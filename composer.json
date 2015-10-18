@@ -1,0 +1,26 @@
+{
+    "name": "innmind/math",
+    "type": "library",
+    "description": "Library holding a set of math functions",
+    "keywords": ["math"],
+    "homepage": "http://github.com/Innmind/Math",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Baptiste Langlade",
+            "email": "langlade.baptiste@gmail.com"
+        }
+    ],
+    "support": {
+        "issues": "http://github.com/Innmind/Math/issues"
+    },
+    "require": {
+        "php": ">=5.5",
+    },
+    "autoload": {
+        "psr-0": {
+            "Innmind\\Math": ""
+        }
+    },
+    "target-dir": "Innmind/Math"
+}
