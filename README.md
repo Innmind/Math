@@ -17,5 +17,5 @@ $q->max()->value(); // 12
 $q->mean(); // 6.5
 $q->median()->value(); // 6.5
 $q->quartile(1)->value(); // 3.5 because 25% of values from the set are lower than 3.5
-$q->quartile(3)->value(); // 9.5 because 75% of values from the set are lower than 3.5
+$q->quartile(3)->value(); // 9.5 because 75% of values from the set are lower than 9.5
 ```
