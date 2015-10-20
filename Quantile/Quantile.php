@@ -226,6 +226,12 @@ class Quantile
      */
     protected function buildQuartile($percentage)
     {
+        if ($this->length === 2) {
+            return ($this->dataset[0] + $this->dataset[1]) / 2;
+        } else if ($this->length === 1) {
+            return $this->dataset[0];
+        }
+
         $position = $this->length * (float) $percentage;
 
         if (fmod($position, 1) !== 0) {
