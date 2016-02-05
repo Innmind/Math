@@ -6,9 +6,9 @@ namespace Innmind\Math\Quantile;
 /**
  * Holds a quartile value
  */
-class Quartile
+final class Quartile
 {
-    protected $value;
+    private $value;
 
     public function __construct(float $value)
     {

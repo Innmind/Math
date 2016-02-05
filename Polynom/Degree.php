@@ -3,10 +3,10 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Polynom;
 
-class Degree
+final class Degree
 {
-    protected $degree;
-    protected $coeff;
+    private $degree;
+    private $coeff;
 
     public function __construct(int $degree, float $coeff)
     {

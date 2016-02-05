@@ -5,9 +5,9 @@ namespace Innmind\Math\Regression;
 
 use Innmind\Math\Polynom\Polynom;
 
-class LinearRegression
+final class LinearRegression
 {
-    protected $polynom;
+    private $polynom;
 
     public function __construct(array $data)
     {
@@ -56,7 +56,7 @@ class LinearRegression
      *
      * @return array
      */
-    protected function compute(array $data): array
+    private function compute(array $data): array
     {
         $count = count($data);
         $x = array_keys($data);

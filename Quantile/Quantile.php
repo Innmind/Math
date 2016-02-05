@@ -3,14 +3,14 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Quantile;
 
-class Quantile
+final class Quantile
 {
-    protected $min;
-    protected $max;
-    protected $mean;
-    protected $median;
-    protected $firstQuartile;
-    protected $thirdQuartile;
+    private $min;
+    private $max;
+    private $mean;
+    private $median;
+    private $firstQuartile;
+    private $thirdQuartile;
 
     public function __construct(array $dataset)
     {
@@ -102,7 +102,7 @@ class Quantile
      *
      * @return array
      */
-    protected function clean(array $dataset): array
+    private function clean(array $dataset): array
     {
         $cleaned = array_map(function($element) {
             if (!is_numeric($element)) {
@@ -141,7 +141,7 @@ class Quantile
      *
      * @return self
      */
-    protected function buildMin(array $dataset): self
+    private function buildMin(array $dataset): self
     {
         $this->min = new Quartile(min($dataset));
 
@@ -155,7 +155,7 @@ class Quantile
      *
      * @return self
      */
-    protected function buildMax(array $dataset): self
+    private function buildMax(array $dataset): self
     {
         $this->max = new Quartile(max($dataset));
 
@@ -170,7 +170,7 @@ class Quantile
      *
      * @return self
      */
-    protected function buildMean(array $dataset, int $length): self
+    private function buildMean(array $dataset, int $length): self
     {
         $sum = array_sum($dataset);
         $this->mean = $sum / $length;
@@ -186,7 +186,7 @@ class Quantile
      *
      * @return self
      */
-    protected function buildMedian(array $dataset, int $length): self
+    private function buildMedian(array $dataset, int $length): self
     {
         $even = ($length % 2) === 0;
         $index = (ceil($length / 2)) - 1;
@@ -210,7 +210,7 @@ class Quantile
      *
      * @return self
      */
-    protected function buildFirstQuartile(array $dataset, int $length): self
+    private function buildFirstQuartile(array $dataset, int $length): self
     {
         $this->firstQuartile = new Quartile($this->buildQuartile(
             0.25,
@@ -229,7 +229,7 @@ class Quantile
      *
      * @return self
      */
-    protected function buildThirdQuartile(array $dataset, int $length): self
+    private function buildThirdQuartile(array $dataset, int $length): self
     {
         $this->thirdQuartile = new Quartile($this->buildQuartile(
             0.75,
@@ -249,7 +249,7 @@ class Quantile
      *
      * @return float
      */
-    protected function buildQuartile(
+    private function buildQuartile(
         float $percentage,
         array $dataset,
         int $length

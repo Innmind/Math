@@ -5,10 +5,10 @@ namespace Innmind\Math\Polynom;
 
 use Innmind\Immutable\TypedCollection;
 
-class Polynom
+final class Polynom
 {
-    protected $intercept;
-    protected $degrees;
+    private $intercept;
+    private $degrees;
 
     public function __construct(float $intercept, array $degrees = [])
     {
