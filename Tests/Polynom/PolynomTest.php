@@ -22,11 +22,16 @@ class PolynomTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($p->hasDegree(1));
         $this->assertFalse($p->hasDegree(2));
         $this->assertInstanceOf(Degree::class, $p->degree(1));
+
+        $p = new Polynom(0, [$d = new Degree(1, 2)]);
+
+        $this->assertTrue($p->hasDegree(1));
+        $this->assertSame($d, $p->degree(1));
     }
 
     /**
      * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Unknown degree "2"
+     * @expectedExceptionMessage Unknown index 2
      */
     public function testThrowIfTryingToAccessUnknownDegree()
     {
@@ -37,7 +42,7 @@ class PolynomTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage A polynom degree must be an instance of "Innmind\Math\Polynom\Degree"
+     * @expectedExceptionMessage Each value must be an instance of "Innmind\Math\Polynom\Degree"
      */
     public function testThrowIfTryingToBuildPolynomWithInvalidData()
     {
