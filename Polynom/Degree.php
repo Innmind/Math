@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace Innmind\Math\Polynom;
 
@@ -7,18 +8,18 @@ class Degree
     protected $degree;
     protected $coeff;
 
-    public function __construct($degree, $coeff)
+    public function __construct(int $degree, float $coeff)
     {
-        $this->degree = (float) $degree;
-        $this->coeff = (float) $coeff;
+        $this->degree = $degree;
+        $this->coeff = $coeff;
     }
 
     /**
      * Return the degree
      *
-     * @return float
+     * @return int
      */
-    public function degree()
+    public function degree(): int
     {
         return $this->degree;
     }
@@ -28,7 +29,7 @@ class Degree
      *
      * @return float
      */
-    public function coeff()
+    public function coeff(): float
     {
         return $this->coeff;
     }
@@ -40,8 +41,8 @@ class Degree
      *
      * @return float
      */
-    public function __invoke($x)
+    public function __invoke(float $x): float
     {
-        return $this->coeff * pow((float) $x, $this->degree);
+        return $this->coeff * pow($x, $this->degree);
     }
 }

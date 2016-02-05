@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace Innmind\Math\Quantile;
 
@@ -31,7 +32,7 @@ class Quantile
      *
      * @return Quartile
      */
-    public function min()
+    public function min(): Quartile
     {
         return $this->quartile(0);
     }
@@ -41,7 +42,7 @@ class Quantile
      *
      * @return Quartile
      */
-    public function max()
+    public function max(): Quartile
     {
         return $this->quartile(4);
     }
@@ -51,7 +52,7 @@ class Quantile
      *
      * @return float
      */
-    public function mean()
+    public function mean(): float
     {
         return $this->mean;
     }
@@ -61,7 +62,7 @@ class Quantile
      *
      * @return Quartile
      */
-    public function median()
+    public function median(): Quartile
     {
         return $this->quartile(2);
     }
@@ -73,7 +74,7 @@ class Quantile
      *
      * @return Quartile
      */
-    public function quartile($index)
+    public function quartile(int $index): Quartile
     {
         switch ($index) {
             case 0:
@@ -103,7 +104,7 @@ class Quantile
      *
      * @return array
      */
-    protected function clean(array $dataset)
+    protected function clean(array $dataset): array
     {
         $cleaned = array_map(function($element) {
             if (!is_numeric($element)) {
@@ -138,9 +139,9 @@ class Quantile
     /**
      * Extract the minimum value from the dataset
      *
-     * @return Quantile self
+     * @return self
      */
-    protected function buildMin()
+    protected function buildMin(): self
     {
         $this->min = new Quartile(min($this->dataset));
 
@@ -150,9 +151,9 @@ class Quantile
     /**
      * Extract the maximum value from the dataset
      *
-     * @return Quantile self
+     * @return self
      */
-    protected function buildMax()
+    protected function buildMax(): self
     {
         $this->max = new Quartile(max($this->dataset));
 
@@ -162,9 +163,9 @@ class Quantile
     /**
      * Build the mean value from the dataset
      *
-     * @return Quantile self
+     * @return self
      */
-    protected function buildMean()
+    protected function buildMean(): self
     {
         $sum = array_sum($this->dataset);
         $this->mean = $sum / $this->length;
@@ -175,9 +176,9 @@ class Quantile
     /**
      * Extract the median from the dataset
      *
-     * @return Quantile self
+     * @return self
      */
-    protected function buildMedian()
+    protected function buildMedian(): self
     {
         $even = ($this->length % 2) === 0;
         $index = (ceil($this->length / 2)) - 1;
@@ -196,9 +197,9 @@ class Quantile
     /**
      * Extract the first quartile
      *
-     * @return Quantile self
+     * @return self
      */
-    protected function buildFirstQuartile()
+    protected function buildFirstQuartile(): self
     {
         $this->firstQuartile = new Quartile($this->buildQuartile(0.25));
 
@@ -208,9 +209,9 @@ class Quantile
     /**
      * Extract the first quartile
      *
-     * @return Quantile self
+     * @return self
      */
-    protected function buildThirdQuartile()
+    protected function buildThirdQuartile(): self
     {
         $this->thirdQuartile = new Quartile($this->buildQuartile(0.75));
 
@@ -224,7 +225,7 @@ class Quantile
      *
      * @return float
      */
-    protected function buildQuartile($percentage)
+    protected function buildQuartile(float $percentage): float
     {
         if ($this->length === 2) {
             return ($this->dataset[0] + $this->dataset[1]) / 2;

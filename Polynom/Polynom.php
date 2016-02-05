@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace Innmind\Math\Polynom;
 
@@ -7,9 +8,9 @@ class Polynom
     protected $intercept;
     protected $degrees = [];
 
-    public function __construct($intercept, array $degrees = [])
+    public function __construct(float $intercept, array $degrees = [])
     {
-        $this->intercept = (float) $intercept;
+        $this->intercept = $intercept;
 
         foreach ($degrees as $degree) {
             if (!$degree instanceof Degree) {
@@ -26,12 +27,12 @@ class Polynom
     /**
      * Create a new polynom with this added degree
      *
-     * @param float $degree
+     * @param int $degree
      * @param float $coeff
      *
-     * @return Polynom New instance
+     * @return self
      */
-    public function withDegree($degree, $coeff)
+    public function withDegree(int $degree, float $coeff): self
     {
         $degrees = $this->degrees;
 
@@ -51,7 +52,7 @@ class Polynom
      *
      * @return float
      */
-    public function intercept()
+    public function intercept(): float
     {
         return $this->intercept;
     }
@@ -59,11 +60,11 @@ class Polynom
     /**
      * Return the given degree
      *
-     * @param float $degree
+     * @param int $degree
      *
      * @return Degree
      */
-    public function degree($degree)
+    public function degree(int $degree): Degree
     {
         if (!$this->hasDegree($degree)) {
             throw new \InvalidArgumentException(sprintf(
@@ -73,7 +74,7 @@ class Polynom
         }
 
         foreach ($this->degrees as $d) {
-            if ($d->degree() === (float) $degree) {
+            if ($d->degree() === $degree) {
                 return $d;
             }
         }
@@ -82,14 +83,14 @@ class Polynom
     /**
      * Check if the polynom has the given degree
      *
-     * @param float $degree
+     * @param int $degree
      *
      * @return bool
      */
-    public function hasDegree($degree)
+    public function hasDegree(int $degree): bool
     {
         foreach ($this->degrees as $d) {
-            if ($d->degree() === (float) $degree) {
+            if ($d->degree() === $degree) {
                 return true;
             }
         }
@@ -104,7 +105,7 @@ class Polynom
      *
      * @return float
      */
-    public function __invoke($x)
+    public function __invoke(float $x): float
     {
         $result = $this->intercept;
 
