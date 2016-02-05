@@ -1,49 +1,40 @@
 <?php
+declare(strict_types = 1);
 
 namespace Innmind\Math\Polynom;
 
-class Polynom
-{
-    protected $intercept;
-    protected $degrees = [];
+use Innmind\Immutable\TypedCollection;
 
-    public function __construct($intercept, array $degrees = [])
+final class Polynom
+{
+    private $intercept;
+    private $degrees;
+
+    public function __construct(float $intercept, array $degrees = [])
     {
-        $this->intercept = (float) $intercept;
+        $this->intercept = $intercept;
+        $degrees = new TypedCollection(Degree::class, $degrees); //verify the data
+        $this->degrees = new TypedCollection(Degree::class, []);
 
         foreach ($degrees as $degree) {
-            if (!$degree instanceof Degree) {
-                throw new \InvalidArgumentException(sprintf(
-                    'A polynom degree must be an instance of "%s"',
-                    Degree::class
-                ));
-            }
-
-            $this->degrees[$degree->degree()] = $degree;
+            $this->degrees = $this->degrees->set($degree->degree(), $degree);
         }
     }
 
     /**
      * Create a new polynom with this added degree
      *
-     * @param float $degree
+     * @param int $degree
      * @param float $coeff
      *
-     * @return Polynom New instance
+     * @return self
      */
-    public function withDegree($degree, $coeff)
+    public function withDegree(int $degree, float $coeff): self
     {
-        $degrees = $this->degrees;
-
-        foreach ($degrees as $key => $d) {
-            if ($d->degree() === (float) $degree) {
-                unset($degrees[$key]);
-            }
-        }
-
-        $degrees[] = new Degree($degree, $coeff);
-
-        return new self($this->intercept, $degrees);
+        return new self(
+            $this->intercept,
+            $this->degrees->set($degree, new Degree($degree, $coeff))->toPrimitive()
+        );
     }
 
     /**
@@ -51,7 +42,7 @@ class Polynom
      *
      * @return float
      */
-    public function intercept()
+    public function intercept(): float
     {
         return $this->intercept;
     }
@@ -59,42 +50,25 @@ class Polynom
     /**
      * Return the given degree
      *
-     * @param float $degree
+     * @param int $degree
      *
      * @return Degree
      */
-    public function degree($degree)
+    public function degree(int $degree): Degree
     {
-        if (!$this->hasDegree($degree)) {
-            throw new \InvalidArgumentException(sprintf(
-                'Unknown degree "%s"',
-                $degree
-            ));
-        }
-
-        foreach ($this->degrees as $d) {
-            if ($d->degree() === (float) $degree) {
-                return $d;
-            }
-        }
+        return $this->degrees->get($degree);
     }
 
     /**
      * Check if the polynom has the given degree
      *
-     * @param float $degree
+     * @param int $degree
      *
      * @return bool
      */
-    public function hasDegree($degree)
+    public function hasDegree(int $degree): bool
     {
-        foreach ($this->degrees as $d) {
-            if ($d->degree() === (float) $degree) {
-                return true;
-            }
-        }
-
-        return false;
+        return $this->degrees->hasKey($degree);
     }
 
     /**
@@ -104,7 +78,7 @@ class Polynom
      *
      * @return float
      */
-    public function __invoke($x)
+    public function __invoke(float $x): float
     {
         $result = $this->intercept;
 

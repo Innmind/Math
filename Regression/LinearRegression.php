@@ -1,12 +1,13 @@
 <?php
+declare(strict_types = 1);
 
 namespace Innmind\Math\Regression;
 
 use Innmind\Math\Polynom\Polynom;
 
-class LinearRegression
+final class LinearRegression
 {
-    protected $polynom;
+    private $polynom;
 
     public function __construct(array $data)
     {
@@ -19,7 +20,7 @@ class LinearRegression
      *
      * @return float
      */
-    public function intercept()
+    public function intercept(): float
     {
         return $this->polynom->intercept();
     }
@@ -29,7 +30,7 @@ class LinearRegression
      *
      * @return float
      */
-    public function slope()
+    public function slope(): float
     {
         return $this->polynom->degree(1)->coeff();
     }
@@ -41,7 +42,7 @@ class LinearRegression
      *
      * @return float
      */
-    public function __invoke($x)
+    public function __invoke(float $x): float
     {
         return call_user_func($this->polynom, $x);
     }
@@ -55,7 +56,7 @@ class LinearRegression
      *
      * @return array
      */
-    protected function compute(array $data)
+    private function compute(array $data): array
     {
         $count = count($data);
         $x = array_keys($data);

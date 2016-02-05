@@ -1,15 +1,16 @@
 <?php
+declare(strict_types = 1);
 
 namespace Innmind\Math\Quantile;
 
 /**
  * Holds a quartile value
  */
-class Quartile
+final class Quartile
 {
-    protected $value;
+    private $value;
 
-    public function __construct($value)
+    public function __construct(float $value)
     {
         $this->value = $value;
     }
@@ -19,7 +20,7 @@ class Quartile
      *
      * @return float
      */
-    public function value()
+    public function value(): float
     {
         return $this->value;
     }
