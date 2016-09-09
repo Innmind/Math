@@ -50,6 +50,26 @@ final class Matrix implements \Iterator
         return new self(...$rows);
     }
 
+    /**
+     * Initialize a matrix to the wisjed dimension filled with the specified value
+     */
+    public static function initialize(Dimension $dimension, float $value): self
+    {
+        $rows = [];
+
+        for ($i = 0; $i < $dimension->rows(); ++$i) {
+            $rows[] = new RowVector(
+                ...array_fill(
+                    0,
+                    $dimension->columns(),
+                    $value
+                )
+            );
+        }
+
+        return new self(...$rows);
+    }
+
     public function dimension(): Dimension
     {
         return $this->dimension;

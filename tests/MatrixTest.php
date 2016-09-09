@@ -122,4 +122,22 @@ class MatrixTest extends \PHPUnit_Framework_TestCase
             $matrix->toArray()
         );
     }
+
+    public function testInitialize()
+    {
+        $matrix = Matrix::initialize(
+            new Dimension(3, 2),
+            4.2
+        );
+
+        $this->assertInstanceOf(Matrix::class, $matrix);
+        $this->assertSame(
+            [
+                [4.2, 4.2],
+                [4.2, 4.2],
+                [4.2, 4.2],
+                ],
+                $matrix->toArray()
+        );
+    }
 }
