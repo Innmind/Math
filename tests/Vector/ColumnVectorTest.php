@@ -3,9 +3,10 @@ declare(strict_types = 1);
 
 namespace Tests\Innmind\Math\Vector;
 
-use Innmind\Math\Vector\{
-    ColumnVector,
-    RowVector
+use Innmind\Math\{
+    Vector\ColumnVector,
+    Vector\RowVector,
+    Matrix
 };
 
 class ColumnVectorTest extends \PHPUnit_Framework_TestCase
@@ -43,5 +44,20 @@ class ColumnVectorTest extends \PHPUnit_Framework_TestCase
     public function testThrowWhenEmptyVector()
     {
         new ColumnVector;
+    }
+
+    public function testMatrix()
+    {
+        $matrix = (new ColumnVector(-1, 2))->matrix(new RowVector(4, 1, 2));
+
+        $this->assertInstanceOf(Matrix::class, $matrix);
+        $this->assertSame('2 x 3', (string) $matrix->dimension());
+        $this->assertSame(
+            [
+                [-4.0, -1.0, -2.0],
+                [8.0, 2.0, 4.0],
+            ],
+            $matrix->toArray()
+        );
     }
 }

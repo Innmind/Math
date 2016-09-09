@@ -3,9 +3,10 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Vector;
 
-use Innmind\Math\Exception\{
-    VectorsMustMeOfTheSameDimensionException,
-    VectorCannotBeEmptyException
+use Innmind\Math\{
+    Exception\VectorsMustMeOfTheSameDimensionException,
+    Exception\VectorCannotBeEmptyException,
+    Matrix
 };
 use Innmind\Immutable\Sequence;
 
@@ -52,6 +53,29 @@ final class RowVector implements \Iterator
                 return $value;
             }
         );
+    }
+
+    /**
+     * @see https://en.wikipedia.org/wiki/Row_and_column_vectors#Operations
+     */
+    public function matrix(ColumnVector $column): Matrix
+    {
+        $rows = [];
+
+        foreach ($column as $number) {
+            $values = $this->numbers->reduce(
+                [],
+                function (array $values, float $rowNumber) use ($number) {
+                    $values[] = $rowNumber * $number;
+
+                    return $values;
+                }
+            );
+
+            $rows[] = new RowVector(...$values);
+        }
+
+        return new Matrix(...$rows);
     }
 
     public function get(int $position): float
