@@ -1,10 +1,10 @@
 # Math
 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Innmind/Math/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/Innmind/Math/?branch=develop)
-[![Code Coverage](https://scrutinizer-ci.com/g/Innmind/Math/badges/coverage.png?b=develop)](https://scrutinizer-ci.com/g/Innmind/Math/?branch=develop)
-[![Build Status](https://scrutinizer-ci.com/g/Innmind/Math/badges/build.png?b=develop)](https://scrutinizer-ci.com/g/Innmind/Math/build-status/develop)
-
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/e0d40ca0-ff10-42ac-93c2-f9fd281ef545/big.png)](https://insight.sensiolabs.com/projects/e0d40ca0-ff10-42ac-93c2-f9fd281ef545)
+| `master` | `develop` |
+|----------|-----------|
+| [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Innmind/Math/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Innmind/Math/?branch=master) | [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Innmind/Math/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/Innmind/Math/?branch=develop) |
+| [![Code Coverage](https://scrutinizer-ci.com/g/Innmind/Math/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Innmind/Math/?branch=master) | [![Code Coverage](https://scrutinizer-ci.com/g/Innmind/Math/badges/coverage.png?b=develop)](https://scrutinizer-ci.com/g/Innmind/Math/?branch=develop) |
+| [![Build Status](https://scrutinizer-ci.com/g/Innmind/Math/badges/build.png?b=master)](https://scrutinizer-ci.com/g/Innmind/Math/build-status/master) | [![Build Status](https://scrutinizer-ci.com/g/Innmind/Math/badges/build.png?b=develop)](https://scrutinizer-ci.com/g/Innmind/Math/build-status/develop) |
 
 ## Quantile
 
