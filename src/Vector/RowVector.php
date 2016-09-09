@@ -46,7 +46,7 @@ final class RowVector implements \Iterator
 
         return $this->numbers->reduce(
             0,
-            function (float $carry, $number) use ($column) {
+            function(float $carry, $number) use ($column) {
                 $value = $carry + $number * $column->current();
                 $column->next();
 
@@ -65,7 +65,7 @@ final class RowVector implements \Iterator
         foreach ($column as $number) {
             $values = $this->numbers->reduce(
                 [],
-                function (array $values, float $rowNumber) use ($number) {
+                function(array $values, float $rowNumber) use ($number) {
                     $values[] = $rowNumber * $number;
 
                     return $values;

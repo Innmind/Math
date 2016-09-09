@@ -59,7 +59,7 @@ final class Matrix implements \Iterator
     {
         return $this
             ->rows
-            ->map(function (RowVector $row) {
+            ->map(function(RowVector $row) {
                 return $row->toArray();
             })
             ->toPrimitive();
@@ -105,7 +105,7 @@ final class Matrix implements \Iterator
         for ($i = 0; $i < $this->dimension->columns(); ++$i) {
             $values = $this->rows->reduce(
                 [],
-                function (array $values, RowVector $row) use ($i) {
+                function(array $values, RowVector $row) use ($i) {
                     $values[] = $row->get($i);
 
                     return $values;

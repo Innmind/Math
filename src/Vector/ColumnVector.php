@@ -46,7 +46,7 @@ final class ColumnVector implements \Iterator
 
         return $this->numbers->reduce(
             0,
-            function (float $carry, $number) use ($row) {
+            function(float $carry, $number) use ($row) {
                 $value = $carry + $number * $row->current();
                 $row->next();
 
@@ -60,7 +60,7 @@ final class ColumnVector implements \Iterator
      */
     public function matrix(RowVector $row): Matrix
     {
-        $rows = $this->numbers->map(function (float $number) use ($row) {
+        $rows = $this->numbers->map(function(float $number) use ($row) {
             $values = [];
 
             foreach ($row as $rowNumber) {
