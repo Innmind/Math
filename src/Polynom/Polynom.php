@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Polynom;
 
-use Innmind\Immutable\TypedCollection;
+use Innmind\Immutable\Map;
 
 final class Polynom
 {
@@ -13,11 +13,17 @@ final class Polynom
     public function __construct(float $intercept, array $degrees = [])
     {
         $this->intercept = $intercept;
-        $degrees = new TypedCollection(Degree::class, $degrees); //verify the data
-        $this->degrees = new TypedCollection(Degree::class, []);
+        $this->degrees = new Map('int', Degree::class);
 
         foreach ($degrees as $degree) {
-            $this->degrees = $this->degrees->set($degree->degree(), $degree);
+            if (!$degree instanceof Degree) {
+                throw new \InvalidArgumentException(sprintf(
+                    'Each value must be an instance of "%s"',
+                    Degree::class
+                ));
+            }
+
+            $this->degrees = $this->degrees->put($degree->degree(), $degree);
         }
     }
 
@@ -31,9 +37,14 @@ final class Polynom
      */
     public function withDegree(int $degree, float $coeff): self
     {
+        $degrees = $this->degrees->put($degree, new Degree($degree, $coeff));
+
         return new self(
             $this->intercept,
-            $this->degrees->set($degree, new Degree($degree, $coeff))->toPrimitive()
+            array_combine(
+                $degrees->keys()->toPrimitive(),
+                $degrees->values()->toPrimitive()
+            )
         );
     }
 
@@ -68,7 +79,7 @@ final class Polynom
      */
     public function hasDegree(int $degree): bool
     {
-        return $this->degrees->hasKey($degree);
+        return $this->degrees->contains($degree);
     }
 
     /**

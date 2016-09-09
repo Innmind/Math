@@ -31,7 +31,6 @@ class PolynomTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Unknown index 2
      */
     public function testThrowIfTryingToAccessUnknownDegree()
     {
