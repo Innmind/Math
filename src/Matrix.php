@@ -75,6 +75,20 @@ final class Matrix implements \Iterator
         return $this->columns->get($column);
     }
 
+    public function transpose(): self
+    {
+        $rows = $this->columns->reduce(
+            [],
+            function(array $rows, ColumnVector $column): array {
+                $rows[] = new RowVector(...$column);
+
+                return $rows;
+            }
+        );
+
+        return new self(...$rows);
+    }
+
     public function current()
     {
         return $this->rows->current();

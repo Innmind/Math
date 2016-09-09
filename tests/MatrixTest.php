@@ -80,4 +80,23 @@ class MatrixTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Matrix::class, $matrix);
         $this->assertSame($values, $matrix->toArray());
     }
+
+    public function testTranspose()
+    {
+        $matrix = Matrix::fromArray([
+            [1, 2, 3],
+            [3, 4, 5],
+            [2, 3, 4],
+        ])->transpose();
+
+        $this->assertInstanceOf(Matrix::class, $matrix);
+        $this->assertSame(
+            [
+                [1.0, 3.0, 2.0],
+                [2.0, 4.0, 3.0],
+                [3.0, 5.0, 4.0],
+            ],
+            $matrix->toArray()
+        );
+    }
 }
