@@ -9,8 +9,26 @@ final class LinearRegression
 {
     private $polynom;
 
-    public function __construct(array $data)
+    /**
+     * @param Dataset $data
+     */
+    public function __construct($data)
     {
+        if (is_array($data)) {
+            trigger_error(
+                'The use of arrays is deprecated, use the Dataset class',
+                E_USER_DEPRECATED
+            );
+            $data = Dataset::fromArray($data);
+        }
+
+        if (!$data instanceof Dataset) {
+            throw new \TypeError(sprintf(
+                'Argument must be an instance of %s',
+                Dataset::class
+            ));
+        }
+
         list($slope, $intercept) = $this->compute($data);
         $this->polynom = (new Polynom($intercept))->withDegree(1, $slope);
     }
@@ -52,23 +70,15 @@ final class LinearRegression
      *
      * @see https://richardathome.wordpress.com/2006/01/25/a-php-linear-regression-function/
      *
-     * @param array $data
+     * @param Dataset $data
      *
      * @return array
      */
-    private function compute(array $data): array
+    private function compute(Dataset $data): array
     {
-        $count = count($data);
-        $x = array_keys($data);
-        $y = array_values($data);
-
-        foreach ($x as &$value) {
-            $value = (float) $value;
-        }
-
-        foreach ($y as &$value) {
-            $value = (float) $value;
-        }
+        $count = $data->dimension()->rows();
+        $x = $data->abscissas()->toArray();
+        $y = $data->ordinates()->toArray();
 
         $xSum = array_sum($x);
         $ySum = array_sum($y);
