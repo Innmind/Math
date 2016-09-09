@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Innmind\Math\Tests\Regression;
+namespace Tests\Innmind\Math\Regression;
 
 use Innmind\Math\Regression\LinearRegression;
 

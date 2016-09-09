@@ -19,9 +19,9 @@
         "innmind/immutable": "~1.0"
     },
     "autoload": {
-        "psr-0": {
-            "Innmind\\Math": ""
+        "psr-4": {
+            "Innmind\\Math\\": "src/",
+            "Tests\\Innmind\\Math\\": "tests/"
         }
-    },
-    "target-dir": "Innmind/Math"
+    }
 }
