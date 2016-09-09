@@ -78,6 +78,15 @@ final class RowVector implements \Iterator
         return new Matrix(...$rows);
     }
 
+    public function multiply(float $coefficient): self
+    {
+        $numbers = $this->numbers->map(function($number) use ($coefficient) {
+            return $number * $coefficient;
+        });
+
+        return new self(...$numbers);
+    }
+
     public function get(int $position): float
     {
         return $this->numbers->get($position);

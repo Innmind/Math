@@ -60,4 +60,14 @@ class ColumnVectorTest extends \PHPUnit_Framework_TestCase
             $matrix->toArray()
         );
     }
+
+    public function testMultiply()
+    {
+        $row = new ColumnVector(25, 5, 1);
+        $row2 = $row->multiply(2.56);
+
+        $this->assertInstanceOf(ColumnVector::class, $row2);
+        $this->assertSame([25.0, 5.0, 1.0], $row->toArray());
+        $this->assertSame([64.0, 12.8, 2.56], $row2->toArray());
+    }
 }
