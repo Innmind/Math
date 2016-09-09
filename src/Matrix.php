@@ -89,6 +89,25 @@ final class Matrix implements \Iterator
         return new self(...$rows);
     }
 
+    public function multiply(self $matrix): self
+    {
+        $expectedM = $this->dimension->rows();
+        $expectedN = $matrix->dimension()->columns();
+        $rows = [];
+
+        for ($i = 0; $i < $expectedM; ++$i) {
+            $row = [];
+
+            for ($j = 0; $j < $expectedN; ++$j) {
+                $row[] = $this->row($i)->dot($matrix->column($j));
+            }
+
+            $rows[] = $row;
+        }
+
+        return self::fromArray($rows);
+    }
+
     public function current()
     {
         return $this->rows->current();

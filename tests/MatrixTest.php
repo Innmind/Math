@@ -99,4 +99,27 @@ class MatrixTest extends \PHPUnit_Framework_TestCase
             $matrix->toArray()
         );
     }
+
+    public function testMultiply()
+    {
+        $matrix = Matrix::fromArray([
+            [1, 2, 3],
+            [4, 5, 6],
+        ])->multiply(
+            Matrix::fromArray([
+                [7, 8],
+                [9, 10],
+                [11, 12],
+            ])
+        );
+
+        $this->assertInstanceOf(Matrix::class, $matrix);
+        $this->assertSame(
+            [
+                [58.0, 64.0],
+                [139.0, 154.0]
+            ],
+            $matrix->toArray()
+        );
+    }
 }
