@@ -32,6 +32,9 @@ final class RowVector implements \Iterator
         return $this->numbers->size();
     }
 
+    /**
+     * @see https://en.wikipedia.org/wiki/Row_and_column_vectors#Operations
+     */
     public function dot(ColumnVector $column): float
     {
         if ($this->dimension() !== $column->dimension()) {
