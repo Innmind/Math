@@ -71,4 +71,12 @@ class RowVectorTest extends \PHPUnit_Framework_TestCase
         $this->assertSame([25.0, 5.0, 1.0], $row->toArray());
         $this->assertSame([64.0, 12.8, 2.56], $row2->toArray());
     }
+
+    public function testInitialize()
+    {
+        $vector = RowVector::initialize(4, 1.2);
+
+        $this->assertInstanceOf(RowVector::class, $vector);
+        $this->assertSame([1.2, 1.2, 1.2, 1.2], $vector->toArray());
+    }
 }

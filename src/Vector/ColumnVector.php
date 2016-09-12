@@ -23,6 +23,11 @@ final class ColumnVector implements \Iterator
         }
     }
 
+    public static function initialize(int $dimension, float $value): self
+    {
+        return new self(...array_fill(0, $dimension, $value));
+    }
+
     public function toArray(): array
     {
         return $this->numbers->toPrimitive();
