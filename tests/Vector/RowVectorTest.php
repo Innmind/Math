@@ -79,4 +79,28 @@ class RowVectorTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(RowVector::class, $vector);
         $this->assertSame([1.2, 1.2, 1.2, 1.2], $vector->toArray());
     }
+
+    public function testSubtract()
+    {
+        $vector1 = new RowVector(1, 2, 3, 4);
+        $vector2 = new RowVector(0.5, 2.5, 2.8, 4.2);
+
+        $vector3 = $vector1->subtract($vector2);
+
+        $this->assertInstanceOf(RowVector::class, $vector3);
+        $this->assertNotSame($vector3, $vector1);
+        $this->assertNotSame($vector3, $vector2);
+        $this->assertEquals(
+            [0.5, -0.5, 0.2, -0.2],
+            $vector3->toArray()
+        );
+    }
+
+    /**
+     * @expectedException Innmind\Math\Exception\VectorsMustMeOfTheSameDimensionException
+     */
+    public function testThrowWhenSubtractingVectorsOfDifferentDimensions()
+    {
+        RowVector::initialize(1, 1)->subtract(RowVector::initialize(2, 1));
+    }
 }
