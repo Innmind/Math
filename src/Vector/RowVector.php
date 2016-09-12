@@ -51,7 +51,7 @@ final class RowVector implements \Iterator
 
         return $this->numbers->reduce(
             0,
-            function(float $carry, $number) use ($column) {
+            function(float $carry, float $number) use ($column): float {
                 $value = $carry + $number * $column->current();
                 $column->next();
 
@@ -70,7 +70,7 @@ final class RowVector implements \Iterator
         foreach ($column as $number) {
             $values = $this->numbers->reduce(
                 [],
-                function(array $values, float $rowNumber) use ($number) {
+                function(array $values, float $rowNumber) use ($number): array {
                     $values[] = $rowNumber * $number;
 
                     return $values;
@@ -85,7 +85,7 @@ final class RowVector implements \Iterator
 
     public function multiply(float $coefficient): self
     {
-        $numbers = $this->numbers->map(function($number) use ($coefficient) {
+        $numbers = $this->numbers->map(function(float $number) use ($coefficient): float {
             return $number * $coefficient;
         });
 
@@ -101,7 +101,7 @@ final class RowVector implements \Iterator
         $row->rewind();
         $numbers = $this->numbers->reduce(
             [],
-            function (array $numbers, $number) use ($row): array {
+            function (array $numbers, float $number) use ($row): array {
                 $numbers[] = $number - $row->current();
                 $row->next();
 

@@ -51,7 +51,7 @@ final class ColumnVector implements \Iterator
 
         return $this->numbers->reduce(
             0,
-            function(float $carry, $number) use ($row) {
+            function(float $carry, float $number) use ($row): float {
                 $value = $carry + $number * $row->current();
                 $row->next();
 
@@ -65,7 +65,7 @@ final class ColumnVector implements \Iterator
      */
     public function matrix(RowVector $row): Matrix
     {
-        $rows = $this->numbers->map(function(float $number) use ($row) {
+        $rows = $this->numbers->map(function(float $number) use ($row): RowVector {
             $values = [];
 
             foreach ($row as $rowNumber) {
@@ -80,7 +80,7 @@ final class ColumnVector implements \Iterator
 
     public function multiply(float $coefficient): self
     {
-        $numbers = $this->numbers->map(function($number) use ($coefficient) {
+        $numbers = $this->numbers->map(function(float $number) use ($coefficient): float {
             return $number * $coefficient;
         });
 
@@ -96,7 +96,7 @@ final class ColumnVector implements \Iterator
         $row->rewind();
         $numbers = $this->numbers->reduce(
             [],
-            function (array $numbers, $number) use ($row): array {
+            function (array $numbers, float $number) use ($row): array {
                 $numbers[] = $number - $row->current();
                 $row->next();
 
