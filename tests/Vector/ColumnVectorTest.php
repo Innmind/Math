@@ -63,12 +63,12 @@ class ColumnVectorTest extends \PHPUnit_Framework_TestCase
 
     public function testMultiply()
     {
-        $row = new ColumnVector(25, 5, 1);
-        $row2 = $row->multiply(ColumnVector::initialize(3, 2.56));
+        $column = new ColumnVector(25, 5, 1);
+        $column2 = $column->multiply(ColumnVector::initialize(3, 2.56));
 
-        $this->assertInstanceOf(ColumnVector::class, $row2);
-        $this->assertSame([25.0, 5.0, 1.0], $row->toArray());
-        $this->assertSame([64.0, 12.8, 2.56], $row2->toArray());
+        $this->assertInstanceOf(ColumnVector::class, $column2);
+        $this->assertSame([25.0, 5.0, 1.0], $column->toArray());
+        $this->assertSame([64.0, 12.8, 2.56], $column2->toArray());
     }
 
     /**
@@ -81,12 +81,12 @@ class ColumnVectorTest extends \PHPUnit_Framework_TestCase
 
     public function testDivide()
     {
-        $row = new ColumnVector(25, 5, 1);
-        $row2 = $row->divide(ColumnVector::initialize(3, 5));
+        $column = new ColumnVector(25, 5, 1);
+        $column2 = $column->divide(ColumnVector::initialize(3, 5));
 
-        $this->assertInstanceOf(ColumnVector::class, $row2);
-        $this->assertSame([25.0, 5.0, 1.0], $row->toArray());
-        $this->assertSame([5.0, 1.0, 0.2], $row2->toArray());
+        $this->assertInstanceOf(ColumnVector::class, $column2);
+        $this->assertSame([25.0, 5.0, 1.0], $column->toArray());
+        $this->assertSame([5.0, 1.0, 0.2], $column2->toArray());
     }
 
     /**
