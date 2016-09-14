@@ -103,4 +103,28 @@ class RowVectorTest extends \PHPUnit_Framework_TestCase
     {
         RowVector::initialize(1, 1)->subtract(RowVector::initialize(2, 1));
     }
+
+    public function testAdd()
+    {
+        $vector1 = new RowVector(1, 2, 3, 4);
+        $vector2 = new RowVector(0.5, 2.5, 2.8, 4.2);
+
+        $vector3 = $vector1->add($vector2);
+
+        $this->assertInstanceOf(RowVector::class, $vector3);
+        $this->assertNotSame($vector3, $vector1);
+        $this->assertNotSame($vector3, $vector2);
+        $this->assertEquals(
+            [1.5, 4.5, 5.8, 8.2],
+            $vector3->toArray()
+        );
+    }
+
+    /**
+     * @expectedException Innmind\Math\Exception\VectorsMustMeOfTheSameDimensionException
+     */
+    public function testThrowWhenAddingVectorsOfDifferentDimensions()
+    {
+        RowVector::initialize(1, 1)->add(RowVector::initialize(2, 1));
+    }
 }

@@ -107,6 +107,26 @@ final class ColumnVector implements \Iterator
         return new self(...$numbers);
     }
 
+    public function add(self $column): self
+    {
+        if ($this->dimension() !== $column->dimension()) {
+            throw new VectorsMustMeOfTheSameDimensionException;
+        }
+
+        $column->rewind();
+        $numbers = $this->numbers->reduce(
+            [],
+            function (array $numbers, float $number) use ($column): array {
+                $numbers[] = $number + $column->current();
+                $column->next();
+
+                return $numbers;
+            }
+        );
+
+        return new self(...$numbers);
+    }
+
     public function get(int $position): float
     {
         return $this->numbers->get($position);

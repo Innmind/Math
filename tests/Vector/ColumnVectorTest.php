@@ -102,4 +102,28 @@ class ColumnVectorTest extends \PHPUnit_Framework_TestCase
     {
         ColumnVector::initialize(1, 1)->subtract(ColumnVector::initialize(2, 1));
     }
+
+    public function testAdd()
+    {
+        $vector1 = new ColumnVector(1, 2, 3, 4);
+        $vector2 = new ColumnVector(0.5, 2.5, 2.8, 4.2);
+
+        $vector3 = $vector1->add($vector2);
+
+        $this->assertInstanceOf(ColumnVector::class, $vector3);
+        $this->assertNotSame($vector3, $vector1);
+        $this->assertNotSame($vector3, $vector2);
+        $this->assertEquals(
+            [1.5, 4.5, 5.8, 8.2],
+            $vector3->toArray()
+        );
+    }
+
+    /**
+     * @expectedException Innmind\Math\Exception\VectorsMustMeOfTheSameDimensionException
+     */
+    public function testThrowWhenAddingVectorsOfDifferentDimensions()
+    {
+        ColumnVector::initialize(1, 1)->add(ColumnVector::initialize(2, 1));
+    }
 }
