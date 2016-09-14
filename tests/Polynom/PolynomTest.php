@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Innmind\Math\Tests\Polynom;
+namespace Tests\Innmind\Math\Polynom;
 
 use Innmind\Math\Polynom\Polynom;
 use Innmind\Math\Polynom\Degree;
@@ -31,7 +31,6 @@ class PolynomTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Unknown index 2
      */
     public function testThrowIfTryingToAccessUnknownDegree()
     {

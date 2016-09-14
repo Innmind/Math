@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Innmind\Math\Tests\Polynom;
+namespace Tests\Innmind\Math\Polynom;
 
 use Innmind\Math\Polynom\Degree;
 

@@ -16,12 +16,12 @@
     },
     "require": {
         "php": "~7.0",
-        "innmind/immutable": "~1.0"
+        "innmind/immutable": "~1.9"
     },
     "autoload": {
-        "psr-0": {
-            "Innmind\\Math": ""
+        "psr-4": {
+            "Innmind\\Math\\": "src/",
+            "Tests\\Innmind\\Math\\": "tests/"
         }
-    },
-    "target-dir": "Innmind/Math"
+    }
 }

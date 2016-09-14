@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Innmind\Math\Tests\Quantile;
+namespace Tests\Innmind\Math\Quantile;
 
 use Innmind\Math\Quantile\Quantile;
 
