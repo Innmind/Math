@@ -78,10 +78,18 @@ final class ColumnVector implements \Iterator
         return new Matrix(...$rows);
     }
 
-    public function multiply(float $coefficient): self
+    public function multiply(self $column): self
     {
-        $numbers = $this->numbers->map(function(float $number) use ($coefficient): float {
-            return $number * $coefficient;
+        if ($this->dimension() !== $column->dimension()) {
+            throw new VectorsMustMeOfTheSameDimensionException;
+        }
+
+        $column->rewind();
+        $numbers = $this->numbers->map(function(float $number) use ($column): float {
+            $number *= $column->current();
+            $column->next();
+
+            return $number;
         });
 
         return new self(...$numbers);

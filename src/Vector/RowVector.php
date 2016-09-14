@@ -83,10 +83,18 @@ final class RowVector implements \Iterator
         return new Matrix(...$rows);
     }
 
-    public function multiply(float $coefficient): self
+    public function multiply(self $row): self
     {
-        $numbers = $this->numbers->map(function(float $number) use ($coefficient): float {
-            return $number * $coefficient;
+        if ($this->dimension() !== $row->dimension()) {
+            throw new VectorsMustMeOfTheSameDimensionException;
+        }
+
+        $row->rewind();
+        $numbers = $this->numbers->map(function(float $number) use ($row): float {
+            $number *= $row->current();
+            $row->next();
+
+            return $number;
         });
 
         return new self(...$numbers);
