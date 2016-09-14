@@ -80,6 +80,24 @@ class RowVectorTest extends \PHPUnit_Framework_TestCase
         RowVector::initialize(1, 1)->multiply(RowVector::initialize(2, 1));
     }
 
+    public function testDivide()
+    {
+        $row = new RowVector(25, 5, 1);
+        $row2 = $row->divide(RowVector::initialize(3, 5));
+
+        $this->assertInstanceOf(RowVector::class, $row2);
+        $this->assertSame([25.0, 5.0, 1.0], $row->toArray());
+        $this->assertSame([5.0, 1.0, 0.2], $row2->toArray());
+    }
+
+    /**
+     * @expectedException Innmind\Math\Exception\VectorsMustMeOfTheSameDimensionException
+     */
+    public function testThrowWhenDevidingVectorsOfDifferentDimensions()
+    {
+        RowVector::initialize(1, 1)->divide(RowVector::initialize(2, 1));
+    }
+
     public function testInitialize()
     {
         $vector = RowVector::initialize(4, 1.2);

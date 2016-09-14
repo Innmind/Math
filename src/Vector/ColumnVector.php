@@ -95,6 +95,23 @@ final class ColumnVector implements \Iterator
         return new self(...$numbers);
     }
 
+    public function divide(self $column): self
+    {
+        if ($this->dimension() !== $column->dimension()) {
+            throw new VectorsMustMeOfTheSameDimensionException;
+        }
+
+        $column->rewind();
+        $numbers = $this->numbers->map(function(float $number) use ($column): float {
+            $number /= $column->current();
+            $column->next();
+
+            return $number;
+        });
+
+        return new self(...$numbers);
+    }
+
     public function subtract(self $column): self
     {
         if ($this->dimension() !== $column->dimension()) {

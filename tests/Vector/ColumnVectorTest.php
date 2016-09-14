@@ -79,6 +79,24 @@ class ColumnVectorTest extends \PHPUnit_Framework_TestCase
         ColumnVector::initialize(1, 1)->multiply(ColumnVector::initialize(2, 1));
     }
 
+    public function testDivide()
+    {
+        $row = new ColumnVector(25, 5, 1);
+        $row2 = $row->divide(ColumnVector::initialize(3, 5));
+
+        $this->assertInstanceOf(ColumnVector::class, $row2);
+        $this->assertSame([25.0, 5.0, 1.0], $row->toArray());
+        $this->assertSame([5.0, 1.0, 0.2], $row2->toArray());
+    }
+
+    /**
+     * @expectedException Innmind\Math\Exception\VectorsMustMeOfTheSameDimensionException
+     */
+    public function testThrowWhenDividingVectorsOfDifferentDimensions()
+    {
+        ColumnVector::initialize(1, 1)->divide(ColumnVector::initialize(2, 1));
+    }
+
     public function testInitialize()
     {
         $vector = ColumnVector::initialize(4, 1.2);

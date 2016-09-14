@@ -100,6 +100,23 @@ final class RowVector implements \Iterator
         return new self(...$numbers);
     }
 
+    public function divide(self $row): self
+    {
+        if ($this->dimension() !== $row->dimension()) {
+            throw new VectorsMustMeOfTheSameDimensionException;
+        }
+
+        $row->rewind();
+        $numbers = $this->numbers->map(function(float $number) use ($row): float {
+            $number /= $row->current();
+            $row->next();
+
+            return $number;
+        });
+
+        return new self(...$numbers);
+    }
+
     public function subtract(self $row): self
     {
         if ($this->dimension() !== $row->dimension()) {
