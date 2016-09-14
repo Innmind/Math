@@ -135,6 +135,18 @@ final class ColumnVector implements \Iterator
         return new self(...$numbers);
     }
 
+    public function power(float $power): self
+    {
+        $numbers = $this->numbers->map(function (float $number) use ($power): float {
+            $coeff = $number < 0 ? -1 : 1; //to fix php messing with negative base
+            $number **= $power;
+
+            return $number * $coeff;
+        });
+
+        return new self(...$numbers);
+    }
+
     public function get(int $position): float
     {
         return $this->numbers->get($position);

@@ -135,4 +135,18 @@ class RowVectorTest extends \PHPUnit_Framework_TestCase
     {
         RowVector::initialize(1, 1)->add(RowVector::initialize(2, 1));
     }
+
+    public function testPower()
+    {
+        $vector1 = new RowVector(1, 2, 3, -4);
+
+        $vector2 = $vector1->power(2);
+
+        $this->assertInstanceOf(RowVector::class, $vector2);
+        $this->assertNotSame($vector2, $vector1);
+        $this->assertEquals(
+            [1.0, 4.0, 9.0, -16.0],
+            $vector2->toArray()
+        );
+    }
 }
