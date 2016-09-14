@@ -149,4 +149,11 @@ class RowVectorTest extends \PHPUnit_Framework_TestCase
             $vector2->toArray()
         );
     }
+
+    public function testSum()
+    {
+        $vector = new RowVector(1, 2, 3, -4);
+
+        $this->assertSame(2.0, $vector->sum());
+    }
 }

@@ -147,6 +147,16 @@ final class ColumnVector implements \Iterator
         return new self(...$numbers);
     }
 
+    public function sum(): float
+    {
+        return $this->numbers->reduce(
+            0,
+            function (float $carry, float $number): float {
+                return $carry + $number;
+            }
+        );
+    }
+
     public function get(int $position): float
     {
         return $this->numbers->get($position);
