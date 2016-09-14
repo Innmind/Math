@@ -3,24 +3,16 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Vector;
 
-use Innmind\Math\{
-    Exception\VectorsMustMeOfTheSameDimensionException,
-    Exception\VectorCannotBeEmptyException,
-    Matrix
-};
+use Innmind\Math\Matrix;
 use Innmind\Immutable\Sequence;
 
 final class RowVector implements \Iterator
 {
-    private $numbers;
+    private $vector;
 
     public function __construct(float ...$numbers)
     {
-        $this->numbers = new Sequence(...$numbers);
-
-        if ($this->dimension() === 0) {
-            throw new VectorCannotBeEmptyException;
-        }
+        $this->vector = new Vector(...$numbers);
     }
 
     public static function initialize(int $dimension, float $value): self
@@ -30,34 +22,17 @@ final class RowVector implements \Iterator
 
     public function toArray(): array
     {
-        return $this->numbers->toPrimitive();
+        return $this->vector->toArray();
     }
 
     public function dimension(): int
     {
-        return $this->numbers->size();
+        return $this->vector->dimension();
     }
 
-    /**
-     * @see https://en.wikipedia.org/wiki/Row_and_column_vectors#Operations
-     */
     public function dot(ColumnVector $column): float
     {
-        if ($this->dimension() !== $column->dimension()) {
-            throw new VectorsMustMeOfTheSameDimensionException;
-        }
-
-        $column->rewind();
-
-        return $this->numbers->reduce(
-            0,
-            function(float $carry, float $number) use ($column): float {
-                $value = $carry + $number * $column->current();
-                $column->next();
-
-                return $value;
-            }
-        );
+        return $this->vector->dot(new Vector(...$column));
     }
 
     /**
@@ -68,14 +43,11 @@ final class RowVector implements \Iterator
         $rows = [];
 
         foreach ($column as $number) {
-            $values = $this->numbers->reduce(
-                [],
-                function(array $values, float $rowNumber) use ($number): array {
-                    $values[] = $rowNumber * $number;
+            $values = [];
 
-                    return $values;
-                }
-            );
+            foreach ($this->vector as $rowNumber) {
+                $values[] = $rowNumber * $number;
+            }
 
             $rows[] = new RowVector(...$values);
         }
@@ -85,127 +57,71 @@ final class RowVector implements \Iterator
 
     public function multiply(self $row): self
     {
-        if ($this->dimension() !== $row->dimension()) {
-            throw new VectorsMustMeOfTheSameDimensionException;
-        }
-
-        $row->rewind();
-        $numbers = $this->numbers->map(function(float $number) use ($row): float {
-            $number *= $row->current();
-            $row->next();
-
-            return $number;
-        });
-
-        return new self(...$numbers);
+        return new self(
+            ...$this->vector->multiply($row->vector)
+        );
     }
 
     public function divide(self $row): self
     {
-        if ($this->dimension() !== $row->dimension()) {
-            throw new VectorsMustMeOfTheSameDimensionException;
-        }
-
-        $row->rewind();
-        $numbers = $this->numbers->map(function(float $number) use ($row): float {
-            $number /= $row->current();
-            $row->next();
-
-            return $number;
-        });
-
-        return new self(...$numbers);
+        return new self(
+            ...$this->vector->divide($row->vector)
+        );
     }
 
     public function subtract(self $row): self
     {
-        if ($this->dimension() !== $row->dimension()) {
-            throw new VectorsMustMeOfTheSameDimensionException;
-        }
-
-        $row->rewind();
-        $numbers = $this->numbers->reduce(
-            [],
-            function (array $numbers, float $number) use ($row): array {
-                $numbers[] = $number - $row->current();
-                $row->next();
-
-                return $numbers;
-            }
+        return new self(
+            ...$this->vector->subtract($row->vector)
         );
-
-        return new self(...$numbers);
     }
 
     public function add(self $row): self
     {
-        if ($this->dimension() !== $row->dimension()) {
-            throw new VectorsMustMeOfTheSameDimensionException;
-        }
-
-        $row->rewind();
-        $numbers = $this->numbers->reduce(
-            [],
-            function (array $numbers, float $number) use ($row): array {
-                $numbers[] = $number + $row->current();
-                $row->next();
-
-                return $numbers;
-            }
+        return new self(
+            ...$this->vector->add($row->vector)
         );
-
-        return new self(...$numbers);
     }
 
     public function power(int $power): self
     {
-        $numbers = $this->numbers->map(function (float $number) use ($power): float {
-            $coeff = $number < 0 ? -1 : 1; //to fix php messing with negative base
-            $number **= $power;
-
-            return $number * $coeff;
-        });
-
-        return new self(...$numbers);
+        return new self(
+            ...$this->vector->power($power)
+        );
     }
 
     public function sum(): float
     {
-        return $this->numbers->reduce(
-            0,
-            function (float $carry, float $number): float {
-                return $carry + $number;
-            }
-        );
+        return $this->vector->sum();
     }
 
     public function get(int $position): float
     {
-        return $this->numbers->get($position);
+        return $this->vector->get($position);
     }
 
     public function current()
     {
-        return $this->numbers->current();
+        return $this->vector->current();
     }
 
     public function key()
     {
-        return $this->numbers->key();
+        return $this->vector->key();
     }
 
     public function next()
     {
-        $this->numbers->next();
+        $this->vector->next();
     }
 
     public function rewind()
     {
-        $this->numbers->rewind();
+        $this->vector->rewind();
     }
 
     public function valid()
     {
-        return $this->numbers->valid();
+        return $this->vector->valid();
     }
 }
