@@ -103,7 +103,7 @@ final class Vector implements \Iterator
         $vector->rewind();
         $numbers = $this->numbers->reduce(
             [],
-            function (array $numbers, float $number) use ($vector): array {
+            function(array $numbers, float $number) use ($vector): array {
                 $numbers[] = $number - $vector->current();
                 $vector->next();
 
@@ -123,7 +123,7 @@ final class Vector implements \Iterator
         $vector->rewind();
         $numbers = $this->numbers->reduce(
             [],
-            function (array $numbers, float $number) use ($vector): array {
+            function(array $numbers, float $number) use ($vector): array {
                 $numbers[] = $number + $vector->current();
                 $vector->next();
 
@@ -136,7 +136,7 @@ final class Vector implements \Iterator
 
     public function power(int $power): self
     {
-        $numbers = $this->numbers->map(function (float $number) use ($power): float {
+        $numbers = $this->numbers->map(function(float $number) use ($power): float {
             $coeff = $number < 0 ? -1 : 1; //to fix php messing with negative base
             $number **= $power;
 
@@ -150,7 +150,7 @@ final class Vector implements \Iterator
     {
         return $this->numbers->reduce(
             0,
-            function (float $carry, float $number): float {
+            function(float $carry, float $number): float {
                 return $carry + $number;
             }
         );

@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace Innmind\Math\Vector;
 
 use Innmind\Math\Matrix;
-use Innmind\Immutable\Sequence;
 
 final class RowVector implements \Iterator
 {

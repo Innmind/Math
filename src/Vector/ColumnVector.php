@@ -3,12 +3,7 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Vector;
 
-use Innmind\Math\{
-    Exception\VectorsMustMeOfTheSameDimensionException,
-    Exception\VectorCannotBeEmptyException,
-    Matrix
-};
-use Innmind\Immutable\Sequence;
+use Innmind\Math\Matrix;
 
 final class ColumnVector implements \Iterator
 {
