@@ -137,10 +137,7 @@ final class Vector implements \Iterator
     public function power(int $power): self
     {
         $numbers = $this->numbers->map(function(float $number) use ($power): float {
-            $coeff = $number < 0 ? -1 : 1; //to fix php messing with negative base
-            $number **= $power;
-
-            return $number * $coeff;
+            return $number ** $power;
         });
 
         return new self(...$numbers);
