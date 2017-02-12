@@ -9,26 +9,8 @@ final class LinearRegression
 {
     private $polynom;
 
-    /**
-     * @param Dataset $data
-     */
-    public function __construct($data)
+    public function __construct(Dataset $data)
     {
-        if (is_array($data)) {
-            trigger_error(
-                'The use of arrays is deprecated, use the Dataset class',
-                E_USER_DEPRECATED
-            );
-            $data = Dataset::fromArray($data);
-        }
-
-        if (!$data instanceof Dataset) {
-            throw new \TypeError(sprintf(
-                'Argument must be an instance of %s',
-                Dataset::class
-            ));
-        }
-
         list($slope, $intercept) = $this->compute($data);
         $this->polynom = (new Polynom($intercept))->withDegree(1, $slope);
     }
