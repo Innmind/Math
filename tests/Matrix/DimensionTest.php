@@ -4,8 +4,9 @@ declare(strict_types = 1);
 namespace Tests\Innmind\Math\Matrix;
 
 use Innmind\Math\Matrix\Dimension;
+use PHPUnit\Framework\TestCase;
 
-class DimensionTest extends \PHPUnit_Framework_TestCase
+class DimensionTest extends TestCase
 {
     public function testInterface()
     {

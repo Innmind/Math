@@ -20,8 +20,18 @@
     },
     "autoload": {
         "psr-4": {
-            "Innmind\\Math\\": "src/",
+            "Innmind\\Math\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
             "Tests\\Innmind\\Math\\": "tests/"
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~6.0"
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit --colors=always"
     }
 }
