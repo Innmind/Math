@@ -9,8 +9,9 @@ use Innmind\Math\{
     Vector\RowVector,
     Vector\ColumnVector
 };
+use PHPUnit\Framework\TestCase;
 
-class MatrixTest extends \PHPUnit_Framework_TestCase
+class MatrixTest extends TestCase
 {
     public function testInterface()
     {

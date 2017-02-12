@@ -8,8 +8,9 @@ use Innmind\Math\{
     Vector\ColumnVector,
     Matrix
 };
+use PHPUnit\Framework\TestCase;
 
-class RowVectorTest extends \PHPUnit_Framework_TestCase
+class RowVectorTest extends TestCase
 {
     public function testInterface()
     {

@@ -9,8 +9,9 @@ use Innmind\Math\{
     Vector\ColumnVector,
     Matrix\Dimension
 };
+use PHPUnit\Framework\TestCase;
 
-class DatasetTest extends \PHPUnit_Framework_TestCase
+class DatasetTest extends TestCase
 {
     public function testInterface()
     {

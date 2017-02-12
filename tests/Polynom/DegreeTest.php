@@ -4,8 +4,9 @@ declare(strict_types = 1);
 namespace Tests\Innmind\Math\Polynom;
 
 use Innmind\Math\Polynom\Degree;
+use PHPUnit\Framework\TestCase;
 
-class DegreeTest extends \PHPUnit_Framework_TestCase
+class DegreeTest extends TestCase
 {
     public function testDegree()
     {

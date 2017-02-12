@@ -5,8 +5,9 @@ namespace Tests\Innmind\Math\Polynom;
 
 use Innmind\Math\Polynom\Polynom;
 use Innmind\Math\Polynom\Degree;
+use PHPUnit\Framework\TestCase;
 
-class PolynomTest extends \PHPUnit_Framework_TestCase
+class PolynomTest extends TestCase
 {
     public function testImmutability()
     {

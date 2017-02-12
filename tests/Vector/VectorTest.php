@@ -4,8 +4,9 @@ declare(strict_types = 1);
 namespace Tests\Innmind\Math\Vector;
 
 use Innmind\Math\Vector\Vector;
+use PHPUnit\Framework\TestCase;
 
-class VectorTest extends \PHPUnit_Framework_TestCase
+class VectorTest extends TestCase
 {
     public function testInterface()
     {

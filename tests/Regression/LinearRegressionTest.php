@@ -7,8 +7,9 @@ use Innmind\Math\Regression\{
     LinearRegression,
     Dataset
 };
+use PHPUnit\Framework\TestCase;
 
-class LinearRegressionTest extends \PHPUnit_Framework_TestCase
+class LinearRegressionTest extends TestCase
 {
     public function testIntercept()
     {
