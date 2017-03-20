@@ -5,7 +5,7 @@ namespace Innmind\Math\Algebra;
 
 use Innmind\Math\Exception\TypeError;
 
-final class Number
+final class Number implements NumberInterface
 {
     private $value;
 
@@ -19,14 +19,14 @@ final class Number
     }
 
     /**
-     * @return int|float
+     * {@inheritdoc}
      */
     public function value()
     {
         return $this->value;
     }
 
-    public function equals(self $number): bool
+    public function equals(NumberInterface $number): bool
     {
         return $this->value() === $number->value();
     }

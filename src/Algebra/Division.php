@@ -10,8 +10,10 @@ final class Division
     private $dividend;
     private $divisor;
 
-    public function __construct(Number $dividend, Number $divisor)
-    {
+    public function __construct(
+        NumberInterface $dividend,
+        NumberInterface $divisor
+    ) {
         if ($divisor->value() === 0) {
             throw new DivisionByZeroError;
         }
@@ -20,7 +22,7 @@ final class Division
         $this->divisor = $divisor;
     }
 
-    public function result(): Number
+    public function result(): NumberInterface
     {
         return new Number($this->dividend->value() / $this->divisor->value());
     }

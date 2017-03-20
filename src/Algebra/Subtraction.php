@@ -10,7 +10,7 @@ final class Subtraction
 {
     private $values;
 
-    public function __construct(Number ...$values)
+    public function __construct(NumberInterface ...$values)
     {
         $this->values = new Sequence(...$values);
 
@@ -19,14 +19,14 @@ final class Subtraction
         }
     }
 
-    public function result(): Number
+    public function result(): NumberInterface
     {
         $value = $this
             ->values
             ->drop(1)
             ->reduce(
                 $this->values->first()->value(),
-                function($carry, Number $number) {
+                function($carry, NumberInterface $number) {
                     return $carry - $number->value();
                 }
             );
@@ -38,7 +38,7 @@ final class Subtraction
     {
         return (string) $this
             ->values
-            ->map(function(Number $number) {
+            ->map(function(NumberInterface $number) {
                 return $number->value();
             })
             ->join(' - ');

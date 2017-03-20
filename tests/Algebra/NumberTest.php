@@ -3,11 +3,22 @@ declare(strict_types = 1);
 
 namespace Tests\Innmind\Math\Algebra;
 
-use Innmind\Math\Algebra\Number;
+use Innmind\Math\Algebra\{
+    Number,
+    NumberInterface
+};
 use PHPUnit\Framework\TestCase;
 
 class NumberTest extends TestCase
 {
+    public function testInterface()
+    {
+        $this->assertInstanceOf(
+            NumberInterface::class,
+            new Number(42)
+        );
+    }
+
     /**
      * @expectedException Innmind\Math\Exception\TypeError
      * @expectedExceptionMessage Number must be an int or a float
