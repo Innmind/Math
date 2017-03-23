@@ -50,6 +50,26 @@ final class Division implements OperationInterface, NumberInterface
         return $this->result()->higherThan($number);
     }
 
+    public function add(NumberInterface $number): NumberInterface
+    {
+        return new Addition($this, $number);
+    }
+
+    public function subtract(NumberInterface $number): NumberInterface
+    {
+        return new Subtraction($this, $number);
+    }
+
+    public function divideBy(NumberInterface $number): NumberInterface
+    {
+        return new self($this, $number);
+    }
+
+    public function multiplyBy(NumberInterface $number): NumberInterface
+    {
+        return new Multiplication($this, $number);
+    }
+
     public function result(): NumberInterface
     {
         return new Number($this->dividend->value() / $this->divisor->value());

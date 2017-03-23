@@ -7,7 +7,10 @@ use Innmind\Math\Algebra\{
     Addition,
     Number,
     OperationInterface,
-    NumberInterface
+    NumberInterface,
+    Subtraction,
+    Division,
+    Multiplication
 };
 use PHPUnit\Framework\TestCase;
 
@@ -71,6 +74,54 @@ class AdditionTest extends TestCase
 
         $this->assertFalse($addition->higherThan(new Number(132)));
         $this->assertTrue($addition->higherThan(new Number(131)));
+    }
+
+    public function testAdd()
+    {
+        $addition = new Addition(
+            new Number(24),
+            new Number(42)
+        );
+        $number = $addition->add(new Number(66));
+
+        $this->assertInstanceOf(Addition::class, $number);
+        $this->assertSame(132, $number->value());
+    }
+
+    public function testSubtract()
+    {
+        $addition = new Addition(
+            new Number(24),
+            new Number(42)
+        );
+        $number = $addition->subtract(new Number(66));
+
+        $this->assertInstanceOf(Subtraction::class, $number);
+        $this->assertSame(0, $number->value());
+    }
+
+    public function testDivideBy()
+    {
+        $addition = new Addition(
+            new Number(24),
+            new Number(42)
+        );
+        $number = $addition->divideBy(new Number(3));
+
+        $this->assertInstanceOf(Division::class, $number);
+        $this->assertSame(22, $number->value());
+    }
+
+    public function testMulitplyBy()
+    {
+        $addition = new Addition(
+            new Number(24),
+            new Number(42)
+        );
+        $number = $addition->multiplyBy(new Number(2));
+
+        $this->assertInstanceOf(Multiplication::class, $number);
+        $this->assertSame(132, $number->value());
     }
 
     public function testStringCast()

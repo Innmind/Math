@@ -36,6 +36,26 @@ final class Number implements NumberInterface
         return $this->value() > $number->value();
     }
 
+    public function add(NumberInterface $number): NumberInterface
+    {
+        return new Addition($this, $number);
+    }
+
+    public function subtract(NumberInterface $number): NumberInterface
+    {
+        return new Subtraction($this, $number);
+    }
+
+    public function divideBy(NumberInterface $number): NumberInterface
+    {
+        return new Division($this, $number);
+    }
+
+    public function multiplyBy(NumberInterface $number): NumberInterface
+    {
+        return new Multiplication($this, $number);
+    }
+
     public function __toString(): string
     {
         return (string) $this->value;

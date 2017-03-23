@@ -11,5 +11,9 @@ interface NumberInterface
     public function value();
     public function equals(self $number): bool;
     public function higherThan(self $number): bool;
+    public function add(NumberInterface $number): NumberInterface;
+    public function subtract(NumberInterface $number): NumberInterface;
+    public function divideBy(NumberInterface $number): NumberInterface;
+    public function multiplyBy(NumberInterface $number): NumberInterface;
     public function __toString(): string;
 }

@@ -5,7 +5,11 @@ namespace Tests\Innmind\Math\Algebra;
 
 use Innmind\Math\Algebra\{
     Number,
-    NumberInterface
+    NumberInterface,
+    Addition,
+    Subtraction,
+    Multiplication,
+    Division
 };
 use PHPUnit\Framework\TestCase;
 
@@ -54,5 +58,41 @@ class NumberTest extends TestCase
     {
         $this->assertFalse((new Number(42))->higherThan(new Number(42)));
         $this->assertTrue((new Number(42))->higherThan(new Number(41.24)));
+    }
+
+    public function testAdd()
+    {
+        $number = new Number(42);
+        $number = $number->add(new Number(66));
+
+        $this->assertInstanceOf(Addition::class, $number);
+        $this->assertSame(108, $number->value());
+    }
+
+    public function testSubtract()
+    {
+        $number = new Number(42);
+        $number = $number->subtract(new Number(66));
+
+        $this->assertInstanceOf(Subtraction::class, $number);
+        $this->assertSame(-24, $number->value());
+    }
+
+    public function testDivideBy()
+    {
+        $number = new Number(42);
+        $number = $number->divideBy(new Number(2));
+
+        $this->assertInstanceOf(Division::class, $number);
+        $this->assertSame(21, $number->value());
+    }
+
+    public function testMulitplyBy()
+    {
+        $number = new Number(42);
+        $number = $number->multiplyBy(new Number(2));
+
+        $this->assertInstanceOf(Multiplication::class, $number);
+        $this->assertSame(84, $number->value());
     }
 }

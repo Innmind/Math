@@ -8,7 +8,9 @@ use Innmind\Math\Algebra\{
     Number,
     OperationInterface,
     NumberInterface,
-    Addition
+    Addition,
+    Multiplication,
+    Division
 };
 use PHPUnit\Framework\TestCase;
 
@@ -67,6 +69,54 @@ class SubtractionTest extends TestCase
 
         $this->assertFalse($subtraction->higherThan(new Number(18)));
         $this->assertTrue($subtraction->higherThan(new Number(17.9)));
+    }
+
+    public function testAdd()
+    {
+        $subtraction = new Subtraction(
+            new Number(42),
+            new Number(24)
+        );
+        $number = $subtraction->add(new Number(66));
+
+        $this->assertInstanceOf(Addition::class, $number);
+        $this->assertSame(84, $number->value());
+    }
+
+    public function testSubtract()
+    {
+        $subtraction = new Subtraction(
+            new Number(42),
+            new Number(24)
+        );
+        $number = $subtraction->subtract(new Number(66));
+
+        $this->assertInstanceOf(Subtraction::class, $number);
+        $this->assertSame(-48, $number->value());
+    }
+
+    public function testDivideBy()
+    {
+        $subtraction = new Subtraction(
+            new Number(42),
+            new Number(24)
+        );
+        $number = $subtraction->divideBy(new Number(3));
+
+        $this->assertInstanceOf(Division::class, $number);
+        $this->assertSame(6, $number->value());
+    }
+
+    public function testMulitplyBy()
+    {
+        $subtraction = new Subtraction(
+            new Number(42),
+            new Number(24)
+        );
+        $number = $subtraction->multiplyBy(new Number(2));
+
+        $this->assertInstanceOf(Multiplication::class, $number);
+        $this->assertSame(36, $number->value());
     }
 
     public function testStringCast()
