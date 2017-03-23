@@ -6,7 +6,8 @@ namespace Tests\Innmind\Math\Algebra;
 use Innmind\Math\Algebra\{
     Addition,
     Number,
-    OperationInterface
+    OperationInterface,
+    NumberInterface
 };
 use PHPUnit\Framework\TestCase;
 
@@ -21,6 +22,7 @@ class AdditionTest extends TestCase
         );
 
         $this->assertInstanceOf(OperationInterface::class, $addition);
+        $this->assertInstanceOf(NumberInterface::class, $addition);
     }
 
     public function testResult()
@@ -36,7 +38,7 @@ class AdditionTest extends TestCase
         $this->assertSame(132, $result->value());
     }
 
-    public function testStringCast()
+    public function testValue()
     {
         $addition = new Addition(
             new Number(24),
@@ -44,7 +46,32 @@ class AdditionTest extends TestCase
             new Number(66)
         );
 
-        $this->assertSame('24 + 42 + 66', (string) $addition);
+        $this->assertSame(132, $addition->value());
+    }
+
+    public function testEquals()
+    {
+        $addition = new Addition(
+            new Number(24),
+            new Number(42),
+            new Number(66)
+        );
+
+        $this->assertTrue($addition->equals(new Number(132)));
+        $this->assertFalse($addition->equals(new Number(131)));
+    }
+
+    public function testStringCast()
+    {
+        $addition = new Addition(
+            new Number(24),
+            new Addition(
+                new Number(42),
+                new Number(66)
+            )
+        );
+
+        $this->assertSame('24 + (42 + 66)', (string) $addition);
     }
 
     /**

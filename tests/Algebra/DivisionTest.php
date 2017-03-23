@@ -6,7 +6,9 @@ namespace Tests\Innmind\Math\Algebra;
 use Innmind\Math\Algebra\{
     Division,
     Number,
-    OperationInterface
+    OperationInterface,
+    NumberInterface,
+    Addition
 };
 use PHPUnit\Framework\TestCase;
 
@@ -20,6 +22,7 @@ class DivisionTest extends TestCase
         );
 
         $this->assertInstanceOf(OperationInterface::class, $division);
+        $this->assertInstanceOf(NumberInterface::class, $division);
         $this->assertSame($dividend, $division->dividend());
         $this->assertSame($divisor, $division->divisor());
     }
@@ -33,11 +36,32 @@ class DivisionTest extends TestCase
         $this->assertSame(2, $result->value());
     }
 
+    public function testValue()
+    {
+        $division = new Division(new Number(4), new Number(2));
+
+        $this->assertSame(2, $division->value());
+    }
+
+    public function testEquals()
+    {
+        $division = new Division(new Number(4), new Number(2));
+
+        $this->assertTrue($division->equals(new Number(2)));
+        $this->assertFalse($division->equals(new Number(2.1)));
+    }
+
     public function testStringCast()
     {
         $this->assertSame(
-            '4 ÷ 2',
-            (string) new Division(new Number(4), new Number(2))
+            '(2 + 2) ÷ 2',
+            (string) new Division(
+                new Addition(
+                    new Number(2),
+                    new Number(2)
+                ),
+                new Number(2)
+            )
         );
     }
 

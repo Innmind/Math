@@ -6,7 +6,9 @@ namespace Tests\Innmind\Math\Algebra;
 use Innmind\Math\Algebra\{
     Multiplication,
     Number,
-    OperationInterface
+    OperationInterface,
+    NumberInterface,
+    Addition
 };
 use PHPUnit\Framework\TestCase;
 
@@ -20,6 +22,7 @@ class MultiplicationTest extends TestCase
         );
 
         $this->assertInstanceOf(OperationInterface::class, $multiplication);
+        $this->assertInstanceOf(NumberInterface::class, $multiplication);
     }
 
     public function testResult()
@@ -34,15 +37,39 @@ class MultiplicationTest extends TestCase
         $this->assertSame(1008, $result->value());
     }
 
+    public function testValue()
+    {
+        $multiplication = new Multiplication(
+            new Number(4),
+            new Number(2)
+        );
+
+        $this->assertSame(8, $multiplication->value());
+    }
+
+    public function testEquals()
+    {
+        $multiplication = new Multiplication(
+            new Number(4),
+            new Number(2)
+        );
+
+        $this->assertTrue($multiplication->equals(new Number(8)));
+        $this->assertFalse($multiplication->equals(new Number(8.1)));
+    }
+
     public function testStringCast()
     {
         $multiplication = new Multiplication(
-            new Number(24),
+            new Addition(
+                new Number(12),
+                new Number(12)
+            ),
             new Number(42),
             new Number(66)
         );
 
-        $this->assertSame('24 x 42 x 66', (string) $multiplication);
+        $this->assertSame('(12 + 12) x 42 x 66', (string) $multiplication);
     }
 
     /**

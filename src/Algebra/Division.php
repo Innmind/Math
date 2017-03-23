@@ -5,7 +5,7 @@ namespace Innmind\Math\Algebra;
 
 use Innmind\Math\Exception\DivisionByZeroError;
 
-final class Division implements OperationInterface
+final class Division implements OperationInterface, NumberInterface
 {
     private $dividend;
     private $divisor;
@@ -32,6 +32,19 @@ final class Division implements OperationInterface
         return $this->divisor;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function value()
+    {
+        return $this->result()->value();
+    }
+
+    public function equals(NumberInterface $number): bool
+    {
+        return $this->result()->equals($number);
+    }
+
     public function result(): NumberInterface
     {
         return new Number($this->dividend->value() / $this->divisor->value());
@@ -39,10 +52,15 @@ final class Division implements OperationInterface
 
     public function __toString(): string
     {
+        $dividend = $this->dividend instanceof OperationInterface ?
+            '('.$this->dividend.')' : (string) $this->dividend;
+        $divisor = $this->divisor instanceof OperationInterface ?
+            '('.$this->divisor.')' : (string) $this->divisor;
+
         return sprintf(
             '%s ÷ %s',
-            $this->dividend,
-            $this->divisor
+            $dividend,
+            $divisor
         );
     }
 }

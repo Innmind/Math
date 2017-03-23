@@ -6,7 +6,9 @@ namespace Tests\Innmind\Math\Algebra;
 use Innmind\Math\Algebra\{
     Subtraction,
     Number,
-    OperationInterface
+    OperationInterface,
+    NumberInterface,
+    Addition
 };
 use PHPUnit\Framework\TestCase;
 
@@ -20,6 +22,7 @@ class SubtractionTest extends TestCase
         );
 
         $this->assertInstanceOf(OperationInterface::class, $subtraction);
+        $this->assertInstanceOf(NumberInterface::class, $subtraction);
     }
 
     public function testResult()
@@ -34,15 +37,39 @@ class SubtractionTest extends TestCase
         $this->assertSame(18, $result->value());
     }
 
+    public function testValue()
+    {
+        $subtraction = new Subtraction(
+            new Number(42),
+            new Number(24)
+        );
+
+        $this->assertSame(18, $subtraction->value());
+    }
+
+    public function testEquals()
+    {
+        $subtraction = new Subtraction(
+            new Number(42),
+            new Number(24)
+        );
+
+        $this->assertTrue($subtraction->equals(new Number(18)));
+        $this->assertFalse($subtraction->equals(new Number(18.1)));
+    }
+
     public function testStringCast()
     {
         $subtraction = new Subtraction(
-            new Number(24),
+            new Addition(
+                new Number(12),
+                new Number(12)
+            ),
             new Number(42),
             new Number(66)
         );
 
-        $this->assertSame('24 - 42 - 66', (string) $subtraction);
+        $this->assertSame('(12 + 12) - 42 - 66', (string) $subtraction);
     }
 
     /**

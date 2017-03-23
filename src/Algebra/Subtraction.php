@@ -6,7 +6,7 @@ namespace Innmind\Math\Algebra;
 use Innmind\Math\Exception\OperationMustContainAtLeastTwoNumbersException;
 use Innmind\Immutable\Sequence;
 
-final class Subtraction implements OperationInterface
+final class Subtraction implements OperationInterface, NumberInterface
 {
     private $values;
 
@@ -17,6 +17,19 @@ final class Subtraction implements OperationInterface
         if ($this->values->size() < 2) {
             throw new OperationMustContainAtLeastTwoNumbersException;
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function value()
+    {
+        return $this->result()->value();
+    }
+
+    public function equals(NumberInterface $number): bool
+    {
+        return $this->result()->equals($number);
     }
 
     public function result(): NumberInterface
@@ -39,7 +52,11 @@ final class Subtraction implements OperationInterface
         return (string) $this
             ->values
             ->map(function(NumberInterface $number) {
-                return $number->value();
+                if ($number instanceof OperationInterface) {
+                    return '('.$number.')';
+                }
+
+                return (string) $number;
             })
             ->join(' - ');
     }
