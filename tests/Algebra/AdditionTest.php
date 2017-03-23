@@ -61,6 +61,18 @@ class AdditionTest extends TestCase
         $this->assertFalse($addition->equals(new Number(131)));
     }
 
+    public function testHigherThan()
+    {
+        $addition = new Addition(
+            new Number(24),
+            new Number(42),
+            new Number(66)
+        );
+
+        $this->assertFalse($addition->higherThan(new Number(132)));
+        $this->assertTrue($addition->higherThan(new Number(131)));
+    }
+
     public function testStringCast()
     {
         $addition = new Addition(

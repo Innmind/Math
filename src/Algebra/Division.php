@@ -45,6 +45,11 @@ final class Division implements OperationInterface, NumberInterface
         return $this->result()->equals($number);
     }
 
+    public function higherThan(NumberInterface $number): bool
+    {
+        return $this->result()->higherThan($number);
+    }
+
     public function result(): NumberInterface
     {
         return new Number($this->dividend->value() / $this->divisor->value());

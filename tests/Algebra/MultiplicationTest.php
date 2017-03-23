@@ -58,6 +58,17 @@ class MultiplicationTest extends TestCase
         $this->assertFalse($multiplication->equals(new Number(8.1)));
     }
 
+    public function testHigherThan()
+    {
+        $multiplication = new Multiplication(
+            new Number(4),
+            new Number(2)
+        );
+
+        $this->assertFalse($multiplication->higherThan(new Number(8)));
+        $this->assertTrue($multiplication->higherThan(new Number(7.9)));
+    }
+
     public function testStringCast()
     {
         $multiplication = new Multiplication(

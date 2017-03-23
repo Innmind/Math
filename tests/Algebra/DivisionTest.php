@@ -51,6 +51,14 @@ class DivisionTest extends TestCase
         $this->assertFalse($division->equals(new Number(2.1)));
     }
 
+    public function testHigherThan()
+    {
+        $division = new Division(new Number(4), new Number(2));
+
+        $this->assertFalse($division->higherThan(new Number(2)));
+        $this->assertTrue($division->higherThan(new Number(1.9)));
+    }
+
     public function testStringCast()
     {
         $this->assertSame(

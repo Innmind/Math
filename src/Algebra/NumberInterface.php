@@ -10,5 +10,6 @@ interface NumberInterface
      */
     public function value();
     public function equals(self $number): bool;
+    public function higherThan(self $number): bool;
     public function __toString(): string;
 }

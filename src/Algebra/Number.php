@@ -31,6 +31,11 @@ final class Number implements NumberInterface
         return $this->value() === $number->value();
     }
 
+    public function higherThan(NumberInterface $number): bool
+    {
+        return $this->value() > $number->value();
+    }
+
     public function __toString(): string
     {
         return (string) $this->value;

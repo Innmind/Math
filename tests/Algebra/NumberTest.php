@@ -49,4 +49,10 @@ class NumberTest extends TestCase
         $this->assertTrue((new Number(42))->equals(new Number(42)));
         $this->assertFalse((new Number(42))->equals(new Number(42.24)));
     }
+
+    public function testHigherThan()
+    {
+        $this->assertFalse((new Number(42))->higherThan(new Number(42)));
+        $this->assertTrue((new Number(42))->higherThan(new Number(41.24)));
+    }
 }

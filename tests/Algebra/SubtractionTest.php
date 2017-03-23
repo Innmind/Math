@@ -58,6 +58,17 @@ class SubtractionTest extends TestCase
         $this->assertFalse($subtraction->equals(new Number(18.1)));
     }
 
+    public function testHigherThan()
+    {
+        $subtraction = new Subtraction(
+            new Number(42),
+            new Number(24)
+        );
+
+        $this->assertFalse($subtraction->higherThan(new Number(18)));
+        $this->assertTrue($subtraction->higherThan(new Number(17.9)));
+    }
+
     public function testStringCast()
     {
         $subtraction = new Subtraction(

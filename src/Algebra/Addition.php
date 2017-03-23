@@ -32,6 +32,11 @@ final class Addition implements OperationInterface, NumberInterface
         return $this->result()->equals($number);
     }
 
+    public function higherThan(NumberInterface $number): bool
+    {
+        return $this->result()->higherThan($number);
+    }
+
     public function result(): NumberInterface
     {
         $value = $this
