@@ -6,7 +6,7 @@ namespace Innmind\Math\Algebra;
 use Innmind\Math\Exception\OperationMustContainAtLeastTwoNumbersException;
 use Innmind\Immutable\Sequence;
 
-final class Addition
+final class Addition implements OperationInterface
 {
     private $values;
 

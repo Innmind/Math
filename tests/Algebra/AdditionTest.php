@@ -5,12 +5,24 @@ namespace Tests\Innmind\Math\Algebra;
 
 use Innmind\Math\Algebra\{
     Addition,
-    Number
+    Number,
+    OperationInterface
 };
 use PHPUnit\Framework\TestCase;
 
 class AdditionTest extends TestCase
 {
+    public function testInterface()
+    {
+        $addition = new Addition(
+            new Number(24),
+            new Number(42),
+            new Number(66)
+        );
+
+        $this->assertInstanceOf(OperationInterface::class, $addition);
+    }
+
     public function testResult()
     {
         $addition = new Addition(

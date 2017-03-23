@@ -5,12 +5,23 @@ namespace Tests\Innmind\Math\Algebra;
 
 use Innmind\Math\Algebra\{
     Subtraction,
-    Number
+    Number,
+    OperationInterface
 };
 use PHPUnit\Framework\TestCase;
 
 class SubtractionTest extends TestCase
 {
+    public function testInterface()
+    {
+        $subtraction = new Subtraction(
+            new Number(4),
+            new Number(2)
+        );
+
+        $this->assertInstanceOf(OperationInterface::class, $subtraction);
+    }
+
     public function testResult()
     {
         $subtraction = new Subtraction(

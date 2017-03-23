@@ -6,7 +6,7 @@ namespace Innmind\Math\Algebra;
 use Innmind\Math\Exception\OperationMustContainAtLeastTwoNumbersException;
 use Innmind\Immutable\Sequence;
 
-final class Multiplication
+final class Multiplication implements OperationInterface
 {
     private $values;
 

@@ -5,12 +5,23 @@ namespace Tests\Innmind\Math\Algebra;
 
 use Innmind\Math\Algebra\{
     Multiplication,
-    Number
+    Number,
+    OperationInterface
 };
 use PHPUnit\Framework\TestCase;
 
 class MultiplicationTest extends TestCase
 {
+    public function testInterface()
+    {
+        $multiplication = new Multiplication(
+            new Number(4),
+            new Number(42)
+        );
+
+        $this->assertInstanceOf(OperationInterface::class, $multiplication);
+    }
+
     public function testResult()
     {
         $multiplication = new Multiplication(

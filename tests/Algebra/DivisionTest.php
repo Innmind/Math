@@ -5,7 +5,8 @@ namespace Tests\Innmind\Math\Algebra;
 
 use Innmind\Math\Algebra\{
     Division,
-    Number
+    Number,
+    OperationInterface
 };
 use PHPUnit\Framework\TestCase;
 
@@ -18,6 +19,7 @@ class DivisionTest extends TestCase
             $divisor = new Number(2)
         );
 
+        $this->assertInstanceOf(OperationInterface::class, $division);
         $this->assertSame($dividend, $division->dividend());
         $this->assertSame($divisor, $division->divisor());
     }

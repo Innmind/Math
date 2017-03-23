@@ -5,7 +5,7 @@ namespace Innmind\Math\Algebra;
 
 use Innmind\Math\Exception\DivisionByZeroError;
 
-final class Division
+final class Division implements OperationInterface
 {
     private $dividend;
     private $divisor;
