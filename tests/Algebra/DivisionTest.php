@@ -11,6 +11,17 @@ use PHPUnit\Framework\TestCase;
 
 class DivisionTest extends TestCase
 {
+    public function testInterface()
+    {
+        $division = new Division(
+            $dividend = new Number(4),
+            $divisor = new Number(2)
+        );
+
+        $this->assertSame($dividend, $division->dividend());
+        $this->assertSame($divisor, $division->divisor());
+    }
+
     public function testResult()
     {
         $division = new Division(new Number(4), new Number(2));

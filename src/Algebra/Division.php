@@ -22,6 +22,16 @@ final class Division
         $this->divisor = $divisor;
     }
 
+    public function dividend(): NumberInterface
+    {
+        return $this->dividend;
+    }
+
+    public function divisor(): NumberInterface
+    {
+        return $this->divisor;
+    }
+
     public function result(): NumberInterface
     {
         return new Number($this->dividend->value() / $this->divisor->value());
