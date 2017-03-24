@@ -9,7 +9,8 @@ use Innmind\Math\Algebra\{
     Addition,
     Subtraction,
     Multiplication,
-    Division
+    Division,
+    Round
 };
 use PHPUnit\Framework\TestCase;
 
@@ -94,5 +95,14 @@ class NumberTest extends TestCase
 
         $this->assertInstanceOf(Multiplication::class, $number);
         $this->assertSame(84, $number->value());
+    }
+
+    public function testRound()
+    {
+        $number = new Number(42.25);
+        $number = $number->round(1);
+
+        $this->assertInstanceOf(Round::class, $number);
+        $this->assertSame(42.3, $number->value());
     }
 }

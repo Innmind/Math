@@ -70,6 +70,11 @@ final class Division implements OperationInterface, NumberInterface
         return new Multiplication($this, $number);
     }
 
+    public function round(int $precision = 0, string $mode = Round::UP): NumberInterface
+    {
+        return new Round($this, $precision, $mode);
+    }
+
     public function result(): NumberInterface
     {
         return new Number($this->dividend->value() / $this->divisor->value());

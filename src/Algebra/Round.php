@@ -3,19 +3,31 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Algebra;
 
-use Innmind\Math\Exception\TypeError;
+use Innmind\Math\Exception\InvalidArgumentException;
 
-final class Number implements NumberInterface
+final class Round implements NumberInterface
 {
-    private $value;
+    public const UP = 'UP';
+    public const DOWN = 'DOWN';
+    public const EVEN = 'EVEN';
+    public const ODD = 'ODD';
 
-    public function __construct($value)
-    {
-        if (!is_int($value) && !is_float($value)) {
-            throw new TypeError('Number must be an int or a float');
+    private $number;
+    private $precision;
+    private $mode;
+
+    public function __construct(
+        NumberInterface $number,
+        int $precision = 0,
+        string $mode = self::UP
+    ) {
+        if ($precision < 0) {
+            throw new InvalidArgumentException;
         }
 
-        $this->value = $value;
+        $this->number = $number;
+        $this->precision = $precision;
+        $this->mode = constant('PHP_ROUND_HALF_'.$mode);
     }
 
     /**
@@ -23,7 +35,7 @@ final class Number implements NumberInterface
      */
     public function value()
     {
-        return $this->value;
+        return round($this->number->value(), $this->precision, $this->mode);
     }
 
     public function equals(NumberInterface $number): bool
@@ -58,11 +70,11 @@ final class Number implements NumberInterface
 
     public function round(int $precision = 0, string $mode = Round::UP): NumberInterface
     {
-        return new Round($this, $precision, $mode);
+        return new self($this, $precision, $mode);
     }
 
     public function __toString(): string
     {
-        return (string) $this->value;
+        return (string) $this->value();
     }
 }

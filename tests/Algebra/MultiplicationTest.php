@@ -10,7 +10,8 @@ use Innmind\Math\Algebra\{
     NumberInterface,
     Addition,
     Subtraction,
-    Division
+    Division,
+    Round
 };
 use PHPUnit\Framework\TestCase;
 
@@ -117,6 +118,18 @@ class MultiplicationTest extends TestCase
 
         $this->assertInstanceOf(Multiplication::class, $number);
         $this->assertSame(132, $number->value());
+    }
+
+    public function testRound()
+    {
+        $multiplication = new Multiplication(
+            new Number(2.22),
+            new Number(3)
+        );
+        $number = $multiplication->round(1);
+
+        $this->assertInstanceOf(Round::class, $number);
+        $this->assertSame(6.7, $number->value());
     }
 
     public function testStringCast()

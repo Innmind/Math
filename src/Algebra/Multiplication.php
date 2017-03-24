@@ -57,6 +57,11 @@ final class Multiplication implements OperationInterface, NumberInterface
         return new self($this, $number);
     }
 
+    public function round(int $precision = 0, string $mode = Round::UP): NumberInterface
+    {
+        return new Round($this, $precision, $mode);
+    }
+
     public function result(): NumberInterface
     {
         $value = $this
