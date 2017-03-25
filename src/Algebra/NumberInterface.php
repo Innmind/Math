@@ -11,11 +11,11 @@ interface NumberInterface
     public function value();
     public function equals(self $number): bool;
     public function higherThan(self $number): bool;
-    public function add(NumberInterface $number): NumberInterface;
-    public function subtract(NumberInterface $number): NumberInterface;
-    public function divideBy(NumberInterface $number): NumberInterface;
-    public function multiplyBy(NumberInterface $number): NumberInterface;
-    public function round(int $precision = 0, string $mode = Round::UP): NumberInterface;
-    public function floor(): NumberInterface;
+    public function add(self $number): self;
+    public function subtract(self $number): self;
+    public function divideBy(self $number): self;
+    public function multiplyBy(self $number): self;
+    public function round(int $precision = 0, string $mode = Round::UP): self;
+    public function floor(): self;
     public function __toString(): string;
 }
