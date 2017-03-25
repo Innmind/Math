@@ -17,5 +17,6 @@ interface NumberInterface
     public function multiplyBy(self $number): self;
     public function round(int $precision = 0, string $mode = Round::UP): self;
     public function floor(): self;
+    public function ceil(): self;
     public function __toString(): string;
 }

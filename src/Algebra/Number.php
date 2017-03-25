@@ -66,6 +66,11 @@ final class Number implements NumberInterface
         return new Floor($this);
     }
 
+    public function ceil(): NumberInterface
+    {
+        return new Ceil($this);
+    }
+
     public function __toString(): string
     {
         return (string) $this->value;

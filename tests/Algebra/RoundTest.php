@@ -11,7 +11,8 @@ use Innmind\Math\Algebra\{
     Subtraction,
     Multiplication,
     Division,
-    Floor
+    Floor,
+    Ceil
 };
 use PHPUnit\Framework\TestCase;
 
@@ -118,6 +119,15 @@ class RoundTest extends TestCase
 
         $this->assertInstanceOf(Floor::class, $number);
         $this->assertSame(42.0, $number->value());
+    }
+
+    public function testCeil()
+    {
+        $round = new Round(new Number(42.45), 1);
+        $number = $round->ceil();
+
+        $this->assertInstanceOf(Ceil::class, $number);
+        $this->assertSame(43.0, $number->value());
     }
 
     public function values(): array

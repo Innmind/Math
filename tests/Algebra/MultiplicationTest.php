@@ -12,7 +12,8 @@ use Innmind\Math\Algebra\{
     Subtraction,
     Division,
     Round,
-    Floor
+    Floor,
+    Ceil
 };
 use PHPUnit\Framework\TestCase;
 
@@ -143,6 +144,18 @@ class MultiplicationTest extends TestCase
 
         $this->assertInstanceOf(Floor::class, $number);
         $this->assertSame(6.0, $number->value());
+    }
+
+    public function testCeil()
+    {
+        $multiplication = new Multiplication(
+            new Number(2.22),
+            new Number(3)
+        );
+        $number = $multiplication->ceil();
+
+        $this->assertInstanceOf(Ceil::class, $number);
+        $this->assertSame(7.0, $number->value());
     }
 
     public function testStringCast()

@@ -80,6 +80,11 @@ final class Division implements OperationInterface, NumberInterface
         return new Floor($this);
     }
 
+    public function ceil(): NumberInterface
+    {
+        return new Ceil($this);
+    }
+
     public function result(): NumberInterface
     {
         return new Number($this->dividend->value() / $this->divisor->value());

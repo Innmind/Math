@@ -67,6 +67,11 @@ final class Addition implements OperationInterface, NumberInterface
         return new Floor($this);
     }
 
+    public function ceil(): NumberInterface
+    {
+        return new Ceil($this);
+    }
+
     public function result(): NumberInterface
     {
         $value = $this

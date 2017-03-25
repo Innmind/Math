@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Algebra;
 
-final class Floor implements NumberInterface
+final class Ceil implements NumberInterface
 {
     private $number;
 
@@ -17,7 +17,7 @@ final class Floor implements NumberInterface
      */
     public function value()
     {
-        return floor($this->number->value());
+        return ceil($this->number->value());
     }
 
     public function equals(NumberInterface $number): bool
@@ -57,12 +57,12 @@ final class Floor implements NumberInterface
 
     public function floor(): NumberInterface
     {
-        return new self($this);
+        return new Floor($this);
     }
 
     public function ceil(): NumberInterface
     {
-        return new Ceil($this);
+        return new self($this);
     }
 
     public function __toString(): string
