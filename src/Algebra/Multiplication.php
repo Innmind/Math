@@ -72,6 +72,11 @@ final class Multiplication implements OperationInterface, NumberInterface
         return new Ceil($this);
     }
 
+    public function product(): NumberInterface
+    {
+        return $this->result();
+    }
+
     public function result(): NumberInterface
     {
         $value = $this

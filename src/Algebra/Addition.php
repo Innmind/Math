@@ -72,6 +72,11 @@ final class Addition implements OperationInterface, NumberInterface
         return new Ceil($this);
     }
 
+    public function sum(): NumberInterface
+    {
+        return $this->result();
+    }
+
     public function result(): NumberInterface
     {
         $value = $this

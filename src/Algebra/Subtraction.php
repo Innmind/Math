@@ -72,6 +72,11 @@ final class Subtraction implements OperationInterface, NumberInterface
         return new Ceil($this);
     }
 
+    public function difference(): NumberInterface
+    {
+        return $this->result();
+    }
+
     public function result(): NumberInterface
     {
         $value = $this

@@ -40,6 +40,7 @@ class SubtractionTest extends TestCase
 
         $this->assertInstanceOf(Number::class, $result);
         $this->assertSame(18, $result->value());
+        $this->assertTrue($result->equals($subtraction->difference()));
     }
 
     public function testValue()

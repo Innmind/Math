@@ -39,6 +39,7 @@ class DivisionTest extends TestCase
 
         $this->assertInstanceOf(Number::class, $result);
         $this->assertSame(2, $result->value());
+        $this->assertTrue($result->equals($division->quotient()));
     }
 
     public function testValue()

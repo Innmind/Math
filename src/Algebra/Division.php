@@ -85,6 +85,11 @@ final class Division implements OperationInterface, NumberInterface
         return new Ceil($this);
     }
 
+    public function quotient(): NumberInterface
+    {
+        return $this->result();
+    }
+
     public function result(): NumberInterface
     {
         return new Number($this->dividend->value() / $this->divisor->value());
