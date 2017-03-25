@@ -3,20 +3,18 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Algebra;
 
-use Innmind\Math\Exception\OperationMustContainAtLeastTwoNumbersException;
 use Innmind\Immutable\Sequence;
 
 final class Multiplication implements OperationInterface, NumberInterface
 {
     private $values;
 
-    public function __construct(NumberInterface ...$values)
-    {
-        $this->values = new Sequence(...$values);
-
-        if ($this->values->size() < 2) {
-            throw new OperationMustContainAtLeastTwoNumbersException;
-        }
+    public function __construct(
+        NumberInterface $first,
+        NumberInterface $second,
+        NumberInterface ...$values
+    ) {
+        $this->values = new Sequence($first, $second, ...$values);
     }
 
     /**

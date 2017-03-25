@@ -172,12 +172,4 @@ class SubtractionTest extends TestCase
 
         $this->assertSame('(12 + 12) - 42 - 66', (string) $subtraction);
     }
-
-    /**
-     * @expectedException Innmind\Math\Exception\OperationMustContainAtLeastTwoNumbersException
-     */
-    public function testThrowWhenNotEnoughNumbers()
-    {
-        new Subtraction(new Number(42));
-    }
 }

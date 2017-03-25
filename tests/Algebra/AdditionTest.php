@@ -176,12 +176,4 @@ class AdditionTest extends TestCase
 
         $this->assertSame('24 + (42 + 66)', (string) $addition);
     }
-
-    /**
-     * @expectedException Innmind\Math\Exception\OperationMustContainAtLeastTwoNumbersException
-     */
-    public function testThrowWhenNotEnoughNumbers()
-    {
-        new Addition(new Number(42));
-    }
 }

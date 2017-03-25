@@ -172,12 +172,4 @@ class MultiplicationTest extends TestCase
 
         $this->assertSame('(12 + 12) x 42 x 66', (string) $multiplication);
     }
-
-    /**
-     * @expectedException Innmind\Math\Exception\OperationMustContainAtLeastTwoNumbersException
-     */
-    public function testThrowWhenNotEnoughNumbers()
-    {
-        new Multiplication(new Number(42));
-    }
 }
