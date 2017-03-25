@@ -47,6 +47,7 @@ class FloorTest extends TestCase
     {
         $floor = new Floor(new Number(42.45));
 
+        $this->assertTrue($floor->equals(new Number(42)));
         $this->assertTrue($floor->equals(new Number(42.0)));
         $this->assertFalse($floor->equals(new Number(43)));
     }

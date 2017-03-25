@@ -22,7 +22,7 @@ final class Floor implements NumberInterface
 
     public function equals(NumberInterface $number): bool
     {
-        return $this->value() === $number->value();
+        return $this->value() == $number->value();
     }
 
     public function higherThan(NumberInterface $number): bool

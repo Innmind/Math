@@ -56,6 +56,9 @@ class RoundTest extends TestCase
         $round = new Round(new Number(42.45), 1);
 
         $this->assertTrue($round->equals(new Number(42.5)));
+        $this->assertTrue($round->equals(new Number(
+            42.499999999999999 # with a precision over 14 digits php will round it
+        )));
         $this->assertFalse($round->equals(new Number(42)));
     }
 

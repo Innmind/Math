@@ -47,6 +47,7 @@ class CeilTest extends TestCase
     {
         $floor = new Ceil(new Number(42.45));
 
+        $this->assertTrue($floor->equals(new Number(43)));
         $this->assertTrue($floor->equals(new Number(43.0)));
         $this->assertFalse($floor->equals(new Number(42)));
     }

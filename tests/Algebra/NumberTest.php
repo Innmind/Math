@@ -54,6 +54,13 @@ class NumberTest extends TestCase
     public function testEquals()
     {
         $this->assertTrue((new Number(42))->equals(new Number(42)));
+        $this->assertTrue((new Number(42))->equals(new Number(42.0)));
+        $this->assertTrue((new Number(42.0))->equals(new Number(42)));
+        $this->assertTrue(
+            (new Number(42.1))->equals(new Number(
+                42.099999999999999 # with a precision over 14 digits php will round it
+            ))
+        );
         $this->assertFalse((new Number(42))->equals(new Number(42.24)));
     }
 
