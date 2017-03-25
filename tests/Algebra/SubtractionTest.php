@@ -11,7 +11,8 @@ use Innmind\Math\Algebra\{
     Addition,
     Multiplication,
     Division,
-    Round
+    Round,
+    Floor
 };
 use PHPUnit\Framework\TestCase;
 
@@ -130,6 +131,18 @@ class SubtractionTest extends TestCase
 
         $this->assertInstanceOf(Round::class, $number);
         $this->assertSame(12.2, $number->value());
+    }
+
+    public function testFloor()
+    {
+        $subtraction = new Subtraction(
+            new Number(24.55),
+            new Number(12.33)
+        );
+        $number = $subtraction->floor();
+
+        $this->assertInstanceOf(Floor::class, $number);
+        $this->assertSame(12.0, $number->value());
     }
 
     public function testStringCast()

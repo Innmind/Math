@@ -73,6 +73,11 @@ final class Round implements NumberInterface
         return new self($this, $precision, $mode);
     }
 
+    public function floor(): NumberInterface
+    {
+        return new Floor($this);
+    }
+
     public function __toString(): string
     {
         return (string) $this->value();

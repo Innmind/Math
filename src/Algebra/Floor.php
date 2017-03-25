@@ -3,19 +3,13 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Algebra;
 
-use Innmind\Math\Exception\TypeError;
-
-final class Number implements NumberInterface
+final class Floor implements NumberInterface
 {
-    private $value;
+    private $number;
 
-    public function __construct($value)
+    public function __construct(NumberInterface $number)
     {
-        if (!is_int($value) && !is_float($value)) {
-            throw new TypeError('Number must be an int or a float');
-        }
-
-        $this->value = $value;
+        $this->number = $number;
     }
 
     /**
@@ -23,7 +17,7 @@ final class Number implements NumberInterface
      */
     public function value()
     {
-        return $this->value;
+        return floor($this->number->value());
     }
 
     public function equals(NumberInterface $number): bool
@@ -63,11 +57,11 @@ final class Number implements NumberInterface
 
     public function floor(): NumberInterface
     {
-        return new Floor($this);
+        return new self($this);
     }
 
     public function __toString(): string
     {
-        return (string) $this->value;
+        return (string) $this->value();
     }
 }

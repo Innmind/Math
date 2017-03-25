@@ -10,7 +10,8 @@ use Innmind\Math\Algebra\{
     Subtraction,
     Multiplication,
     Division,
-    Round
+    Round,
+    Floor
 };
 use PHPUnit\Framework\TestCase;
 
@@ -104,5 +105,14 @@ class NumberTest extends TestCase
 
         $this->assertInstanceOf(Round::class, $number);
         $this->assertSame(42.3, $number->value());
+    }
+
+    public function testFloor()
+    {
+        $number = new Number(42.25);
+        $number = $number->floor();
+
+        $this->assertInstanceOf(Floor::class, $number);
+        $this->assertSame(42.0, $number->value());
     }
 }

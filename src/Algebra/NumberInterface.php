@@ -16,5 +16,6 @@ interface NumberInterface
     public function divideBy(NumberInterface $number): NumberInterface;
     public function multiplyBy(NumberInterface $number): NumberInterface;
     public function round(int $precision = 0, string $mode = Round::UP): NumberInterface;
+    public function floor(): NumberInterface;
     public function __toString(): string;
 }
