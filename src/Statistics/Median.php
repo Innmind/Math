@@ -3,10 +3,13 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Statistics;
 
-use Innmind\Math\Algebra\NumberInterface;
+use Innmind\Math\Algebra\{
+    NumberInterface,
+    Round
+};
 use Innmind\Immutable\Sequence;
 
-final class Median
+final class Median implements NumberInterface
 {
     private $result;
 
@@ -31,10 +34,10 @@ final class Median
                 //mathematically the value is mean(size/2, size/2+1) but here we
                 //do mean(size/2-1, size/2) as the sequence indexes start at 0
                 $index = $sequence->size() / 2;
-                $this->result = (new Mean(
+                $this->result = new Mean(
                     $sequence->get($index - 1),
                     $sequence->get($index)
-                ))->result();
+                );
                 break;
         }
     }
@@ -42,5 +45,63 @@ final class Median
     public function result(): NumberInterface
     {
         return $this->result;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function value()
+    {
+        return $this->result->value();
+    }
+
+    public function equals(NumberInterface $number): bool
+    {
+        return $this->result->equals($number);
+    }
+
+    public function higherThan(NumberInterface $number): bool
+    {
+        return $this->result->higherThan($number);
+    }
+
+    public function add(NumberInterface $number): NumberInterface
+    {
+        return $this->result->add($number);
+    }
+
+    public function subtract(NumberInterface $number): NumberInterface
+    {
+        return $this->result->subtract($number);
+    }
+
+    public function divideBy(NumberInterface $number): NumberInterface
+    {
+        return $this->result->divideBy($number);
+    }
+
+    public function multiplyBy(NumberInterface $number): NumberInterface
+    {
+        return $this->result->multiplyBy($number);
+    }
+
+    public function round(int $precision = 0, string $mode = Round::UP): NumberInterface
+    {
+        return $this->result->round($precision, $mode);
+    }
+
+    public function floor(): NumberInterface
+    {
+        return $this->result->floor();
+    }
+
+    public function ceil(): NumberInterface
+    {
+        return $this->result->ceil();
+    }
+
+    public function __toString(): string
+    {
+        return (string) $this->result;
     }
 }
