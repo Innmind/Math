@@ -3,31 +3,24 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Algebra;
 
-use Innmind\Math\Exception\InvalidArgumentException;
-
-final class Round implements NumberInterface
+final class Modulo implements OperationInterface, NumberInterface
 {
-    public const UP = 'UP';
-    public const DOWN = 'DOWN';
-    public const EVEN = 'EVEN';
-    public const ODD = 'ODD';
-
     private $number;
-    private $precision;
-    private $mode;
+    private $modulus;
 
     public function __construct(
         NumberInterface $number,
-        int $precision = 0,
-        string $mode = self::UP
+        NumberInterface $modulus
     ) {
-        if ($precision < 0) {
-            throw new InvalidArgumentException;
-        }
-
         $this->number = $number;
-        $this->precision = $precision;
-        $this->mode = constant('PHP_ROUND_HALF_'.$mode);
+        $this->modulus = $modulus;
+    }
+
+    public function result(): NumberInterface
+    {
+        return new Number(
+            fmod($this->number->value(), $this->modulus->value())
+        );
     }
 
     /**
@@ -35,17 +28,17 @@ final class Round implements NumberInterface
      */
     public function value()
     {
-        return round($this->number->value(), $this->precision, $this->mode);
+        return $this->result()->value();
     }
 
     public function equals(NumberInterface $number): bool
     {
-        return $this->value() == $number->value();
+        return $this->result()->equals($number);
     }
 
     public function higherThan(NumberInterface $number): bool
     {
-        return $this->value() > $number->value();
+        return $this->result()->higherThan($number);
     }
 
     public function add(NumberInterface $number): NumberInterface
@@ -70,7 +63,7 @@ final class Round implements NumberInterface
 
     public function round(int $precision = 0, string $mode = Round::UP): NumberInterface
     {
-        return new self($this, $precision, $mode);
+        return new Round($this, $precision, $mode);
     }
 
     public function floor(): NumberInterface
@@ -85,11 +78,16 @@ final class Round implements NumberInterface
 
     public function modulo(NumberInterface $modulus): NumberInterface
     {
-        return new Modulo($this, $modulus);
+        return new self($this, $modulus);
     }
 
     public function __toString(): string
     {
-        return (string) $this->value();
+        $number = $this->number instanceof OperationInterface ?
+            '('.$this->number.')' : $this->number;
+        $modulus = $this->modulus instanceof OperationInterface ?
+            '('.$this->modulus.')' : $this->modulus;
+
+        return $number.' % '.$modulus;
     }
 }

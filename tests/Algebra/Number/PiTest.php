@@ -13,7 +13,8 @@ use Innmind\Math\Algebra\{
     Division,
     Round,
     Floor,
-    Ceil
+    Ceil,
+    Modulo
 };
 use PHPUnit\Framework\TestCase;
 
@@ -102,5 +103,14 @@ class PiTest extends TestCase
 
         $this->assertInstanceOf(Ceil::class, $number);
         $this->assertSame(4.0, $number->value());
+    }
+
+    public function testModulo()
+    {
+        $number = new Pi;
+        $number = $number->modulo(new Number(0.1));
+
+        $this->assertInstanceOf(Modulo::class, $number);
+        $this->assertSame(0.041592653589792944, $number->value());
     }
 }

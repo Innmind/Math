@@ -65,6 +65,11 @@ final class Ceil implements NumberInterface
         return new self($this);
     }
 
+    public function modulo(NumberInterface $modulus): NumberInterface
+    {
+        return new Modulo($this, $modulus);
+    }
+
     public function __toString(): string
     {
         return (string) $this->value();

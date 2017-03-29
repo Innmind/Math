@@ -13,7 +13,8 @@ use Innmind\Math\{
     Algebra\Division,
     Algebra\Round,
     Algebra\Floor,
-    Algebra\Ceil
+    Algebra\Ceil,
+    Algebra\Modulo
 };
 use PHPUnit\Framework\TestCase;
 
@@ -144,6 +145,18 @@ class MeanTest extends TestCase
 
         $this->assertInstanceOf(Ceil::class, $number);
         $this->assertSame(5.0, $number->value());
+    }
+
+    public function testModulo()
+    {
+        $mean = new Mean(
+            new Number(1),
+            new Number(7)
+        );
+        $number = $mean->modulo(new Number(3));
+
+        $this->assertInstanceOf(Modulo::class, $number);
+        $this->assertSame(1.0, $number->value());
     }
 
     public function testStringCast()

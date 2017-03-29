@@ -13,7 +13,8 @@ use Innmind\Math\Algebra\{
     Division,
     Round,
     Floor,
-    Ceil
+    Ceil,
+    Modulo
 };
 use PHPUnit\Framework\TestCase;
 
@@ -157,6 +158,18 @@ class SubtractionTest extends TestCase
 
         $this->assertInstanceOf(Ceil::class, $number);
         $this->assertSame(13.0, $number->value());
+    }
+
+    public function testModulo()
+    {
+        $subtraction = new Subtraction(
+            new Number(25),
+            new Number(12)
+        );
+        $number = $subtraction->modulo(new Number(6));
+
+        $this->assertInstanceOf(Modulo::class, $number);
+        $this->assertSame(1.0, $number->value());
     }
 
     public function testStringCast()

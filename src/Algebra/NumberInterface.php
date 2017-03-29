@@ -18,5 +18,6 @@ interface NumberInterface
     public function round(int $precision = 0, string $mode = Round::UP): self;
     public function floor(): self;
     public function ceil(): self;
+    public function modulo(self $modulus): self;
     public function __toString(): string;
 }

@@ -12,7 +12,8 @@ use Innmind\Math\Algebra\{
     Subtraction,
     Multiplication,
     Division,
-    Round
+    Round,
+    Modulo
 };
 use PHPUnit\Framework\TestCase;
 
@@ -20,9 +21,9 @@ class CeilTest extends TestCase
 {
     public function testInterface()
     {
-        $floor = new Ceil(new Number(42.42));
+        $ceil = new Ceil(new Number(42.42));
 
-        $this->assertInstanceOf(NumberInterface::class, $floor);
+        $this->assertInstanceOf(NumberInterface::class, $ceil);
     }
 
     /**
@@ -30,9 +31,9 @@ class CeilTest extends TestCase
      */
     public function testValue($number, $expected)
     {
-        $floor = new Ceil(new Number($number));
+        $ceil = new Ceil(new Number($number));
 
-        $this->assertSame($expected, $floor->value());
+        $this->assertSame($expected, $ceil->value());
     }
 
     public function testStringCast()
@@ -45,25 +46,25 @@ class CeilTest extends TestCase
 
     public function testEquals()
     {
-        $floor = new Ceil(new Number(42.45));
+        $ceil = new Ceil(new Number(42.45));
 
-        $this->assertTrue($floor->equals(new Number(43)));
-        $this->assertTrue($floor->equals(new Number(43.0)));
-        $this->assertFalse($floor->equals(new Number(42)));
+        $this->assertTrue($ceil->equals(new Number(43)));
+        $this->assertTrue($ceil->equals(new Number(43.0)));
+        $this->assertFalse($ceil->equals(new Number(42)));
     }
 
     public function testHigherThan()
     {
-        $floor = new Ceil(new Number(42.45));
+        $ceil = new Ceil(new Number(42.45));
 
-        $this->assertTrue($floor->higherThan(new Number(41.9)));
-        $this->assertFalse($floor->higherThan(new Number(43.5)));
+        $this->assertTrue($ceil->higherThan(new Number(41.9)));
+        $this->assertFalse($ceil->higherThan(new Number(43.5)));
     }
 
     public function testAdd()
     {
-        $floor = new Ceil(new Number(42.5));
-        $number = $floor->add(new Number(7));
+        $ceil = new Ceil(new Number(42.5));
+        $number = $ceil->add(new Number(7));
 
         $this->assertInstanceOf(Addition::class, $number);
         $this->assertSame(50.0, $number->value());
@@ -71,8 +72,8 @@ class CeilTest extends TestCase
 
     public function testSubtract()
     {
-        $floor = new Ceil(new Number(42.5));
-        $number = $floor->subtract(new Number(7));
+        $ceil = new Ceil(new Number(42.5));
+        $number = $ceil->subtract(new Number(7));
 
         $this->assertInstanceOf(Subtraction::class, $number);
         $this->assertSame(36.0, $number->value());
@@ -80,8 +81,8 @@ class CeilTest extends TestCase
 
     public function testMultiplication()
     {
-        $floor = new Ceil(new Number(42.5));
-        $number = $floor->multiplyBy(new Number(2));
+        $ceil = new Ceil(new Number(42.5));
+        $number = $ceil->multiplyBy(new Number(2));
 
         $this->assertInstanceOf(Multiplication::class, $number);
         $this->assertSame(86.0, $number->value());
@@ -89,8 +90,8 @@ class CeilTest extends TestCase
 
     public function testDivision()
     {
-        $floor = new Ceil(new Number(42.5));
-        $number = $floor->divideBy(new Number(2));
+        $ceil = new Ceil(new Number(42.5));
+        $number = $ceil->divideBy(new Number(2));
 
         $this->assertInstanceOf(Division::class, $number);
         $this->assertSame(21.5, $number->value());
@@ -107,8 +108,8 @@ class CeilTest extends TestCase
 
     public function testFloor()
     {
-        $floor = new Ceil(new Number(42.45));
-        $number = $floor->floor();
+        $ceil = new Ceil(new Number(42.45));
+        $number = $ceil->floor();
 
         $this->assertInstanceOf(Floor::class, $number);
         $this->assertSame(43.0, $number->value());
@@ -116,11 +117,20 @@ class CeilTest extends TestCase
 
     public function testCeil()
     {
-        $floor = new Ceil(new Number(42.45));
-        $number = $floor->ceil();
+        $ceil = new Ceil(new Number(42.45));
+        $number = $ceil->ceil();
 
         $this->assertInstanceOf(Ceil::class, $number);
         $this->assertSame(43.0, $number->value());
+    }
+
+    public function testModulo()
+    {
+        $ceil = new Ceil(new Number(42.45));
+        $number = $ceil->modulo(new Number(2.1));
+
+        $this->assertInstanceOf(Modulo::class, $number);
+        $this->assertSame(1.0, $number->value());
     }
 
     public function values(): array

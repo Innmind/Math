@@ -71,6 +71,11 @@ final class Number implements NumberInterface
         return new Ceil($this);
     }
 
+    public function modulo(NumberInterface $modulus): NumberInterface
+    {
+        return new Modulo($this, $modulus);
+    }
+
     public function __toString(): string
     {
         return (string) $this->value;

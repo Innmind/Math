@@ -13,7 +13,8 @@ use Innmind\Math\Algebra\{
     Multiplication,
     Round,
     Floor,
-    Ceil
+    Ceil,
+    Modulo
 };
 use PHPUnit\Framework\TestCase;
 
@@ -175,5 +176,17 @@ class AdditionTest extends TestCase
         );
 
         $this->assertSame('24 + (42 + 66)', (string) $addition);
+    }
+
+    public function testModulo()
+    {
+        $addition = new Addition(
+            new Number(2.1),
+            new Number(4.24)
+        );
+        $number = $addition->modulo(new Number(0.1));
+
+        $this->assertInstanceOf(Modulo::class, $number);
+        $this->assertSame(0.04, $number->value());
     }
 }

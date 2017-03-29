@@ -88,6 +88,11 @@ final class Mean implements NumberInterface
         return $this->result->ceil();
     }
 
+    public function modulo(NumberInterface $modulus): NumberInterface
+    {
+        return $this->result->modulo($modulus);
+    }
+
     public function __toString(): string
     {
         return (string) $this->result;

@@ -11,7 +11,8 @@ use Innmind\Math\Algebra\{
     Division,
     Round,
     Floor,
-    Ceil
+    Ceil,
+    Modulo
 };
 
 final class Pi implements NumberInterface
@@ -67,6 +68,11 @@ final class Pi implements NumberInterface
     public function ceil(): NumberInterface
     {
         return new Ceil($this);
+    }
+
+    public function modulo(NumberInterface $modulus): NumberInterface
+    {
+        return new Modulo($this, $modulus);
     }
 
     public function __toString(): string

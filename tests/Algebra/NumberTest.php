@@ -12,7 +12,8 @@ use Innmind\Math\Algebra\{
     Division,
     Round,
     Floor,
-    Ceil
+    Ceil,
+    Modulo
 };
 use PHPUnit\Framework\TestCase;
 
@@ -131,5 +132,14 @@ class NumberTest extends TestCase
 
         $this->assertInstanceOf(Ceil::class, $number);
         $this->assertSame(43.0, $number->value());
+    }
+
+    public function testModulo()
+    {
+        $number = new Number(3);
+        $number = $number->modulo(new Number(2));
+
+        $this->assertInstanceOf(Modulo::class, $number);
+        $this->assertSame(1.0, $number->value());
     }
 }
