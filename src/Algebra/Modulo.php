@@ -81,6 +81,11 @@ final class Modulo implements OperationInterface, NumberInterface
         return new self($this, $modulus);
     }
 
+    public function absolute(): NumberInterface
+    {
+        return new Absolute($this);
+    }
+
     public function __toString(): string
     {
         $number = $this->number instanceof OperationInterface ?

@@ -19,5 +19,6 @@ interface NumberInterface
     public function floor(): self;
     public function ceil(): self;
     public function modulo(self $modulus): self;
+    public function absolute(): self;
     public function __toString(): string;
 }

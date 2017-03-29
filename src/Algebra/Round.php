@@ -88,6 +88,11 @@ final class Round implements NumberInterface
         return new Modulo($this, $modulus);
     }
 
+    public function absolute(): NumberInterface
+    {
+        return new Absolute($this);
+    }
+
     public function __toString(): string
     {
         return (string) $this->value();

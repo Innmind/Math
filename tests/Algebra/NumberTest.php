@@ -13,7 +13,8 @@ use Innmind\Math\Algebra\{
     Round,
     Floor,
     Ceil,
-    Modulo
+    Modulo,
+    Absolute
 };
 use PHPUnit\Framework\TestCase;
 
@@ -141,5 +142,14 @@ class NumberTest extends TestCase
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertSame(1.0, $number->value());
+    }
+
+    public function testAbsolute()
+    {
+        $number = new Number(-9);
+        $number = $number->absolute();
+
+        $this->assertInstanceOf(Absolute::class, $number);
+        $this->assertSame(9, $number->value());
     }
 }

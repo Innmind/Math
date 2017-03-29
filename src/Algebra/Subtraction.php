@@ -75,6 +75,11 @@ final class Subtraction implements OperationInterface, NumberInterface
         return new Modulo($this, $modulus);
     }
 
+    public function absolute(): NumberInterface
+    {
+        return new Absolute($this);
+    }
+
     public function difference(): NumberInterface
     {
         return $this->result();

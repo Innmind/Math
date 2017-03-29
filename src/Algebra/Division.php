@@ -90,6 +90,11 @@ final class Division implements OperationInterface, NumberInterface
         return new Modulo($this, $modulus);
     }
 
+    public function absolute(): NumberInterface
+    {
+        return new Absolute($this);
+    }
+
     public function quotient(): NumberInterface
     {
         return $this->result();

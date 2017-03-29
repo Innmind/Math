@@ -14,7 +14,8 @@ use Innmind\Math\Algebra\{
     Round,
     Floor,
     Ceil,
-    Modulo
+    Modulo,
+    Absolute
 };
 use PHPUnit\Framework\TestCase;
 
@@ -136,6 +137,15 @@ class DivisionTest extends TestCase
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertSame(1.0, $number->value());
+    }
+
+    public function testAbsolute()
+    {
+        $division = new Division(new Number(9), new Number(-3));
+        $number = $division->absolute();
+
+        $this->assertInstanceOf(Absolute::class, $number);
+        $this->assertSame(3, $number->value());
     }
 
     public function testStringCast()

@@ -14,7 +14,8 @@ use Innmind\Math\Algebra\{
     Round,
     Floor,
     Ceil,
-    Modulo
+    Modulo,
+    Absolute
 };
 use PHPUnit\Framework\TestCase;
 
@@ -112,5 +113,14 @@ class PiTest extends TestCase
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertSame(0.041592653589792944, $number->value());
+    }
+
+    public function testAbsolute()
+    {
+        $number = new Pi;
+        $number = $number->absolute();
+
+        $this->assertInstanceOf(Absolute::class, $number);
+        $this->assertSame((new Pi)->value(), $number->value());
     }
 }

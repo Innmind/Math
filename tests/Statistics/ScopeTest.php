@@ -14,7 +14,8 @@ use Innmind\Math\{
     Algebra\Round,
     Algebra\Floor,
     Algebra\Ceil,
-    Algebra\Modulo
+    Algebra\Modulo,
+    Algebra\Absolute
 };
 use PHPUnit\Framework\TestCase;
 
@@ -158,6 +159,18 @@ class ScopeTest extends TestCase
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertSame(1.0, $number->value());
+    }
+
+    public function testAbsolute()
+    {
+        $scope = new Scope(
+            new Number(-1),
+            new Number(-7)
+        );
+        $number = $scope->absolute();
+
+        $this->assertInstanceOf(Absolute::class, $number);
+        $this->assertSame(6, $number->value());
     }
 
     public function testStringCast()

@@ -14,7 +14,8 @@ use Innmind\Math\{
     Algebra\Round,
     Algebra\Floor,
     Algebra\Ceil,
-    Algebra\Modulo
+    Algebra\Modulo,
+    Algebra\Absolute
 };
 use PHPUnit\Framework\TestCase;
 
@@ -179,6 +180,18 @@ class MedianTest extends TestCase
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertSame(1.0, $number->value());
+    }
+
+    public function testAbsolute()
+    {
+        $median = new Median(
+            new Number(-1),
+            new Number(-7)
+        );
+        $number = $median->absolute();
+
+        $this->assertInstanceOf(Absolute::class, $number);
+        $this->assertSame(4, $number->value());
     }
 
     public function testStringCast()

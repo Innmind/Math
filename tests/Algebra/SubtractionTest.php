@@ -14,7 +14,8 @@ use Innmind\Math\Algebra\{
     Round,
     Floor,
     Ceil,
-    Modulo
+    Modulo,
+    Absolute
 };
 use PHPUnit\Framework\TestCase;
 
@@ -170,6 +171,18 @@ class SubtractionTest extends TestCase
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertSame(1.0, $number->value());
+    }
+
+    public function testAbsolute()
+    {
+        $subtraction = new Subtraction(
+            new Number(12),
+            new Number(25)
+        );
+        $number = $subtraction->absolute();
+
+        $this->assertInstanceOf(Absolute::class, $number);
+        $this->assertSame(13, $number->value());
     }
 
     public function testStringCast()

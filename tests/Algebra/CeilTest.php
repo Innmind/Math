@@ -13,7 +13,8 @@ use Innmind\Math\Algebra\{
     Multiplication,
     Division,
     Round,
-    Modulo
+    Modulo,
+    Absolute
 };
 use PHPUnit\Framework\TestCase;
 
@@ -131,6 +132,15 @@ class CeilTest extends TestCase
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertSame(1.0, $number->value());
+    }
+
+    public function testAbsolute()
+    {
+        $ceil = new Ceil(new Number(-42.45));
+        $number = $ceil->absolute();
+
+        $this->assertInstanceOf(Absolute::class, $number);
+        $this->assertSame(42.0, $number->value());
     }
 
     public function values(): array

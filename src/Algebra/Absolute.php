@@ -1,39 +1,38 @@
 <?php
 declare(strict_types = 1);
 
-namespace Innmind\Math\Algebra\Number;
+namespace Innmind\Math\Algebra;
 
-use Innmind\Math\Algebra\{
-    NumberInterface,
-    Addition,
-    Subtraction,
-    Multiplication,
-    Division,
-    Round,
-    Floor,
-    Ceil,
-    Modulo,
-    Absolute
-};
-
-final class Pi implements NumberInterface
+final class Absolute implements OperationInterface, NumberInterface
 {
+    private $number;
+
+    public function __construct(NumberInterface $number)
+    {
+        $this->number = $number;
+    }
+
     /**
      * {@inheritdoc}
      */
     public function value()
     {
-        return pi();
+        return $this->result()->value();
+    }
+
+    public function result(): NumberInterface
+    {
+        return new Number(abs($this->number->value()));
     }
 
     public function equals(NumberInterface $number): bool
     {
-        return $this->value() == $number->value();
+        return $this->result()->equals($number);
     }
 
     public function higherThan(NumberInterface $number): bool
     {
-        return $this->value() > $number->value();
+        return $this->result()->higherThan($number);
     }
 
     public function add(NumberInterface $number): NumberInterface
@@ -78,11 +77,11 @@ final class Pi implements NumberInterface
 
     public function absolute(): NumberInterface
     {
-        return new Absolute($this);
+        return new self($this);
     }
 
     public function __toString(): string
     {
-        return 'π';
+        return '|'.$this->number.'|';
     }
 }

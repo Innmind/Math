@@ -75,6 +75,11 @@ final class Multiplication implements OperationInterface, NumberInterface
         return new Modulo($this, $modulus);
     }
 
+    public function absolute(): NumberInterface
+    {
+        return new Absolute($this);
+    }
+
     public function product(): NumberInterface
     {
         return $this->result();

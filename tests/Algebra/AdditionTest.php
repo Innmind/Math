@@ -14,7 +14,8 @@ use Innmind\Math\Algebra\{
     Round,
     Floor,
     Ceil,
-    Modulo
+    Modulo,
+    Absolute
 };
 use PHPUnit\Framework\TestCase;
 
@@ -188,5 +189,17 @@ class AdditionTest extends TestCase
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertSame(0.04, $number->value());
+    }
+
+    public function testAbsolute()
+    {
+        $addition = new Addition(
+            new Number(2.1),
+            new Number(4.24)
+        );
+        $number = $addition->absolute();
+
+        $this->assertInstanceOf(Absolute::class, $number);
+        $this->assertSame(6.34, $number->value());
     }
 }

@@ -75,6 +75,11 @@ final class Addition implements OperationInterface, NumberInterface
         return new Modulo($this, $modulus);
     }
 
+    public function absolute(): NumberInterface
+    {
+        return new Absolute($this);
+    }
+
     public function sum(): NumberInterface
     {
         return $this->result();

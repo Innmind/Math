@@ -14,7 +14,8 @@ use Innmind\Math\Algebra\{
     Round,
     Floor,
     Ceil,
-    Modulo
+    Modulo,
+    Absolute
 };
 use PHPUnit\Framework\TestCase;
 
@@ -170,6 +171,18 @@ class MultiplicationTest extends TestCase
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertSame(1.0, $number->value());
+    }
+
+    public function testAbsolute()
+    {
+        $multiplication = new Multiplication(
+            new Number(-3),
+            new Number(3)
+        );
+        $number = $multiplication->absolute();
+
+        $this->assertInstanceOf(Absolute::class, $number);
+        $this->assertSame(9, $number->value());
     }
 
     public function testStringCast()

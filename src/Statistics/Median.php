@@ -105,6 +105,11 @@ final class Median implements NumberInterface
         return $this->result->modulo($modulus);
     }
 
+    public function absolute(): NumberInterface
+    {
+        return $this->result->absolute();
+    }
+
     public function __toString(): string
     {
         return (string) $this->result;
