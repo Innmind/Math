@@ -93,6 +93,11 @@ final class Round implements NumberInterface
         return new Absolute($this);
     }
 
+    public function power(NumberInterface $power): NumberInterface
+    {
+        return new Power($this, $power);
+    }
+
     public function __toString(): string
     {
         return (string) $this->value();

@@ -15,7 +15,8 @@ use Innmind\Math\Algebra\{
     Floor,
     Ceil,
     Modulo,
-    Absolute
+    Absolute,
+    Power
 };
 use PHPUnit\Framework\TestCase;
 
@@ -183,6 +184,18 @@ class SubtractionTest extends TestCase
 
         $this->assertInstanceOf(Absolute::class, $number);
         $this->assertSame(13, $number->value());
+    }
+
+    public function testPower()
+    {
+        $subtraction = new Subtraction(
+            new Number(12),
+            new Number(6)
+        );
+        $number = $subtraction->power(new Number(2));
+
+        $this->assertInstanceOf(Power::class, $number);
+        $this->assertSame(36, $number->value());
     }
 
     public function testStringCast()

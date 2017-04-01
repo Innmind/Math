@@ -13,7 +13,8 @@ use Innmind\Math\Algebra\{
     Floor,
     Ceil,
     Modulo,
-    Absolute
+    Absolute,
+    Power
 };
 
 final class Pi implements NumberInterface
@@ -79,6 +80,11 @@ final class Pi implements NumberInterface
     public function absolute(): NumberInterface
     {
         return new Absolute($this);
+    }
+
+    public function power(NumberInterface $power): NumberInterface
+    {
+        return new Power($this, $power);
     }
 
     public function __toString(): string

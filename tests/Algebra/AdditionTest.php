@@ -15,7 +15,8 @@ use Innmind\Math\Algebra\{
     Floor,
     Ceil,
     Modulo,
-    Absolute
+    Absolute,
+    Power
 };
 use PHPUnit\Framework\TestCase;
 
@@ -201,5 +202,17 @@ class AdditionTest extends TestCase
 
         $this->assertInstanceOf(Absolute::class, $number);
         $this->assertSame(6.34, $number->value());
+    }
+
+    public function testPower()
+    {
+        $addition = new Addition(
+            new Number(2),
+            new Number(4)
+        );
+        $number = $addition->power(new Number(2));
+
+        $this->assertInstanceOf(Power::class, $number);
+        $this->assertSame(36, $number->value());
     }
 }

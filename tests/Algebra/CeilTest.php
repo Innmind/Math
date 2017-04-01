@@ -14,7 +14,8 @@ use Innmind\Math\Algebra\{
     Division,
     Round,
     Modulo,
-    Absolute
+    Absolute,
+    Power
 };
 use PHPUnit\Framework\TestCase;
 
@@ -141,6 +142,15 @@ class CeilTest extends TestCase
 
         $this->assertInstanceOf(Absolute::class, $number);
         $this->assertSame(42.0, $number->value());
+    }
+
+    public function testPower()
+    {
+        $ceil = new Ceil(new Number(2.5));
+        $number = $ceil->power(new Number(2));
+
+        $this->assertInstanceOf(Power::class, $number);
+        $this->assertSame(9.0, $number->value());
     }
 
     public function values(): array

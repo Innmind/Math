@@ -20,5 +20,6 @@ interface NumberInterface
     public function ceil(): self;
     public function modulo(self $modulus): self;
     public function absolute(): self;
+    public function power(self $power): self;
     public function __toString(): string;
 }

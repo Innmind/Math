@@ -15,7 +15,8 @@ use Innmind\Math\Algebra\{
     Floor,
     Ceil,
     Modulo,
-    Absolute
+    Absolute,
+    Power
 };
 use PHPUnit\Framework\TestCase;
 
@@ -122,5 +123,17 @@ class PiTest extends TestCase
 
         $this->assertInstanceOf(Absolute::class, $number);
         $this->assertSame((new Pi)->value(), $number->value());
+    }
+
+    public function testPower()
+    {
+        $number = new Pi;
+        $number = $number->power(new Number(2));
+
+        $this->assertInstanceOf(Power::class, $number);
+        $this->assertSame(
+            (new Pi)->multiplyBy(new Pi)->value(),
+            $number->value()
+        );
     }
 }

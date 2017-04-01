@@ -95,6 +95,11 @@ final class Division implements OperationInterface, NumberInterface
         return new Absolute($this);
     }
 
+    public function power(NumberInterface $power): NumberInterface
+    {
+        return new Power($this, $power);
+    }
+
     public function quotient(): NumberInterface
     {
         return $this->result();

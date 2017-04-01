@@ -15,7 +15,8 @@ use Innmind\Math\Algebra\{
     Round,
     Floor,
     Ceil,
-    Absolute
+    Absolute,
+    Power
 };
 use PHPUnit\Framework\TestCase;
 
@@ -186,5 +187,17 @@ class ModuloTest extends TestCase
 
         $this->assertInstanceOf(Absolute::class, $number);
         $this->assertSame(0.24, $number->value());
+    }
+
+    public function testPower()
+    {
+        $modulo = new Modulo(
+            new Number(9),
+            new Number(2)
+        );
+        $number = $modulo->power(new Number(2));
+
+        $this->assertInstanceOf(Power::class, $number);
+        $this->assertSame(1.0, $number->value());
     }
 }

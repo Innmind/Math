@@ -80,6 +80,11 @@ final class Multiplication implements OperationInterface, NumberInterface
         return new Absolute($this);
     }
 
+    public function power(NumberInterface $power): NumberInterface
+    {
+        return new Power($this, $power);
+    }
+
     public function product(): NumberInterface
     {
         return $this->result();

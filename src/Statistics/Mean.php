@@ -98,6 +98,11 @@ final class Mean implements NumberInterface
         return $this->result->absolute();
     }
 
+    public function power(NumberInterface $power): NumberInterface
+    {
+        return $this->result->power($power);
+    }
+
     public function __toString(): string
     {
         return (string) $this->result;

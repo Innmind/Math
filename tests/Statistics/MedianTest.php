@@ -15,7 +15,8 @@ use Innmind\Math\{
     Algebra\Floor,
     Algebra\Ceil,
     Algebra\Modulo,
-    Algebra\Absolute
+    Algebra\Absolute,
+    Algebra\Power
 };
 use PHPUnit\Framework\TestCase;
 
@@ -192,6 +193,18 @@ class MedianTest extends TestCase
 
         $this->assertInstanceOf(Absolute::class, $number);
         $this->assertSame(4, $number->value());
+    }
+
+    public function testPower()
+    {
+        $median = new Median(
+            new Number(1),
+            new Number(7)
+        );
+        $number = $median->power(new Number(2));
+
+        $this->assertInstanceOf(Power::class, $number);
+        $this->assertSame(16, $number->value());
     }
 
     public function testStringCast()

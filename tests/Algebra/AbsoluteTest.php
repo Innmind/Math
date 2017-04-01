@@ -15,7 +15,8 @@ use Innmind\Math\Algebra\{
     Multiplication,
     Division,
     Round,
-    Modulo
+    Modulo,
+    Power
 };
 use PHPUnit\Framework\TestCase;
 
@@ -142,6 +143,15 @@ class AbsoluteTest extends TestCase
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertSame(0.45, $number->value());
+    }
+
+    public function testPower()
+    {
+        $absolute = new Absolute(new Number(-4));
+        $number = $absolute->power(new Number(2));
+
+        $this->assertInstanceOf(Power::class, $number);
+        $this->assertSame(16, $number->value());
     }
 
     public function values(): array

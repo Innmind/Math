@@ -15,7 +15,8 @@ use Innmind\Math\{
     Algebra\Floor,
     Algebra\Ceil,
     Algebra\Modulo,
-    Algebra\Absolute
+    Algebra\Absolute,
+    Algebra\Power
 };
 use PHPUnit\Framework\TestCase;
 
@@ -171,6 +172,18 @@ class ScopeTest extends TestCase
 
         $this->assertInstanceOf(Absolute::class, $number);
         $this->assertSame(6, $number->value());
+    }
+
+    public function testPower()
+    {
+        $scope = new Scope(
+            new Number(1),
+            new Number(7)
+        );
+        $number = $scope->power(new Number(2));
+
+        $this->assertInstanceOf(Power::class, $number);
+        $this->assertSame(36, $number->value());
     }
 
     public function testStringCast()
