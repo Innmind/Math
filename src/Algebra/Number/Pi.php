@@ -14,7 +14,8 @@ use Innmind\Math\Algebra\{
     Ceil,
     Modulo,
     Absolute,
-    Power
+    Power,
+    SquareRoot
 };
 
 final class Pi implements NumberInterface
@@ -85,6 +86,11 @@ final class Pi implements NumberInterface
     public function power(NumberInterface $power): NumberInterface
     {
         return new Power($this, $power);
+    }
+
+    public function squareRoot(): NumberInterface
+    {
+        return new SquareRoot($this);
     }
 
     public function __toString(): string

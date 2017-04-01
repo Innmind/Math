@@ -85,6 +85,11 @@ final class Multiplication implements OperationInterface, NumberInterface
         return new Power($this, $power);
     }
 
+    public function squareRoot(): NumberInterface
+    {
+        return new SquareRoot($this);
+    }
+
     public function product(): NumberInterface
     {
         return $this->result();

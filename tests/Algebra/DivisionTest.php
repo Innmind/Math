@@ -16,7 +16,8 @@ use Innmind\Math\Algebra\{
     Ceil,
     Modulo,
     Absolute,
-    Power
+    Power,
+    SquareRoot
 };
 use PHPUnit\Framework\TestCase;
 
@@ -156,6 +157,15 @@ class DivisionTest extends TestCase
 
         $this->assertInstanceOf(Power::class, $number);
         $this->assertSame(9, $number->value());
+    }
+
+    public function testSquareRoot()
+    {
+        $division = new Division(new Number(8), new Number(2));
+        $number = $division->squareRoot();
+
+        $this->assertInstanceOf(SquareRoot::class, $number);
+        $this->assertSame(2.0, $number->value());
     }
 
     public function testStringCast()

@@ -98,6 +98,11 @@ final class Round implements NumberInterface
         return new Power($this, $power);
     }
 
+    public function squareRoot(): NumberInterface
+    {
+        return new SquareRoot($this);
+    }
+
     public function __toString(): string
     {
         return (string) $this->value();

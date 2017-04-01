@@ -3,24 +3,13 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Algebra;
 
-final class Modulo implements OperationInterface, NumberInterface
+final class SquareRoot implements OperationInterface, NumberInterface
 {
     private $number;
-    private $modulus;
 
-    public function __construct(
-        NumberInterface $number,
-        NumberInterface $modulus
-    ) {
-        $this->number = $number;
-        $this->modulus = $modulus;
-    }
-
-    public function result(): NumberInterface
+    public function __construct(NumberInterface $number)
     {
-        return new Number(
-            fmod($this->number->value(), $this->modulus->value())
-        );
+        $this->number = $number;
     }
 
     /**
@@ -29,6 +18,11 @@ final class Modulo implements OperationInterface, NumberInterface
     public function value()
     {
         return $this->result()->value();
+    }
+
+    public function result(): NumberInterface
+    {
+        return new Number(sqrt($this->number->value()));
     }
 
     public function equals(NumberInterface $number): bool
@@ -78,7 +72,7 @@ final class Modulo implements OperationInterface, NumberInterface
 
     public function modulo(NumberInterface $modulus): NumberInterface
     {
-        return new self($this, $modulus);
+        return new Modulo($this, $modulus);
     }
 
     public function absolute(): NumberInterface
@@ -93,16 +87,14 @@ final class Modulo implements OperationInterface, NumberInterface
 
     public function squareRoot(): NumberInterface
     {
-        return new SquareRoot($this);
+        return new self($this);
     }
 
     public function __toString(): string
     {
         $number = $this->number instanceof OperationInterface ?
             '('.$this->number.')' : $this->number;
-        $modulus = $this->modulus instanceof OperationInterface ?
-            '('.$this->modulus.')' : $this->modulus;
 
-        return $number.' % '.$modulus;
+        return '√'.$number;
     }
 }

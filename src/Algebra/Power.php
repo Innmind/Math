@@ -91,6 +91,11 @@ final class Power implements OperationInterface, NumberInterface
         return new self($this, $power);
     }
 
+    public function squareRoot(): NumberInterface
+    {
+        return new SquareRoot($this);
+    }
+
     public function __toString(): string
     {
         $number = $this->number instanceof OperationInterface ?

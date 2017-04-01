@@ -85,6 +85,11 @@ final class Addition implements OperationInterface, NumberInterface
         return new Power($this, $power);
     }
 
+    public function squareRoot(): NumberInterface
+    {
+        return new SquareRoot($this);
+    }
+
     public function sum(): NumberInterface
     {
         return $this->result();

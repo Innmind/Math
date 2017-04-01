@@ -85,6 +85,11 @@ final class Subtraction implements OperationInterface, NumberInterface
         return new Power($this, $power);
     }
 
+    public function squareRoot(): NumberInterface
+    {
+        return new SquareRoot($this);
+    }
+
     public function difference(): NumberInterface
     {
         return $this->result();

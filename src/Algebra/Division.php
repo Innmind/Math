@@ -100,6 +100,11 @@ final class Division implements OperationInterface, NumberInterface
         return new Power($this, $power);
     }
 
+    public function squareRoot(): NumberInterface
+    {
+        return new SquareRoot($this);
+    }
+
     public function quotient(): NumberInterface
     {
         return $this->result();

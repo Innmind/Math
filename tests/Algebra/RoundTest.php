@@ -15,7 +15,8 @@ use Innmind\Math\Algebra\{
     Ceil,
     Modulo,
     Absolute,
-    Power
+    Power,
+    SquareRoot
 };
 use PHPUnit\Framework\TestCase;
 
@@ -161,6 +162,15 @@ class RoundTest extends TestCase
 
         $this->assertInstanceOf(Power::class, $number);
         $this->assertSame(6.25, $number->value());
+    }
+
+    public function testSquareRoot()
+    {
+        $round = new Round(new Number(4.3));
+        $number = $round->squareRoot();
+
+        $this->assertInstanceOf(SquareRoot::class, $number);
+        $this->assertSame(2.0, $number->value());
     }
 
     public function values(): array

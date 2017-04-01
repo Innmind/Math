@@ -21,5 +21,6 @@ interface NumberInterface
     public function modulo(self $modulus): self;
     public function absolute(): self;
     public function power(self $power): self;
+    public function squareRoot(): self;
     public function __toString(): string;
 }

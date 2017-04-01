@@ -103,6 +103,11 @@ final class Mean implements NumberInterface
         return $this->result->power($power);
     }
 
+    public function squareRoot(): NumberInterface
+    {
+        return $this->result->squareRoot();
+    }
+
     public function __toString(): string
     {
         return (string) $this->result;

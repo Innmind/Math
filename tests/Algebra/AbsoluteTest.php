@@ -16,7 +16,8 @@ use Innmind\Math\Algebra\{
     Division,
     Round,
     Modulo,
-    Power
+    Power,
+    SquareRoot
 };
 use PHPUnit\Framework\TestCase;
 
@@ -152,6 +153,15 @@ class AbsoluteTest extends TestCase
 
         $this->assertInstanceOf(Power::class, $number);
         $this->assertSame(16, $number->value());
+    }
+
+    public function testSquareRoot()
+    {
+        $absolute = new Absolute(new Number(-4));
+        $number = $absolute->squareRoot();
+
+        $this->assertInstanceOf(SquareRoot::class, $number);
+        $this->assertSame(2.0, $number->value());
     }
 
     public function values(): array

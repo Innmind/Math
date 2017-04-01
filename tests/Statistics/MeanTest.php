@@ -16,7 +16,8 @@ use Innmind\Math\{
     Algebra\Ceil,
     Algebra\Modulo,
     Algebra\Absolute,
-    Algebra\Power
+    Algebra\Power,
+    Algebra\SquareRoot
 };
 use PHPUnit\Framework\TestCase;
 
@@ -183,6 +184,18 @@ class MeanTest extends TestCase
 
         $this->assertInstanceOf(Power::class, $number);
         $this->assertSame(16, $number->value());
+    }
+
+    public function testSquareRoot()
+    {
+        $mean = new Mean(
+            new Number(1),
+            new Number(7)
+        );
+        $number = $mean->squareRoot();
+
+        $this->assertInstanceOf(SquareRoot::class, $number);
+        $this->assertSame(2.0, $number->value());
     }
 
     public function testStringCast()

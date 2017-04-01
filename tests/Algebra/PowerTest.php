@@ -16,7 +16,8 @@ use Innmind\Math\Algebra\{
     Floor,
     Ceil,
     Modulo,
-    Absolute
+    Absolute,
+    SquareRoot
 };
 use PHPUnit\Framework\TestCase;
 
@@ -199,5 +200,17 @@ class PowerTest extends TestCase
 
         $this->assertInstanceOf(Power::class, $number);
         $this->assertSame(16, $number->value());
+    }
+
+    public function testSquareRoot()
+    {
+        $power = new Power(
+            new Number(2),
+            new Number(2)
+        );
+        $number = $power->squareRoot();
+
+        $this->assertInstanceOf(SquareRoot::class, $number);
+        $this->assertSame(2.0, $number->value());
     }
 }

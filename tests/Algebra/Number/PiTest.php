@@ -16,7 +16,8 @@ use Innmind\Math\Algebra\{
     Ceil,
     Modulo,
     Absolute,
-    Power
+    Power,
+    SquareRoot
 };
 use PHPUnit\Framework\TestCase;
 
@@ -135,5 +136,14 @@ class PiTest extends TestCase
             (new Pi)->multiplyBy(new Pi)->value(),
             $number->value()
         );
+    }
+
+    public function testSquareRoot()
+    {
+        $number = new Pi;
+        $number = $number->squareRoot();
+
+        $this->assertInstanceOf(SquareRoot::class, $number);
+        $this->assertSame(M_SQRTPI, $number->value());
     }
 }

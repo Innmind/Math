@@ -16,7 +16,8 @@ use Innmind\Math\{
     Algebra\Ceil,
     Algebra\Modulo,
     Algebra\Absolute,
-    Algebra\Power
+    Algebra\Power,
+    Algebra\SquareRoot
 };
 use PHPUnit\Framework\TestCase;
 
@@ -184,6 +185,18 @@ class ScopeTest extends TestCase
 
         $this->assertInstanceOf(Power::class, $number);
         $this->assertSame(36, $number->value());
+    }
+
+    public function testSquareRoot()
+    {
+        $scope = new Scope(
+            new Number(1),
+            new Number(5)
+        );
+        $number = $scope->squareRoot();
+
+        $this->assertInstanceOf(SquareRoot::class, $number);
+        $this->assertSame(2.0, $number->value());
     }
 
     public function testStringCast()
