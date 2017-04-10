@@ -102,7 +102,7 @@ final class Addition implements OperationInterface, NumberInterface
             ->drop(1)
             ->reduce(
                 $this->values->first()->value(),
-                function($carry, Number $number) {
+                function($carry, NumberInterface $number) {
                     return $carry + $number->value();
                 }
             );
