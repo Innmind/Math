@@ -5,6 +5,7 @@ namespace Tests\Innmind\Math\Geometry\Angle;
 
 use Innmind\Math\{
     Geometry\Angle\Degree,
+    Geometry\Angle\Radian,
     Algebra\Number
 };
 use PHPUnit\Framework\TestCase;
@@ -54,13 +55,25 @@ class DegreeTest extends TestCase
         $this->assertSame('90°', (string) $opposite);
     }
 
+    /**
+     * @dataProvider degrees
+     */
+    public function testToRadian($degree, $string, $expected)
+    {
+        $degree = new Degree(new Number($degree));
+        $radian = $degree->toRadian();
+
+        $this->assertInstanceOf(Radian::class, $radian);
+        $this->assertSame($expected, (string) $radian);
+    }
+
     public function degrees(): array
     {
         return [
-            [0, '0°'],
-            [360, '0°'],
-            [42, '42°'],
-            [-42, '318°'],
+            [0, '0°', '0 rad'],
+            [360, '0°', '0 rad'],
+            [42, '42°', '0.73303828583762 rad'],
+            [-42, '318°', '5.550147021342 rad'],
         ];
     }
 }

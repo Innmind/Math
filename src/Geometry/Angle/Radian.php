@@ -5,55 +5,56 @@ namespace Innmind\Math\Geometry\Angle;
 
 use Innmind\Math\Algebra\{
     NumberInterface,
-    Number
+    Number,
+    Number\Pi
 };
 
-final class Degree
+final class Radian
 {
     private $number;
-    private $radian;
+    private $degree;
 
     public function __construct(NumberInterface $number)
     {
-        $modulus = new Number(360);
+        $modulus = (new Pi)->multiplyBy(new Number(2));
         $this->number = $number
             ->modulo($modulus)
             ->add($modulus)
             ->modulo($modulus);
     }
 
-    public function toRadian(): Radian
+    public function toDegree(): Degree
     {
-        return $this->radian ?? $this->radian = new Radian(
+        return $this->degree ?? $this->degree = new Degree(
             new Number(
-                deg2rad($this->number->value())
+                rad2deg($this->number->value())
             )
         );
     }
 
     public function isRight(): bool
     {
-        return $this->number->equals(new Number(90));
+        return $this->toDegree()->isRight();
     }
 
     public function isObtuse(): bool
     {
-        return $this->number->higherThan(new Number(90));
+        return $this->toDegree()->isObtuse();
     }
 
     public function isAcuse(): bool
     {
-        return (new Number(90))->higherThan($this->number);
+        return $this->toDegree()->isAcuse();
     }
 
     public function isFlat(): bool
     {
-        return $this->number->equals(new Number(180));
+        return $this->toDegree()->isFlat();
     }
 
     public function opposite(): self
     {
-        return new self($this->number->add(new Number(180)));
+        return $this->toDegree()->opposite()->toRadian();
     }
 
     public function number(): NumberInterface
@@ -63,6 +64,6 @@ final class Degree
 
     public function __toString(): string
     {
-        return $this->number->value().'°';
+        return $this->number->value().' rad';
     }
 }
