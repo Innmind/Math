@@ -38,14 +38,18 @@ final class SquareRoot implements OperationInterface, NumberInterface
         return $this->result()->higherThan($number);
     }
 
-    public function add(NumberInterface ...$numbers): NumberInterface
-    {
-        return new Addition($this, ...$numbers);
+    public function add(
+        NumberInterface $number,
+        NumberInterface ...$numbers
+    ): NumberInterface {
+        return new Addition($this, $number, ...$numbers);
     }
 
-    public function subtract(NumberInterface ...$numbers): NumberInterface
-    {
-        return new Subtraction($this, ...$numbers);
+    public function subtract(
+        NumberInterface $number,
+        NumberInterface ...$numbers
+    ): NumberInterface {
+        return new Subtraction($this, $number, ...$numbers);
     }
 
     public function divideBy(NumberInterface $number): NumberInterface
@@ -53,9 +57,11 @@ final class SquareRoot implements OperationInterface, NumberInterface
         return new Division($this, $number);
     }
 
-    public function multiplyBy(NumberInterface ...$numbers): NumberInterface
-    {
-        return new Multiplication($this, ...$numbers);
+    public function multiplyBy(
+        NumberInterface $number,
+        NumberInterface ...$numbers
+    ): NumberInterface {
+        return new Multiplication($this, $number, ...$numbers);
     }
 
     public function round(int $precision = 0, string $mode = Round::UP): NumberInterface

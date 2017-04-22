@@ -65,14 +65,18 @@ final class Median implements NumberInterface
         return $this->result->higherThan($number);
     }
 
-    public function add(NumberInterface ...$numbers): NumberInterface
-    {
-        return $this->result->add(...$numbers);
+    public function add(
+        NumberInterface $number,
+        NumberInterface ...$numbers
+    ): NumberInterface {
+        return $this->result->add($number, ...$numbers);
     }
 
-    public function subtract(NumberInterface ...$numbers): NumberInterface
-    {
-        return $this->result->subtract(...$numbers);
+    public function subtract(
+        NumberInterface $number,
+        NumberInterface ...$numbers
+    ): NumberInterface {
+        return $this->result->subtract($number, ...$numbers);
     }
 
     public function divideBy(NumberInterface $number): NumberInterface
@@ -80,9 +84,11 @@ final class Median implements NumberInterface
         return $this->result->divideBy($number);
     }
 
-    public function multiplyBy(NumberInterface ...$numbers): NumberInterface
-    {
-        return $this->result->multiplyBy(...$numbers);
+    public function multiplyBy(
+        NumberInterface $number,
+        NumberInterface ...$numbers
+    ): NumberInterface {
+        return $this->result->multiplyBy($number, ...$numbers);
     }
 
     public function round(int $precision = 0, string $mode = Round::UP): NumberInterface
