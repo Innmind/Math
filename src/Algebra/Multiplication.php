@@ -5,7 +5,7 @@ namespace Innmind\Math\Algebra;
 
 use Innmind\Immutable\Sequence;
 
-final class Multiplication implements OperationInterface, NumberInterface
+final class Multiplication implements OperationInterface, NumberInterface, \Iterator
 {
     private $values;
     private $result;
@@ -127,5 +127,45 @@ final class Multiplication implements OperationInterface, NumberInterface
                 return (string) $number;
             })
             ->join(' x ');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function current()
+    {
+        return $this->values->current();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function key()
+    {
+        return $this->values->key();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function next()
+    {
+        $this->values->next();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rewind()
+    {
+        $this->values->rewind();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function valid()
+    {
+        return $this->values->valid();
     }
 }

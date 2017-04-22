@@ -26,13 +26,27 @@ class AdditionTest extends TestCase
     public function testInterface()
     {
         $addition = new Addition(
-            new Number(24),
-            new Number(42),
-            new Number(66)
+            $first = new Number(24),
+            $second = new Number(42),
+            $third = new Number(66)
         );
 
         $this->assertInstanceOf(OperationInterface::class, $addition);
         $this->assertInstanceOf(NumberInterface::class, $addition);
+        $this->assertInstanceOf(\Iterator::class, $addition);
+        $this->assertSame($first, $addition->current());
+        $this->assertSame(0, $addition->key());
+        $this->assertTrue($addition->valid());
+        $this->assertNull($addition->next());
+        $this->assertSame($second, $addition->current());
+        $this->assertSame(1, $addition->key());
+        $addition->next();
+        $this->assertSame($third, $addition->current());
+        $this->assertSame(2, $addition->key());
+        $addition->next();
+        $this->assertFalse($addition->valid());
+        $this->assertNull($addition->rewind());
+        $this->assertSame($first, $addition->current());
     }
 
     public function testResult()
