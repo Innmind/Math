@@ -38,14 +38,14 @@ final class Pi implements NumberInterface
         return $this->value() > $number->value();
     }
 
-    public function add(NumberInterface $number): NumberInterface
+    public function add(NumberInterface ...$numbers): NumberInterface
     {
-        return new Addition($this, $number);
+        return new Addition($this, ...$numbers);
     }
 
-    public function subtract(NumberInterface $number): NumberInterface
+    public function subtract(NumberInterface ...$numbers): NumberInterface
     {
-        return new Subtraction($this, $number);
+        return new Subtraction($this, ...$numbers);
     }
 
     public function divideBy(NumberInterface $number): NumberInterface

@@ -11,8 +11,8 @@ interface NumberInterface
     public function value();
     public function equals(self $number): bool;
     public function higherThan(self $number): bool;
-    public function add(self $number): self;
-    public function subtract(self $number): self;
+    public function add(self ...$numbers): self;
+    public function subtract(self ...$numbers): self;
     public function divideBy(self $number): self;
     public function multiplyBy(self $number): self;
     public function round(int $precision = 0, string $mode = Round::UP): self;
