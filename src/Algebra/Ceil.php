@@ -6,6 +6,7 @@ namespace Innmind\Math\Algebra;
 final class Ceil implements NumberInterface
 {
     private $number;
+    private $value;
 
     public function __construct(NumberInterface $number)
     {
@@ -17,7 +18,7 @@ final class Ceil implements NumberInterface
      */
     public function value()
     {
-        return ceil($this->number->value());
+        return $this->value ?? $this->value = ceil($this->number->value());
     }
 
     public function equals(NumberInterface $number): bool

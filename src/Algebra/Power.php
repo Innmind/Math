@@ -7,6 +7,7 @@ final class Power implements OperationInterface, NumberInterface
 {
     private $number;
     private $power;
+    private $result;
 
     public function __construct(
         NumberInterface $number,
@@ -18,7 +19,7 @@ final class Power implements OperationInterface, NumberInterface
 
     public function result(): NumberInterface
     {
-        return new Number(
+        return $this->result ?? $this->result = new Number(
             $this->number->value() ** $this->power->value()
         );
     }

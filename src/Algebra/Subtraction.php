@@ -8,6 +8,7 @@ use Innmind\Immutable\Sequence;
 final class Subtraction implements OperationInterface, NumberInterface
 {
     private $values;
+    private $result;
 
     public function __construct(
         NumberInterface $first,
@@ -97,6 +98,10 @@ final class Subtraction implements OperationInterface, NumberInterface
 
     public function result(): NumberInterface
     {
+        if ($this->result) {
+            return $this->result;
+        }
+
         $value = $this
             ->values
             ->drop(1)
@@ -107,7 +112,7 @@ final class Subtraction implements OperationInterface, NumberInterface
                 }
             );
 
-        return new Number($value);
+        return $this->result = new Number($value);
     }
 
     public function __toString(): string

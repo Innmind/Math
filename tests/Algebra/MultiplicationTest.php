@@ -45,6 +45,7 @@ class MultiplicationTest extends TestCase
         $this->assertInstanceOf(Number::class, $result);
         $this->assertSame(1008, $result->value());
         $this->assertTrue($result->equals($multiplication->product()));
+        $this->assertSame($result, $multiplication->result());
     }
 
     public function testValue()

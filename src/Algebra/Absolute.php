@@ -6,6 +6,7 @@ namespace Innmind\Math\Algebra;
 final class Absolute implements OperationInterface, NumberInterface
 {
     private $number;
+    private $result;
 
     public function __construct(NumberInterface $number)
     {
@@ -22,7 +23,9 @@ final class Absolute implements OperationInterface, NumberInterface
 
     public function result(): NumberInterface
     {
-        return new Number(abs($this->number->value()));
+        return $this->result ?? $this->result = new Number(
+            abs($this->number->value())
+        );
     }
 
     public function equals(NumberInterface $number): bool

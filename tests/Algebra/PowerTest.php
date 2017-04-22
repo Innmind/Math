@@ -34,6 +34,19 @@ class PowerTest extends TestCase
         $this->assertInstanceOf(OperationInterface::class, $power);
     }
 
+    public function testResult()
+    {
+        $power = new Power(
+            new Number(42.24),
+            new Number(2.1)
+        );
+        $result = $power->result();
+
+        $this->assertInstanceOf(NumberInterface::class, $result);
+        $this->assertSame(2594.3000857236, $result->value());
+        $this->assertSame($result, $power->result());
+    }
+
     public function testStringCast()
     {
         $power = new Power(

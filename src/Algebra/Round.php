@@ -15,6 +15,7 @@ final class Round implements NumberInterface
     private $number;
     private $precision;
     private $mode;
+    private $value;
 
     public function __construct(
         NumberInterface $number,
@@ -35,7 +36,11 @@ final class Round implements NumberInterface
      */
     public function value()
     {
-        return round($this->number->value(), $this->precision, $this->mode);
+        return $this->value ?? $this->value = round(
+            $this->number->value(),
+            $this->precision,
+            $this->mode
+        );
     }
 
     public function equals(NumberInterface $number): bool

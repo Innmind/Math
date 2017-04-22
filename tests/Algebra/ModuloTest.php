@@ -34,6 +34,19 @@ class ModuloTest extends TestCase
         $this->assertInstanceOf(OperationInterface::class, $modulo);
     }
 
+    public function testResult()
+    {
+        $modulo = new Modulo(
+            new Number(42.24),
+            new Number(2.1)
+        );
+        $result = $modulo->result();
+
+        $this->assertInstanceOf(NumberInterface::class, $result);
+        $this->assertSame(0.24, $result->value());
+        $this->assertSame($result, $modulo->result());
+    }
+
     public function testStringCast()
     {
         $modulo = new Modulo(

@@ -31,6 +31,16 @@ class SquareRootTest extends TestCase
         $this->assertInstanceOf(OperationInterface::class, $sqrt);
     }
 
+    public function testResult()
+    {
+        $sqrt = new SquareRoot(new Number(4));
+        $result = $sqrt->result();
+
+        $this->assertInstanceOf(NumberInterface::class, $result);
+        $this->assertSame(2.0, $result->value());
+        $this->assertSame($result, $sqrt->result());
+    }
+
     public function testValue()
     {
         $sqrt = new SquareRoot(new Number(4));

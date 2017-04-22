@@ -6,6 +6,7 @@ namespace Innmind\Math\Algebra;
 final class Floor implements NumberInterface
 {
     private $number;
+    private $value;
 
     public function __construct(NumberInterface $number)
     {
@@ -17,7 +18,7 @@ final class Floor implements NumberInterface
      */
     public function value()
     {
-        return floor($this->number->value());
+        return $this->value ?? $this->value = floor($this->number->value());
     }
 
     public function equals(NumberInterface $number): bool

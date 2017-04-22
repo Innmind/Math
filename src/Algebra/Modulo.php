@@ -7,6 +7,7 @@ final class Modulo implements OperationInterface, NumberInterface
 {
     private $number;
     private $modulus;
+    private $result;
 
     public function __construct(
         NumberInterface $number,
@@ -18,7 +19,7 @@ final class Modulo implements OperationInterface, NumberInterface
 
     public function result(): NumberInterface
     {
-        return new Number(
+        return $this->result ?? $this->result = new Number(
             fmod($this->number->value(), $this->modulus->value())
         );
     }

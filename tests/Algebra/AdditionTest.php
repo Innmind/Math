@@ -47,6 +47,7 @@ class AdditionTest extends TestCase
         $this->assertInstanceOf(Number::class, $result);
         $this->assertSame(132, $result->value());
         $this->assertTrue($result->equals($addition->sum()));
+        $this->assertSame($result, $addition->result());
     }
 
     public function testValue()

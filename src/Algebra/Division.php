@@ -9,6 +9,7 @@ final class Division implements OperationInterface, NumberInterface
 {
     private $dividend;
     private $divisor;
+    private $result;
 
     public function __construct(
         NumberInterface $dividend,
@@ -112,7 +113,9 @@ final class Division implements OperationInterface, NumberInterface
 
     public function result(): NumberInterface
     {
-        return new Number($this->dividend->value() / $this->divisor->value());
+        return $this->result ?? $this->result = new Number(
+            $this->dividend->value() / $this->divisor->value()
+        );
     }
 
     public function __toString(): string
