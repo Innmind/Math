@@ -51,9 +51,9 @@ final class Number implements NumberInterface
         return new Division($this, $number);
     }
 
-    public function multiplyBy(NumberInterface $number): NumberInterface
+    public function multiplyBy(NumberInterface ...$numbers): NumberInterface
     {
-        return new Multiplication($this, $number);
+        return new Multiplication($this, ...$numbers);
     }
 
     public function round(int $precision = 0, string $mode = Round::UP): NumberInterface

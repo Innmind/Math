@@ -80,9 +80,9 @@ final class Median implements NumberInterface
         return $this->result->divideBy($number);
     }
 
-    public function multiplyBy(NumberInterface $number): NumberInterface
+    public function multiplyBy(NumberInterface ...$numbers): NumberInterface
     {
-        return $this->result->multiplyBy($number);
+        return $this->result->multiplyBy(...$numbers);
     }
 
     public function round(int $precision = 0, string $mode = Round::UP): NumberInterface

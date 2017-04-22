@@ -51,9 +51,9 @@ final class Multiplication implements OperationInterface, NumberInterface, \Iter
         return new Division($this, $number);
     }
 
-    public function multiplyBy(NumberInterface $number): NumberInterface
+    public function multiplyBy(NumberInterface ...$numbers): NumberInterface
     {
-        return new self($this, $number);
+        return new self($this, ...$numbers);
     }
 
     public function round(int $precision = 0, string $mode = Round::UP): NumberInterface
