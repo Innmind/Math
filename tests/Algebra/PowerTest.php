@@ -226,4 +226,20 @@ class PowerTest extends TestCase
         $this->assertInstanceOf(SquareRoot::class, $number);
         $this->assertSame(2.0, $number->value());
     }
+
+    public function testNegativePower()
+    {
+        //2^-3 === 1/(2^3)
+        $this->assertTrue(
+            (new Number(2))
+                ->power(new Number(-3))
+                ->equals(
+                    (new Number(1))->divideBy(
+                        (new Number(2))->power(
+                            new Number(3)
+                        )
+                    )
+                )
+        );
+    }
 }
