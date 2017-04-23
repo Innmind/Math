@@ -215,4 +215,29 @@ class SquareRootTest extends TestCase
                 )
         );
     }
+
+    public function testSquareRootAddition()
+    {
+        //sqrt(a*n) + sqrt(b*n) === sqrt((sqrt(a) + sqrt(b))^2 * n)
+        $this->assertTrue(
+            (new Number(9))
+                ->multiplyBy(new Number(2))
+                ->squareRoot()
+                ->add(
+                    (new Number(4))
+                        ->multiplyBy(new Number(2))
+                        ->squareRoot()
+                )
+                ->equals(
+                    (new Number(9))
+                        ->squareRoot()
+                        ->add(
+                            (new Number(4))->squareRoot()
+                        )
+                        ->power(new Number(2))
+                        ->multiplyBy(new Number(2))
+                        ->squareRoot()
+                )
+        );
+    }
 }
