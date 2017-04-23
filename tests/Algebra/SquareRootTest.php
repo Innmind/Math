@@ -240,4 +240,16 @@ class SquareRootTest extends TestCase
                 )
         );
     }
+
+    public function testSquareRootAsPowerNotation()
+    {
+        //sqrt(a) === a^0.5
+        $this->assertTrue(
+            ($a = new Number(4))
+                ->squareRoot()
+                ->equals(
+                    $a->power(new Number(0.5))
+                )
+        );
+    }
 }
