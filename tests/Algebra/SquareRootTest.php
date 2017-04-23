@@ -175,10 +175,10 @@ class SquareRootTest extends TestCase
     {
         //sqrt(a)^2 === a
         $this->assertTrue(
-            (new Number(9))
+            ($a = new Number(9))
                 ->squareRoot()
                 ->power(new Number(2))
-                ->equals(new Number(9))
+                ->equals($a)
         );
     }
 
@@ -186,14 +186,14 @@ class SquareRootTest extends TestCase
     {
         //sqrt(a*b) === sqrt(a) * sqrt(b)
         $this->assertTrue(
-            (new Number(4))
-                ->multiplyBy(new Number(9))
+            ($a = new Number(4))
+                ->multiplyBy($b = new Number(9))
                 ->squareRoot()
                 ->equals(
-                    (new Number(4))
+                    $a
                         ->squareRoot()
                         ->multiplyBy(
-                            (new Number(9))->squareRoot()
+                            $b->squareRoot()
                         )
                 )
         );
@@ -203,14 +203,14 @@ class SquareRootTest extends TestCase
     {
         //sqrt(a/b) === sqrt(a) / sqrt(b)
         $this->assertTrue(
-            (new Number(4))
-                ->divideBy(new Number(9))
+            ($a = new Number(4))
+                ->divideBy($b = new Number(9))
                 ->squareRoot()
                 ->equals(
-                    (new Number(4))
+                    $a
                         ->squareRoot()
                         ->divideBy(
-                            (new Number(9))->squareRoot()
+                            $b->squareRoot()
                         )
                 )
         );
@@ -220,22 +220,22 @@ class SquareRootTest extends TestCase
     {
         //sqrt(a*n) + sqrt(b*n) === sqrt((sqrt(a) + sqrt(b))^2 * n)
         $this->assertTrue(
-            (new Number(9))
-                ->multiplyBy(new Number(2))
+            ($a = new Number(9))
+                ->multiplyBy($n = new Number(2))
                 ->squareRoot()
                 ->add(
-                    (new Number(4))
-                        ->multiplyBy(new Number(2))
+                    ($b = new Number(4))
+                        ->multiplyBy($n)
                         ->squareRoot()
                 )
                 ->equals(
-                    (new Number(9))
+                    $a
                         ->squareRoot()
                         ->add(
-                            (new Number(4))->squareRoot()
+                            $b->squareRoot()
                         )
                         ->power(new Number(2))
-                        ->multiplyBy(new Number(2))
+                        ->multiplyBy($n)
                         ->squareRoot()
                 )
         );

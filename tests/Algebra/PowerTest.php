@@ -229,14 +229,14 @@ class PowerTest extends TestCase
 
     public function testNegativePower()
     {
-        //2^-3 === 1/(2^3)
+        //a^-n === 1/(a^n)
         $this->assertTrue(
-            (new Number(2))
-                ->power(new Number(-3))
+            ($a = new Number(2))
+                ->power($n = new Number(-3))
                 ->equals(
                     (new Number(1))->divideBy(
-                        (new Number(2))->power(
-                            new Number(3)
+                        $a->power(
+                            $n->absolute()
                         )
                     )
                 )
@@ -247,17 +247,15 @@ class PowerTest extends TestCase
     {
         //x^(a+b) === x^a + x^b
         $this->assertTrue(
-            (new Number(2))
+            ($x = new Number(2))
                 ->power(
-                    (new Number(3))->add(new Number(4))
+                    ($a = new Number(3))->add($b = new Number(4))
                 )
                 ->equals(
-                    (new Number(2))
-                        ->power(new Number(3))
+                    $x
+                        ->power($a)
                         ->multiplyBy(
-                            (new Number(2))->power(
-                                new Number(4)
-                            )
+                            $x->power($b)
                         )
                 )
         );
@@ -267,17 +265,15 @@ class PowerTest extends TestCase
     {
         //x^(a-b) === x^a / x^b
         $this->assertTrue(
-            (new Number(2))
+            ($x = new Number(2))
                 ->power(
-                    (new Number(3))->subtract(new Number(4))
+                    ($a = new Number(3))->subtract($b = new Number(4))
                 )
                 ->equals(
-                    (new Number(2))
-                        ->power(new Number(3))
+                    $x
+                        ->power($a)
                         ->divideBy(
-                            (new Number(2))->power(
-                                new Number(4)
-                            )
+                            $x->power($b)
                         )
                 )
         );
@@ -287,12 +283,12 @@ class PowerTest extends TestCase
     {
         //(x^a)^b === x^(a*b)
         $this->assertTrue(
-            (new Number(2))
-                ->power(new Number(3))
-                ->power(new Number(4))
+            ($x = new Number(2))
+                ->power($a = new Number(3))
+                ->power($b = new Number(4))
                 ->equals(
-                    (new Number(2))->power(
-                        (new Number(3))->multiplyBy(new Number(4))
+                    $x->power(
+                        $a->multiplyBy($b)
                     )
                 )
         );
@@ -302,14 +298,14 @@ class PowerTest extends TestCase
     {
         //(a*b)^n = a^n * b^n
         $this->assertTrue(
-            (new Number(2))
-                ->multiplyBy(new Number(3))
-                ->power(new Number(4))
+            ($a = new Number(2))
+                ->multiplyBy($b = new Number(3))
+                ->power($n = new Number(4))
                 ->equals(
-                    (new Number(2))
-                        ->power(new Number(4))
+                    $a
+                        ->power($n)
                         ->multiplyBy(
-                            (new Number(3))->power(new Number(4))
+                            $b->power($n)
                         )
                 )
         );
