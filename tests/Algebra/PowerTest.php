@@ -242,4 +242,76 @@ class PowerTest extends TestCase
                 )
         );
     }
+
+    public function testPowerAddition()
+    {
+        //x^(a+b) === x^a + x^b
+        $this->assertTrue(
+            (new Number(2))
+                ->power(
+                    (new Number(3))->add(new Number(4))
+                )
+                ->equals(
+                    (new Number(2))
+                        ->power(new Number(3))
+                        ->multiplyBy(
+                            (new Number(2))->power(
+                                new Number(4)
+                            )
+                        )
+                )
+        );
+    }
+
+    public function testPowerSubtraction()
+    {
+        //x^(a-b) === x^a / x^b
+        $this->assertTrue(
+            (new Number(2))
+                ->power(
+                    (new Number(3))->subtract(new Number(4))
+                )
+                ->equals(
+                    (new Number(2))
+                        ->power(new Number(3))
+                        ->divideBy(
+                            (new Number(2))->power(
+                                new Number(4)
+                            )
+                        )
+                )
+        );
+    }
+
+    public function testPowerMultiplication()
+    {
+        //(x^a)^b === x^(a*b)
+        $this->assertTrue(
+            (new Number(2))
+                ->power(new Number(3))
+                ->power(new Number(4))
+                ->equals(
+                    (new Number(2))->power(
+                        (new Number(3))->multiplyBy(new Number(4))
+                    )
+                )
+        );
+    }
+
+    public function testPowerDistribution()
+    {
+        //(a*b)^n = a^n * b^n
+        $this->assertTrue(
+            (new Number(2))
+                ->multiplyBy(new Number(3))
+                ->power(new Number(4))
+                ->equals(
+                    (new Number(2))
+                        ->power(new Number(4))
+                        ->multiplyBy(
+                            (new Number(3))->power(new Number(4))
+                        )
+                )
+        );
+    }
 }
