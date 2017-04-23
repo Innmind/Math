@@ -181,4 +181,38 @@ class SquareRootTest extends TestCase
                 ->equals(new Number(9))
         );
     }
+
+    public function testSquareRootOfMultiplication()
+    {
+        //sqrt(a*b) === sqrt(a) * sqrt(b)
+        $this->assertTrue(
+            (new Number(4))
+                ->multiplyBy(new Number(9))
+                ->squareRoot()
+                ->equals(
+                    (new Number(4))
+                        ->squareRoot()
+                        ->multiplyBy(
+                            (new Number(9))->squareRoot()
+                        )
+                )
+        );
+    }
+
+    public function testSquareRootOfDivision()
+    {
+        //sqrt(a/b) === sqrt(a) / sqrt(b)
+        $this->assertTrue(
+            (new Number(4))
+                ->divideBy(new Number(9))
+                ->squareRoot()
+                ->equals(
+                    (new Number(4))
+                        ->squareRoot()
+                        ->divideBy(
+                            (new Number(9))->squareRoot()
+                        )
+                )
+        );
+    }
 }
