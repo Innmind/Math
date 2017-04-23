@@ -236,4 +236,88 @@ class MultiplicationTest extends TestCase
 
         $this->assertSame('(12 + 12) x 42 x 66', (string) $multiplication);
     }
+
+    public function testDistributivity()
+    {
+        //a(b+c) === ab + ac
+        $this->assertTrue(
+            ($a = new Number(2))
+                ->multiplyBy(
+                    ($b = new Number(3))->add($c = new Number(4))
+                )
+                ->equals(
+                    $a
+                        ->multiplyBy($b)
+                        ->add($a->multiplyBy($c))
+                )
+        );
+    }
+
+    public function testDoubleDistributivity()
+    {
+        //(a+b)(c+d) === ac + ad + bc + bd
+        $this->assertTrue(
+            ($a = new Number(2))
+                ->add($b = new Number(3))
+                ->multiplyBy(
+                    ($c = new Number(4))->add($d = new Number(5))
+                )
+                ->equals(
+                    $a
+                        ->multiplyBy($c)
+                        ->add($a->multiplyBy($d))
+                        ->add($b->multiplyBy($c))
+                        ->add($b->multiplyBy($d))
+                )
+        );
+    }
+
+    public function testRemarkableIdentity()
+    {
+        //(a+b)^2 = a^2 + 2ab + b^2
+        $this->assertTrue(
+            ($a = new Number(2))
+                ->add($b = new Number(3))
+                ->power(new Number(2))
+                ->equals(
+                    $a
+                        ->power(new Number(2))
+                        ->add(
+                            (new Number(2))
+                                ->multiplyBy($a)
+                                ->multiplyBy($b)
+                        )
+                        ->add($b->power(new Number(2)))
+                )
+        );
+
+        //(a-b)^2 = a^2 - 2ab + b^2
+        $this->assertTrue(
+            ($a = new Number(2))
+                ->subtract($b = new Number(3))
+                ->power(new Number(2))
+                ->equals(
+                    $a
+                        ->power(new Number(2))
+                        ->subtract(
+                            (new Number(2))
+                                ->multiplyBy($a)
+                                ->multiplyBy($b)
+                        )
+                        ->add($b->power(new Number(2)))
+                )
+        );
+
+        //(a+b)(a-b) = a^2 - b^2
+        $this->assertTrue(
+            ($a = new Number(2))
+                ->add($b = new Number(3))
+                ->multiplyBy($a->subtract($b))
+                ->equals(
+                    $a
+                        ->power(new Number(2))
+                        ->subtract($b->power(new Number(2)))
+                )
+        );
+    }
 }
