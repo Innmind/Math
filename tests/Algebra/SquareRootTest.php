@@ -170,4 +170,15 @@ class SquareRootTest extends TestCase
         $this->assertInstanceOf(SquareRoot::class, $number);
         $this->assertSame(2.0, $number->value());
     }
+
+    public function testSquareOfSquareRoot()
+    {
+        //sqrt(a)^2 === a
+        $this->assertTrue(
+            (new Number(9))
+                ->squareRoot()
+                ->power(new Number(2))
+                ->equals(new Number(9))
+        );
+    }
 }
