@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Innmind\Math\Vector;
+namespace Innmind\Math\Matrix;
 
 use Innmind\Math\{
     Exception\VectorsMustMeOfTheSameDimensionException,

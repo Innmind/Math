@@ -1,11 +1,11 @@
 <?php
 declare(strict_types = 1);
 
-namespace Tests\Innmind\Math\Vector;
+namespace Tests\Innmind\Math\Matrix;
 
 use Innmind\Math\{
-    Vector\ColumnVector,
-    Vector\RowVector,
+    Matrix\ColumnVector,
+    Matrix\RowVector,
     Matrix
 };
 use PHPUnit\Framework\TestCase;

@@ -1,11 +1,11 @@
 <?php
 declare(strict_types = 1);
 
-namespace Innmind\Math\Vector;
+namespace Innmind\Math\Matrix;
 
 use Innmind\Math\Matrix;
 
-final class RowVector implements \Iterator
+final class ColumnVector implements \Iterator
 {
     private $vector;
 
@@ -29,23 +29,26 @@ final class RowVector implements \Iterator
         return $this->vector->dimension();
     }
 
-    public function dot(ColumnVector $column): float
+    /**
+     * @see https://en.wikipedia.org/wiki/Row_and_column_vectors#Operations
+     */
+    public function dot(RowVector $row): float
     {
-        return $this->vector->dot(new Vector(...$column));
+        return $this->vector->dot(new Vector(...$row));
     }
 
     /**
      * @see https://en.wikipedia.org/wiki/Row_and_column_vectors#Operations
      */
-    public function matrix(ColumnVector $column): Matrix
+    public function matrix(RowVector $row): Matrix
     {
         $rows = [];
 
-        foreach ($column as $number) {
+        foreach ($this->vector as $number) {
             $values = [];
 
-            foreach ($this->vector as $rowNumber) {
-                $values[] = $rowNumber * $number;
+            foreach ($row as $rowNumber) {
+                $values[] = $number * $rowNumber;
             }
 
             $rows[] = new RowVector(...$values);
@@ -54,31 +57,31 @@ final class RowVector implements \Iterator
         return new Matrix(...$rows);
     }
 
-    public function multiply(self $row): self
+    public function multiply(self $column): self
     {
         return new self(
-            ...$this->vector->multiply($row->vector)
+            ...$this->vector->multiply($column->vector)
         );
     }
 
-    public function divide(self $row): self
+    public function divide(self $column): self
     {
         return new self(
-            ...$this->vector->divide($row->vector)
+            ...$this->vector->divide($column->vector)
         );
     }
 
-    public function subtract(self $row): self
+    public function subtract(self $column): self
     {
         return new self(
-            ...$this->vector->subtract($row->vector)
+            ...$this->vector->subtract($column->vector)
         );
     }
 
-    public function add(self $row): self
+    public function add(self $column): self
     {
         return new self(
-            ...$this->vector->add($row->vector)
+            ...$this->vector->add($column->vector)
         );
     }
 

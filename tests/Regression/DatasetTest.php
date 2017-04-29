@@ -5,8 +5,8 @@ namespace Tests\Innmind\Math\Regression;
 
 use Innmind\Math\{
     Regression\Dataset,
-    Vector\RowVector,
-    Vector\ColumnVector,
+    Matrix\RowVector,
+    Matrix\ColumnVector,
     Matrix\Dimension
 };
 use PHPUnit\Framework\TestCase;

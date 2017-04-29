@@ -6,8 +6,8 @@ namespace Tests\Innmind\Math;
 use Innmind\Math\{
     Matrix,
     Matrix\Dimension,
-    Vector\RowVector,
-    Vector\ColumnVector
+    Matrix\RowVector,
+    Matrix\ColumnVector
 };
 use PHPUnit\Framework\TestCase;
 

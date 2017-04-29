@@ -4,8 +4,8 @@ declare(strict_types = 1);
 namespace Innmind\Math;
 
 use Innmind\Math\{
-    Vector\RowVector,
-    Vector\ColumnVector,
+    Matrix\RowVector,
+    Matrix\ColumnVector,
     Exception\MatrixCannotBeEmptyException,
     Exception\VectorsMustMeOfTheSameDimensionException,
     Matrix\Dimension

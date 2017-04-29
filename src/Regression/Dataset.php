@@ -6,8 +6,8 @@ namespace Innmind\Math\Regression;
 use Innmind\Math\{
     Matrix,
     Matrix\Dimension,
-    Vector\RowVector,
-    Vector\ColumnVector,
+    Matrix\RowVector,
+    Matrix\ColumnVector,
     Exception\VectorsMustContainsOnlyTwoValuesException
 };
 
