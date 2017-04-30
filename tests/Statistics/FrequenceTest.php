@@ -5,6 +5,7 @@ namespace Tests\Innmind\Math\Statistics;
 
 use Innmind\Math\{
     Statistics\Frequence,
+    Algebra\NumberInterface,
     Algebra\Number,
     Algebra\Division
 };
@@ -26,5 +27,7 @@ class FrequenceTest extends TestCase
         $this->assertInstanceOf(Division::class, $frequence(new Number(4)));
         $this->assertSame('2 ÷ 5', (string) $frequence(new Number(1)));
         $this->assertSame('0 ÷ 5', (string) $frequence(new Number(4)));
+        $this->assertInstanceOf(NumberInterface::class, $frequence->size());
+        $this->assertSame(5, $frequence->size()->value());
     }
 }

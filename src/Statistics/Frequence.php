@@ -32,4 +32,9 @@ final class Frequence
 
         return new Division(new Number($frequence), $this->size);
     }
+
+    public function size(): NumberInterface
+    {
+        return $this->size;
+    }
 }
