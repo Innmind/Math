@@ -16,4 +16,20 @@ class DimensionTest extends TestCase
         $this->assertSame(3, $dimension->columns());
         $this->assertSame('2 x 3', (string) $dimension);
     }
+
+    /**
+     * @expectedException Innmind\Math\Exception\NegativeDimensionException
+     */
+    public function testThrowWhenNegativeRows()
+    {
+        new Dimension(-1, 1);
+    }
+
+    /**
+     * @expectedException Innmind\Math\Exception\NegativeDimensionException
+     */
+    public function testThrowWhenNegativeColumns()
+    {
+        new Dimension(1, -1);
+    }
 }
