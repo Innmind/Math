@@ -3,12 +3,15 @@ declare(strict_types = 1);
 
 namespace Innmind\Math;
 
+use function Innmind\Math\numerize;
 use Innmind\Math\{
     Matrix\RowVector,
     Matrix\ColumnVector,
     Exception\MatrixCannotBeEmptyException,
     Exception\VectorsMustMeOfTheSameDimensionException,
-    Matrix\Dimension
+    Matrix\Dimension,
+    Algebra\NumberInterface,
+    Algebra\Number
 };
 use Innmind\Immutable\Sequence;
 
@@ -25,7 +28,7 @@ final class Matrix implements \Iterator
         }
 
         for ($i = 1; $i < $count; ++$i) {
-            if ($rows[$i]->dimension() !== $rows[$i - 1]->dimension()) {
+            if (!$rows[$i]->dimension()->equals($rows[$i - 1]->dimension())) {
                 throw new VectorsMustMeOfTheSameDimensionException;
             }
         }
@@ -34,7 +37,7 @@ final class Matrix implements \Iterator
         $this->columns = new Sequence;
         $this->dimension = new Dimension(
             $count,
-            $this->rows->get(0)->dimension()
+            $this->rows->get(0)->dimension()->value()
         );
         $this->buildColumns();
     }
@@ -44,24 +47,24 @@ final class Matrix implements \Iterator
         $rows = [];
 
         foreach ($values as $numbers) {
-            $rows[] = new RowVector(...$numbers);
+            $rows[] = new RowVector(...numerize(...$numbers));
         }
 
         return new self(...$rows);
     }
 
     /**
-     * Initialize a matrix to the wisjed dimension filled with the specified value
+     * Initialize a matrix to the wished dimension filled with the specified value
      */
-    public static function initialize(Dimension $dimension, float $value): self
+    public static function initialize(Dimension $dimension, NumberInterface $value): self
     {
         $rows = [];
 
-        for ($i = 0; $i < $dimension->rows(); ++$i) {
+        for ($i = 0; $i < $dimension->rows()->value(); ++$i) {
             $rows[] = new RowVector(
                 ...array_fill(
                     0,
-                    $dimension->columns(),
+                    $dimension->columns()->value(),
                     $value
                 )
             );
@@ -115,10 +118,10 @@ final class Matrix implements \Iterator
         $expectedN = $matrix->dimension()->columns();
         $rows = [];
 
-        for ($i = 0; $i < $expectedM; ++$i) {
+        for ($i = 0; $i < $expectedM->value(); ++$i) {
             $row = [];
 
-            for ($j = 0; $j < $expectedN; ++$j) {
+            for ($j = 0; $j < $expectedN->value(); ++$j) {
                 $row[] = $this->row($i)->dot($matrix->column($j));
             }
 
@@ -155,7 +158,7 @@ final class Matrix implements \Iterator
 
     private function buildColumns()
     {
-        for ($i = 0; $i < $this->dimension->columns(); ++$i) {
+        for ($i = 0; $i < $this->dimension->columns()->value(); ++$i) {
             $values = $this->rows->reduce(
                 [],
                 function(array $values, RowVector $row) use ($i) {

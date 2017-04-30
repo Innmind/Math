@@ -3,7 +3,11 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Matrix;
 
-use Innmind\Math\Exception\NegativeDimensionException;
+use Innmind\Math\{
+    Algebra\NumberInterface,
+    Algebra\Number,
+    Exception\NegativeDimensionException
+};
 
 final class Dimension
 {
@@ -17,17 +21,17 @@ final class Dimension
             throw new NegativeDimensionException;
         }
 
-        $this->rows = $rows;
-        $this->columns = $columns;
+        $this->rows = new Number($rows);
+        $this->columns = new Number($columns);
         $this->string = sprintf('%s x %s', $rows, $columns);
     }
 
-    public function rows(): int
+    public function rows(): NumberInterface
     {
         return $this->rows;
     }
 
-    public function columns(): int
+    public function columns(): NumberInterface
     {
         return $this->columns;
     }

@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Regression;
 
+use function Innmind\Math\numerize;
 use Innmind\Math\{
     Matrix,
     Matrix\Dimension,
@@ -19,7 +20,7 @@ final class Dataset implements \Iterator
     {
         $this->matrix = new Matrix(...$rows);
 
-        if ($this->matrix->dimension()->columns() !== 2) {
+        if ($this->matrix->dimension()->columns()->value() !== 2) {
             throw new VectorsMustContainsOnlyTwoValuesException;
         }
     }
@@ -30,12 +31,15 @@ final class Dataset implements \Iterator
 
         foreach ($values as $x => $y) {
             $coordinates = is_array($y) ? $y : [$x, $y];
-            $rows[] = new RowVector(...$coordinates);
+            $rows[] = new RowVector(...numerize(...$coordinates));
         }
 
         return new self(...$rows);
     }
 
+    /**
+     * @return int|float[]
+     */
     public function toArray(): array
     {
         return $this->matrix->toArray();

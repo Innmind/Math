@@ -3,28 +3,34 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Matrix;
 
-use Innmind\Math\Matrix;
+use Innmind\Math\{
+    Matrix,
+    Algebra\NumberInterface
+};
 
 final class ColumnVector implements \Iterator
 {
     private $vector;
 
-    public function __construct(float ...$numbers)
+    public function __construct(NumberInterface ...$numbers)
     {
         $this->vector = new Vector(...$numbers);
     }
 
-    public static function initialize(int $dimension, float $value): self
+    public static function initialize(int $dimension, NumberInterface $value): self
     {
         return new self(...array_fill(0, $dimension, $value));
     }
 
+    /**
+     * @return int|float[]
+     */
     public function toArray(): array
     {
         return $this->vector->toArray();
     }
 
-    public function dimension(): int
+    public function dimension(): NumberInterface
     {
         return $this->vector->dimension();
     }
@@ -32,7 +38,7 @@ final class ColumnVector implements \Iterator
     /**
      * @see https://en.wikipedia.org/wiki/Row_and_column_vectors#Operations
      */
-    public function dot(RowVector $row): float
+    public function dot(RowVector $row): NumberInterface
     {
         return $this->vector->dot(new Vector(...$row));
     }
@@ -48,7 +54,7 @@ final class ColumnVector implements \Iterator
             $values = [];
 
             foreach ($row as $rowNumber) {
-                $values[] = $number * $rowNumber;
+                $values[] = $number->multiplyBy($rowNumber);
             }
 
             $rows[] = new RowVector(...$values);
@@ -85,19 +91,19 @@ final class ColumnVector implements \Iterator
         );
     }
 
-    public function power(int $power): self
+    public function power(NumberInterface $power): self
     {
         return new self(
             ...$this->vector->power($power)
         );
     }
 
-    public function sum(): float
+    public function sum(): NumberInterface
     {
         return $this->vector->sum();
     }
 
-    public function get(int $position): float
+    public function get(int $position): NumberInterface
     {
         return $this->vector->get($position);
     }

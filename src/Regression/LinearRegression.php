@@ -58,7 +58,7 @@ final class LinearRegression
      */
     private function compute(Dataset $data): array
     {
-        $count = $data->dimension()->rows();
+        $count = $data->dimension()->rows()->value();
         $x = $data->abscissas()->toArray();
         $y = $data->ordinates()->toArray();
 

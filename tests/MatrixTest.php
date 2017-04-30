@@ -3,11 +3,13 @@ declare(strict_types = 1);
 
 namespace Tests\Innmind\Math;
 
+use function Innmind\Math\numerize;
 use Innmind\Math\{
     Matrix,
     Matrix\Dimension,
     Matrix\RowVector,
-    Matrix\ColumnVector
+    Matrix\ColumnVector,
+    Algebra\Number
 };
 use PHPUnit\Framework\TestCase;
 
@@ -16,8 +18,8 @@ class MatrixTest extends TestCase
     public function testInterface()
     {
         $rows = [
-            new RowVector(1, 2, 3),
-            new RowVector(2, 3, 4),
+            new RowVector(...numerize(1, 2, 3)),
+            new RowVector(...numerize(2, 3, 4)),
         ];
         $matrix = new Matrix(...$rows);
 
@@ -30,8 +32,8 @@ class MatrixTest extends TestCase
         $this->assertSame($rows[1], $matrix->row(1));
         $this->assertSame(
             [
-                [1.0, 2.0, 3.0],
-                [2.0, 3.0, 4.0],
+                [1, 2, 3],
+                [2, 3, 4],
             ],
             $matrix->toArray()
         );
@@ -39,15 +41,15 @@ class MatrixTest extends TestCase
         $this->assertInstanceOf(ColumnVector::class, $matrix->column(1));
         $this->assertInstanceOf(ColumnVector::class, $matrix->column(2));
         $this->assertSame(
-            [1.0, 2.0],
+            [1, 2],
             $matrix->column(0)->toArray()
         );
         $this->assertSame(
-            [2.0, 3.0],
+            [2, 3],
             $matrix->column(1)->toArray()
         );
         $this->assertSame(
-            [3.0, 4.0],
+            [3, 4],
             $matrix->column(2)->toArray()
         );
     }
@@ -66,16 +68,16 @@ class MatrixTest extends TestCase
     public function testThrowWhenBuildingMatrixWithIncoherentRows()
     {
         new Matrix(
-            new RowVector(1, 2),
-            new RowVector(1, 2, 3)
+            new RowVector(...numerize(1, 2)),
+            new RowVector(...numerize(1, 2, 3))
         );
     }
 
     public function testFromArray()
     {
         $matrix = Matrix::fromArray($values = [
-            [1.0, 2.0, 3.0],
-            [2.0, 3.0, 4.0],
+            [1, 2, 3],
+            [2, 3, 4],
         ]);
 
         $this->assertInstanceOf(Matrix::class, $matrix);
@@ -93,9 +95,9 @@ class MatrixTest extends TestCase
         $this->assertInstanceOf(Matrix::class, $matrix);
         $this->assertSame(
             [
-                [1.0, 3.0, 2.0],
-                [2.0, 4.0, 3.0],
-                [3.0, 5.0, 4.0],
+                [1, 3, 2],
+                [2, 4, 3],
+                [3, 5, 4],
             ],
             $matrix->toArray()
         );
@@ -117,8 +119,8 @@ class MatrixTest extends TestCase
         $this->assertInstanceOf(Matrix::class, $matrix);
         $this->assertSame(
             [
-                [58.0, 64.0],
-                [139.0, 154.0]
+                [58, 64],
+                [139, 154]
             ],
             $matrix->toArray()
         );
@@ -128,7 +130,7 @@ class MatrixTest extends TestCase
     {
         $matrix = Matrix::initialize(
             new Dimension(3, 2),
-            4.2
+            new Number(4.2)
         );
 
         $this->assertInstanceOf(Matrix::class, $matrix);

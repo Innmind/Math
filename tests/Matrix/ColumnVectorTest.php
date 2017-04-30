@@ -3,10 +3,13 @@ declare(strict_types = 1);
 
 namespace Tests\Innmind\Math\Matrix;
 
+use function Innmind\Math\numerize;
 use Innmind\Math\{
     Matrix\ColumnVector,
     Matrix\RowVector,
-    Matrix
+    Matrix,
+    Algebra\NumberInterface,
+    Algebra\Number
 };
 use PHPUnit\Framework\TestCase;
 
@@ -14,21 +17,27 @@ class ColumnVectorTest extends TestCase
 {
     public function testInterface()
     {
-        $vector = new ColumnVector(1, 2, 3);
+        $vector = new ColumnVector(...numerize(1, 2, 3));
 
-        $this->assertSame([1.0, 2.0, 3.0], $vector->toArray());
         $this->assertInstanceOf(\Iterator::class, $vector);
-        $this->assertSame(3, $vector->dimension());
-        $this->assertSame(1.0, $vector->get(0));
-        $this->assertSame(2.0, $vector->get(1));
-        $this->assertSame(3.0, $vector->get(2));
+        $this->assertSame(3, $vector->dimension()->value());
+        $this->assertInstanceOf(NumberInterface::class, $vector->get(0));
+        $this->assertInstanceOf(NumberInterface::class, $vector->get(1));
+        $this->assertInstanceOf(NumberInterface::class, $vector->get(2));
+        $this->assertSame(1, $vector->get(0)->value());
+        $this->assertSame(2, $vector->get(1)->value());
+        $this->assertSame(3, $vector->get(2)->value());
+        $this->assertSame([1, 2, 3], $vector->toArray());
     }
 
     public function testDot()
     {
-        $number = (new ColumnVector(-1, 2))->dot(new RowVector(4, 1));
+        $number = (new ColumnVector(...numerize(-1, 2)))->dot(
+            new RowVector(...numerize(4, 1))
+        );
 
-        $this->assertSame(-2.0, $number);
+        $this->assertInstanceOf(NumberInterface::class, $number);
+        $this->assertSame(-2, $number->value());
     }
 
     /**
@@ -36,7 +45,9 @@ class ColumnVectorTest extends TestCase
      */
     public function testThrowForDotProductWithDifferentDimensions()
     {
-        (new ColumnVector(-1, 2))->dot(new RowVector(4, 1, 0));
+        (new ColumnVector(...numerize(-1, 2)))->dot(
+            new RowVector(...numerize(4, 1, 0))
+        );
     }
 
     /**
@@ -49,14 +60,16 @@ class ColumnVectorTest extends TestCase
 
     public function testMatrix()
     {
-        $matrix = (new ColumnVector(-1, 2))->matrix(new RowVector(4, 1, 2));
+        $matrix = (new ColumnVector(...numerize(-1, 2)))->matrix(
+            new RowVector(...numerize(4, 1, 2))
+        );
 
         $this->assertInstanceOf(Matrix::class, $matrix);
         $this->assertSame('2 x 3', (string) $matrix->dimension());
         $this->assertSame(
             [
-                [-4.0, -1.0, -2.0],
-                [8.0, 2.0, 4.0],
+                [-4, -1, -2],
+                [8, 2, 4],
             ],
             $matrix->toArray()
         );
@@ -64,11 +77,11 @@ class ColumnVectorTest extends TestCase
 
     public function testMultiply()
     {
-        $column = new ColumnVector(25, 5, 1);
-        $column2 = $column->multiply(ColumnVector::initialize(3, 2.56));
+        $column = new ColumnVector(...numerize(25, 5, 1));
+        $column2 = $column->multiply(ColumnVector::initialize(3, new Number(2.56)));
 
         $this->assertInstanceOf(ColumnVector::class, $column2);
-        $this->assertSame([25.0, 5.0, 1.0], $column->toArray());
+        $this->assertSame([25, 5, 1], $column->toArray());
         $this->assertSame([64.0, 12.8, 2.56], $column2->toArray());
     }
 
@@ -77,17 +90,19 @@ class ColumnVectorTest extends TestCase
      */
     public function testThrowWhenMultiplyingVectorsOfDifferentDimensions()
     {
-        ColumnVector::initialize(1, 1)->multiply(ColumnVector::initialize(2, 1));
+        ColumnVector::initialize(1, new Number(1))->multiply(
+            ColumnVector::initialize(2, new Number(1))
+        );
     }
 
     public function testDivide()
     {
-        $column = new ColumnVector(25, 5, 1);
-        $column2 = $column->divide(ColumnVector::initialize(3, 5));
+        $column = new ColumnVector(...numerize(25, 5, 1));
+        $column2 = $column->divide(ColumnVector::initialize(3, new Number(5)));
 
         $this->assertInstanceOf(ColumnVector::class, $column2);
-        $this->assertSame([25.0, 5.0, 1.0], $column->toArray());
-        $this->assertSame([5.0, 1.0, 0.2], $column2->toArray());
+        $this->assertSame([25, 5, 1], $column->toArray());
+        $this->assertSame([5, 1, 0.2], $column2->toArray());
     }
 
     /**
@@ -95,12 +110,14 @@ class ColumnVectorTest extends TestCase
      */
     public function testThrowWhenDividingVectorsOfDifferentDimensions()
     {
-        ColumnVector::initialize(1, 1)->divide(ColumnVector::initialize(2, 1));
+        ColumnVector::initialize(1, new Number(1))->divide(
+            ColumnVector::initialize(2, new Number(1))
+        );
     }
 
     public function testInitialize()
     {
-        $vector = ColumnVector::initialize(4, 1.2);
+        $vector = ColumnVector::initialize(4, new Number(1.2));
 
         $this->assertInstanceOf(ColumnVector::class, $vector);
         $this->assertSame([1.2, 1.2, 1.2, 1.2], $vector->toArray());
@@ -108,8 +125,8 @@ class ColumnVectorTest extends TestCase
 
     public function testSubtract()
     {
-        $vector1 = new ColumnVector(1, 2, 3, 4);
-        $vector2 = new ColumnVector(0.5, 2.5, 2.8, 4.2);
+        $vector1 = new ColumnVector(...numerize(1, 2, 3, 4));
+        $vector2 = new ColumnVector(...numerize(0.5, 2.5, 2.8, 4.2));
 
         $vector3 = $vector1->subtract($vector2);
 
@@ -127,13 +144,15 @@ class ColumnVectorTest extends TestCase
      */
     public function testThrowWhenSubtractingVectorsOfDifferentDimensions()
     {
-        ColumnVector::initialize(1, 1)->subtract(ColumnVector::initialize(2, 1));
+        ColumnVector::initialize(1, new Number(1))->subtract(
+            ColumnVector::initialize(2, new Number(1))
+        );
     }
 
     public function testAdd()
     {
-        $vector1 = new ColumnVector(1, 2, 3, 4);
-        $vector2 = new ColumnVector(0.5, 2.5, 2.8, 4.2);
+        $vector1 = new ColumnVector(...numerize(1, 2, 3, 4));
+        $vector2 = new ColumnVector(...numerize(0.5, 2.5, 2.8, 4.2));
 
         $vector3 = $vector1->add($vector2);
 
@@ -151,14 +170,16 @@ class ColumnVectorTest extends TestCase
      */
     public function testThrowWhenAddingVectorsOfDifferentDimensions()
     {
-        ColumnVector::initialize(1, 1)->add(ColumnVector::initialize(2, 1));
+        ColumnVector::initialize(1, new Number(1))->add(
+            ColumnVector::initialize(2, new Number(1))
+        );
     }
 
     public function testPower()
     {
-        $vector1 = new ColumnVector(1, 2, 3, -4);
+        $vector1 = new ColumnVector(...numerize(1, 2, 3, -4));
 
-        $vector2 = $vector1->power(3);
+        $vector2 = $vector1->power(new Number(3));
 
         $this->assertInstanceOf(ColumnVector::class, $vector2);
         $this->assertNotSame($vector2, $vector1);
@@ -170,8 +191,9 @@ class ColumnVectorTest extends TestCase
 
     public function testSum()
     {
-        $vector = new ColumnVector(1, 2, 3, -4);
+        $vector = new ColumnVector(...numerize(1, 2, 3, -4));
 
-        $this->assertSame(2.0, $vector->sum());
+        $this->assertInstanceOf(NumberInterface::class, $vector->sum());
+        $this->assertSame(2, $vector->sum()->value());
     }
 }
