@@ -101,6 +101,31 @@ final class RowVector implements \Iterator
         return $this->vector->sum();
     }
 
+    public function foreach(callable $function): self
+    {
+        $this->vector->foreach($function);
+
+        return $this;
+    }
+
+    public function map(callable $function): self
+    {
+        return new self(
+            ...$this->vector->map($function)
+        );
+    }
+
+    /**
+     * @param mixed $carry
+     * @param callable $reducer
+     *
+     * @return mixed
+     */
+    public function reduce($carry, callable $reducer)
+    {
+        return $this->vector->reduce($carry, $reducer);
+    }
+
     public function get(int $position): NumberInterface
     {
         return $this->vector->get($position);

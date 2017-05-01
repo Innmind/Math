@@ -194,4 +194,43 @@ class VectorTest extends TestCase
         $this->assertInstanceOf(NumberInterface::class, $vector->sum());
         $this->assertSame(2, $vector->sum()->value());
     }
+
+    public function testForeach()
+    {
+        $vector = new Vector(...numerize(1, 2, 3, -4));
+        $count = 0;
+        $vector->foreach(function() use (&$count) {
+            ++$count;
+        });
+
+        $this->assertSame(4, $count);
+    }
+
+    public function testMap()
+    {
+        $vector = new Vector(...numerize(1, 2, 3, -4));
+        $vector2 = $vector->map(function($number) {
+            return $number->multiplyBy($number);
+        });
+
+        $this->assertInstanceOf(Vector::class, $vector2);
+        $this->assertNotSame($vector2, $vector);
+        $this->assertSame([1, 2, 3, -4], $vector->toArray());
+        $this->assertSame([1, 4, 9, 16], $vector2->toArray());
+    }
+
+    public function testReduce()
+    {
+        $vector = new Vector(...numerize(1, 2, 3, -4));
+
+        $this->assertSame(
+            2,
+            $vector->reduce(
+                0,
+                function(int $carry, $number): int {
+                    return $carry + $number->value();
+                }
+            )
+        );
+    }
 }

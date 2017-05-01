@@ -163,6 +163,31 @@ final class Vector implements \Iterator
         return add(...$this->numbers);
     }
 
+    public function foreach(callable $function): self
+    {
+        $this->numbers->foreach($function);
+
+        return $this;
+    }
+
+    public function map(callable $function): self
+    {
+        return new self(
+            ...$this->numbers->map($function)
+        );
+    }
+
+    /**
+     * @param mixed $carry
+     * @param callable $reducer
+     *
+     * @return mixed
+     */
+    public function reduce($carry, callable $reducer)
+    {
+        return $this->numbers->reduce($carry, $reducer);
+    }
+
     public function get(int $position): NumberInterface
     {
         return $this->numbers->get($position);
