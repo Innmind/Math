@@ -11,7 +11,8 @@ use Innmind\Math\{
     Exception\VectorsMustMeOfTheSameDimensionException,
     Matrix\Dimension,
     Algebra\NumberInterface,
-    Algebra\Number
+    Algebra\Number,
+    Algebra\Integer
 };
 use Innmind\Immutable\Sequence;
 
@@ -36,8 +37,8 @@ final class Matrix implements \Iterator
         $this->rows = new Sequence(...$rows);
         $this->columns = new Sequence;
         $this->dimension = new Dimension(
-            $count,
-            $this->rows->get(0)->dimension()->value()
+            new Integer($count),
+            $this->rows->get(0)->dimension()
         );
         $this->buildColumns();
     }

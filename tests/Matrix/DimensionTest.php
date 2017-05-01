@@ -5,7 +5,7 @@ namespace Tests\Innmind\Math\Matrix;
 
 use Innmind\Math\{
     Matrix\Dimension,
-    Algebra\NumberInterface
+    Algebra\Integer
 };
 use PHPUnit\Framework\TestCase;
 
@@ -13,10 +13,10 @@ class DimensionTest extends TestCase
 {
     public function testInterface()
     {
-        $dimension = new Dimension(2, 3);
+        $dimension = new Dimension(new Integer(2), new Integer(3));
 
-        $this->assertInstanceOf(NumberInterface::class, $dimension->rows());
-        $this->assertInstanceOf(NumberInterface::class, $dimension->columns());
+        $this->assertInstanceOf(Integer::class, $dimension->rows());
+        $this->assertInstanceOf(Integer::class, $dimension->columns());
         $this->assertSame(2, $dimension->rows()->value());
         $this->assertSame(3, $dimension->columns()->value());
         $this->assertSame('2 x 3', (string) $dimension);
@@ -27,7 +27,7 @@ class DimensionTest extends TestCase
      */
     public function testThrowWhenNegativeRows()
     {
-        new Dimension(-1, 1);
+        new Dimension(new Integer(-1), new Integer(1));
     }
 
     /**
@@ -35,6 +35,6 @@ class DimensionTest extends TestCase
      */
     public function testThrowWhenNegativeColumns()
     {
-        new Dimension(1, -1);
+        new Dimension(new Integer(1), new Integer(-1));
     }
 }

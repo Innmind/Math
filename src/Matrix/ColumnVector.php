@@ -5,7 +5,8 @@ namespace Innmind\Math\Matrix;
 
 use Innmind\Math\{
     Matrix,
-    Algebra\NumberInterface
+    Algebra\NumberInterface,
+    Algebra\Integer
 };
 
 final class ColumnVector implements \Iterator
@@ -17,9 +18,9 @@ final class ColumnVector implements \Iterator
         $this->vector = new Vector(...$numbers);
     }
 
-    public static function initialize(int $dimension, NumberInterface $value): self
+    public static function initialize(Integer $dimension, NumberInterface $value): self
     {
-        return new self(...array_fill(0, $dimension, $value));
+        return new self(...array_fill(0, $dimension->value(), $value));
     }
 
     /**
@@ -30,7 +31,7 @@ final class ColumnVector implements \Iterator
         return $this->vector->toArray();
     }
 
-    public function dimension(): NumberInterface
+    public function dimension(): Integer
     {
         return $this->vector->dimension();
     }

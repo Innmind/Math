@@ -9,7 +9,8 @@ use Innmind\Math\{
     Matrix\Dimension,
     Matrix\RowVector,
     Matrix\ColumnVector,
-    Algebra\Number
+    Algebra\Number,
+    Algebra\Integer
 };
 use PHPUnit\Framework\TestCase;
 
@@ -129,7 +130,7 @@ class MatrixTest extends TestCase
     public function testInitialize()
     {
         $matrix = Matrix::initialize(
-            new Dimension(3, 2),
+            new Dimension(new Integer(3), new Integer(2)),
             new Number(4.2)
         );
 

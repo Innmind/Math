@@ -9,7 +9,8 @@ use Innmind\Math\{
     Matrix\RowVector,
     Matrix,
     Algebra\NumberInterface,
-    Algebra\Number
+    Algebra\Number,
+    Algebra\Integer
 };
 use PHPUnit\Framework\TestCase;
 
@@ -78,7 +79,9 @@ class ColumnVectorTest extends TestCase
     public function testMultiply()
     {
         $column = new ColumnVector(...numerize(25, 5, 1));
-        $column2 = $column->multiply(ColumnVector::initialize(3, new Number(2.56)));
+        $column2 = $column->multiply(
+            ColumnVector::initialize(new Integer(3), new Number(2.56))
+        );
 
         $this->assertInstanceOf(ColumnVector::class, $column2);
         $this->assertSame([25, 5, 1], $column->toArray());
@@ -90,15 +93,17 @@ class ColumnVectorTest extends TestCase
      */
     public function testThrowWhenMultiplyingVectorsOfDifferentDimensions()
     {
-        ColumnVector::initialize(1, new Number(1))->multiply(
-            ColumnVector::initialize(2, new Number(1))
+        ColumnVector::initialize(new Integer(1), new Number(1))->multiply(
+            ColumnVector::initialize(new Integer(2), new Number(1))
         );
     }
 
     public function testDivide()
     {
         $column = new ColumnVector(...numerize(25, 5, 1));
-        $column2 = $column->divide(ColumnVector::initialize(3, new Number(5)));
+        $column2 = $column->divide(
+            ColumnVector::initialize(new Integer(3), new Number(5))
+        );
 
         $this->assertInstanceOf(ColumnVector::class, $column2);
         $this->assertSame([25, 5, 1], $column->toArray());
@@ -110,14 +115,14 @@ class ColumnVectorTest extends TestCase
      */
     public function testThrowWhenDividingVectorsOfDifferentDimensions()
     {
-        ColumnVector::initialize(1, new Number(1))->divide(
-            ColumnVector::initialize(2, new Number(1))
+        ColumnVector::initialize(new Integer(1), new Number(1))->divide(
+            ColumnVector::initialize(new Integer(2), new Number(1))
         );
     }
 
     public function testInitialize()
     {
-        $vector = ColumnVector::initialize(4, new Number(1.2));
+        $vector = ColumnVector::initialize(new Integer(4), new Number(1.2));
 
         $this->assertInstanceOf(ColumnVector::class, $vector);
         $this->assertSame([1.2, 1.2, 1.2, 1.2], $vector->toArray());
@@ -144,8 +149,8 @@ class ColumnVectorTest extends TestCase
      */
     public function testThrowWhenSubtractingVectorsOfDifferentDimensions()
     {
-        ColumnVector::initialize(1, new Number(1))->subtract(
-            ColumnVector::initialize(2, new Number(1))
+        ColumnVector::initialize(new Integer(1), new Number(1))->subtract(
+            ColumnVector::initialize(new Integer(2), new Number(1))
         );
     }
 
@@ -170,8 +175,8 @@ class ColumnVectorTest extends TestCase
      */
     public function testThrowWhenAddingVectorsOfDifferentDimensions()
     {
-        ColumnVector::initialize(1, new Number(1))->add(
-            ColumnVector::initialize(2, new Number(1))
+        ColumnVector::initialize(new Integer(1), new Number(1))->add(
+            ColumnVector::initialize(new Integer(2), new Number(1))
         );
     }
 

@@ -7,7 +7,8 @@ use function Innmind\Math\numerize;
 use Innmind\Math\{
     Matrix\Vector,
     Algebra\NumberInterface,
-    Algebra\Number
+    Algebra\Number,
+    Algebra\Integer
 };
 use PHPUnit\Framework\TestCase;
 
@@ -60,7 +61,9 @@ class VectorTest extends TestCase
     public function testMultiply()
     {
         $vector = new Vector(...numerize(25, 5, 1));
-        $vector2 = $vector->multiply(Vector::initialize(3, new Number(2.56)));
+        $vector2 = $vector->multiply(
+            Vector::initialize(new Integer(3), new Number(2.56))
+        );
 
         $this->assertInstanceOf(Vector::class, $vector2);
         $this->assertSame(25, $vector->get(0)->value());
@@ -76,15 +79,17 @@ class VectorTest extends TestCase
      */
     public function testThrowWhenMultiplyingVectorsOfDifferentDimensions()
     {
-        Vector::initialize(1, new Number(1))->multiply(
-            Vector::initialize(2, new Number(1))
+        Vector::initialize(new Integer(1), new Number(1))->multiply(
+            Vector::initialize(new Integer(2), new Number(1))
         );
     }
 
     public function testDivide()
     {
         $vector = new Vector(...numerize(25, 5, 1));
-        $vector2 = $vector->divide(Vector::initialize(3, new Number(5)));
+        $vector2 = $vector->divide(
+            Vector::initialize(new Integer(3), new Number(5))
+        );
 
         $this->assertInstanceOf(Vector::class, $vector2);
         $this->assertSame(25, $vector->get(0)->value());
@@ -100,14 +105,14 @@ class VectorTest extends TestCase
      */
     public function testThrowWhenDevidingVectorsOfDifferentDimensions()
     {
-        Vector::initialize(1, new Number(1))->divide(
-            Vector::initialize(2, new Number(1))
+        Vector::initialize(new Integer(1), new Number(1))->divide(
+            Vector::initialize(new Integer(2), new Number(1))
         );
     }
 
     public function testInitialize()
     {
-        $vector = Vector::initialize(4, new Number(1.2));
+        $vector = Vector::initialize(new Integer(4), new Number(1.2));
 
         $this->assertInstanceOf(Vector::class, $vector);
         $this->assertSame(1.2, $vector->get(0)->value());
@@ -137,8 +142,8 @@ class VectorTest extends TestCase
      */
     public function testThrowWhenSubtractingVectorsOfDifferentDimensions()
     {
-        Vector::initialize(1, new Number(1))->subtract(
-            Vector::initialize(2, new Number(1))
+        Vector::initialize(new Integer(1), new Number(1))->subtract(
+            Vector::initialize(new Integer(2), new Number(1))
         );
     }
 
@@ -163,8 +168,8 @@ class VectorTest extends TestCase
      */
     public function testThrowWhenAddingVectorsOfDifferentDimensions()
     {
-        Vector::initialize(1, new Number(1))->add(
-            Vector::initialize(2, new Number(1))
+        Vector::initialize(new Integer(1), new Number(1))->add(
+            Vector::initialize(new Integer(2), new Number(1))
         );
     }
 

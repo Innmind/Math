@@ -9,7 +9,8 @@ use Innmind\Math\{
     Exception\VectorCannotBeEmptyException,
     Matrix,
     Algebra\NumberInterface,
-    Algebra\Number
+    Algebra\Number,
+    Algebra\Integer
 };
 use Innmind\Immutable\Sequence;
 
@@ -20,16 +21,16 @@ final class Vector implements \Iterator
     public function __construct(NumberInterface ...$numbers)
     {
         $this->numbers = new Sequence(...$numbers);
-        $this->dimension = new Number($this->numbers->size());
+        $this->dimension = new Integer($this->numbers->size());
 
         if ($this->dimension()->value() === 0) {
             throw new VectorCannotBeEmptyException;
         }
     }
 
-    public static function initialize(int $dimension, NumberInterface $value): self
+    public static function initialize(Integer $dimension, NumberInterface $value): self
     {
-        return new self(...array_fill(0, $dimension, $value));
+        return new self(...array_fill(0, $dimension->value(), $value));
     }
 
     /**
@@ -45,7 +46,7 @@ final class Vector implements \Iterator
             ->toPrimitive();
     }
 
-    public function dimension(): NumberInterface
+    public function dimension(): Integer
     {
         return $this->dimension;
     }
