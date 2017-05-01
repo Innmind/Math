@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Quantile;
 
+use Innmind\Math\Algebra\NumberInterface;
+
 /**
  * Holds a quartile value
  */
@@ -10,7 +12,7 @@ final class Quartile
 {
     private $value;
 
-    public function __construct(float $value)
+    public function __construct(NumberInterface $value)
     {
         $this->value = $value;
     }
@@ -18,9 +20,9 @@ final class Quartile
     /**
      * Return the quartile value
      *
-     * @return float
+     * @return NumberInterface
      */
-    public function value(): float
+    public function value(): NumberInterface
     {
         return $this->value;
     }
