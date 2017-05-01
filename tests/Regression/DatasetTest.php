@@ -18,24 +18,24 @@ class DatasetTest extends TestCase
     {
         $dataset = new Dataset(
             new RowVector(...numerize(1, 2)),
-            new RowVector(...numerize(2, 3))
+            new RowVector(...numerize(3, 4))
         );
 
         $this->assertInstanceOf(\Iterator::class, $dataset);
         $this->assertInstanceOf(Dimension::class, $dataset->dimension());
         $this->assertSame('2 x 2', (string) $dataset->dimension());
         $this->assertSame(
-            [[1, 2], [2, 3]],
+            [[1, 2], [3, 4]],
             $dataset->toArray()
         );
         $this->assertInstanceOf(ColumnVector::class, $dataset->abscissas());
         $this->assertInstanceOf(ColumnVector::class, $dataset->ordinates());
         $this->assertSame(
-            [1, 2],
+            [1, 3],
             $dataset->abscissas()->toArray()
         );
         $this->assertSame(
-            [2, 3],
+            [2, 4],
             $dataset->ordinates()->toArray()
         );
     }
