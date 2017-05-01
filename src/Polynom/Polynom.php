@@ -3,6 +3,11 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Polynom;
 
+use function Innmind\Math\add;
+use Innmind\Math\Algebra\{
+    NumberInterface,
+    Integer
+};
 use Innmind\Immutable\Map;
 
 final class Polynom
@@ -10,50 +15,46 @@ final class Polynom
     private $intercept;
     private $degrees;
 
-    public function __construct(float $intercept, array $degrees = [])
+    public function __construct(NumberInterface $intercept, Degree ...$degrees)
     {
         $this->intercept = $intercept;
         $this->degrees = new Map('int', Degree::class);
 
         foreach ($degrees as $degree) {
-            if (!$degree instanceof Degree) {
-                throw new \InvalidArgumentException(sprintf(
-                    'Each value must be an instance of "%s"',
-                    Degree::class
-                ));
-            }
-
-            $this->degrees = $this->degrees->put($degree->degree(), $degree);
+            $this->degrees = $this->degrees->put(
+                $degree->degree()->value(),
+                $degree
+            );
         }
     }
 
     /**
      * Create a new polynom with this added degree
      *
-     * @param int $degree
-     * @param float $coeff
+     * @param Integer $degree
+     * @param NumberInterface $coeff
      *
      * @return self
      */
-    public function withDegree(int $degree, float $coeff): self
+    public function withDegree(Integer $degree, NumberInterface $coeff): self
     {
-        $degrees = $this->degrees->put($degree, new Degree($degree, $coeff));
+        $degrees = $this->degrees->put(
+            $degree->value(),
+            new Degree($degree, $coeff)
+        );
 
         return new self(
             $this->intercept,
-            array_combine(
-                $degrees->keys()->toPrimitive(),
-                $degrees->values()->toPrimitive()
-            )
+            ...$degrees->values()
         );
     }
 
     /**
      * Return the intercept value
      *
-     * @return float
+     * @return NumberInterface
      */
-    public function intercept(): float
+    public function intercept(): NumberInterface
     {
         return $this->intercept;
     }
@@ -85,18 +86,22 @@ final class Polynom
     /**
      * Compute the value for the given x
      *
-     * @param float $x
+     * @param NumberInterface $x
      *
-     * @return float
+     * @return NumberInterface
      */
-    public function __invoke(float $x): float
+    public function __invoke(NumberInterface $x): NumberInterface
     {
-        $result = $this->intercept;
+        return add(
+            $this->intercept,
+            ...$this->degrees->values()->reduce(
+                [],
+                function(array $carry, Degree $degree) use ($x): array {
+                    $carry[] = $degree($x);
 
-        foreach ($this->degrees as $degree) {
-            $result += $degree($x);
-        }
-
-        return $result;
+                    return $carry;
+                }
+            )
+        );
     }
 }

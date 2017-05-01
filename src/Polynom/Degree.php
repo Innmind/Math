@@ -3,46 +3,37 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Polynom;
 
+use Innmind\Math\{
+    Algebra\NumberInterface,
+    Algebra\Integer
+};
+
 final class Degree
 {
     private $degree;
     private $coeff;
 
-    public function __construct(int $degree, float $coeff)
+    public function __construct(Integer $degree, NumberInterface $coeff)
     {
         $this->degree = $degree;
         $this->coeff = $coeff;
     }
 
-    /**
-     * Return the degree
-     *
-     * @return int
-     */
-    public function degree(): int
+    public function degree(): Integer
     {
         return $this->degree;
     }
 
-    /**
-     * Return the coeff
-     *
-     * @return float
-     */
-    public function coeff(): float
+    public function coeff(): NumberInterface
     {
         return $this->coeff;
     }
 
     /**
      * Compute the value for the given x
-     *
-     * @param float $x
-     *
-     * @return float
      */
-    public function __invoke(float $x): float
+    public function __invoke(NumberInterface $x): NumberInterface
     {
-        return $this->coeff * pow($x, $this->degree);
+        return $this->coeff->multiplyBy($x->power($this->degree));
     }
 }

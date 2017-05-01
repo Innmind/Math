@@ -3,7 +3,17 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Regression;
 
-use Innmind\Math\Polynom\Polynom;
+use function Innmind\Math\{
+    add,
+    multiply,
+    divide,
+    subtract
+};
+use Innmind\Math\{
+    Polynom\Polynom,
+    Algebra\NumberInterface,
+    Algebra\Integer
+};
 
 final class LinearRegression
 {
@@ -12,15 +22,18 @@ final class LinearRegression
     public function __construct(Dataset $data)
     {
         list($slope, $intercept) = $this->compute($data);
-        $this->polynom = (new Polynom($intercept))->withDegree(1, $slope);
+        $this->polynom = (new Polynom($intercept))->withDegree(
+            new Integer(1),
+            $slope
+        );
     }
 
     /**
      * Return the intercept value
      *
-     * @return float
+     * @return NumberInterface
      */
-    public function intercept(): float
+    public function intercept(): NumberInterface
     {
         return $this->polynom->intercept();
     }
@@ -28,9 +41,9 @@ final class LinearRegression
     /**
      * Return the slope value
      *
-     * @return float
+     * @return NumberInterface
      */
-    public function slope(): float
+    public function slope(): NumberInterface
     {
         return $this->polynom->degree(1)->coeff();
     }
@@ -38,13 +51,13 @@ final class LinearRegression
     /**
      * Compute the value at the given x value
      *
-     * @param float $x
+     * @param NumberInterface $x
      *
-     * @return float
+     * @return NumberInterface
      */
-    public function __invoke(float $x): float
+    public function __invoke(NumberInterface $x): NumberInterface
     {
-        return call_user_func($this->polynom, $x);
+        return ($this->polynom)($x);
     }
 
     /**
@@ -58,22 +71,37 @@ final class LinearRegression
      */
     private function compute(Dataset $data): array
     {
-        $count = $data->dimension()->rows()->value();
+        $dimension = $data->dimension()->rows();
         $x = $data->abscissas()->toArray();
         $y = $data->ordinates()->toArray();
 
-        $xSum = array_sum($x);
-        $ySum = array_sum($y);
-        $xxSum = 0;
-        $xySum = 0;
+        $xSum = $data->abscissas()->sum();
+        $ySum = $data->ordinates()->sum();
+        $xxSum = new Integer(0);
+        $xySum = new Integer(0);
 
-        for ($i = 0; $i < $count; $i++) {
-            $xySum += $x[$i] * $y[$i];
-            $xxSum += $x[$i] * $x[$i];
+        for ($i = 0; $i < $dimension->value(); $i++) {
+            $xySum = add($xySum, multiply($x[$i], $y[$i]));
+            $xxSum = add($xxSum, multiply($x[$i], $x[$i]));
         }
 
-        $slope = (($count * $xySum) - ($xSum * $ySum)) / (($count * $xxSum) - ($xSum * $xSum));
-        $intercept = ($ySum - ($slope * $xSum)) / $count;
+        $slope = divide(
+            subtract(
+                $dimension->multiplyBy($xySum),
+                $xSum->multiplyBy($ySum)
+            ),
+            subtract(
+                $dimension->multiplyBy($xxSum),
+                $xSum->power(new Integer(2))
+            )
+        );
+        $intercept = divide(
+            subtract(
+                $ySum,
+                $slope->multiplyBy($xSum)
+            ),
+            $dimension
+        );
 
         return [$slope, $intercept];
     }
