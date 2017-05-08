@@ -3,9 +3,11 @@ declare(strict_types = 1);
 
 namespace Innmind\Math;
 
-use Innmind\Math\{
+use function Innmind\Math\{
     numerize,
-    add,
+    add
+};
+use Innmind\Math\{
     Algebra\NumberInterface,
     Algebra\Number,
     Algebra\Addition,
