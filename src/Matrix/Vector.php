@@ -193,27 +193,27 @@ final class Vector implements \Iterator
         return $this->numbers->get($position);
     }
 
-    public function current()
+    public function current(): NumberInterface
     {
         return $this->numbers->current();
     }
 
-    public function key()
+    public function key(): int
     {
         return $this->numbers->key();
     }
 
-    public function next()
+    public function next(): void
     {
         $this->numbers->next();
     }
 
-    public function rewind()
+    public function rewind(): void
     {
         $this->numbers->rewind();
     }
 
-    public function valid()
+    public function valid(): bool
     {
         return $this->numbers->valid();
     }

@@ -60,27 +60,27 @@ final class Dataset implements \Iterator
         return $this->matrix->dimension();
     }
 
-    public function current()
+    public function current(): RowVector
     {
         return $this->matrix->current();
     }
 
-    public function key()
+    public function key(): int
     {
         return $this->matrix->key();
     }
 
-    public function next()
+    public function next(): void
     {
         $this->matrix->next();
     }
 
-    public function rewind()
+    public function rewind(): void
     {
         $this->matrix->rewind();
     }
 
-    public function valid()
+    public function valid(): bool
     {
         return $this->matrix->valid();
     }

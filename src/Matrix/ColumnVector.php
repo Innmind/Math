@@ -134,27 +134,27 @@ final class ColumnVector implements \Iterator
         return $this->vector->get($position);
     }
 
-    public function current()
+    public function current(): NumberInterface
     {
         return $this->vector->current();
     }
 
-    public function key()
+    public function key(): int
     {
         return $this->vector->key();
     }
 
-    public function next()
+    public function next(): void
     {
         $this->vector->next();
     }
 
-    public function rewind()
+    public function rewind(): void
     {
         $this->vector->rewind();
     }
 
-    public function valid()
+    public function valid(): bool
     {
         return $this->vector->valid();
     }

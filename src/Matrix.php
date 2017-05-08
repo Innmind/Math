@@ -132,32 +132,32 @@ final class Matrix implements \Iterator
         return self::fromArray($rows);
     }
 
-    public function current()
+    public function current(): RowVector
     {
         return $this->rows->current();
     }
 
-    public function key()
+    public function key(): int
     {
         return $this->rows->key();
     }
 
-    public function next()
+    public function next(): void
     {
         $this->rows->next();
     }
 
-    public function rewind()
+    public function rewind(): void
     {
         $this->rows->rewind();
     }
 
-    public function valid()
+    public function valid(): bool
     {
         return $this->rows->valid();
     }
 
-    private function buildColumns()
+    private function buildColumns(): void
     {
         for ($i = 0; $i < $this->dimension->columns()->value(); ++$i) {
             $values = $this->rows->reduce(
