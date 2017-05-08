@@ -5,7 +5,23 @@ namespace Innmind\Math;
 
 use function Innmind\Math\{
     numerize,
-    add
+    add,
+    absolute,
+    ceil,
+    cosine,
+    divide,
+    floor,
+    frequence,
+    mean,
+    median,
+    modulo,
+    multiply,
+    power,
+    round,
+    sine,
+    squareRoot,
+    subtract,
+    tangent
 };
 use Innmind\Math\{
     Algebra\NumberInterface,
@@ -57,7 +73,7 @@ class FunctionsTest extends TestCase
 
     public function testAbsolute()
     {
-        $abs = \Innmind\Math\absolute(-4);
+        $abs = absolute(-4);
 
         $this->assertInstanceOf(Absolute::class, $abs);
         $this->assertSame(4, $abs->value());
@@ -65,7 +81,7 @@ class FunctionsTest extends TestCase
 
     public function testCeil()
     {
-        $ceil = \Innmind\Math\ceil(4.2);
+        $ceil = ceil(4.2);
 
         $this->assertInstanceOf(Ceil::class, $ceil);
         $this->assertSame(5.0, $ceil->value());
@@ -81,7 +97,7 @@ class FunctionsTest extends TestCase
 
     public function testFloor()
     {
-        $floor = \Innmind\Math\floor(4.2);
+        $floor = floor(4.2);
 
         $this->assertInstanceOf(Floor::class, $floor);
         $this->assertSame(4.0, $floor->value());
@@ -113,7 +129,7 @@ class FunctionsTest extends TestCase
 
     public function testRound()
     {
-        $round = \Innmind\Math\round(4.85, 1, 'down');
+        $round = round(4.85, 1, 'down');
 
         $this->assertInstanceOf(Round::class, $round);
         $this->assertSame(4.8, $round->value());
@@ -173,7 +189,7 @@ class FunctionsTest extends TestCase
 
     public function testFrequence()
     {
-        $frequence = \Innmind\Math\frequence(1, 1, 2, 3, 4, 4);
+        $frequence = frequence(1, 1, 2, 3, 4, 4);
 
         $this->assertInstanceOf(Frequence::class, $frequence);
         $this->assertSame(
