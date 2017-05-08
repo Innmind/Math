@@ -6,6 +6,7 @@ namespace Tests\Innmind\Math\Polynom;
 use Innmind\Math\{
     Polynom\Polynom,
     Polynom\Degree,
+    Polynom\Tangent,
     Algebra\NumberInterface,
     Algebra\Number,
     Algebra\Integer
@@ -79,5 +80,41 @@ class PolynomTest extends TestCase
             ->withDegree(new Integer(2), new Number(3));
 
         $this->assertSame(54, $p(new Number(2))->value());
+    }
+
+    public function testDerivative()
+    {
+        $polynom = (new Polynom(new Number(0)))
+            ->withDegree(new Integer(2), new Number(1));
+
+        $this->assertInstanceOf(
+            NumberInterface::class,
+            $polynom->derivative(new Number(2))
+        );
+        $this->assertSame(
+            4.000,
+            $polynom->derivative(new Number(2))->round(3)->value()
+        );
+    }
+
+    public function testTangent()
+    {
+        $polynom = (new Polynom(new Number(0)))
+            ->withDegree(new Integer(2), new Number(1));
+
+        $this->assertInstanceOf(
+            Tangent::class,
+            $polynom->tangent(new Number(2))
+        );
+        $this->assertSame(
+            $polynom,
+            $polynom
+                ->tangent(new Number(2))
+                ->polynom()
+        );
+        $this->assertSame(
+            4.0,
+            $polynom->tangent(new Number(2))(new Number(2))->value()
+        );
     }
 }

@@ -3,9 +3,14 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Polynom;
 
-use function Innmind\Math\add;
+use function Innmind\Math\{
+    add,
+    divide,
+    subtract
+};
 use Innmind\Math\Algebra\{
     NumberInterface,
+    Number,
     Integer
 };
 use Innmind\Immutable\Map;
@@ -103,5 +108,41 @@ final class Polynom
                 }
             )
         );
+    }
+
+    /**
+     * Compute the derative of x
+     *
+     * @param NumberInterface $x
+     * @param NumberInterface|null $limit Value that tend to 0 (default to 0.000000000001)
+     *
+     * @return NumberInterface
+     */
+    public function derivative(
+        NumberInterface $x,
+        NumberInterface $limit = null
+    ): NumberInterface {
+        $limit = $limit ?? Tangent::limit();
+
+        return divide(
+            subtract(
+                $this(add($x, $limit)),
+                $this($x)
+            ),
+            $limit
+        );
+    }
+
+    /**
+     * Return the affine function (tangent) in the position x
+     *
+     * @param NumberInterface $x
+     * @param NumberInterface|null $limit
+     *
+     * @return Tangent
+     */
+    public function tangent(NumberInterface $x, NumberInterface $limit = null): Tangent
+    {
+        return new Tangent($this, $x, $limit);
     }
 }
