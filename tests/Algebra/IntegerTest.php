@@ -150,4 +150,36 @@ class IntegerTest extends TestCase
         $this->assertInstanceOf(SquareRoot::class, $number);
         $this->assertSame(2.0, $number->value());
     }
+
+    /**
+     * @dataProvider factorials
+     */
+    public function testFactorial($integer, $expected)
+    {
+        $number = new Integer($integer);
+
+        $this->assertInstanceOf(NumberInterface::class, $number->factorial());
+        $this->assertSame($expected, $number->factorial()->value());
+    }
+
+    /**
+     * @expectedException Innmind\Math\Exception\NegativeFactorialException
+     */
+    public function testThrowWhenNegativeFactorial()
+    {
+        (new Integer(-1))->factorial();
+    }
+
+    public function factorials(): array
+    {
+        return [
+            [0, 1],
+            [1, 1],
+            [2, 2],
+            [3, 6],
+            [4, 24],
+            [10, 3628800],
+            [100, 9.332621544394418E+157],
+        ];
+    }
 }

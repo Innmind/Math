@@ -10,6 +10,7 @@ use function Innmind\Math\{
     ceil,
     cosine,
     divide,
+    factorial,
     floor,
     frequence,
     mean,
@@ -31,6 +32,7 @@ use Innmind\Math\{
     Algebra\Ceil,
     Algebra\Division,
     Algebra\Floor,
+    Algebra\Integer,
     Algebra\Modulo,
     Algebra\Multiplication,
     Algebra\Power,
@@ -232,6 +234,14 @@ class FunctionsTest extends TestCase
 
         $this->assertInstanceOf(NumberInterface::class, $scope);
         $this->assertSame(6, $scope->value());
+    }
+
+    public function testFactorial()
+    {
+        $int = factorial(3);
+
+        $this->assertInstanceOf(NumberInterface::class, $int);
+        $this->assertSame(6, $int->value());
     }
 
     public function cosines(): array

@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Algebra;
 
+use Innmind\Math\Exception\NegativeFactorialException;
+
 final class Integer implements NumberInterface
 {
     private $number;
@@ -89,6 +91,25 @@ final class Integer implements NumberInterface
     public function squareRoot(): NumberInterface
     {
         return $this->number->squareRoot();
+    }
+
+    public function factorial(): NumberInterface
+    {
+        if ((new self(0))->higherThan($this)) {
+            throw new NegativeFactorialException;
+        }
+
+        if ((new self(2))->higherThan($this)) {
+            return new Integer(1);
+        }
+
+        $factorial = $i = $this->value();
+
+        do {
+            $factorial *= --$i;
+        } while ($i > 1);
+
+        return new Number($factorial);
     }
 
     public function __toString(): string

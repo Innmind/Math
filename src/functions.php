@@ -11,6 +11,7 @@ use Innmind\Math\{
     Algebra\Ceil,
     Algebra\Division,
     Algebra\Floor,
+    Algebra\Integer,
     Algebra\Modulo,
     Algebra\Multiplication,
     Algebra\Power,
@@ -215,6 +216,20 @@ function median($first, ...$numbers): NumberInterface
 function scope($first, $second, ...$numbers): NumberInterface
 {
     return new Scope(...numerize($first, $second, ...$numbers));
+}
+
+/**
+ * @param int|Integer $int
+ *
+ * @return NumberInterface
+ */
+function factorial($int): NumberInterface
+{
+    if (!$int instanceof Integer) {
+        $int = new Integer($int);
+    }
+
+    return $int->factorial();
 }
 
 /**
