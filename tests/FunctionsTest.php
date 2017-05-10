@@ -22,7 +22,9 @@ use function Innmind\Math\{
     sine,
     squareRoot,
     subtract,
-    tangent
+    tangent,
+    max,
+    min
 };
 use Innmind\Math\{
     Algebra\NumberInterface,
@@ -242,6 +244,30 @@ class FunctionsTest extends TestCase
 
         $this->assertInstanceOf(NumberInterface::class, $int);
         $this->assertSame(6, $int->value());
+    }
+
+    public function testMax()
+    {
+        $number = max(
+            1,
+            new Number(2),
+            $expected = new Number(4),
+            3
+        );
+
+        $this->assertSame($expected, $number);
+    }
+
+    public function testMin()
+    {
+        $number = min(
+            2,
+            $expected = new Number(1),
+            new Number(4),
+            3
+        );
+
+        $this->assertSame($expected, $number);
     }
 
     public function cosines(): array

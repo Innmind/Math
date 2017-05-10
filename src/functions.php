@@ -28,6 +28,7 @@ use Innmind\Math\{
     Statistics\Median,
     Statistics\Scope
 };
+use Innmind\Immutable\Sequence;
 
 /**
  * @param int|float|NumberInterface $numbers
@@ -230,6 +231,36 @@ function factorial($int): NumberInterface
     }
 
     return $int->factorial();
+}
+
+/**
+ * @param int|float|NumberInterface $first
+ * @param int|float|NumberInterface $numbers
+ *
+ * @return NumberInterface
+ */
+function max($first, ...$numbers): NumberInterface
+{
+    return (new Sequence(...numerize($first, ...$numbers)))
+        ->sort(function(NumberInterface $a, NumberInterface $b) {
+            return $b->higherThan($a);
+        })
+        ->first();
+}
+
+/**
+ * @param int|float|NumberInterface $first
+ * @param int|float|NumberInterface $numbers
+ *
+ * @return NumberInterface
+ */
+function min($first, ...$numbers): NumberInterface
+{
+    return (new Sequence(...numerize($first, ...$numbers)))
+        ->sort(function(NumberInterface $a, NumberInterface $b) {
+            return $a->higherThan($b);
+        })
+        ->first();
 }
 
 /**
