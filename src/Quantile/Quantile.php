@@ -7,7 +7,9 @@ use function Innmind\Math\{
     divide,
     add,
     mean,
-    median
+    median,
+    min,
+    max
 };
 use Innmind\Math\{
     Regression\Dataset,
@@ -117,11 +119,7 @@ final class Quantile
      */
     private function buildMin(Dataset $dataset): self
     {
-        $this->min = new Quartile(
-            new Number(
-                min($dataset->ordinates()->toArray())
-            )
-        );
+        $this->min = new Quartile(min(...$dataset->ordinates()));
 
         return $this;
     }
@@ -135,11 +133,7 @@ final class Quantile
      */
     private function buildMax(Dataset $dataset): self
     {
-        $this->max = new Quartile(
-            new Number(
-                max($dataset->ordinates()->toArray())
-            )
-        );
+        $this->max = new Quartile(max(...$dataset->ordinates()));
 
         return $this;
     }
