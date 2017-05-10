@@ -3,7 +3,11 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Geometry;
 
-use Innmind\Math\Geometry\Angle\Degree;
+use function Innmind\Math\cosine;
+use Innmind\Math\{
+    Geometry\Angle\Degree,
+    Algebra\Integer
+};
 
 final class Angle
 {
@@ -34,5 +38,32 @@ final class Angle
     public function degree(): Degree
     {
         return $this->degree;
+    }
+
+    /**
+     * It sums the segments like we would sum vectors, except here we don't use
+     * vectors as it would need a plan to express a direction
+     */
+    public function sum(): Segment
+    {
+        $length = $this
+            ->firstSegment
+            ->length()
+            ->power(new Integer(2))
+            ->add(
+                $this
+                    ->secondSegment
+                    ->length()
+                    ->power(new Integer(2))
+            )
+            ->subtract(
+                (new Integer(2))
+                    ->multiplyBy($this->firstSegment->length())
+                    ->multiplyBy($this->secondSegment->length())
+                    ->multiplyBy(cosine($this->degree))
+            )
+            ->squareRoot();
+
+        return new Segment($length);
     }
 }

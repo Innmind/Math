@@ -25,4 +25,20 @@ class AngleTest extends TestCase
         $this->assertSame($degree, $angle->degree());
         $this->assertSame($second, $angle->secondSegment());
     }
+
+    public function testSum()
+    {
+        $angle = new Angle(
+            new Segment(new Integer(5)),
+            new Degree(new Integer(49)),
+            new Segment(new Integer(7))
+        );
+        $segment = $angle->sum();
+
+        $this->assertInstanceOf(Segment::class, $segment);
+        $this->assertSame(
+            5.298666621959197,
+            $segment->length()->value()
+        );
+    }
 }
