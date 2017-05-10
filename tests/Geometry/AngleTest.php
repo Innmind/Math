@@ -7,6 +7,7 @@ use Innmind\Math\{
     Geometry\Angle,
     Geometry\Angle\Degree,
     Geometry\Segment,
+    Algebra\NumberInterface,
     Algebra\Integer
 };
 use PHPUnit\Framework\TestCase;
@@ -39,6 +40,22 @@ class AngleTest extends TestCase
         $this->assertSame(
             5.298666621959197,
             $segment->length()->value()
+        );
+    }
+
+    public function testScalarProduct()
+    {
+        $angle = new Angle(
+            new Segment(new Integer(5)),
+            new Degree(new Integer(49)),
+            new Segment(new Integer(7))
+        );
+        $number = $angle->scalarProduct();
+
+        $this->assertInstanceOf(NumberInterface::class, $number);
+        $this->assertSame(
+            22.962066014667755,
+            $number->value()
         );
     }
 }

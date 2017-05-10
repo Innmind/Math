@@ -3,9 +3,13 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Geometry;
 
-use function Innmind\Math\cosine;
+use function Innmind\Math\{
+    cosine,
+    multiply
+};
 use Innmind\Math\{
     Geometry\Angle\Degree,
+    Algebra\NumberInterface,
     Algebra\Integer
 };
 
@@ -65,5 +69,14 @@ final class Angle
             ->squareRoot();
 
         return new Segment($length);
+    }
+
+    public function scalarProduct(): NumberInterface
+    {
+        return multiply(
+            $this->firstSegment->length(),
+            $this->secondSegment->length(),
+            cosine($this->degree)
+        );
     }
 }
