@@ -9,6 +9,7 @@ use function Innmind\Math\{
 };
 use Innmind\Math\{
     Geometry\Angle\Degree,
+    Geometry\Theorem\AlKashi,
     Algebra\NumberInterface,
     Algebra\Integer
 };
@@ -50,25 +51,13 @@ final class Angle
      */
     public function sum(): Segment
     {
-        $length = $this
-            ->firstSegment
-            ->length()
-            ->power(new Integer(2))
-            ->add(
-                $this
-                    ->secondSegment
-                    ->length()
-                    ->power(new Integer(2))
+        return new Segment(
+            AlKashi::side(
+                $this->firstSegment->length(),
+                $this->degree,
+                $this->secondSegment->length()
             )
-            ->subtract(
-                (new Integer(2))
-                    ->multiplyBy($this->firstSegment->length())
-                    ->multiplyBy($this->secondSegment->length())
-                    ->multiplyBy(cosine($this->degree))
-            )
-            ->squareRoot();
-
-        return new Segment($length);
+        );
     }
 
     public function scalarProduct(): NumberInterface
