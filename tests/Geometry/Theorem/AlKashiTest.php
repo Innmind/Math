@@ -36,4 +36,28 @@ class AlKashiTest extends TestCase
             $c->value()
         );
     }
+
+    public function testAngle()
+    {
+        $ab = AlKashi::angle(
+            new Integer(6),
+            new Integer(7),
+            new Integer(8)
+        );
+
+        $this->assertInstanceOf(Degree::class, $ab);
+        $this->assertSame(75.52248781407008, $ab->number()->value());
+    }
+
+    /**
+     * @expectedException Innmind\Math\Exception\OpenFigureException
+     */
+    public function testThrowWhenOpenTriangle()
+    {
+        AlKashi::angle(
+            new Integer(1),
+            new Integer(42),
+            new Integer(20)
+        );
+    }
 }
