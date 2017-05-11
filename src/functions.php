@@ -21,6 +21,7 @@ use Innmind\Math\{
     Geometry\Angle\Degree,
     Geometry\Angle\Radian,
     Geometry\Trigonometry\Cosine,
+    Geometry\Trigonometry\ArcCosine,
     Geometry\Trigonometry\Sine,
     Geometry\Trigonometry\Tangent,
     Statistics\Frequence,
@@ -165,6 +166,14 @@ function toRadian($radian): Radian
 function cosine($degree): NumberInterface
 {
     return (new Cosine(toDegree($degree)))();
+}
+
+/**
+ * @param Degree|Radian|int|float|NumberInterface $radian
+ */
+function arcCosine($radian): NumberInterface
+{
+    return (new ArcCosine(toRadian($radian)->toDegree()))();
 }
 
 /**

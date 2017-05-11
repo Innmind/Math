@@ -24,7 +24,8 @@ use function Innmind\Math\{
     subtract,
     tangent,
     max,
-    min
+    min,
+    arcCosine
 };
 use Innmind\Math\{
     Algebra\NumberInterface,
@@ -42,6 +43,7 @@ use Innmind\Math\{
     Algebra\SquareRoot,
     Algebra\Subtraction,
     Geometry\Angle\Degree,
+    Geometry\Angle\Radian,
     Statistics\Frequence,
     Statistics\Mean,
     Statistics\Median,
@@ -167,6 +169,20 @@ class FunctionsTest extends TestCase
     }
 
     /**
+     * @dataProvider arcCosines
+     */
+    public function testArcCosine($expected, $number)
+    {
+        $acos = arcCosine($number);
+
+        $this->assertInstanceOf(NumberInterface::class, $acos);
+        $this->assertSame(
+            $expected,
+            (new Radian($acos))->toDegree()->number()->value()
+        );
+    }
+
+    /**
      * @dataProvider sines
      */
     public function testSine($expected, $number)
@@ -278,6 +294,17 @@ class FunctionsTest extends TestCase
             [divide(squareRoot(3), 2), new Number(30)],
             [divide(squareRoot(3), 2), new Degree(new Number(30))],
             [divide(squareRoot(3), 2), (new Degree(new Number(30)))->toRadian()],
+        ];
+    }
+
+    public function arcCosines(): array
+    {
+        return [
+            [30.0, divide(squareRoot(3), 2)],
+            [30.0, sqrt(3)/2],
+            [30.0, new Number(sqrt(3)/2)],
+            [30.0, new Radian(new Number(sqrt(3)/2))],
+            [30.0, (new Radian(new Number(sqrt(3)/2)))->toDegree()],
         ];
     }
 
