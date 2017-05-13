@@ -233,9 +233,9 @@ function scope($first, $second, ...$numbers): NumberInterface
 /**
  * @param int|Integer $int
  *
- * @return NumberInterface
+ * @return Factorial
  */
-function factorial($int): NumberInterface
+function factorial($int): Factorial
 {
     if ($int instanceof Integer) {
         return $int->factorial();
