@@ -3,13 +3,20 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Algebra;
 
-final class Integer implements NumberInterface
+use Innmind\Math\Exception\NegativeFactorialException;
+
+final class Factorial implements OperationInterface, NumberInterface
 {
+    private $value;
     private $number;
 
     public function __construct(int $value)
     {
-        $this->number = new Number($value);
+        if ($value < 0) {
+            throw new NegativeFactorialException;
+        }
+
+        $this->value = $value;
     }
 
     /**
@@ -17,87 +24,101 @@ final class Integer implements NumberInterface
      */
     public function value()
     {
-        return $this->number->value();
+        return $this->result()->value();
     }
 
     public function equals(NumberInterface $number): bool
     {
-        return $this->number->equals($number);
+        return $this->result()->equals($number);
     }
 
     public function higherThan(NumberInterface $number): bool
     {
-        return $this->number->higherThan($number);
+        return $this->result()->higherThan($number);
     }
 
     public function add(
         NumberInterface $number,
         NumberInterface ...$numbers
     ): NumberInterface {
-        return $this->number->add($number, ...$numbers);
+        return $this->result()->add($number, ...$numbers);
     }
 
     public function subtract(
         NumberInterface $number,
         NumberInterface ...$numbers
     ): NumberInterface {
-        return $this->number->subtract($number, ...$numbers);
+        return $this->result()->subtract($number, ...$numbers);
     }
 
     public function divideBy(NumberInterface $number): NumberInterface
     {
-        return $this->number->divideBy($number);
+        return $this->result()->divideBy($number);
     }
 
     public function multiplyBy(
         NumberInterface $number,
         NumberInterface ...$numbers
     ): NumberInterface {
-        return $this->number->multiplyBy($number, ...$numbers);
+        return $this->result()->multiplyBy($number, ...$numbers);
     }
 
     public function round(int $precision = 0, string $mode = Round::UP): NumberInterface
     {
-        return $this->number->round($precision, $mode);
+        return $this->result()->round($precision, $mode);
     }
 
     public function floor(): NumberInterface
     {
-        return $this->number->floor();
+        return $this->result()->floor();
     }
 
     public function ceil(): NumberInterface
     {
-        return $this->number->ceil();
+        return $this->result()->ceil();
     }
 
     public function modulo(NumberInterface $modulus): NumberInterface
     {
-        return $this->number->modulo($modulus);
+        return $this->result()->modulo($modulus);
     }
 
     public function absolute(): NumberInterface
     {
-        return $this->number->absolute();
+        return $this->result()->absolute();
     }
 
     public function power(NumberInterface $power): NumberInterface
     {
-        return $this->number->power($power);
+        return $this->result()->power($power);
     }
 
     public function squareRoot(): NumberInterface
     {
-        return $this->number->squareRoot();
+        return $this->result()->squareRoot();
     }
 
-    public function factorial(): Factorial
+    public function result(): NumberInterface
     {
-        return new Factorial($this->number->value());
+        if ($this->number) {
+            return $this->number;
+        }
+
+        if ($this->value < 2) {
+            return $this->number = new Integer(1);
+        }
+
+        $factorial = $i = $this->value;
+
+        do {
+            $factorial *= --$i;
+        } while ($i > 1);
+
+        return $this->number = new Number($factorial);
     }
 
     public function __toString(): string
     {
-        return (string) $this->number;
+        return $this->value.'!';
     }
 }

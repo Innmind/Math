@@ -18,6 +18,7 @@ use Innmind\Math\{
     Algebra\Round,
     Algebra\SquareRoot,
     Algebra\Subtraction,
+    Algebra\Factorial,
     Geometry\Angle\Degree,
     Geometry\Angle\Radian,
     Geometry\Trigonometry\Cosine,
@@ -235,11 +236,11 @@ function scope($first, $second, ...$numbers): NumberInterface
  */
 function factorial($int): NumberInterface
 {
-    if (!$int instanceof Integer) {
-        $int = new Integer($int);
+    if ($int instanceof Integer) {
+        return $int->factorial();
     }
 
-    return $int->factorial();
+    return new Factorial($int);
 }
 
 /**

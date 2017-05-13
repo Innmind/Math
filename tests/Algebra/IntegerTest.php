@@ -17,7 +17,8 @@ use Innmind\Math\Algebra\{
     Modulo,
     Absolute,
     Power,
-    SquareRoot
+    SquareRoot,
+    Factorial
 };
 use PHPUnit\Framework\TestCase;
 
@@ -151,15 +152,12 @@ class IntegerTest extends TestCase
         $this->assertSame(2.0, $number->value());
     }
 
-    /**
-     * @dataProvider factorials
-     */
-    public function testFactorial($integer, $expected)
+    public function testFactorial()
     {
-        $number = new Integer($integer);
+        $number = new Integer(3);
 
-        $this->assertInstanceOf(NumberInterface::class, $number->factorial());
-        $this->assertSame($expected, $number->factorial()->value());
+        $this->assertInstanceOf(Factorial::class, $number->factorial());
+        $this->assertSame('3!', (string) $number->factorial());
     }
 
     /**
@@ -168,18 +166,5 @@ class IntegerTest extends TestCase
     public function testThrowWhenNegativeFactorial()
     {
         (new Integer(-1))->factorial();
-    }
-
-    public function factorials(): array
-    {
-        return [
-            [0, 1],
-            [1, 1],
-            [2, 2],
-            [3, 6],
-            [4, 24],
-            [10, 3628800],
-            [100, 9.332621544394418E+157],
-        ];
     }
 }
