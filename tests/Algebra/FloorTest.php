@@ -43,7 +43,7 @@ class FloorTest extends TestCase
     public function testStringCast()
     {
         $this->assertSame(
-            '42',
+            '42.0',
             (string) new Floor(new Number(42.45))
         );
     }

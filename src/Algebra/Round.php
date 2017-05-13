@@ -121,6 +121,6 @@ final class Round implements NumberInterface
 
     public function __toString(): string
     {
-        return (string) $this->value();
+        return var_export($this->value(), true);
     }
 }

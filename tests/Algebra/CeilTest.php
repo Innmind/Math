@@ -43,7 +43,7 @@ class CeilTest extends TestCase
     public function testStringCast()
     {
         $this->assertSame(
-            '43',
+            '43.0',
             (string) new Ceil(new Number(42.45))
         );
     }
