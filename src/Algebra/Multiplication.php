@@ -97,6 +97,11 @@ final class Multiplication implements OperationInterface, NumberInterface, \Iter
         return new SquareRoot($this);
     }
 
+    public function exponential(): NumberInterface
+    {
+        return new Exponential($this);
+    }
+
     public function product(): NumberInterface
     {
         return $this->result();

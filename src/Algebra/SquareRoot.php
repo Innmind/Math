@@ -99,6 +99,11 @@ final class SquareRoot implements OperationInterface, NumberInterface
         return new self($this);
     }
 
+    public function exponential(): NumberInterface
+    {
+        return new Exponential($this);
+    }
+
     public function __toString(): string
     {
         $number = $this->number instanceof OperationInterface ?

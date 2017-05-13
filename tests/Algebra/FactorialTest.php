@@ -18,7 +18,8 @@ use Innmind\Math\Algebra\{
     Modulo,
     Absolute,
     Power,
-    SquareRoot
+    SquareRoot,
+    Exponential
 };
 use PHPUnit\Framework\TestCase;
 
@@ -158,6 +159,14 @@ class FactorialTest extends TestCase
 
         $this->assertInstanceOf(SquareRoot::class, $number);
         $this->assertSame(2.4494897428, $number->value());
+    }
+
+    public function testExponential()
+    {
+        $number = (new Factorial(4))->exponential();
+
+        $this->assertInstanceOf(Exponential::class, $number);
+        $this->assertSame(exp(24), $number->value());
     }
 
     /**

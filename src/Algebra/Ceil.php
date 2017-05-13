@@ -92,6 +92,11 @@ final class Ceil implements NumberInterface
         return new SquareRoot($this);
     }
 
+    public function exponential(): NumberInterface
+    {
+        return new Exponential($this);
+    }
+
     public function __toString(): string
     {
         return (string) $this->value();

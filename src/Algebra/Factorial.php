@@ -98,6 +98,11 @@ final class Factorial implements OperationInterface, NumberInterface
         return $this->result()->squareRoot();
     }
 
+    public function exponential(): NumberInterface
+    {
+        return new Exponential($this);
+    }
+
     public function result(): NumberInterface
     {
         if ($this->number) {

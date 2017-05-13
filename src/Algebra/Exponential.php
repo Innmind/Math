@@ -3,14 +3,21 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Algebra;
 
-final class Absolute implements OperationInterface, NumberInterface
+final class Exponential implements OperationInterface, NumberInterface
 {
-    private $number;
+    private $power;
     private $result;
 
-    public function __construct(NumberInterface $number)
+    public function __construct(NumberInterface $power)
     {
-        $this->number = $number;
+        $this->power = $power;
+    }
+
+    public function result(): NumberInterface
+    {
+        return $this->result ?? $this->result = new Number(
+            exp($this->power->value())
+        );
     }
 
     /**
@@ -19,13 +26,6 @@ final class Absolute implements OperationInterface, NumberInterface
     public function value()
     {
         return $this->result()->value();
-    }
-
-    public function result(): NumberInterface
-    {
-        return $this->result ?? $this->result = new Number(
-            abs($this->number->value())
-        );
     }
 
     public function equals(NumberInterface $number): bool
@@ -86,7 +86,7 @@ final class Absolute implements OperationInterface, NumberInterface
 
     public function absolute(): NumberInterface
     {
-        return new self($this);
+        return new Absolute($this);
     }
 
     public function power(NumberInterface $power): NumberInterface
@@ -101,11 +101,14 @@ final class Absolute implements OperationInterface, NumberInterface
 
     public function exponential(): NumberInterface
     {
-        return new Exponential($this);
+        return new self($this);
     }
 
     public function __toString(): string
     {
-        return '|'.$this->number.'|';
+        $power = $this->power instanceof OperationInterface ?
+            '('.$this->power.')' : $this->power;
+
+        return 'e^'.$power;
     }
 }

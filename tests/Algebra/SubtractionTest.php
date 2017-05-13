@@ -17,7 +17,8 @@ use Innmind\Math\Algebra\{
     Modulo,
     Absolute,
     Power,
-    SquareRoot
+    SquareRoot,
+    Exponential
 };
 use PHPUnit\Framework\TestCase;
 
@@ -221,6 +222,17 @@ class SubtractionTest extends TestCase
 
         $this->assertInstanceOf(SquareRoot::class, $number);
         $this->assertSame(2.0, $number->value());
+    }
+
+    public function testExponential()
+    {
+        $number = (new Subtraction(
+            new Number(8),
+            new Number(4)
+        ))->exponential();
+
+        $this->assertInstanceOf(Exponential::class, $number);
+        $this->assertSame(exp(4), $number->value());
     }
 
     public function testStringCast()

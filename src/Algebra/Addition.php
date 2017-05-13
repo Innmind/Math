@@ -97,6 +97,11 @@ final class Addition implements OperationInterface, NumberInterface, \Iterator
         return new SquareRoot($this);
     }
 
+    public function exponential(): NumberInterface
+    {
+        return new Exponential($this);
+    }
+
     public function sum(): NumberInterface
     {
         return $this->result();

@@ -17,7 +17,8 @@ use Innmind\Math\{
     Algebra\Modulo,
     Algebra\Absolute,
     Algebra\Power,
-    Algebra\SquareRoot
+    Algebra\SquareRoot,
+    Algebra\Exponential
 };
 use PHPUnit\Framework\TestCase;
 
@@ -218,6 +219,18 @@ class MedianTest extends TestCase
 
         $this->assertInstanceOf(SquareRoot::class, $number);
         $this->assertSame(2.0, $number->value());
+    }
+
+    public function testExponential()
+    {
+        $mean = new Median(
+            new Number(1),
+            new Number(7)
+        );
+        $number = $mean->exponential();
+
+        $this->assertInstanceOf(Exponential::class, $number);
+        $this->assertSame(exp(4), $number->value());
     }
 
     public function testStringCast()

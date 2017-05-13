@@ -103,6 +103,11 @@ final class Power implements OperationInterface, NumberInterface
         return new SquareRoot($this);
     }
 
+    public function exponential(): NumberInterface
+    {
+        return new Exponential($this);
+    }
+
     public function __toString(): string
     {
         $number = $this->number instanceof OperationInterface ?

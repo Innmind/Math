@@ -22,5 +22,6 @@ interface NumberInterface
     public function absolute(): self;
     public function power(self $power): self;
     public function squareRoot(): self;
+    public function exponential(): self;
     public function __toString(): string;
 }

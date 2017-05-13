@@ -97,6 +97,11 @@ final class Subtraction implements OperationInterface, NumberInterface, \Iterato
         return new SquareRoot($this);
     }
 
+    public function exponential(): NumberInterface
+    {
+        return new Exponential($this);
+    }
+
     public function difference(): NumberInterface
     {
         return $this->result();

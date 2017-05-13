@@ -19,6 +19,7 @@ use Innmind\Math\{
     Algebra\SquareRoot,
     Algebra\Subtraction,
     Algebra\Factorial,
+    Algebra\Exponential,
     Geometry\Angle\Degree,
     Geometry\Angle\Radian,
     Geometry\Trigonometry\Cosine,
@@ -241,6 +242,16 @@ function factorial($int): NumberInterface
     }
 
     return new Factorial($int);
+}
+
+/**
+ * @param int|float|NumberInterface $number
+ *
+ * @return Exponential
+ */
+function exponential($number): Exponential
+{
+    return new Exponential(...numerize($number));
 }
 
 /**

@@ -25,7 +25,8 @@ use function Innmind\Math\{
     tangent,
     max,
     min,
-    arcCosine
+    arcCosine,
+    exponential
 };
 use Innmind\Math\{
     Algebra\NumberInterface,
@@ -42,6 +43,7 @@ use Innmind\Math\{
     Algebra\Round,
     Algebra\SquareRoot,
     Algebra\Subtraction,
+    Algebra\Exponential,
     Geometry\Angle\Degree,
     Geometry\Angle\Radian,
     Statistics\Frequence,
@@ -284,6 +286,14 @@ class FunctionsTest extends TestCase
         );
 
         $this->assertSame($expected, $number);
+    }
+
+    public function testExponential()
+    {
+        $exp = exponential(4);
+
+        $this->assertInstanceOf(Exponential::class, $exp);
+        $this->assertSame('e^4', (string) $exp);
     }
 
     public function cosines(): array

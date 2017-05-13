@@ -112,6 +112,11 @@ final class Division implements OperationInterface, NumberInterface
         return new SquareRoot($this);
     }
 
+    public function exponential(): NumberInterface
+    {
+        return new Exponential($this);
+    }
+
     public function quotient(): NumberInterface
     {
         return $this->result();

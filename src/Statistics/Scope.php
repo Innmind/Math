@@ -109,6 +109,11 @@ final class Scope implements NumberInterface
         return $this->result->squareRoot();
     }
 
+    public function exponential(): NumberInterface
+    {
+        return $this->result->exponential();
+    }
+
     public function __toString(): string
     {
         return (string) $this->result;

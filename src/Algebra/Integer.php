@@ -96,6 +96,11 @@ final class Integer implements NumberInterface
         return new Factorial($this->number->value());
     }
 
+    public function exponential(): NumberInterface
+    {
+        return new Exponential($this);
+    }
+
     public function __toString(): string
     {
         return (string) $this->number;

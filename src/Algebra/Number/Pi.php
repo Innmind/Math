@@ -15,7 +15,8 @@ use Innmind\Math\Algebra\{
     Modulo,
     Absolute,
     Power,
-    SquareRoot
+    SquareRoot,
+    Exponential
 };
 
 final class Pi implements NumberInterface
@@ -97,6 +98,11 @@ final class Pi implements NumberInterface
     public function squareRoot(): NumberInterface
     {
         return new SquareRoot($this);
+    }
+
+    public function exponential(): NumberInterface
+    {
+        return new Exponential($this);
     }
 
     public function __toString(): string

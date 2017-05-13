@@ -17,7 +17,8 @@ use Innmind\Math\Algebra\{
     Ceil,
     Absolute,
     Power,
-    SquareRoot
+    SquareRoot,
+    Exponential
 };
 use PHPUnit\Framework\TestCase;
 
@@ -225,5 +226,16 @@ class ModuloTest extends TestCase
 
         $this->assertInstanceOf(SquareRoot::class, $number);
         $this->assertSame(2.0, $number->value());
+    }
+
+    public function testExponential()
+    {
+        $number = (new Modulo(
+            new Number(12),
+            new Number(8)
+        ))->exponential();
+
+        $this->assertInstanceOf(Exponential::class, $number);
+        $this->assertSame(exp(4), $number->value());
     }
 }
