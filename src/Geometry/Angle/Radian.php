@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Geometry\Angle;
 
+use function Innmind\Math\multiply;
 use Innmind\Math\Algebra\{
     NumberInterface,
     Number,
@@ -16,11 +17,9 @@ final class Radian
 
     public function __construct(NumberInterface $number)
     {
-        $modulus = (new Pi)->multiplyBy(new Number(2));
-        $this->number = $number
-            ->modulo($modulus)
-            ->add($modulus)
-            ->modulo($modulus);
+        $this->number = $number->modulo(
+            multiply(2, new Pi)
+        );
     }
 
     public function toDegree(): Degree

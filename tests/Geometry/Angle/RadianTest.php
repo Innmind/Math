@@ -72,7 +72,7 @@ class RadianTest extends TestCase
             [0, '0 rad', '0°'],
             [pi() * 2, '0 rad', '0°'],
             [1, '1 rad', '57.295779513082°'],
-            [-(pi() * 3), pi().' rad', '180°'],
+            [-(pi() * 3), -pi().' rad', '180°'],
         ];
     }
 }
