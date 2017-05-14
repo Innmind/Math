@@ -112,14 +112,14 @@ final class Polynom
     }
 
     /**
-     * Compute the derative of x
+     * Compute the derived number of x
      *
      * @param NumberInterface $x
      * @param NumberInterface|null $limit Value that tend to 0 (default to 0.000000000001)
      *
      * @return NumberInterface
      */
-    public function derivative(
+    public function derived(
         NumberInterface $x,
         NumberInterface $limit = null
     ): NumberInterface {

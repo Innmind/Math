@@ -25,7 +25,7 @@ final class Tangent
         NumberInterface $limit = null
     ) {
         $this->polynom = $polynom;
-        $this->derivative = $polynom->derivative($abscissa, $limit);
+        $this->derivative = $polynom->derived($abscissa, $limit);
         $this->abscissa = $abscissa;
         $this->intercept = $polynom($abscissa);
     }

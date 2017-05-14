@@ -82,18 +82,18 @@ class PolynomTest extends TestCase
         $this->assertSame(54, $p(new Number(2))->value());
     }
 
-    public function testDerivative()
+    public function testDerived()
     {
         $polynom = (new Polynom(new Number(0)))
             ->withDegree(new Integer(2), new Number(1));
 
         $this->assertInstanceOf(
             NumberInterface::class,
-            $polynom->derivative(new Number(2))
+            $polynom->derived(new Number(2))
         );
         $this->assertSame(
             4.000,
-            $polynom->derivative(new Number(2))->round(3)->value()
+            $polynom->derived(new Number(2))->round(3)->value()
         );
     }
 
