@@ -161,6 +161,25 @@ final class Polynom
         );
     }
 
+    public function derivative(): self
+    {
+        $degrees = $this->degrees;
+
+        if ($degrees->contains(1)) {
+            $intercept = $degrees->get(1)->coeff();
+            $degrees = $degrees->remove(1);
+        }
+
+        return new self(
+            $intercept ?? new Integer(0),
+            ...$degrees
+                ->values()
+                ->map(function(Degree $degree): Degree {
+                    return $degree->derivative();
+                })
+        );
+    }
+
     public function __toString(): string
     {
         $polynom = $this

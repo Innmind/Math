@@ -151,4 +151,21 @@ class PolynomTest extends TestCase
             (string) $primitive
         );
     }
+
+    public function testDerivative()
+    {
+        $polynom = (new Polynom(new Number(0)))
+            ->withDegree(new Integer(1), new Number(4))
+            ->withDegree(new Integer(2), new Number(2))
+            ->withDegree(new Integer(3), new Number(1));
+        $derivative = $polynom->derivative();
+
+        $this->assertInstanceOf(Polynom::class, $derivative);
+        $this->assertNotSame($polynom, $derivative);
+        $this->assertSame('1x^3 + 2x^2 + 4x', (string) $polynom);
+        $this->assertSame(
+            '(1 x 3)x^2 + (2 x 2)x + 4',
+            (string) $derivative
+        );
+    }
 }

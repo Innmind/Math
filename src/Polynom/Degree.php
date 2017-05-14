@@ -5,7 +5,8 @@ namespace Innmind\Math\Polynom;
 
 use function Innmind\Math\{
     add,
-    divide
+    divide,
+    subtract
 };
 use Innmind\Math\{
     Algebra\NumberInterface,
@@ -42,6 +43,14 @@ final class Degree
                 $this->coeff,
                 add($this->degree, 1)
             )
+        );
+    }
+
+    public function derivative(): self
+    {
+        return new self(
+            subtract($this->degree, 1)->result(),
+            $this->coeff->multiplyBy($this->degree)
         );
     }
 
