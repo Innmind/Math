@@ -62,7 +62,7 @@ class AdditionTest extends TestCase
         );
         $result = $addition->result();
 
-        $this->assertInstanceOf(Number::class, $result);
+        $this->assertInstanceOf(NumberInterface::class, $result);
         $this->assertSame(132, $result->value());
         $this->assertTrue($result->equals($addition->sum()));
         $this->assertSame($result, $addition->result());

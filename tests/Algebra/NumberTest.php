@@ -20,7 +20,8 @@ use Innmind\Math\Algebra\{
     Exponential,
     BinaryLogarithm,
     NaturalLogarithm,
-    CommonLogarithm
+    CommonLogarithm,
+    Integer
 };
 use PHPUnit\Framework\TestCase;
 
@@ -49,6 +50,19 @@ class NumberTest extends TestCase
     public function testThrowWhenNotANumber()
     {
         new Number(NAN);
+    }
+
+    public function testWrap()
+    {
+        $number = Number::wrap(42.1);
+
+        $this->assertInstanceOf(Number::class, $number);
+        $this->assertSame('42.1', (string) $number);
+
+        $number = Number::wrap(42);
+
+        $this->assertInstanceOf(Integer::class, $number);
+        $this->assertSame('42', (string) $number);
     }
 
     public function testInt()

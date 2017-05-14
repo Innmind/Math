@@ -134,7 +134,7 @@ final class Factorial implements OperationInterface, NumberInterface
             $factorial *= --$i;
         } while ($i > 1);
 
-        return $this->number = new Number($factorial);
+        return $this->number = Number::wrap($factorial);
     }
 
     public function __toString(): string

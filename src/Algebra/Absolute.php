@@ -23,7 +23,7 @@ final class Absolute implements OperationInterface, NumberInterface
 
     public function result(): NumberInterface
     {
-        return $this->result ?? $this->result = new Number(
+        return $this->result ?? $this->result = Number::wrap(
             abs($this->number->value())
         );
     }

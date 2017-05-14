@@ -138,7 +138,7 @@ final class Multiplication implements OperationInterface, NumberInterface, \Iter
                 }
             );
 
-        return $this->result = new Number($value);
+        return $this->result = Number::wrap($value);
     }
 
     public function __toString(): string

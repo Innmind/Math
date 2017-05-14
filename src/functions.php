@@ -339,7 +339,7 @@ function numerize(...$numbers): array
             continue;
         }
 
-        $number = new Number($number);
+        $number = Number::wrap($number);
     }
 
     return $numbers;

@@ -25,6 +25,15 @@ final class Number implements NumberInterface
         $this->value = $value;
     }
 
+    public static function wrap($value): NumberInterface
+    {
+        if (is_int($value)) {
+            return new Integer($value);
+        }
+
+        return new self($value);
+    }
+
     /**
      * {@inheritdoc}
      */

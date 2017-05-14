@@ -19,7 +19,7 @@ final class Power implements OperationInterface, NumberInterface
 
     public function result(): NumberInterface
     {
-        return $this->result ?? $this->result = new Number(
+        return $this->result ?? $this->result = Number::wrap(
             $this->number->value() ** $this->power->value()
         );
     }

@@ -138,7 +138,7 @@ final class Subtraction implements OperationInterface, NumberInterface, \Iterato
                 }
             );
 
-        return $this->result = new Number($value);
+        return $this->result = Number::wrap($value);
     }
 
     public function __toString(): string

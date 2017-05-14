@@ -23,7 +23,7 @@ final class SquareRoot implements OperationInterface, NumberInterface
 
     public function result(): NumberInterface
     {
-        return $this->result ?? $this->result = new Number(
+        return $this->result ?? $this->result = Number::wrap(
             sqrt($this->number->value())
         );
     }
