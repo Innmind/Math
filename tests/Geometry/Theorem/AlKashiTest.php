@@ -27,10 +27,13 @@ class AlKashiTest extends TestCase
         );
 
         $this->assertInstanceOf(NumberInterface::class, $c);
-        $this->assertSame(
-            '√(((5^2) + (7^2)) - (((2 x 5) x 7) x 0.6560590289905075))',
-            (string) $c
-        );
+        $this->assertTrue(in_array(
+            (string) $c,
+            [
+                '√(((5^2) + (7^2)) - (((2 x 5) x 7) x 0.6560590289905075))',
+                '√(((5^2) + (7^2)) - (((2 x 5) x 7) x 0.6560590289905074))',
+            ]
+        ));
         $this->assertSame(
             5.298666621959197,
             $c->value()
