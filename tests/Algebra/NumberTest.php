@@ -21,7 +21,8 @@ use Innmind\Math\Algebra\{
     BinaryLogarithm,
     NaturalLogarithm,
     CommonLogarithm,
-    Integer
+    Integer,
+    Number\Infinite
 };
 use PHPUnit\Framework\TestCase;
 
@@ -63,6 +64,16 @@ class NumberTest extends TestCase
 
         $this->assertInstanceOf(Integer::class, $number);
         $this->assertSame('42', (string) $number);
+
+        $number = Number::wrap(INF);
+
+        $this->assertInstanceOf(Infinite::class, $number);
+        $this->assertSame('+∞', (string) $number);
+
+        $number = Number::wrap(-INF);
+
+        $this->assertInstanceOf(Infinite::class, $number);
+        $this->assertSame('-∞', (string) $number);
     }
 
     public function testInt()

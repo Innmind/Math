@@ -1,42 +1,49 @@
 <?php
 declare(strict_types = 1);
 
-namespace Innmind\Math\Algebra;
+namespace Innmind\Math\Algebra\Number;
 
-use Innmind\Math\{
-    Algebra\Number\Infinite,
-    Exception\TypeError,
-    Exception\NotANumberException
+use Innmind\Math\Algebra\{
+    NumberInterface,
+    Addition,
+    Subtraction,
+    Multiplication,
+    Division,
+    Round,
+    Floor,
+    Ceil,
+    Modulo,
+    Absolute,
+    Power,
+    SquareRoot,
+    Exponential,
+    BinaryLogarithm,
+    NaturalLogarithm,
+    CommonLogarithm
 };
 
-final class Number implements NumberInterface
+final class Infinite implements NumberInterface
 {
     private $value;
 
-    public function __construct($value)
+    private function __construct()
     {
-        if (!is_int($value) && !is_float($value)) {
-            throw new TypeError('Number must be an int or a float');
-        }
-
-        if (is_nan($value)) {
-            throw new NotANumberException;
-        }
-
-        $this->value = $value;
     }
 
-    public static function wrap($value): NumberInterface
+    public static function positive(): self
     {
-        if (is_infinite($value)) {
-            return $value > 0 ? Infinite::positive() : Infinite::negative();
-        }
+        $self = new self;
+        $self->value = INF;
 
-        if (is_int($value)) {
-            return new Integer($value);
-        }
+        return $self;
+    }
 
-        return new self($value);
+    public static function negative(): self
+    {
+        $self = new self;
+        $self->value = -INF;
+
+        return $self;
     }
 
     /**
@@ -140,6 +147,6 @@ final class Number implements NumberInterface
 
     public function __toString(): string
     {
-        return var_export($this->value, true);
+        return $this->value() > 0 ? '+∞' : '-∞';
     }
 }
