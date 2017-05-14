@@ -19,7 +19,10 @@ use Innmind\Math\Algebra\{
     Absolute,
     Power,
     SquareRoot,
-    Exponential
+    Exponential,
+    BinaryLogarithm,
+    NaturalLogarithm,
+    CommonLogarithm
 };
 use PHPUnit\Framework\TestCase;
 
@@ -167,6 +170,30 @@ class FactorialTest extends TestCase
 
         $this->assertInstanceOf(Exponential::class, $number);
         $this->assertSame(exp(24), $number->value());
+    }
+
+    public function testBinaryLogarithm()
+    {
+        $number = (new Factorial(4))->binaryLogarithm();
+
+        $this->assertInstanceOf(BinaryLogarithm::class, $number);
+        $this->assertSame(log(24, 2), $number->value());
+    }
+
+    public function testNaturalLogarithm()
+    {
+        $number = (new Factorial(4))->naturalLogarithm();
+
+        $this->assertInstanceOf(NaturalLogarithm::class, $number);
+        $this->assertSame(log(24), $number->value());
+    }
+
+    public function testCommonLogarithm()
+    {
+        $number = (new Factorial(4))->commonLogarithm();
+
+        $this->assertInstanceOf(CommonLogarithm::class, $number);
+        $this->assertSame(log10(24), $number->value());
     }
 
     /**

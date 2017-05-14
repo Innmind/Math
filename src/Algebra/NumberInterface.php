@@ -23,5 +23,8 @@ interface NumberInterface
     public function power(self $power): self;
     public function squareRoot(): self;
     public function exponential(): self;
+    public function binaryLogarithm(): self;
+    public function naturalLogarithm(): self;
+    public function commonLogarithm(): self;
     public function __toString(): string;
 }

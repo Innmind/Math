@@ -20,6 +20,9 @@ use Innmind\Math\{
     Algebra\Subtraction,
     Algebra\Factorial,
     Algebra\Exponential,
+    Algebra\BinaryLogarithm,
+    Algebra\NaturalLogarithm,
+    Algebra\CommonLogarithm,
     Geometry\Angle\Degree,
     Geometry\Angle\Radian,
     Geometry\Trigonometry\Cosine,
@@ -252,6 +255,46 @@ function factorial($int): Factorial
 function exponential($number): Exponential
 {
     return new Exponential(...numerize($number));
+}
+
+/**
+ * @param int|float|NumberInterface $number
+ *
+ * @return BinaryLogarithm
+ */
+function binaryLogarithm($number): BinaryLogarithm
+{
+    return new BinaryLogarithm(...numerize($number));
+}
+
+/**
+ * @param int|float|NumberInterface $number
+ *
+ * @return NaturalLogarithm
+ */
+function naturalLogarithm($number): NaturalLogarithm
+{
+    return new NaturalLogarithm(...numerize($number));
+}
+
+/**
+ * @param int|float|NumberInterface $number
+ *
+ * @return NaturalLogarithm
+ */
+function logarithm($number): NaturalLogarithm
+{
+    return naturalLogarithm($number);
+}
+
+/**
+ * @param int|float|NumberInterface $number
+ *
+ * @return CommonLogarithm
+ */
+function commonLogarithm($number): CommonLogarithm
+{
+    return new CommonLogarithm(...numerize($number));
 }
 
 /**

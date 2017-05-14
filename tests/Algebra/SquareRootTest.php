@@ -18,7 +18,10 @@ use Innmind\Math\Algebra\{
     Modulo,
     Absolute,
     Power,
-    Exponential
+    Exponential,
+    BinaryLogarithm,
+    NaturalLogarithm,
+    CommonLogarithm
 };
 use PHPUnit\Framework\TestCase;
 
@@ -178,6 +181,30 @@ class SquareRootTest extends TestCase
 
         $this->assertInstanceOf(Exponential::class, $number);
         $this->assertSame(exp(4), $number->value());
+    }
+
+    public function testBinaryLogarithm()
+    {
+        $number = (new SquareRoot(new Number(16)))->binaryLogarithm();
+
+        $this->assertInstanceOf(BinaryLogarithm::class, $number);
+        $this->assertSame(log(4, 2), $number->value());
+    }
+
+    public function testNaturalLogarithm()
+    {
+        $number = (new SquareRoot(new Number(16)))->naturalLogarithm();
+
+        $this->assertInstanceOf(NaturalLogarithm::class, $number);
+        $this->assertSame(log(4), $number->value());
+    }
+
+    public function testCommonLogarithm()
+    {
+        $number = (new SquareRoot(new Number(16)))->commonLogarithm();
+
+        $this->assertInstanceOf(CommonLogarithm::class, $number);
+        $this->assertSame(log10(4), $number->value());
     }
 
     public function testSquareOfSquareRoot()

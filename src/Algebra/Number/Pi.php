@@ -16,7 +16,10 @@ use Innmind\Math\Algebra\{
     Absolute,
     Power,
     SquareRoot,
-    Exponential
+    Exponential,
+    BinaryLogarithm,
+    NaturalLogarithm,
+    CommonLogarithm
 };
 
 final class Pi implements NumberInterface
@@ -103,6 +106,21 @@ final class Pi implements NumberInterface
     public function exponential(): NumberInterface
     {
         return new Exponential($this);
+    }
+
+    public function binaryLogarithm(): NumberInterface
+    {
+        return new BinaryLogarithm($this);
+    }
+
+    public function naturalLogarithm(): NumberInterface
+    {
+        return new NaturalLogarithm($this);
+    }
+
+    public function commonLogarithm(): NumberInterface
+    {
+        return new CommonLogarithm($this);
     }
 
     public function __toString(): string

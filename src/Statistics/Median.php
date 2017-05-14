@@ -131,6 +131,21 @@ final class Median implements NumberInterface
         return $this->result->exponential();
     }
 
+    public function binaryLogarithm(): NumberInterface
+    {
+        return $this->result->binaryLogarithm();
+    }
+
+    public function naturalLogarithm(): NumberInterface
+    {
+        return $this->result->naturalLogarithm();
+    }
+
+    public function commonLogarithm(): NumberInterface
+    {
+        return $this->result->commonLogarithm();
+    }
+
     public function __toString(): string
     {
         return (string) $this->result;

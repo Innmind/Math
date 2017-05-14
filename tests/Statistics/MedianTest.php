@@ -18,7 +18,10 @@ use Innmind\Math\{
     Algebra\Absolute,
     Algebra\Power,
     Algebra\SquareRoot,
-    Algebra\Exponential
+    Algebra\Exponential,
+    Algebra\BinaryLogarithm,
+    Algebra\NaturalLogarithm,
+    Algebra\CommonLogarithm
 };
 use PHPUnit\Framework\TestCase;
 
@@ -231,6 +234,39 @@ class MedianTest extends TestCase
 
         $this->assertInstanceOf(Exponential::class, $number);
         $this->assertSame(exp(4), $number->value());
+    }
+
+    public function testBinaryLogarithm()
+    {
+        $number = (new Median(
+            new Number(1),
+            new Number(7)
+        ))->binaryLogarithm();
+
+        $this->assertInstanceOf(BinaryLogarithm::class, $number);
+        $this->assertSame(log(4, 2), $number->value());
+    }
+
+    public function testNaturalLogarithm()
+    {
+        $number = (new Median(
+            new Number(1),
+            new Number(7)
+        ))->naturalLogarithm();
+
+        $this->assertInstanceOf(NaturalLogarithm::class, $number);
+        $this->assertSame(log(4), $number->value());
+    }
+
+    public function testCommonLogarithm()
+    {
+        $number = (new Median(
+            new Number(1),
+            new Number(7)
+        ))->commonLogarithm();
+
+        $this->assertInstanceOf(CommonLogarithm::class, $number);
+        $this->assertSame(log10(4), $number->value());
     }
 
     public function testStringCast()

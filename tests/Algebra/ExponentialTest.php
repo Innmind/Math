@@ -18,7 +18,10 @@ use Innmind\Math\Algebra\{
     Ceil,
     Modulo,
     Absolute,
-    SquareRoot
+    SquareRoot,
+    BinaryLogarithm,
+    NaturalLogarithm,
+    CommonLogarithm
 };
 use PHPUnit\Framework\TestCase;
 
@@ -214,5 +217,29 @@ class ExponentialTest extends TestCase
 
         $this->assertInstanceOf(Exponential::class, $number);
         $this->assertSame(exp(1), $number->value());
+    }
+
+    public function testBinaryLogarithm()
+    {
+        $number = (new Exponential(new Number(1)))->binaryLogarithm();
+
+        $this->assertInstanceOf(BinaryLogarithm::class, $number);
+        $this->assertSame(log(exp(1), 2), $number->value());
+    }
+
+    public function testNaturalLogarithm()
+    {
+        $number = (new Exponential(new Number(1)))->naturalLogarithm();
+
+        $this->assertInstanceOf(NaturalLogarithm::class, $number);
+        $this->assertSame(log(exp(1)), $number->value());
+    }
+
+    public function testCommonLogarithm()
+    {
+        $number = (new Exponential(new Number(1)))->commonLogarithm();
+
+        $this->assertInstanceOf(CommonLogarithm::class, $number);
+        $this->assertSame(log10(exp(1)), $number->value());
     }
 }

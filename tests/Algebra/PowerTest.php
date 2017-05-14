@@ -18,7 +18,10 @@ use Innmind\Math\Algebra\{
     Modulo,
     Absolute,
     SquareRoot,
-    Exponential
+    Exponential,
+    BinaryLogarithm,
+    NaturalLogarithm,
+    CommonLogarithm
 };
 use PHPUnit\Framework\TestCase;
 
@@ -237,6 +240,39 @@ class PowerTest extends TestCase
 
         $this->assertInstanceOf(Exponential::class, $number);
         $this->assertSame(exp(4), $number->value());
+    }
+
+    public function testBinaryLogarithm()
+    {
+        $number = (new Power(
+            new Number(2),
+            new Number(2)
+        ))->binaryLogarithm();
+
+        $this->assertInstanceOf(BinaryLogarithm::class, $number);
+        $this->assertSame(log(4, 2), $number->value());
+    }
+
+    public function testNaturalLogarithm()
+    {
+        $number = (new Power(
+            new Number(2),
+            new Number(2)
+        ))->naturalLogarithm();
+
+        $this->assertInstanceOf(NaturalLogarithm::class, $number);
+        $this->assertSame(log(4), $number->value());
+    }
+
+    public function testCommonLogarithm()
+    {
+        $number = (new Power(
+            new Number(2),
+            new Number(2)
+        ))->commonLogarithm();
+
+        $this->assertInstanceOf(CommonLogarithm::class, $number);
+        $this->assertSame(log10(4), $number->value());
     }
 
     public function testNegativePower()

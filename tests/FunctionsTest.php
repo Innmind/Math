@@ -26,7 +26,11 @@ use function Innmind\Math\{
     max,
     min,
     arcCosine,
-    exponential
+    exponential,
+    binaryLogarithm,
+    naturalLogarithm,
+    logarithm,
+    commonLogarithm
 };
 use Innmind\Math\{
     Algebra\NumberInterface,
@@ -44,6 +48,9 @@ use Innmind\Math\{
     Algebra\SquareRoot,
     Algebra\Subtraction,
     Algebra\Exponential,
+    Algebra\BinaryLogarithm,
+    Algebra\NaturalLogarithm,
+    Algebra\CommonLogarithm,
     Geometry\Angle\Degree,
     Geometry\Angle\Radian,
     Statistics\Frequence,
@@ -294,6 +301,38 @@ class FunctionsTest extends TestCase
 
         $this->assertInstanceOf(Exponential::class, $exp);
         $this->assertSame('e^4', (string) $exp);
+    }
+
+    public function testBinaryLogarithm()
+    {
+        $lb = binaryLogarithm(1);
+
+        $this->assertInstanceOf(BinaryLogarithm::class, $lb);
+        $this->assertSame('lb(1)', (string) $lb);
+    }
+
+    public function testNaturalLogarithm()
+    {
+        $ln = naturalLogarithm(1);
+
+        $this->assertInstanceOf(NaturalLogarithm::class, $ln);
+        $this->assertSame('ln(1)', (string) $ln);
+    }
+
+    public function testLogarithm()
+    {
+        $ln = logarithm(1);
+
+        $this->assertInstanceOf(NaturalLogarithm::class, $ln);
+        $this->assertSame('ln(1)', (string) $ln);
+    }
+
+    public function testCommonLogarithm()
+    {
+        $lg = commonLogarithm(1);
+
+        $this->assertInstanceOf(CommonLogarithm::class, $lg);
+        $this->assertSame('lg(1)', (string) $lg);
     }
 
     public function cosines(): array

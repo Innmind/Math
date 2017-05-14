@@ -119,6 +119,21 @@ final class Round implements NumberInterface
         return new Exponential($this);
     }
 
+    public function binaryLogarithm(): NumberInterface
+    {
+        return new BinaryLogarithm($this);
+    }
+
+    public function naturalLogarithm(): NumberInterface
+    {
+        return new NaturalLogarithm($this);
+    }
+
+    public function commonLogarithm(): NumberInterface
+    {
+        return new CommonLogarithm($this);
+    }
+
     public function __toString(): string
     {
         return var_export($this->value(), true);

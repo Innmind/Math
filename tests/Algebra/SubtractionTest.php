@@ -18,7 +18,10 @@ use Innmind\Math\Algebra\{
     Absolute,
     Power,
     SquareRoot,
-    Exponential
+    Exponential,
+    BinaryLogarithm,
+    NaturalLogarithm,
+    CommonLogarithm
 };
 use PHPUnit\Framework\TestCase;
 
@@ -233,6 +236,39 @@ class SubtractionTest extends TestCase
 
         $this->assertInstanceOf(Exponential::class, $number);
         $this->assertSame(exp(4), $number->value());
+    }
+
+    public function testBinaryLogarithm()
+    {
+        $number = (new Subtraction(
+            new Number(8),
+            new Number(4)
+        ))->binaryLogarithm();
+
+        $this->assertInstanceOf(BinaryLogarithm::class, $number);
+        $this->assertSame(log(4, 2), $number->value());
+    }
+
+    public function testNaturalLogarithm()
+    {
+        $number = (new Subtraction(
+            new Number(8),
+            new Number(4)
+        ))->naturalLogarithm();
+
+        $this->assertInstanceOf(NaturalLogarithm::class, $number);
+        $this->assertSame(log(4), $number->value());
+    }
+
+    public function testCommonLogarithm()
+    {
+        $number = (new Subtraction(
+            new Number(8),
+            new Number(4)
+        ))->commonLogarithm();
+
+        $this->assertInstanceOf(CommonLogarithm::class, $number);
+        $this->assertSame(log10(4), $number->value());
     }
 
     public function testStringCast()

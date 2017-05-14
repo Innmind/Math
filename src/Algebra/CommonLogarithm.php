@@ -3,13 +3,24 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Algebra;
 
-final class Floor implements NumberInterface
+use Innmind\Math\Exception\OutOfDefinitionSetException;
+
+/**
+ * Base 10 logarithm
+ */
+final class CommonLogarithm implements OperationInterface, NumberInterface
 {
     private $number;
-    private $value;
+    private $result;
 
     public function __construct(NumberInterface $number)
     {
+        $zero = new Integer(0);
+
+        if ($zero->equals($number) || $zero->higherThan($number)) {
+            throw new OutOfDefinitionSetException;
+        }
+
         $this->number = $number;
     }
 
@@ -18,17 +29,17 @@ final class Floor implements NumberInterface
      */
     public function value()
     {
-        return $this->value ?? $this->value = floor($this->number->value());
+        return $this->result()->value();
     }
 
     public function equals(NumberInterface $number): bool
     {
-        return $this->value() == $number->value();
+        return $this->result()->equals($number);
     }
 
     public function higherThan(NumberInterface $number): bool
     {
-        return $this->value() > $number->value();
+        return $this->result()->higherThan($number);
     }
 
     public function add(
@@ -64,7 +75,7 @@ final class Floor implements NumberInterface
 
     public function floor(): NumberInterface
     {
-        return new self($this);
+        return new Floor($this);
     }
 
     public function ceil(): NumberInterface
@@ -109,11 +120,18 @@ final class Floor implements NumberInterface
 
     public function commonLogarithm(): NumberInterface
     {
-        return new CommonLogarithm($this);
+        return new self($this);
+    }
+
+    public function result(): NumberInterface
+    {
+        return $this->result ?? $this->result = new Number(
+            log10($this->number->value())
+        );
     }
 
     public function __toString(): string
     {
-        return var_export($this->value(), true);
+        return sprintf('lg(%s)', $this->number);
     }
 }

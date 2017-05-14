@@ -18,7 +18,10 @@ use Innmind\Math\Algebra\{
     Absolute,
     Power,
     SquareRoot,
-    Exponential
+    Exponential,
+    BinaryLogarithm,
+    NaturalLogarithm,
+    CommonLogarithm
 };
 use PHPUnit\Framework\TestCase;
 
@@ -154,5 +157,29 @@ class PiTest extends TestCase
 
         $this->assertInstanceOf(Exponential::class, $number);
         $this->assertSame(exp(M_PI), $number->value());
+    }
+
+    public function testBinaryLogarithm()
+    {
+        $number = (new Pi)->binaryLogarithm();
+
+        $this->assertInstanceOf(BinaryLogarithm::class, $number);
+        $this->assertSame(log(M_PI, 2), $number->value());
+    }
+
+    public function testNaturalLogarithm()
+    {
+        $number = (new Pi)->naturalLogarithm();
+
+        $this->assertInstanceOf(NaturalLogarithm::class, $number);
+        $this->assertSame(log(M_PI), $number->value());
+    }
+
+    public function testCommonLogarithm()
+    {
+        $number = (new Pi)->commonLogarithm();
+
+        $this->assertInstanceOf(CommonLogarithm::class, $number);
+        $this->assertSame(log10(M_PI), $number->value());
     }
 }
