@@ -5,7 +5,8 @@ namespace Innmind\Math\Polynom;
 
 use Innmind\Math\{
     Algebra\NumberInterface,
-    Algebra\Integer
+    Algebra\Integer,
+    Algebra\OperationInterface
 };
 
 final class Degree
@@ -35,5 +36,21 @@ final class Degree
     public function __invoke(NumberInterface $x): NumberInterface
     {
         return $this->coeff->multiplyBy($x->power($this->degree));
+    }
+
+    public function __toString(): string
+    {
+        $coeff = $this->coeff instanceof OperationInterface ?
+            '('.$this->coeff.')' : $this->coeff;
+
+        if ($this->degree->equals(new Integer(1))) {
+            return $coeff.'x';
+        }
+
+        return sprintf(
+            '%sx^%s',
+            $coeff,
+            $this->degree
+        );
     }
 }

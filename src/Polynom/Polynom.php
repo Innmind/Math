@@ -11,7 +11,8 @@ use function Innmind\Math\{
 use Innmind\Math\Algebra\{
     NumberInterface,
     Number,
-    Integer
+    Integer,
+    OperationInterface
 };
 use Innmind\Immutable\Map;
 
@@ -144,5 +145,27 @@ final class Polynom
     public function tangent(NumberInterface $x, NumberInterface $limit = null): Tangent
     {
         return new Tangent($this, $x, $limit);
+    }
+
+    public function __toString(): string
+    {
+        $polynom = $this
+            ->degrees
+            ->values()
+            ->sort(function (Degree $a, Degree $b): bool {
+                return $b->degree()->higherThan($a->degree());
+            })
+            ->join(' + ');
+
+        if (!$this->intercept->equals(new Integer(0))) {
+            $intercept = $this->intercept instanceof OperationInterface ?
+                '('.$this->intercept.')' : (string) $this->intercept;
+
+            $polynom = $polynom
+                ->append(' + ')
+                ->append($intercept);
+        }
+
+        return (string) $polynom;
     }
 }

@@ -117,4 +117,21 @@ class PolynomTest extends TestCase
             $polynom->tangent(new Number(2))(new Number(2))->value()
         );
     }
+
+    public function testStringCast()
+    {
+        $polynom = (new Polynom(new Number(42)))
+            ->withDegree(new Integer(2), new Number(2))
+            ->withDegree(new Integer(1), new Number(3))
+            ->withDegree(new Integer(3), new Number(1));
+
+        $this->assertSame('1x^3 + 2x^2 + 3x + 42', (string) $polynom);
+
+        $polynom = (new Polynom(new Number(0)))
+            ->withDegree(new Integer(2), new Number(2))
+            ->withDegree(new Integer(1), new Number(3))
+            ->withDegree(new Integer(3), new Number(1));
+
+        $this->assertSame('1x^3 + 2x^2 + 3x', (string) $polynom);
+    }
 }
