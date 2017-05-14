@@ -91,4 +91,42 @@ class TriangleTest extends TestCase
             $triangle->height()->length()->value()
         );
     }
+
+    public function testIsIsosceles()
+    {
+        $triangle = new Triangle(
+            new Segment(new Number(9.8)),
+            new Segment(new Integer(16)),
+            new Segment(new Integer(16))
+        );
+
+        $this->assertTrue($triangle->isIsosceles());
+
+        $triangle = new Triangle(
+            new Segment(new Number(9.8)),
+            new Segment(new Integer(15)),
+            new Segment(new Integer(16))
+        );
+
+        $this->assertFalse($triangle->isIsosceles());
+    }
+
+    public function testIsEquilateral()
+    {
+        $triangle = new Triangle(
+            new Segment(new Integer(16)),
+            new Segment(new Integer(16)),
+            new Segment(new Integer(16))
+        );
+
+        $this->assertTrue($triangle->isEquilateral());
+
+        $triangle = new Triangle(
+            new Segment(new Number(9.8)),
+            new Segment(new Integer(16)),
+            new Segment(new Integer(16))
+        );
+
+        $this->assertFalse($triangle->isEquilateral());
+    }
 }

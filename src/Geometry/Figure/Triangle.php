@@ -86,4 +86,17 @@ final class Triangle implements FigureInterface
     {
         return $this->height;
     }
+
+    public function isIsosceles(): bool
+    {
+        return $this->a->equals($this->b) ||
+            $this->a->equals($this->c) ||
+            $this->b->equals($this->c);
+    }
+
+    public function isEquilateral(): bool
+    {
+        return $this->a->equals($this->b) &&
+            $this->b->equals($this->c);
+    }
 }
