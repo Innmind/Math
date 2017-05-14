@@ -43,6 +43,14 @@ class NumberTest extends TestCase
         new Number('42');
     }
 
+    /**
+     * @expectedException Innmind\Math\Exception\NotANumberException
+     */
+    public function testThrowWhenNotANumber()
+    {
+        new Number(NAN);
+    }
+
     public function testInt()
     {
         $number = new Number(42);

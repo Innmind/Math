@@ -3,7 +3,10 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Algebra;
 
-use Innmind\Math\Exception\TypeError;
+use Innmind\Math\Exception\{
+    TypeError,
+    NotANumberException
+};
 
 final class Number implements NumberInterface
 {
@@ -13,6 +16,10 @@ final class Number implements NumberInterface
     {
         if (!is_int($value) && !is_float($value)) {
             throw new TypeError('Number must be an int or a float');
+        }
+
+        if (is_nan($value)) {
+            throw new NotANumberException;
         }
 
         $this->value = $value;
