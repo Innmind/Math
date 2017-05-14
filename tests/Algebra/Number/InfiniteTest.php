@@ -157,27 +157,27 @@ class InfiniteTest extends TestCase
         $this->assertSame(INF, $number->value());
     }
 
+    /**
+     * @expectedException Innmind\Math\Exception\OutOfDefinitionSetException
+     */
     public function testBinaryLogarithm()
     {
-        $number = Infinite::positive()->binaryLogarithm();
-
-        $this->assertInstanceOf(BinaryLogarithm::class, $number);
-        $this->assertSame(INF, $number->value());
+        Infinite::positive()->binaryLogarithm();
     }
 
+    /**
+     * @expectedException Innmind\Math\Exception\OutOfDefinitionSetException
+     */
     public function testNaturalLogarithm()
     {
-        $number = Infinite::positive()->naturalLogarithm();
-
-        $this->assertInstanceOf(NaturalLogarithm::class, $number);
-        $this->assertSame(INF, $number->value());
+        Infinite::positive()->naturalLogarithm();
     }
 
+    /**
+     * @expectedException Innmind\Math\Exception\OutOfDefinitionSetException
+     */
     public function testCommonLogarithm()
     {
-        $number = Infinite::positive()->commonLogarithm();
-
-        $this->assertInstanceOf(CommonLogarithm::class, $number);
-        $this->assertSame(INF, $number->value());
+        Infinite::positive()->commonLogarithm();
     }
 }
