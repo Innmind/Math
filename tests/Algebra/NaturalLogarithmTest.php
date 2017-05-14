@@ -3,25 +3,26 @@ declare(strict_types = 1);
 
 namespace Tests\Innmind\Math\Algebra;
 
-use Innmind\Math\Algebra\{
-    NaturalLogarithm,
-    SquareRoot,
-    Ceil,
-    Floor,
-    NumberInterface,
-    OperationInterface,
-    Number,
-    Addition,
-    Subtraction,
-    Multiplication,
-    Division,
-    Round,
-    Modulo,
-    Absolute,
-    Power,
-    Exponential,
-    BinaryLogarithm,
-    CommonLogarithm
+use Innmind\Math\{
+    Algebra\NaturalLogarithm,
+    Algebra\SquareRoot,
+    Algebra\Ceil,
+    Algebra\Floor,
+    Algebra\NumberInterface,
+    Algebra\OperationInterface,
+    Algebra\Number,
+    Algebra\Addition,
+    Algebra\Subtraction,
+    Algebra\Multiplication,
+    Algebra\Division,
+    Algebra\Round,
+    Algebra\Modulo,
+    Algebra\Absolute,
+    Algebra\Power,
+    Algebra\Exponential,
+    Algebra\BinaryLogarithm,
+    Algebra\CommonLogarithm,
+    DefinitionSet\SetInterface
 };
 use PHPUnit\Framework\TestCase;
 
@@ -213,6 +214,14 @@ class NaturalLogarithmTest extends TestCase
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
         $this->assertSame(log10(log(2)), $number->value());
+    }
+
+    public function testDefinitionSet()
+    {
+        $set = BinaryLogarithm::definitionSet();
+
+        $this->assertInstanceOf(SetInterface::class, $set);
+        $this->assertSame(']0;+∞[', (string) $set);
     }
 
     public function testLogarithmMultiplication()

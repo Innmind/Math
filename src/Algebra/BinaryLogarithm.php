@@ -3,21 +3,26 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Algebra;
 
-use Innmind\Math\Exception\OutOfDefinitionSetException;
+use Innmind\Math\{
+    Algebra\Number\Infinite,
+    DefinitionSet\SetInterface,
+    DefinitionSet\Range,
+    Exception\OutOfDefinitionSetException
+};
 
 /**
  * Base 2 logarithm
  */
 final class BinaryLogarithm implements OperationInterface, NumberInterface
 {
+    private static $definitionSet;
+
     private $number;
     private $result;
 
     public function __construct(NumberInterface $number)
     {
-        $zero = new Integer(0);
-
-        if ($zero->equals($number) || $zero->higherThan($number)) {
+        if (!self::definitionSet()->contains($number)) {
             throw new OutOfDefinitionSetException;
         }
 
@@ -128,6 +133,14 @@ final class BinaryLogarithm implements OperationInterface, NumberInterface
         return $this->result ?? $this->result = Number::wrap(
             log($this->number->value(), 2)
         );
+    }
+
+    public static function definitionSet(): SetInterface
+    {
+        return self::$definitionSet ?? self::$definitionSet = Range::exclusive(
+            new Integer(0),
+            Infinite::positive()
+        );;
     }
 
     public function __toString(): string
