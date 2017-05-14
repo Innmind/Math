@@ -134,4 +134,21 @@ class PolynomTest extends TestCase
 
         $this->assertSame('1x^3 + 2x^2 + 3x', (string) $polynom);
     }
+
+    public function testPrimitive()
+    {
+        $polynom = (new Polynom(new Number(42)))
+            ->withDegree(new Integer(2), new Number(2))
+            ->withDegree(new Integer(1), new Number(3))
+            ->withDegree(new Integer(3), new Number(1));
+        $primitive = $polynom->primitive();
+
+        $this->assertInstanceOf(Polynom::class, $primitive);
+        $this->assertNotSame($polynom, $primitive);
+        $this->assertSame('1x^3 + 2x^2 + 3x + 42', (string) $polynom);
+        $this->assertSame(
+            '(1 ÷ (3 + 1))x^4 + (2 ÷ (2 + 1))x^3 + (3 ÷ (1 + 1))x^2 + 42x',
+            (string) $primitive
+        );
+    }
 }

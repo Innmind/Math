@@ -3,6 +3,10 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Polynom;
 
+use function Innmind\Math\{
+    add,
+    divide
+};
 use Innmind\Math\{
     Algebra\NumberInterface,
     Algebra\Integer,
@@ -28,6 +32,17 @@ final class Degree
     public function coeff(): NumberInterface
     {
         return $this->coeff;
+    }
+
+    public function primitive(): self
+    {
+        return new self(
+            add($this->degree, 1)->result(),
+            divide(
+                $this->coeff,
+                add($this->degree, 1)
+            )
+        );
     }
 
     /**

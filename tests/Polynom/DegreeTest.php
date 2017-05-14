@@ -36,4 +36,15 @@ class DegreeTest extends TestCase
 
         $this->assertSame('(1 ÷ 4)x^8', (string) $d);
     }
+
+    public function testPrimitive()
+    {
+        $d = new Degree(new Integer(8), new Number(2));
+        $primitive = $d->primitive();
+
+        $this->assertInstanceOf(Degree::class, $primitive);
+        $this->assertNotSame($d, $primitive);
+        $this->assertSame('2x^8', (string) $d);
+        $this->assertSame('(2 ÷ (8 + 1))x^9', (string) $primitive);
+    }
 }

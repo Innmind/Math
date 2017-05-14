@@ -147,6 +147,20 @@ final class Polynom
         return new Tangent($this, $x, $limit);
     }
 
+    public function primitive(): self
+    {
+        return new self(
+            new Integer(0),
+            ...$this
+                ->degrees
+                ->values()
+                ->map(function(Degree $degree): Degree {
+                    return $degree->primitive();
+                })
+                ->add(new Degree(new Integer(1), $this->intercept))
+        );
+    }
+
     public function __toString(): string
     {
         $polynom = $this
