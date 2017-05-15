@@ -152,6 +152,16 @@ class PolynomTest extends TestCase
         );
     }
 
+    public function testRemovePrimitiveFirstDegreeWhenNulCoefficient()
+    {
+        $this->assertSame(
+            '(2 ÷ (2 + 1))x^3',
+            (string) (new Polynom(new Number(0)))
+                ->withDegree(new Integer(2), new Number(2))
+                ->primitive()
+        );
+    }
+
     public function testDerivative()
     {
         $polynom = (new Polynom(new Number(0)))

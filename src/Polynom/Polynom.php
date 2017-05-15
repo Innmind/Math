@@ -149,16 +149,20 @@ final class Polynom
 
     public function primitive(): self
     {
-        return new self(
-            new Integer(0),
-            ...$this
-                ->degrees
-                ->values()
-                ->map(function(Degree $degree): Degree {
-                    return $degree->primitive();
-                })
-                ->add(new Degree(new Integer(1), $this->intercept))
-        );
+        $degrees = $this
+            ->degrees
+            ->values()
+            ->map(function(Degree $degree): Degree {
+                return $degree->primitive();
+            });
+
+        if (!$this->intercept->equals(new Integer(0))) {
+            $degrees = $degrees->add(
+                new Degree(new Integer(1), $this->intercept)
+            );
+        }
+
+        return new self(new Integer(0), ...$degrees);
     }
 
     public function derivative(): self
