@@ -17,7 +17,7 @@ class PolynomTest extends TestCase
 {
     public function testImmutability()
     {
-        $p = new Polynom(new Number(0));
+        $p = new Polynom;
 
         $this->assertNotSame(
             $p,
@@ -37,7 +37,7 @@ class PolynomTest extends TestCase
         $this->assertInstanceOf(Degree::class, $p->degree(1));
 
         $p = new Polynom(
-            new Number(0),
+            null,
             $d = new Degree(new Integer(1), new Number(2))
         );
 
@@ -50,7 +50,7 @@ class PolynomTest extends TestCase
      */
     public function testThrowIfTryingToAccessUnknownDegree()
     {
-        $p = new Polynom(new Number(0));
+        $p = new Polynom;
 
         $p->degree(2);
     }
@@ -84,7 +84,7 @@ class PolynomTest extends TestCase
 
     public function testDerived()
     {
-        $polynom = (new Polynom(new Number(0)))
+        $polynom = (new Polynom)
             ->withDegree(new Integer(2), new Number(1));
 
         $this->assertInstanceOf(
@@ -99,7 +99,7 @@ class PolynomTest extends TestCase
 
     public function testTangent()
     {
-        $polynom = (new Polynom(new Number(0)))
+        $polynom = (new Polynom)
             ->withDegree(new Integer(2), new Number(1));
 
         $this->assertInstanceOf(
@@ -127,7 +127,7 @@ class PolynomTest extends TestCase
 
         $this->assertSame('1x^3 + 2x^2 + 3x + 42', (string) $polynom);
 
-        $polynom = (new Polynom(new Number(0)))
+        $polynom = (new Polynom)
             ->withDegree(new Integer(2), new Number(2))
             ->withDegree(new Integer(1), new Number(3))
             ->withDegree(new Integer(3), new Number(1));
@@ -156,7 +156,7 @@ class PolynomTest extends TestCase
     {
         $this->assertSame(
             '(2 ÷ (2 + 1))x^3',
-            (string) (new Polynom(new Number(0)))
+            (string) (new Polynom)
                 ->withDegree(new Integer(2), new Number(2))
                 ->primitive()
         );
@@ -164,7 +164,7 @@ class PolynomTest extends TestCase
 
     public function testDerivative()
     {
-        $polynom = (new Polynom(new Number(0)))
+        $polynom = (new Polynom)
             ->withDegree(new Integer(1), new Number(4))
             ->withDegree(new Integer(2), new Number(2))
             ->withDegree(new Integer(3), new Number(1));

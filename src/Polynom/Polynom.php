@@ -21,9 +21,9 @@ final class Polynom
     private $intercept;
     private $degrees;
 
-    public function __construct(NumberInterface $intercept, Degree ...$degrees)
+    public function __construct(NumberInterface $intercept = null, Degree ...$degrees)
     {
-        $this->intercept = $intercept;
+        $this->intercept = $intercept ?? new Integer(0);
         $this->degrees = new Map('int', Degree::class);
 
         foreach ($degrees as $degree) {
