@@ -138,6 +138,11 @@ final class Number implements NumberInterface
         return new CommonLogarithm($this);
     }
 
+    public function signum(): NumberInterface
+    {
+        return new Signum($this);
+    }
+
     public function __toString(): string
     {
         return var_export($this->value, true);

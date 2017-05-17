@@ -21,7 +21,8 @@ use Innmind\Math\Algebra\{
     Exponential,
     BinaryLogarithm,
     NaturalLogarithm,
-    CommonLogarithm
+    CommonLogarithm,
+    Signum
 };
 use PHPUnit\Framework\TestCase;
 
@@ -181,5 +182,13 @@ class PiTest extends TestCase
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
         $this->assertSame(log10(M_PI), $number->value());
+    }
+
+    public function testSignum()
+    {
+        $number = (new Pi)->signum();
+
+        $this->assertInstanceOf(Signum::class, $number);
+        $this->assertSame(1, $number->value());
     }
 }

@@ -19,7 +19,8 @@ use Innmind\Math\Algebra\{
     Exponential,
     BinaryLogarithm,
     NaturalLogarithm,
-    CommonLogarithm
+    CommonLogarithm,
+    Signum
 };
 
 /**
@@ -124,6 +125,11 @@ final class E implements NumberInterface
     public function commonLogarithm(): NumberInterface
     {
         return new CommonLogarithm($this);
+    }
+
+    public function signum(): NumberInterface
+    {
+        return new Signum($this);
     }
 
     public function __toString(): string

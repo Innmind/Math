@@ -118,6 +118,11 @@ final class Factorial implements OperationInterface, NumberInterface
         return new CommonLogarithm($this);
     }
 
+    public function signum(): NumberInterface
+    {
+        return new Signum($this);
+    }
+
     public function result(): NumberInterface
     {
         if ($this->number) {

@@ -23,6 +23,7 @@ use Innmind\Math\{
     Algebra\BinaryLogarithm,
     Algebra\NaturalLogarithm,
     Algebra\CommonLogarithm,
+    Algebra\Signum,
     Geometry\Angle\Degree,
     Geometry\Angle\Radian,
     Geometry\Trigonometry\Cosine,
@@ -295,6 +296,16 @@ function logarithm($number): NaturalLogarithm
 function commonLogarithm($number): CommonLogarithm
 {
     return new CommonLogarithm(...numerize($number));
+}
+
+/**
+ * @param int|float|NumberInterface $number
+ *
+ * @return Signum
+ */
+function signum($number): Signum
+{
+    return new Signum(...numerize($number));
 }
 
 /**

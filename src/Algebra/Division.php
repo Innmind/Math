@@ -132,6 +132,11 @@ final class Division implements OperationInterface, NumberInterface
         return new CommonLogarithm($this);
     }
 
+    public function signum(): NumberInterface
+    {
+        return new Signum($this);
+    }
+
     public function quotient(): NumberInterface
     {
         return $this->result();

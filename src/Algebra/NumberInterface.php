@@ -26,5 +26,6 @@ interface NumberInterface
     public function binaryLogarithm(): self;
     public function naturalLogarithm(): self;
     public function commonLogarithm(): self;
+    public function signum(): self;
     public function __toString(): string;
 }

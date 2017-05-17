@@ -22,6 +22,7 @@ use Innmind\Math\{
     Algebra\Exponential,
     Algebra\NaturalLogarithm,
     Algebra\CommonLogarithm,
+    Algebra\Signum,
     DefinitionSet\SetInterface
 };
 use PHPUnit\Framework\TestCase;
@@ -214,6 +215,14 @@ class BinaryLogarithmTest extends TestCase
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
         $this->assertSame(log10(log(2, 2)), $number->value());
+    }
+
+    public function testSignum()
+    {
+        $number = (new BinaryLogarithm(new Number(2)))->signum();
+
+        $this->assertInstanceOf(Signum::class, $number);
+        $this->assertSame(1, $number->value());
     }
 
     public function testDefinitionSet()

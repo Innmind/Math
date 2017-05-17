@@ -117,6 +117,11 @@ final class Multiplication implements OperationInterface, NumberInterface, \Iter
         return new CommonLogarithm($this);
     }
 
+    public function signum(): NumberInterface
+    {
+        return new Signum($this);
+    }
+
     public function product(): NumberInterface
     {
         return $this->result();

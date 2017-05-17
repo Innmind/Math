@@ -21,7 +21,8 @@ use Innmind\Math\Algebra\{
     Exponential,
     BinaryLogarithm,
     NaturalLogarithm,
-    CommonLogarithm
+    CommonLogarithm,
+    Signum
 };
 use PHPUnit\Framework\TestCase;
 
@@ -179,5 +180,13 @@ class InfiniteTest extends TestCase
     public function testCommonLogarithm()
     {
         Infinite::positive()->commonLogarithm();
+    }
+
+    public function testSignum()
+    {
+        $number = Infinite::positive()->signum();
+
+        $this->assertInstanceOf(Signum::class, $number);
+        $this->assertSame(1, $number->value());
     }
 }

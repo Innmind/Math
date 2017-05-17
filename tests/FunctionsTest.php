@@ -30,7 +30,8 @@ use function Innmind\Math\{
     binaryLogarithm,
     naturalLogarithm,
     logarithm,
-    commonLogarithm
+    commonLogarithm,
+    signum
 };
 use Innmind\Math\{
     Algebra\NumberInterface,
@@ -51,6 +52,7 @@ use Innmind\Math\{
     Algebra\BinaryLogarithm,
     Algebra\NaturalLogarithm,
     Algebra\CommonLogarithm,
+    Algebra\Signum,
     Geometry\Angle\Degree,
     Geometry\Angle\Radian,
     Statistics\Frequence,
@@ -333,6 +335,14 @@ class FunctionsTest extends TestCase
 
         $this->assertInstanceOf(CommonLogarithm::class, $lg);
         $this->assertSame('lg(1)', (string) $lg);
+    }
+
+    public function testSignum()
+    {
+        $sgn = signum(1);
+
+        $this->assertInstanceOf(Signum::class, $sgn);
+        $this->assertSame('sgn(1)', (string) $sgn);
     }
 
     public function cosines(): array

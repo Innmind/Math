@@ -20,7 +20,8 @@ use Innmind\Math\Algebra\{
     Exponential,
     BinaryLogarithm,
     NaturalLogarithm,
-    CommonLogarithm
+    CommonLogarithm,
+    Signum
 };
 use PHPUnit\Framework\TestCase;
 
@@ -197,6 +198,14 @@ class CeilTest extends TestCase
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
         $this->assertSame(log10(4), $number->value());
+    }
+
+    public function testSignum()
+    {
+        $number = (new Ceil(new Number(2)))->signum();
+
+        $this->assertInstanceOf(Signum::class, $number);
+        $this->assertSame(1, $number->value());
     }
 
     public function values(): array

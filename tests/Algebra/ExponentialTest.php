@@ -21,7 +21,8 @@ use Innmind\Math\Algebra\{
     SquareRoot,
     BinaryLogarithm,
     NaturalLogarithm,
-    CommonLogarithm
+    CommonLogarithm,
+    Signum
 };
 use PHPUnit\Framework\TestCase;
 
@@ -241,5 +242,13 @@ class ExponentialTest extends TestCase
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
         $this->assertSame(log10(exp(1)), $number->value());
+    }
+
+    public function testSignum()
+    {
+        $number = (new Exponential(new Number(1)))->signum();
+
+        $this->assertInstanceOf(Signum::class, $number);
+        $this->assertSame(1, $number->value());
     }
 }

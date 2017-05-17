@@ -128,6 +128,11 @@ final class CommonLogarithm implements OperationInterface, NumberInterface
         return new self($this);
     }
 
+    public function signum(): NumberInterface
+    {
+        return new Signum($this);
+    }
+
     public function result(): NumberInterface
     {
         return $this->result ?? $this->result = Number::wrap(

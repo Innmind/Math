@@ -1,38 +1,23 @@
 <?php
 declare(strict_types = 1);
 
-namespace Innmind\Math\Statistics;
+namespace Innmind\Math\Algebra;
 
-use Innmind\Math\Algebra\{
-    NumberInterface,
-    Number,
-    Round
-};
-use Innmind\Immutable\Sequence;
-
-final class Mean implements NumberInterface
+final class Signum implements OperationInterface, NumberInterface
 {
+    private $number;
     private $result;
 
-    public function __construct(
-        NumberInterface $first,
-        NumberInterface ...$values
-    ) {
-        $sequence = new Sequence($first, ...$values);
-        $sum = $sequence
-            ->drop(1)
-            ->reduce(
-                $sequence->first(),
-                function(NumberInterface $carry, NumberInterface $number): NumberInterface {
-                    return $carry->add($number);
-                }
-            );
-        $this->result = $sum->divideBy(new Number($sequence->size()));
+    public function __construct(NumberInterface $number)
+    {
+        $this->number = $number;
     }
 
     public function result(): NumberInterface
     {
-        return $this->result;
+        return $this->result ?? $this->result = Number::wrap(
+            $this->number->value() <=> 0
+        );
     }
 
     /**
@@ -40,107 +25,107 @@ final class Mean implements NumberInterface
      */
     public function value()
     {
-        return $this->result->value();
+        return $this->result()->value();
     }
 
     public function equals(NumberInterface $number): bool
     {
-        return $this->result->equals($number);
+        return $this->result()->equals($number);
     }
 
     public function higherThan(NumberInterface $number): bool
     {
-        return $this->result->higherThan($number);
+        return $this->result()->higherThan($number);
     }
 
     public function add(
         NumberInterface $number,
         NumberInterface ...$numbers
     ): NumberInterface {
-        return $this->result->add($number, ...$numbers);
+        return new Addition($this, $number, ...$numbers);
     }
 
     public function subtract(
         NumberInterface $number,
         NumberInterface ...$numbers
     ): NumberInterface {
-        return $this->result->subtract($number, ...$numbers);
+        return new Subtraction($this, $number, ...$numbers);
     }
 
     public function divideBy(NumberInterface $number): NumberInterface
     {
-        return $this->result->divideBy($number);
+        return new Division($this, $number);
     }
 
     public function multiplyBy(
         NumberInterface $number,
         NumberInterface ...$numbers
     ): NumberInterface {
-        return $this->result->multiplyBy($number, ...$numbers);
+        return new Multiplication($this, $number, ...$numbers);
     }
 
     public function round(int $precision = 0, string $mode = Round::UP): NumberInterface
     {
-        return $this->result->round($precision, $mode);
+        return new Round($this, $precision, $mode);
     }
 
     public function floor(): NumberInterface
     {
-        return $this->result->floor();
+        return new Floor($this);
     }
 
     public function ceil(): NumberInterface
     {
-        return $this->result->ceil();
+        return new Ceil($this);
     }
 
     public function modulo(NumberInterface $modulus): NumberInterface
     {
-        return $this->result->modulo($modulus);
+        return new Modulo($this, $modulus);
     }
 
     public function absolute(): NumberInterface
     {
-        return $this->result->absolute();
+        return new Absolute($this);
     }
 
     public function power(NumberInterface $power): NumberInterface
     {
-        return $this->result->power($power);
+        return new Power($this, $power);
     }
 
     public function squareRoot(): NumberInterface
     {
-        return $this->result->squareRoot();
+        return new SquareRoot($this);
     }
 
     public function exponential(): NumberInterface
     {
-        return $this->result->exponential();
+        return new Exponential($this);
     }
 
     public function binaryLogarithm(): NumberInterface
     {
-        return $this->result->binaryLogarithm();
+        return new BinaryLogarithm($this);
     }
 
     public function naturalLogarithm(): NumberInterface
     {
-        return $this->result->naturalLogarithm();
+        return new NaturalLogarithm($this);
     }
 
     public function commonLogarithm(): NumberInterface
     {
-        return $this->result->commonLogarithm();
+        return new CommonLogarithm($this);
     }
 
     public function signum(): NumberInterface
     {
-        return $this->result->signum();
+        return new self($this);
     }
 
     public function __toString(): string
     {
-        return (string) $this->result;
+        return sprintf('sgn(%s)', $this->number);
     }
 }

@@ -119,6 +119,11 @@ final class SquareRoot implements OperationInterface, NumberInterface
         return new CommonLogarithm($this);
     }
 
+    public function signum(): NumberInterface
+    {
+        return new Signum($this);
+    }
+
     public function __toString(): string
     {
         $number = $this->number instanceof OperationInterface ?

@@ -22,7 +22,8 @@ use Innmind\Math\Algebra\{
     NaturalLogarithm,
     CommonLogarithm,
     Integer,
-    Number\Infinite
+    Number\Infinite,
+    Signum
 };
 use PHPUnit\Framework\TestCase;
 
@@ -240,5 +241,13 @@ class NumberTest extends TestCase
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
         $this->assertSame(log10(4), $number->value());
+    }
+
+    public function testSignum()
+    {
+        $number = (new Number(2))->signum();
+
+        $this->assertInstanceOf(Signum::class, $number);
+        $this->assertSame(1, $number->value());
     }
 }

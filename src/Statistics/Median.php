@@ -146,6 +146,11 @@ final class Median implements NumberInterface
         return $this->result->commonLogarithm();
     }
 
+    public function signum(): NumberInterface
+    {
+        return $this->result->signum();
+    }
+
     public function __toString(): string
     {
         return (string) $this->result;

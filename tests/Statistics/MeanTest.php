@@ -21,7 +21,8 @@ use Innmind\Math\{
     Algebra\Exponential,
     Algebra\BinaryLogarithm,
     Algebra\NaturalLogarithm,
-    Algebra\CommonLogarithm
+    Algebra\CommonLogarithm,
+    Algebra\Signum
 };
 use PHPUnit\Framework\TestCase;
 
@@ -245,6 +246,17 @@ class MeanTest extends TestCase
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
         $this->assertSame(log10(4), $number->value());
+    }
+
+    public function testSignum()
+    {
+        $number = (new Mean(
+            new Number(1),
+            new Number(7)
+        ))->signum();
+
+        $this->assertInstanceOf(Signum::class, $number);
+        $this->assertSame(1, $number->value());
     }
 
     public function testStringCast()

@@ -117,6 +117,11 @@ final class Addition implements OperationInterface, NumberInterface, \Iterator
         return new CommonLogarithm($this);
     }
 
+    public function signum(): NumberInterface
+    {
+        return new Signum($this);
+    }
+
     public function sum(): NumberInterface
     {
         return $this->result();
