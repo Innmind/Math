@@ -126,6 +126,33 @@ final class ComplexNumber
         );
     }
 
+    public function squareRoot(): self
+    {
+        $real = squareRoot(
+            divide(
+                add(
+                    $this->real,
+                    $this->absolute()
+                ),
+                2
+            )
+        );
+        $imaginary = multiply(
+            $this->imaginary->signum(),
+            squareRoot(
+                divide(
+                    add(
+                        multiply(-1, $this->real),
+                        $this->absolute()
+                    ),
+                    2
+                )
+            )
+        );
+
+        return new self($real, $imaginary);
+    }
+
     public function equals(self $number): bool
     {
         return $this->real->equals($number->real()) &&
