@@ -126,4 +126,21 @@ class ComplexNumberTest extends TestCase
         $this->assertInstanceOf(NumberInterface::class, $absolute);
         $this->assertSame(sqrt(13), $absolute->value());
     }
+
+    public function testReciprocal()
+    {
+        $number = new ComplexNumber(
+            new Integer(2),
+            new Integer(3)
+        );
+        $reciprocal = $number->reciprocal();
+
+        $this->assertInstanceOf(ComplexNumber::class, $reciprocal);
+        $this->assertNotSame($number, $reciprocal);
+        $this->assertSame('(2 + 3i)', (string) $number);
+        $this->assertSame(
+            '((2 ÷ ((2^2) + (3^2))) + (-1 x (3 ÷ ((2^2) + (3^2))))i)',
+            (string) $reciprocal
+        );
+    }
 }

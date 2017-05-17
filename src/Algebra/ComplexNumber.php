@@ -105,6 +105,19 @@ final class ComplexNumber
         );
     }
 
+    public function reciprocal(): self
+    {
+        $divisor = add(
+            power($this->real, 2),
+            power($this->imaginary, 2)
+        );
+
+        return new self(
+            divide($this->real, $divisor),
+            multiply(-1, divide($this->imaginary, $divisor))
+        );
+    }
+
     public function __toString(): string
     {
         $real = $this->real instanceof OperationInterface ?
