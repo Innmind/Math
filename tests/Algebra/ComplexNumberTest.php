@@ -99,4 +99,18 @@ class ComplexNumberTest extends TestCase
         $this->assertSame(23/41, $number->real()->value());
         $this->assertSame(2/41, $number->imaginary()->value());
     }
+
+    public function testConjugate()
+    {
+        $number = new ComplexNumber(
+            new Integer(2),
+            new Integer(3)
+        );
+        $conjugate = $number->conjugate();
+
+        $this->assertInstanceOf(ComplexNumber::class, $conjugate);
+        $this->assertNotSame($number, $conjugate);
+        $this->assertSame('(2 + 3i)', (string) $number);
+        $this->assertSame('(2 + (-1 x 3)i)', (string) $conjugate);
+    }
 }

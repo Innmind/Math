@@ -72,11 +72,7 @@ final class ComplexNumber
 
     public function divideBy(self $number): self
     {
-        $conjugate = new self(
-            $number->real(),
-            multiply(-1, $number->imaginary())
-        );
-        $dividend = $this->multiplyBy($conjugate);
+        $dividend = $this->multiplyBy($number->conjugate());
         $divisor = subtract(
             power($number->real(), 2),
             multiply(
@@ -88,6 +84,14 @@ final class ComplexNumber
         $imaginary = divide($dividend->imaginary(), $divisor);
 
         return new self($real, $imaginary);
+    }
+
+    public function conjugate(): self
+    {
+        return new self(
+            $this->real,
+            multiply(-1, $this->imaginary())
+        );
     }
 
     public function __toString(): string
