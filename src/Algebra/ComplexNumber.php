@@ -118,6 +118,14 @@ final class ComplexNumber
         );
     }
 
+    public function negation(): self
+    {
+        return new self(
+            multiply(-1, $this->real),
+            multiply(-1, $this->imaginary)
+        );
+    }
+
     public function equals(self $number): bool
     {
         return $this->real->equals($number->real()) &&

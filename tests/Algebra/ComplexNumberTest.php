@@ -144,6 +144,20 @@ class ComplexNumberTest extends TestCase
         );
     }
 
+    public function testNegate()
+    {
+        $number = new ComplexNumber(
+            new Integer(2),
+            new Integer(3)
+        );
+        $negation = $number->negation();
+
+        $this->assertInstanceOf(ComplexNumber::class, $negation);
+        $this->assertNotSame($number, $negation);
+        $this->assertSame('(2 + 3i)', (string) $number);
+        $this->assertSame('((-1 x 2) + (-1 x 3)i)', (string) $negation);
+    }
+
     public function testEquals()
     {
         $number = new ComplexNumber(
