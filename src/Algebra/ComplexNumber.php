@@ -8,7 +8,8 @@ use function Innmind\Math\{
     multiply,
     divide,
     power,
-    subtract
+    subtract,
+    squareRoot
 };
 
 final class ComplexNumber
@@ -91,6 +92,16 @@ final class ComplexNumber
         return new self(
             $this->real,
             multiply(-1, $this->imaginary())
+        );
+    }
+
+    public function absolute(): NumberInterface
+    {
+        return squareRoot(
+            add(
+                power($this->real, 2),
+                power($this->imaginary, 2)
+            )
         );
     }
 

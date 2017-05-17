@@ -6,7 +6,8 @@ namespace Tests\Innmind\Math\Algebra;
 use function Innmind\Math\add;
 use Innmind\Math\Algebra\{
     ComplexNumber,
-    Integer
+    Integer,
+    NumberInterface
 };
 use PHPUnit\Framework\TestCase;
 
@@ -112,5 +113,17 @@ class ComplexNumberTest extends TestCase
         $this->assertNotSame($number, $conjugate);
         $this->assertSame('(2 + 3i)', (string) $number);
         $this->assertSame('(2 + (-1 x 3)i)', (string) $conjugate);
+    }
+
+    public function testAbsolute()
+    {
+        $number = new ComplexNumber(
+            new Integer(2),
+            new Integer(3)
+        );
+        $absolute = $number->absolute();
+
+        $this->assertInstanceOf(NumberInterface::class, $absolute);
+        $this->assertSame(sqrt(13), $absolute->value());
     }
 }
