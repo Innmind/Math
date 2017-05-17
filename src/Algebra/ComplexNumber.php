@@ -118,6 +118,12 @@ final class ComplexNumber
         );
     }
 
+    public function equals(self $number): bool
+    {
+        return $this->real->equals($number->real()) &&
+            $this->imaginary->equals($number->imaginary());
+    }
+
     public function __toString(): string
     {
         $real = $this->real instanceof OperationInterface ?

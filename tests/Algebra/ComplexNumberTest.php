@@ -143,4 +143,26 @@ class ComplexNumberTest extends TestCase
             (string) $reciprocal
         );
     }
+
+    public function testEquals()
+    {
+        $number = new ComplexNumber(
+            new Integer(2),
+            new Integer(3)
+        );
+
+        $this->assertTrue($number->equals($number));
+        $this->assertTrue($number->equals(
+            new ComplexNumber(
+                new Integer(2),
+                new Integer(3)
+            )
+        ));
+        $this->assertFalse($number->equals(
+            new ComplexNumber(
+                new Integer(3),
+                new Integer(3)
+            )
+        ));
+    }
 }
