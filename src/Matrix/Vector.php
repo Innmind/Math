@@ -6,7 +6,6 @@ namespace Innmind\Math\Matrix;
 use function Innmind\Math\add;
 use Innmind\Math\{
     Exception\VectorsMustMeOfTheSameDimensionException,
-    Exception\VectorCannotBeEmptyException,
     Matrix,
     Algebra\NumberInterface,
     Algebra\Number,
@@ -18,14 +17,12 @@ final class Vector implements \Iterator
 {
     private $numbers;
 
-    public function __construct(NumberInterface ...$numbers)
-    {
-        $this->numbers = new Sequence(...$numbers);
+    public function __construct(
+        NumberInterface $number,
+        NumberInterface ...$numbers
+    ) {
+        $this->numbers = new Sequence($number, ...$numbers);
         $this->dimension = new Integer($this->numbers->size());
-
-        if ($this->dimension()->value() === 0) {
-            throw new VectorCannotBeEmptyException;
-        }
     }
 
     public static function initialize(Integer $dimension, NumberInterface $value): self

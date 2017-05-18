@@ -7,7 +7,6 @@ use function Innmind\Math\numerize;
 use Innmind\Math\{
     Matrix\RowVector,
     Matrix\ColumnVector,
-    Exception\MatrixCannotBeEmptyException,
     Exception\VectorsMustMeOfTheSameDimensionException,
     Matrix\Dimension,
     Algebra\NumberInterface,
@@ -22,11 +21,10 @@ final class Matrix implements \Iterator
     private $rows;
     private $columns;
 
-    public function __construct(RowVector ...$rows)
+    public function __construct(RowVector $row, RowVector ...$rows)
     {
-        if (($count = count($rows)) < 1) {
-            throw new MatrixCannotBeEmptyException;
-        }
+        array_unshift($rows, $row);
+        $count = count($rows);
 
         for ($i = 1; $i < $count; ++$i) {
             if (!$rows[$i]->dimension()->equals($rows[$i - 1]->dimension())) {

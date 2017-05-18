@@ -56,14 +56,6 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @expectedException Innmind\Math\Exception\MatrixCannotBeEmptyException
-     */
-    public function testThrowWhenBuildingEmptyMatrix()
-    {
-        new Matrix;
-    }
-
-    /**
      * @expectedException Innmind\Math\Exception\VectorsMustMeOfTheSameDimensionException
      */
     public function testThrowWhenBuildingMatrixWithIncoherentRows()

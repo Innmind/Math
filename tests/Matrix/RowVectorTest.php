@@ -51,14 +51,6 @@ class RowVectorTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\VectorCannotBeEmptyException
-     */
-    public function testThrowWhenEmptyVector()
-    {
-        new RowVector;
-    }
-
     public function testMatrix()
     {
         $matrix = (new RowVector(...numerize(-1, 2)))->matrix(

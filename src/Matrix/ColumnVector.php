@@ -13,9 +13,11 @@ final class ColumnVector implements \Iterator
 {
     private $vector;
 
-    public function __construct(NumberInterface ...$numbers)
-    {
-        $this->vector = new Vector(...$numbers);
+    public function __construct(
+        NumberInterface $number,
+        NumberInterface ...$numbers
+    ) {
+        $this->vector = new Vector($number, ...$numbers);
     }
 
     public static function initialize(Integer $dimension, NumberInterface $value): self

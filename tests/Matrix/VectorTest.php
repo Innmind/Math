@@ -50,14 +50,6 @@ class VectorTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\VectorCannotBeEmptyException
-     */
-    public function testThrowWhenEmptyVector()
-    {
-        new Vector;
-    }
-
     public function testMultiply()
     {
         $vector = new Vector(...numerize(25, 5, 1));
