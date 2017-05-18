@@ -6,7 +6,7 @@ namespace Tests\Innmind\Math\Geometry\Theorem;
 use Innmind\Math\{
     Geometry\Theorem\AlKashi,
     Geometry\Angle\Degree,
-    Algebra\NumberInterface,
+    Geometry\Segment,
     Algebra\Integer
 };
 use PHPUnit\Framework\TestCase;
@@ -21,14 +21,14 @@ class AlKashiTest extends TestCase
     public function testSide()
     {
         $c = AlKashi::side(
-            new Integer(5),
+            new Segment(new Integer(5)),
             new Degree(new Integer(49)),
-            new Integer(7)
+            new Segment(new Integer(7))
         );
 
-        $this->assertInstanceOf(NumberInterface::class, $c);
+        $this->assertInstanceOf(Segment::class, $c);
         $this->assertTrue(in_array(
-            (string) $c,
+            (string) $c->length(),
             [
                 '√(((5^2) + (7^2)) - (((2 x 5) x 7) x 0.6560590289905075))',
                 '√(((5^2) + (7^2)) - (((2 x 5) x 7) x 0.6560590289905074))',
@@ -36,16 +36,16 @@ class AlKashiTest extends TestCase
         ));
         $this->assertSame(
             5.298666621959197,
-            $c->value()
+            $c->length()->value()
         );
     }
 
     public function testAngle()
     {
         $ab = AlKashi::angle(
-            new Integer(6),
-            new Integer(7),
-            new Integer(8)
+            new Segment(new Integer(6)),
+            new Segment(new Integer(7)),
+            new Segment(new Integer(8))
         );
 
         $this->assertInstanceOf(Degree::class, $ab);
@@ -58,9 +58,9 @@ class AlKashiTest extends TestCase
     public function testThrowWhenOpenTriangle()
     {
         AlKashi::angle(
-            new Integer(1),
-            new Integer(42),
-            new Integer(20)
+            new Segment(new Integer(1)),
+            new Segment(new Integer(42)),
+            new Segment(new Integer(20))
         );
     }
 }

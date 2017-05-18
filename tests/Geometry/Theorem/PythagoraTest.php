@@ -5,6 +5,7 @@ namespace Tests\Innmind\Math\Gemoretry\Theorem;
 
 use Innmind\Math\{
     Geometry\Theorem\Pythagora,
+    Geometry\Segment,
     Algebra\Number
 };
 use PHPUnit\Framework\TestCase;
@@ -18,23 +19,29 @@ class PythagoraTest extends TestCase
 
     public function testHypotenuse()
     {
+        $hypotenuse = Pythagora::hypotenuse(
+            new Segment(new Number(3)),
+            new Segment(new Number(2))
+        );
+
+        $this->assertInstanceOf(Segment::class, $hypotenuse);
         $this->assertSame(
             3.6055512755,
-            Pythagora::hypotenuse(
-                new Number(3),
-                new Number(2)
-            )->value()
+            $hypotenuse->length()->value()
         );
     }
 
     public function testAdjacentSide()
     {
+        $side = Pythagora::adjacentSide(
+            new Segment(new Number(5)),
+            new Segment(new Number(2))
+        );
+
+        $this->assertInstanceOf(Segment::class, $side);
         $this->assertSame(
             4.582575695,
-            Pythagora::adjacentSide(
-                new Number(5),
-                new Number(2)
-            )->value()
+            $side->length()->value()
         );
     }
 }

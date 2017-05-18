@@ -3,9 +3,9 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Geometry\Theorem;
 
-use Innmind\Math\Algebra\{
-    NumberInterface,
-    Number
+use Innmind\Math\{
+    Algebra\Number,
+    Geometry\Segment
 };
 
 /**
@@ -17,26 +17,32 @@ final class Pythagora
      * Compute the hypotenuse for adjacent sides A and B
      */
     public static function hypotenuse(
-        NumberInterface $a,
-        NumberInterface $b
-    ): NumberInterface {
-        return $a
+        Segment $a,
+        Segment $b
+    ): Segment {
+        $hypotenuse = $a
+            ->length()
             ->power(new Number(2))
-            ->add($b->power(new Number(2)))
+            ->add($b->length()->power(new Number(2)))
             ->squareRoot();
+
+        return new Segment($hypotenuse);
     }
 
     /**
      * Compute a side A or B from the hypotenuse and one side
      */
     public static function adjacentSide(
-        NumberInterface $hypotenuse,
-        NumberInterface $adjacentSide
-    ): NumberInterface {
-        return $hypotenuse
+        Segment $hypotenuse,
+        Segment $adjacentSide
+    ): Segment {
+        $side = $hypotenuse
+            ->length()
             ->power(new Number(2))
-            ->subtract($adjacentSide->power(new Number(2)))
+            ->subtract($adjacentSide->length()->power(new Number(2)))
             ->squareRoot();
+
+        return new Segment($side);
     }
 
     public function __toString(): string

@@ -51,12 +51,10 @@ final class Angle
      */
     public function sum(): Segment
     {
-        return new Segment(
-            AlKashi::side(
-                $this->firstSegment->length(),
-                $this->degree,
-                $this->secondSegment->length()
-            )
+        return AlKashi::side(
+            $this->firstSegment,
+            $this->degree,
+            $this->secondSegment
         );
     }
 

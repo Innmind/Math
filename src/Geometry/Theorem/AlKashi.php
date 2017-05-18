@@ -13,6 +13,7 @@ use Innmind\Math\{
     Algebra\Integer,
     Geometry\Angle\Degree,
     Geometry\Angle\Radian,
+    Geometry\Segment,
     Exception\OpenFigureException
 };
 use Innmind\Immutable\Set;
@@ -26,11 +27,14 @@ use Innmind\Immutable\Set;
 final class AlKashi
 {
     public static function side(
-        NumberInterface $a,
+        Segment $a,
         Degree $degree,
-        NumberInterface $b
-    ): NumberInterface {
-        return $a
+        Segment $b
+    ): Segment {
+        $a = $a->length();
+        $b = $b->length();
+
+        $side = $a
             ->power(new Integer(2))
             ->add(
                 $b->power(new Integer(2))
@@ -42,16 +46,21 @@ final class AlKashi
                     ->multiplyBy(cosine($degree))
             )
             ->squareRoot();
+
+        return new Segment($side);
     }
 
     /**
      * Return the angle between a and b sides
      */
     public static function angle(
-        NumberInterface $a,
-        NumberInterface $b,
-        NumberInterface $c
+        Segment $a,
+        Segment $b,
+        Segment $c
     ): Degree {
+        $a = $a->length();
+        $b = $b->length();
+        $c = $c->length();
         $longest = max($a, $b, $c);
         $opposites = (new Set(NumberInterface::class))
             ->add($a)
