@@ -5,6 +5,7 @@ namespace Innmind\Math\Geometry\Trigonometry;
 
 use Innmind\Math\{
     Geometry\Angle\Degree,
+    Geometry\Angle\Radian,
     Algebra\NumberInterface,
     Algebra\Number
 };
@@ -16,16 +17,17 @@ final class ArcCosine
 {
     private $arcCosine;
 
-    public function __construct(Degree $degree)
+    public function __construct(NumberInterface $number)
     {
-        $this->arcCosine = new Number(
+        $radians = new Number(
             acos(
-                $degree->toRadian()->number()->value()
+                $number->value()
             )
         );
+        $this->arcCosine = (new Radian($radians))->toDegree();
     }
 
-    public function __invoke(): NumberInterface
+    public function __invoke(): Degree
     {
         return $this->arcCosine;
     }

@@ -31,7 +31,9 @@ use function Innmind\Math\{
     naturalLogarithm,
     logarithm,
     commonLogarithm,
-    signum
+    signum,
+    arcSine,
+    arcTangent
 };
 use Innmind\Math\{
     Algebra\NumberInterface,
@@ -179,18 +181,28 @@ class FunctionsTest extends TestCase
         $this->assertSame($expected->value(), $cos->value());
     }
 
-    /**
-     * @dataProvider arcCosines
-     */
-    public function testArcCosine($expected, $number)
+    public function testArcCosine()
     {
-        $acos = arcCosine($number);
+        $acos = arcCosine(cosine(30));
 
-        $this->assertInstanceOf(NumberInterface::class, $acos);
-        $this->assertSame(
-            $expected,
-            (new Radian($acos))->toDegree()->number()->value()
-        );
+        $this->assertInstanceOf(Degree::class, $acos);
+        $this->assertSame(30.0, $acos->number()->value());
+    }
+
+    public function testArcSine()
+    {
+        $asin = arcSine(sine(30));
+
+        $this->assertInstanceOf(Degree::class, $asin);
+        $this->assertSame(30.0, $asin->number()->value());
+    }
+
+    public function testArcTangent()
+    {
+        $atan = arcTangent(tangent(30));
+
+        $this->assertInstanceOf(Degree::class, $atan);
+        $this->assertSame(30.0, $atan->number()->value());
     }
 
     /**
@@ -353,17 +365,6 @@ class FunctionsTest extends TestCase
             [divide(squareRoot(3), 2), new Number(30)],
             [divide(squareRoot(3), 2), new Degree(new Number(30))],
             [divide(squareRoot(3), 2), (new Degree(new Number(30)))->toRadian()],
-        ];
-    }
-
-    public function arcCosines(): array
-    {
-        return [
-            [30.0, divide(squareRoot(3), 2)],
-            [30.0, sqrt(3)/2],
-            [30.0, new Number(sqrt(3)/2)],
-            [30.0, new Radian(new Number(sqrt(3)/2))],
-            [30.0, (new Radian(new Number(sqrt(3)/2)))->toDegree()],
         ];
     }
 

@@ -12,7 +12,6 @@ use Innmind\Math\{
     Algebra\NumberInterface,
     Algebra\Integer,
     Geometry\Angle\Degree,
-    Geometry\Angle\Radian,
     Geometry\Segment,
     Exception\OpenFigureException
 };
@@ -83,7 +82,7 @@ final class AlKashi
                     ->multiplyBy($b)
             );
 
-        return (new Radian(arcCosine($cosAB)))->toDegree();
+        return arcCosine($cosAB);
     }
 
     public function __toString(): string

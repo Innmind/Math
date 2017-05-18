@@ -177,27 +177,27 @@ function cosine($degree): NumberInterface
 }
 
 /**
- * @param Degree|Radian|int|float|NumberInterface $radian
+ * @param int|float|NumberInterface $number
  */
-function arcCosine($radian): NumberInterface
+function arcCosine($number): Degree
 {
-    return (new ArcCosine(toRadian($radian)->toDegree()))();
+    return (new ArcCosine(...numerize($number)))();
 }
 
 /**
- * @param Degree|Radian|int|float|NumberInterface $radian
+ * @param int|float|NumberInterface $number
  */
-function arcSine($radian): NumberInterface
+function arcSine($number): Degree
 {
-    return (new ArcSine(toRadian($radian)->toDegree()))();
+    return (new ArcSine(...numerize($number)))();
 }
 
 /**
- * @param Degree|Radian|int|float|NumberInterface $radian
+ * @param int|float|NumberInterface $number
  */
-function arcTangent($radian): NumberInterface
+function arcTangent($number): Degree
 {
-    return (new ArcTangent(toRadian($radian)->toDegree()))();
+    return (new ArcTangent(...numerize($number)))();
 }
 
 /**

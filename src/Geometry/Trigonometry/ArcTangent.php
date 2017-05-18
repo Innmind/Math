@@ -5,6 +5,7 @@ namespace Innmind\Math\Geometry\Trigonometry;
 
 use Innmind\Math\{
     Geometry\Angle\Degree,
+    Geometry\Angle\Radian,
     Algebra\NumberInterface,
     Algebra\Number
 };
@@ -16,16 +17,17 @@ final class ArcTangent
 {
     private $arcTangent;
 
-    public function __construct(Degree $degree)
+    public function __construct(NumberInterface $number)
     {
-        $this->arcTangent = new Number(
+        $radians = new Number(
             atan(
-                $degree->toRadian()->number()->value()
+                $number->value()
             )
         );
+        $this->arcTangent = (new Radian($radians))->toDegree();
     }
 
-    public function __invoke(): NumberInterface
+    public function __invoke(): Degree
     {
         return $this->arcTangent;
     }
