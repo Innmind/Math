@@ -29,7 +29,9 @@ use Innmind\Math\{
     Geometry\Trigonometry\Cosine,
     Geometry\Trigonometry\ArcCosine,
     Geometry\Trigonometry\Sine,
+    Geometry\Trigonometry\ArcSine,
     Geometry\Trigonometry\Tangent,
+    Geometry\Trigonometry\ArcTangent,
     Statistics\Frequence,
     Statistics\Mean,
     Statistics\Median,
@@ -180,6 +182,22 @@ function cosine($degree): NumberInterface
 function arcCosine($radian): NumberInterface
 {
     return (new ArcCosine(toRadian($radian)->toDegree()))();
+}
+
+/**
+ * @param Degree|Radian|int|float|NumberInterface $radian
+ */
+function arcSine($radian): NumberInterface
+{
+    return (new ArcSine(toRadian($radian)->toDegree()))();
+}
+
+/**
+ * @param Degree|Radian|int|float|NumberInterface $radian
+ */
+function arcTangent($radian): NumberInterface
+{
+    return (new ArcTangent(toRadian($radian)->toDegree()))();
 }
 
 /**
