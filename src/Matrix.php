@@ -27,26 +27,27 @@ final class Matrix implements \Iterator
     private $rows;
     private $columns;
 
-    public function __construct(RowVector $row, RowVector ...$rows)
+    public function __construct(RowVector $first, RowVector ...$rows)
     {
-        array_unshift($rows, $row);
-        $count = count($rows);
-
-        for ($i = 1; $i < $count; ++$i) {
-            if (!$rows[$i]->dimension()->equals($rows[$i - 1]->dimension())) {
-                throw new VectorsMustMeOfTheSameDimensionException;
-            }
-        }
-
-        $this->rows = (new Sequence(...$rows))->reduce(
+        $this->rows = (new Sequence($first, ...$rows))->reduce(
             new Stream(RowVector::class),
             function(Stream $carry, RowVector $row): Stream {
                 return $carry->add($row);
             }
         );
+
+        $this
+            ->rows
+            ->drop(1)
+            ->foreach(function(RowVector $row) use ($first): void {
+                if (!$row->dimension()->equals($first->dimension())) {
+                    throw new VectorsMustMeOfTheSameDimensionException;
+                }
+            });
+
         $this->columns = new Stream(ColumnVector::class);
         $this->dimension = new Dimension(
-            new Integer($count),
+            new Integer($this->rows->size()),
             $this->rows->get(0)->dimension()
         );
         $this->buildColumns();
