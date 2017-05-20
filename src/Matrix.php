@@ -292,6 +292,43 @@ final class Matrix implements \Iterator
             ->equals($this->transpose());
     }
 
+    public function isInRowEchelonForm(): bool
+    {
+        $zero = new Integer(0);
+        $leadingZeros = $this->rows->reduce(
+            new Sequence,
+            function(Sequence $carry, RowVector $row) use ($zero): Sequence {
+                $numbers = iterator_to_array($row);
+                $dimension = $row->dimension()->value();
+                $count = 0;
+
+                for ($i = 1; $i < $dimension; $i++) {
+                    if (!$numbers[$i]->equals($zero)) {
+                        break;
+                    }
+
+                    ++$count;
+                }
+
+                return $carry->add($count);
+            }
+        );
+
+        $previous = $leadingZeros->first();
+
+        return $leadingZeros
+            ->drop(1)
+            ->reduce(
+                true,
+                function(bool $carry, int $count) use (&$previous): bool {
+                    $carry = $carry && $count > $previous;
+                    $previous = $count;
+
+                    return $carry;
+                }
+            );
+    }
+
     public function current(): RowVector
     {
         return $this->rows->current();

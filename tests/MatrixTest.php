@@ -382,4 +382,27 @@ class MatrixTest extends TestCase
 
         $this->assertTrue($matrix->isAntisymmetric());
     }
+
+    public function testIsInRowEchelonForm()
+    {
+        $matrix = Matrix::fromArray([
+            [3, 1, 1, -2, 1, 0, -3],
+            [0, 0, 0, 3, 1, 1, 0],
+            [0, 0, 0, 0, -1, 7, 9],
+            [0, 0, 0, 0, 0, 2, 1],
+            [0, 0, 0, 0, 0, 0, -3],
+        ]);
+
+        $this->assertTrue($matrix->isInRowEchelonForm());
+
+        $matrix = Matrix::fromArray([
+            [3, 1, 1, -2, 1, 0, -3],
+            [0, 0, 0, 3, 1, 1, 0],
+            [0, 0, 0, 0, 0, 7, 9],
+            [0, 0, 0, 0, 0, 2, 1],
+            [0, 0, 0, 0, 0, 0, -3],
+        ]);
+
+        $this->assertFalse($matrix->isInRowEchelonForm());
+    }
 }
