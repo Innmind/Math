@@ -8,6 +8,7 @@ use Innmind\Math\{
     Matrix\RowVector,
     Matrix\ColumnVector,
     Exception\VectorsMustMeOfTheSameDimensionException,
+    Exception\MatrixMustBeSquareException,
     Matrix\Dimension,
     Algebra\NumberInterface,
     Algebra\Number,
@@ -128,6 +129,32 @@ final class Matrix implements \Iterator
         }
 
         return self::fromArray($rows);
+    }
+
+    public function isSquare(): bool
+    {
+        return $this->dimension->rows()->equals($this->dimension->columns());
+    }
+
+    public function diagonal(): self
+    {
+        if (!$this->isSquare()) {
+            throw new MatrixMustBeSquareException;
+        }
+
+        $rows = $this->rows->reduce(
+            new Sequence,
+            function(Sequence $rows, RowVector $row): Sequence {
+                $numbers = $row->toArray();
+                $newRow = array_fill(0, $row->dimension()->value(), 0);
+                $index = $rows->size();
+                $newRow[$index] = $numbers[$index];
+
+                return $rows->add(new RowVector(...numerize(...$newRow)));
+            }
+        );
+
+        return new self(...$rows);
     }
 
     public function current(): RowVector

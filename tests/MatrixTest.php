@@ -136,4 +136,49 @@ class MatrixTest extends TestCase
                 $matrix->toArray()
         );
     }
+
+    public function testIsSquare()
+    {
+        $this->assertTrue(
+            Matrix::fromArray([
+                [1, 2],
+                [3, 4],
+            ])->isSquare()
+        );
+        $this->assertFalse(
+            Matrix::fromArray([
+                [1, 2],
+            ])->isSquare()
+        );
+    }
+
+    /**
+     * @expectedException Innmind\Math\Exception\MatrixMustBeSquareException
+     */
+    public function testThrowWhenAskingForNonSquareDiagonal()
+    {
+        Matrix::fromArray([[1, 2]])->diagonal();
+    }
+
+    public function testDiagonal()
+    {
+        $matrix = Matrix::fromArray($initial = [
+            [1, 2, 3],
+            [4, 5, 6],
+            [7, 8, 9],
+        ]);
+        $diagonal = $matrix->diagonal();
+
+        $this->assertInstanceOf(Matrix::class, $diagonal);
+        $this->assertNotSame($matrix, $diagonal);
+        $this->assertSame($initial, $matrix->toArray());
+        $this->assertSame(
+            [
+                [1, 0, 0],
+                [0, 5, 0],
+                [0, 0, 9],
+            ],
+            $diagonal->toArray()
+        );
+    }
 }
