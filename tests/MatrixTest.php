@@ -345,4 +345,41 @@ class MatrixTest extends TestCase
         ));
         $this->assertFalse($matrix->equals($matrix->transpose()));
     }
+
+    public function testIsSymmetric()
+    {
+        $matrix = Matrix::fromArray([
+            [1, 0, -1],
+            [2, 3, 4],
+        ]);
+
+        $this->assertFalse($matrix->isSymmetric());
+
+        $matrix = Matrix::fromArray([
+            [1, 0, 1],
+            [0, 1, 0],
+            [1, 0, 1],
+        ]);
+
+        $this->assertTrue($matrix->isSymmetric());
+    }
+
+    public function testIsAntisymmetric()
+    {
+        $matrix = Matrix::fromArray([
+            [1, 0, -1],
+            [2, 3, 4],
+        ]);
+
+        $this->assertFalse($matrix->isAntisymmetric());
+
+        $matrix = Matrix::fromArray([
+            [0, 2, 3, 4],
+            [-2, 0, -1, 7],
+            [-3, 1, 0, -6],
+            [-4, -7, 6, 0],
+        ]);
+
+        $this->assertTrue($matrix->isAntisymmetric());
+    }
 }

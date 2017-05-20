@@ -280,6 +280,18 @@ final class Matrix implements \Iterator
         );
     }
 
+    public function isSymmetric(): bool
+    {
+        return $this->equals($this->transpose());
+    }
+
+    public function isAntisymmetric(): bool
+    {
+        return $this
+            ->multiplyBy(new Integer(-1))
+            ->equals($this->transpose());
+    }
+
     public function current(): RowVector
     {
         return $this->rows->current();
