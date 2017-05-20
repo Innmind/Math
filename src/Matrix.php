@@ -64,6 +64,21 @@ final class Matrix implements \Iterator
         return new self(...$rows);
     }
 
+    public static function fromColumns(
+        ColumnVector $first,
+        ColumnVector ...$columns
+    ): self {
+        $self = self::fromArray(
+            (new Sequence($first, ...$columns))
+                ->map(function(ColumnVector $column): array {
+                    return iterator_to_array($column);
+                })
+                ->toPrimitive()
+        );
+
+        return $self->transpose();
+    }
+
     /**
      * Initialize a matrix to the wished dimension filled with the specified value
      */

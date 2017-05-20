@@ -102,6 +102,24 @@ class MatrixTest extends TestCase
         $this->assertSame($values, $matrix->toArray());
     }
 
+    public function testFromColumns()
+    {
+        $matrix = Matrix::fromColumns(
+            new ColumnVector(...numerize(1, 2, 3)),
+            new ColumnVector(...numerize(4, 5, 6))
+        );
+
+        $this->assertInstanceOf(Matrix::class, $matrix);
+        $this->assertSame(
+            [
+                [1, 4],
+                [2, 5],
+                [3, 6],
+            ],
+            $matrix->toArray()
+        );
+    }
+
     public function testTranspose()
     {
         $matrix = Matrix::fromArray([
