@@ -308,4 +308,24 @@ class MatrixTest extends TestCase
             $c->toArray()
         );
     }
+
+    public function testMultiplyBy()
+    {
+        $matrix = Matrix::fromArray($initial = [
+            [1, 0, -1],
+            [2, 3, 4],
+        ]);
+        $result = $matrix->multiplyBy(new Integer(3));
+
+        $this->assertInstanceOf(Matrix::class, $result);
+        $this->assertNotSame($matrix, $result);
+        $this->assertSame($initial, $matrix->toArray());
+        $this->assertSame(
+            [
+                [3, 0, -3],
+                [6, 9, 12],
+            ],
+            $result->toArray()
+        );
+    }
 }

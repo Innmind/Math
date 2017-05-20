@@ -162,6 +162,22 @@ final class Matrix implements \Iterator
         return new self(...$rows);
     }
 
+    public function multiplyBy(NumberInterface $number): self
+    {
+        $rows = $this->rows->reduce(
+            new Sequence,
+            function(Sequence $rows, RowVector $row) use ($number): Sequence {
+                return $rows->add(
+                    $row->multiply(
+                        RowVector::initialize($row->dimension(), $number)
+                    )
+                );
+            }
+        );
+
+        return new self(...$rows);
+    }
+
     public function transpose(): self
     {
         $rows = $this->columns->reduce(
