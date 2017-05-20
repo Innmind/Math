@@ -181,4 +181,34 @@ class MatrixTest extends TestCase
             $diagonal->toArray()
         );
     }
+
+    /**
+     * @expectedException Innmind\Math\Exception\MatrixMustBeSquareException
+     */
+    public function testThrowWhenAskingForNonSquareIdentity()
+    {
+        Matrix::fromArray([[1, 2]])->identity();
+    }
+
+    public function testIdentity()
+    {
+        $matrix = Matrix::fromArray($initial = [
+            [1, 2, 3],
+            [4, 5, 6],
+            [7, 8, 9],
+        ]);
+        $identity = $matrix->identity();
+
+        $this->assertInstanceOf(Matrix::class, $identity);
+        $this->assertNotSame($matrix, $identity);
+        $this->assertSame($initial, $matrix->toArray());
+        $this->assertSame(
+            [
+                [1, 0, 0],
+                [0, 1, 0],
+                [0, 0, 1],
+            ],
+            $identity->toArray()
+        );
+    }
 }

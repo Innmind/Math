@@ -157,6 +157,25 @@ final class Matrix implements \Iterator
         return new self(...$rows);
     }
 
+    public function identity(): self
+    {
+        if (!$this->isSquare()) {
+            throw new MatrixMustBeSquareException;
+        }
+
+        $rows = $this->rows->reduce(
+            new Sequence,
+            function(Sequence $rows, RowVector $row): Sequence {
+                $newRow = array_fill(0, $row->dimension()->value(), 0);
+                $newRow[$rows->size()] = 1;
+
+                return $rows->add(new RowVector(...numerize(...$newRow)));
+            }
+        );
+
+        return new self(...$rows);
+    }
+
     public function current(): RowVector
     {
         return $this->rows->current();
