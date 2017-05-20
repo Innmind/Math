@@ -178,21 +178,25 @@ final class Matrix implements \Iterator
 
     public function dot(self $matrix): self
     {
-        $expectedM = $this->dimension->rows();
-        $expectedN = $matrix->dimension()->columns();
-        $rows = [];
+        $rows = $this->rows->reduce(
+            new Sequence,
+            function(Sequence $rows, RowVector $row) use ($matrix): Sequence {
+                $newRow = $matrix
+                    ->columns()
+                    ->reduce(
+                        new Sequence,
+                        function(Sequence $carry, ColumnVector $column) use ($row): Sequence {
+                            return $carry->add(
+                                $row->dot($column)
+                            );
+                        }
+                    );
 
-        for ($i = 0; $i < $expectedM->value(); ++$i) {
-            $row = [];
-
-            for ($j = 0; $j < $expectedN->value(); ++$j) {
-                $row[] = $this->row($i)->dot($matrix->column($j));
+                return $rows->add($newRow);
             }
+        );
 
-            $rows[] = $row;
-        }
-
-        return self::fromArray($rows);
+        return self::fromArray($rows->toPrimitive());
     }
 
     public function isSquare(): bool
