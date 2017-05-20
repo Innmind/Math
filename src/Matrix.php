@@ -116,6 +116,23 @@ final class Matrix implements \Iterator
         return new self(...$rows);
     }
 
+    public function subtract(self $matrix): self
+    {
+        if (!$this->dimension->equals($matrix->dimension())) {
+            throw new MatricesMustBeOfTheSameDimensionException;
+        }
+
+        $matrix->rewind();
+        $rows = $this->rows->map(function(RowVector $row) use ($matrix) {
+            $row = $row->subtract($matrix->current());
+            $matrix->next();
+
+            return $row;
+        });
+
+        return new self(...$rows);
+    }
+
     public function transpose(): self
     {
         $rows = $this->columns->reduce(

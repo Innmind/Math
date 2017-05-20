@@ -247,4 +247,40 @@ class MatrixTest extends TestCase
             $c->toArray()
         );
     }
+
+    /**
+     * @expectedException Innmind\Math\Exception\MatricesMustBeOfTheSameDimensionException
+     */
+    public function testThrowWhenSubtractingMatricesOfDifferentDimensions()
+    {
+        Matrix::fromArray([[1]])->subtract(
+            Matrix::fromArray([[1, 2]])
+        );
+    }
+
+    public function testSubtract()
+    {
+        $a = Matrix::fromArray($aValues = [
+            [1, 0, -1],
+            [2, 1, 4],
+        ]);
+        $b = Matrix::fromArray($bValues = [
+            [0, -1, -2],
+            [-3, 1, 5],
+        ]);
+        $c = $a->subtract($b);
+
+        $this->assertInstanceOf(Matrix::class, $c);
+        $this->assertNotSame($c, $a);
+        $this->assertNotSame($c, $b);
+        $this->assertSame($aValues, $a->toArray());
+        $this->assertSame($bValues, $b->toArray());
+        $this->assertSame(
+            [
+                [1, 1, 1],
+                [5, 0, -1],
+            ],
+            $c->toArray()
+        );
+    }
 }
