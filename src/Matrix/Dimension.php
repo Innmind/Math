@@ -35,6 +35,12 @@ final class Dimension
         return $this->columns;
     }
 
+    public function equals(self $dimension): bool
+    {
+        return $this->rows->equals($dimension->rows()) &&
+            $this->columns->equals($dimension->columns());
+    }
+
     public function __toString(): string
     {
         return $this->string;
