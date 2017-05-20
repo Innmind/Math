@@ -225,4 +225,15 @@ class VectorTest extends TestCase
             )
         );
     }
+
+    public function testEquals()
+    {
+        $vector = new Vector(...numerize(1, 2, 3));
+
+        $this->assertTrue($vector->equals($vector));
+        $this->assertTrue($vector->equals(new Vector(...numerize(1, 2, 3))));
+        $this->assertFalse($vector->equals(new Vector(...numerize(1, 2, 4))));
+        $this->assertFalse($vector->equals(new Vector(...numerize(3, 2, 1))));
+        $this->assertFalse($vector->equals(new Vector(...numerize(1, 2))));
+    }
 }

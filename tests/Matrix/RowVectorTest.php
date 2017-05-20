@@ -233,4 +233,14 @@ class RowVectorTest extends TestCase
             )
         );
     }
+
+    public function testEquals()
+    {
+        $vector = new RowVector(...numerize(1, 2, 3));
+
+        $this->assertTrue($vector->equals($vector));
+        $this->assertTrue($vector->equals(new RowVector(...numerize(1, 2, 3))));
+        $this->assertFalse($vector->equals(new RowVector(...numerize(3, 2, 1))));
+        $this->assertFalse($vector->equals(new RowVector(...numerize(1, 2))));
+    }
 }

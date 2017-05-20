@@ -136,6 +136,11 @@ final class ColumnVector implements \Iterator
         return $this->vector->get($position);
     }
 
+    public function equals(self $column): bool
+    {
+        return $this->vector->equals($column->vector);
+    }
+
     public function current(): NumberInterface
     {
         return $this->vector->current();

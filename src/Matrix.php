@@ -261,6 +261,25 @@ final class Matrix implements \Iterator
         return new self(...$rows);
     }
 
+    public function equals(self $matrix): bool
+    {
+        if (!$this->dimension->equals($matrix->dimension())) {
+            return false;
+        }
+
+        $matrix->rewind();
+
+        return $this->rows->reduce(
+            true,
+            function(bool $carry, RowVector $row) use ($matrix): bool {
+                $carry = $carry && $row->equals($matrix->current());
+                $matrix->next();
+
+                return $carry;
+            }
+        );
+    }
+
     public function current(): RowVector
     {
         return $this->rows->current();

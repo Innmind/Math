@@ -133,6 +133,11 @@ final class RowVector implements \Iterator
         return $this->vector->get($position);
     }
 
+    public function equals(self $row): bool
+    {
+        return $this->vector->equals($row->vector);
+    }
+
     public function current(): NumberInterface
     {
         return $this->vector->current();

@@ -328,4 +328,21 @@ class MatrixTest extends TestCase
             $result->toArray()
         );
     }
+
+    public function testEquals()
+    {
+        $matrix = Matrix::fromArray([
+            [1, 0, -1],
+            [2, 3, 4],
+        ]);
+
+        $this->assertTrue($matrix->equals($matrix));
+        $this->assertTrue($matrix->equals(
+            Matrix::fromArray([
+                [1, 0, -1],
+                [2, 3, 4],
+            ])
+        ));
+        $this->assertFalse($matrix->equals($matrix->transpose()));
+    }
 }
