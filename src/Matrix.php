@@ -15,7 +15,11 @@ use Innmind\Math\{
     Algebra\Number,
     Algebra\Integer
 };
-use Innmind\Immutable\Sequence;
+use Innmind\Immutable\{
+    Sequence,
+    StreamInterface,
+    Stream
+};
 
 final class Matrix implements \Iterator
 {
@@ -34,8 +38,13 @@ final class Matrix implements \Iterator
             }
         }
 
-        $this->rows = new Sequence(...$rows);
-        $this->columns = new Sequence;
+        $this->rows = (new Sequence(...$rows))->reduce(
+            new Stream(RowVector::class),
+            function(Stream $carry, RowVector $row): Stream {
+                return $carry->add($row);
+            }
+        );
+        $this->columns = new Stream(ColumnVector::class);
         $this->dimension = new Dimension(
             new Integer($count),
             $this->rows->get(0)->dimension()
@@ -83,10 +92,14 @@ final class Matrix implements \Iterator
     {
         return $this
             ->rows
-            ->map(function(RowVector $row) {
-                return $row->toArray();
-            })
-            ->toPrimitive();
+            ->reduce(
+                [],
+                function(array $carry, RowVector $row) {
+                    $carry[] = $row->toArray();
+
+                    return $carry;
+                }
+            );
     }
 
     public function row(int $row): RowVector
@@ -97,6 +110,22 @@ final class Matrix implements \Iterator
     public function column(int $column): ColumnVector
     {
         return $this->columns->get($column);
+    }
+
+    /**
+     * @return StreamInterface<RowVector>
+     */
+    public function rows(): StreamInterface
+    {
+        return $this->rows;
+    }
+
+    /**
+     * @return StreamInterface<ColumnVector>
+     */
+    public function columns(): StreamInterface
+    {
+        return $this->columns;
     }
 
     public function add(self $matrix): self

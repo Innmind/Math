@@ -12,6 +12,7 @@ use Innmind\Math\{
     Algebra\Number,
     Algebra\Integer
 };
+use Innmind\Immutable\StreamInterface;
 use PHPUnit\Framework\TestCase;
 
 class MatrixTest extends TestCase
@@ -53,6 +54,30 @@ class MatrixTest extends TestCase
             [3, 4],
             $matrix->column(2)->toArray()
         );
+    }
+
+    public function testRows()
+    {
+        $matrix = Matrix::fromArray([
+            [1, 2, 3],
+            [1, 2, 3],
+        ]);
+
+        $this->assertInstanceOf(StreamInterface::class, $matrix->rows());
+        $this->assertSame(RowVector::class, (string) $matrix->rows()->type());
+        $this->assertCount(2, $matrix->rows());
+    }
+
+    public function testColumns()
+    {
+        $matrix = Matrix::fromArray([
+            [1, 2, 3],
+            [1, 2, 3],
+        ]);
+
+        $this->assertInstanceOf(StreamInterface::class, $matrix->columns());
+        $this->assertSame(ColumnVector::class, (string) $matrix->columns()->type());
+        $this->assertCount(3, $matrix->columns());
     }
 
     /**
