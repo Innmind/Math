@@ -405,4 +405,68 @@ class MatrixTest extends TestCase
 
         $this->assertFalse($matrix->isInRowEchelonForm());
     }
+
+    public function testDropRow()
+    {
+        $matrix = Matrix::fromArray($initial = [
+            [0, 2, 3, 4],
+            [-2, 0, -1, 7],
+            [-3, 1, 0, -6],
+            [-4, -7, 6, 0],
+        ]);
+        $dropped = $matrix->dropRow(0);
+
+        $this->assertInstanceOf(Matrix::class, $dropped);
+        $this->assertNotSame($matrix, $dropped);
+        $this->assertSame($initial, $matrix->toArray());
+        $this->assertSame(
+            [
+                [-2, 0, -1, 7],
+                [-3, 1, 0, -6],
+                [-4, -7, 6, 0],
+            ],
+            $dropped->toArray()
+        );
+        $this->assertSame(
+            [
+                [0, 2, 3, 4],
+                [-2, 0, -1, 7],
+                [-4, -7, 6, 0],
+            ],
+            $matrix->dropRow(2)->toArray()
+        );
+    }
+
+    public function testDropColumn()
+    {
+        $matrix = Matrix::fromArray($initial = [
+            [0, 2, 3, 4],
+            [-2, 0, -1, 7],
+            [-3, 1, 0, -6],
+            [-4, -7, 6, 0],
+        ]);
+        $dropped = $matrix->dropColumn(0);
+
+        $this->assertInstanceOf(Matrix::class, $dropped);
+        $this->assertNotSame($matrix, $dropped);
+        $this->assertSame($initial, $matrix->toArray());
+        $this->assertSame(
+            [
+                [2, 3, 4],
+                [0, -1, 7],
+                [1, 0, -6],
+                [-7, 6, 0],
+            ],
+            $dropped->toArray()
+        );
+        $this->assertSame(
+            [
+                [0, 2, 4],
+                [-2, 0, 7],
+                [-3, 1, -6],
+                [-4, -7, 0],
+            ],
+            $matrix->dropColumn(2)->toArray()
+        );
+    }
 }

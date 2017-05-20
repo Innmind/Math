@@ -129,6 +129,39 @@ final class Matrix implements \Iterator
         return $this->columns;
     }
 
+    public function dropRow(int $row): self
+    {
+        return new self(
+            ...$this
+                ->rows
+                ->slice(0, $row)
+                ->append(
+                    $this->rows->slice($row + 1, $this->rows->size())
+                )
+        );
+    }
+
+    public function dropColumn(int $column): self
+    {
+        $self = self::fromArray(
+            $this
+                ->columns
+                ->slice(0, $column)
+                ->append(
+                    $this->columns->slice($column + 1, $this->columns->size())
+                )
+                ->reduce(
+                    new Sequence,
+                    function(Sequence $carry, ColumnVector $column): Sequence {
+                        return $carry->add(iterator_to_array($column));
+                    }
+                )
+                ->toPrimitive()
+        );
+
+        return $self->transpose();
+    }
+
     public function add(self $matrix): self
     {
         if (!$this->dimension->equals($matrix->dimension())) {
