@@ -96,12 +96,12 @@ class MatrixTest extends TestCase
         );
     }
 
-    public function testMultiply()
+    public function testDot()
     {
         $matrix = Matrix::fromArray([
             [1, 2, 3],
             [4, 5, 6],
-        ])->multiply(
+        ])->dot(
             Matrix::fromArray([
                 [7, 8],
                 [9, 10],

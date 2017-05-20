@@ -147,7 +147,7 @@ final class Matrix implements \Iterator
         return new self(...$rows);
     }
 
-    public function multiply(self $matrix): self
+    public function dot(self $matrix): self
     {
         $expectedM = $this->dimension->rows();
         $expectedN = $matrix->dimension()->columns();
