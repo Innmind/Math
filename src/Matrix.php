@@ -9,6 +9,7 @@ use Innmind\Math\{
     Matrix\ColumnVector,
     Exception\VectorsMustMeOfTheSameDimensionException,
     Exception\MatrixMustBeSquareException,
+    Exception\MatricesMustBeOfTheSameDimensionException,
     Matrix\Dimension,
     Algebra\NumberInterface,
     Algebra\Number,
@@ -96,6 +97,23 @@ final class Matrix implements \Iterator
     public function column(int $column): ColumnVector
     {
         return $this->columns->get($column);
+    }
+
+    public function add(self $matrix): self
+    {
+        if (!$this->dimension->equals($matrix->dimension())) {
+            throw new MatricesMustBeOfTheSameDimensionException;
+        }
+
+        $matrix->rewind();
+        $rows = $this->rows->map(function(RowVector $row) use ($matrix) {
+            $row = $row->add($matrix->current());
+            $matrix->next();
+
+            return $row;
+        });
+
+        return new self(...$rows);
     }
 
     public function transpose(): self
