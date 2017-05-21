@@ -232,4 +232,47 @@ class ColumnVectorTest extends TestCase
             )
         );
     }
+
+    public function testEquals()
+    {
+        $vector = new ColumnVector(...numerize(1, 2, 3));
+
+        $this->assertTrue($vector->equals($vector));
+        $this->assertTrue($vector->equals(new ColumnVector(...numerize(1, 2, 3))));
+        $this->assertFalse($vector->equals(new ColumnVector(...numerize(3, 2, 1))));
+        $this->assertFalse($vector->equals(new ColumnVector(...numerize(1, 2))));
+    }
+
+    /**
+     * @dataProvider leads
+     */
+    public function testLead($numbers, $expected)
+    {
+        $vector = new ColumnVector(...numerize(...$numbers));
+
+        $this->assertInstanceOf(NumberInterface::class, $vector->lead());
+        $this->assertSame($expected, $vector->lead()->value());
+    }
+
+    public function leads(): array
+    {
+        return [
+            [
+                [1, 2, 3],
+                1,
+            ],
+            [
+                [0, 2, 3],
+                2,
+            ],
+            [
+                [0, 3, 0, 2],
+                3,
+            ],
+            [
+                [0, 0, 0, 0],
+                0,
+            ],
+        ];
+    }
 }

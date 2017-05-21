@@ -8,12 +8,18 @@ use Innmind\Math\{
     Matrix\RowVector,
     Matrix\ColumnVector,
     Exception\VectorsMustMeOfTheSameDimensionException,
+    Exception\MatrixMustBeSquareException,
+    Exception\MatricesMustBeOfTheSameDimensionException,
     Matrix\Dimension,
     Algebra\NumberInterface,
     Algebra\Number,
     Algebra\Integer
 };
-use Innmind\Immutable\Sequence;
+use Innmind\Immutable\{
+    Sequence,
+    StreamInterface,
+    Stream
+};
 
 final class Matrix implements \Iterator
 {
@@ -21,21 +27,27 @@ final class Matrix implements \Iterator
     private $rows;
     private $columns;
 
-    public function __construct(RowVector $row, RowVector ...$rows)
+    public function __construct(RowVector $first, RowVector ...$rows)
     {
-        array_unshift($rows, $row);
-        $count = count($rows);
-
-        for ($i = 1; $i < $count; ++$i) {
-            if (!$rows[$i]->dimension()->equals($rows[$i - 1]->dimension())) {
-                throw new VectorsMustMeOfTheSameDimensionException;
+        $this->rows = (new Sequence($first, ...$rows))->reduce(
+            new Stream(RowVector::class),
+            function(Stream $carry, RowVector $row): Stream {
+                return $carry->add($row);
             }
-        }
+        );
 
-        $this->rows = new Sequence(...$rows);
-        $this->columns = new Sequence;
+        $this
+            ->rows
+            ->drop(1)
+            ->foreach(function(RowVector $row) use ($first): void {
+                if (!$row->dimension()->equals($first->dimension())) {
+                    throw new VectorsMustMeOfTheSameDimensionException;
+                }
+            });
+
+        $this->columns = new Stream(ColumnVector::class);
         $this->dimension = new Dimension(
-            new Integer($count),
+            new Integer($this->rows->size()),
             $this->rows->get(0)->dimension()
         );
         $this->buildColumns();
@@ -50,6 +62,21 @@ final class Matrix implements \Iterator
         }
 
         return new self(...$rows);
+    }
+
+    public static function fromColumns(
+        ColumnVector $first,
+        ColumnVector ...$columns
+    ): self {
+        $self = self::fromArray(
+            (new Sequence($first, ...$columns))
+                ->map(function(ColumnVector $column): array {
+                    return iterator_to_array($column);
+                })
+                ->toPrimitive()
+        );
+
+        return $self->transpose();
     }
 
     /**
@@ -81,10 +108,14 @@ final class Matrix implements \Iterator
     {
         return $this
             ->rows
-            ->map(function(RowVector $row) {
-                return $row->toArray();
-            })
-            ->toPrimitive();
+            ->reduce(
+                [],
+                function(array $carry, RowVector $row) {
+                    $carry[] = $row->toArray();
+
+                    return $carry;
+                }
+            );
     }
 
     public function row(int $row): RowVector
@@ -95,6 +126,96 @@ final class Matrix implements \Iterator
     public function column(int $column): ColumnVector
     {
         return $this->columns->get($column);
+    }
+
+    /**
+     * @return StreamInterface<RowVector>
+     */
+    public function rows(): StreamInterface
+    {
+        return $this->rows;
+    }
+
+    /**
+     * @return StreamInterface<ColumnVector>
+     */
+    public function columns(): StreamInterface
+    {
+        return $this->columns;
+    }
+
+    public function dropRow(int $row): self
+    {
+        return new self(
+            ...$this
+                ->rows
+                ->slice(0, $row)
+                ->append(
+                    $this->rows->slice($row + 1, $this->rows->size())
+                )
+        );
+    }
+
+    public function dropColumn(int $column): self
+    {
+        return self::fromColumns(
+            ...$this
+                ->columns
+                ->slice(0, $column)
+                ->append(
+                    $this->columns->slice($column + 1, $this->columns->size())
+                )
+        );
+    }
+
+    public function add(self $matrix): self
+    {
+        if (!$this->dimension->equals($matrix->dimension())) {
+            throw new MatricesMustBeOfTheSameDimensionException;
+        }
+
+        $matrix->rewind();
+        $rows = $this->rows->map(function(RowVector $row) use ($matrix) {
+            $row = $row->add($matrix->current());
+            $matrix->next();
+
+            return $row;
+        });
+
+        return new self(...$rows);
+    }
+
+    public function subtract(self $matrix): self
+    {
+        if (!$this->dimension->equals($matrix->dimension())) {
+            throw new MatricesMustBeOfTheSameDimensionException;
+        }
+
+        $matrix->rewind();
+        $rows = $this->rows->map(function(RowVector $row) use ($matrix) {
+            $row = $row->subtract($matrix->current());
+            $matrix->next();
+
+            return $row;
+        });
+
+        return new self(...$rows);
+    }
+
+    public function multiplyBy(NumberInterface $number): self
+    {
+        $rows = $this->rows->reduce(
+            new Sequence,
+            function(Sequence $rows, RowVector $row) use ($number): Sequence {
+                return $rows->add(
+                    $row->multiply(
+                        RowVector::initialize($row->dimension(), $number)
+                    )
+                );
+            }
+        );
+
+        return new self(...$rows);
     }
 
     public function transpose(): self
@@ -111,23 +232,172 @@ final class Matrix implements \Iterator
         return new self(...$rows);
     }
 
-    public function multiply(self $matrix): self
+    public function dot(self $matrix): self
     {
-        $expectedM = $this->dimension->rows();
-        $expectedN = $matrix->dimension()->columns();
-        $rows = [];
+        $rows = $this->rows->reduce(
+            new Sequence,
+            function(Sequence $rows, RowVector $row) use ($matrix): Sequence {
+                $newRow = $matrix
+                    ->columns()
+                    ->reduce(
+                        new Sequence,
+                        function(Sequence $carry, ColumnVector $column) use ($row): Sequence {
+                            return $carry->add(
+                                $row->dot($column)
+                            );
+                        }
+                    );
 
-        for ($i = 0; $i < $expectedM->value(); ++$i) {
-            $row = [];
-
-            for ($j = 0; $j < $expectedN->value(); ++$j) {
-                $row[] = $this->row($i)->dot($matrix->column($j));
+                return $rows->add($newRow);
             }
+        );
 
-            $rows[] = $row;
+        return self::fromArray($rows->toPrimitive());
+    }
+
+    public function isSquare(): bool
+    {
+        return $this->dimension->rows()->equals($this->dimension->columns());
+    }
+
+    public function diagonal(): self
+    {
+        if (!$this->isSquare()) {
+            throw new MatrixMustBeSquareException;
         }
 
-        return self::fromArray($rows);
+        $rows = $this->rows->reduce(
+            new Sequence,
+            function(Sequence $rows, RowVector $row): Sequence {
+                $numbers = $row->toArray();
+                $newRow = array_fill(0, $row->dimension()->value(), 0);
+                $index = $rows->size();
+                $newRow[$index] = $numbers[$index];
+
+                return $rows->add(new RowVector(...numerize(...$newRow)));
+            }
+        );
+
+        return new self(...$rows);
+    }
+
+    public function identity(): self
+    {
+        if (!$this->isSquare()) {
+            throw new MatrixMustBeSquareException;
+        }
+
+        $rows = $this->rows->reduce(
+            new Sequence,
+            function(Sequence $rows, RowVector $row): Sequence {
+                $newRow = array_fill(0, $row->dimension()->value(), 0);
+                $newRow[$rows->size()] = 1;
+
+                return $rows->add(new RowVector(...numerize(...$newRow)));
+            }
+        );
+
+        return new self(...$rows);
+    }
+
+    public function equals(self $matrix): bool
+    {
+        if (!$this->dimension->equals($matrix->dimension())) {
+            return false;
+        }
+
+        $matrix->rewind();
+
+        return $this->rows->reduce(
+            true,
+            function(bool $carry, RowVector $row) use ($matrix): bool {
+                $carry = $carry && $row->equals($matrix->current());
+                $matrix->next();
+
+                return $carry;
+            }
+        );
+    }
+
+    public function isSymmetric(): bool
+    {
+        return $this->equals($this->transpose());
+    }
+
+    public function isAntisymmetric(): bool
+    {
+        return $this
+            ->multiplyBy(new Integer(-1))
+            ->equals($this->transpose());
+    }
+
+    public function isInRowEchelonForm(): bool
+    {
+        $zero = new Integer(0);
+        $leadingZeros = $this->rows->reduce(
+            new Sequence,
+            function(Sequence $carry, RowVector $row) use ($zero): Sequence {
+                $numbers = iterator_to_array($row);
+                $dimension = $row->dimension()->value();
+                $count = 0;
+
+                for ($i = 1; $i < $dimension; $i++) {
+                    if (!$numbers[$i]->equals($zero)) {
+                        break;
+                    }
+
+                    ++$count;
+                }
+
+                return $carry->add($count);
+            }
+        );
+
+        $previous = $leadingZeros->first();
+
+        return $leadingZeros
+            ->drop(1)
+            ->reduce(
+                true,
+                function(bool $carry, int $count) use (&$previous): bool {
+                    $carry = $carry && $count > $previous;
+                    $previous = $count;
+
+                    return $carry;
+                }
+            );
+    }
+
+    public function augmentWith(self $matrix): self
+    {
+        return self::fromColumns(
+            ...$this->columns->append($matrix->columns())
+        );
+    }
+
+    /**
+     * Use the property (A|In) -> (In|A^-1)
+     *
+     * The matrix augmented with its identity, by transforming the matrix part
+     * to be its identity, then the identity part became the inversed matrix
+     */
+    public function inverse(): self
+    {
+        if (!$this->isSquare()) {
+            throw new MatrixMustBeSquareException;
+        }
+
+        $matrix = $this->augmentWith($this->identity());
+        $matrix = $this->reduceLowerTriangle($matrix);
+        $matrix = $this->reduceUpperTriangle($matrix);
+
+        return Matrix::fromColumns(
+            ...$matrix
+                ->columns()
+                ->takeEnd(
+                    $this->dimension->columns()->value()
+                )
+        );
     }
 
     public function current(): RowVector
@@ -168,5 +438,91 @@ final class Matrix implements \Iterator
             );
             $this->columns = $this->columns->add(new ColumnVector(...$values));
         }
+    }
+
+    private function reduceLowerTriangle(self $matrix): self
+    {
+        $rows = $matrix->rows();
+        $index = 0;
+
+        do {
+            //reduce the matrix to an echelon form with leading ones
+            $rows = $rows->reduce(
+                $rows->clear(),
+                function(StreamInterface $rows, RowVector $row) use ($index): StreamInterface {
+                    if ($rows->size() <= $index) {
+                        return $rows->add($row);
+                    }
+
+                    $reference = $rows->get($index);
+                    $multiplier = $row
+                        ->get($index)
+                        ->divideBy(
+                            $reference->get($index)
+                        );
+
+                    return $rows->add(
+                        $row->subtract(
+                            $reference->multiply(
+                                RowVector::initialize(
+                                    $row->dimension(),
+                                    $multiplier
+                                )
+                            )
+                        )
+                    );
+                }
+            );
+
+            $rows = $rows->map(function(RowVector $row): RowVector {
+                return $row->multiply(
+                    RowVector::initialize(
+                        $row->dimension(),
+                        (new Integer(1))->divideBy($row->lead())
+                    )
+                );
+            });
+
+            ++$index;
+        } while ($index < $this->dimension()->rows()->value());
+
+        return new self(...$rows);
+    }
+
+    private function reduceUpperTriangle(self $matrix): self
+    {
+        $rows = $matrix
+            ->rows()
+            ->reverse();
+        $index = $rows->size() - 1;
+        $reference = 0;
+
+        do {
+            //for each line remove remove the lines below by mutuplying them
+            //by the number in j column of the row being manipulated
+            $rows = $rows->reduce(
+                $rows->clear(),
+                function(StreamInterface $rows, RowVector $row) use ($index, $reference): StreamInterface {
+                    if ($rows->size() <= $reference) {
+                        return $rows->add($row);
+                    }
+
+                    return $rows->add(
+                        $row->subtract(
+                            $rows->get($reference)->multiply(
+                                RowVector::initialize(
+                                    $row->dimension(),
+                                    $row->get($index)
+                                )
+                            )
+                        )
+                    );
+                }
+            );
+            --$index;
+            ++$reference;
+        } while ($index >= 0);
+
+        return new self(...$rows->reverse());
     }
 }

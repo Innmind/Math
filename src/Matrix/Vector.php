@@ -190,6 +190,42 @@ final class Vector implements \Iterator
         return $this->numbers->get($position);
     }
 
+    public function equals(self $vector): bool
+    {
+        if (!$this->dimension()->equals($vector->dimension())) {
+            return false;
+        }
+
+        $vector->rewind();
+
+        return $this->reduce(
+            true,
+            function(bool $carry, NumberInterface $number) use ($vector): bool {
+                $carry = $carry && $number->equals($vector->current());
+                $vector->next();
+
+                return $carry;
+            }
+        );
+    }
+
+    /**
+     * First non zero number found
+     */
+    public function lead(): NumberInterface
+    {
+        return $this->reduce(
+            new Integer(0),
+            function(NumberInterface $lead, NumberInterface $number): NumberInterface {
+                if (!$lead->equals(new Integer(0))) {
+                    return $lead;
+                }
+
+                return $number;
+            }
+        );
+    }
+
     public function current(): NumberInterface
     {
         return $this->numbers->current();

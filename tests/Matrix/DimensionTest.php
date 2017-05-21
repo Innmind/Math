@@ -37,4 +37,23 @@ class DimensionTest extends TestCase
     {
         new Dimension(new Integer(1), new Integer(-1));
     }
+
+    public function testEquals()
+    {
+        $dimension = new Dimension(new Integer(2), new Integer(3));
+
+        $this->assertTrue($dimension->equals($dimension));
+        $this->assertTrue($dimension->equals(
+            new Dimension(new Integer(2), new Integer(3))
+        ));
+        $this->assertFalse($dimension->equals(
+            new Dimension(new Integer(1), new Integer(3))
+        ));
+        $this->assertFalse($dimension->equals(
+            new Dimension(new Integer(2), new Integer(2))
+        ));
+        $this->assertFalse($dimension->equals(
+            new Dimension(new Integer(1), new Integer(2))
+        ));
+    }
 }

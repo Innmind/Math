@@ -136,6 +136,19 @@ final class ColumnVector implements \Iterator
         return $this->vector->get($position);
     }
 
+    public function equals(self $column): bool
+    {
+        return $this->vector->equals($column->vector);
+    }
+
+    /**
+     * First non zero number found
+     */
+    public function lead(): NumberInterface
+    {
+        return $this->vector->lead();
+    }
+
     public function current(): NumberInterface
     {
         return $this->vector->current();
