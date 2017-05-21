@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Algebra;
 
-use Innmind\Math\Exception\InvalidArgumentException;
+use Innmind\Math\Exception\PrecisionMustBePositive;
 
 final class Round implements NumberInterface
 {
@@ -23,7 +23,7 @@ final class Round implements NumberInterface
         string $mode = self::UP
     ) {
         if ($precision < 0) {
-            throw new InvalidArgumentException;
+            throw new PrecisionMustBePositive;
         }
 
         $this->number = $number;

@@ -35,7 +35,7 @@ class RoundTest extends TestCase
     }
 
     /**
-     * @expectedException Innmind\Math\Exception\InvalidArgumentException
+     * @expectedException Innmind\Math\Exception\PrecisionMustBePositive
      */
     public function testThrowWhenNegativePrecision()
     {
