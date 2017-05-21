@@ -58,8 +58,7 @@ class QuantileTest extends TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Unknown quartile 6
+     * @expectedException Innmind\Math\Exception\OutOfRangeException
      */
     public function testThrowWhenAccessingUnknownQuartile()
     {

@@ -15,7 +15,8 @@ use Innmind\Math\{
     Regression\Dataset,
     Algebra\NumberInterface,
     Algebra\Number,
-    Matrix\ColumnVector
+    Matrix\ColumnVector,
+    Exception\OutOfRangeException
 };
 
 final class Quantile
@@ -104,10 +105,7 @@ final class Quantile
                 return $this->max;
         }
 
-        throw new \InvalidArgumentException(sprintf(
-            'Unknown quartile %s',
-            $index
-        ));
+        throw new OutOfRangeException;
     }
 
     /**
