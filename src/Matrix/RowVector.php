@@ -16,7 +16,7 @@ final class RowVector implements \Iterator
     public function __construct(
         NumberInterface $number,
         NumberInterface ...$numbers
-    ){
+    ) {
         $this->vector = new Vector($number, ...$numbers);
     }
 

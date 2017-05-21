@@ -145,7 +145,7 @@ final class CommonLogarithm implements OperationInterface, NumberInterface
         return self::$definitionSet ?? self::$definitionSet = Range::exclusive(
             new Integer(0),
             Infinite::positive()
-        );;
+        );
     }
 
     public function __toString(): string

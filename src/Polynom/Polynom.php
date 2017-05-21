@@ -189,7 +189,7 @@ final class Polynom
         $polynom = $this
             ->degrees
             ->values()
-            ->sort(function (Degree $a, Degree $b): bool {
+            ->sort(function(Degree $a, Degree $b): bool {
                 return $b->degree()->higherThan($a->degree());
             })
             ->join(' + ');
