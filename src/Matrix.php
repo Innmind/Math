@@ -375,6 +375,31 @@ final class Matrix implements \Iterator
         );
     }
 
+    /**
+     * Use the property (A|In) -> (In|A^-1)
+     *
+     * The matrix augmented with its identity, by transforming the matrix part
+     * to be its identity, then the identity part became the inversed matrix
+     */
+    public function inverse(): self
+    {
+        if (!$this->isSquare()) {
+            throw new MatrixMustBeSquareException;
+        }
+
+        $matrix = $this->augmentWith($this->identity());
+        $matrix = $this->reduceLowerTriangle($matrix);
+        $matrix = $this->reduceUpperTriangle($matrix);
+
+        return Matrix::fromColumns(
+            ...$matrix
+                ->columns()
+                ->takeEnd(
+                    $this->dimension->columns()->value()
+                )
+        );
+    }
+
     public function current(): RowVector
     {
         return $this->rows->current();
@@ -413,5 +438,91 @@ final class Matrix implements \Iterator
             );
             $this->columns = $this->columns->add(new ColumnVector(...$values));
         }
+    }
+
+    private function reduceLowerTriangle(self $matrix): self
+    {
+        $rows = $matrix->rows();
+        $index = 0;
+
+        do {
+            //reduce the matrix to an echelon form with leading ones
+            $rows = $rows->reduce(
+                $rows->clear(),
+                function(StreamInterface $rows, RowVector $row) use ($index): StreamInterface {
+                    if ($rows->size() <= $index) {
+                        return $rows->add($row);
+                    }
+
+                    $reference = $rows->get($index);
+                    $multiplier = $row
+                        ->get($index)
+                        ->divideBy(
+                            $reference->get($index)
+                        );
+
+                    return $rows->add(
+                        $row->subtract(
+                            $reference->multiply(
+                                RowVector::initialize(
+                                    $row->dimension(),
+                                    $multiplier
+                                )
+                            )
+                        )
+                    );
+                }
+            );
+
+            $rows = $rows->map(function(RowVector $row): RowVector {
+                return $row->multiply(
+                    RowVector::initialize(
+                        $row->dimension(),
+                        (new Integer(1))->divideBy($row->lead())
+                    )
+                );
+            });
+
+            ++$index;
+        } while ($index < $this->dimension()->rows()->value());
+
+        return new self(...$rows);
+    }
+
+    private function reduceUpperTriangle(self $matrix): self
+    {
+        $rows = $matrix
+            ->rows()
+            ->reverse();
+        $index = $rows->size() - 1;
+        $reference = 0;
+
+        do {
+            //for each line remove remove the lines below by mutuplying them
+            //by the number in j column of the row being manipulated
+            $rows = $rows->reduce(
+                $rows->clear(),
+                function(StreamInterface $rows, RowVector $row) use ($index, $reference): StreamInterface {
+                    if ($rows->size() <= $reference) {
+                        return $rows->add($row);
+                    }
+
+                    return $rows->add(
+                        $row->subtract(
+                            $rows->get($reference)->multiply(
+                                RowVector::initialize(
+                                    $row->dimension(),
+                                    $row->get($index)
+                                )
+                            )
+                        )
+                    );
+                }
+            );
+            --$index;
+            ++$reference;
+        } while ($index >= 0);
+
+        return new self(...$rows->reverse());
     }
 }

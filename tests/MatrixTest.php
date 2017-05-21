@@ -509,4 +509,65 @@ class MatrixTest extends TestCase
             $augmented->toArray()
         );
     }
+
+    /**
+     * @dataProvider inverses
+     */
+    public function testInverse($initial, $expected)
+    {
+        $matrix = Matrix::fromArray($initial);
+        $inversed = $matrix->inverse();
+
+        $this->assertInstanceOf(Matrix::class, $inversed);
+        $this->assertNotSame($matrix, $inversed);
+        $this->assertSame($initial, $matrix->toArray());
+        $this->assertSame($expected, $inversed->toArray());
+    }
+
+    public function testInverseIdentityProperty()
+    {
+        $matrix = Matrix::fromArray($initial = [
+            [1, 2, 1],
+            [4, 0, -1],
+            [-1, 2, 2],
+        ]);
+
+        $this->assertTrue(
+            $matrix->dot($matrix->inverse())->equals(
+                $matrix->identity()
+            )
+        );
+    }
+
+    public function inverses(): array
+    {
+        return [
+            [
+                [
+                    [1, 2, 1],
+                    [4, 0, -1],
+                    [-1, 2, 2],
+                ],
+                [
+                    [-0.5, 0.5, 0.5],
+                    [1.75, -0.75, -1.25],
+                    [-2.0, 1.0, 2.0],
+                ],
+            ],
+            [
+                [
+                    [1, 1, 1, 1],
+                    [1, 2, 1, 1],
+                    [2, 1, 1, 1],
+                    [1, 1, 1, 2],
+                ],
+                [
+                    [-1, 0, 1, 0],
+                    [-1, 1, 0, 0],
+                    [4, -1, -1, -1],
+                    [-1, 0, 0, 1],
+                ],
+            ],
+        ];
+    }
 }
