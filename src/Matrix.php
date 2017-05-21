@@ -376,7 +376,7 @@ final class Matrix implements \Iterator
     }
 
     /**
-     * Use the property (A|In) -> (In|A^-1)
+     * Use the property (A|In) -> (In|A⁻¹)
      *
      * The matrix augmented with its identity, by transforming the matrix part
      * to be its identity, then the identity part became the inversed matrix
