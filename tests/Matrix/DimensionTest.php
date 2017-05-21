@@ -23,7 +23,7 @@ class DimensionTest extends TestCase
     }
 
     /**
-     * @expectedException Innmind\Math\Exception\NegativeDimensionException
+     * @expectedException Innmind\Math\Exception\DimensionMustBePositive
      */
     public function testThrowWhenNegativeRows()
     {
@@ -31,7 +31,7 @@ class DimensionTest extends TestCase
     }
 
     /**
-     * @expectedException Innmind\Math\Exception\NegativeDimensionException
+     * @expectedException Innmind\Math\Exception\DimensionMustBePositive
      */
     public function testThrowWhenNegativeColumns()
     {

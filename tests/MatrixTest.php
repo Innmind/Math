@@ -81,7 +81,7 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @expectedException Innmind\Math\Exception\VectorsMustMeOfTheSameDimensionException
+     * @expectedException Innmind\Math\Exception\VectorsMustMeOfTheSameDimension
      */
     public function testThrowWhenBuildingMatrixWithIncoherentRows()
     {
@@ -196,7 +196,7 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @expectedException Innmind\Math\Exception\MatrixMustBeSquareException
+     * @expectedException Innmind\Math\Exception\MatrixMustBeSquare
      */
     public function testThrowWhenAskingForNonSquareDiagonal()
     {
@@ -226,7 +226,7 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @expectedException Innmind\Math\Exception\MatrixMustBeSquareException
+     * @expectedException Innmind\Math\Exception\MatrixMustBeSquare
      */
     public function testThrowWhenAskingForNonSquareIdentity()
     {
@@ -256,7 +256,7 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @expectedException Innmind\Math\Exception\MatricesMustBeOfTheSameDimensionException
+     * @expectedException Innmind\Math\Exception\MatricesMustBeOfTheSameDimension
      */
     public function testThrowWhenAddindMatricesOfDifferentDimensions()
     {
@@ -292,7 +292,7 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @expectedException Innmind\Math\Exception\MatricesMustBeOfTheSameDimensionException
+     * @expectedException Innmind\Math\Exception\MatricesMustBeOfTheSameDimension
      */
     public function testThrowWhenSubtractingMatricesOfDifferentDimensions()
     {

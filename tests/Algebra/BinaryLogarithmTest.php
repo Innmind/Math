@@ -38,7 +38,7 @@ class BinaryLogarithmTest extends TestCase
     }
 
     /**
-     * @expectedException Innmind\Math\Exception\OutOfDefinitionSetException
+     * @expectedException Innmind\Math\Exception\OutOfDefinitionSet
      */
     public function testThrowWhenNotAllowedValue()
     {

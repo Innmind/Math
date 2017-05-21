@@ -50,7 +50,7 @@ class AlKashiTest extends TestCase
     }
 
     /**
-     * @expectedException Innmind\Math\Exception\OpenFigureException
+     * @expectedException Innmind\Math\Exception\SegmentsCannotBeJoined
      */
     public function testThrowWhenOpenTriangle()
     {

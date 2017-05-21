@@ -9,7 +9,7 @@ use Innmind\Math\{
     Matrix\Dimension,
     Matrix\RowVector,
     Matrix\ColumnVector,
-    Exception\VectorsMustContainsOnlyTwoValuesException
+    Exception\VectorsMustContainsOnlyTwoValues
 };
 
 final class Dataset implements \Iterator
@@ -21,7 +21,7 @@ final class Dataset implements \Iterator
         $this->matrix = new Matrix(...$rows);
 
         if ($this->matrix->dimension()->columns()->value() !== 2) {
-            throw new VectorsMustContainsOnlyTwoValuesException;
+            throw new VectorsMustContainsOnlyTwoValues;
         }
     }
 

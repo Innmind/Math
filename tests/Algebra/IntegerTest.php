@@ -206,7 +206,7 @@ class IntegerTest extends TestCase
     }
 
     /**
-     * @expectedException Innmind\Math\Exception\NegativeFactorialException
+     * @expectedException Innmind\Math\Exception\FactorialMustBePositive
      */
     public function testThrowWhenNegativeFactorial()
     {

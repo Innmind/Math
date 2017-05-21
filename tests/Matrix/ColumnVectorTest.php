@@ -42,7 +42,7 @@ class ColumnVectorTest extends TestCase
     }
 
     /**
-     * @expectedException Innmind\Math\Exception\VectorsMustMeOfTheSameDimensionException
+     * @expectedException Innmind\Math\Exception\VectorsMustMeOfTheSameDimension
      */
     public function testThrowForDotProductWithDifferentDimensions()
     {
@@ -81,7 +81,7 @@ class ColumnVectorTest extends TestCase
     }
 
     /**
-     * @expectedException Innmind\Math\Exception\VectorsMustMeOfTheSameDimensionException
+     * @expectedException Innmind\Math\Exception\VectorsMustMeOfTheSameDimension
      */
     public function testThrowWhenMultiplyingVectorsOfDifferentDimensions()
     {
@@ -103,7 +103,7 @@ class ColumnVectorTest extends TestCase
     }
 
     /**
-     * @expectedException Innmind\Math\Exception\VectorsMustMeOfTheSameDimensionException
+     * @expectedException Innmind\Math\Exception\VectorsMustMeOfTheSameDimension
      */
     public function testThrowWhenDividingVectorsOfDifferentDimensions()
     {
@@ -137,7 +137,7 @@ class ColumnVectorTest extends TestCase
     }
 
     /**
-     * @expectedException Innmind\Math\Exception\VectorsMustMeOfTheSameDimensionException
+     * @expectedException Innmind\Math\Exception\VectorsMustMeOfTheSameDimension
      */
     public function testThrowWhenSubtractingVectorsOfDifferentDimensions()
     {
@@ -163,7 +163,7 @@ class ColumnVectorTest extends TestCase
     }
 
     /**
-     * @expectedException Innmind\Math\Exception\VectorsMustMeOfTheSameDimensionException
+     * @expectedException Innmind\Math\Exception\VectorsMustMeOfTheSameDimension
      */
     public function testThrowWhenAddingVectorsOfDifferentDimensions()
     {

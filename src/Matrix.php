@@ -7,9 +7,9 @@ use function Innmind\Math\numerize;
 use Innmind\Math\{
     Matrix\RowVector,
     Matrix\ColumnVector,
-    Exception\VectorsMustMeOfTheSameDimensionException,
-    Exception\MatrixMustBeSquareException,
-    Exception\MatricesMustBeOfTheSameDimensionException,
+    Exception\VectorsMustMeOfTheSameDimension,
+    Exception\MatrixMustBeSquare,
+    Exception\MatricesMustBeOfTheSameDimension,
     Matrix\Dimension,
     Algebra\NumberInterface,
     Algebra\Number,
@@ -41,7 +41,7 @@ final class Matrix implements \Iterator
             ->drop(1)
             ->foreach(static function(RowVector $row) use ($first): void {
                 if (!$row->dimension()->equals($first->dimension())) {
-                    throw new VectorsMustMeOfTheSameDimensionException;
+                    throw new VectorsMustMeOfTheSameDimension;
                 }
             });
 
@@ -171,7 +171,7 @@ final class Matrix implements \Iterator
     public function add(self $matrix): self
     {
         if (!$this->dimension->equals($matrix->dimension())) {
-            throw new MatricesMustBeOfTheSameDimensionException;
+            throw new MatricesMustBeOfTheSameDimension;
         }
 
         $matrix->rewind();
@@ -188,7 +188,7 @@ final class Matrix implements \Iterator
     public function subtract(self $matrix): self
     {
         if (!$this->dimension->equals($matrix->dimension())) {
-            throw new MatricesMustBeOfTheSameDimensionException;
+            throw new MatricesMustBeOfTheSameDimension;
         }
 
         $matrix->rewind();
@@ -263,7 +263,7 @@ final class Matrix implements \Iterator
     public function diagonal(): self
     {
         if (!$this->isSquare()) {
-            throw new MatrixMustBeSquareException;
+            throw new MatrixMustBeSquare;
         }
 
         $rows = $this->rows->reduce(
@@ -284,7 +284,7 @@ final class Matrix implements \Iterator
     public function identity(): self
     {
         if (!$this->isSquare()) {
-            throw new MatrixMustBeSquareException;
+            throw new MatrixMustBeSquare;
         }
 
         $rows = $this->rows->reduce(
@@ -384,7 +384,7 @@ final class Matrix implements \Iterator
     public function inverse(): self
     {
         if (!$this->isSquare()) {
-            throw new MatrixMustBeSquareException;
+            throw new MatrixMustBeSquare;
         }
 
         $matrix = $this->augmentWith($this->identity());

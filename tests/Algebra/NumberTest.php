@@ -47,7 +47,7 @@ class NumberTest extends TestCase
     }
 
     /**
-     * @expectedException Innmind\Math\Exception\NotANumberException
+     * @expectedException Innmind\Math\Exception\NotANumber
      */
     public function testThrowWhenNotANumber()
     {

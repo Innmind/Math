@@ -21,7 +21,7 @@ class SegmentTest extends TestCase
     }
 
     /**
-     * @expectedException Innmind\Math\Exception\LengthMustBePositiveException
+     * @expectedException Innmind\Math\Exception\LengthMustBePositive
      */
     public function testThrowWhenNullSegment()
     {
@@ -29,7 +29,7 @@ class SegmentTest extends TestCase
     }
 
     /**
-     * @expectedException Innmind\Math\Exception\LengthMustBePositiveException
+     * @expectedException Innmind\Math\Exception\LengthMustBePositive
      */
     public function testThrowWhenNegativeLength()
     {

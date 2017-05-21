@@ -3,6 +3,6 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Exception;
 
-final class LengthMustBePositiveException extends LogicException
+final class SegmentsCannotBeJoined extends LogicException
 {
 }

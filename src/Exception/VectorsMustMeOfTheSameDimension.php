@@ -3,6 +3,6 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Exception;
 
-final class NegativeDimensionException extends LogicException
+final class VectorsMustMeOfTheSameDimension extends LogicException
 {
 }

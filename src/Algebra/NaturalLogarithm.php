@@ -7,7 +7,7 @@ use Innmind\Math\{
     Algebra\Number\Infinite,
     DefinitionSet\SetInterface,
     DefinitionSet\Range,
-    Exception\OutOfDefinitionSetException
+    Exception\OutOfDefinitionSet
 };
 
 /**
@@ -23,7 +23,7 @@ final class NaturalLogarithm implements OperationInterface, NumberInterface
     public function __construct(NumberInterface $number)
     {
         if (!self::definitionSet()->contains($number)) {
-            throw new OutOfDefinitionSetException;
+            throw new OutOfDefinitionSet;
         }
 
         $this->number = $number;

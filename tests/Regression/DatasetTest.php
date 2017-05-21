@@ -41,7 +41,7 @@ class DatasetTest extends TestCase
     }
 
     /**
-     * @expectedException Innmind\Math\Exception\VectorsMustContainsOnlyTwoValuesException
+     * @expectedException Innmind\Math\Exception\VectorsMustContainsOnlyTwoValues
      */
     public function testThrowWhenNotUsingTwoDimensionalDataset()
     {

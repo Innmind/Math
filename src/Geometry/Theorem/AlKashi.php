@@ -13,7 +13,7 @@ use Innmind\Math\{
     Algebra\Integer,
     Geometry\Angle\Degree,
     Geometry\Segment,
-    Exception\OpenFigureException
+    Exception\SegmentsCannotBeJoined
 };
 use Innmind\Immutable\Set;
 
@@ -69,7 +69,7 @@ final class AlKashi
         $opposites = add(...$opposites);
 
         if ($longest->higherThan($opposites) && !$longest->equals($opposites)) {
-            throw new OpenFigureException;
+            throw new SegmentsCannotBeJoined;
         }
 
         $cosAB = $a

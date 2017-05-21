@@ -5,7 +5,7 @@ namespace Innmind\Math\Matrix;
 
 use Innmind\Math\{
     Algebra\Integer,
-    Exception\NegativeDimensionException
+    Exception\DimensionMustBePositive
 };
 
 final class Dimension
@@ -17,7 +17,7 @@ final class Dimension
     public function __construct(Integer $rows, Integer $columns)
     {
         if ($rows->value() < 0 || $columns->value() < 0) {
-            throw new NegativeDimensionException;
+            throw new DimensionMustBePositive;
         }
 
         $this->rows = $rows;

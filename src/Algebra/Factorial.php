@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Algebra;
 
-use Innmind\Math\Exception\NegativeFactorialException;
+use Innmind\Math\Exception\FactorialMustBePositive;
 
 final class Factorial implements OperationInterface, NumberInterface
 {
@@ -13,7 +13,7 @@ final class Factorial implements OperationInterface, NumberInterface
     public function __construct(int $value)
     {
         if ($value < 0) {
-            throw new NegativeFactorialException;
+            throw new FactorialMustBePositive;
         }
 
         $this->value = $value;

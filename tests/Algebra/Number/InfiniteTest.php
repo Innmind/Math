@@ -115,7 +115,7 @@ class InfiniteTest extends TestCase
     }
 
     /**
-     * @expectedException Innmind\Math\Exception\NotANumberException
+     * @expectedException Innmind\Math\Exception\NotANumber
      */
     public function testModulo()
     {
@@ -159,7 +159,7 @@ class InfiniteTest extends TestCase
     }
 
     /**
-     * @expectedException Innmind\Math\Exception\OutOfDefinitionSetException
+     * @expectedException Innmind\Math\Exception\OutOfDefinitionSet
      */
     public function testBinaryLogarithm()
     {
@@ -167,7 +167,7 @@ class InfiniteTest extends TestCase
     }
 
     /**
-     * @expectedException Innmind\Math\Exception\OutOfDefinitionSetException
+     * @expectedException Innmind\Math\Exception\OutOfDefinitionSet
      */
     public function testNaturalLogarithm()
     {
@@ -175,7 +175,7 @@ class InfiniteTest extends TestCase
     }
 
     /**
-     * @expectedException Innmind\Math\Exception\OutOfDefinitionSetException
+     * @expectedException Innmind\Math\Exception\OutOfDefinitionSet
      */
     public function testCommonLogarithm()
     {

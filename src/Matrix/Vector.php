@@ -5,7 +5,7 @@ namespace Innmind\Math\Matrix;
 
 use function Innmind\Math\add;
 use Innmind\Math\{
-    Exception\VectorsMustMeOfTheSameDimensionException,
+    Exception\VectorsMustMeOfTheSameDimension,
     Matrix,
     Algebra\NumberInterface,
     Algebra\Number,
@@ -54,7 +54,7 @@ final class Vector implements \Iterator
     public function dot(self $vector): NumberInterface
     {
         if (!$this->dimension()->equals($vector->dimension())) {
-            throw new VectorsMustMeOfTheSameDimensionException;
+            throw new VectorsMustMeOfTheSameDimension;
         }
 
         $vector->rewind();
@@ -75,7 +75,7 @@ final class Vector implements \Iterator
     public function multiplyBy(self $vector): self
     {
         if (!$this->dimension()->equals($vector->dimension())) {
-            throw new VectorsMustMeOfTheSameDimensionException;
+            throw new VectorsMustMeOfTheSameDimension;
         }
 
         $vector->rewind();
@@ -92,7 +92,7 @@ final class Vector implements \Iterator
     public function divideBy(self $vector): self
     {
         if (!$this->dimension()->equals($vector->dimension())) {
-            throw new VectorsMustMeOfTheSameDimensionException;
+            throw new VectorsMustMeOfTheSameDimension;
         }
 
         $vector->rewind();
@@ -109,7 +109,7 @@ final class Vector implements \Iterator
     public function subtract(self $vector): self
     {
         if (!$this->dimension()->equals($vector->dimension())) {
-            throw new VectorsMustMeOfTheSameDimensionException;
+            throw new VectorsMustMeOfTheSameDimension;
         }
 
         $vector->rewind();
@@ -129,7 +129,7 @@ final class Vector implements \Iterator
     public function add(self $vector): self
     {
         if (!$this->dimension()->equals($vector->dimension())) {
-            throw new VectorsMustMeOfTheSameDimensionException;
+            throw new VectorsMustMeOfTheSameDimension;
         }
 
         $vector->rewind();

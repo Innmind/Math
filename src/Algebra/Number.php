@@ -6,7 +6,7 @@ namespace Innmind\Math\Algebra;
 use Innmind\Math\{
     Algebra\Number\Infinite,
     Exception\TypeError,
-    Exception\NotANumberException
+    Exception\NotANumber
 };
 
 final class Number implements NumberInterface
@@ -20,7 +20,7 @@ final class Number implements NumberInterface
         }
 
         if (is_nan($value)) {
-            throw new NotANumberException;
+            throw new NotANumber;
         }
 
         $this->value = $value;
