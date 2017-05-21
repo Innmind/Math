@@ -7,7 +7,7 @@ use Innmind\Math\{
     Quantile\Quantile,
     Quantile\Quartile,
     Regression\Dataset,
-    Algebra\NumberInterface
+    Algebra\Number
 };
 use PHPUnit\Framework\TestCase;
 
@@ -21,36 +21,36 @@ class QuantileTest extends TestCase
         $quantile = new Quantile(Dataset::fromArray($dataset));
 
         $this->assertInstanceOf(Quartile::class, $quantile->min());
-        $this->assertInstanceOf(NumberInterface::class, $quantile->min()->value());
+        $this->assertInstanceOf(Number::class, $quantile->min()->value());
         $this->assertSame(
             $min,
             $quantile->min()->value()->value()
         );
         $this->assertInstanceOf(Quartile::class, $quantile->max());
-        $this->assertInstanceOf(NumberInterface::class, $quantile->max()->value());
+        $this->assertInstanceOf(Number::class, $quantile->max()->value());
         $this->assertSame(
             $max,
             $quantile->max()->value()->value()
         );
-        $this->assertInstanceOf(NumberInterface::class, $quantile->mean());
+        $this->assertInstanceOf(Number::class, $quantile->mean());
         $this->assertSame(
             $mean,
             $quantile->mean()->value()
         );
         $this->assertInstanceOf(Quartile::class, $quantile->median());
-        $this->assertInstanceOf(NumberInterface::class, $quantile->median()->value());
+        $this->assertInstanceOf(Number::class, $quantile->median()->value());
         $this->assertSame(
             $median,
             $quantile->median()->value()->value()
         );
         $this->assertInstanceOf(Quartile::class, $quantile->quartile(1));
-        $this->assertInstanceOf(NumberInterface::class, $quantile->quartile(1)->value());
+        $this->assertInstanceOf(Number::class, $quantile->quartile(1)->value());
         $this->assertSame(
             $first,
             $quantile->quartile(1)->value()->value()
         );
         $this->assertInstanceOf(Quartile::class, $quantile->quartile(3));
-        $this->assertInstanceOf(NumberInterface::class, $quantile->quartile(3)->value());
+        $this->assertInstanceOf(Number::class, $quantile->quartile(3)->value());
         $this->assertSame(
             $third,
             $quantile->quartile(3)->value()->value()

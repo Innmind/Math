@@ -5,7 +5,7 @@ namespace Innmind\Math\Probabilities;
 
 use Innmind\Math\{
     Regression\Dataset,
-    Algebra\NumberInterface
+    Algebra\Number
 };
 
 final class StandardDeviation
@@ -17,7 +17,7 @@ final class StandardDeviation
         $this->deviation = (new Variance($dataset))()->squareRoot();
     }
 
-    public function __invoke(): NumberInterface
+    public function __invoke(): Number
     {
         return $this->deviation;
     }

@@ -36,7 +36,6 @@ use function Innmind\Math\{
     arcTangent
 };
 use Innmind\Math\{
-    Algebra\NumberInterface,
     Algebra\Number,
     Algebra\Addition,
     Algebra\Absolute,
@@ -74,12 +73,12 @@ class FunctionsTest extends TestCase
         $numbers = numerize(
             1,
             4.2,
-            $zero = new Number(0)
+            $zero = new Number\Number(0)
         );
 
         $this->assertCount(3, $numbers);
-        $this->assertInstanceOf(NumberInterface::class, $numbers[0]);
-        $this->assertInstanceOf(NumberInterface::class, $numbers[1]);
+        $this->assertInstanceOf(Number::class, $numbers[0]);
+        $this->assertInstanceOf(Number::class, $numbers[1]);
         $this->assertSame($zero, $numbers[2]);
         $this->assertSame(1, $numbers[0]->value());
         $this->assertSame(4.2, $numbers[1]->value());
@@ -87,7 +86,7 @@ class FunctionsTest extends TestCase
 
     public function testAdd()
     {
-        $addition = add(1, 4.2, new Number(0));
+        $addition = add(1, 4.2, new Number\Number(0));
 
         $this->assertInstanceOf(Addition::class, $addition);
         $this->assertSame(5.2, $addition->value());
@@ -180,7 +179,7 @@ class FunctionsTest extends TestCase
     {
         $cos = cosine($number);
 
-        $this->assertInstanceOf(NumberInterface::class, $cos);
+        $this->assertInstanceOf(Number::class, $cos);
         $this->assertSame($expected->value(), $cos->value());
     }
 
@@ -215,7 +214,7 @@ class FunctionsTest extends TestCase
     {
         $sin = sine($number);
 
-        $this->assertInstanceOf(NumberInterface::class, $sin);
+        $this->assertInstanceOf(Number::class, $sin);
         $this->assertSame($expected->value(), $sin->value());
     }
 
@@ -226,7 +225,7 @@ class FunctionsTest extends TestCase
     {
         $tan = tangent($number);
 
-        $this->assertInstanceOf(NumberInterface::class, $tan);
+        $this->assertInstanceOf(Number::class, $tan);
         $this->assertSame(
             divide(sine($number), cosine($number))->value(),
             $tan->value()
@@ -240,19 +239,19 @@ class FunctionsTest extends TestCase
         $this->assertInstanceOf(Frequence::class, $frequence);
         $this->assertSame(
             divide(2, 6)->value(),
-            $frequence(new Number(1))->value()
+            $frequence(new Number\Number(1))->value()
         );
         $this->assertSame(
             divide(2, 6)->value(),
-            $frequence(new Number(4))->value()
+            $frequence(new Number\Number(4))->value()
         );
         $this->assertSame(
             divide(1, 6)->value(),
-            $frequence(new Number(2))->value()
+            $frequence(new Number\Number(2))->value()
         );
         $this->assertSame(
             divide(1, 6)->value(),
-            $frequence(new Number(3))->value()
+            $frequence(new Number\Number(3))->value()
         );
     }
 
@@ -260,7 +259,7 @@ class FunctionsTest extends TestCase
     {
         $mean = mean(1, 2, 2, 2, 3, 5, 5, 6, 6, 7);
 
-        $this->assertInstanceOf(NumberInterface::class, $mean);
+        $this->assertInstanceOf(Number::class, $mean);
         $this->assertSame(3.9, $mean->value());
     }
 
@@ -268,7 +267,7 @@ class FunctionsTest extends TestCase
     {
         $median = median(1, 2, 2, 2, 3, 5, 5, 6, 6, 7);
 
-        $this->assertInstanceOf(NumberInterface::class, $median);
+        $this->assertInstanceOf(Number::class, $median);
         $this->assertSame(4, $median->value());
     }
 
@@ -276,7 +275,7 @@ class FunctionsTest extends TestCase
     {
         $scope = scope(1, 2, 2, 2, 3, 5, 5, 6, 6, 7);
 
-        $this->assertInstanceOf(NumberInterface::class, $scope);
+        $this->assertInstanceOf(Number::class, $scope);
         $this->assertSame(6, $scope->value());
     }
 
@@ -284,7 +283,7 @@ class FunctionsTest extends TestCase
     {
         $int = factorial(3);
 
-        $this->assertInstanceOf(NumberInterface::class, $int);
+        $this->assertInstanceOf(Number::class, $int);
         $this->assertSame(6, $int->value());
     }
 
@@ -292,8 +291,8 @@ class FunctionsTest extends TestCase
     {
         $number = max(
             1,
-            new Number(2),
-            $expected = new Number(4),
+            new Number\Number(2),
+            $expected = new Number\Number(4),
             3
         );
 
@@ -304,8 +303,8 @@ class FunctionsTest extends TestCase
     {
         $number = min(
             2,
-            $expected = new Number(1),
-            new Number(4),
+            $expected = new Number\Number(1),
+            new Number\Number(4),
             3
         );
 
@@ -365,9 +364,9 @@ class FunctionsTest extends TestCase
         return [
             [divide(squareRoot(3), 2), 30],
             [divide(squareRoot(3), 2), 30.0],
-            [divide(squareRoot(3), 2), new Number(30)],
-            [divide(squareRoot(3), 2), new Degree(new Number(30))],
-            [divide(squareRoot(3), 2), (new Degree(new Number(30)))->toRadian()],
+            [divide(squareRoot(3), 2), new Number\Number(30)],
+            [divide(squareRoot(3), 2), new Degree(new Number\Number(30))],
+            [divide(squareRoot(3), 2), (new Degree(new Number\Number(30)))->toRadian()],
         ];
     }
 
@@ -376,14 +375,14 @@ class FunctionsTest extends TestCase
         return [
             [divide(squareRoot(3), 2), 60],
             [divide(squareRoot(3), 2), 60.0],
-            [divide(squareRoot(3), 2), new Number(60)],
-            [divide(squareRoot(3), 2), new Degree(new Number(60))],
-            [divide(squareRoot(3), 2), (new Degree(new Number(60)))->toRadian()],
-            [new Number(0.5), 30],
-            [new Number(0.5), 30.0],
-            [new Number(0.5), new Number(30)],
-            [new Number(0.5), new Degree(new Number(30))],
-            [new Number(0.5), (new Degree(new Number(30)))->toRadian()],
+            [divide(squareRoot(3), 2), new Number\Number(60)],
+            [divide(squareRoot(3), 2), new Degree(new Number\Number(60))],
+            [divide(squareRoot(3), 2), (new Degree(new Number\Number(60)))->toRadian()],
+            [new Number\Number(0.5), 30],
+            [new Number\Number(0.5), 30.0],
+            [new Number\Number(0.5), new Number\Number(30)],
+            [new Number\Number(0.5), new Degree(new Number\Number(30))],
+            [new Number\Number(0.5), (new Degree(new Number\Number(30)))->toRadian()],
         ];
     }
 

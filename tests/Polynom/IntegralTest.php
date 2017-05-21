@@ -7,7 +7,7 @@ use Innmind\Math\{
     Polynom\Integral,
     Polynom\Polynom,
     Algebra\Integer,
-    Algebra\NumberInterface
+    Algebra\Number
 };
 use PHPUnit\Framework\TestCase;
 
@@ -43,7 +43,7 @@ class IntegralTest extends TestCase
 
         $area = $integral(new Integer(0), new Integer(4));
 
-        $this->assertInstanceOf(NumberInterface::class, $area);
+        $this->assertInstanceOf(Number::class, $area);
         $this->assertSame(32/3, $area->value());
     }
 }

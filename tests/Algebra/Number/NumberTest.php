@@ -1,11 +1,11 @@
 <?php
 declare(strict_types = 1);
 
-namespace Tests\Innmind\Math\Algebra;
+namespace Tests\Innmind\Math\Algebra\Number;
 
 use Innmind\Math\Algebra\{
-    Number,
-    NumberInterface,
+    Number\Number,
+    Number as NumberInterface,
     Addition,
     Subtraction,
     Multiplication,

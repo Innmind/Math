@@ -6,7 +6,7 @@ namespace Tests\Innmind\Math\Gemoretry\Theorem;
 use Innmind\Math\{
     Geometry\Theorem\Pythagora,
     Geometry\Segment,
-    Algebra\Number
+    Algebra\Number\Number
 };
 use PHPUnit\Framework\TestCase;
 

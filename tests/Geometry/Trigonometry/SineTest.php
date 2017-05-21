@@ -6,7 +6,6 @@ namespace Tests\Innmind\Math\Geometry\Trigonometry;
 use Innmind\Math\{
     Geometry\Trigonometry\Sine,
     Geometry\Angle\Degree,
-    Algebra\NumberInterface,
     Algebra\Number,
     Algebra\Addition,
     Algebra\Subtraction,
@@ -31,35 +30,35 @@ class SineTest extends TestCase
 {
     public function testInterface()
     {
-        $sin = new Sine(new Degree(new Number(42)));
+        $sin = new Sine(new Degree(new Number\Number(42)));
 
-        $this->assertInstanceOf(NumberInterface::class, $sin);
+        $this->assertInstanceOf(Number::class, $sin);
         $this->assertSame(0.66913060635886, $sin->value());
         $this->assertSame('sin(42°)', (string) $sin);
     }
 
     public function testEquals()
     {
-        $sin = new Sine(new Degree(new Number(42)));
+        $sin = new Sine(new Degree(new Number\Number(42)));
 
         $this->assertTrue($sin->equals($sin));
-        $this->assertTrue($sin->equals(new Number(0.6691306063588582)));
-        $this->assertFalse($sin->equals(new Number(0.66)));
+        $this->assertTrue($sin->equals(new Number\Number(0.6691306063588582)));
+        $this->assertFalse($sin->equals(new Number\Number(0.66)));
     }
 
     public function testHigherThan()
     {
-        $sin = new Sine(new Degree(new Number(42)));
+        $sin = new Sine(new Degree(new Number\Number(42)));
 
         $this->assertFalse($sin->higherThan($sin));
-        $this->assertFalse($sin->higherThan(new Number(0.6691306063588582)));
-        $this->assertTrue($sin->higherThan(new Number(0.66)));
+        $this->assertFalse($sin->higherThan(new Number\Number(0.6691306063588582)));
+        $this->assertTrue($sin->higherThan(new Number\Number(0.66)));
     }
 
     public function testAdd()
     {
-        $sin = new Sine(new Degree(new Number(42)));
-        $number = $sin->add(new Number(1));
+        $sin = new Sine(new Degree(new Number\Number(42)));
+        $number = $sin->add(new Number\Number(1));
 
         $this->assertInstanceOf(Addition::class, $number);
         $this->assertSame(1.6691306063588582, $number->value());
@@ -67,8 +66,8 @@ class SineTest extends TestCase
 
     public function testSubtract()
     {
-        $sin = new Sine(new Degree(new Number(42)));
-        $number = $sin->subtract(new Number(66));
+        $sin = new Sine(new Degree(new Number\Number(42)));
+        $number = $sin->subtract(new Number\Number(66));
 
         $this->assertInstanceOf(Subtraction::class, $number);
         $this->assertSame(-65.33086939364114, $number->value());
@@ -76,8 +75,8 @@ class SineTest extends TestCase
 
     public function testDivideBy()
     {
-        $sin = new Sine(new Degree(new Number(42)));
-        $number = $sin->divideBy(new Number(2));
+        $sin = new Sine(new Degree(new Number\Number(42)));
+        $number = $sin->divideBy(new Number\Number(2));
 
         $this->assertInstanceOf(Division::class, $number);
         $this->assertSame(0.3345653031794291, $number->value());
@@ -85,8 +84,8 @@ class SineTest extends TestCase
 
     public function testMulitplyBy()
     {
-        $sin = new Sine(new Degree(new Number(42)));
-        $number = $sin->multiplyBy(new Number(2));
+        $sin = new Sine(new Degree(new Number\Number(42)));
+        $number = $sin->multiplyBy(new Number\Number(2));
 
         $this->assertInstanceOf(Multiplication::class, $number);
         $this->assertSame(1.3382612127177165, $number->value());
@@ -94,7 +93,7 @@ class SineTest extends TestCase
 
     public function testRound()
     {
-        $sin = new Sine(new Degree(new Number(42)));
+        $sin = new Sine(new Degree(new Number\Number(42)));
         $number = $sin->round(1);
 
         $this->assertInstanceOf(Round::class, $number);
@@ -103,7 +102,7 @@ class SineTest extends TestCase
 
     public function testFloor()
     {
-        $sin = new Sine(new Degree(new Number(42)));
+        $sin = new Sine(new Degree(new Number\Number(42)));
         $number = $sin->floor();
 
         $this->assertInstanceOf(Floor::class, $number);
@@ -112,7 +111,7 @@ class SineTest extends TestCase
 
     public function testCeil()
     {
-        $sin = new Sine(new Degree(new Number(42)));
+        $sin = new Sine(new Degree(new Number\Number(42)));
         $number = $sin->ceil();
 
         $this->assertInstanceOf(Ceil::class, $number);
@@ -121,8 +120,8 @@ class SineTest extends TestCase
 
     public function testModulo()
     {
-        $sin = new Sine(new Degree(new Number(42)));
-        $number = $sin->modulo(new Number(3));
+        $sin = new Sine(new Degree(new Number\Number(42)));
+        $number = $sin->modulo(new Number\Number(3));
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertSame(0.6691306063588582, $number->value());
@@ -130,7 +129,7 @@ class SineTest extends TestCase
 
     public function testAbsolute()
     {
-        $sin = new Sine(new Degree(new Number(42)));
+        $sin = new Sine(new Degree(new Number\Number(42)));
         $number = $sin->absolute();
 
         $this->assertInstanceOf(Absolute::class, $number);
@@ -139,8 +138,8 @@ class SineTest extends TestCase
 
     public function testPower()
     {
-        $sin = new Sine(new Degree(new Number(42)));
-        $number = $sin->power(new Number(2));
+        $sin = new Sine(new Degree(new Number\Number(42)));
+        $number = $sin->power(new Number\Number(2));
 
         $this->assertInstanceOf(Power::class, $number);
         $this->assertSame(0.4477357683661733, $number->value());
@@ -148,7 +147,7 @@ class SineTest extends TestCase
 
     public function testSquareRoot()
     {
-        $sin = new Sine(new Degree(new Number(42)));
+        $sin = new Sine(new Degree(new Number\Number(42)));
         $number = $sin->squareRoot();
 
         $this->assertInstanceOf(SquareRoot::class, $number);
@@ -157,7 +156,7 @@ class SineTest extends TestCase
 
     public function testExponential()
     {
-        $sin = new Sine(new Degree(new Number(42)));
+        $sin = new Sine(new Degree(new Number\Number(42)));
         $number = $sin->exponential();
 
         $this->assertInstanceOf(Exponential::class, $number);
@@ -166,7 +165,7 @@ class SineTest extends TestCase
 
     public function testBinaryLogarithm()
     {
-        $number = (new Sine(new Degree(new Number(42))))->binaryLogarithm();
+        $number = (new Sine(new Degree(new Number\Number(42))))->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
         $this->assertSame(-0.5796402595724052, $number->value());
@@ -174,7 +173,7 @@ class SineTest extends TestCase
 
     public function testNaturalLogarithm()
     {
-        $number = (new Sine(new Degree(new Number(42))))->naturalLogarithm();
+        $number = (new Sine(new Degree(new Number\Number(42))))->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
         $this->assertSame(-0.4017760116616475, $number->value());
@@ -182,7 +181,7 @@ class SineTest extends TestCase
 
     public function testCommonLogarithm()
     {
-        $number = (new Sine(new Degree(new Number(42))))->commonLogarithm();
+        $number = (new Sine(new Degree(new Number\Number(42))))->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
         $this->assertSame(-0.17448910482575006, $number->value());
@@ -190,7 +189,7 @@ class SineTest extends TestCase
 
     public function testSignum()
     {
-        $number = (new Sine(new Degree(new Number(42))))->signum();
+        $number = (new Sine(new Degree(new Number\Number(42))))->signum();
 
         $this->assertInstanceOf(Signum::class, $number);
         $this->assertSame(1, $number->value());

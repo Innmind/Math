@@ -8,8 +8,7 @@ use Innmind\Math\{
     Algebra\SquareRoot,
     Algebra\Ceil,
     Algebra\Floor,
-    Algebra\NumberInterface,
-    Algebra\OperationInterface,
+    Algebra\Operation,
     Algebra\Number,
     Algebra\Addition,
     Algebra\Subtraction,
@@ -23,7 +22,7 @@ use Innmind\Math\{
     Algebra\NaturalLogarithm,
     Algebra\CommonLogarithm,
     Algebra\Signum,
-    DefinitionSet\SetInterface
+    DefinitionSet\Set
 };
 use PHPUnit\Framework\TestCase;
 
@@ -31,10 +30,10 @@ class BinaryLogarithmTest extends TestCase
 {
     public function testInterface()
     {
-        $lb = new BinaryLogarithm(new Number(42.42));
+        $lb = new BinaryLogarithm(new Number\Number(42.42));
 
-        $this->assertInstanceOf(NumberInterface::class, $lb);
-        $this->assertInstanceOf(OperationInterface::class, $lb);
+        $this->assertInstanceOf(Number::class, $lb);
+        $this->assertInstanceOf(Operation::class, $lb);
     }
 
     /**
@@ -42,22 +41,22 @@ class BinaryLogarithmTest extends TestCase
      */
     public function testThrowWhenNotAllowedValue()
     {
-        new BinaryLogarithm(new Number(0));
+        new BinaryLogarithm(new Number\Number(0));
     }
 
     public function testResult()
     {
-        $lb = new BinaryLogarithm(new Number(1));
+        $lb = new BinaryLogarithm(new Number\Number(1));
         $result = $lb->result();
 
-        $this->assertInstanceOf(NumberInterface::class, $result);
+        $this->assertInstanceOf(Number::class, $result);
         $this->assertSame(0.0, $result->value());
         $this->assertSame($result, $lb->result());
     }
 
     public function testValue()
     {
-        $lb = new BinaryLogarithm(new Number(1));
+        $lb = new BinaryLogarithm(new Number\Number(1));
 
         $this->assertSame(0.0, $lb->value());
     }
@@ -66,30 +65,30 @@ class BinaryLogarithmTest extends TestCase
     {
         $this->assertSame(
             'lb(4)',
-            (string) new BinaryLogarithm(new Number(4))
+            (string) new BinaryLogarithm(new Number\Number(4))
         );
     }
 
     public function testEquals()
     {
-        $lb = new BinaryLogarithm(new Number(1));
+        $lb = new BinaryLogarithm(new Number\Number(1));
 
-        $this->assertTrue($lb->equals(new Number(0)));
-        $this->assertFalse($lb->equals(new Number(0.1)));
+        $this->assertTrue($lb->equals(new Number\Number(0)));
+        $this->assertFalse($lb->equals(new Number\Number(0.1)));
     }
 
     public function testHigherThan()
     {
-        $lb = new BinaryLogarithm(new Number(1));
+        $lb = new BinaryLogarithm(new Number\Number(1));
 
-        $this->assertTrue($lb->higherThan(new Number(-0.1)));
-        $this->assertFalse($lb->higherThan(new Number(0)));
+        $this->assertTrue($lb->higherThan(new Number\Number(-0.1)));
+        $this->assertFalse($lb->higherThan(new Number\Number(0)));
     }
 
     public function testAdd()
     {
-        $lb = new BinaryLogarithm(new Number(1));
-        $number = $lb->add(new Number(7));
+        $lb = new BinaryLogarithm(new Number\Number(1));
+        $number = $lb->add(new Number\Number(7));
 
         $this->assertInstanceOf(Addition::class, $number);
         $this->assertSame(7.0, $number->value());
@@ -97,8 +96,8 @@ class BinaryLogarithmTest extends TestCase
 
     public function testSubtract()
     {
-        $lb = new BinaryLogarithm(new Number(1));
-        $number = $lb->subtract(new Number(7));
+        $lb = new BinaryLogarithm(new Number\Number(1));
+        $number = $lb->subtract(new Number\Number(7));
 
         $this->assertInstanceOf(Subtraction::class, $number);
         $this->assertSame(-7.0, $number->value());
@@ -106,8 +105,8 @@ class BinaryLogarithmTest extends TestCase
 
     public function testMultiplication()
     {
-        $lb = new BinaryLogarithm(new Number(1));
-        $number = $lb->multiplyBy(new Number(2));
+        $lb = new BinaryLogarithm(new Number\Number(1));
+        $number = $lb->multiplyBy(new Number\Number(2));
 
         $this->assertInstanceOf(Multiplication::class, $number);
         $this->assertSame(0.0, $number->value());
@@ -115,8 +114,8 @@ class BinaryLogarithmTest extends TestCase
 
     public function testDivision()
     {
-        $lb = new BinaryLogarithm(new Number(1));
-        $number = $lb->divideBy(new Number(2));
+        $lb = new BinaryLogarithm(new Number\Number(1));
+        $number = $lb->divideBy(new Number\Number(2));
 
         $this->assertInstanceOf(Division::class, $number);
         $this->assertSame(0.0, $number->value());
@@ -124,7 +123,7 @@ class BinaryLogarithmTest extends TestCase
 
     public function testRound()
     {
-        $lb = new BinaryLogarithm(new Number(1));
+        $lb = new BinaryLogarithm(new Number\Number(1));
         $number = $lb->round();
 
         $this->assertInstanceOf(Round::class, $number);
@@ -133,7 +132,7 @@ class BinaryLogarithmTest extends TestCase
 
     public function testFloor()
     {
-        $lb = new BinaryLogarithm(new Number(1));
+        $lb = new BinaryLogarithm(new Number\Number(1));
         $number = $lb->floor();
 
         $this->assertInstanceOf(Floor::class, $number);
@@ -142,7 +141,7 @@ class BinaryLogarithmTest extends TestCase
 
     public function testCeil()
     {
-        $lb = new BinaryLogarithm(new Number(1));
+        $lb = new BinaryLogarithm(new Number\Number(1));
         $number = $lb->ceil();
 
         $this->assertInstanceOf(Ceil::class, $number);
@@ -151,7 +150,7 @@ class BinaryLogarithmTest extends TestCase
 
     public function testAbsolute()
     {
-        $lb = new BinaryLogarithm(new Number(0.5));
+        $lb = new BinaryLogarithm(new Number\Number(0.5));
         $number = $lb->absolute();
 
         $this->assertInstanceOf(Absolute::class, $number);
@@ -160,8 +159,8 @@ class BinaryLogarithmTest extends TestCase
 
     public function testModulo()
     {
-        $lb = new BinaryLogarithm(new Number(1));
-        $number = $lb->modulo(new Number(2));
+        $lb = new BinaryLogarithm(new Number\Number(1));
+        $number = $lb->modulo(new Number\Number(2));
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertSame(0.0, $number->value());
@@ -169,8 +168,8 @@ class BinaryLogarithmTest extends TestCase
 
     public function testPower()
     {
-        $lb = new BinaryLogarithm(new Number(1));
-        $number = $lb->power(new Number(2));
+        $lb = new BinaryLogarithm(new Number\Number(1));
+        $number = $lb->power(new Number\Number(2));
 
         $this->assertInstanceOf(Power::class, $number);
         $this->assertSame(0.0, $number->value());
@@ -178,7 +177,7 @@ class BinaryLogarithmTest extends TestCase
 
     public function testSquareRoot()
     {
-        $lb = new BinaryLogarithm(new Number(1));
+        $lb = new BinaryLogarithm(new Number\Number(1));
         $number = $lb->squareRoot();
 
         $this->assertInstanceOf(SquareRoot::class, $number);
@@ -187,7 +186,7 @@ class BinaryLogarithmTest extends TestCase
 
     public function testExponential()
     {
-        $number = (new BinaryLogarithm(new Number(1)))->exponential();
+        $number = (new BinaryLogarithm(new Number\Number(1)))->exponential();
 
         $this->assertInstanceOf(Exponential::class, $number);
         $this->assertSame(1.0, $number->value());
@@ -195,7 +194,7 @@ class BinaryLogarithmTest extends TestCase
 
     public function testBinaryLogarithm()
     {
-        $number = (new BinaryLogarithm(new Number(2)))->binaryLogarithm();
+        $number = (new BinaryLogarithm(new Number\Number(2)))->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
         $this->assertSame(log(log(2, 2), 2), $number->value());
@@ -203,7 +202,7 @@ class BinaryLogarithmTest extends TestCase
 
     public function testNaturalLogarithm()
     {
-        $number = (new BinaryLogarithm(new Number(2)))->naturalLogarithm();
+        $number = (new BinaryLogarithm(new Number\Number(2)))->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
         $this->assertSame(log(log(2, 2)), $number->value());
@@ -211,7 +210,7 @@ class BinaryLogarithmTest extends TestCase
 
     public function testCommonLogarithm()
     {
-        $number = (new BinaryLogarithm(new Number(2)))->commonLogarithm();
+        $number = (new BinaryLogarithm(new Number\Number(2)))->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
         $this->assertSame(log10(log(2, 2)), $number->value());
@@ -219,7 +218,7 @@ class BinaryLogarithmTest extends TestCase
 
     public function testSignum()
     {
-        $number = (new BinaryLogarithm(new Number(2)))->signum();
+        $number = (new BinaryLogarithm(new Number\Number(2)))->signum();
 
         $this->assertInstanceOf(Signum::class, $number);
         $this->assertSame(1, $number->value());
@@ -229,7 +228,7 @@ class BinaryLogarithmTest extends TestCase
     {
         $set = BinaryLogarithm::definitionSet();
 
-        $this->assertInstanceOf(SetInterface::class, $set);
+        $this->assertInstanceOf(Set::class, $set);
         $this->assertSame(']0;+∞[', (string) $set);
     }
 
@@ -238,8 +237,8 @@ class BinaryLogarithmTest extends TestCase
         //lb(axb) === lb(a) + lb(b)
         $this->assertTrue(
             (new BinaryLogarithm(
-                ($a = new Number(2))->multiplyBy(
-                    $b = new Number(4)
+                ($a = new Number\Number(2))->multiplyBy(
+                    $b = new Number\Number(4)
                 )
             ))->equals(
                 (new BinaryLogarithm($a))->add(
@@ -254,8 +253,8 @@ class BinaryLogarithmTest extends TestCase
         //lb(a/b) === lb(a) - lb(b)
         $this->assertTrue(
             (new BinaryLogarithm(
-                ($a = new Number(2))->divideBy(
-                    $b = new Number(4)
+                ($a = new Number\Number(2))->divideBy(
+                    $b = new Number\Number(4)
                 )
             ))->equals(
                 (new BinaryLogarithm($a))->subtract(

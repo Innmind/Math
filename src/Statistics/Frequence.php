@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace Innmind\Math\Statistics;
 
 use Innmind\Math\Algebra\{
-    NumberInterface,
     Number,
     Division
 };
@@ -15,25 +14,25 @@ final class Frequence
     private $values;
     private $size;
 
-    public function __construct(NumberInterface ...$values)
+    public function __construct(Number ...$values)
     {
         $this->values = new Sequence(...$values);
-        $this->size = new Number($this->values->size());
+        $this->size = new Number\Number($this->values->size());
     }
 
-    public function __invoke(NumberInterface $number): NumberInterface
+    public function __invoke(Number $number): Number
     {
         $frequence = $this
             ->values
-            ->filter(static function(NumberInterface $value) use ($number): bool {
+            ->filter(static function(Number $value) use ($number): bool {
                 return $value->equals($number);
             })
             ->size();
 
-        return new Division(new Number($frequence), $this->size);
+        return new Division(new Number\Number($frequence), $this->size);
     }
 
-    public function size(): NumberInterface
+    public function size(): Number
     {
         return $this->size;
     }

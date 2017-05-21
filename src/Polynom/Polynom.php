@@ -9,10 +9,9 @@ use function Innmind\Math\{
     subtract
 };
 use Innmind\Math\Algebra\{
-    NumberInterface,
     Number,
     Integer,
-    OperationInterface
+    Operation
 };
 use Innmind\Immutable\Map;
 
@@ -21,7 +20,7 @@ final class Polynom
     private $intercept;
     private $degrees;
 
-    public function __construct(NumberInterface $intercept = null, Degree ...$degrees)
+    public function __construct(Number $intercept = null, Degree ...$degrees)
     {
         $this->intercept = $intercept ?? new Integer(0);
         $this->degrees = new Map('int', Degree::class);
@@ -38,11 +37,11 @@ final class Polynom
      * Create a new polynom with this added degree
      *
      * @param Integer $degree
-     * @param NumberInterface $coeff
+     * @param Number $coeff
      *
      * @return self
      */
-    public function withDegree(Integer $degree, NumberInterface $coeff): self
+    public function withDegree(Integer $degree, Number $coeff): self
     {
         $degrees = $this->degrees->put(
             $degree->value(),
@@ -58,9 +57,9 @@ final class Polynom
     /**
      * Return the intercept value
      *
-     * @return NumberInterface
+     * @return Number
      */
-    public function intercept(): NumberInterface
+    public function intercept(): Number
     {
         return $this->intercept;
     }
@@ -92,11 +91,11 @@ final class Polynom
     /**
      * Compute the value for the given x
      *
-     * @param NumberInterface $x
+     * @param Number $x
      *
-     * @return NumberInterface
+     * @return Number
      */
-    public function __invoke(NumberInterface $x): NumberInterface
+    public function __invoke(Number $x): Number
     {
         return add(
             $this->intercept,
@@ -114,15 +113,13 @@ final class Polynom
     /**
      * Compute the derived number of x
      *
-     * @param NumberInterface $x
-     * @param NumberInterface|null $limit Value that tend to 0 (default to 0.000000000001)
+     * @param Number $x
+     * @param Number|null $limit Value that tend to 0 (default to 0.000000000001)
      *
-     * @return NumberInterface
+     * @return Number
      */
-    public function derived(
-        NumberInterface $x,
-        NumberInterface $limit = null
-    ): NumberInterface {
+    public function derived(Number $x, Number $limit = null): Number
+    {
         $limit = $limit ?? Tangent::limit();
 
         return divide(
@@ -137,12 +134,12 @@ final class Polynom
     /**
      * Return the affine function (tangent) in the position x
      *
-     * @param NumberInterface $x
-     * @param NumberInterface|null $limit
+     * @param Number $x
+     * @param Number|null $limit
      *
      * @return Tangent
      */
-    public function tangent(NumberInterface $x, NumberInterface $limit = null): Tangent
+    public function tangent(Number $x, Number $limit = null): Tangent
     {
         return new Tangent($this, $x, $limit);
     }
@@ -195,7 +192,7 @@ final class Polynom
             ->join(' + ');
 
         if (!$this->intercept->equals(new Integer(0))) {
-            $intercept = $this->intercept instanceof OperationInterface ?
+            $intercept = $this->intercept instanceof Operation ?
                 '('.$this->intercept.')' : (string) $this->intercept;
 
             $polynom = $polynom

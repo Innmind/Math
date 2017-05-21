@@ -5,11 +5,11 @@ namespace Tests\Innmind\Math\DefinitionSet;
 
 use Innmind\Math\{
     DefinitionSet\Range,
-    DefinitionSet\SetInterface,
+    DefinitionSet\Set,
     DefinitionSet\Union,
     DefinitionSet\Intersection,
     Algebra\Integer,
-    Algebra\Number
+    Algebra\Number\Number
 };
 use PHPUnit\Framework\TestCase;
 
@@ -18,7 +18,7 @@ class RangeTest extends TestCase
     public function testInterface()
     {
         $this->assertInstanceOf(
-            SetInterface::class,
+            Set::class,
             Range::inclusive(new Integer(1), new Integer(2))
         );
     }

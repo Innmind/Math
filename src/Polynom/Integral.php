@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace Innmind\Math\Polynom;
 
 use function Innmind\Math\subtract;
-use Innmind\Math\Algebra\NumberInterface;
+use Innmind\Math\Algebra\Number;
 
 final class Integral
 {
@@ -20,7 +20,7 @@ final class Integral
         return $this->polynom;
     }
 
-    public function __invoke(NumberInterface $a, NumberInterface $b): NumberInterface
+    public function __invoke(Number $a, Number $b): Number
     {
         $primitive = $this->polynom->primitive();
 

@@ -7,7 +7,7 @@ use Innmind\Math\{
     Geometry\Angle,
     Geometry\Angle\Degree,
     Geometry\Segment,
-    Algebra\NumberInterface,
+    Algebra\Number,
     Algebra\Integer
 };
 use PHPUnit\Framework\TestCase;
@@ -52,7 +52,7 @@ class AngleTest extends TestCase
         );
         $number = $angle->scalarProduct();
 
-        $this->assertInstanceOf(NumberInterface::class, $number);
+        $this->assertInstanceOf(Number::class, $number);
         $this->assertSame(
             22.962066014667755,
             $number->value()

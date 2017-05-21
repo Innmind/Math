@@ -5,7 +5,6 @@ namespace Tests\Innmind\Math\Algebra;
 
 use Innmind\Math\Algebra\{
     Floor,
-    NumberInterface,
     Number,
     Addition,
     Subtraction,
@@ -29,9 +28,9 @@ class FloorTest extends TestCase
 {
     public function testInterface()
     {
-        $floor = new Floor(new Number(42.42));
+        $floor = new Floor(new Number\Number(42.42));
 
-        $this->assertInstanceOf(NumberInterface::class, $floor);
+        $this->assertInstanceOf(Number::class, $floor);
     }
 
     /**
@@ -39,7 +38,7 @@ class FloorTest extends TestCase
      */
     public function testValue($number, $expected)
     {
-        $floor = new Floor(new Number($number));
+        $floor = new Floor(new Number\Number($number));
 
         $this->assertSame($expected, $floor->value());
     }
@@ -48,31 +47,31 @@ class FloorTest extends TestCase
     {
         $this->assertSame(
             '42.0',
-            (string) new Floor(new Number(42.45))
+            (string) new Floor(new Number\Number(42.45))
         );
     }
 
     public function testEquals()
     {
-        $floor = new Floor(new Number(42.45));
+        $floor = new Floor(new Number\Number(42.45));
 
-        $this->assertTrue($floor->equals(new Number(42)));
-        $this->assertTrue($floor->equals(new Number(42.0)));
-        $this->assertFalse($floor->equals(new Number(43)));
+        $this->assertTrue($floor->equals(new Number\Number(42)));
+        $this->assertTrue($floor->equals(new Number\Number(42.0)));
+        $this->assertFalse($floor->equals(new Number\Number(43)));
     }
 
     public function testHigherThan()
     {
-        $floor = new Floor(new Number(42.45));
+        $floor = new Floor(new Number\Number(42.45));
 
-        $this->assertTrue($floor->higherThan(new Number(41.9)));
-        $this->assertFalse($floor->higherThan(new Number(42.5)));
+        $this->assertTrue($floor->higherThan(new Number\Number(41.9)));
+        $this->assertFalse($floor->higherThan(new Number\Number(42.5)));
     }
 
     public function testAdd()
     {
-        $floor = new Floor(new Number(42.5));
-        $number = $floor->add(new Number(7));
+        $floor = new Floor(new Number\Number(42.5));
+        $number = $floor->add(new Number\Number(7));
 
         $this->assertInstanceOf(Addition::class, $number);
         $this->assertSame(49.0, $number->value());
@@ -80,8 +79,8 @@ class FloorTest extends TestCase
 
     public function testSubtract()
     {
-        $floor = new Floor(new Number(42.5));
-        $number = $floor->subtract(new Number(7));
+        $floor = new Floor(new Number\Number(42.5));
+        $number = $floor->subtract(new Number\Number(7));
 
         $this->assertInstanceOf(Subtraction::class, $number);
         $this->assertSame(35.0, $number->value());
@@ -89,8 +88,8 @@ class FloorTest extends TestCase
 
     public function testMultiplication()
     {
-        $floor = new Floor(new Number(42.5));
-        $number = $floor->multiplyBy(new Number(2));
+        $floor = new Floor(new Number\Number(42.5));
+        $number = $floor->multiplyBy(new Number\Number(2));
 
         $this->assertInstanceOf(Multiplication::class, $number);
         $this->assertSame(84.0, $number->value());
@@ -98,8 +97,8 @@ class FloorTest extends TestCase
 
     public function testDivision()
     {
-        $floor = new Floor(new Number(42.5));
-        $number = $floor->divideBy(new Number(2));
+        $floor = new Floor(new Number\Number(42.5));
+        $number = $floor->divideBy(new Number\Number(2));
 
         $this->assertInstanceOf(Division::class, $number);
         $this->assertSame(21.0, $number->value());
@@ -107,7 +106,7 @@ class FloorTest extends TestCase
 
     public function testRound()
     {
-        $round = new Floor(new Number(42.45));
+        $round = new Floor(new Number\Number(42.45));
         $number = $round->round();
 
         $this->assertInstanceOf(Round::class, $number);
@@ -116,7 +115,7 @@ class FloorTest extends TestCase
 
     public function testFloor()
     {
-        $floor = new Floor(new Number(42.45));
+        $floor = new Floor(new Number\Number(42.45));
         $number = $floor->floor();
 
         $this->assertInstanceOf(Floor::class, $number);
@@ -125,7 +124,7 @@ class FloorTest extends TestCase
 
     public function testCeil()
     {
-        $floor = new Floor(new Number(42.45));
+        $floor = new Floor(new Number\Number(42.45));
         $number = $floor->ceil();
 
         $this->assertInstanceOf(Ceil::class, $number);
@@ -134,8 +133,8 @@ class FloorTest extends TestCase
 
     public function testModulo()
     {
-        $floor = new Floor(new Number(42.45));
-        $number = $floor->modulo(new Number(20));
+        $floor = new Floor(new Number\Number(42.45));
+        $number = $floor->modulo(new Number\Number(20));
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertSame(2.0, $number->value());
@@ -143,7 +142,7 @@ class FloorTest extends TestCase
 
     public function testAbsolute()
     {
-        $floor = new Floor(new Number(-42.45));
+        $floor = new Floor(new Number\Number(-42.45));
         $number = $floor->absolute();
 
         $this->assertInstanceOf(Absolute::class, $number);
@@ -152,8 +151,8 @@ class FloorTest extends TestCase
 
     public function testPower()
     {
-        $floor = new Floor(new Number(2.5));
-        $number = $floor->power(new Number(2));
+        $floor = new Floor(new Number\Number(2.5));
+        $number = $floor->power(new Number\Number(2));
 
         $this->assertInstanceOf(Power::class, $number);
         $this->assertSame(4.0, $number->value());
@@ -161,7 +160,7 @@ class FloorTest extends TestCase
 
     public function testSquareRoot()
     {
-        $floor = new Floor(new Number(4.5));
+        $floor = new Floor(new Number\Number(4.5));
         $number = $floor->squareRoot();
 
         $this->assertInstanceOf(SquareRoot::class, $number);
@@ -170,7 +169,7 @@ class FloorTest extends TestCase
 
     public function testExponential()
     {
-        $number = (new Floor(new Number(4.5)))->exponential();
+        $number = (new Floor(new Number\Number(4.5)))->exponential();
 
         $this->assertInstanceOf(Exponential::class, $number);
         $this->assertSame(exp(4), $number->value());
@@ -178,7 +177,7 @@ class FloorTest extends TestCase
 
     public function testBinaryLogarithm()
     {
-        $number = (new Floor(new Number(3.5)))->binaryLogarithm();
+        $number = (new Floor(new Number\Number(3.5)))->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
         $this->assertSame(log(3, 2), $number->value());
@@ -186,7 +185,7 @@ class FloorTest extends TestCase
 
     public function testNaturalLogarithm()
     {
-        $number = (new Floor(new Number(3.5)))->naturalLogarithm();
+        $number = (new Floor(new Number\Number(3.5)))->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
         $this->assertSame(log(3), $number->value());
@@ -194,7 +193,7 @@ class FloorTest extends TestCase
 
     public function testCommonLogarithm()
     {
-        $number = (new Floor(new Number(3.5)))->commonLogarithm();
+        $number = (new Floor(new Number\Number(3.5)))->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
         $this->assertSame(log10(3), $number->value());
@@ -202,7 +201,7 @@ class FloorTest extends TestCase
 
     public function testSignum()
     {
-        $number = (new Floor(new Number(2)))->signum();
+        $number = (new Floor(new Number\Number(2)))->signum();
 
         $this->assertInstanceOf(Signum::class, $number);
         $this->assertSame(1, $number->value());

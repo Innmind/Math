@@ -5,15 +5,15 @@ namespace Innmind\Math\Algebra;
 
 use Innmind\Immutable\Sequence;
 
-final class Subtraction implements OperationInterface, NumberInterface, \Iterator
+final class Subtraction implements Operation, Number, \Iterator
 {
     private $values;
     private $result;
 
     public function __construct(
-        NumberInterface $first,
-        NumberInterface $second,
-        NumberInterface ...$values
+        Number $first,
+        Number $second,
+        Number ...$values
     ) {
         $this->values = new Sequence($first, $second, ...$values);
     }
@@ -26,108 +26,102 @@ final class Subtraction implements OperationInterface, NumberInterface, \Iterato
         return $this->result()->value();
     }
 
-    public function equals(NumberInterface $number): bool
+    public function equals(Number $number): bool
     {
         return $this->result()->equals($number);
     }
 
-    public function higherThan(NumberInterface $number): bool
+    public function higherThan(Number $number): bool
     {
         return $this->result()->higherThan($number);
     }
 
-    public function add(
-        NumberInterface $number,
-        NumberInterface ...$numbers
-    ): NumberInterface {
+    public function add(Number $number, Number ...$numbers): Number
+    {
         return new Addition($this, $number, ...$numbers);
     }
 
-    public function subtract(
-        NumberInterface $number,
-        NumberInterface ...$numbers
-    ): NumberInterface {
+    public function subtract(Number $number, Number ...$numbers): Number
+    {
         return new self($this, $number, ...$numbers);
     }
 
-    public function divideBy(NumberInterface $number): NumberInterface
+    public function divideBy(Number $number): Number
     {
         return new Division($this, $number);
     }
 
-    public function multiplyBy(
-        NumberInterface $number,
-        NumberInterface ...$numbers
-    ): NumberInterface {
+    public function multiplyBy(Number $number, Number ...$numbers): Number
+    {
         return new Multiplication($this, $number, ...$numbers);
     }
 
-    public function round(int $precision = 0, string $mode = Round::UP): NumberInterface
+    public function round(int $precision = 0, string $mode = Round::UP): Number
     {
         return new Round($this, $precision, $mode);
     }
 
-    public function floor(): NumberInterface
+    public function floor(): Number
     {
         return new Floor($this);
     }
 
-    public function ceil(): NumberInterface
+    public function ceil(): Number
     {
         return new Ceil($this);
     }
 
-    public function modulo(NumberInterface $modulus): NumberInterface
+    public function modulo(Number $modulus): Number
     {
         return new Modulo($this, $modulus);
     }
 
-    public function absolute(): NumberInterface
+    public function absolute(): Number
     {
         return new Absolute($this);
     }
 
-    public function power(NumberInterface $power): NumberInterface
+    public function power(Number $power): Number
     {
         return new Power($this, $power);
     }
 
-    public function squareRoot(): NumberInterface
+    public function squareRoot(): Number
     {
         return new SquareRoot($this);
     }
 
-    public function exponential(): NumberInterface
+    public function exponential(): Number
     {
         return new Exponential($this);
     }
 
-    public function binaryLogarithm(): NumberInterface
+    public function binaryLogarithm(): Number
     {
         return new BinaryLogarithm($this);
     }
 
-    public function naturalLogarithm(): NumberInterface
+    public function naturalLogarithm(): Number
     {
         return new NaturalLogarithm($this);
     }
 
-    public function commonLogarithm(): NumberInterface
+    public function commonLogarithm(): Number
     {
         return new CommonLogarithm($this);
     }
 
-    public function signum(): NumberInterface
+    public function signum(): Number
     {
         return new Signum($this);
     }
 
-    public function difference(): NumberInterface
+    public function difference(): Number
     {
         return $this->result();
     }
 
-    public function result(): NumberInterface
+    public function result(): Number
     {
         if ($this->result) {
             return $this->result;
@@ -138,20 +132,20 @@ final class Subtraction implements OperationInterface, NumberInterface, \Iterato
             ->drop(1)
             ->reduce(
                 $this->values->first()->value(),
-                static function($carry, NumberInterface $number) {
+                static function($carry, Number $number) {
                     return $carry - $number->value();
                 }
             );
 
-        return $this->result = Number::wrap($value);
+        return $this->result = Number\Number::wrap($value);
     }
 
     public function __toString(): string
     {
         return (string) $this
             ->values
-            ->map(static function(NumberInterface $number) {
-                if ($number instanceof OperationInterface) {
+            ->map(static function(Number $number) {
+                if ($number instanceof Operation) {
                     return '('.$number.')';
                 }
 

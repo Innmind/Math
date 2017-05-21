@@ -6,7 +6,6 @@ namespace Innmind\Math\Geometry\Trigonometry;
 use Innmind\Math\{
     Geometry\Angle\Degree,
     Geometry\Angle\Radian,
-    Algebra\NumberInterface,
     Algebra\Number,
     Algebra\Round
 };
@@ -14,12 +13,12 @@ use Innmind\Math\{
 /**
  * Inverse of cosine, such as a===Cosine(ArcCosine(a))
  */
-final class ArcCosine implements NumberInterface
+final class ArcCosine implements Number
 {
     private $number;
     private $arcCosine;
 
-    public function __construct(NumberInterface $number)
+    public function __construct(Number $number)
     {
         $this->number = $number;
     }
@@ -37,98 +36,92 @@ final class ArcCosine implements NumberInterface
         return $this->arcCosine()->number()->value();
     }
 
-    public function equals(NumberInterface $number): bool
+    public function equals(Number $number): bool
     {
         return $this->arcCosine()->number()->equals($number);
     }
 
-    public function higherThan(NumberInterface $number): bool
+    public function higherThan(Number $number): bool
     {
         return $this->arcCosine()->number()->higherThan($number);
     }
 
-    public function add(
-        NumberInterface $number,
-        NumberInterface ...$numbers
-    ): NumberInterface {
+    public function add(Number $number, Number ...$numbers): Number
+    {
         return $this->arcCosine()->number()->add($number, ...$numbers);
     }
 
-    public function subtract(
-        NumberInterface $number,
-        NumberInterface ...$numbers
-    ): NumberInterface {
+    public function subtract(Number $number, Number ...$numbers): Number
+    {
         return $this->arcCosine()->number()->subtract($number, ...$numbers);
     }
 
-    public function divideBy(NumberInterface $number): NumberInterface
+    public function divideBy(Number $number): Number
     {
         return $this->arcCosine()->number()->divideBy($number);
     }
 
-    public function multiplyBy(
-        NumberInterface $number,
-        NumberInterface ...$numbers
-    ): NumberInterface {
+    public function multiplyBy(Number $number, Number ...$numbers): Number
+    {
         return $this->arcCosine()->number()->multiplyBy($number, ...$numbers);
     }
 
-    public function round(int $precision = 0, string $mode = Round::UP): NumberInterface
+    public function round(int $precision = 0, string $mode = Round::UP): Number
     {
         return $this->arcCosine()->number()->round($precision, $mode);
     }
 
-    public function floor(): NumberInterface
+    public function floor(): Number
     {
         return $this->arcCosine()->number()->floor();
     }
 
-    public function ceil(): NumberInterface
+    public function ceil(): Number
     {
         return $this->arcCosine()->number()->ceil();
     }
 
-    public function modulo(NumberInterface $modulus): NumberInterface
+    public function modulo(Number $modulus): Number
     {
         return $this->arcCosine()->number()->modulo($modulus);
     }
 
-    public function absolute(): NumberInterface
+    public function absolute(): Number
     {
         return $this->arcCosine()->number()->absolute();
     }
 
-    public function power(NumberInterface $power): NumberInterface
+    public function power(Number $power): Number
     {
         return $this->arcCosine()->number()->power($power);
     }
 
-    public function squareRoot(): NumberInterface
+    public function squareRoot(): Number
     {
         return $this->arcCosine()->number()->squareRoot();
     }
 
-    public function exponential(): NumberInterface
+    public function exponential(): Number
     {
         return $this->arcCosine()->number()->exponential();
     }
 
-    public function binaryLogarithm(): NumberInterface
+    public function binaryLogarithm(): Number
     {
         return $this->arcCosine()->number()->binaryLogarithm();
     }
 
-    public function naturalLogarithm(): NumberInterface
+    public function naturalLogarithm(): Number
     {
         return $this->arcCosine()->number()->naturalLogarithm();
     }
 
-    public function commonLogarithm(): NumberInterface
+    public function commonLogarithm(): Number
     {
         return $this->arcCosine()->number()->commonLogarithm();
     }
 
-    public function signum(): NumberInterface
+    public function signum(): Number
     {
         return $this->arcCosine()->number()->signum();
     }
@@ -139,7 +132,7 @@ final class ArcCosine implements NumberInterface
             return $this->arcCosine;
         }
 
-        $radians = new Number(
+        $radians = new Number\Number(
             acos(
                 $this->number->value()
             )

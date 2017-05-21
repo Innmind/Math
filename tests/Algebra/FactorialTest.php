@@ -7,7 +7,6 @@ use Innmind\Math\Algebra\{
     Factorial,
     Integer,
     Number,
-    NumberInterface,
     Addition,
     Subtraction,
     Multiplication,
@@ -32,7 +31,7 @@ class FactorialTest extends TestCase
     public function testInterface()
     {
         $this->assertInstanceOf(
-            NumberInterface::class,
+            Number::class,
             new Factorial(42)
         );
     }
@@ -56,14 +55,14 @@ class FactorialTest extends TestCase
     public function testEquals()
     {
         $this->assertTrue((new Factorial(3))->equals(new Factorial(3)));
-        $this->assertTrue((new Factorial(3))->equals(new Number(6.0)));
-        $this->assertFalse((new Factorial(3))->equals(new Number(42.24)));
+        $this->assertTrue((new Factorial(3))->equals(new Number\Number(6.0)));
+        $this->assertFalse((new Factorial(3))->equals(new Number\Number(42.24)));
     }
 
     public function testHigherThan()
     {
         $this->assertFalse((new Factorial(3))->higherThan(new Factorial(3)));
-        $this->assertTrue((new Factorial(3))->higherThan(new Number(1.24)));
+        $this->assertTrue((new Factorial(3))->higherThan(new Number\Number(1.24)));
     }
 
     public function testAdd()
@@ -212,7 +211,7 @@ class FactorialTest extends TestCase
     {
         $number = new Factorial($integer);
 
-        $this->assertInstanceOf(NumberInterface::class, $number->result());
+        $this->assertInstanceOf(Number::class, $number->result());
         $this->assertSame($expected, $number->result()->value());
     }
 

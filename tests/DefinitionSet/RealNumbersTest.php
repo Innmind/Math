@@ -5,11 +5,11 @@ namespace Tests\Innmind\Math\DefinitionSet;
 
 use Innmind\Math\{
     DefinitionSet\RealNumbers,
-    DefinitionSet\SetInterface,
+    DefinitionSet\Set,
     DefinitionSet\Union,
     DefinitionSet\Intersection,
     Algebra\Integer,
-    Algebra\Number,
+    Algebra\Number\Number,
     Algebra\Number\Pi
 };
 use PHPUnit\Framework\TestCase;
@@ -19,7 +19,7 @@ class RealNumbersTest extends TestCase
     public function testInterface()
     {
         $this->assertInstanceOf(
-            SetInterface::class,
+            Set::class,
             new RealNumbers
         );
     }

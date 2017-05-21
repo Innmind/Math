@@ -5,7 +5,7 @@ namespace Innmind\Math\Geometry;
 
 use Innmind\Math\{
     Geometry\Angle\Degree,
-    Algebra\NumberInterface,
+    Algebra\Number,
     Algebra\Integer,
     Exception\LengthMustBePositive
 };
@@ -14,7 +14,7 @@ final class Segment
 {
     private $length;
 
-    public function __construct(NumberInterface $length)
+    public function __construct(Number $length)
     {
         if (!$length->higherThan(new Integer(0))) {
             throw new LengthMustBePositive;
@@ -23,7 +23,7 @@ final class Segment
         $this->length = $length;
     }
 
-    public function length(): NumberInterface
+    public function length(): Number
     {
         return $this->length;
     }

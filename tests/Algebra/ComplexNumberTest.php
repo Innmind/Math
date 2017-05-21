@@ -7,7 +7,7 @@ use function Innmind\Math\add;
 use Innmind\Math\Algebra\{
     ComplexNumber,
     Integer,
-    NumberInterface
+    Number
 };
 use PHPUnit\Framework\TestCase;
 
@@ -123,7 +123,7 @@ class ComplexNumberTest extends TestCase
         );
         $absolute = $number->absolute();
 
-        $this->assertInstanceOf(NumberInterface::class, $absolute);
+        $this->assertInstanceOf(Number::class, $absolute);
         $this->assertSame(sqrt(13), $absolute->value());
     }
 

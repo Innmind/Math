@@ -5,7 +5,7 @@ namespace Innmind\Math\Algebra;
 
 use Innmind\Math\Exception\FactorialMustBePositive;
 
-final class Factorial implements OperationInterface, NumberInterface
+final class Factorial implements Operation, Number
 {
     private $value;
     private $number;
@@ -27,103 +27,97 @@ final class Factorial implements OperationInterface, NumberInterface
         return $this->result()->value();
     }
 
-    public function equals(NumberInterface $number): bool
+    public function equals(Number $number): bool
     {
         return $this->result()->equals($number);
     }
 
-    public function higherThan(NumberInterface $number): bool
+    public function higherThan(Number $number): bool
     {
         return $this->result()->higherThan($number);
     }
 
-    public function add(
-        NumberInterface $number,
-        NumberInterface ...$numbers
-    ): NumberInterface {
+    public function add(Number $number, Number ...$numbers): Number
+    {
         return $this->result()->add($number, ...$numbers);
     }
 
-    public function subtract(
-        NumberInterface $number,
-        NumberInterface ...$numbers
-    ): NumberInterface {
+    public function subtract(Number $number, Number ...$numbers): Number
+    {
         return $this->result()->subtract($number, ...$numbers);
     }
 
-    public function divideBy(NumberInterface $number): NumberInterface
+    public function divideBy(Number $number): Number
     {
         return $this->result()->divideBy($number);
     }
 
-    public function multiplyBy(
-        NumberInterface $number,
-        NumberInterface ...$numbers
-    ): NumberInterface {
+    public function multiplyBy(Number $number, Number ...$numbers): Number
+    {
         return $this->result()->multiplyBy($number, ...$numbers);
     }
 
-    public function round(int $precision = 0, string $mode = Round::UP): NumberInterface
+    public function round(int $precision = 0, string $mode = Round::UP): Number
     {
         return $this->result()->round($precision, $mode);
     }
 
-    public function floor(): NumberInterface
+    public function floor(): Number
     {
         return $this->result()->floor();
     }
 
-    public function ceil(): NumberInterface
+    public function ceil(): Number
     {
         return $this->result()->ceil();
     }
 
-    public function modulo(NumberInterface $modulus): NumberInterface
+    public function modulo(Number $modulus): Number
     {
         return $this->result()->modulo($modulus);
     }
 
-    public function absolute(): NumberInterface
+    public function absolute(): Number
     {
         return $this->result()->absolute();
     }
 
-    public function power(NumberInterface $power): NumberInterface
+    public function power(Number $power): Number
     {
         return $this->result()->power($power);
     }
 
-    public function squareRoot(): NumberInterface
+    public function squareRoot(): Number
     {
         return $this->result()->squareRoot();
     }
 
-    public function exponential(): NumberInterface
+    public function exponential(): Number
     {
         return new Exponential($this);
     }
 
-    public function binaryLogarithm(): NumberInterface
+    public function binaryLogarithm(): Number
     {
         return new BinaryLogarithm($this);
     }
 
-    public function naturalLogarithm(): NumberInterface
+    public function naturalLogarithm(): Number
     {
         return new NaturalLogarithm($this);
     }
 
-    public function commonLogarithm(): NumberInterface
+    public function commonLogarithm(): Number
     {
         return new CommonLogarithm($this);
     }
 
-    public function signum(): NumberInterface
+    public function signum(): Number
     {
         return new Signum($this);
     }
 
-    public function result(): NumberInterface
+    public function result(): Number
     {
         if ($this->number) {
             return $this->number;
@@ -139,7 +133,7 @@ final class Factorial implements OperationInterface, NumberInterface
             $factorial *= --$i;
         } while ($i > 1);
 
-        return $this->number = Number::wrap($factorial);
+        return $this->number = Number\Number::wrap($factorial);
     }
 
     public function __toString(): string

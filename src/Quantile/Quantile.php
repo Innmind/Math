@@ -13,7 +13,6 @@ use function Innmind\Math\{
 };
 use Innmind\Math\{
     Regression\Dataset,
-    Algebra\NumberInterface,
     Algebra\Number,
     Matrix\ColumnVector,
     Exception\OutOfRangeException
@@ -66,9 +65,9 @@ final class Quantile
     /**
      * Return the mean value
      *
-     * @return NumberInterface
+     * @return Number
      */
-    public function mean(): NumberInterface
+    public function mean(): Number
     {
         return $this->mean;
     }
@@ -174,7 +173,7 @@ final class Quantile
     private function buildFirstQuartile(Dataset $dataset): self
     {
         $this->firstQuartile = new Quartile($this->buildQuartile(
-            new Number(0.25),
+            new Number\Number(0.25),
             $dataset->ordinates()
         ));
 
@@ -191,7 +190,7 @@ final class Quantile
     private function buildThirdQuartile(Dataset $dataset): self
     {
         $this->thirdQuartile = new Quartile($this->buildQuartile(
-            new Number(0.75),
+            new Number\Number(0.75),
             $dataset->ordinates()
         ));
 
@@ -201,15 +200,15 @@ final class Quantile
     /**
      * Return the value describing the the quartile at the given percentage
      *
-     * @param NumberInterface $percentage
+     * @param Number $percentage
      * @param ColumnVector $dataset
      *
      * @return float
      */
     private function buildQuartile(
-        NumberInterface $percentage,
+        Number $percentage,
         ColumnVector $dataset
-    ): NumberInterface {
+    ): Number {
         $dimension = $dataset->dimension();
 
         if ($dimension->value() === 2) {

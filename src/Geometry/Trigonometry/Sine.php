@@ -5,7 +5,6 @@ namespace Innmind\Math\Geometry\Trigonometry;
 
 use Innmind\Math\{
     Geometry\Angle\Degree,
-    Algebra\NumberInterface,
     Algebra\Number,
     Algebra\Round
 };
@@ -17,7 +16,7 @@ use Innmind\Math\{
  *
  * Where angle is the one between the adjacent side and the hypothenuse
  */
-final class Sine implements NumberInterface
+final class Sine implements Number
 {
     private $degree;
     private $sine;
@@ -35,105 +34,99 @@ final class Sine implements NumberInterface
         return $this->sine()->value();
     }
 
-    public function equals(NumberInterface $number): bool
+    public function equals(Number $number): bool
     {
         return $this->sine()->equals($number);
     }
 
-    public function higherThan(NumberInterface $number): bool
+    public function higherThan(Number $number): bool
     {
         return $this->sine()->higherThan($number);
     }
 
-    public function add(
-        NumberInterface $number,
-        NumberInterface ...$numbers
-    ): NumberInterface {
+    public function add(Number $number, Number ...$numbers): Number
+    {
         return $this->sine()->add($number, ...$numbers);
     }
 
-    public function subtract(
-        NumberInterface $number,
-        NumberInterface ...$numbers
-    ): NumberInterface {
+    public function subtract(Number $number, Number ...$numbers): Number
+    {
         return $this->sine()->subtract($number, ...$numbers);
     }
 
-    public function divideBy(NumberInterface $number): NumberInterface
+    public function divideBy(Number $number): Number
     {
         return $this->sine()->divideBy($number);
     }
 
-    public function multiplyBy(
-        NumberInterface $number,
-        NumberInterface ...$numbers
-    ): NumberInterface {
+    public function multiplyBy(Number $number, Number ...$numbers): Number
+    {
         return $this->sine()->multiplyBy($number, ...$numbers);
     }
 
-    public function round(int $precision = 0, string $mode = Round::UP): NumberInterface
+    public function round(int $precision = 0, string $mode = Round::UP): Number
     {
         return $this->sine()->round($precision, $mode);
     }
 
-    public function floor(): NumberInterface
+    public function floor(): Number
     {
         return $this->sine()->floor();
     }
 
-    public function ceil(): NumberInterface
+    public function ceil(): Number
     {
         return $this->sine()->ceil();
     }
 
-    public function modulo(NumberInterface $modulus): NumberInterface
+    public function modulo(Number $modulus): Number
     {
         return $this->sine()->modulo($modulus);
     }
 
-    public function absolute(): NumberInterface
+    public function absolute(): Number
     {
         return $this->sine()->absolute();
     }
 
-    public function power(NumberInterface $power): NumberInterface
+    public function power(Number $power): Number
     {
         return $this->sine()->power($power);
     }
 
-    public function squareRoot(): NumberInterface
+    public function squareRoot(): Number
     {
         return $this->sine()->squareRoot();
     }
 
-    public function exponential(): NumberInterface
+    public function exponential(): Number
     {
         return $this->sine()->exponential();
     }
 
-    public function binaryLogarithm(): NumberInterface
+    public function binaryLogarithm(): Number
     {
         return $this->sine()->binaryLogarithm();
     }
 
-    public function naturalLogarithm(): NumberInterface
+    public function naturalLogarithm(): Number
     {
         return $this->sine()->naturalLogarithm();
     }
 
-    public function commonLogarithm(): NumberInterface
+    public function commonLogarithm(): Number
     {
         return $this->sine()->commonLogarithm();
     }
 
-    public function signum(): NumberInterface
+    public function signum(): Number
     {
         return $this->sine()->signum();
     }
 
-    private function sine(): NumberInterface
+    private function sine(): Number
     {
-        return $this->sine ?? $this->sine = new Number(
+        return $this->sine ?? $this->sine = new Number\Number(
             sin(
                 $this->degree->toRadian()->number()->value()
             )

@@ -5,13 +5,13 @@ namespace Innmind\Math\Geometry\Figure;
 
 use function Innmind\Math\multiply;
 use Innmind\Math\{
-    Geometry\FigureInterface,
+    Geometry\Figure,
     Geometry\Segment,
-    Algebra\NumberInterface,
+    Algebra\Number,
     Algebra\Number\Pi
 };
 
-final class Circle implements FigureInterface
+final class Circle implements Figure
 {
     private $radius;
     private $diameter;
@@ -24,12 +24,12 @@ final class Circle implements FigureInterface
         );
     }
 
-    public function perimeter(): NumberInterface
+    public function perimeter(): Number
     {
         return multiply(2, new Pi, $this->radius->length());
     }
 
-    public function area(): NumberInterface
+    public function area(): Number
     {
         return multiply(
             $this->radius->length(),

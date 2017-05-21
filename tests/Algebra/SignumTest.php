@@ -6,8 +6,7 @@ namespace Tests\Innmind\Math\Algebra;
 use Innmind\Math\Algebra\{
     Signum,
     Power,
-    NumberInterface,
-    OperationInterface,
+    Operation,
     Number,
     Addition,
     Subtraction,
@@ -31,32 +30,32 @@ class SignumTest extends TestCase
     public function testInterface()
     {
         $sgn = new Signum(
-            $this->createMock(NumberInterface::class)
+            $this->createMock(Number::class)
         );
 
-        $this->assertInstanceOf(NumberInterface::class, $sgn);
-        $this->assertInstanceOf(OperationInterface::class, $sgn);
+        $this->assertInstanceOf(Number::class, $sgn);
+        $this->assertInstanceOf(Operation::class, $sgn);
     }
 
     public function testResult()
     {
         $sgn = new Signum(
-            new Number(42)
+            new Number\Number(42)
         );
         $result = $sgn->result();
 
-        $this->assertInstanceOf(NumberInterface::class, $result);
+        $this->assertInstanceOf(Number::class, $result);
         $this->assertSame(1, $result->value());
         $this->assertSame($result, $sgn->result());
 
-        $this->assertSame(-1, (new Signum(new Number(-42)))->value());
-        $this->assertSame(0, (new Signum(new Number(0)))->value());
+        $this->assertSame(-1, (new Signum(new Number\Number(-42)))->value());
+        $this->assertSame(0, (new Signum(new Number\Number(0)))->value());
     }
 
     public function testStringCast()
     {
         $sgn = new Signum(
-            new Number(42.24)
+            new Number\Number(42.24)
         );
 
         $this->assertSame('sgn(42.24)', (string) $sgn);
@@ -66,8 +65,8 @@ class SignumTest extends TestCase
     {
         $sgn = new Signum(
             new Addition(
-                new Number(1),
-                new Number(1)
+                new Number\Number(1),
+                new Number\Number(1)
             )
         );
 
@@ -77,29 +76,29 @@ class SignumTest extends TestCase
     public function testEquals()
     {
         $sgn = new Signum(
-            new Number(2)
+            new Number\Number(2)
         );
 
-        $this->assertTrue($sgn->equals(new Number(1)));
-        $this->assertFalse($sgn->equals(new Number(0)));
+        $this->assertTrue($sgn->equals(new Number\Number(1)));
+        $this->assertFalse($sgn->equals(new Number\Number(0)));
     }
 
     public function testHigherThan()
     {
         $sgn = new Signum(
-            new Number(2)
+            new Number\Number(2)
         );
 
-        $this->assertTrue($sgn->higherThan(new Number(0)));
-        $this->assertFalse($sgn->higherThan(new Number(1)));
+        $this->assertTrue($sgn->higherThan(new Number\Number(0)));
+        $this->assertFalse($sgn->higherThan(new Number\Number(1)));
     }
 
     public function testAdd()
     {
         $sgn = new Signum(
-            new Number(2)
+            new Number\Number(2)
         );
-        $number = $sgn->add(new Number(66));
+        $number = $sgn->add(new Number\Number(66));
 
         $this->assertInstanceOf(Addition::class, $number);
         $this->assertSame(67, $number->value());
@@ -108,9 +107,9 @@ class SignumTest extends TestCase
     public function testSubtract()
     {
         $sgn = new Signum(
-            new Number(2)
+            new Number\Number(2)
         );
-        $number = $sgn->subtract(new Number(66));
+        $number = $sgn->subtract(new Number\Number(66));
 
         $this->assertInstanceOf(Subtraction::class, $number);
         $this->assertSame(-65, $number->value());
@@ -119,9 +118,9 @@ class SignumTest extends TestCase
     public function testDivideBy()
     {
         $sgn = new Signum(
-            new Number(2)
+            new Number\Number(2)
         );
-        $number = $sgn->divideBy(new Number(2));
+        $number = $sgn->divideBy(new Number\Number(2));
 
         $this->assertInstanceOf(Division::class, $number);
         $this->assertSame(0.5, $number->value());
@@ -130,9 +129,9 @@ class SignumTest extends TestCase
     public function testMulitplyBy()
     {
         $sgn = new Signum(
-            new Number(2)
+            new Number\Number(2)
         );
-        $number = $sgn->multiplyBy(new Number(2));
+        $number = $sgn->multiplyBy(new Number\Number(2));
 
         $this->assertInstanceOf(Multiplication::class, $number);
         $this->assertSame(2, $number->value());
@@ -141,7 +140,7 @@ class SignumTest extends TestCase
     public function testRound()
     {
         $sgn = new Signum(
-            new Number(2)
+            new Number\Number(2)
         );
         $number = $sgn->round(1);
 
@@ -152,7 +151,7 @@ class SignumTest extends TestCase
     public function testFloor()
     {
         $sgn = new Signum(
-            new Number(2)
+            new Number\Number(2)
         );
         $number = $sgn->floor();
 
@@ -163,7 +162,7 @@ class SignumTest extends TestCase
     public function testCeil()
     {
         $sgn = new Signum(
-            new Number(2)
+            new Number\Number(2)
         );
         $number = $sgn->ceil();
 
@@ -174,9 +173,9 @@ class SignumTest extends TestCase
     public function testModulo()
     {
         $sgn = new Signum(
-            new Number(2)
+            new Number\Number(2)
         );
-        $number = $sgn->modulo(new Number(0.5));
+        $number = $sgn->modulo(new Number\Number(0.5));
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertSame(0.0, $number->value());
@@ -185,7 +184,7 @@ class SignumTest extends TestCase
     public function testAbsolute()
     {
         $sgn = new Signum(
-            new Number(-2)
+            new Number\Number(-2)
         );
         $number = $sgn->absolute();
 
@@ -196,9 +195,9 @@ class SignumTest extends TestCase
     public function testPower()
     {
         $sgn = new Signum(
-            new Number(2)
+            new Number\Number(2)
         );
-        $number = $sgn->power(new Number(2));
+        $number = $sgn->power(new Number\Number(2));
 
         $this->assertInstanceOf(Power::class, $number);
         $this->assertSame(1, $number->value());
@@ -207,7 +206,7 @@ class SignumTest extends TestCase
     public function testSquareRoot()
     {
         $sgn = new Signum(
-            new Number(2)
+            new Number\Number(2)
         );
         $number = $sgn->squareRoot();
 
@@ -218,7 +217,7 @@ class SignumTest extends TestCase
     public function testExponential()
     {
         $number = (new Signum(
-            new Number(2)
+            new Number\Number(2)
         ))->exponential();
 
         $this->assertInstanceOf(Exponential::class, $number);
@@ -228,7 +227,7 @@ class SignumTest extends TestCase
     public function testBinaryLogarithm()
     {
         $number = (new Signum(
-            new Number(2)
+            new Number\Number(2)
         ))->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
@@ -238,7 +237,7 @@ class SignumTest extends TestCase
     public function testNaturalLogarithm()
     {
         $number = (new Signum(
-            new Number(2)
+            new Number\Number(2)
         ))->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
@@ -248,7 +247,7 @@ class SignumTest extends TestCase
     public function testCommonLogarithm()
     {
         $number = (new Signum(
-            new Number(2)
+            new Number\Number(2)
         ))->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
@@ -257,7 +256,7 @@ class SignumTest extends TestCase
 
     public function testSignum()
     {
-        $number = (new Signum(new Number(1)))->signum();
+        $number = (new Signum(new Number\Number(1)))->signum();
 
         $this->assertInstanceOf(Signum::class, $number);
         $this->assertSame(1, $number->value());

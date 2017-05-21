@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace Innmind\Math\Algebra\Number;
 
 use Innmind\Math\Algebra\{
-    NumberInterface,
+    Number as NumberInterface,
     Addition,
     Subtraction,
     Multiplication,

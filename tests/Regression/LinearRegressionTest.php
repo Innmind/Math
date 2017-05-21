@@ -6,7 +6,7 @@ namespace Tests\Innmind\Math\Regression;
 use Innmind\Math\{
     Regression\LinearRegression,
     Regression\Dataset,
-    Algebra\NumberInterface,
+    Algebra\Number,
     Algebra\Integer,
     Probabilities\StandardDeviation
 };
@@ -17,7 +17,7 @@ class LinearRegressionTest extends TestCase
     public function testIntercept()
     {
         $r = new LinearRegression(Dataset::fromArray([0, 1]));
-        $this->assertInstanceOf(NumberInterface::class, $r->intercept());
+        $this->assertInstanceOf(Number::class, $r->intercept());
         $this->assertSame($r->intercept(), $r->intercept());
         $this->assertSame(0, $r->intercept()->value());
 
@@ -28,7 +28,7 @@ class LinearRegressionTest extends TestCase
     public function testSlope()
     {
         $r = new LinearRegression(Dataset::fromArray([0, 1]));
-        $this->assertInstanceOf(NumberInterface::class, $r->slope());
+        $this->assertInstanceOf(Number::class, $r->slope());
         $this->assertSame($r->slope(), $r->slope());
         $this->assertSame(1, $r->slope()->value());
 
@@ -50,7 +50,7 @@ class LinearRegressionTest extends TestCase
         $regression = new LinearRegression(Dataset::fromArray([0.5, 1, 4, -1]));
 
         $this->assertInstanceOf(
-            NumberInterface::class,
+            Number::class,
             $regression->rootMeanSquareDeviation()
         );
         $this->assertSame(

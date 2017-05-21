@@ -10,8 +10,7 @@ use function Innmind\Math\{
 use Innmind\Math\{
     Geometry\Angle\Degree,
     Geometry\Theorem\AlKashi,
-    Algebra\NumberInterface,
-    Algebra\Integer
+    Algebra\Number
 };
 
 final class Angle
@@ -58,7 +57,7 @@ final class Angle
         );
     }
 
-    public function scalarProduct(): NumberInterface
+    public function scalarProduct(): Number
     {
         return multiply(
             $this->firstSegment->length(),

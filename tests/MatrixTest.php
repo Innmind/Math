@@ -9,7 +9,7 @@ use Innmind\Math\{
     Matrix\Dimension,
     Matrix\RowVector,
     Matrix\ColumnVector,
-    Algebra\Number,
+    Algebra\Number\Number,
     Algebra\Integer
 };
 use Innmind\Immutable\StreamInterface;

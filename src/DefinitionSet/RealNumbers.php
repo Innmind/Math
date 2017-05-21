@@ -3,21 +3,21 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\DefinitionSet;
 
-use Innmind\Math\Algebra\NumberInterface;
+use Innmind\Math\Algebra\Number;
 
-final class RealNumbers implements SetInterface
+final class RealNumbers implements Set
 {
-    public function contains(NumberInterface $number): bool
+    public function contains(Number $number): bool
     {
         return true;
     }
 
-    public function union(SetInterface $set): SetInterface
+    public function union(Set $set): Set
     {
         return new Union($this, $set);
     }
 
-    public function intersect(SetInterface $set): SetInterface
+    public function intersect(Set $set): Set
     {
         return new Intersection($this, $set);
     }

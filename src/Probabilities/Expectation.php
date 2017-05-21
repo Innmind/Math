@@ -5,7 +5,7 @@ namespace Innmind\Math\Probabilities;
 
 use Innmind\Math\{
     Regression\Dataset,
-    Algebra\NumberInterface
+    Algebra\Number
 };
 
 final class Expectation
@@ -20,7 +20,7 @@ final class Expectation
             ->sum();
     }
 
-    public function __invoke(): NumberInterface
+    public function __invoke(): Number
     {
         return $this->expectation;
     }

@@ -9,7 +9,7 @@ use function Innmind\Math\{
     subtract
 };
 use Innmind\Math\{
-    Algebra\NumberInterface,
+    Algebra\Number,
     Algebra\Integer
 };
 
@@ -17,15 +17,13 @@ final class BinomialDistribution
 {
     private $probability;
 
-    public function __construct(NumberInterface $probability)
+    public function __construct(Number $probability)
     {
         $this->probability = $probability;
     }
 
-    public function __invoke(
-        Integer $trials,
-        Integer $success
-    ): NumberInterface {
+    public function __invoke(Integer $trials, Integer $success): Number
+    {
         $errors = new Integer($trials->subtract($success)->value());
         $coefficient = divide(
             $trials->factorial(),

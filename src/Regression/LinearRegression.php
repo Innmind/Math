@@ -11,7 +11,7 @@ use function Innmind\Math\{
 };
 use Innmind\Math\{
     Polynom\Polynom,
-    Algebra\NumberInterface,
+    Algebra\Number,
     Algebra\Integer,
     Matrix
 };
@@ -34,9 +34,9 @@ final class LinearRegression
     /**
      * Return the intercept value
      *
-     * @return NumberInterface
+     * @return Number
      */
-    public function intercept(): NumberInterface
+    public function intercept(): Number
     {
         return $this->polynom->intercept();
     }
@@ -44,9 +44,9 @@ final class LinearRegression
     /**
      * Return the slope value
      *
-     * @return NumberInterface
+     * @return Number
      */
-    public function slope(): NumberInterface
+    public function slope(): Number
     {
         return $this->polynom->degree(1)->coeff();
     }
@@ -54,16 +54,16 @@ final class LinearRegression
     /**
      * Compute the value at the given x value
      *
-     * @param NumberInterface $x
+     * @param Number $x
      *
-     * @return NumberInterface
+     * @return Number
      */
-    public function __invoke(NumberInterface $x): NumberInterface
+    public function __invoke(Number $x): Number
     {
         return ($this->polynom)($x);
     }
 
-    public function rootMeanSquareDeviation(): NumberInterface
+    public function rootMeanSquareDeviation(): Number
     {
         return $this->deviation;
     }
@@ -114,12 +114,12 @@ final class LinearRegression
         return [$slope, $intercept];
     }
 
-    private function buildRmsd(Dataset $dataset): NumberInterface
+    private function buildRmsd(Dataset $dataset): Number
     {
         $dataset = Matrix::fromColumns(
             $dataset
                 ->abscissas()
-                ->map(function(NumberInterface $x): NumberInterface {
+                ->map(function(Number $x): Number {
                     return $this($x);
                 }),
             $dataset->ordinates()

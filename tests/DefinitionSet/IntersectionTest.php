@@ -6,10 +6,10 @@ namespace Tests\Innmind\Math\DefinitionSet;
 use Innmind\Math\{
     DefinitionSet\Intersection,
     DefinitionSet\Union,
-    DefinitionSet\SetInterface,
-    DefinitionSet\Set,
+    DefinitionSet\Set as SetInterface,
+    DefinitionSet\Set\Set,
     Algebra\Integer,
-    Algebra\Number
+    Algebra\Number\Number
 };
 use PHPUnit\Framework\TestCase;
 

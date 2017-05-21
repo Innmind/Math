@@ -3,13 +3,13 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Algebra;
 
-final class Integer implements NumberInterface
+final class Integer implements Number
 {
     private $number;
 
     public function __construct(int $value)
     {
-        $this->number = new Number($value);
+        $this->number = new Number\Number($value);
     }
 
     /**
@@ -20,73 +20,67 @@ final class Integer implements NumberInterface
         return $this->number->value();
     }
 
-    public function equals(NumberInterface $number): bool
+    public function equals(Number $number): bool
     {
         return $this->number->equals($number);
     }
 
-    public function higherThan(NumberInterface $number): bool
+    public function higherThan(Number $number): bool
     {
         return $this->number->higherThan($number);
     }
 
-    public function add(
-        NumberInterface $number,
-        NumberInterface ...$numbers
-    ): NumberInterface {
+    public function add(Number $number, Number ...$numbers): Number
+    {
         return $this->number->add($number, ...$numbers);
     }
 
-    public function subtract(
-        NumberInterface $number,
-        NumberInterface ...$numbers
-    ): NumberInterface {
+    public function subtract(Number $number, Number ...$numbers): Number
+    {
         return $this->number->subtract($number, ...$numbers);
     }
 
-    public function divideBy(NumberInterface $number): NumberInterface
+    public function divideBy(Number $number): Number
     {
         return $this->number->divideBy($number);
     }
 
-    public function multiplyBy(
-        NumberInterface $number,
-        NumberInterface ...$numbers
-    ): NumberInterface {
+    public function multiplyBy(Number $number, Number ...$numbers): Number
+    {
         return $this->number->multiplyBy($number, ...$numbers);
     }
 
-    public function round(int $precision = 0, string $mode = Round::UP): NumberInterface
+    public function round(int $precision = 0, string $mode = Round::UP): Number
     {
         return $this->number->round($precision, $mode);
     }
 
-    public function floor(): NumberInterface
+    public function floor(): Number
     {
         return $this->number->floor();
     }
 
-    public function ceil(): NumberInterface
+    public function ceil(): Number
     {
         return $this->number->ceil();
     }
 
-    public function modulo(NumberInterface $modulus): NumberInterface
+    public function modulo(Number $modulus): Number
     {
         return $this->number->modulo($modulus);
     }
 
-    public function absolute(): NumberInterface
+    public function absolute(): Number
     {
         return $this->number->absolute();
     }
 
-    public function power(NumberInterface $power): NumberInterface
+    public function power(Number $power): Number
     {
         return $this->number->power($power);
     }
 
-    public function squareRoot(): NumberInterface
+    public function squareRoot(): Number
     {
         return $this->number->squareRoot();
     }
@@ -96,27 +90,27 @@ final class Integer implements NumberInterface
         return new Factorial($this->number->value());
     }
 
-    public function exponential(): NumberInterface
+    public function exponential(): Number
     {
         return new Exponential($this);
     }
 
-    public function binaryLogarithm(): NumberInterface
+    public function binaryLogarithm(): Number
     {
         return new BinaryLogarithm($this);
     }
 
-    public function naturalLogarithm(): NumberInterface
+    public function naturalLogarithm(): Number
     {
         return new NaturalLogarithm($this);
     }
 
-    public function commonLogarithm(): NumberInterface
+    public function commonLogarithm(): Number
     {
         return new CommonLogarithm($this);
     }
 
-    public function signum(): NumberInterface
+    public function signum(): Number
     {
         return new Signum($this);
     }

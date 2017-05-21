@@ -8,12 +8,12 @@ use function Innmind\Math\{
     multiply
 };
 use Innmind\Math\{
-    Geometry\FigureInterface,
+    Geometry\Figure,
     Geometry\Segment,
-    Algebra\NumberInterface
+    Algebra\Number
 };
 
-final class Rectangle implements FigureInterface
+final class Rectangle implements Figure
 {
     private $length;
     private $width;
@@ -24,7 +24,7 @@ final class Rectangle implements FigureInterface
         $this->width = $width;
     }
 
-    public function perimeter(): NumberInterface
+    public function perimeter(): Number
     {
         return add(
             multiply($this->length->length(), 2),
@@ -32,7 +32,7 @@ final class Rectangle implements FigureInterface
         );
     }
 
-    public function area(): NumberInterface
+    public function area(): Number
     {
         return multiply(
             $this->length->length(),

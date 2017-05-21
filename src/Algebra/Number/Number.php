@@ -3,34 +3,65 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Algebra\Number;
 
-use Innmind\Math\Algebra\{
-    Number as NumberInterface,
-    Addition,
-    Subtraction,
-    Multiplication,
-    Division,
-    Round,
-    Floor,
-    Ceil,
-    Modulo,
-    Absolute,
-    Power,
-    SquareRoot,
-    Exponential,
-    BinaryLogarithm,
-    NaturalLogarithm,
-    CommonLogarithm,
-    Signum
+use Innmind\Math\{
+    Algebra\Number as NumberInterface,
+    Algebra\Integer,
+    Algebra\Absolute,
+    Algebra\Addition,
+    Algebra\BinaryLogarithm,
+    Algebra\Ceil,
+    Algebra\CommonLogarithm,
+    Algebra\Division,
+    Algebra\Exponential,
+    Algebra\Floor,
+    Algebra\Modulo,
+    Algebra\Multiplication,
+    Algebra\NaturalLogarithm,
+    Algebra\Power,
+    Algebra\Round,
+    Algebra\Signum,
+    Algebra\SquareRoot,
+    Algebra\Subtraction,
+    Exception\TypeError,
+    Exception\NotANumber
 };
 
-final class Pi implements NumberInterface
+final class Number implements NumberInterface
 {
+    private $value;
+
+    public function __construct($value)
+    {
+        if (!is_int($value) && !is_float($value)) {
+            throw new TypeError('Number must be an int or a float');
+        }
+
+        if (is_nan($value)) {
+            throw new NotANumber;
+        }
+
+        $this->value = $value;
+    }
+
+    public static function wrap($value): NumberInterface
+    {
+        if (is_infinite($value)) {
+            return $value > 0 ? Infinite::positive() : Infinite::negative();
+        }
+
+        if (is_int($value)) {
+            return new Integer($value);
+        }
+
+        return new self($value);
+    }
+
     /**
      * {@inheritdoc}
      */
     public function value()
     {
-        return pi();
+        return $this->value;
     }
 
     public function equals(NumberInterface $number): bool
@@ -131,6 +162,6 @@ final class Pi implements NumberInterface
 
     public function __toString(): string
     {
-        return 'π';
+        return var_export($this->value, true);
     }
 }

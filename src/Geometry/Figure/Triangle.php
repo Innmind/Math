@@ -12,14 +12,14 @@ use function Innmind\Math\{
     divide
 };
 use Innmind\Math\{
-    Geometry\FigureInterface,
+    Geometry\Figure,
     Geometry\Segment,
     Geometry\Theorem\AlKashi,
-    Algebra\NumberInterface,
+    Algebra\Number,
     Algebra\Integer
 };
 
-final class Triangle implements FigureInterface
+final class Triangle implements Figure
 {
     private $a;
     private $b;
@@ -57,12 +57,12 @@ final class Triangle implements FigureInterface
         ));
     }
 
-    public function perimeter(): NumberInterface
+    public function perimeter(): Number
     {
         return add($this->a, $this->b, $this->c);
     }
 
-    public function area(): NumberInterface
+    public function area(): Number
     {
         //Heron's formula
         $p = $this->perimeter()->divideBy(new Integer(2));

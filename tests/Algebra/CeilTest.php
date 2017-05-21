@@ -6,7 +6,6 @@ namespace Tests\Innmind\Math\Algebra;
 use Innmind\Math\Algebra\{
     Ceil,
     Floor,
-    NumberInterface,
     Number,
     Addition,
     Subtraction,
@@ -29,9 +28,9 @@ class CeilTest extends TestCase
 {
     public function testInterface()
     {
-        $ceil = new Ceil(new Number(42.42));
+        $ceil = new Ceil(new Number\Number(42.42));
 
-        $this->assertInstanceOf(NumberInterface::class, $ceil);
+        $this->assertInstanceOf(Number::class, $ceil);
     }
 
     /**
@@ -39,7 +38,7 @@ class CeilTest extends TestCase
      */
     public function testValue($number, $expected)
     {
-        $ceil = new Ceil(new Number($number));
+        $ceil = new Ceil(new Number\Number($number));
 
         $this->assertSame($expected, $ceil->value());
     }
@@ -48,31 +47,31 @@ class CeilTest extends TestCase
     {
         $this->assertSame(
             '43.0',
-            (string) new Ceil(new Number(42.45))
+            (string) new Ceil(new Number\Number(42.45))
         );
     }
 
     public function testEquals()
     {
-        $ceil = new Ceil(new Number(42.45));
+        $ceil = new Ceil(new Number\Number(42.45));
 
-        $this->assertTrue($ceil->equals(new Number(43)));
-        $this->assertTrue($ceil->equals(new Number(43.0)));
-        $this->assertFalse($ceil->equals(new Number(42)));
+        $this->assertTrue($ceil->equals(new Number\Number(43)));
+        $this->assertTrue($ceil->equals(new Number\Number(43.0)));
+        $this->assertFalse($ceil->equals(new Number\Number(42)));
     }
 
     public function testHigherThan()
     {
-        $ceil = new Ceil(new Number(42.45));
+        $ceil = new Ceil(new Number\Number(42.45));
 
-        $this->assertTrue($ceil->higherThan(new Number(41.9)));
-        $this->assertFalse($ceil->higherThan(new Number(43.5)));
+        $this->assertTrue($ceil->higherThan(new Number\Number(41.9)));
+        $this->assertFalse($ceil->higherThan(new Number\Number(43.5)));
     }
 
     public function testAdd()
     {
-        $ceil = new Ceil(new Number(42.5));
-        $number = $ceil->add(new Number(7));
+        $ceil = new Ceil(new Number\Number(42.5));
+        $number = $ceil->add(new Number\Number(7));
 
         $this->assertInstanceOf(Addition::class, $number);
         $this->assertSame(50.0, $number->value());
@@ -80,8 +79,8 @@ class CeilTest extends TestCase
 
     public function testSubtract()
     {
-        $ceil = new Ceil(new Number(42.5));
-        $number = $ceil->subtract(new Number(7));
+        $ceil = new Ceil(new Number\Number(42.5));
+        $number = $ceil->subtract(new Number\Number(7));
 
         $this->assertInstanceOf(Subtraction::class, $number);
         $this->assertSame(36.0, $number->value());
@@ -89,8 +88,8 @@ class CeilTest extends TestCase
 
     public function testMultiplication()
     {
-        $ceil = new Ceil(new Number(42.5));
-        $number = $ceil->multiplyBy(new Number(2));
+        $ceil = new Ceil(new Number\Number(42.5));
+        $number = $ceil->multiplyBy(new Number\Number(2));
 
         $this->assertInstanceOf(Multiplication::class, $number);
         $this->assertSame(86.0, $number->value());
@@ -98,8 +97,8 @@ class CeilTest extends TestCase
 
     public function testDivision()
     {
-        $ceil = new Ceil(new Number(42.5));
-        $number = $ceil->divideBy(new Number(2));
+        $ceil = new Ceil(new Number\Number(42.5));
+        $number = $ceil->divideBy(new Number\Number(2));
 
         $this->assertInstanceOf(Division::class, $number);
         $this->assertSame(21.5, $number->value());
@@ -107,7 +106,7 @@ class CeilTest extends TestCase
 
     public function testRound()
     {
-        $round = new Ceil(new Number(42.45));
+        $round = new Ceil(new Number\Number(42.45));
         $number = $round->round();
 
         $this->assertInstanceOf(Round::class, $number);
@@ -116,7 +115,7 @@ class CeilTest extends TestCase
 
     public function testFloor()
     {
-        $ceil = new Ceil(new Number(42.45));
+        $ceil = new Ceil(new Number\Number(42.45));
         $number = $ceil->floor();
 
         $this->assertInstanceOf(Floor::class, $number);
@@ -125,7 +124,7 @@ class CeilTest extends TestCase
 
     public function testCeil()
     {
-        $ceil = new Ceil(new Number(42.45));
+        $ceil = new Ceil(new Number\Number(42.45));
         $number = $ceil->ceil();
 
         $this->assertInstanceOf(Ceil::class, $number);
@@ -134,8 +133,8 @@ class CeilTest extends TestCase
 
     public function testModulo()
     {
-        $ceil = new Ceil(new Number(42.45));
-        $number = $ceil->modulo(new Number(2.1));
+        $ceil = new Ceil(new Number\Number(42.45));
+        $number = $ceil->modulo(new Number\Number(2.1));
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertSame(1.0, $number->value());
@@ -143,7 +142,7 @@ class CeilTest extends TestCase
 
     public function testAbsolute()
     {
-        $ceil = new Ceil(new Number(-42.45));
+        $ceil = new Ceil(new Number\Number(-42.45));
         $number = $ceil->absolute();
 
         $this->assertInstanceOf(Absolute::class, $number);
@@ -152,8 +151,8 @@ class CeilTest extends TestCase
 
     public function testPower()
     {
-        $ceil = new Ceil(new Number(2.5));
-        $number = $ceil->power(new Number(2));
+        $ceil = new Ceil(new Number\Number(2.5));
+        $number = $ceil->power(new Number\Number(2));
 
         $this->assertInstanceOf(Power::class, $number);
         $this->assertSame(9.0, $number->value());
@@ -161,7 +160,7 @@ class CeilTest extends TestCase
 
     public function testSquareRoot()
     {
-        $ceil = new Ceil(new Number(3.5));
+        $ceil = new Ceil(new Number\Number(3.5));
         $number = $ceil->squareRoot();
 
         $this->assertInstanceOf(SquareRoot::class, $number);
@@ -170,7 +169,7 @@ class CeilTest extends TestCase
 
     public function testExponential()
     {
-        $number = (new Ceil(new Number(3.5)))->exponential();
+        $number = (new Ceil(new Number\Number(3.5)))->exponential();
 
         $this->assertInstanceOf(Exponential::class, $number);
         $this->assertSame(exp(4), $number->value());
@@ -178,7 +177,7 @@ class CeilTest extends TestCase
 
     public function testBinaryLogarithm()
     {
-        $number = (new Ceil(new Number(3.5)))->binaryLogarithm();
+        $number = (new Ceil(new Number\Number(3.5)))->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
         $this->assertSame(log(4, 2), $number->value());
@@ -186,7 +185,7 @@ class CeilTest extends TestCase
 
     public function testNaturalLogarithm()
     {
-        $number = (new Ceil(new Number(3.5)))->naturalLogarithm();
+        $number = (new Ceil(new Number\Number(3.5)))->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
         $this->assertSame(log(4), $number->value());
@@ -194,7 +193,7 @@ class CeilTest extends TestCase
 
     public function testCommonLogarithm()
     {
-        $number = (new Ceil(new Number(3.5)))->commonLogarithm();
+        $number = (new Ceil(new Number\Number(3.5)))->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
         $this->assertSame(log10(4), $number->value());
@@ -202,7 +201,7 @@ class CeilTest extends TestCase
 
     public function testSignum()
     {
-        $number = (new Ceil(new Number(2)))->signum();
+        $number = (new Ceil(new Number\Number(2)))->signum();
 
         $this->assertInstanceOf(Signum::class, $number);
         $this->assertSame(1, $number->value());

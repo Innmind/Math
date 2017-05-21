@@ -5,7 +5,7 @@ namespace Innmind\Math\Regression;
 
 use function Innmind\Math\numerize;
 use Innmind\Math\{
-    Algebra\NumberInterface,
+    Algebra\Number,
     Algebra\Integer,
     Polynom\Polynom,
     Matrix,
@@ -52,12 +52,12 @@ final class PolynomialRegression
         return $this->polynom;
     }
 
-    public function __invoke(NumberInterface $x): NumberInterface
+    public function __invoke(Number $x): Number
     {
         return ($this->polynom)($x);
     }
 
-    public function rootMeanSquareDeviation(): NumberInterface
+    public function rootMeanSquareDeviation(): Number
     {
         return $this->deviation;
     }
@@ -70,8 +70,8 @@ final class PolynomialRegression
             ->abscissas()
             ->reduce(
                 new Sequence,
-                static function(Sequence $rows, NumberInterface $x) use ($powers): Sequence {
-                    $xToThePowers = $powers->map(static function(NumberInterface $power) use ($x): NumberInterface {
+                static function(Sequence $rows, Number $x) use ($powers): Sequence {
+                    $xToThePowers = $powers->map(static function(Number $power) use ($x): Number {
                         return $x->power($power);
                     });
 
@@ -87,12 +87,12 @@ final class PolynomialRegression
         return Matrix::fromColumns($dataset->ordinates());
     }
 
-    private function buildRmsd(Dataset $dataset): NumberInterface
+    private function buildRmsd(Dataset $dataset): Number
     {
         $dataset = Matrix::fromColumns(
             $dataset
                 ->abscissas()
-                ->map(function(NumberInterface $x): NumberInterface {
+                ->map(function(Number $x): Number {
                     return $this($x);
                 }),
             $dataset->ordinates()

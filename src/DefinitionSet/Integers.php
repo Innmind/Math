@@ -4,13 +4,13 @@ declare(strict_types = 1);
 namespace Innmind\Math\DefinitionSet;
 
 use Innmind\Math\Algebra\{
-    NumberInterface,
+    Number,
     Integer
 };
 
-final class Integers implements SetInterface
+final class Integers implements Set
 {
-    public function contains(NumberInterface $number): bool
+    public function contains(Number $number): bool
     {
         if ($number instanceof Integer) {
             return true;
@@ -21,12 +21,12 @@ final class Integers implements SetInterface
             ->equals(new Integer(0));
     }
 
-    public function union(SetInterface $set): SetInterface
+    public function union(Set $set): Set
     {
         return new Union($this, $set);
     }
 
-    public function intersect(SetInterface $set): SetInterface
+    public function intersect(Set $set): Set
     {
         return new Intersection($this, $set);
     }

@@ -5,8 +5,7 @@ namespace Tests\Innmind\Math\Algebra;
 
 use Innmind\Math\Algebra\{
     Modulo,
-    NumberInterface,
-    OperationInterface,
+    Operation,
     Number,
     Addition,
     Subtraction,
@@ -31,23 +30,23 @@ class ModuloTest extends TestCase
     public function testInterface()
     {
         $modulo = new Modulo(
-            $this->createMock(NumberInterface::class),
-            $this->createMock(NumberInterface::class)
+            $this->createMock(Number::class),
+            $this->createMock(Number::class)
         );
 
-        $this->assertInstanceOf(NumberInterface::class, $modulo);
-        $this->assertInstanceOf(OperationInterface::class, $modulo);
+        $this->assertInstanceOf(Number::class, $modulo);
+        $this->assertInstanceOf(Operation::class, $modulo);
     }
 
     public function testResult()
     {
         $modulo = new Modulo(
-            new Number(42.24),
-            new Number(2.1)
+            new Number\Number(42.24),
+            new Number\Number(2.1)
         );
         $result = $modulo->result();
 
-        $this->assertInstanceOf(NumberInterface::class, $result);
+        $this->assertInstanceOf(Number::class, $result);
         $this->assertSame(0.24, $result->value());
         $this->assertSame($result, $modulo->result());
     }
@@ -55,8 +54,8 @@ class ModuloTest extends TestCase
     public function testStringCast()
     {
         $modulo = new Modulo(
-            new Number(42.24),
-            new Number(2.1)
+            new Number\Number(42.24),
+            new Number\Number(2.1)
         );
 
         $this->assertSame('42.24 % 2.1', (string) $modulo);
@@ -66,12 +65,12 @@ class ModuloTest extends TestCase
     {
         $modulo = new Modulo(
             new Addition(
-                new Number(1),
-                new Number(1)
+                new Number\Number(1),
+                new Number\Number(1)
             ),
             new Addition(
-                new Number(2),
-                new Number(2)
+                new Number\Number(2),
+                new Number\Number(2)
             )
         );
 
@@ -81,32 +80,32 @@ class ModuloTest extends TestCase
     public function testEquals()
     {
         $modulo = new Modulo(
-            new Number(42.24),
-            new Number(2.1)
+            new Number\Number(42.24),
+            new Number\Number(2.1)
         );
 
-        $this->assertTrue($modulo->equals(new Number(0.2400000000000002)));
-        $this->assertFalse($modulo->equals(new Number(1.24)));
+        $this->assertTrue($modulo->equals(new Number\Number(0.2400000000000002)));
+        $this->assertFalse($modulo->equals(new Number\Number(1.24)));
     }
 
     public function testHigherThan()
     {
         $modulo = new Modulo(
-            new Number(42.24),
-            new Number(2.1)
+            new Number\Number(42.24),
+            new Number\Number(2.1)
         );
 
-        $this->assertTrue($modulo->higherThan(new Number(0.23)));
-        $this->assertFalse($modulo->higherThan(new Number(0.2400000000000002)));
+        $this->assertTrue($modulo->higherThan(new Number\Number(0.23)));
+        $this->assertFalse($modulo->higherThan(new Number\Number(0.2400000000000002)));
     }
 
     public function testAdd()
     {
         $modulo = new Modulo(
-            new Number(42.24),
-            new Number(2.1)
+            new Number\Number(42.24),
+            new Number\Number(2.1)
         );
-        $number = $modulo->add(new Number(66));
+        $number = $modulo->add(new Number\Number(66));
 
         $this->assertInstanceOf(Addition::class, $number);
         $this->assertSame(66.24, $number->value());
@@ -115,10 +114,10 @@ class ModuloTest extends TestCase
     public function testSubtract()
     {
         $modulo = new Modulo(
-            new Number(42.24),
-            new Number(2.1)
+            new Number\Number(42.24),
+            new Number\Number(2.1)
         );
-        $number = $modulo->subtract(new Number(66));
+        $number = $modulo->subtract(new Number\Number(66));
 
         $this->assertInstanceOf(Subtraction::class, $number);
         $this->assertSame(-65.76, $number->value());
@@ -127,10 +126,10 @@ class ModuloTest extends TestCase
     public function testDivideBy()
     {
         $modulo = new Modulo(
-            new Number(42.24),
-            new Number(2.1)
+            new Number\Number(42.24),
+            new Number\Number(2.1)
         );
-        $number = $modulo->divideBy(new Number(2));
+        $number = $modulo->divideBy(new Number\Number(2));
 
         $this->assertInstanceOf(Division::class, $number);
         $this->assertSame(0.12, $number->value());
@@ -139,10 +138,10 @@ class ModuloTest extends TestCase
     public function testMulitplyBy()
     {
         $modulo = new Modulo(
-            new Number(42.24),
-            new Number(2.1)
+            new Number\Number(42.24),
+            new Number\Number(2.1)
         );
-        $number = $modulo->multiplyBy(new Number(2));
+        $number = $modulo->multiplyBy(new Number\Number(2));
 
         $this->assertInstanceOf(Multiplication::class, $number);
         $this->assertSame(0.48, $number->value());
@@ -151,8 +150,8 @@ class ModuloTest extends TestCase
     public function testRound()
     {
         $modulo = new Modulo(
-            new Number(42.24),
-            new Number(2.1)
+            new Number\Number(42.24),
+            new Number\Number(2.1)
         );
         $number = $modulo->round(1);
 
@@ -163,8 +162,8 @@ class ModuloTest extends TestCase
     public function testFloor()
     {
         $modulo = new Modulo(
-            new Number(42.24),
-            new Number(2.1)
+            new Number\Number(42.24),
+            new Number\Number(2.1)
         );
         $number = $modulo->floor();
 
@@ -175,8 +174,8 @@ class ModuloTest extends TestCase
     public function testCeil()
     {
         $modulo = new Modulo(
-            new Number(42.24),
-            new Number(2.1)
+            new Number\Number(42.24),
+            new Number\Number(2.1)
         );
         $number = $modulo->ceil();
 
@@ -187,10 +186,10 @@ class ModuloTest extends TestCase
     public function testModulo()
     {
         $modulo = new Modulo(
-            new Number(42.24),
-            new Number(2.1)
+            new Number\Number(42.24),
+            new Number\Number(2.1)
         );
-        $number = $modulo->modulo(new Number(0.1));
+        $number = $modulo->modulo(new Number\Number(0.1));
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertSame(0.04, $number->value());
@@ -199,8 +198,8 @@ class ModuloTest extends TestCase
     public function testAbsolute()
     {
         $modulo = new Modulo(
-            new Number(-42.24),
-            new Number(2.1)
+            new Number\Number(-42.24),
+            new Number\Number(2.1)
         );
         $number = $modulo->absolute();
 
@@ -211,10 +210,10 @@ class ModuloTest extends TestCase
     public function testPower()
     {
         $modulo = new Modulo(
-            new Number(9),
-            new Number(2)
+            new Number\Number(9),
+            new Number\Number(2)
         );
-        $number = $modulo->power(new Number(2));
+        $number = $modulo->power(new Number\Number(2));
 
         $this->assertInstanceOf(Power::class, $number);
         $this->assertSame(1.0, $number->value());
@@ -223,8 +222,8 @@ class ModuloTest extends TestCase
     public function testSquareRoot()
     {
         $modulo = new Modulo(
-            new Number(12),
-            new Number(8)
+            new Number\Number(12),
+            new Number\Number(8)
         );
         $number = $modulo->squareRoot();
 
@@ -235,8 +234,8 @@ class ModuloTest extends TestCase
     public function testExponential()
     {
         $number = (new Modulo(
-            new Number(12),
-            new Number(8)
+            new Number\Number(12),
+            new Number\Number(8)
         ))->exponential();
 
         $this->assertInstanceOf(Exponential::class, $number);
@@ -246,8 +245,8 @@ class ModuloTest extends TestCase
     public function testBinaryLogarithm()
     {
         $number = (new Modulo(
-            new Number(12),
-            new Number(8)
+            new Number\Number(12),
+            new Number\Number(8)
         ))->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
@@ -257,8 +256,8 @@ class ModuloTest extends TestCase
     public function testNaturalLogarithm()
     {
         $number = (new Modulo(
-            new Number(12),
-            new Number(8)
+            new Number\Number(12),
+            new Number\Number(8)
         ))->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
@@ -268,8 +267,8 @@ class ModuloTest extends TestCase
     public function testCommonLogarithm()
     {
         $number = (new Modulo(
-            new Number(12),
-            new Number(8)
+            new Number\Number(12),
+            new Number\Number(8)
         ))->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
@@ -279,8 +278,8 @@ class ModuloTest extends TestCase
     public function testSignum()
     {
         $number = (new Modulo(
-            new Number(12),
-            new Number(8)
+            new Number\Number(12),
+            new Number\Number(8)
         ))->signum();
 
         $this->assertInstanceOf(Signum::class, $number);

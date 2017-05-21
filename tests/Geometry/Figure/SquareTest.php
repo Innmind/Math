@@ -5,9 +5,9 @@ namespace Tests\Innmind\Math\Geometry\Figure;
 
 use Innmind\Math\{
     Geometry\Figure\Square,
-    Geometry\FigureInterface,
+    Geometry\Figure,
     Geometry\Segment,
-    Algebra\NumberInterface,
+    Algebra\Number,
     Algebra\Integer
 };
 use PHPUnit\Framework\TestCase;
@@ -17,7 +17,7 @@ class SquareTest extends TestCase
     public function testInterface()
     {
         $this->assertInstanceOf(
-            FigureInterface::class,
+            Figure::class,
             new Square(
                 new Segment(new Integer(2))
             )
@@ -30,7 +30,7 @@ class SquareTest extends TestCase
             new Segment(new Integer(2))
         );
 
-        $this->assertInstanceOf(NumberInterface::class, $square->perimeter());
+        $this->assertInstanceOf(Number::class, $square->perimeter());
         $this->assertSame(8, $square->perimeter()->value());
     }
 
@@ -40,7 +40,7 @@ class SquareTest extends TestCase
             new Segment(new Integer(2))
         );
 
-        $this->assertInstanceOf(NumberInterface::class, $square->area());
+        $this->assertInstanceOf(Number::class, $square->area());
         $this->assertSame(4, $square->area()->value());
     }
 

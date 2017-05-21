@@ -3,6 +3,6 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Exception;
 
-class TypeError extends \TypeError implements ExceptionInterface
+class TypeError extends \TypeError implements Exception
 {
 }

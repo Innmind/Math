@@ -6,7 +6,6 @@ namespace Tests\Innmind\Math\Algebra;
 use Innmind\Math\Algebra\{
     Integer,
     Number,
-    NumberInterface,
     Addition,
     Subtraction,
     Multiplication,
@@ -32,7 +31,7 @@ class IntegerTest extends TestCase
     public function testInterface()
     {
         $this->assertInstanceOf(
-            NumberInterface::class,
+            Number::class,
             new Integer(42)
         );
     }
@@ -48,14 +47,14 @@ class IntegerTest extends TestCase
     public function testEquals()
     {
         $this->assertTrue((new Integer(42))->equals(new Integer(42)));
-        $this->assertTrue((new Integer(42))->equals(new Number(42.0)));
-        $this->assertFalse((new Integer(42))->equals(new Number(42.24)));
+        $this->assertTrue((new Integer(42))->equals(new Number\Number(42.0)));
+        $this->assertFalse((new Integer(42))->equals(new Number\Number(42.24)));
     }
 
     public function testHigherThan()
     {
         $this->assertFalse((new Integer(42))->higherThan(new Integer(42)));
-        $this->assertTrue((new Integer(42))->higherThan(new Number(41.24)));
+        $this->assertTrue((new Integer(42))->higherThan(new Number\Number(41.24)));
     }
 
     public function testAdd()

@@ -6,7 +6,7 @@ namespace Innmind\Math\Probabilities;
 use Innmind\Math\{
     Regression\Dataset,
     Matrix\ColumnVector,
-    Algebra\NumberInterface,
+    Algebra\Number,
     Algebra\Integer
 };
 
@@ -30,7 +30,7 @@ final class Variance
             ->sum();
     }
 
-    public function __invoke(): NumberInterface
+    public function __invoke(): Number
     {
         return $this->variance;
     }

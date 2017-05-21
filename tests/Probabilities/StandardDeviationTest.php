@@ -7,7 +7,7 @@ use function Innmind\Math\divide;
 use Innmind\Math\{
     Probabilities\StandardDeviation,
     Regression\Dataset,
-    Algebra\NumberInterface
+    Algebra\Number
 };
 use PHPUnit\Framework\TestCase;
 
@@ -23,7 +23,7 @@ class StandardDeviationTest extends TestCase
             ])
         );
 
-        $this->assertInstanceOf(NumberInterface::class, $deviation());
+        $this->assertInstanceOf(Number::class, $deviation());
         $this->assertSame(
             divide(101, 36)->squareRoot()->value(),
             $deviation()->value()

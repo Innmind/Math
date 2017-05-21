@@ -5,7 +5,6 @@ namespace Innmind\Math\Geometry\Angle;
 
 use function Innmind\Math\multiply;
 use Innmind\Math\Algebra\{
-    NumberInterface,
     Number,
     Number\Pi
 };
@@ -15,7 +14,7 @@ final class Radian
     private $number;
     private $degree;
 
-    public function __construct(NumberInterface $number)
+    public function __construct(Number $number)
     {
         $this->number = $number->modulo(
             multiply(2, new Pi)
@@ -25,7 +24,7 @@ final class Radian
     public function toDegree(): Degree
     {
         return $this->degree ?? $this->degree = new Degree(
-            new Number(
+            new Number\Number(
                 rad2deg($this->number->value())
             )
         );
@@ -56,7 +55,7 @@ final class Radian
         return $this->toDegree()->opposite()->toRadian();
     }
 
-    public function number(): NumberInterface
+    public function number(): Number
     {
         return $this->number;
     }

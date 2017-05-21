@@ -3,31 +3,31 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\DefinitionSet;
 
-use Innmind\Math\Algebra\NumberInterface;
+use Innmind\Math\Algebra\Number;
 
-final class Union implements SetInterface
+final class Union implements Set
 {
     private $left;
     private $right;
 
-    public function __construct(SetInterface $left, SetInterface $right)
+    public function __construct(Set $left, Set $right)
     {
         $this->left = $left;
         $this->right = $right;
     }
 
-    public function contains(NumberInterface $number): bool
+    public function contains(Number $number): bool
     {
         return $this->left->contains($number) ||
             $this->right->contains($number);
     }
 
-    public function union(SetInterface $set): SetInterface
+    public function union(Set $set): Set
     {
         return new self($this, $set);
     }
 
-    public function intersect(SetInterface $set): SetInterface
+    public function intersect(Set $set): Set
     {
         return new Intersection($this, $set);
     }

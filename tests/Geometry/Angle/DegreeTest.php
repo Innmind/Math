@@ -6,7 +6,7 @@ namespace Tests\Innmind\Math\Geometry\Angle;
 use Innmind\Math\{
     Geometry\Angle\Degree,
     Geometry\Angle\Radian,
-    Algebra\Number
+    Algebra\Number\Number
 };
 use PHPUnit\Framework\TestCase;
 

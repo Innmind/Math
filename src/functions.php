@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace Innmind\Math;
 
 use Innmind\Math\{
-    Algebra\NumberInterface,
     Algebra\Number,
     Algebra\Addition,
     Algebra\Absolute,
@@ -40,78 +39,78 @@ use Innmind\Math\{
 use Innmind\Immutable\Sequence;
 
 /**
- * @param int|float|NumberInterface $numbers
+ * @param int|float|Number $numbers
  */
-function add(...$numbers): NumberInterface
+function add(...$numbers): Number
 {
     return new Addition(...numerize(...$numbers));
 }
 
 /**
- * @param int|float|NumberInterface $number
+ * @param int|float|Number $number
  */
-function absolute($number): NumberInterface
+function absolute($number): Number
 {
     return new Absolute(numerize($number)[0]);
 }
 
 /**
- * @param int|float|NumberInterface $number
+ * @param int|float|Number $number
  */
-function ceil($number): NumberInterface
+function ceil($number): Number
 {
     return new Ceil(numerize($number)[0]);
 }
 
 /**
- * @param int|float|NumberInterface $dividend
- * @param int|float|NumberInterface $divisor
+ * @param int|float|Number $dividend
+ * @param int|float|Number $divisor
  */
-function divide($dividend, $divisor): NumberInterface
+function divide($dividend, $divisor): Number
 {
     return new Division(...numerize($dividend, $divisor));
 }
 
 /**
- * @param int|float|NumberInterface $number
+ * @param int|float|Number $number
  */
-function floor($number): NumberInterface
+function floor($number): Number
 {
     return new Floor(numerize($number)[0]);
 }
 
 /**
- * @param int|float|NumberInterface $number
- * @param int|float|NumberInterface $modulus
+ * @param int|float|Number $number
+ * @param int|float|Number $modulus
  */
-function modulo($number, $modulus): NumberInterface
+function modulo($number, $modulus): Number
 {
     return new Modulo(...numerize($number, $modulus));
 }
 
 /**
- * @param int|float|NumberInterface $numbers
+ * @param int|float|Number $numbers
  */
-function multiply(...$numbers): NumberInterface
+function multiply(...$numbers): Number
 {
     return new Multiplication(...numerize(...$numbers));
 }
 
 /**
- * @param int|float|NumberInterface $number
- * @param int|float|NumberInterface $power
+ * @param int|float|Number $number
+ * @param int|float|Number $power
  */
-function power($number, $power): NumberInterface
+function power($number, $power): Number
 {
     return new Power(...numerize($number, $power));
 }
 
 /**
- * @param int|float|NumberInterface $number
- * @param int|float|NumberInterface $precision
+ * @param int|float|Number $number
+ * @param int|float|Number $precision
  * @param string $mode
  */
-function round($number, $precision = 0, $mode = Round::UP): NumberInterface
+function round($number, $precision = 0, $mode = Round::UP): Number
 {
     return new Round(
         numerize($number)[0],
@@ -121,23 +120,23 @@ function round($number, $precision = 0, $mode = Round::UP): NumberInterface
 }
 
 /**
- * @param int|float|NumberInterface $number
+ * @param int|float|Number $number
  */
-function squareRoot($number): NumberInterface
+function squareRoot($number): Number
 {
     return new SquareRoot(numerize($number)[0]);
 }
 
 /**
- * @param int|float|NumberInterface $numbers
+ * @param int|float|Number $numbers
  */
-function subtract(...$numbers): NumberInterface
+function subtract(...$numbers): Number
 {
     return new Subtraction(...numerize(...$numbers));
 }
 
 /**
- * @param Degree|Radian|int|float|NumberInterface $degree
+ * @param Degree|Radian|int|float|Number $degree
  */
 function toDegree($degree): Degree
 {
@@ -153,7 +152,7 @@ function toDegree($degree): Degree
 }
 
 /**
- * @param Degree|Radian|int|float|NumberInterface $radian
+ * @param Degree|Radian|int|float|Number $radian
  */
 function toRadian($radian): Radian
 {
@@ -169,15 +168,15 @@ function toRadian($radian): Radian
 }
 
 /**
- * @param Degree|Radian|int|float|NumberInterface $degree
+ * @param Degree|Radian|int|float|Number $degree
  */
-function cosine($degree): NumberInterface
+function cosine($degree): Number
 {
     return new Cosine(toDegree($degree));
 }
 
 /**
- * @param int|float|NumberInterface $number
+ * @param int|float|Number $number
  */
 function arcCosine($number): ArcCosine
 {
@@ -185,7 +184,7 @@ function arcCosine($number): ArcCosine
 }
 
 /**
- * @param int|float|NumberInterface $number
+ * @param int|float|Number $number
  */
 function arcSine($number): ArcSine
 {
@@ -193,7 +192,7 @@ function arcSine($number): ArcSine
 }
 
 /**
- * @param int|float|NumberInterface $number
+ * @param int|float|Number $number
  */
 function arcTangent($number): ArcTangent
 {
@@ -201,23 +200,23 @@ function arcTangent($number): ArcTangent
 }
 
 /**
- * @param Degree|Radian|int|float|NumberInterface $degree
+ * @param Degree|Radian|int|float|Number $degree
  */
-function sine($degree): NumberInterface
+function sine($degree): Number
 {
     return new Sine(toDegree($degree));
 }
 
 /**
- * @param Degree|Radian|int|float|NumberInterface $degree
+ * @param Degree|Radian|int|float|Number $degree
  */
-function tangent($degree): NumberInterface
+function tangent($degree): Number
 {
     return new Tangent(toDegree($degree));
 }
 
 /**
- * @param int|float|NumberInterface $numbers
+ * @param int|float|Number $numbers
  */
 function frequence(...$numbers): Frequence
 {
@@ -225,29 +224,29 @@ function frequence(...$numbers): Frequence
 }
 
 /**
- * @param int|float|NumberInterface $first
- * @param int|float|NumberInterface $numbers
+ * @param int|float|Number $first
+ * @param int|float|Number $numbers
  */
-function mean($first, ...$numbers): NumberInterface
+function mean($first, ...$numbers): Number
 {
     return new Mean(...numerize($first, ...$numbers));
 }
 
 /**
- * @param int|float|NumberInterface $first
- * @param int|float|NumberInterface $numbers
+ * @param int|float|Number $first
+ * @param int|float|Number $numbers
  */
-function median($first, ...$numbers): NumberInterface
+function median($first, ...$numbers): Number
 {
     return new Median(...numerize($first, ...$numbers));
 }
 
 /**
- * @param int|float|NumberInterface $first
- * @param int|float|NumberInterface $second
- * @param int|float|NumberInterface $numbers
+ * @param int|float|Number $first
+ * @param int|float|Number $second
+ * @param int|float|Number $numbers
  */
-function scope($first, $second, ...$numbers): NumberInterface
+function scope($first, $second, ...$numbers): Number
 {
     return new Scope(...numerize($first, $second, ...$numbers));
 }
@@ -267,7 +266,7 @@ function factorial($int): Factorial
 }
 
 /**
- * @param int|float|NumberInterface $number
+ * @param int|float|Number $number
  *
  * @return Exponential
  */
@@ -277,7 +276,7 @@ function exponential($number): Exponential
 }
 
 /**
- * @param int|float|NumberInterface $number
+ * @param int|float|Number $number
  *
  * @return BinaryLogarithm
  */
@@ -287,7 +286,7 @@ function binaryLogarithm($number): BinaryLogarithm
 }
 
 /**
- * @param int|float|NumberInterface $number
+ * @param int|float|Number $number
  *
  * @return NaturalLogarithm
  */
@@ -297,7 +296,7 @@ function naturalLogarithm($number): NaturalLogarithm
 }
 
 /**
- * @param int|float|NumberInterface $number
+ * @param int|float|Number $number
  *
  * @return NaturalLogarithm
  */
@@ -307,7 +306,7 @@ function logarithm($number): NaturalLogarithm
 }
 
 /**
- * @param int|float|NumberInterface $number
+ * @param int|float|Number $number
  *
  * @return CommonLogarithm
  */
@@ -317,7 +316,7 @@ function commonLogarithm($number): CommonLogarithm
 }
 
 /**
- * @param int|float|NumberInterface $number
+ * @param int|float|Number $number
  *
  * @return Signum
  */
@@ -327,48 +326,48 @@ function signum($number): Signum
 }
 
 /**
- * @param int|float|NumberInterface $first
- * @param int|float|NumberInterface $numbers
+ * @param int|float|Number $first
+ * @param int|float|Number $numbers
  *
- * @return NumberInterface
+ * @return Number
  */
-function max($first, ...$numbers): NumberInterface
+function max($first, ...$numbers): Number
 {
     return (new Sequence(...numerize($first, ...$numbers)))
-        ->sort(static function(NumberInterface $a, NumberInterface $b) {
+        ->sort(static function(Number $a, Number $b) {
             return $b->higherThan($a);
         })
         ->first();
 }
 
 /**
- * @param int|float|NumberInterface $first
- * @param int|float|NumberInterface $numbers
+ * @param int|float|Number $first
+ * @param int|float|Number $numbers
  *
- * @return NumberInterface
+ * @return Number
  */
-function min($first, ...$numbers): NumberInterface
+function min($first, ...$numbers): Number
 {
     return (new Sequence(...numerize($first, ...$numbers)))
-        ->sort(static function(NumberInterface $a, NumberInterface $b) {
+        ->sort(static function(Number $a, Number $b) {
             return $a->higherThan($b);
         })
         ->first();
 }
 
 /**
- * @param int|float|NumberInterface $numbers
+ * @param int|float|Number $numbers
  *
- * @return NumberInterface[]
+ * @return Number[]
  */
 function numerize(...$numbers): array
 {
     foreach ($numbers as &$number) {
-        if ($number instanceof NumberInterface) {
+        if ($number instanceof Number) {
             continue;
         }
 
-        $number = Number::wrap($number);
+        $number = Number\Number::wrap($number);
     }
 
     return $numbers;

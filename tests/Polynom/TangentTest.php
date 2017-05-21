@@ -8,7 +8,7 @@ use Innmind\Math\{
     Polynom\Polynom,
     Polynom\Degree,
     Algebra\Integer,
-    Algebra\NumberInterface
+    Algebra\Number
 };
 use PHPUnit\Framework\TestCase;
 
@@ -32,7 +32,7 @@ class TangentTest extends TestCase
 
         $this->assertSame($polynom, $tangent->polynom());
         $this->assertSame($abscissa, $tangent->abscissa());
-        $this->assertInstanceOf(NumberInterface::class, $tangent(new Integer(0)));
+        $this->assertInstanceOf(Number::class, $tangent(new Integer(0)));
         $this->assertSame(
             4.0,
             $tangent(new Integer(2))->value()

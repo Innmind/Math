@@ -1,15 +1,15 @@
 <?php
 declare(strict_types = 1);
 
-namespace Tests\Innmind\Math\DefinitionSet;
+namespace Tests\Innmind\Math\DefinitionSet\Set;
 
 use Innmind\Math\{
-    DefinitionSet\Set,
-    DefinitionSet\SetInterface,
+    DefinitionSet\Set\Set,
+    DefinitionSet\Set as SetInterface,
     DefinitionSet\Union,
     DefinitionSet\Intersection,
     Algebra\Integer,
-    Algebra\Number
+    Algebra\Number\Number
 };
 use PHPUnit\Framework\TestCase;
 

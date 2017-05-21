@@ -6,8 +6,7 @@ namespace Tests\Innmind\Math\Algebra;
 use Innmind\Math\Algebra\{
     Subtraction,
     Number,
-    OperationInterface,
-    NumberInterface,
+    Operation,
     Addition,
     Multiplication,
     Division,
@@ -31,12 +30,12 @@ class SubtractionTest extends TestCase
     public function testInterface()
     {
         $subtraction = new Subtraction(
-            $first = new Number(4),
-            $second = new Number(2)
+            $first = new Number\Number(4),
+            $second = new Number\Number(2)
         );
 
-        $this->assertInstanceOf(OperationInterface::class, $subtraction);
-        $this->assertInstanceOf(NumberInterface::class, $subtraction);
+        $this->assertInstanceOf(Operation::class, $subtraction);
+        $this->assertInstanceOf(Number::class, $subtraction);
         $this->assertInstanceOf(\Iterator::class, $subtraction);
         $this->assertSame($first, $subtraction->current());
         $this->assertSame(0, $subtraction->key());
@@ -53,12 +52,12 @@ class SubtractionTest extends TestCase
     public function testResult()
     {
         $subtraction = new Subtraction(
-            new Number(42),
-            new Number(24)
+            new Number\Number(42),
+            new Number\Number(24)
         );
         $result = $subtraction->result();
 
-        $this->assertInstanceOf(NumberInterface::class, $result);
+        $this->assertInstanceOf(Number::class, $result);
         $this->assertSame(18, $result->value());
         $this->assertTrue($result->equals($subtraction->difference()));
         $this->assertSame($result, $subtraction->result());
@@ -67,8 +66,8 @@ class SubtractionTest extends TestCase
     public function testValue()
     {
         $subtraction = new Subtraction(
-            new Number(42),
-            new Number(24)
+            new Number\Number(42),
+            new Number\Number(24)
         );
 
         $this->assertSame(18, $subtraction->value());
@@ -77,32 +76,32 @@ class SubtractionTest extends TestCase
     public function testEquals()
     {
         $subtraction = new Subtraction(
-            new Number(42),
-            new Number(24)
+            new Number\Number(42),
+            new Number\Number(24)
         );
 
-        $this->assertTrue($subtraction->equals(new Number(18)));
-        $this->assertFalse($subtraction->equals(new Number(18.1)));
+        $this->assertTrue($subtraction->equals(new Number\Number(18)));
+        $this->assertFalse($subtraction->equals(new Number\Number(18.1)));
     }
 
     public function testHigherThan()
     {
         $subtraction = new Subtraction(
-            new Number(42),
-            new Number(24)
+            new Number\Number(42),
+            new Number\Number(24)
         );
 
-        $this->assertFalse($subtraction->higherThan(new Number(18)));
-        $this->assertTrue($subtraction->higherThan(new Number(17.9)));
+        $this->assertFalse($subtraction->higherThan(new Number\Number(18)));
+        $this->assertTrue($subtraction->higherThan(new Number\Number(17.9)));
     }
 
     public function testAdd()
     {
         $subtraction = new Subtraction(
-            new Number(42),
-            new Number(24)
+            new Number\Number(42),
+            new Number\Number(24)
         );
-        $number = $subtraction->add(new Number(66));
+        $number = $subtraction->add(new Number\Number(66));
 
         $this->assertInstanceOf(Addition::class, $number);
         $this->assertSame(84, $number->value());
@@ -111,10 +110,10 @@ class SubtractionTest extends TestCase
     public function testSubtract()
     {
         $subtraction = new Subtraction(
-            new Number(42),
-            new Number(24)
+            new Number\Number(42),
+            new Number\Number(24)
         );
-        $number = $subtraction->subtract(new Number(66));
+        $number = $subtraction->subtract(new Number\Number(66));
 
         $this->assertInstanceOf(Subtraction::class, $number);
         $this->assertSame(-48, $number->value());
@@ -123,10 +122,10 @@ class SubtractionTest extends TestCase
     public function testDivideBy()
     {
         $subtraction = new Subtraction(
-            new Number(42),
-            new Number(24)
+            new Number\Number(42),
+            new Number\Number(24)
         );
-        $number = $subtraction->divideBy(new Number(3));
+        $number = $subtraction->divideBy(new Number\Number(3));
 
         $this->assertInstanceOf(Division::class, $number);
         $this->assertSame(6, $number->value());
@@ -135,10 +134,10 @@ class SubtractionTest extends TestCase
     public function testMulitplyBy()
     {
         $subtraction = new Subtraction(
-            new Number(42),
-            new Number(24)
+            new Number\Number(42),
+            new Number\Number(24)
         );
-        $number = $subtraction->multiplyBy(new Number(2));
+        $number = $subtraction->multiplyBy(new Number\Number(2));
 
         $this->assertInstanceOf(Multiplication::class, $number);
         $this->assertSame(36, $number->value());
@@ -147,8 +146,8 @@ class SubtractionTest extends TestCase
     public function testRound()
     {
         $subtraction = new Subtraction(
-            new Number(24.55),
-            new Number(12.33)
+            new Number\Number(24.55),
+            new Number\Number(12.33)
         );
         $number = $subtraction->round(1);
 
@@ -159,8 +158,8 @@ class SubtractionTest extends TestCase
     public function testFloor()
     {
         $subtraction = new Subtraction(
-            new Number(24.55),
-            new Number(12.33)
+            new Number\Number(24.55),
+            new Number\Number(12.33)
         );
         $number = $subtraction->floor();
 
@@ -171,8 +170,8 @@ class SubtractionTest extends TestCase
     public function testCeil()
     {
         $subtraction = new Subtraction(
-            new Number(24.55),
-            new Number(12.33)
+            new Number\Number(24.55),
+            new Number\Number(12.33)
         );
         $number = $subtraction->ceil();
 
@@ -183,10 +182,10 @@ class SubtractionTest extends TestCase
     public function testModulo()
     {
         $subtraction = new Subtraction(
-            new Number(25),
-            new Number(12)
+            new Number\Number(25),
+            new Number\Number(12)
         );
-        $number = $subtraction->modulo(new Number(6));
+        $number = $subtraction->modulo(new Number\Number(6));
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertSame(1.0, $number->value());
@@ -195,8 +194,8 @@ class SubtractionTest extends TestCase
     public function testAbsolute()
     {
         $subtraction = new Subtraction(
-            new Number(12),
-            new Number(25)
+            new Number\Number(12),
+            new Number\Number(25)
         );
         $number = $subtraction->absolute();
 
@@ -207,10 +206,10 @@ class SubtractionTest extends TestCase
     public function testPower()
     {
         $subtraction = new Subtraction(
-            new Number(12),
-            new Number(6)
+            new Number\Number(12),
+            new Number\Number(6)
         );
-        $number = $subtraction->power(new Number(2));
+        $number = $subtraction->power(new Number\Number(2));
 
         $this->assertInstanceOf(Power::class, $number);
         $this->assertSame(36, $number->value());
@@ -219,8 +218,8 @@ class SubtractionTest extends TestCase
     public function testSquareRoot()
     {
         $subtraction = new Subtraction(
-            new Number(8),
-            new Number(4)
+            new Number\Number(8),
+            new Number\Number(4)
         );
         $number = $subtraction->squareRoot();
 
@@ -231,8 +230,8 @@ class SubtractionTest extends TestCase
     public function testExponential()
     {
         $number = (new Subtraction(
-            new Number(8),
-            new Number(4)
+            new Number\Number(8),
+            new Number\Number(4)
         ))->exponential();
 
         $this->assertInstanceOf(Exponential::class, $number);
@@ -242,8 +241,8 @@ class SubtractionTest extends TestCase
     public function testBinaryLogarithm()
     {
         $number = (new Subtraction(
-            new Number(8),
-            new Number(4)
+            new Number\Number(8),
+            new Number\Number(4)
         ))->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
@@ -253,8 +252,8 @@ class SubtractionTest extends TestCase
     public function testNaturalLogarithm()
     {
         $number = (new Subtraction(
-            new Number(8),
-            new Number(4)
+            new Number\Number(8),
+            new Number\Number(4)
         ))->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
@@ -264,8 +263,8 @@ class SubtractionTest extends TestCase
     public function testCommonLogarithm()
     {
         $number = (new Subtraction(
-            new Number(8),
-            new Number(4)
+            new Number\Number(8),
+            new Number\Number(4)
         ))->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
@@ -275,8 +274,8 @@ class SubtractionTest extends TestCase
     public function testSignum()
     {
         $number = (new Subtraction(
-            new Number(4),
-            new Number(3)
+            new Number\Number(4),
+            new Number\Number(3)
         ))->signum();
 
         $this->assertInstanceOf(Signum::class, $number);
@@ -287,11 +286,11 @@ class SubtractionTest extends TestCase
     {
         $subtraction = new Subtraction(
             new Addition(
-                new Number(12),
-                new Number(12)
+                new Number\Number(12),
+                new Number\Number(12)
             ),
-            new Number(42),
-            new Number(66)
+            new Number\Number(42),
+            new Number\Number(66)
         );
 
         $this->assertSame('(12 + 12) - 42 - 66', (string) $subtraction);

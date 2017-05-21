@@ -7,7 +7,7 @@ use function Innmind\Math\divide;
 use Innmind\Math\{
     Probabilities\Variance,
     Regression\Dataset,
-    Algebra\NumberInterface
+    Algebra\Number
 };
 use PHPUnit\Framework\TestCase;
 
@@ -23,7 +23,7 @@ class VarianceTest extends TestCase
             ])
         );
 
-        $this->assertInstanceOf(NumberInterface::class, $variance());
+        $this->assertInstanceOf(Number::class, $variance());
         $this->assertSame(
             divide(101, 36)->value(),
             $variance()->value()

@@ -11,7 +11,6 @@ use Innmind\Math\{
     Exception\MatrixMustBeSquare,
     Exception\MatricesMustBeOfTheSameDimension,
     Matrix\Dimension,
-    Algebra\NumberInterface,
     Algebra\Number,
     Algebra\Integer
 };
@@ -82,7 +81,7 @@ final class Matrix implements \Iterator
     /**
      * Initialize a matrix to the wished dimension filled with the specified value
      */
-    public static function initialize(Dimension $dimension, NumberInterface $value): self
+    public static function initialize(Dimension $dimension, Number $value): self
     {
         $rows = [];
 
@@ -202,7 +201,7 @@ final class Matrix implements \Iterator
         return new self(...$rows);
     }
 
-    public function multiplyBy(NumberInterface $number): self
+    public function multiplyBy(Number $number): self
     {
         $rows = $this->rows->reduce(
             new Sequence,

@@ -17,20 +17,18 @@ final class ComplexNumber
     private $real;
     private $imaginary;
 
-    public function __construct(
-        NumberInterface $real,
-        NumberInterface $imaginary
-    ) {
+    public function __construct(Number $real, Number $imaginary)
+    {
         $this->real = $real;
         $this->imaginary = $imaginary;
     }
 
-    public function real(): NumberInterface
+    public function real(): Number
     {
         return $this->real;
     }
 
-    public function imaginary(): NumberInterface
+    public function imaginary(): Number
     {
         return $this->imaginary;
     }
@@ -95,7 +93,7 @@ final class ComplexNumber
         );
     }
 
-    public function absolute(): NumberInterface
+    public function absolute(): Number
     {
         return squareRoot(
             add(
@@ -161,9 +159,9 @@ final class ComplexNumber
 
     public function __toString(): string
     {
-        $real = $this->real instanceof OperationInterface ?
+        $real = $this->real instanceof Operation ?
             '('.$this->real.')' : $this->real;
-        $imaginary = $this->imaginary instanceof OperationInterface ?
+        $imaginary = $this->imaginary instanceof Operation ?
             '('.$this->imaginary.')' : $this->imaginary;
 
         return sprintf('(%s + %si)', $real, $imaginary);

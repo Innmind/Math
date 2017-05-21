@@ -9,9 +9,9 @@ use function Innmind\Math\{
     subtract
 };
 use Innmind\Math\{
-    Algebra\NumberInterface,
+    Algebra\Number,
     Algebra\Integer,
-    Algebra\OperationInterface
+    Algebra\Operation
 };
 
 final class Degree
@@ -19,7 +19,7 @@ final class Degree
     private $degree;
     private $coeff;
 
-    public function __construct(Integer $degree, NumberInterface $coeff)
+    public function __construct(Integer $degree, Number $coeff)
     {
         $this->degree = $degree;
         $this->coeff = $coeff;
@@ -30,7 +30,7 @@ final class Degree
         return $this->degree;
     }
 
-    public function coeff(): NumberInterface
+    public function coeff(): Number
     {
         return $this->coeff;
     }
@@ -57,14 +57,14 @@ final class Degree
     /**
      * Compute the value for the given x
      */
-    public function __invoke(NumberInterface $x): NumberInterface
+    public function __invoke(Number $x): Number
     {
         return $this->coeff->multiplyBy($x->power($this->degree));
     }
 
     public function __toString(): string
     {
-        $coeff = $this->coeff instanceof OperationInterface ?
+        $coeff = $this->coeff instanceof Operation ?
             '('.$this->coeff.')' : $this->coeff;
 
         if ($this->degree->equals(new Integer(1))) {

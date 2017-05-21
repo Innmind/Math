@@ -7,7 +7,6 @@ use function Innmind\Math\add;
 use Innmind\Math\{
     Exception\VectorsMustMeOfTheSameDimension,
     Matrix,
-    Algebra\NumberInterface,
     Algebra\Number,
     Algebra\Integer
 };
@@ -17,15 +16,13 @@ final class Vector implements \Iterator
 {
     private $numbers;
 
-    public function __construct(
-        NumberInterface $number,
-        NumberInterface ...$numbers
-    ) {
+    public function __construct(Number $number, Number ...$numbers)
+    {
         $this->numbers = new Sequence($number, ...$numbers);
         $this->dimension = new Integer($this->numbers->size());
     }
 
-    public static function initialize(Integer $dimension, NumberInterface $value): self
+    public static function initialize(Integer $dimension, Number $value): self
     {
         return new self(...array_fill(0, $dimension->value(), $value));
     }
@@ -37,7 +34,7 @@ final class Vector implements \Iterator
     {
         return $this
             ->numbers
-            ->map(static function(NumberInterface $number) {
+            ->map(static function(Number $number) {
                 return $number->value();
             })
             ->toPrimitive();
@@ -51,7 +48,7 @@ final class Vector implements \Iterator
     /**
      * @see https://en.wikipedia.org/wiki/Row_and_column_vectors#Operations
      */
-    public function dot(self $vector): NumberInterface
+    public function dot(self $vector): Number
     {
         if (!$this->dimension()->equals($vector->dimension())) {
             throw new VectorsMustMeOfTheSameDimension;
@@ -60,8 +57,8 @@ final class Vector implements \Iterator
         $vector->rewind();
 
         return $this->numbers->reduce(
-            new Number(0),
-            static function(NumberInterface $carry, NumberInterface $number) use ($vector): NumberInterface {
+            new Integer(0),
+            static function(Number $carry, Number $number) use ($vector): Number {
                 $value = $carry->add(
                     $number->multiplyBy($vector->current())
                 );
@@ -79,7 +76,7 @@ final class Vector implements \Iterator
         }
 
         $vector->rewind();
-        $numbers = $this->numbers->map(static function(NumberInterface $number) use ($vector): NumberInterface {
+        $numbers = $this->numbers->map(static function(Number $number) use ($vector): Number {
             $number = $number->multiplyBy($vector->current());
             $vector->next();
 
@@ -96,7 +93,7 @@ final class Vector implements \Iterator
         }
 
         $vector->rewind();
-        $numbers = $this->numbers->map(static function(NumberInterface $number) use ($vector): NumberInterface {
+        $numbers = $this->numbers->map(static function(Number $number) use ($vector): Number {
             $number = $number->divideBy($vector->current());
             $vector->next();
 
@@ -115,7 +112,7 @@ final class Vector implements \Iterator
         $vector->rewind();
         $numbers = $this->numbers->reduce(
             [],
-            static function(array $numbers, NumberInterface $number) use ($vector): array {
+            static function(array $numbers, Number $number) use ($vector): array {
                 $numbers[] = $number->subtract($vector->current());
                 $vector->next();
 
@@ -135,7 +132,7 @@ final class Vector implements \Iterator
         $vector->rewind();
         $numbers = $this->numbers->reduce(
             [],
-            static function(array $numbers, NumberInterface $number) use ($vector): array {
+            static function(array $numbers, Number $number) use ($vector): array {
                 $numbers[] = $number->add($vector->current());
                 $vector->next();
 
@@ -146,16 +143,16 @@ final class Vector implements \Iterator
         return new self(...$numbers);
     }
 
-    public function power(NumberInterface $power): self
+    public function power(Number $power): self
     {
-        $numbers = $this->numbers->map(static function(NumberInterface $number) use ($power): NumberInterface {
+        $numbers = $this->numbers->map(static function(Number $number) use ($power): Number {
             return $number->power($power);
         });
 
         return new self(...$numbers);
     }
 
-    public function sum(): NumberInterface
+    public function sum(): Number
     {
         return add(...$this->numbers);
     }
@@ -185,7 +182,7 @@ final class Vector implements \Iterator
         return $this->numbers->reduce($carry, $reducer);
     }
 
-    public function get(int $position): NumberInterface
+    public function get(int $position): Number
     {
         return $this->numbers->get($position);
     }
@@ -200,7 +197,7 @@ final class Vector implements \Iterator
 
         return $this->reduce(
             true,
-            static function(bool $carry, NumberInterface $number) use ($vector): bool {
+            static function(bool $carry, Number $number) use ($vector): bool {
                 $carry = $carry && $number->equals($vector->current());
                 $vector->next();
 
@@ -212,11 +209,11 @@ final class Vector implements \Iterator
     /**
      * First non zero number found
      */
-    public function lead(): NumberInterface
+    public function lead(): Number
     {
         return $this->reduce(
             new Integer(0),
-            static function(NumberInterface $lead, NumberInterface $number): NumberInterface {
+            static function(Number $lead, Number $number): Number {
                 if (!$lead->equals(new Integer(0))) {
                     return $lead;
                 }
@@ -226,7 +223,7 @@ final class Vector implements \Iterator
         );
     }
 
-    public function current(): NumberInterface
+    public function current(): Number
     {
         return $this->numbers->current();
     }

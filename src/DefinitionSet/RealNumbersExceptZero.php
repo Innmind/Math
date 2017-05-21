@@ -4,23 +4,23 @@ declare(strict_types = 1);
 namespace Innmind\Math\DefinitionSet;
 
 use Innmind\Math\Algebra\{
-    NumberInterface,
+    Number,
     Integer
 };
 
-final class RealNumbersExceptZero implements SetInterface
+final class RealNumbersExceptZero implements Set
 {
-    public function contains(NumberInterface $number): bool
+    public function contains(Number $number): bool
     {
         return !$number->equals(new Integer(0));
     }
 
-    public function union(SetInterface $set): SetInterface
+    public function union(Set $set): Set
     {
         return new Union($this, $set);
     }
 
-    public function intersect(SetInterface $set): SetInterface
+    public function intersect(Set $set): Set
     {
         return new Intersection($this, $set);
     }

@@ -5,11 +5,11 @@ namespace Tests\Innmind\Math\DefinitionSet;
 
 use Innmind\Math\{
     DefinitionSet\Union,
-    DefinitionSet\SetInterface,
-    DefinitionSet\Set,
+    DefinitionSet\Set as SetInterface,
+    DefinitionSet\Set\Set,
     DefinitionSet\Intersection,
     Algebra\Integer,
-    Algebra\Number
+    Algebra\Number\Number
 };
 use PHPUnit\Framework\TestCase;
 

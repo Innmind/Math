@@ -7,10 +7,7 @@ use function Innmind\Math\{
     add,
     multiply
 };
-use Innmind\Math\Algebra\{
-    NumberInterface,
-    Number
-};
+use Innmind\Math\Algebra\Number;
 
 final class Tangent
 {
@@ -21,8 +18,8 @@ final class Tangent
 
     public function __construct(
         Polynom $polynom,
-        NumberInterface $abscissa,
-        NumberInterface $limit = null
+        Number $abscissa,
+        Number $limit = null
     ) {
         $this->polynom = $polynom;
         $this->derivative = $polynom->derived($abscissa, $limit);
@@ -35,12 +32,12 @@ final class Tangent
         return $this->polynom;
     }
 
-    public function abscissa(): NumberInterface
+    public function abscissa(): Number
     {
         return $this->abscissa;
     }
 
-    public function __invoke(NumberInterface $x): NumberInterface
+    public function __invoke(Number $x): Number
     {
         return add(
             multiply(
@@ -51,8 +48,8 @@ final class Tangent
         );
     }
 
-    public static function limit(): NumberInterface
+    public static function limit(): Number
     {
-        return new Number(0.000000000001);
+        return new Number\Number(0.000000000001);
     }
 }

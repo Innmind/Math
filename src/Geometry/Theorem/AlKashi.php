@@ -9,7 +9,7 @@ use function Innmind\Math\{
     add
 };
 use Innmind\Math\{
-    Algebra\NumberInterface,
+    Algebra\Number,
     Algebra\Integer,
     Geometry\Angle\Degree,
     Geometry\Segment,
@@ -61,7 +61,7 @@ final class AlKashi
         $b = $b->length();
         $c = $c->length();
         $longest = max($a, $b, $c);
-        $opposites = (new Set(NumberInterface::class))
+        $opposites = (new Set(Number::class))
             ->add($a)
             ->add($b)
             ->add($c)

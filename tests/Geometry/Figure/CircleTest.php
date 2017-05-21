@@ -5,9 +5,9 @@ namespace Tests\Innmind\Math\Geometry\Figure;
 
 use Innmind\Math\{
     Geometry\Figure\Circle,
-    Geometry\FigureInterface,
+    Geometry\Figure,
     Geometry\Segment,
-    Algebra\NumberInterface,
+    Algebra\Number,
     Algebra\Integer
 };
 use PHPUnit\Framework\TestCase;
@@ -17,7 +17,7 @@ class CircleTest extends TestCase
     public function testInterface()
     {
         $this->assertInstanceOf(
-            FigureInterface::class,
+            Figure::class,
             new Circle(
                 new Segment(new Integer(2))
             )
@@ -30,7 +30,7 @@ class CircleTest extends TestCase
             new Segment(new Integer(4))
         );
 
-        $this->assertInstanceOf(NumberInterface::class, $circle->perimeter());
+        $this->assertInstanceOf(Number::class, $circle->perimeter());
         $this->assertSame(25.132741228718345, $circle->perimeter()->value());
     }
 
@@ -40,7 +40,7 @@ class CircleTest extends TestCase
             new Segment(new Integer(4))
         );
 
-        $this->assertInstanceOf(NumberInterface::class, $circle->area());
+        $this->assertInstanceOf(Number::class, $circle->area());
         $this->assertSame(50.26548245743669, $circle->area()->value());
     }
 

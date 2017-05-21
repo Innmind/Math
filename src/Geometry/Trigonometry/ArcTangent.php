@@ -6,7 +6,6 @@ namespace Innmind\Math\Geometry\Trigonometry;
 use Innmind\Math\{
     Geometry\Angle\Degree,
     Geometry\Angle\Radian,
-    Algebra\NumberInterface,
     Algebra\Number,
     Algebra\Round
 };
@@ -14,12 +13,12 @@ use Innmind\Math\{
 /**
  * Inverse of tangent, such as a===Tangent(ArcTangent(a))
  */
-final class ArcTangent implements NumberInterface
+final class ArcTangent implements Number
 {
     private $number;
     private $arcTangent;
 
-    public function __construct(NumberInterface $number)
+    public function __construct(Number $number)
     {
         $this->number = $number;
     }
@@ -37,98 +36,98 @@ final class ArcTangent implements NumberInterface
         return $this->arcTangent()->number()->value();
     }
 
-    public function equals(NumberInterface $number): bool
+    public function equals(Number $number): bool
     {
         return $this->arcTangent()->number()->equals($number);
     }
 
-    public function higherThan(NumberInterface $number): bool
+    public function higherThan(Number $number): bool
     {
         return $this->arcTangent()->number()->higherThan($number);
     }
 
     public function add(
-        NumberInterface $number,
-        NumberInterface ...$numbers
-    ): NumberInterface {
+        Number $number,
+        Number ...$numbers
+    ): Number {
         return $this->arcTangent()->number()->add($number, ...$numbers);
     }
 
     public function subtract(
-        NumberInterface $number,
-        NumberInterface ...$numbers
-    ): NumberInterface {
+        Number $number,
+        Number ...$numbers
+    ): Number {
         return $this->arcTangent()->number()->subtract($number, ...$numbers);
     }
 
-    public function divideBy(NumberInterface $number): NumberInterface
+    public function divideBy(Number $number): Number
     {
         return $this->arcTangent()->number()->divideBy($number);
     }
 
     public function multiplyBy(
-        NumberInterface $number,
-        NumberInterface ...$numbers
-    ): NumberInterface {
+        Number $number,
+        Number ...$numbers
+    ): Number {
         return $this->arcTangent()->number()->multiplyBy($number, ...$numbers);
     }
 
-    public function round(int $precision = 0, string $mode = Round::UP): NumberInterface
+    public function round(int $precision = 0, string $mode = Round::UP): Number
     {
         return $this->arcTangent()->number()->round($precision, $mode);
     }
 
-    public function floor(): NumberInterface
+    public function floor(): Number
     {
         return $this->arcTangent()->number()->floor();
     }
 
-    public function ceil(): NumberInterface
+    public function ceil(): Number
     {
         return $this->arcTangent()->number()->ceil();
     }
 
-    public function modulo(NumberInterface $modulus): NumberInterface
+    public function modulo(Number $modulus): Number
     {
         return $this->arcTangent()->number()->modulo($modulus);
     }
 
-    public function absolute(): NumberInterface
+    public function absolute(): Number
     {
         return $this->arcTangent()->number()->absolute();
     }
 
-    public function power(NumberInterface $power): NumberInterface
+    public function power(Number $power): Number
     {
         return $this->arcTangent()->number()->power($power);
     }
 
-    public function squareRoot(): NumberInterface
+    public function squareRoot(): Number
     {
         return $this->arcTangent()->number()->squareRoot();
     }
 
-    public function exponential(): NumberInterface
+    public function exponential(): Number
     {
         return $this->arcTangent()->number()->exponential();
     }
 
-    public function binaryLogarithm(): NumberInterface
+    public function binaryLogarithm(): Number
     {
         return $this->arcTangent()->number()->binaryLogarithm();
     }
 
-    public function naturalLogarithm(): NumberInterface
+    public function naturalLogarithm(): Number
     {
         return $this->arcTangent()->number()->naturalLogarithm();
     }
 
-    public function commonLogarithm(): NumberInterface
+    public function commonLogarithm(): Number
     {
         return $this->arcTangent()->number()->commonLogarithm();
     }
 
-    public function signum(): NumberInterface
+    public function signum(): Number
     {
         return $this->arcTangent()->number()->signum();
     }
@@ -139,7 +138,7 @@ final class ArcTangent implements NumberInterface
             return $this->arcTangent;
         }
 
-        $radians = new Number(
+        $radians = new Number\Number(
             atan(
                 $this->number->value()
             )

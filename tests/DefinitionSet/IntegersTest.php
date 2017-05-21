@@ -5,11 +5,11 @@ namespace Tests\Innmind\Math\DefinitionSet;
 
 use Innmind\Math\{
     DefinitionSet\Integers,
-    DefinitionSet\SetInterface,
+    DefinitionSet\Set,
     DefinitionSet\Union,
     DefinitionSet\Intersection,
     Algebra\Integer,
-    Algebra\Number
+    Algebra\Number\Number
 };
 use PHPUnit\Framework\TestCase;
 
@@ -18,7 +18,7 @@ class IntegersTest extends TestCase
     public function testInterface()
     {
         $this->assertInstanceOf(
-            SetInterface::class,
+            Set::class,
             new Integers
         );
     }

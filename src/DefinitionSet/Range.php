@@ -3,9 +3,9 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\DefinitionSet;
 
-use Innmind\Math\Algebra\NumberInterface;
+use Innmind\Math\Algebra\Number;
 
-final class Range implements SetInterface
+final class Range implements Set
 {
     public const INCLUSIVE = true;
     public const EXCLUSIVE = false;
@@ -17,8 +17,8 @@ final class Range implements SetInterface
 
     public function __construct(
         bool $lowerInclusivity,
-        NumberInterface $lower,
-        NumberInterface $upper,
+        Number $lower,
+        Number $upper,
         bool $upperInclusivity
     ) {
         $this->lowerInclusivity = $lowerInclusivity;
@@ -27,21 +27,17 @@ final class Range implements SetInterface
         $this->upperInclusivity = $upperInclusivity;
     }
 
-    public static function inclusive(
-        NumberInterface $lower,
-        NumberInterface $upper
-    ): self {
+    public static function inclusive(Number $lower, Number $upper): self
+    {
         return new self(self::INCLUSIVE, $lower, $upper, self::INCLUSIVE);
     }
 
-    public static function exclusive(
-        NumberInterface $lower,
-        NumberInterface $upper
-    ): self {
+    public static function exclusive(Number $lower, Number $upper): self
+    {
         return new self(self::EXCLUSIVE, $lower, $upper, self::EXCLUSIVE);
     }
 
-    public function contains(NumberInterface $number): bool
+    public function contains(Number $number): bool
     {
         if ($this->lower->higherThan($number)) {
             return false;
@@ -68,12 +64,12 @@ final class Range implements SetInterface
         return true;
     }
 
-    public function union(SetInterface $set): SetInterface
+    public function union(Set $set): Set
     {
         return new Union($this, $set);
     }
 
-    public function intersect(SetInterface $set): SetInterface
+    public function intersect(Set $set): Set
     {
         return new Intersection($this, $set);
     }

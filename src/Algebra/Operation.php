@@ -3,8 +3,8 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Algebra;
 
-interface OperationInterface
+interface Operation
 {
-    public function result(): NumberInterface;
+    public function result(): Number;
     public function __toString(): string;
 }

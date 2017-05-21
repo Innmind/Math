@@ -5,9 +5,9 @@ namespace Tests\Innmind\Math\Geometry\Figure;
 
 use Innmind\Math\{
     Geometry\Figure\Rectangle,
-    Geometry\FigureInterface,
+    Geometry\Figure,
     Geometry\Segment,
-    Algebra\NumberInterface,
+    Algebra\Number,
     Algebra\Integer
 };
 use PHPUnit\Framework\TestCase;
@@ -17,7 +17,7 @@ class RectangleTest extends TestCase
     public function testInterface()
     {
         $this->assertInstanceOf(
-            FigureInterface::class,
+            Figure::class,
             new Rectangle(
                 new Segment(new Integer(2)),
                 new Segment(new Integer(4))
@@ -32,7 +32,7 @@ class RectangleTest extends TestCase
             new Segment(new Integer(4))
         );
 
-        $this->assertInstanceOf(NumberInterface::class, $rectangle->perimeter());
+        $this->assertInstanceOf(Number::class, $rectangle->perimeter());
         $this->assertSame(12, $rectangle->perimeter()->value());
     }
 
@@ -43,7 +43,7 @@ class RectangleTest extends TestCase
             new Segment(new Integer(4))
         );
 
-        $this->assertInstanceOf(NumberInterface::class, $rectangle->area());
+        $this->assertInstanceOf(Number::class, $rectangle->area());
         $this->assertSame(8, $rectangle->area()->value());
     }
 

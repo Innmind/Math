@@ -5,12 +5,12 @@ namespace Innmind\Math\Geometry\Figure;
 
 use function Innmind\Math\multiply;
 use Innmind\Math\{
-    Geometry\FigureInterface,
+    Geometry\Figure,
     Geometry\Segment,
-    Algebra\NumberInterface
+    Algebra\Number
 };
 
-final class Square implements FigureInterface
+final class Square implements Figure
 {
     private $side;
 
@@ -19,12 +19,12 @@ final class Square implements FigureInterface
         $this->side = $side;
     }
 
-    public function perimeter(): NumberInterface
+    public function perimeter(): Number
     {
         return multiply($this->side->length(), 4);
     }
 
-    public function area(): NumberInterface
+    public function area(): Number
     {
         return multiply($this->side->length(), $this->side->length());
     }

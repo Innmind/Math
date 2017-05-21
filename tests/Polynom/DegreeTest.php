@@ -6,7 +6,7 @@ namespace Tests\Innmind\Math\Polynom;
 use function Innmind\Math\divide;
 use Innmind\Math\{
     Polynom\Degree,
-    Algebra\Number,
+    Algebra\Number\Number,
     Algebra\Integer
 };
 use PHPUnit\Framework\TestCase;

@@ -5,7 +5,7 @@ namespace Innmind\Math\Matrix;
 
 use Innmind\Math\{
     Matrix,
-    Algebra\NumberInterface,
+    Algebra\Number,
     Algebra\Integer
 };
 
@@ -13,14 +13,12 @@ final class ColumnVector implements \Iterator
 {
     private $vector;
 
-    public function __construct(
-        NumberInterface $number,
-        NumberInterface ...$numbers
-    ) {
+    public function __construct(Number $number, Number ...$numbers)
+    {
         $this->vector = new Vector($number, ...$numbers);
     }
 
-    public static function initialize(Integer $dimension, NumberInterface $value): self
+    public static function initialize(Integer $dimension, Number $value): self
     {
         return new self(...array_fill(0, $dimension->value(), $value));
     }
@@ -41,7 +39,7 @@ final class ColumnVector implements \Iterator
     /**
      * @see https://en.wikipedia.org/wiki/Row_and_column_vectors#Operations
      */
-    public function dot(RowVector $row): NumberInterface
+    public function dot(RowVector $row): Number
     {
         return $this->vector->dot(new Vector(...$row));
     }
@@ -94,14 +92,14 @@ final class ColumnVector implements \Iterator
         );
     }
 
-    public function power(NumberInterface $power): self
+    public function power(Number $power): self
     {
         return new self(
             ...$this->vector->power($power)
         );
     }
 
-    public function sum(): NumberInterface
+    public function sum(): Number
     {
         return $this->vector->sum();
     }
@@ -131,7 +129,7 @@ final class ColumnVector implements \Iterator
         return $this->vector->reduce($carry, $reducer);
     }
 
-    public function get(int $position): NumberInterface
+    public function get(int $position): Number
     {
         return $this->vector->get($position);
     }
@@ -144,12 +142,12 @@ final class ColumnVector implements \Iterator
     /**
      * First non zero number found
      */
-    public function lead(): NumberInterface
+    public function lead(): Number
     {
         return $this->vector->lead();
     }
 
-    public function current(): NumberInterface
+    public function current(): Number
     {
         return $this->vector->current();
     }

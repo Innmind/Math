@@ -3,6 +3,6 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Exception;
 
-class OutOfRangeException extends \OutOfRangeException implements ExceptionInterface
+class OutOfRangeException extends \OutOfRangeException implements Exception
 {
 }

@@ -7,7 +7,7 @@ use function Innmind\Math\divide;
 use Innmind\Math\{
     Probabilities\Expectation,
     Regression\Dataset,
-    Algebra\NumberInterface
+    Algebra\Number
 };
 use PHPUnit\Framework\TestCase;
 
@@ -23,7 +23,7 @@ class ExpectationTest extends TestCase
             ])
         );
 
-        $this->assertInstanceOf(NumberInterface::class, $expectation());
+        $this->assertInstanceOf(Number::class, $expectation());
         $this->assertSame(
             divide(1, 6)->value(),
             $expectation()->value()
