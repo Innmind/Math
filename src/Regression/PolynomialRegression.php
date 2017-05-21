@@ -72,40 +72,10 @@ final class PolynomialRegression
             );
 
         return new Matrix(...$rows);
-        // $values = [];
-
-        // for ($i = 0; $i < $degree->value(); $i++) {
-        //     $row = [];
-
-        //     for ($j = 0; $j < $degree->value(); $j++) {
-        //         $row[] = $dataset
-        //             ->abscissas()
-        //             ->power(new Integer($i + $j))
-        //             ->sum();
-        //     }
-
-        //     $values[] = $row;
-        // }
-
-        // return Matrix::fromArray($values);
     }
 
     private function buildVector(Dataset $dataset, Integer $degree): Matrix
     {
         return Matrix::fromColumns($dataset->ordinates());
-        // $values = [];
-
-        // for ($i = 0; $i < $degree->value(); $i++) {
-        //     $values[] = $dataset
-        //         ->ordinates()
-        //         ->multiply(
-        //             $dataset
-        //                 ->abscissas()
-        //                 ->power(new Integer($i))
-        //         )
-        //         ->sum();
-        // }
-
-        // return Matrix::fromColumns(new ColumnVector(...$values));
     }
 }
