@@ -138,7 +138,7 @@ final class Multiplication implements OperationInterface, NumberInterface, \Iter
             ->drop(1)
             ->reduce(
                 $this->values->first()->value(),
-                function($carry, NumberInterface $number) {
+                static function($carry, NumberInterface $number) {
                     return $carry * $number->value();
                 }
             );
@@ -150,7 +150,7 @@ final class Multiplication implements OperationInterface, NumberInterface, \Iter
     {
         return (string) $this
             ->values
-            ->map(function(NumberInterface $number) {
+            ->map(static function(NumberInterface $number) {
                 if ($number instanceof OperationInterface) {
                     return '('.$number.')';
                 }

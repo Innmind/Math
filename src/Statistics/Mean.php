@@ -23,7 +23,7 @@ final class Mean implements NumberInterface
             ->drop(1)
             ->reduce(
                 $sequence->first(),
-                function(NumberInterface $carry, NumberInterface $number): NumberInterface {
+                static function(NumberInterface $carry, NumberInterface $number): NumberInterface {
                     return $carry->add($number);
                 }
             );

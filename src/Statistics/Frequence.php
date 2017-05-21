@@ -25,7 +25,7 @@ final class Frequence
     {
         $frequence = $this
             ->values
-            ->filter(function(NumberInterface $value) use ($number): bool {
+            ->filter(static function(NumberInterface $value) use ($number): bool {
                 return $value->equals($number);
             })
             ->size();

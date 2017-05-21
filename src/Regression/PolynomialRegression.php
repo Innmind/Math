@@ -62,8 +62,8 @@ final class PolynomialRegression
             ->abscissas()
             ->reduce(
                 new Sequence,
-                function(Sequence $rows, NumberInterface $x) use ($powers): Sequence {
-                    $xToThePowers = $powers->map(function(NumberInterface $power) use ($x): NumberInterface {
+                static function(Sequence $rows, NumberInterface $x) use ($powers): Sequence {
+                    $xToThePowers = $powers->map(static function(NumberInterface $power) use ($x): NumberInterface {
                         return $x->power($power);
                     });
 

@@ -102,7 +102,7 @@ final class Polynom
             $this->intercept,
             ...$this->degrees->values()->reduce(
                 [],
-                function(array $carry, Degree $degree) use ($x): array {
+                static function(array $carry, Degree $degree) use ($x): array {
                     $carry[] = $degree($x);
 
                     return $carry;
@@ -152,7 +152,7 @@ final class Polynom
         $degrees = $this
             ->degrees
             ->values()
-            ->map(function(Degree $degree): Degree {
+            ->map(static function(Degree $degree): Degree {
                 return $degree->primitive();
             });
 
@@ -178,7 +178,7 @@ final class Polynom
             $intercept ?? new Integer(0),
             ...$degrees
                 ->values()
-                ->map(function(Degree $degree): Degree {
+                ->map(static function(Degree $degree): Degree {
                     return $degree->derivative();
                 })
         );
@@ -189,7 +189,7 @@ final class Polynom
         $polynom = $this
             ->degrees
             ->values()
-            ->sort(function(Degree $a, Degree $b): bool {
+            ->sort(static function(Degree $a, Degree $b): bool {
                 return $b->degree()->higherThan($a->degree());
             })
             ->join(' + ');

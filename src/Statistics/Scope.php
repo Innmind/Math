@@ -19,7 +19,7 @@ final class Scope implements NumberInterface
         NumberInterface ...$values
     ) {
         $sequence = (new Sequence($first, $second, ...$values))
-            ->sort(function(NumberInterface $a, NumberInterface $b): bool {
+            ->sort(static function(NumberInterface $a, NumberInterface $b): bool {
                 return $a->higherThan($b);
             });
         $this->result = $sequence->last()->subtract($sequence->first());

@@ -138,7 +138,7 @@ final class Addition implements OperationInterface, NumberInterface, \Iterator
             ->drop(1)
             ->reduce(
                 $this->values->first()->value(),
-                function($carry, NumberInterface $number) {
+                static function($carry, NumberInterface $number) {
                     return $carry + $number->value();
                 }
             );
@@ -150,7 +150,7 @@ final class Addition implements OperationInterface, NumberInterface, \Iterator
     {
         return (string) $this
             ->values
-            ->map(function(NumberInterface $number): string {
+            ->map(static function(NumberInterface $number): string {
                 if ($number instanceof OperationInterface) {
                     return '('.$number.')';
                 }

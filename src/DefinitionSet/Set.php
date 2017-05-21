@@ -12,7 +12,7 @@ final class Set implements SetInterface
 
     public function __construct(NumberInterface ...$values)
     {
-        $this->values = (new Sequence(...$values))->map(function($v) {
+        $this->values = (new Sequence(...$values))->map(static function($v) {
             return $v->value();
         });
     }

@@ -18,7 +18,7 @@ final class Median implements NumberInterface
         NumberInterface ...$values
     ) {
         $sequence = (new Sequence($first, ...$values))
-            ->sort(function(NumberInterface $a, NumberInterface $b): bool {
+            ->sort(static function(NumberInterface $a, NumberInterface $b): bool {
                 return $a->higherThan($b);
             });
         switch ($sequence->size() % 2) {

@@ -335,7 +335,7 @@ function signum($number): Signum
 function max($first, ...$numbers): NumberInterface
 {
     return (new Sequence(...numerize($first, ...$numbers)))
-        ->sort(function(NumberInterface $a, NumberInterface $b) {
+        ->sort(static function(NumberInterface $a, NumberInterface $b) {
             return $b->higherThan($a);
         })
         ->first();
@@ -350,7 +350,7 @@ function max($first, ...$numbers): NumberInterface
 function min($first, ...$numbers): NumberInterface
 {
     return (new Sequence(...numerize($first, ...$numbers)))
-        ->sort(function(NumberInterface $a, NumberInterface $b) {
+        ->sort(static function(NumberInterface $a, NumberInterface $b) {
             return $a->higherThan($b);
         })
         ->first();

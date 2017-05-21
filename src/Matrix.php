@@ -31,7 +31,7 @@ final class Matrix implements \Iterator
     {
         $this->rows = (new Sequence($first, ...$rows))->reduce(
             new Stream(RowVector::class),
-            function(Stream $carry, RowVector $row): Stream {
+            static function(Stream $carry, RowVector $row): Stream {
                 return $carry->add($row);
             }
         );
@@ -39,7 +39,7 @@ final class Matrix implements \Iterator
         $this
             ->rows
             ->drop(1)
-            ->foreach(function(RowVector $row) use ($first): void {
+            ->foreach(static function(RowVector $row) use ($first): void {
                 if (!$row->dimension()->equals($first->dimension())) {
                     throw new VectorsMustMeOfTheSameDimensionException;
                 }
@@ -70,7 +70,7 @@ final class Matrix implements \Iterator
     ): self {
         $self = self::fromArray(
             (new Sequence($first, ...$columns))
-                ->map(function(ColumnVector $column): array {
+                ->map(static function(ColumnVector $column): array {
                     return iterator_to_array($column);
                 })
                 ->toPrimitive()
@@ -110,7 +110,7 @@ final class Matrix implements \Iterator
             ->rows
             ->reduce(
                 [],
-                function(array $carry, RowVector $row) {
+                static function(array $carry, RowVector $row) {
                     $carry[] = $row->toArray();
 
                     return $carry;
@@ -175,7 +175,7 @@ final class Matrix implements \Iterator
         }
 
         $matrix->rewind();
-        $rows = $this->rows->map(function(RowVector $row) use ($matrix) {
+        $rows = $this->rows->map(static function(RowVector $row) use ($matrix) {
             $row = $row->add($matrix->current());
             $matrix->next();
 
@@ -192,7 +192,7 @@ final class Matrix implements \Iterator
         }
 
         $matrix->rewind();
-        $rows = $this->rows->map(function(RowVector $row) use ($matrix) {
+        $rows = $this->rows->map(static function(RowVector $row) use ($matrix) {
             $row = $row->subtract($matrix->current());
             $matrix->next();
 
@@ -206,7 +206,7 @@ final class Matrix implements \Iterator
     {
         $rows = $this->rows->reduce(
             new Sequence,
-            function(Sequence $rows, RowVector $row) use ($number): Sequence {
+            static function(Sequence $rows, RowVector $row) use ($number): Sequence {
                 return $rows->add(
                     $row->multiply(
                         RowVector::initialize($row->dimension(), $number)
@@ -222,7 +222,7 @@ final class Matrix implements \Iterator
     {
         $rows = $this->columns->reduce(
             [],
-            function(array $rows, ColumnVector $column): array {
+            static function(array $rows, ColumnVector $column): array {
                 $rows[] = new RowVector(...$column);
 
                 return $rows;
@@ -236,12 +236,12 @@ final class Matrix implements \Iterator
     {
         $rows = $this->rows->reduce(
             new Sequence,
-            function(Sequence $rows, RowVector $row) use ($matrix): Sequence {
+            static function(Sequence $rows, RowVector $row) use ($matrix): Sequence {
                 $newRow = $matrix
                     ->columns()
                     ->reduce(
                         new Sequence,
-                        function(Sequence $carry, ColumnVector $column) use ($row): Sequence {
+                        static function(Sequence $carry, ColumnVector $column) use ($row): Sequence {
                             return $carry->add(
                                 $row->dot($column)
                             );
@@ -268,7 +268,7 @@ final class Matrix implements \Iterator
 
         $rows = $this->rows->reduce(
             new Sequence,
-            function(Sequence $rows, RowVector $row): Sequence {
+            static function(Sequence $rows, RowVector $row): Sequence {
                 $numbers = $row->toArray();
                 $newRow = array_fill(0, $row->dimension()->value(), 0);
                 $index = $rows->size();
@@ -289,7 +289,7 @@ final class Matrix implements \Iterator
 
         $rows = $this->rows->reduce(
             new Sequence,
-            function(Sequence $rows, RowVector $row): Sequence {
+            static function(Sequence $rows, RowVector $row): Sequence {
                 $newRow = array_fill(0, $row->dimension()->value(), 0);
                 $newRow[$rows->size()] = 1;
 
@@ -310,7 +310,7 @@ final class Matrix implements \Iterator
 
         return $this->rows->reduce(
             true,
-            function(bool $carry, RowVector $row) use ($matrix): bool {
+            static function(bool $carry, RowVector $row) use ($matrix): bool {
                 $carry = $carry && $row->equals($matrix->current());
                 $matrix->next();
 
@@ -336,7 +336,7 @@ final class Matrix implements \Iterator
         $zero = new Integer(0);
         $leadingZeros = $this->rows->reduce(
             new Sequence,
-            function(Sequence $carry, RowVector $row) use ($zero): Sequence {
+            static function(Sequence $carry, RowVector $row) use ($zero): Sequence {
                 $numbers = iterator_to_array($row);
                 $dimension = $row->dimension()->value();
                 $count = 0;
@@ -359,7 +359,7 @@ final class Matrix implements \Iterator
             ->drop(1)
             ->reduce(
                 true,
-                function(bool $carry, int $count) use (&$previous): bool {
+                static function(bool $carry, int $count) use (&$previous): bool {
                     $carry = $carry && $count > $previous;
                     $previous = $count;
 
@@ -430,7 +430,7 @@ final class Matrix implements \Iterator
         for ($i = 0; $i < $this->dimension->columns()->value(); ++$i) {
             $values = $this->rows->reduce(
                 [],
-                function(array $values, RowVector $row) use ($i) {
+                static function(array $values, RowVector $row) use ($i) {
                     $values[] = $row->get($i);
 
                     return $values;
@@ -449,7 +449,7 @@ final class Matrix implements \Iterator
             //reduce the matrix to an echelon form with leading ones
             $rows = $rows->reduce(
                 $rows->clear(),
-                function(StreamInterface $rows, RowVector $row) use ($index): StreamInterface {
+                static function(StreamInterface $rows, RowVector $row) use ($index): StreamInterface {
                     if ($rows->size() <= $index) {
                         return $rows->add($row);
                     }
@@ -474,7 +474,7 @@ final class Matrix implements \Iterator
                 }
             );
 
-            $rows = $rows->map(function(RowVector $row): RowVector {
+            $rows = $rows->map(static function(RowVector $row): RowVector {
                 return $row->multiply(
                     RowVector::initialize(
                         $row->dimension(),
@@ -502,7 +502,7 @@ final class Matrix implements \Iterator
             //by the number in j column of the row being manipulated
             $rows = $rows->reduce(
                 $rows->clear(),
-                function(StreamInterface $rows, RowVector $row) use ($index, $reference): StreamInterface {
+                static function(StreamInterface $rows, RowVector $row) use ($index, $reference): StreamInterface {
                     if ($rows->size() <= $reference) {
                         return $rows->add($row);
                     }
