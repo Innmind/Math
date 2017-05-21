@@ -16,7 +16,7 @@ use Innmind\Math\{
  */
 final class ArcTangent implements NumberInterface
 {
-    private $degree;
+    private $number;
     private $arcTangent;
 
     public function __construct(NumberInterface $number)
