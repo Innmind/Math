@@ -66,17 +66,17 @@ final class ColumnVector implements \Iterator
         return new Matrix(...$rows);
     }
 
-    public function multiply(self $column): self
+    public function multiplyBy(self $column): self
     {
         return new self(
-            ...$this->vector->multiply($column->vector)
+            ...$this->vector->multiplyBy($column->vector)
         );
     }
 
-    public function divide(self $column): self
+    public function divideBy(self $column): self
     {
         return new self(
-            ...$this->vector->divide($column->vector)
+            ...$this->vector->divideBy($column->vector)
         );
     }
 

@@ -72,7 +72,7 @@ final class Vector implements \Iterator
         );
     }
 
-    public function multiply(self $vector): self
+    public function multiplyBy(self $vector): self
     {
         if (!$this->dimension()->equals($vector->dimension())) {
             throw new VectorsMustMeOfTheSameDimensionException;
@@ -89,7 +89,7 @@ final class Vector implements \Iterator
         return new self(...$numbers);
     }
 
-    public function divide(self $vector): self
+    public function divideBy(self $vector): self
     {
         if (!$this->dimension()->equals($vector->dimension())) {
             throw new VectorsMustMeOfTheSameDimensionException;

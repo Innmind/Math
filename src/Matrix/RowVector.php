@@ -63,17 +63,17 @@ final class RowVector implements \Iterator
         return new Matrix(...$rows);
     }
 
-    public function multiply(self $row): self
+    public function multiplyBy(self $row): self
     {
         return new self(
-            ...$this->vector->multiply($row->vector)
+            ...$this->vector->multiplyBy($row->vector)
         );
     }
 
-    public function divide(self $row): self
+    public function divideBy(self $row): self
     {
         return new self(
-            ...$this->vector->divide($row->vector)
+            ...$this->vector->divideBy($row->vector)
         );
     }
 

@@ -69,10 +69,10 @@ class RowVectorTest extends TestCase
         );
     }
 
-    public function testMultiply()
+    public function testMultiplyBy()
     {
         $row = new RowVector(...numerize(25, 5, 1));
-        $row2 = $row->multiply(
+        $row2 = $row->multiplyBy(
             RowVector::initialize(new Integer(3), new Number(2.56))
         );
 
@@ -86,15 +86,15 @@ class RowVectorTest extends TestCase
      */
     public function testThrowWhenMultiplyingVectorsOfDifferentDimensions()
     {
-        RowVector::initialize(new Integer(1), new Number(1))->multiply(
+        RowVector::initialize(new Integer(1), new Number(1))->multiplyBy(
             RowVector::initialize(new Integer(2), new Number(1))
         );
     }
 
-    public function testDivide()
+    public function testDivideBy()
     {
         $row = new RowVector(...numerize(25, 5, 1));
-        $row2 = $row->divide(
+        $row2 = $row->divideBy(
             RowVector::initialize(new Integer(3), new Number(5))
         );
 
@@ -108,7 +108,7 @@ class RowVectorTest extends TestCase
      */
     public function testThrowWhenDevidingVectorsOfDifferentDimensions()
     {
-        RowVector::initialize(new Integer(1), new Number(1))->divide(
+        RowVector::initialize(new Integer(1), new Number(1))->divideBy(
             RowVector::initialize(new Integer(2), new Number(1))
         );
     }

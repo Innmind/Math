@@ -26,7 +26,7 @@ final class Variance
                 )
             )
             ->power(new Integer(2))
-            ->multiply($dataset->ordinates())
+            ->multiplyBy($dataset->ordinates())
             ->sum();
     }
 

@@ -16,7 +16,7 @@ final class Expectation
     {
         $this->expectation = $dataset
             ->abscissas()
-            ->multiply($dataset->ordinates())
+            ->multiplyBy($dataset->ordinates())
             ->sum();
     }
 

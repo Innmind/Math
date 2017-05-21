@@ -50,10 +50,10 @@ class VectorTest extends TestCase
         );
     }
 
-    public function testMultiply()
+    public function testMultiplyBy()
     {
         $vector = new Vector(...numerize(25, 5, 1));
-        $vector2 = $vector->multiply(
+        $vector2 = $vector->multiplyBy(
             Vector::initialize(new Integer(3), new Number(2.56))
         );
 
@@ -71,15 +71,15 @@ class VectorTest extends TestCase
      */
     public function testThrowWhenMultiplyingVectorsOfDifferentDimensions()
     {
-        Vector::initialize(new Integer(1), new Number(1))->multiply(
+        Vector::initialize(new Integer(1), new Number(1))->multiplyBy(
             Vector::initialize(new Integer(2), new Number(1))
         );
     }
 
-    public function testDivide()
+    public function testDivideBy()
     {
         $vector = new Vector(...numerize(25, 5, 1));
-        $vector2 = $vector->divide(
+        $vector2 = $vector->divideBy(
             Vector::initialize(new Integer(3), new Number(5))
         );
 
@@ -97,7 +97,7 @@ class VectorTest extends TestCase
      */
     public function testThrowWhenDevidingVectorsOfDifferentDimensions()
     {
-        Vector::initialize(new Integer(1), new Number(1))->divide(
+        Vector::initialize(new Integer(1), new Number(1))->divideBy(
             Vector::initialize(new Integer(2), new Number(1))
         );
     }

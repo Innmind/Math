@@ -68,10 +68,10 @@ class ColumnVectorTest extends TestCase
         );
     }
 
-    public function testMultiply()
+    public function testMultiplyBy()
     {
         $column = new ColumnVector(...numerize(25, 5, 1));
-        $column2 = $column->multiply(
+        $column2 = $column->multiplyBy(
             ColumnVector::initialize(new Integer(3), new Number(2.56))
         );
 
@@ -85,15 +85,15 @@ class ColumnVectorTest extends TestCase
      */
     public function testThrowWhenMultiplyingVectorsOfDifferentDimensions()
     {
-        ColumnVector::initialize(new Integer(1), new Number(1))->multiply(
+        ColumnVector::initialize(new Integer(1), new Number(1))->multiplyBy(
             ColumnVector::initialize(new Integer(2), new Number(1))
         );
     }
 
-    public function testDivide()
+    public function testDivideBy()
     {
         $column = new ColumnVector(...numerize(25, 5, 1));
-        $column2 = $column->divide(
+        $column2 = $column->divideBy(
             ColumnVector::initialize(new Integer(3), new Number(5))
         );
 
@@ -107,7 +107,7 @@ class ColumnVectorTest extends TestCase
      */
     public function testThrowWhenDividingVectorsOfDifferentDimensions()
     {
-        ColumnVector::initialize(new Integer(1), new Number(1))->divide(
+        ColumnVector::initialize(new Integer(1), new Number(1))->divideBy(
             ColumnVector::initialize(new Integer(2), new Number(1))
         );
     }

@@ -208,7 +208,7 @@ final class Matrix implements \Iterator
             new Sequence,
             static function(Sequence $rows, RowVector $row) use ($number): Sequence {
                 return $rows->add(
-                    $row->multiply(
+                    $row->multiplyBy(
                         RowVector::initialize($row->dimension(), $number)
                     )
                 );
@@ -463,7 +463,7 @@ final class Matrix implements \Iterator
 
                     return $rows->add(
                         $row->subtract(
-                            $reference->multiply(
+                            $reference->multiplyBy(
                                 RowVector::initialize(
                                     $row->dimension(),
                                     $multiplier
@@ -475,7 +475,7 @@ final class Matrix implements \Iterator
             );
 
             $rows = $rows->map(static function(RowVector $row): RowVector {
-                return $row->multiply(
+                return $row->multiplyBy(
                     RowVector::initialize(
                         $row->dimension(),
                         (new Integer(1))->divideBy($row->lead())
@@ -509,7 +509,7 @@ final class Matrix implements \Iterator
 
                     return $rows->add(
                         $row->subtract(
-                            $rows->get($reference)->multiply(
+                            $rows->get($reference)->multiplyBy(
                                 RowVector::initialize(
                                     $row->dimension(),
                                     $row->get($index)
