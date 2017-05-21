@@ -138,6 +138,14 @@ final class RowVector implements \Iterator
         return $this->vector->equals($row->vector);
     }
 
+    /**
+     * First non zero number found
+     */
+    public function lead(): NumberInterface
+    {
+        return $this->vector->lead();
+    }
+
     public function current(): NumberInterface
     {
         return $this->vector->current();

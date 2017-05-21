@@ -209,6 +209,23 @@ final class Vector implements \Iterator
         );
     }
 
+    /**
+     * First non zero number found
+     */
+    public function lead(): NumberInterface
+    {
+        return $this->reduce(
+            new Integer(0),
+            function(NumberInterface $lead, NumberInterface $number): NumberInterface {
+                if (!$lead->equals(new Integer(0))) {
+                    return $lead;
+                }
+
+                return $number;
+            }
+        );
+    }
+
     public function current(): NumberInterface
     {
         return $this->numbers->current();
