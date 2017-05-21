@@ -32,6 +32,7 @@ class PolynomialRegressionTest extends TestCase
         $this->assertFalse($polynom->hasDegree(1));
         $this->assertSame(1.0, $polynom->degree(2)->coeff()->value());
         $this->assertFalse($polynom->hasDegree(3));
+        $this->assertSame(81.0, $polynom(new Integer(9))->value());
     }
 
     public function testCubicRegression()
@@ -53,6 +54,7 @@ class PolynomialRegressionTest extends TestCase
         $this->assertSame(0.0, $polynom->degree(1)->coeff()->value());
         $this->assertSame(0.0, $polynom->degree(2)->coeff()->value());
         $this->assertSame(1.0, $polynom->degree(3)->coeff()->value());
+        $this->assertSame(729.0, $polynom(new Integer(9))->value());
     }
 
     public function testRegression()
