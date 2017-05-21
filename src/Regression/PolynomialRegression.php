@@ -16,6 +16,7 @@ use Innmind\Immutable\Sequence;
 final class PolynomialRegression
 {
     private $polynom;
+    private $deviation;
 
     public function __construct(Dataset $dataset, Integer $degree)
     {
@@ -42,6 +43,8 @@ final class PolynomialRegression
                 $coefficients->get($i)
             );
         }
+
+        $this->deviation = $this->buildRmsd($dataset);
     }
 
     public function polynom(): Polynom
@@ -52,6 +55,11 @@ final class PolynomialRegression
     public function __invoke(NumberInterface $x): NumberInterface
     {
         return ($this->polynom)($x);
+    }
+
+    public function rootMeanSquareDeviation(): NumberInterface
+    {
+        return $this->deviation;
     }
 
     private function buildMatrix(Dataset $dataset, Integer $degree): Matrix
@@ -77,5 +85,27 @@ final class PolynomialRegression
     private function buildVector(Dataset $dataset, Integer $degree): Matrix
     {
         return Matrix::fromColumns($dataset->ordinates());
+    }
+
+    private function buildRmsd(Dataset $dataset): NumberInterface
+    {
+        $dataset = Matrix::fromColumns(
+            $dataset
+                ->abscissas()
+                ->map(function(NumberInterface $x): NumberInterface {
+                    return $this($x);
+                }),
+            $dataset->ordinates()
+        );
+
+        return $dataset
+            ->column(0)
+            ->subtract($dataset->column(1))
+            ->power(new Integer(2))
+            ->sum()
+            ->divideBy(
+                $dataset->column(0)->dimension()
+            )
+            ->squareRoot();
     }
 }

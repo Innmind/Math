@@ -7,7 +7,8 @@ use Innmind\Math\{
     Regression\LinearRegression,
     Regression\Dataset,
     Algebra\NumberInterface,
-    Algebra\Integer
+    Algebra\Integer,
+    Probabilities\StandardDeviation
 };
 use PHPUnit\Framework\TestCase;
 
@@ -42,5 +43,19 @@ class LinearRegressionTest extends TestCase
         $this->assertSame(-0.15, $r->slope()->value());
         $this->assertSame(1.35, $r->intercept()->value());
         $this->assertSame(0.0, $r(new Integer(9))->value());
+    }
+
+    public function testRootMeanSquareDeviation()
+    {
+        $regression = new LinearRegression(Dataset::fromArray([0.5, 1, 4, -1]));
+
+        $this->assertInstanceOf(
+            NumberInterface::class,
+            $regression->rootMeanSquareDeviation()
+        );
+        $this->assertSame(
+            1.8079684731764545,
+            $regression->rootMeanSquareDeviation()->value()
+        );
     }
 }

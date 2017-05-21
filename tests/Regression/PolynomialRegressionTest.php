@@ -7,6 +7,7 @@ use Innmind\Math\{
     Regression\PolynomialRegression,
     Regression\Dataset,
     Algebra\Integer,
+    Algebra\NumberInterface,
     Polynom\Polynom
 };
 use PHPUnit\Framework\TestCase;
@@ -33,6 +34,14 @@ class PolynomialRegressionTest extends TestCase
         $this->assertSame(1.0, $polynom->degree(2)->coeff()->value());
         $this->assertFalse($polynom->hasDegree(3));
         $this->assertSame(81.0, $polynom(new Integer(9))->value());
+        $this->assertInstanceOf(
+            NumberInterface::class,
+            $regression->rootMeanSquareDeviation()
+        );
+        $this->assertSame(
+            0.0,
+            $regression->rootMeanSquareDeviation()->value()
+        );
     }
 
     public function testCubicRegression()
@@ -84,5 +93,13 @@ class PolynomialRegressionTest extends TestCase
         $this->assertSame(2.8924460955724, $polynom->degree(2)->coeff()->value());
         $this->assertSame(-0.47195512820531, $polynom->degree(3)->coeff()->value());
         $this->assertSame(0.021452505827514, $polynom->degree(4)->coeff()->value());
+        $this->assertInstanceOf(
+            NumberInterface::class,
+            $regression->rootMeanSquareDeviation()
+        );
+        $this->assertSame(
+            1.087684019744029,
+            $regression->rootMeanSquareDeviation()->value()
+        );
     }
 }

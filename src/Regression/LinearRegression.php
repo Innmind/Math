@@ -12,12 +12,14 @@ use function Innmind\Math\{
 use Innmind\Math\{
     Polynom\Polynom,
     Algebra\NumberInterface,
-    Algebra\Integer
+    Algebra\Integer,
+    Matrix
 };
 
 final class LinearRegression
 {
     private $polynom;
+    private $deviation;
 
     public function __construct(Dataset $data)
     {
@@ -26,6 +28,7 @@ final class LinearRegression
             new Integer(1),
             $slope
         );
+        $this->deviation = $this->buildRmsd($data);
     }
 
     /**
@@ -58,6 +61,11 @@ final class LinearRegression
     public function __invoke(NumberInterface $x): NumberInterface
     {
         return ($this->polynom)($x);
+    }
+
+    public function rootMeanSquareDeviation(): NumberInterface
+    {
+        return $this->deviation;
     }
 
     /**
@@ -104,5 +112,27 @@ final class LinearRegression
         );
 
         return [$slope, $intercept];
+    }
+
+    private function buildRmsd(Dataset $dataset): NumberInterface
+    {
+        $dataset = Matrix::fromColumns(
+            $dataset
+                ->abscissas()
+                ->map(function(NumberInterface $x): NumberInterface {
+                    return $this($x);
+                }),
+            $dataset->ordinates()
+        );
+
+        return $dataset
+            ->column(0)
+            ->subtract($dataset->column(1))
+            ->power(new Integer(2))
+            ->sum()
+            ->divideBy(
+                $dataset->column(0)->dimension()
+            )
+            ->squareRoot();
     }
 }
