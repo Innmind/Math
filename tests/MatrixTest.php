@@ -487,4 +487,26 @@ class MatrixTest extends TestCase
             $matrix->dropColumn(2)->toArray()
         );
     }
+
+    public function testAugmentWith()
+    {
+        $matrix = Matrix::fromArray($initial = [
+            [2, 3, 4],
+            [5, 6, 7],
+            [8, 9, 10],
+        ]);
+        $augmented = $matrix->augmentWith($matrix->identity());
+
+        $this->assertInstanceOf(Matrix::class, $augmented);
+        $this->assertNotSame($matrix, $augmented);
+        $this->assertSame($initial, $matrix->toArray());
+        $this->assertSame(
+            [
+                [2, 3, 4, 1, 0, 0],
+                [5, 6, 7, 0, 1, 0],
+                [8, 9, 10, 0, 0, 1],
+            ],
+            $augmented->toArray()
+        );
+    }
 }

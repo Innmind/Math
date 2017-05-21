@@ -368,6 +368,13 @@ final class Matrix implements \Iterator
             );
     }
 
+    public function augmentWith(self $matrix): self
+    {
+        return self::fromColumns(
+            ...$this->columns->append($matrix->columns())
+        );
+    }
+
     public function current(): RowVector
     {
         return $this->rows->current();
