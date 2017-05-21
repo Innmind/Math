@@ -179,25 +179,25 @@ function cosine($degree): NumberInterface
 /**
  * @param int|float|NumberInterface $number
  */
-function arcCosine($number): Degree
+function arcCosine($number): ArcCosine
 {
-    return (new ArcCosine(...numerize($number)))();
+    return new ArcCosine(...numerize($number));
 }
 
 /**
  * @param int|float|NumberInterface $number
  */
-function arcSine($number): Degree
+function arcSine($number): ArcSine
 {
-    return (new ArcSine(...numerize($number)))();
+    return new ArcSine(...numerize($number));
 }
 
 /**
  * @param int|float|NumberInterface $number
  */
-function arcTangent($number): Degree
+function arcTangent($number): ArcTangent
 {
-    return (new ArcTangent(...numerize($number)))();
+    return new ArcTangent(...numerize($number));
 }
 
 /**

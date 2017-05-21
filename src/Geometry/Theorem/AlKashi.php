@@ -82,7 +82,7 @@ final class AlKashi
                     ->multiplyBy($b)
             );
 
-        return arcCosine($cosAB);
+        return arcCosine($cosAB)->toDegree();
     }
 
     public function __toString(): string

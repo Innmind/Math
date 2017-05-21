@@ -57,6 +57,9 @@ use Innmind\Math\{
     Algebra\Signum,
     Geometry\Angle\Degree,
     Geometry\Angle\Radian,
+    Geometry\Trigonometry\ArcCosine,
+    Geometry\Trigonometry\ArcSine,
+    Geometry\Trigonometry\ArcTangent,
     Statistics\Frequence,
     Statistics\Mean,
     Statistics\Median,
@@ -185,24 +188,24 @@ class FunctionsTest extends TestCase
     {
         $acos = arcCosine(cosine(30));
 
-        $this->assertInstanceOf(Degree::class, $acos);
-        $this->assertSame(30.0, $acos->number()->value());
+        $this->assertInstanceOf(ArcCosine::class, $acos);
+        $this->assertSame(30.0, $acos->value());
     }
 
     public function testArcSine()
     {
         $asin = arcSine(sine(30));
 
-        $this->assertInstanceOf(Degree::class, $asin);
-        $this->assertSame(30.0, $asin->number()->value());
+        $this->assertInstanceOf(ArcSine::class, $asin);
+        $this->assertSame(30.0, $asin->value());
     }
 
     public function testArcTangent()
     {
         $atan = arcTangent(tangent(30));
 
-        $this->assertInstanceOf(Degree::class, $atan);
-        $this->assertSame(30.0, $atan->number()->value());
+        $this->assertInstanceOf(ArcTangent::class, $atan);
+        $this->assertSame(30.0, $atan->value());
     }
 
     /**
