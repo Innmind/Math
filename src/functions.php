@@ -173,7 +173,7 @@ function toRadian($radian): Radian
  */
 function cosine($degree): NumberInterface
 {
-    return (new Cosine(toDegree($degree)))();
+    return new Cosine(toDegree($degree));
 }
 
 /**
@@ -205,7 +205,7 @@ function arcTangent($number): Degree
  */
 function sine($degree): NumberInterface
 {
-    return (new Sine(toDegree($degree)))();
+    return new Sine(toDegree($degree));
 }
 
 /**
@@ -213,7 +213,7 @@ function sine($degree): NumberInterface
  */
 function tangent($degree): NumberInterface
 {
-    return (new Tangent(toDegree($degree)))();
+    return new Tangent(toDegree($degree));
 }
 
 /**

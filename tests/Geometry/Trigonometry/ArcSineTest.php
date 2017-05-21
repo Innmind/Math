@@ -16,7 +16,7 @@ class ArcSineTest extends TestCase
     public function testInterface()
     {
         $asin = new ArcSine(
-            (new Sine(new Degree(new Number(42))))()
+            new Sine(new Degree(new Number(42)))
         );
 
         $this->assertInstanceOf(Degree::class, $asin());

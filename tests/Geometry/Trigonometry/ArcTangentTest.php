@@ -16,7 +16,7 @@ class ArcTangentTest extends TestCase
     public function testInterface()
     {
         $atan = new ArcTangent(
-            (new Tangent(new Degree(new Number(42))))()
+            new Tangent(new Degree(new Number(42)))
         );
 
         $this->assertInstanceOf(Degree::class, $atan());

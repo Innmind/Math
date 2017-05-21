@@ -16,7 +16,7 @@ class ArcCosineTest extends TestCase
     public function testInterface()
     {
         $acos = new ArcCosine(
-            (new Cosine(new Degree(new Number(42))))()
+            new Cosine(new Degree(new Number(42)))
         );
 
         $this->assertInstanceOf(Degree::class, $acos());
