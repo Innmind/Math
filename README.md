@@ -139,9 +139,12 @@ echo (new Variance($dataset))()->value(); //101/36
 ## Quantile
 
 ```php
-use Innmind\Math\Quantile\Quantile;
+use Innmind\Math\{
+    Quantile\Quantile,
+    Regression\Dataset
+};
 
-$q = new Quantile(range(1,12));
+$q = new Quantile(Dataset::fromArray(range(1,12)));
 $q->min()->value(); // 1
 $q->max()->value(); // 12
 $q->mean(); // 6.5
