@@ -80,6 +80,7 @@ final class LinearRegression
     private function compute(Dataset $data): array
     {
         $dimension = $data->dimension()->rows();
+        $elements = $dimension->value();
         $x = $data->abscissas()->toArray();
         $y = $data->ordinates()->toArray();
 
@@ -88,7 +89,7 @@ final class LinearRegression
         $xxSum = new Integer(0);
         $xySum = new Integer(0);
 
-        for ($i = 0; $i < $dimension->value(); $i++) {
+        for ($i = 0; $i < $elements; $i++) {
             $xySum = add($xySum, multiply($x[$i], $y[$i]));
             $xxSum = add($xxSum, multiply($x[$i], $x[$i]));
         }

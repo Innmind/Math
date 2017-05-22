@@ -84,8 +84,9 @@ final class Matrix implements \Iterator
     public static function initialize(Dimension $dimension, Number $value): self
     {
         $rows = [];
+        $count = $dimension->rows()->value();
 
-        for ($i = 0; $i < $dimension->rows()->value(); ++$i) {
+        for ($i = 0; $i < $count; ++$i) {
             $rows[] = new RowVector(
                 ...array_fill(
                     0,
@@ -426,7 +427,9 @@ final class Matrix implements \Iterator
 
     private function buildColumns(): void
     {
-        for ($i = 0; $i < $this->dimension->columns()->value(); ++$i) {
+        $columns = $this->dimension->columns()->value();
+
+        for ($i = 0; $i < $columns; ++$i) {
             $values = $this->rows->reduce(
                 [],
                 static function(array $values, RowVector $row) use ($i) {

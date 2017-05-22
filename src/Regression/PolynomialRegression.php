@@ -32,8 +32,9 @@ final class PolynomialRegression
 
         $this->polynom = new Polynom($coefficients->get(0));
         $zero = new Integer(0);
+        $degrees = $degree->value();
 
-        for ($i = 1; $i <= $degree->value(); $i++) {
+        for ($i = 1; $i <= $degrees; $i++) {
             if ($coefficients->get($i)->equals($zero)) {
                 continue;
             }
