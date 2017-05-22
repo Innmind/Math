@@ -181,6 +181,11 @@ final class Polynom
         );
     }
 
+    public function integral(): Integral
+    {
+        return new Integral($this);
+    }
+
     public function __toString(): string
     {
         $polynom = $this

@@ -7,6 +7,7 @@ use Innmind\Math\{
     Polynom\Polynom,
     Polynom\Degree,
     Polynom\Tangent,
+    Polynom\Integral,
     Algebra\Number,
     Algebra\Integer
 };
@@ -175,6 +176,19 @@ class PolynomTest extends TestCase
         $this->assertSame(
             '(1 x 3)x^2 + (2 x 2)x + 4',
             (string) $derivative
+        );
+    }
+
+    public function testIntegral()
+    {
+        $integral = (new Polynom)
+            ->withDegree(new Integer(2), new Integer(3))
+            ->integral();
+
+        $this->assertInstanceOf(Integral::class, $integral);
+        $this->assertSame(
+            '∫(3x^2)dx = [(3 ÷ (2 + 1))x^3]',
+            (string) $integral
         );
     }
 }
