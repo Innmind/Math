@@ -14,7 +14,6 @@ use function Innmind\Math\{
 use Innmind\Math\{
     Geometry\Figure,
     Geometry\Segment,
-    Geometry\Theorem\AlKashi,
     Algebra\Number,
     Algebra\Integer
 };
