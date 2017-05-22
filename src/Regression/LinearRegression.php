@@ -3,24 +3,40 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Regression;
 
-use Innmind\Math\Polynom\Polynom;
+use function Innmind\Math\{
+    add,
+    multiply,
+    divide,
+    subtract
+};
+use Innmind\Math\{
+    Polynom\Polynom,
+    Algebra\Number,
+    Algebra\Integer,
+    Matrix
+};
 
 final class LinearRegression
 {
     private $polynom;
+    private $deviation;
 
     public function __construct(Dataset $data)
     {
         list($slope, $intercept) = $this->compute($data);
-        $this->polynom = (new Polynom($intercept))->withDegree(1, $slope);
+        $this->polynom = (new Polynom($intercept))->withDegree(
+            new Integer(1),
+            $slope
+        );
+        $this->deviation = $this->buildRmsd($data);
     }
 
     /**
      * Return the intercept value
      *
-     * @return float
+     * @return Number
      */
-    public function intercept(): float
+    public function intercept(): Number
     {
         return $this->polynom->intercept();
     }
@@ -28,9 +44,9 @@ final class LinearRegression
     /**
      * Return the slope value
      *
-     * @return float
+     * @return Number
      */
-    public function slope(): float
+    public function slope(): Number
     {
         return $this->polynom->degree(1)->coeff();
     }
@@ -38,13 +54,18 @@ final class LinearRegression
     /**
      * Compute the value at the given x value
      *
-     * @param float $x
+     * @param Number $x
      *
-     * @return float
+     * @return Number
      */
-    public function __invoke(float $x): float
+    public function __invoke(Number $x): Number
     {
-        return call_user_func($this->polynom, $x);
+        return ($this->polynom)($x);
+    }
+
+    public function rootMeanSquareDeviation(): Number
+    {
+        return $this->deviation;
     }
 
     /**
@@ -58,23 +79,61 @@ final class LinearRegression
      */
     private function compute(Dataset $data): array
     {
-        $count = $data->dimension()->rows();
+        $dimension = $data->dimension()->rows();
+        $elements = $dimension->value();
         $x = $data->abscissas()->toArray();
         $y = $data->ordinates()->toArray();
 
-        $xSum = array_sum($x);
-        $ySum = array_sum($y);
-        $xxSum = 0;
-        $xySum = 0;
+        $xSum = $data->abscissas()->sum();
+        $ySum = $data->ordinates()->sum();
+        $xxSum = new Integer(0);
+        $xySum = new Integer(0);
 
-        for ($i = 0; $i < $count; $i++) {
-            $xySum += $x[$i] * $y[$i];
-            $xxSum += $x[$i] * $x[$i];
+        for ($i = 0; $i < $elements; $i++) {
+            $xySum = add($xySum, multiply($x[$i], $y[$i]));
+            $xxSum = add($xxSum, multiply($x[$i], $x[$i]));
         }
 
-        $slope = (($count * $xySum) - ($xSum * $ySum)) / (($count * $xxSum) - ($xSum * $xSum));
-        $intercept = ($ySum - ($slope * $xSum)) / $count;
+        $slope = divide(
+            subtract(
+                $dimension->multiplyBy($xySum),
+                $xSum->multiplyBy($ySum)
+            ),
+            subtract(
+                $dimension->multiplyBy($xxSum),
+                $xSum->power(new Integer(2))
+            )
+        );
+        $intercept = divide(
+            subtract(
+                $ySum,
+                $slope->multiplyBy($xSum)
+            ),
+            $dimension
+        );
 
         return [$slope, $intercept];
+    }
+
+    private function buildRmsd(Dataset $dataset): Number
+    {
+        $dataset = Matrix::fromColumns(
+            $dataset
+                ->abscissas()
+                ->map(function(Number $x): Number {
+                    return $this($x);
+                }),
+            $dataset->ordinates()
+        );
+
+        return $dataset
+            ->column(0)
+            ->subtract($dataset->column(1))
+            ->power(new Integer(2))
+            ->sum()
+            ->divideBy(
+                $dataset->column(0)->dimension()
+            )
+            ->squareRoot();
     }
 }

@@ -3,12 +3,13 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Regression;
 
+use function Innmind\Math\numerize;
 use Innmind\Math\{
     Matrix,
     Matrix\Dimension,
-    Vector\RowVector,
-    Vector\ColumnVector,
-    Exception\VectorsMustContainsOnlyTwoValuesException
+    Matrix\RowVector,
+    Matrix\ColumnVector,
+    Exception\VectorsMustContainsOnlyTwoValues
 };
 
 final class Dataset implements \Iterator
@@ -19,8 +20,8 @@ final class Dataset implements \Iterator
     {
         $this->matrix = new Matrix(...$rows);
 
-        if ($this->matrix->dimension()->columns() !== 2) {
-            throw new VectorsMustContainsOnlyTwoValuesException;
+        if ($this->matrix->dimension()->columns()->value() !== 2) {
+            throw new VectorsMustContainsOnlyTwoValues;
         }
     }
 
@@ -30,12 +31,15 @@ final class Dataset implements \Iterator
 
         foreach ($values as $x => $y) {
             $coordinates = is_array($y) ? $y : [$x, $y];
-            $rows[] = new RowVector(...$coordinates);
+            $rows[] = new RowVector(...numerize(...$coordinates));
         }
 
         return new self(...$rows);
     }
 
+    /**
+     * @return int|float[]
+     */
     public function toArray(): array
     {
         return $this->matrix->toArray();
@@ -56,27 +60,27 @@ final class Dataset implements \Iterator
         return $this->matrix->dimension();
     }
 
-    public function current()
+    public function current(): RowVector
     {
         return $this->matrix->current();
     }
 
-    public function key()
+    public function key(): int
     {
         return $this->matrix->key();
     }
 
-    public function next()
+    public function next(): void
     {
         $this->matrix->next();
     }
 
-    public function rewind()
+    public function rewind(): void
     {
         $this->matrix->rewind();
     }
 
-    public function valid()
+    public function valid(): bool
     {
         return $this->matrix->valid();
     }

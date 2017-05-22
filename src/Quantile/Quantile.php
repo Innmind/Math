@@ -3,6 +3,21 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Quantile;
 
+use function Innmind\Math\{
+    divide,
+    add,
+    mean,
+    median,
+    min,
+    max
+};
+use Innmind\Math\{
+    Regression\Dataset,
+    Algebra\Number,
+    Matrix\ColumnVector,
+    Exception\OutOfRangeException
+};
+
 final class Quantile
 {
     private $min;
@@ -12,17 +27,19 @@ final class Quantile
     private $firstQuartile;
     private $thirdQuartile;
 
-    public function __construct(array $dataset)
+    public function __construct(Dataset $dataset)
     {
-        $dataset = $this->clean($dataset);
-        $length = count($dataset);
+        $values = $dataset->ordinates()->toArray();
+        sort($values);
+        $dataset = Dataset::fromArray($values);
+
         $this
             ->buildMin($dataset)
             ->buildMax($dataset)
-            ->buildMean($dataset, $length)
-            ->buildMedian($dataset, $length)
-            ->buildFirstQuartile($dataset, $length)
-            ->buildThirdQuartile($dataset, $length);
+            ->buildMean($dataset)
+            ->buildMedian($dataset)
+            ->buildFirstQuartile($dataset)
+            ->buildThirdQuartile($dataset);
     }
 
     /**
@@ -48,9 +65,9 @@ final class Quantile
     /**
      * Return the mean value
      *
-     * @return float
+     * @return Number
      */
-    public function mean(): float
+    public function mean(): Number
     {
         return $this->mean;
     }
@@ -87,63 +104,19 @@ final class Quantile
                 return $this->max;
         }
 
-        throw new \InvalidArgumentException(sprintf(
-            'Unknown quartile %s',
-            $index
-        ));
-    }
-
-    /**
-     * Transform every value into a numeric if necessary
-     *
-     * @param array $dataset
-     *
-     * @throws LogicException If a value is not a numeric
-     *
-     * @return array
-     */
-    private function clean(array $dataset): array
-    {
-        $cleaned = array_map(function($element) {
-            if (!is_numeric($element)) {
-                throw new \LogicException(sprintf(
-                    'Only numeric values are accepted for a quantile (%s given)',
-                    var_export($element, true)
-                ));
-            }
-
-            if (!is_string($element)) {
-                return $element;
-            }
-
-            if (preg_match('/^\d+\.\d+$/', $element)) {
-                return (float) $element;
-            }
-
-            return (int) $element;
-        }, $dataset);
-
-        if (count($cleaned) === 0) {
-            throw new \LogicException(
-                'The dataset must contain at least one element'
-            );
-        }
-
-        sort($cleaned);
-
-        return $cleaned;
+        throw new OutOfRangeException;
     }
 
     /**
      * Extract the minimum value from the dataset
      *
-     * @param array $dataset
+     * @param Dataset $dataset
      *
      * @return self
      */
-    private function buildMin(array $dataset): self
+    private function buildMin(Dataset $dataset): self
     {
-        $this->min = new Quartile(min($dataset));
+        $this->min = new Quartile(min(...$dataset->ordinates()));
 
         return $this;
     }
@@ -151,13 +124,13 @@ final class Quantile
     /**
      * Extract the maximum value from the dataset
      *
-     * @param array $dataset
+     * @param Dataset $dataset
      *
      * @return self
      */
-    private function buildMax(array $dataset): self
+    private function buildMax(Dataset $dataset): self
     {
-        $this->max = new Quartile(max($dataset));
+        $this->max = new Quartile(max(...$dataset->ordinates()));
 
         return $this;
     }
@@ -165,15 +138,13 @@ final class Quantile
     /**
      * Build the mean value from the dataset
      *
-     * @param array $dataset
-     * @param int $length
+     * @param Dataset $dataset
      *
      * @return self
      */
-    private function buildMean(array $dataset, int $length): self
+    private function buildMean(Dataset $dataset): self
     {
-        $sum = array_sum($dataset);
-        $this->mean = $sum / $length;
+        $this->mean = mean(...$dataset->ordinates());
 
         return $this;
     }
@@ -181,23 +152,13 @@ final class Quantile
     /**
      * Extract the median from the dataset
      *
-     * @param array $dataset
-     * @param int $length
+     * @param Dataset $dataset
      *
      * @return self
      */
-    private function buildMedian(array $dataset, int $length): self
+    private function buildMedian(Dataset $dataset): self
     {
-        $even = ($length % 2) === 0;
-        $index = (ceil($length / 2)) - 1;
-
-        if ($even) {
-            $median = ($dataset[$index + 1] + $dataset[$index]) / 2;
-        } else {
-            $median = $dataset[$index];
-        }
-
-        $this->median = new Quartile($median);
+        $this->median = new Quartile(median(...$dataset->ordinates()));
 
         return $this;
     }
@@ -205,17 +166,15 @@ final class Quantile
     /**
      * Extract the first quartile
      *
-     * @param array $dataset
-     * @param int $length
+     * @param Dataset $dataset
      *
      * @return self
      */
-    private function buildFirstQuartile(array $dataset, int $length): self
+    private function buildFirstQuartile(Dataset $dataset): self
     {
         $this->firstQuartile = new Quartile($this->buildQuartile(
-            0.25,
-            $dataset,
-            $length
+            new Number\Number(0.25),
+            $dataset->ordinates()
         ));
 
         return $this;
@@ -224,17 +183,15 @@ final class Quantile
     /**
      * Extract the first quartile
      *
-     * @param array $dataset
-     * @param int $length
+     * @param Dataset $dataset
      *
      * @return self
      */
-    private function buildThirdQuartile(array $dataset, int $length): self
+    private function buildThirdQuartile(Dataset $dataset): self
     {
         $this->thirdQuartile = new Quartile($this->buildQuartile(
-            0.75,
-            $dataset,
-            $length
+            new Number\Number(0.75),
+            $dataset->ordinates()
         ));
 
         return $this;
@@ -243,32 +200,34 @@ final class Quantile
     /**
      * Return the value describing the the quartile at the given percentage
      *
-     * @param float $percentage
-     * @param array $dataset
-     * @param int $length
+     * @param Number $percentage
+     * @param ColumnVector $dataset
      *
      * @return float
      */
     private function buildQuartile(
-        float $percentage,
-        array $dataset,
-        int $length
-    ): float {
-        if ($length === 2) {
-            return ($dataset[0] + $dataset[1]) / 2;
-        } else if ($length === 1) {
-            return $dataset[0];
+        Number $percentage,
+        ColumnVector $dataset
+    ): Number {
+        $dimension = $dataset->dimension();
+
+        if ($dimension->value() === 2) {
+            return divide(
+                add($dataset->get(0), $dataset->get(1)),
+                2
+            );
+        } else if ($dimension->value() === 1) {
+            return $dataset->get(0);
         }
 
-        $position = $length * $percentage;
+        $index = (int) $dimension
+            ->multiplyBy($percentage)
+            ->round()
+            ->value();
 
-        if (fmod($position, 1) !== 0) {
-            $index = round($position);
-            $value = ($dataset[$index] + $dataset[$index - 1]) / 2;
-        } else {
-            $value = $dataset[$position];
-        }
-
-        return $value;
+        return divide(
+            add($dataset->get($index), $dataset->get($index - 1)),
+            2
+        );
     }
 }
