@@ -115,6 +115,16 @@ final class Integer implements Number
         return new Signum($this);
     }
 
+    public function increment(): self
+    {
+        return new self($this->number->value() + 1);
+    }
+
+    public function decrement(): self
+    {
+        return new self($this->number->value() - 1);
+    }
+
     public function __toString(): string
     {
         return (string) $this->number;
