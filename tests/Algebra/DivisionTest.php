@@ -232,6 +232,6 @@ class DivisionTest extends TestCase
      */
     public function testThrowWhenTryingToDivideByZero()
     {
-        new Division(new Number\Number(4), new Number\Number(0));
+        new Division(new Number\Number(4), new Number\Number(-0.0));
     }
 }

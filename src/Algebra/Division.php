@@ -13,7 +13,7 @@ final class Division implements Operation, Number
 
     public function __construct(Number $dividend, Number $divisor)
     {
-        if ($divisor->value() === 0) {
+        if ($divisor->equals(new Integer(0))) {
             throw new DivisionByZeroError;
         }
 
