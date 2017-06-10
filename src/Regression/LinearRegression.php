@@ -117,22 +117,19 @@ final class LinearRegression
 
     private function buildRmsd(Dataset $dataset): Number
     {
-        $dataset = Matrix::fromColumns(
-            $dataset
-                ->abscissas()
-                ->map(function(Number $x): Number {
-                    return $this($x);
-                }),
-            $dataset->ordinates()
-        );
+        $values = $dataset->ordinates();
+        $estimated = $dataset
+            ->abscissas()
+            ->map(function(Number $x): Number {
+                return $this($x);
+            });
 
-        return $dataset
-            ->column(0)
-            ->subtract($dataset->column(1))
+        return $values
+            ->subtract($estimated)
             ->power(new Integer(2))
             ->sum()
             ->divideBy(
-                $dataset->column(0)->dimension()
+                $values->dimension()
             )
             ->squareRoot();
     }
