@@ -211,4 +211,26 @@ class IntegerTest extends TestCase
     {
         (new Integer(-1))->factorial();
     }
+
+    public function testIncrement()
+    {
+        $number = new Integer(0);
+        $increment = $number->increment();
+
+        $this->assertInstanceOf(Integer::class, $increment);
+        $this->assertNotSame($number, $increment);
+        $this->assertSame(0, $number->value());
+        $this->assertSame(1, $increment->value());
+    }
+
+    public function testDecrement()
+    {
+        $number = new Integer(0);
+        $decrement = $number->decrement();
+
+        $this->assertInstanceOf(Integer::class, $decrement);
+        $this->assertNotSame($number, $decrement);
+        $this->assertSame(0, $number->value());
+        $this->assertSame(-1, $decrement->value());
+    }
 }
