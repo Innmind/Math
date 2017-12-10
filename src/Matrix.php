@@ -10,6 +10,9 @@ use Innmind\Math\{
     Exception\VectorsMustMeOfTheSameDimension,
     Exception\MatrixMustBeSquare,
     Exception\MatricesMustBeOfTheSameDimension,
+    Exception\DivisionByZeroError,
+    Exception\NotANumber,
+    Exception\MatrixNotInvertible,
     Matrix\Dimension,
     Algebra\Number,
     Algebra\Integer
@@ -388,8 +391,13 @@ final class Matrix implements \Iterator
         }
 
         $matrix = $this->augmentWith($this->identity());
-        $matrix = $this->reduceLowerTriangle($matrix);
-        $matrix = $this->reduceUpperTriangle($matrix);
+
+        try {
+            $matrix = $this->reduceLowerTriangle($matrix);
+            $matrix = $this->reduceUpperTriangle($matrix);
+        } catch (DivisionByZeroError | NotANumber $e) {
+            throw new MatrixNotInvertible;
+        }
 
         return Matrix::fromColumns(
             ...$matrix
