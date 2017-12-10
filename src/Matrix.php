@@ -449,14 +449,11 @@ final class Matrix implements \Iterator
 
         do {
             //reduce the matrix to an echelon form with leading ones
-            $rows = $rows->reduce(
-                $rows->clear(),
-                static function(StreamInterface $rows, RowVector $row) use ($index): StreamInterface {
-                    if ($rows->size() <= $index) {
-                        return $rows->add($row);
-                    }
-
-                    $reference = $rows->get($index);
+            [$echeloned, $toEchelon] = $rows->splitAt($index + 1);
+            $reference = $echeloned->last();
+            $rows = $toEchelon->reduce(
+                $echeloned,
+                static function(StreamInterface $rows, RowVector $row) use ($reference, $index): StreamInterface {
                     $multiplier = $row
                         ->get($index)
                         ->divideBy(
@@ -502,16 +499,13 @@ final class Matrix implements \Iterator
         do {
             //for each line remove remove the lines below by mutuplying them
             //by the number in j column of the row being manipulated
-            $rows = $rows->reduce(
-                $rows->clear(),
-                static function(StreamInterface $rows, RowVector $row) use ($index, $reference): StreamInterface {
-                    if ($rows->size() <= $reference) {
-                        return $rows->add($row);
-                    }
-
+            [$reduced, $toReduce] = $rows->splitAt($reference + 1);
+            $rows = $toReduce->reduce(
+                $reduced,
+                static function(StreamInterface $rows, RowVector $row) use ($index, $reduced): StreamInterface {
                     return $rows->add(
                         $row->subtract(
-                            $rows->get($reference)->multiplyBy(
+                            $reduced->last()->multiplyBy(
                                 RowVector::initialize(
                                     $row->dimension(),
                                     $row->get($index)
