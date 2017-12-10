@@ -539,6 +539,20 @@ class MatrixTest extends TestCase
         );
     }
 
+    /**
+     * @expectedException Innmind\Math\Exception\MatrixNotInvertible
+     */
+    public function testThrowWhenMatrixNotInvertible()
+    {
+        Matrix::fromArray([
+            [  2,   -3,    9,   -27,    81],
+            [ -3,    9,  -27,    81,  -243],
+            [  9,  -27,   81,  -243,   729],
+            [-27,   81, -243,   729, -2187],
+            [ 81, -243,  729, -2187,  6561],
+        ])->inverse();
+    }
+
     public function inverses(): array
     {
         return [
