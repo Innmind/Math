@@ -497,7 +497,7 @@ final class Matrix implements \Iterator
         $reference = 0;
 
         do {
-            //for each line remove remove the lines below by mutuplying them
+            //for each line remove the lines below by mutuplying them
             //by the number in j column of the row being manipulated
             [$reduced, $toReduce] = $rows->splitAt($reference + 1);
             $rows = $toReduce->reduce(
