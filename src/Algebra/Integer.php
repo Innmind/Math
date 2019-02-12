@@ -15,7 +15,7 @@ final class Integer implements Number
     /**
      * {@inheritdoc}
      */
-    public function value()
+    public function value(): int
     {
         return $this->number->value();
     }
