@@ -5,7 +5,8 @@ namespace Tests\Innmind\Math\Matrix;
 
 use Innmind\Math\{
     Matrix\Dimension,
-    Algebra\Integer
+    Algebra\Integer,
+    Exception\DimensionMustBePositive
 };
 use PHPUnit\Framework\TestCase;
 
@@ -22,19 +23,17 @@ class DimensionTest extends TestCase
         $this->assertSame('2 x 3', (string) $dimension);
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\DimensionMustBePositive
-     */
     public function testThrowWhenNegativeRows()
     {
+        $this->expectException(DimensionMustBePositive::class);
+
         new Dimension(new Integer(-1), new Integer(1));
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\DimensionMustBePositive
-     */
     public function testThrowWhenNegativeColumns()
     {
+        $this->expectException(DimensionMustBePositive::class);
+
         new Dimension(new Integer(1), new Integer(-1));
     }
 

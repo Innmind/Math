@@ -22,7 +22,8 @@ use Innmind\Math\{
     Algebra\BinaryLogarithm,
     Algebra\NaturalLogarithm,
     Algebra\Signum,
-    DefinitionSet\Set
+    DefinitionSet\Set,
+    Exception\OutOfDefinitionSet
 };
 use PHPUnit\Framework\TestCase;
 
@@ -36,11 +37,10 @@ class CommonLogarithmTest extends TestCase
         $this->assertInstanceOf(Operation::class, $lg);
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\OutOfDefinitionSet
-     */
     public function testThrowWhenNotAllowedValue()
     {
+        $this->expectException(OutOfDefinitionSet::class);
+
         new CommonLogarithm(new Number\Number(0));
     }
 

@@ -7,7 +7,8 @@ use function Innmind\Math\numerize;
 use Innmind\Math\{
     Matrix\Vector,
     Algebra\Number,
-    Algebra\Integer
+    Algebra\Integer,
+    Exception\VectorsMustMeOfTheSameDimension
 };
 use PHPUnit\Framework\TestCase;
 
@@ -39,11 +40,10 @@ class VectorTest extends TestCase
         $this->assertSame(-2, $number->value());
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\VectorsMustMeOfTheSameDimension
-     */
     public function testThrowForDotProductWithDifferentDimensions()
     {
+        $this->expectException(VectorsMustMeOfTheSameDimension::class);
+
         (new Vector(...numerize(-1, 2)))->dot(
             new Vector(...numerize(4, 1, 0))
         );
@@ -65,11 +65,10 @@ class VectorTest extends TestCase
         $this->assertSame(2.56, $vector2->get(2)->value());
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\VectorsMustMeOfTheSameDimension
-     */
     public function testThrowWhenMultiplyingVectorsOfDifferentDimensions()
     {
+        $this->expectException(VectorsMustMeOfTheSameDimension::class);
+
         Vector::initialize(new Integer(1), new Number\Number(1))->multiplyBy(
             Vector::initialize(new Integer(2), new Number\Number(1))
         );
@@ -91,11 +90,10 @@ class VectorTest extends TestCase
         $this->assertSame(0.2, $vector2->get(2)->value());
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\VectorsMustMeOfTheSameDimension
-     */
     public function testThrowWhenDevidingVectorsOfDifferentDimensions()
     {
+        $this->expectException(VectorsMustMeOfTheSameDimension::class);
+
         Vector::initialize(new Integer(1), new Number\Number(1))->divideBy(
             Vector::initialize(new Integer(2), new Number\Number(1))
         );
@@ -128,11 +126,10 @@ class VectorTest extends TestCase
         $this->assertSame(-0.2, $vector3->get(3)->value());
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\VectorsMustMeOfTheSameDimension
-     */
     public function testThrowWhenSubtractingVectorsOfDifferentDimensions()
     {
+        $this->expectException(VectorsMustMeOfTheSameDimension::class);
+
         Vector::initialize(new Integer(1), new Number\Number(1))->subtract(
             Vector::initialize(new Integer(2), new Number\Number(1))
         );
@@ -154,11 +151,10 @@ class VectorTest extends TestCase
         $this->assertSame(8.2, $vector3->get(3)->value());
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\VectorsMustMeOfTheSameDimension
-     */
     public function testThrowWhenAddingVectorsOfDifferentDimensions()
     {
+        $this->expectException(VectorsMustMeOfTheSameDimension::class);
+
         Vector::initialize(new Integer(1), new Number\Number(1))->add(
             Vector::initialize(new Integer(2), new Number\Number(1))
         );

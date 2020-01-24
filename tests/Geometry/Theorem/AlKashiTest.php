@@ -7,7 +7,8 @@ use Innmind\Math\{
     Geometry\Theorem\AlKashi,
     Geometry\Angle\Degree,
     Geometry\Segment,
-    Algebra\Integer
+    Algebra\Integer,
+    Exception\SegmentsCannotBeJoined
 };
 use PHPUnit\Framework\TestCase;
 
@@ -49,11 +50,10 @@ class AlKashiTest extends TestCase
         $this->assertSame(75.52248781407008, $ab->number()->value());
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\SegmentsCannotBeJoined
-     */
     public function testThrowWhenOpenTriangle()
     {
+        $this->expectException(SegmentsCannotBeJoined::class);
+
         AlKashi::angle(
             new Segment(new Integer(1)),
             new Segment(new Integer(42)),

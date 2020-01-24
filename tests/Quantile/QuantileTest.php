@@ -7,7 +7,8 @@ use Innmind\Math\{
     Quantile\Quantile,
     Quantile\Quartile,
     Regression\Dataset,
-    Algebra\Number
+    Algebra\Number,
+    Exception\OutOfRangeException
 };
 use PHPUnit\Framework\TestCase;
 
@@ -57,12 +58,11 @@ class QuantileTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\OutOfRangeException
-     */
     public function testThrowWhenAccessingUnknownQuartile()
     {
         $q = new Quantile(Dataset::fromArray([1,2,3]));
+
+        $this->expectException(OutOfRangeException::class);
 
         $q->quartile(6);
     }

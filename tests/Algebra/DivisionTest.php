@@ -3,25 +3,26 @@ declare(strict_types = 1);
 
 namespace Tests\Innmind\Math\Algebra;
 
-use Innmind\Math\Algebra\{
-    Division,
-    Number,
-    Operation,
-    Addition,
-    Subtraction,
-    Multiplication,
-    Round,
-    Floor,
-    Ceil,
-    Modulo,
-    Absolute,
-    Power,
-    SquareRoot,
-    Exponential,
-    BinaryLogarithm,
-    NaturalLogarithm,
-    CommonLogarithm,
-    Signum
+use Innmind\Math\{
+    Algebra\Division,
+    Algebra\Number,
+    Algebra\Operation,
+    Algebra\Addition,
+    Algebra\Subtraction,
+    Algebra\Multiplication,
+    Algebra\Round,
+    Algebra\Floor,
+    Algebra\Ceil,
+    Algebra\Modulo,
+    Algebra\Absolute,
+    Algebra\Power,
+    Algebra\SquareRoot,
+    Algebra\Exponential,
+    Algebra\BinaryLogarithm,
+    Algebra\NaturalLogarithm,
+    Algebra\CommonLogarithm,
+    Algebra\Signum,
+    Exception\DivisionByZeroError
 };
 use PHPUnit\Framework\TestCase;
 
@@ -227,11 +228,10 @@ class DivisionTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\DivisionByZeroError
-     */
     public function testThrowWhenTryingToDivideByZero()
     {
+        $this->expectException(DivisionByZeroError::class);
+
         new Division(new Number\Number(4), new Number\Number(-0.0));
     }
 }

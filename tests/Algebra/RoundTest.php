@@ -3,24 +3,25 @@ declare(strict_types = 1);
 
 namespace Tests\Innmind\Math\Algebra;
 
-use Innmind\Math\Algebra\{
-    Round,
-    Number,
-    Addition,
-    Subtraction,
-    Multiplication,
-    Division,
-    Floor,
-    Ceil,
-    Modulo,
-    Absolute,
-    Power,
-    SquareRoot,
-    Exponential,
-    BinaryLogarithm,
-    NaturalLogarithm,
-    CommonLogarithm,
-    Signum
+use Innmind\Math\{
+    Algebra\Round,
+    Algebra\Number,
+    Algebra\Addition,
+    Algebra\Subtraction,
+    Algebra\Multiplication,
+    Algebra\Division,
+    Algebra\Floor,
+    Algebra\Ceil,
+    Algebra\Modulo,
+    Algebra\Absolute,
+    Algebra\Power,
+    Algebra\SquareRoot,
+    Algebra\Exponential,
+    Algebra\BinaryLogarithm,
+    Algebra\NaturalLogarithm,
+    Algebra\CommonLogarithm,
+    Algebra\Signum,
+    Exception\PrecisionMustBePositive
 };
 use PHPUnit\Framework\TestCase;
 
@@ -33,11 +34,10 @@ class RoundTest extends TestCase
         $this->assertInstanceOf(Number::class, $round);
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\PrecisionMustBePositive
-     */
     public function testThrowWhenNegativePrecision()
     {
+        $this->expectException(PrecisionMustBePositive::class);
+
         new Round(new Number\Number(42), -1);
     }
 

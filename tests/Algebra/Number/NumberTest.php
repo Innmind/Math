@@ -3,27 +3,29 @@ declare(strict_types = 1);
 
 namespace Tests\Innmind\Math\Algebra\Number;
 
-use Innmind\Math\Algebra\{
-    Number\Number,
-    Number as NumberInterface,
-    Addition,
-    Subtraction,
-    Multiplication,
-    Division,
-    Round,
-    Floor,
-    Ceil,
-    Modulo,
-    Absolute,
-    Power,
-    SquareRoot,
-    Exponential,
-    BinaryLogarithm,
-    NaturalLogarithm,
-    CommonLogarithm,
-    Integer,
-    Number\Infinite,
-    Signum
+use Innmind\Math\{
+    Algebra\Number\Number,
+    Algebra\Number as NumberInterface,
+    Algebra\Addition,
+    Algebra\Subtraction,
+    Algebra\Multiplication,
+    Algebra\Division,
+    Algebra\Round,
+    Algebra\Floor,
+    Algebra\Ceil,
+    Algebra\Modulo,
+    Algebra\Absolute,
+    Algebra\Power,
+    Algebra\SquareRoot,
+    Algebra\Exponential,
+    Algebra\BinaryLogarithm,
+    Algebra\NaturalLogarithm,
+    Algebra\CommonLogarithm,
+    Algebra\Integer,
+    Algebra\Number\Infinite,
+    Algebra\Signum,
+    Exception\TypeError,
+    Exception\NotANumber
 };
 use PHPUnit\Framework\TestCase;
 
@@ -37,20 +39,18 @@ class NumberTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\TypeError
-     * @expectedExceptionMessage Number must be an int or a float
-     */
     public function testThrowWhenValueNotAnIntNorAFloat()
     {
+        $this->expectException(TypeError::class);
+        $this->expectExceptionMessage('Number must be an int or a float');
+
         new Number('42');
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\NotANumber
-     */
     public function testThrowWhenNotANumber()
     {
+        $this->expectException(NotANumber::class);
+
         new Number(NAN);
     }
 

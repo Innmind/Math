@@ -45,12 +45,11 @@ class PolynomTest extends TestCase
         $this->assertSame($d, $p->degree(1));
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testThrowIfTryingToAccessUnknownDegree()
     {
         $p = new Polynom;
+
+        $this->expectException(\InvalidArgumentException::class);
 
         $p->degree(2);
     }

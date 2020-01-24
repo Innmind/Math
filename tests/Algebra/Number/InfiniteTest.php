@@ -3,25 +3,27 @@ declare(strict_types = 1);
 
 namespace Tests\Innmind\Math\Algebra\Number;
 
-use Innmind\Math\Algebra\{
-    Number\Infinite,
-    Number,
-    Addition,
-    Subtraction,
-    Multiplication,
-    Division,
-    Round,
-    Floor,
-    Ceil,
-    Modulo,
-    Absolute,
-    Power,
-    SquareRoot,
-    Exponential,
-    BinaryLogarithm,
-    NaturalLogarithm,
-    CommonLogarithm,
-    Signum
+use Innmind\Math\{
+    Algebra\Number\Infinite,
+    Algebra\Number,
+    Algebra\Addition,
+    Algebra\Subtraction,
+    Algebra\Multiplication,
+    Algebra\Division,
+    Algebra\Round,
+    Algebra\Floor,
+    Algebra\Ceil,
+    Algebra\Modulo,
+    Algebra\Absolute,
+    Algebra\Power,
+    Algebra\SquareRoot,
+    Algebra\Exponential,
+    Algebra\BinaryLogarithm,
+    Algebra\NaturalLogarithm,
+    Algebra\CommonLogarithm,
+    Algebra\Signum,
+    Exception\NotANumber,
+    Exception\OutOfDefinitionSet
 };
 use PHPUnit\Framework\TestCase;
 
@@ -113,12 +115,12 @@ class InfiniteTest extends TestCase
         $this->assertSame(INF, $number->value());
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\NotANumber
-     */
     public function testModulo()
     {
         $number = Infinite::positive();
+
+        $this->expectException(NotANumber::class);
+
         $number->modulo(new Number\Number(1))->value();
     }
 
@@ -157,27 +159,24 @@ class InfiniteTest extends TestCase
         $this->assertSame(INF, $number->value());
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\OutOfDefinitionSet
-     */
     public function testBinaryLogarithm()
     {
+        $this->expectException(OutOfDefinitionSet::class);
+
         Infinite::positive()->binaryLogarithm();
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\OutOfDefinitionSet
-     */
     public function testNaturalLogarithm()
     {
+        $this->expectException(OutOfDefinitionSet::class);
+
         Infinite::positive()->naturalLogarithm();
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\OutOfDefinitionSet
-     */
     public function testCommonLogarithm()
     {
+        $this->expectException(OutOfDefinitionSet::class);
+
         Infinite::positive()->commonLogarithm();
     }
 

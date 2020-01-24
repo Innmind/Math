@@ -10,7 +10,11 @@ use Innmind\Math\{
     Matrix\RowVector,
     Matrix\ColumnVector,
     Algebra\Number\Number,
-    Algebra\Integer
+    Algebra\Integer,
+    Exception\VectorsMustMeOfTheSameDimension,
+    Exception\MatricesMustBeOfTheSameDimension,
+    Exception\MatrixMustBeSquare,
+    Exception\MatrixNotInvertible
 };
 use Innmind\Immutable\StreamInterface;
 use PHPUnit\Framework\TestCase;
@@ -80,11 +84,10 @@ class MatrixTest extends TestCase
         $this->assertCount(3, $matrix->columns());
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\VectorsMustMeOfTheSameDimension
-     */
     public function testThrowWhenBuildingMatrixWithIncoherentRows()
     {
+        $this->expectException(VectorsMustMeOfTheSameDimension::class);
+
         new Matrix(
             new RowVector(...numerize(1, 2)),
             new RowVector(...numerize(1, 2, 3))
@@ -195,11 +198,10 @@ class MatrixTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\MatrixMustBeSquare
-     */
     public function testThrowWhenAskingForNonSquareDiagonal()
     {
+        $this->expectException(MatrixMustBeSquare::class);
+
         Matrix::fromArray([[1, 2]])->diagonal();
     }
 
@@ -225,11 +227,10 @@ class MatrixTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\MatrixMustBeSquare
-     */
     public function testThrowWhenAskingForNonSquareIdentity()
     {
+        $this->expectException(MatrixMustBeSquare::class);
+
         Matrix::fromArray([[1, 2]])->identity();
     }
 
@@ -255,11 +256,10 @@ class MatrixTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\MatricesMustBeOfTheSameDimension
-     */
     public function testThrowWhenAddindMatricesOfDifferentDimensions()
     {
+        $this->expectException(MatricesMustBeOfTheSameDimension::class);
+
         Matrix::fromArray([[1]])->add(
             Matrix::fromArray([[1, 2]])
         );
@@ -291,11 +291,10 @@ class MatrixTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\MatricesMustBeOfTheSameDimension
-     */
     public function testThrowWhenSubtractingMatricesOfDifferentDimensions()
     {
+        $this->expectException(MatricesMustBeOfTheSameDimension::class);
+
         Matrix::fromArray([[1]])->subtract(
             Matrix::fromArray([[1, 2]])
         );
@@ -539,11 +538,10 @@ class MatrixTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\MatrixNotInvertible
-     */
     public function testThrowWhenMatrixNotInvertible()
     {
+        $this->expectException(MatrixNotInvertible::class);
+
         Matrix::fromArray([
             [  2,   -3,    9,   -27,    81],
             [ -3,    9,  -27,    81,  -243],

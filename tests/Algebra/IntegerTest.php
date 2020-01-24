@@ -3,26 +3,27 @@ declare(strict_types = 1);
 
 namespace Tests\Innmind\Math\Algebra;
 
-use Innmind\Math\Algebra\{
-    Integer,
-    Number,
-    Addition,
-    Subtraction,
-    Multiplication,
-    Division,
-    Round,
-    Floor,
-    Ceil,
-    Modulo,
-    Absolute,
-    Power,
-    SquareRoot,
-    Factorial,
-    Exponential,
-    BinaryLogarithm,
-    NaturalLogarithm,
-    CommonLogarithm,
-    Signum
+use Innmind\Math\{
+    Algebra\Integer,
+    Algebra\Number,
+    Algebra\Addition,
+    Algebra\Subtraction,
+    Algebra\Multiplication,
+    Algebra\Division,
+    Algebra\Round,
+    Algebra\Floor,
+    Algebra\Ceil,
+    Algebra\Modulo,
+    Algebra\Absolute,
+    Algebra\Power,
+    Algebra\SquareRoot,
+    Algebra\Factorial,
+    Algebra\Exponential,
+    Algebra\BinaryLogarithm,
+    Algebra\NaturalLogarithm,
+    Algebra\CommonLogarithm,
+    Algebra\Signum,
+    Exception\FactorialMustBePositive
 };
 use PHPUnit\Framework\TestCase;
 
@@ -204,11 +205,10 @@ class IntegerTest extends TestCase
         $this->assertSame(1, $number->value());
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\FactorialMustBePositive
-     */
     public function testThrowWhenNegativeFactorial()
     {
+        $this->expectException(FactorialMustBePositive::class);
+
         (new Integer(-1))->factorial();
     }
 

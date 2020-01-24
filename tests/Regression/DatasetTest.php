@@ -8,7 +8,8 @@ use Innmind\Math\{
     Regression\Dataset,
     Matrix\RowVector,
     Matrix\ColumnVector,
-    Matrix\Dimension
+    Matrix\Dimension,
+    Exception\VectorsMustContainsOnlyTwoValues
 };
 use PHPUnit\Framework\TestCase;
 
@@ -40,11 +41,10 @@ class DatasetTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\VectorsMustContainsOnlyTwoValues
-     */
     public function testThrowWhenNotUsingTwoDimensionalDataset()
     {
+        $this->expectException(VectorsMustContainsOnlyTwoValues::class);
+
         new Dataset(
             new RowVector(...numerize(1, 2, 3))
         );

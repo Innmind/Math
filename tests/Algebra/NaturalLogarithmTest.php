@@ -22,7 +22,8 @@ use Innmind\Math\{
     Algebra\BinaryLogarithm,
     Algebra\CommonLogarithm,
     Algebra\Signum,
-    DefinitionSet\Set
+    DefinitionSet\Set,
+    Exception\OutOfDefinitionSet
 };
 use PHPUnit\Framework\TestCase;
 
@@ -36,11 +37,10 @@ class NaturalLogarithmTest extends TestCase
         $this->assertInstanceOf(Operation::class, $ln);
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\OutOfDefinitionSet
-     */
     public function testThrowWhenNotAllowedValue()
     {
+        $this->expectException(OutOfDefinitionSet::class);
+
         new NaturalLogarithm(new Number\Number(0));
     }
 
