@@ -15,17 +15,18 @@ use Innmind\Math\{
     Regression\Dataset,
     Algebra\Number,
     Matrix\ColumnVector,
+    Statistics\Mean,
     Exception\OutOfRangeException
 };
 
 final class Quantile
 {
-    private $min;
-    private $max;
-    private $mean;
-    private $median;
-    private $firstQuartile;
-    private $thirdQuartile;
+    private Quartile $min;
+    private Quartile $max;
+    private Mean $mean;
+    private Quartile $median;
+    private Quartile $firstQuartile;
+    private Quartile $thirdQuartile;
 
     public function __construct(Dataset $dataset)
     {

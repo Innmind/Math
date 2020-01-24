@@ -15,10 +15,10 @@ use Innmind\Math\{
  */
 final class CommonLogarithm implements Operation, Number
 {
-    private static $definitionSet;
+    private static Set $definitionSet;
 
-    private $number;
-    private $result;
+    private Number $number;
+    private ?Number $result = null;
 
     public function __construct(Number $number)
     {
@@ -129,14 +129,14 @@ final class CommonLogarithm implements Operation, Number
 
     public function result(): Number
     {
-        return $this->result ?? $this->result = Number\Number::wrap(
+        return $this->result ??= Number\Number::wrap(
             log10($this->number->value())
         );
     }
 
     public static function definitionSet(): Set
     {
-        return self::$definitionSet ?? self::$definitionSet = Range::exclusive(
+        return self::$definitionSet ??= Range::exclusive(
             new Integer(0),
             Infinite::positive()
         );

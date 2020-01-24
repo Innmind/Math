@@ -18,8 +18,8 @@ use Innmind\Math\{
 
 final class LinearRegression
 {
-    private $polynom;
-    private $deviation;
+    private Polynom $polynom;
+    private Number $deviation;
 
     public function __construct(Dataset $data)
     {

@@ -15,8 +15,8 @@ use Innmind\Immutable\Sequence;
 
 final class PolynomialRegression
 {
-    private $polynom;
-    private $deviation;
+    private Polynom $polynom;
+    private Number $deviation;
 
     public function __construct(Dataset $dataset, Integer $degree)
     {

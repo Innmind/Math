@@ -10,9 +10,9 @@ use Innmind\Math\{
 
 final class Dimension
 {
-    private $rows;
-    private $columns;
-    private $string;
+    private Integer $rows;
+    private Integer $columns;
+    private string $string;
 
     public function __construct(Integer $rows, Integer $columns)
     {

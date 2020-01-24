@@ -15,8 +15,8 @@ use Innmind\Math\{
  */
 final class ArcCosine implements Number
 {
-    private $number;
-    private $arcCosine;
+    private Number $number;
+    private ?Degree $arcCosine = null;
 
     public function __construct(Number $number)
     {

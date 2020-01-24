@@ -12,7 +12,7 @@ use Innmind\Math\{
 
 final class Square implements Figure
 {
-    private $side;
+    private Segment $side;
 
     public function __construct(Segment $side)
     {

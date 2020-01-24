@@ -7,8 +7,8 @@ use Innmind\Immutable\Sequence;
 
 final class Multiplication implements Operation, Number, \Iterator
 {
-    private $values;
-    private $result;
+    private Sequence $values;
+    private ?Number $result = null;
 
     public function __construct(
         Number $first,

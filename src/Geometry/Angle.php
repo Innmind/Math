@@ -15,9 +15,9 @@ use Innmind\Math\{
 
 final class Angle
 {
-    private $firstSegment;
-    private $secondSegment;
-    private $degree;
+    private Segment $firstSegment;
+    private Segment $secondSegment;
+    private Degree $degree;
 
     public function __construct(
         Segment $firstSegment,

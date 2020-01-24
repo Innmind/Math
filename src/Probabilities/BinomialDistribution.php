@@ -15,7 +15,7 @@ use Innmind\Math\{
 
 final class BinomialDistribution
 {
-    private $probability;
+    private Number $probability;
 
     public function __construct(Number $probability)
     {

@@ -12,7 +12,7 @@ use Innmind\Math\{
 
 final class Variance
 {
-    private $variance;
+    private Number $variance;
 
     public function __construct(Dataset $dataset)
     {

@@ -10,7 +10,7 @@ use Innmind\Math\{
 
 final class Expectation
 {
-    private $expectation;
+    private Number $expectation;
 
     public function __construct(Dataset $dataset)
     {

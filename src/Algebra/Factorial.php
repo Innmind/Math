@@ -7,8 +7,8 @@ use Innmind\Math\Exception\FactorialMustBePositive;
 
 final class Factorial implements Operation, Number
 {
-    private $value;
-    private $number;
+    private int $value;
+    private ?Number $number = null;
 
     public function __construct(int $value)
     {

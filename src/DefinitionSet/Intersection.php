@@ -7,8 +7,8 @@ use Innmind\Math\Algebra\Number;
 
 final class Intersection implements Set
 {
-    private $left;
-    private $right;
+    private Set $left;
+    private Set $right;
 
     public function __construct(Set $left, Set $right)
     {

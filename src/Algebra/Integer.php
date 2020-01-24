@@ -5,7 +5,7 @@ namespace Innmind\Math\Algebra;
 
 final class Integer implements Number
 {
-    private $number;
+    private Number $number;
 
     public function __construct(int $value)
     {

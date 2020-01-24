@@ -10,7 +10,7 @@ use Innmind\Math\{
 
 final class StandardDeviation
 {
-    private $deviation;
+    private Number $deviation;
 
     public function __construct(Dataset $dataset)
     {

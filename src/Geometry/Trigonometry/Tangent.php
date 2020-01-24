@@ -18,8 +18,8 @@ use Innmind\Math\{
  */
 final class Tangent implements Number
 {
-    private $degree;
-    private $tangent;
+    private Degree $degree;
+    private ?Number $tangent = null;
 
     public function __construct(Degree $degree)
     {

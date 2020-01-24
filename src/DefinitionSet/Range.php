@@ -10,10 +10,10 @@ final class Range implements Set
     public const INCLUSIVE = true;
     public const EXCLUSIVE = false;
 
-    private $lowerInclusivity;
-    private $upperInclusivity;
-    private $lower;
-    private $upper;
+    private bool $lowerInclusivity;
+    private bool $upperInclusivity;
+    private Number $lower;
+    private Number $upper;
 
     public function __construct(
         bool $lowerInclusivity,

@@ -11,7 +11,7 @@ use Innmind\Immutable\Sequence;
 
 final class Scope implements Number
 {
-    private $result;
+    private Number $result;
 
     public function __construct(
         Number $first,

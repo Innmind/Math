@@ -14,7 +14,8 @@ use Innmind\Immutable\Sequence;
 
 final class Vector implements \Iterator
 {
-    private $numbers;
+    private Sequence $numbers;
+    private Integer $dimension;
 
     public function __construct(Number $number, Number ...$numbers)
     {

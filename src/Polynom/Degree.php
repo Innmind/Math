@@ -16,8 +16,8 @@ use Innmind\Math\{
 
 final class Degree
 {
-    private $degree;
-    private $coeff;
+    private Integer $degree;
+    private Number $coeff;
 
     public function __construct(Integer $degree, Number $coeff)
     {

@@ -11,8 +11,8 @@ use Innmind\Math\Algebra\{
 
 final class Radian
 {
-    private $number;
-    private $degree;
+    private Number $number;
+    private ?Degree $degree = null;
 
     public function __construct(Number $number)
     {
@@ -23,7 +23,7 @@ final class Radian
 
     public function toDegree(): Degree
     {
-        return $this->degree ?? $this->degree = new Degree(
+        return $this->degree ??= new Degree(
             new Number\Number(
                 rad2deg($this->number->value())
             )

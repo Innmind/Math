@@ -8,7 +8,7 @@ use Innmind\Math\Algebra\Number;
 
 final class Integral
 {
-    private $polynom;
+    private Polynom $polynom;
 
     public function __construct(Polynom $polynom)
     {

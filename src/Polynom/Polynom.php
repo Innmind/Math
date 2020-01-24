@@ -20,8 +20,8 @@ use Innmind\Immutable\{
 
 final class Polynom
 {
-    private $intercept;
-    private $degrees;
+    private Number $intercept;
+    private Map $degrees;
 
     public function __construct(Number $intercept = null, Degree ...$degrees)
     {

@@ -11,10 +11,10 @@ use Innmind\Math\Algebra\Number;
 
 final class Tangent
 {
-    private $polynom;
-    private $derivative;
-    private $abscissa;
-    private $intercept;
+    private Polynom $polynom;
+    private Number $derivative;
+    private Number $abscissa;
+    private Number $intercept;
 
     public function __construct(
         Polynom $polynom,

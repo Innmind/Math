@@ -28,6 +28,7 @@ use Innmind\Math\{
 
 final class Number implements NumberInterface
 {
+    /** @var int|float */
     private $value;
 
     public function __construct($value)

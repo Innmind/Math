@@ -5,8 +5,8 @@ namespace Innmind\Math\Algebra;
 
 final class Signum implements Operation, Number
 {
-    private $number;
-    private $result;
+    private Number $number;
+    private ?Integer $result = null;
 
     public function __construct(Number $number)
     {
@@ -15,7 +15,7 @@ final class Signum implements Operation, Number
 
     public function result(): Number
     {
-        return $this->result ?? $this->result = Number\Number::wrap(
+        return $this->result ??= Number\Number::wrap(
             $this->number->value() <=> 0
         );
     }

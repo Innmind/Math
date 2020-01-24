@@ -15,8 +15,8 @@ use Innmind\Math\{
  */
 final class ArcTangent implements Number
 {
-    private $number;
-    private $arcTangent;
+    private Number $number;
+    private ?Degree $arcTangent = null;
 
     public function __construct(Number $number)
     {

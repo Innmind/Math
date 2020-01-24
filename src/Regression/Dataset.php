@@ -14,7 +14,7 @@ use Innmind\Math\{
 
 final class Dataset implements \Iterator
 {
-    private $matrix;
+    private Matrix $matrix;
 
     public function __construct(RowVector ...$rows)
     {

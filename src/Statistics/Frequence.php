@@ -11,8 +11,8 @@ use Innmind\Immutable\Sequence;
 
 final class Frequence
 {
-    private $values;
-    private $size;
+    private Sequence $values;
+    private Number $size;
 
     public function __construct(Number ...$values)
     {

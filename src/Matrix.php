@@ -25,9 +25,9 @@ use Innmind\Immutable\{
 
 final class Matrix implements \Iterator
 {
-    private $dimension;
-    private $rows;
-    private $columns;
+    private Dimension $dimension;
+    private Stream $rows;
+    private Stream $columns;
 
     public function __construct(RowVector $first, RowVector ...$rows)
     {

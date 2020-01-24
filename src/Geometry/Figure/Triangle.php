@@ -20,11 +20,11 @@ use Innmind\Math\{
 
 final class Triangle implements Figure
 {
-    private $a;
-    private $b;
-    private $c;
-    private $height;
-    private $base;
+    private Number $a;
+    private Number $b;
+    private Number $c;
+    private Segment $height;
+    private Segment $base;
 
     public function __construct(
         Segment $a,

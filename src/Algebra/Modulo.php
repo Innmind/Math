@@ -5,9 +5,9 @@ namespace Innmind\Math\Algebra;
 
 final class Modulo implements Operation, Number
 {
-    private $number;
-    private $modulus;
-    private $result;
+    private Number $number;
+    private Number $modulus;
+    private ?Number $result = null;
 
     public function __construct(Number $number, Number $modulus)
     {
@@ -17,7 +17,7 @@ final class Modulo implements Operation, Number
 
     public function result(): Number
     {
-        return $this->result ?? $this->result = Number\Number::wrap(
+        return $this->result ??= Number\Number::wrap(
             fmod($this->number->value(), $this->modulus->value())
         );
     }

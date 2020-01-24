@@ -12,9 +12,10 @@ final class Round implements Number
     public const EVEN = 'EVEN';
     public const ODD = 'ODD';
 
-    private $number;
-    private $precision;
-    private $mode;
+    private Number $number;
+    private int $precision;
+    private int $mode;
+    /** @var int|float */
     private $value;
 
     public function __construct(
@@ -36,7 +37,7 @@ final class Round implements Number
      */
     public function value()
     {
-        return $this->value ?? $this->value = round(
+        return $this->value ??= round(
             $this->number->value(),
             $this->precision,
             $this->mode

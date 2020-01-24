@@ -7,9 +7,9 @@ use Innmind\Math\Exception\DivisionByZeroError;
 
 final class Division implements Operation, Number
 {
-    private $dividend;
-    private $divisor;
-    private $result;
+    private Number $dividend;
+    private Number $divisor;
+    private ?Number $result = null;
 
     public function __construct(Number $dividend, Number $divisor)
     {
@@ -136,7 +136,7 @@ final class Division implements Operation, Number
 
     public function result(): Number
     {
-        return $this->result ?? $this->result = Number\Number::wrap(
+        return $this->result ??= Number\Number::wrap(
             $this->dividend->value() / $this->divisor->value()
         );
     }

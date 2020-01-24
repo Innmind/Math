@@ -13,8 +13,8 @@ use Innmind\Math\{
 
 final class Circle implements Figure
 {
-    private $radius;
-    private $diameter;
+    private Segment $radius;
+    private Segment $diameter;
 
     public function __construct(Segment $radius)
     {

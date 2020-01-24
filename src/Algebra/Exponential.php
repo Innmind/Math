@@ -5,8 +5,8 @@ namespace Innmind\Math\Algebra;
 
 final class Exponential implements Operation, Number
 {
-    private $power;
-    private $result;
+    private Number $power;
+    private ?Number $result = null;
 
     public function __construct(Number $power)
     {

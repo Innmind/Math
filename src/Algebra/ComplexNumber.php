@@ -14,8 +14,8 @@ use function Innmind\Math\{
 
 final class ComplexNumber
 {
-    private $real;
-    private $imaginary;
+    private Number $real;
+    private Number $imaginary;
 
     public function __construct(Number $real, Number $imaginary)
     {

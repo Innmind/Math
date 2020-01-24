@@ -12,7 +12,7 @@ use Innmind\Math\{
 
 final class Segment
 {
-    private $length;
+    private Number $length;
 
     public function __construct(Number $length)
     {

@@ -13,7 +13,7 @@ use Innmind\Immutable\Sequence;
 
 final class Set implements SetInterface
 {
-    private $values;
+    private Sequence $values;
 
     public function __construct(Number ...$values)
     {

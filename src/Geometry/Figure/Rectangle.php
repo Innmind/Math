@@ -15,8 +15,8 @@ use Innmind\Math\{
 
 final class Rectangle implements Figure
 {
-    private $length;
-    private $width;
+    private Segment $length;
+    private Segment $width;
 
     public function __construct(Segment $length, Segment $width)
     {

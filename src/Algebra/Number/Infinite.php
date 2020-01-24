@@ -25,7 +25,7 @@ use Innmind\Math\Algebra\{
 
 final class Infinite implements NumberInterface
 {
-    private $value;
+    private float $value;
 
     private function __construct()
     {

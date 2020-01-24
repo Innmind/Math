@@ -10,8 +10,8 @@ use Innmind\Math\Algebra\{
 
 final class Degree
 {
-    private $number;
-    private $radian;
+    private Number $number;
+    private ?Radian $radian = null;
 
     public function __construct(Number $number)
     {
@@ -24,7 +24,7 @@ final class Degree
 
     public function toRadian(): Radian
     {
-        return $this->radian ?? $this->radian = new Radian(
+        return $this->radian ??= new Radian(
             new Number\Number(
                 deg2rad($this->number->value())
             )

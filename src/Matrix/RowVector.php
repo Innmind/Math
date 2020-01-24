@@ -11,7 +11,7 @@ use Innmind\Math\{
 
 final class RowVector implements \Iterator
 {
-    private $vector;
+    private Vector $vector;
 
     public function __construct(Number $number, Number ...$numbers)
     {
