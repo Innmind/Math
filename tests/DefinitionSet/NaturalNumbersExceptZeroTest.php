@@ -25,7 +25,7 @@ class NaturalNumbersExceptZeroTest extends TestCase
 
     public function testStringCast()
     {
-        $this->assertSame('ℕ*', (string) new NaturalNumbersExceptZero);
+        $this->assertSame('ℕ*', (new NaturalNumbersExceptZero)->toString());
     }
 
     public function testContains()
@@ -44,7 +44,7 @@ class NaturalNumbersExceptZeroTest extends TestCase
         $union = (new NaturalNumbersExceptZero)->union(new NaturalNumbersExceptZero);
 
         $this->assertInstanceOf(Union::class, $union);
-        $this->assertSame('ℕ*∪ℕ*', (string) $union);
+        $this->assertSame('ℕ*∪ℕ*', $union->toString());
     }
 
     public function testIntersect()
@@ -52,6 +52,6 @@ class NaturalNumbersExceptZeroTest extends TestCase
         $intersection = (new NaturalNumbersExceptZero)->intersect(new NaturalNumbersExceptZero);
 
         $this->assertInstanceOf(Intersection::class, $intersection);
-        $this->assertSame('ℕ*∩ℕ*', (string) $intersection);
+        $this->assertSame('ℕ*∩ℕ*', $intersection->toString());
     }
 }

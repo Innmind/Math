@@ -22,7 +22,7 @@ final class RealNumbers implements Set
         return new Intersection($this, $set);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         return 'ℝ';
     }

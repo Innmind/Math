@@ -27,29 +27,29 @@ class RangeTest extends TestCase
     {
         $this->assertSame(
             '[1;2]',
-            (string) Range::inclusive(new Integer(1), new Integer(2))
+            Range::inclusive(new Integer(1), new Integer(2))->toString()
         );
         $this->assertSame(
             ']1;2[',
-            (string) Range::exclusive(new Integer(1), new Integer(2))
+            Range::exclusive(new Integer(1), new Integer(2))->toString()
         );
         $this->assertSame(
             '[1;2[',
-            (string) new Range(
+            (new Range(
                 Range::INCLUSIVE,
                 new Integer(1),
                 new Integer(2),
                 Range::EXCLUSIVE
-            )
+            ))->toString()
         );
         $this->assertSame(
             ']1;2]',
-            (string) new Range(
+            (new Range(
                 Range::EXCLUSIVE,
                 new Integer(1),
                 new Integer(2),
                 Range::INCLUSIVE
-            )
+            ))->toString()
         );
     }
 
@@ -78,7 +78,7 @@ class RangeTest extends TestCase
         $union = $range->union($range);
 
         $this->assertInstanceOf(Union::class, $union);
-        $this->assertSame('[1;2]∪[1;2]', (string) $union);
+        $this->assertSame('[1;2]∪[1;2]', $union->toString());
     }
 
     public function testIntersect()
@@ -87,6 +87,6 @@ class RangeTest extends TestCase
         $intersection = $range->intersect($range);
 
         $this->assertInstanceOf(Intersection::class, $intersection);
-        $this->assertSame('[1;2]∩[1;2]', (string) $intersection);
+        $this->assertSame('[1;2]∩[1;2]', $intersection->toString());
     }
 }

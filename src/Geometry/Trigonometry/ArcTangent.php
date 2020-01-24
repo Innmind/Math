@@ -147,8 +147,8 @@ final class ArcTangent implements Number
         return $this->arcTangent = (new Radian($radians))->toDegree();
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
-        return sprintf('tan⁻¹(%s)', $this->number);
+        return sprintf('tan⁻¹(%s)', $this->number->toString());
     }
 }

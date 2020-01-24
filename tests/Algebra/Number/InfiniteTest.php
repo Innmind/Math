@@ -36,8 +36,8 @@ class InfiniteTest extends TestCase
 
     public function testStringCast()
     {
-        $this->assertSame('+∞', (string) Infinite::positive());
-        $this->assertSame('-∞', (string) Infinite::negative());
+        $this->assertSame('+∞', Infinite::positive()->toString());
+        $this->assertSame('-∞', Infinite::negative()->toString());
     }
 
     public function testEquals()

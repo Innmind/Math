@@ -141,12 +141,12 @@ final class Division implements Operation, Number
         );
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         $dividend = $this->dividend instanceof Operation ?
-            '('.$this->dividend.')' : (string) $this->dividend;
+            '('.$this->dividend->toString().')' : $this->dividend->toString();
         $divisor = $this->divisor instanceof Operation ?
-            '('.$this->divisor.')' : (string) $this->divisor;
+            '('.$this->divisor->toString().')' : $this->divisor->toString();
 
         return sprintf(
             '%s ÷ %s',

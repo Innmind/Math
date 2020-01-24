@@ -25,7 +25,7 @@ class NaturalNumbersTest extends TestCase
 
     public function testStringCast()
     {
-        $this->assertSame('ℕ', (string) new NaturalNumbers);
+        $this->assertSame('ℕ', (new NaturalNumbers)->toString());
     }
 
     public function testContains()
@@ -43,7 +43,7 @@ class NaturalNumbersTest extends TestCase
         $union = (new NaturalNumbers)->union(new NaturalNumbers);
 
         $this->assertInstanceOf(Union::class, $union);
-        $this->assertSame('ℕ∪ℕ', (string) $union);
+        $this->assertSame('ℕ∪ℕ', $union->toString());
     }
 
     public function testIntersect()
@@ -51,6 +51,6 @@ class NaturalNumbersTest extends TestCase
         $intersection = (new NaturalNumbers)->intersect(new NaturalNumbers);
 
         $this->assertInstanceOf(Intersection::class, $intersection);
-        $this->assertSame('ℕ∩ℕ', (string) $intersection);
+        $this->assertSame('ℕ∩ℕ', $intersection->toString());
     }
 }

@@ -62,10 +62,10 @@ final class Degree
         return $this->coeff->multiplyBy($x->power($this->degree));
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         $coeff = $this->coeff instanceof Operation ?
-            '('.$this->coeff.')' : $this->coeff;
+            '('.$this->coeff->toString().')' : $this->coeff->toString();
 
         if ($this->degree->equals(new Integer(1))) {
             return $coeff.'x';
@@ -74,7 +74,7 @@ final class Degree
         return sprintf(
             '%sx^%s',
             $coeff,
-            $this->degree
+            $this->degree->toString()
         );
     }
 }

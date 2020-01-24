@@ -37,7 +37,7 @@ final class Set implements SetInterface
         return new Intersection($this, $set);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         if ($this->values->size() === 0) {
             return '∅';

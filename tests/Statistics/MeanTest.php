@@ -265,6 +265,6 @@ class MeanTest extends TestCase
             new Number\Number(7.1)
         );
 
-        $this->assertSame('(1 + 7.1) ÷ 2', (string) $mean);
+        $this->assertSame('(1 + 7.1) ÷ 2', $mean->toString());
     }
 }

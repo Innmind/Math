@@ -316,7 +316,7 @@ class FunctionsTest extends TestCase
         $exp = exponential(4);
 
         $this->assertInstanceOf(Exponential::class, $exp);
-        $this->assertSame('e^4', (string) $exp);
+        $this->assertSame('e^4', $exp->toString());
     }
 
     public function testBinaryLogarithm()
@@ -324,7 +324,7 @@ class FunctionsTest extends TestCase
         $lb = binaryLogarithm(1);
 
         $this->assertInstanceOf(BinaryLogarithm::class, $lb);
-        $this->assertSame('lb(1)', (string) $lb);
+        $this->assertSame('lb(1)', $lb->toString());
     }
 
     public function testNaturalLogarithm()
@@ -332,7 +332,7 @@ class FunctionsTest extends TestCase
         $ln = naturalLogarithm(1);
 
         $this->assertInstanceOf(NaturalLogarithm::class, $ln);
-        $this->assertSame('ln(1)', (string) $ln);
+        $this->assertSame('ln(1)', $ln->toString());
     }
 
     public function testLogarithm()
@@ -340,7 +340,7 @@ class FunctionsTest extends TestCase
         $ln = logarithm(1);
 
         $this->assertInstanceOf(NaturalLogarithm::class, $ln);
-        $this->assertSame('ln(1)', (string) $ln);
+        $this->assertSame('ln(1)', $ln->toString());
     }
 
     public function testCommonLogarithm()
@@ -348,7 +348,7 @@ class FunctionsTest extends TestCase
         $lg = commonLogarithm(1);
 
         $this->assertInstanceOf(CommonLogarithm::class, $lg);
-        $this->assertSame('lg(1)', (string) $lg);
+        $this->assertSame('lg(1)', $lg->toString());
     }
 
     public function testSignum()
@@ -356,7 +356,7 @@ class FunctionsTest extends TestCase
         $sgn = signum(1);
 
         $this->assertInstanceOf(Signum::class, $sgn);
-        $this->assertSame('sgn(1)', (string) $sgn);
+        $this->assertSame('sgn(1)', $sgn->toString());
     }
 
     public function cosines(): array

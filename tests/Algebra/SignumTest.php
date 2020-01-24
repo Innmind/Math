@@ -58,7 +58,7 @@ class SignumTest extends TestCase
             new Number\Number(42.24)
         );
 
-        $this->assertSame('sgn(42.24)', (string) $sgn);
+        $this->assertSame('sgn(42.24)', $sgn->toString());
     }
 
     public function testStringCastOperations()
@@ -70,7 +70,7 @@ class SignumTest extends TestCase
             )
         );
 
-        $this->assertSame('sgn(1 + 1)', (string) $sgn);
+        $this->assertSame('sgn(1 + 1)', $sgn->toString());
     }
 
     public function testEquals()

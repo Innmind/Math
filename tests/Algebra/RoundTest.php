@@ -55,7 +55,7 @@ class RoundTest extends TestCase
     {
         $this->assertSame(
             '42.5',
-            (string) new Round(new Number\Number(42.45), 1)
+            (new Round(new Number\Number(42.45), 1))->toString()
         );
     }
 

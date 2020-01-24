@@ -141,8 +141,8 @@ final class ArcSine implements Number
         return $this->arcSine = (new Radian($radians))->toDegree();
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
-        return sprintf('sin⁻¹(%s)', $this->number);
+        return sprintf('sin⁻¹(%s)', $this->number->toString());
     }
 }

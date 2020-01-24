@@ -13,7 +13,10 @@ use Innmind\Math\Algebra\{
     Integer,
     Operation
 };
-use Innmind\Immutable\Map;
+use Innmind\Immutable\{
+    Map,
+    Sequence,
+};
 
 final class Polynom
 {
@@ -186,19 +189,23 @@ final class Polynom
         return new Integral($this);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
-        $polynom = $this
+        $degrees = $this
             ->degrees
             ->values()
             ->sort(static function(Degree $a, Degree $b): bool {
                 return $b->degree()->higherThan($a->degree());
+            });
+        $polynom = Sequence::of(...$degrees)
+            ->map(function(Degree $degree): string {
+                return $degree->toString();
             })
             ->join(' + ');
 
         if (!$this->intercept->equals(new Integer(0))) {
             $intercept = $this->intercept instanceof Operation ?
-                '('.$this->intercept.')' : (string) $this->intercept;
+                '('.$this->intercept->toString().')' : $this->intercept->toString();
 
             $polynom = $polynom
                 ->append(' + ')

@@ -133,8 +133,8 @@ final class Sine implements Number
         );
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
-        return sprintf('sin(%s)', $this->degree);
+        return sprintf('sin(%s)', $this->degree->toString());
     }
 }

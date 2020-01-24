@@ -16,7 +16,7 @@ final class Dimension
 
     public function __construct(Integer $rows, Integer $columns)
     {
-        $this->string = sprintf('%s x %s', $rows, $columns);
+        $this->string = sprintf('%s x %s', $rows->toString(), $columns->toString());
 
         if ($rows->value() < 0 || $columns->value() < 0) {
             throw new DimensionMustBePositive($this->string);
@@ -42,7 +42,7 @@ final class Dimension
             $this->columns->equals($dimension->columns());
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         return $this->string;
     }

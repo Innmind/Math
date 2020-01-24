@@ -129,7 +129,7 @@ final class Pi implements NumberInterface
         return new Signum($this);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         return 'π';
     }

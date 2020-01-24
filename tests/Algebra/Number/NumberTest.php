@@ -59,22 +59,22 @@ class NumberTest extends TestCase
         $number = Number::wrap(42.1);
 
         $this->assertInstanceOf(Number::class, $number);
-        $this->assertSame('42.1', (string) $number);
+        $this->assertSame('42.1', $number->toString());
 
         $number = Number::wrap(42);
 
         $this->assertInstanceOf(Integer::class, $number);
-        $this->assertSame('42', (string) $number);
+        $this->assertSame('42', $number->toString());
 
         $number = Number::wrap(INF);
 
         $this->assertInstanceOf(Infinite::class, $number);
-        $this->assertSame('+∞', (string) $number);
+        $this->assertSame('+∞', $number->toString());
 
         $number = Number::wrap(-INF);
 
         $this->assertInstanceOf(Infinite::class, $number);
-        $this->assertSame('-∞', (string) $number);
+        $this->assertSame('-∞', $number->toString());
     }
 
     public function testInt()
@@ -82,7 +82,7 @@ class NumberTest extends TestCase
         $number = new Number(42);
 
         $this->assertSame(42, $number->value());
-        $this->assertSame('42', (string) $number);
+        $this->assertSame('42', $number->toString());
     }
 
     public function testFloat()
@@ -90,7 +90,7 @@ class NumberTest extends TestCase
         $number = new Number(42.24);
 
         $this->assertSame(42.24, $number->value());
-        $this->assertSame('42.24', (string) $number);
+        $this->assertSame('42.24', $number->toString());
     }
 
     public function testEquals()

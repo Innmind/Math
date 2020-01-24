@@ -142,8 +142,8 @@ final class NaturalLogarithm implements Operation, Number
         );
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
-        return sprintf('ln(%s)', $this->number);
+        return sprintf('ln(%s)', $this->number->toString());
     }
 }

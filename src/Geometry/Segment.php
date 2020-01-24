@@ -17,7 +17,7 @@ final class Segment
     public function __construct(Number $length)
     {
         if (!$length->higherThan(new Integer(0))) {
-            throw new LengthMustBePositive((string) $length);
+            throw new LengthMustBePositive($length->toString());
         }
 
         $this->length = $length;
@@ -33,7 +33,7 @@ final class Segment
         return new Angle($this, $angle, $segment);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         return (string) $this->length->value();
     }

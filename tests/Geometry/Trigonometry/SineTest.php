@@ -34,7 +34,7 @@ class SineTest extends TestCase
 
         $this->assertInstanceOf(Number::class, $sin);
         $this->assertSame(0.66913060635886, $sin->value());
-        $this->assertSame('sin(42°)', (string) $sin);
+        $this->assertSame('sin(42°)', $sin->toString());
     }
 
     public function testEquals()

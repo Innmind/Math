@@ -266,6 +266,6 @@ class ScopeTest extends TestCase
             new Number\Number(7.1)
         );
 
-        $this->assertSame('7.1 - 1', (string) $scope);
+        $this->assertSame('7.1 - 1', $scope->toString());
     }
 }

@@ -25,8 +25,8 @@ class SetTest extends TestCase
 
     public function testStringCast()
     {
-        $this->assertSame('∅', (string) new Set);
-        $this->assertSame('{1;2}', (string) new Set(new Integer(1), new Integer(2)));
+        $this->assertSame('∅', (new Set)->toString());
+        $this->assertSame('{1;2}', (new Set(new Integer(1), new Integer(2)))->toString());
     }
 
     public function testContains()
@@ -52,7 +52,7 @@ class SetTest extends TestCase
         $union = (new Set)->union(new Set);
 
         $this->assertInstanceOf(Union::class, $union);
-        $this->assertSame('∅∪∅', (string) $union);
+        $this->assertSame('∅∪∅', $union->toString());
     }
 
     public function testIntersect()
@@ -60,6 +60,6 @@ class SetTest extends TestCase
         $intersection = (new Set)->intersect(new Set);
 
         $this->assertInstanceOf(Intersection::class, $intersection);
-        $this->assertSame('∅∩∅', (string) $intersection);
+        $this->assertSame('∅∩∅', $intersection->toString());
     }
 }

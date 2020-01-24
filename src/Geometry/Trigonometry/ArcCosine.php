@@ -141,8 +141,8 @@ final class ArcCosine implements Number
         return $this->arcCosine = (new Radian($radians))->toDegree();
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
-        return sprintf('cos⁻¹(%s)', $this->number);
+        return sprintf('cos⁻¹(%s)', $this->number->toString());
     }
 }

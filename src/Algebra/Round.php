@@ -133,7 +133,7 @@ final class Round implements Number
         return new Signum($this);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         return var_export($this->value(), true);
     }

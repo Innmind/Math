@@ -17,7 +17,7 @@ class DegreeTest extends TestCase
      */
     public function testStringCast($degree, $expected)
     {
-        $this->assertSame($expected, (string) new Degree(new Number($degree)));
+        $this->assertSame($expected, (new Degree(new Number($degree)))->toString());
     }
 
     public function testIsRight()
@@ -51,8 +51,8 @@ class DegreeTest extends TestCase
 
         $this->assertNotSame($opposite, $degree);
         $this->assertInstanceOf(Degree::class, $opposite);
-        $this->assertSame('270°', (string) $degree);
-        $this->assertSame('90°', (string) $opposite);
+        $this->assertSame('270°', $degree->toString());
+        $this->assertSame('90°', $opposite->toString());
     }
 
     /**
@@ -64,7 +64,7 @@ class DegreeTest extends TestCase
         $radian = $degree->toRadian();
 
         $this->assertInstanceOf(Radian::class, $radian);
-        $this->assertSame($expected, (string) $radian);
+        $this->assertSame($expected, $radian->toString());
     }
 
     public function degrees(): array

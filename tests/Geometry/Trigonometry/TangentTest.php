@@ -34,7 +34,7 @@ class TangentTest extends TestCase
 
         $this->assertInstanceOf(Number::class, $tan);
         $this->assertSame(0.90040404429784, $tan->value());
-        $this->assertSame('tan(42°)', (string) $tan);
+        $this->assertSame('tan(42°)', $tan->toString());
     }
 
     public function testEquals()

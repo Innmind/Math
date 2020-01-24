@@ -32,8 +32,8 @@ final class Union implements Set
         return new Intersection($this, $set);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
-        return $this->left.'∪'.$this->right;
+        return $this->left->toString().'∪'.$this->right->toString();
     }
 }

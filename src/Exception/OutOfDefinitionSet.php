@@ -12,6 +12,6 @@ final class OutOfDefinitionSet extends LogicException
 {
     public function __construct(Set $set, Number $number)
     {
-        parent::__construct($number.' ∉ '.$set);
+        parent::__construct($number->toString().' ∉ '.$set->toString());
     }
 }

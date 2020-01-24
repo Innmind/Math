@@ -128,8 +128,8 @@ final class Scope implements Number
         return $this->result->signum();
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
-        return (string) $this->result;
+        return $this->result->toString();
     }
 }

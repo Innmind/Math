@@ -27,12 +27,12 @@ final class Integral
         return subtract($primitive($b), $primitive($a));
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         return sprintf(
             '∫(%s)dx = [%s]',
-            $this->polynom,
-            $this->polynom->primitive()
+            $this->polynom->toString(),
+            $this->polynom->primitive()->toString()
         );
     }
 }

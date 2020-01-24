@@ -118,10 +118,10 @@ final class Exponential implements Operation, Number
         return new Signum($this);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         $power = $this->power instanceof Operation ?
-            '('.$this->power.')' : $this->power;
+            '('.$this->power->toString().')' : $this->power->toString();
 
         return 'e^'.$power;
     }

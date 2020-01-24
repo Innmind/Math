@@ -133,8 +133,8 @@ final class Tangent implements Number
         );
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
-        return sprintf('tan(%s)', $this->degree);
+        return sprintf('tan(%s)', $this->degree->toString());
     }
 }

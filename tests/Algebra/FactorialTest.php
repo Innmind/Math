@@ -49,7 +49,7 @@ class FactorialTest extends TestCase
         $number = new Factorial(3);
 
         $this->assertSame(6, $number->value());
-        $this->assertSame('3!', (string) $number);
+        $this->assertSame('3!', $number->toString());
     }
 
     public function testEquals()

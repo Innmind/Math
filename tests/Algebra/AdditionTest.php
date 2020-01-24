@@ -197,7 +197,7 @@ class AdditionTest extends TestCase
             )
         );
 
-        $this->assertSame('24 + (42 + 66)', (string) $addition);
+        $this->assertSame('24 + (42 + 66)', $addition->toString());
     }
 
     public function testModulo()

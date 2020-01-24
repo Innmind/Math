@@ -118,8 +118,8 @@ final class Absolute implements Operation, Number
         return new Signum($this);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
-        return '|'.$this->number.'|';
+        return '|'.$this->number->toString().'|';
     }
 }

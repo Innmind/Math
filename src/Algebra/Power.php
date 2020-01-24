@@ -120,12 +120,12 @@ final class Power implements Operation, Number
         return new Signum($this);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         $number = $this->number instanceof Operation ?
-            '('.$this->number.')' : $this->number;
+            '('.$this->number->toString().')' : $this->number->toString();
         $power = $this->power instanceof Operation ?
-            '('.$this->power.')' : $this->power;
+            '('.$this->power->toString().')' : $this->power->toString();
 
         return $number.'^'.$power;
     }

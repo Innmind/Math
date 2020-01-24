@@ -27,5 +27,5 @@ interface Number
     public function naturalLogarithm(): self;
     public function commonLogarithm(): self;
     public function signum(): self;
-    public function __toString(): string;
+    public function toString(): string;
 }

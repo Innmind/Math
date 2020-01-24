@@ -293,6 +293,6 @@ class SubtractionTest extends TestCase
             new Number\Number(66)
         );
 
-        $this->assertSame('(12 + 12) - 42 - 66', (string) $subtraction);
+        $this->assertSame('(12 + 12) - 42 - 66', $subtraction->toString());
     }
 }

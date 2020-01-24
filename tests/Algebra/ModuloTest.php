@@ -58,7 +58,7 @@ class ModuloTest extends TestCase
             new Number\Number(2.1)
         );
 
-        $this->assertSame('42.24 % 2.1', (string) $modulo);
+        $this->assertSame('42.24 % 2.1', $modulo->toString());
     }
 
     public function testStringCastOperations()
@@ -74,7 +74,7 @@ class ModuloTest extends TestCase
             )
         );
 
-        $this->assertSame('(1 + 1) % (2 + 2)', (string) $modulo);
+        $this->assertSame('(1 + 1) % (2 + 2)', $modulo->toString());
     }
 
     public function testEquals()

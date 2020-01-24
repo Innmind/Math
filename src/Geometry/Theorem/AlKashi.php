@@ -85,7 +85,7 @@ final class AlKashi
         return arcCosine($cosAB)->toDegree();
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         return 'C²=A²+B²-2AB*cos(A,B)';
     }

@@ -24,7 +24,7 @@ class DatasetTest extends TestCase
 
         $this->assertInstanceOf(\Iterator::class, $dataset);
         $this->assertInstanceOf(Dimension::class, $dataset->dimension());
-        $this->assertSame('2 x 2', (string) $dataset->dimension());
+        $this->assertSame('2 x 2', $dataset->dimension()->toString());
         $this->assertSame(
             [[1, 2], [3, 4]],
             $dataset->toArray()

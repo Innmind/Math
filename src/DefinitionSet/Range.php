@@ -74,13 +74,13 @@ final class Range implements Set
         return new Intersection($this, $set);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         return sprintf(
             '%s%s;%s%s',
             $this->lowerInclusivity === self::INCLUSIVE ? '[' : ']',
-            $this->lower,
-            $this->upper,
+            $this->lower->toString(),
+            $this->upper->toString(),
             $this->upperInclusivity === self::INCLUSIVE ? ']' : '['
         );
     }

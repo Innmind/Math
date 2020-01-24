@@ -58,7 +58,7 @@ class PowerTest extends TestCase
             new Number\Number(2.1)
         );
 
-        $this->assertSame('42.24^2.1', (string) $power);
+        $this->assertSame('42.24^2.1', $power->toString());
     }
 
     public function testStringCastOperations()
@@ -74,7 +74,7 @@ class PowerTest extends TestCase
             )
         );
 
-        $this->assertSame('(1 + 1)^(2 + 2)', (string) $power);
+        $this->assertSame('(1 + 1)^(2 + 2)', $power->toString());
     }
 
     public function testEquals()

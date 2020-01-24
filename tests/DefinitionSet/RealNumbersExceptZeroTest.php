@@ -26,7 +26,7 @@ class RealNumbersExceptZeroTest extends TestCase
 
     public function testStringCast()
     {
-        $this->assertSame('ℝ*', (string) new RealNumbersExceptZero);
+        $this->assertSame('ℝ*', (new RealNumbersExceptZero)->toString());
     }
 
     public function testContains()
@@ -46,7 +46,7 @@ class RealNumbersExceptZeroTest extends TestCase
         $union = (new RealNumbersExceptZero)->union(new RealNumbersExceptZero);
 
         $this->assertInstanceOf(Union::class, $union);
-        $this->assertSame('ℝ*∪ℝ*', (string) $union);
+        $this->assertSame('ℝ*∪ℝ*', $union->toString());
     }
 
     public function testIntersect()
@@ -54,6 +54,6 @@ class RealNumbersExceptZeroTest extends TestCase
         $intersection = (new RealNumbersExceptZero)->intersect(new RealNumbersExceptZero);
 
         $this->assertInstanceOf(Intersection::class, $intersection);
-        $this->assertSame('ℝ*∩ℝ*', (string) $intersection);
+        $this->assertSame('ℝ*∩ℝ*', $intersection->toString());
     }
 }

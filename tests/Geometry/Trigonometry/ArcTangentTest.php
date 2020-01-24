@@ -37,8 +37,8 @@ class ArcTangentTest extends TestCase
 
         $this->assertInstanceOf(Number::class, $atan);
         $this->assertInstanceOf(Degree::class, $atan->toDegree());
-        $this->assertSame('tan⁻¹(tan(42°))', (string) $atan);
-        $this->assertSame('42°', (string) $atan->toDegree());
+        $this->assertSame('tan⁻¹(tan(42°))', $atan->toString());
+        $this->assertSame('42°', $atan->toDegree()->toString());
     }
 
     public function testEquals()

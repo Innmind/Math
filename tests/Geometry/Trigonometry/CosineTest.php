@@ -34,7 +34,7 @@ class CosineTest extends TestCase
 
         $this->assertInstanceOf(Number::class, $cos);
         $this->assertSame(0.74314482547739, $cos->value());
-        $this->assertSame('cos(42°)', (string) $cos);
+        $this->assertSame('cos(42°)', $cos->toString());
     }
 
     public function testEquals()

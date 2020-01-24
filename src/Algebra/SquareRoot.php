@@ -118,10 +118,10 @@ final class SquareRoot implements Operation, Number
         return new Signum($this);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         $number = $this->number instanceof Operation ?
-            '('.$this->number.')' : $this->number;
+            '('.$this->number->toString().')' : $this->number->toString();
 
         return '√'.$number;
     }

@@ -136,7 +136,7 @@ final class Factorial implements Operation, Number
         return $this->number = Number\Number::wrap($factorial);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         return $this->value.'!';
     }

@@ -55,7 +55,7 @@ class ExponentialTest extends TestCase
             new Number\Number(2.1)
         );
 
-        $this->assertSame('e^2.1', (string) $power);
+        $this->assertSame('e^2.1', $power->toString());
     }
 
     public function testStringCastOperations()
@@ -67,7 +67,7 @@ class ExponentialTest extends TestCase
             )
         );
 
-        $this->assertSame('e^(2 + 2)', (string) $power);
+        $this->assertSame('e^(2 + 2)', $power->toString());
     }
 
     public function testEquals()

@@ -31,7 +31,7 @@ class MatrixTest extends TestCase
 
         $this->assertInstanceOf(\Iterator::class, $matrix);
         $this->assertInstanceOf(Dimension::class, $matrix->dimension());
-        $this->assertSame('2 x 3', (string) $matrix->dimension());
+        $this->assertSame('2 x 3', $matrix->dimension()->toString());
         $this->assertInstanceOf(RowVector::class, $matrix->row(0));
         $this->assertInstanceOf(RowVector::class, $matrix->row(1));
         $this->assertSame($rows[0], $matrix->row(0));

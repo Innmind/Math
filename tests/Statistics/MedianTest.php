@@ -287,6 +287,6 @@ class MedianTest extends TestCase
             new Number\Number(7.1)
         );
 
-        $this->assertSame('(1 + 7.1) ÷ 2', (string) $median);
+        $this->assertSame('(1 + 7.1) ÷ 2', $median->toString());
     }
 }

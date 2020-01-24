@@ -34,7 +34,7 @@ class ETest extends TestCase
 
     public function testStringCast()
     {
-        $this->assertSame('e', (string) new E);
+        $this->assertSame('e', (new E)->toString());
     }
 
     public function testEquals()

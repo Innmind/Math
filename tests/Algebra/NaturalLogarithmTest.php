@@ -65,7 +65,7 @@ class NaturalLogarithmTest extends TestCase
     {
         $this->assertSame(
             'ln(4)',
-            (string) new NaturalLogarithm(new Number\Number(4))
+            (new NaturalLogarithm(new Number\Number(4)))->toString()
         );
     }
 
@@ -229,7 +229,7 @@ class NaturalLogarithmTest extends TestCase
         $set = BinaryLogarithm::definitionSet();
 
         $this->assertInstanceOf(Set::class, $set);
-        $this->assertSame(']0;+∞[', (string) $set);
+        $this->assertSame(']0;+∞[', $set->toString());
     }
 
     public function testLogarithmMultiplication()

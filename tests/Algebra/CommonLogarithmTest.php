@@ -65,7 +65,7 @@ class CommonLogarithmTest extends TestCase
     {
         $this->assertSame(
             'lg(4)',
-            (string) new CommonLogarithm(new Number\Number(4))
+            (new CommonLogarithm(new Number\Number(4)))->toString()
         );
     }
 
@@ -229,7 +229,7 @@ class CommonLogarithmTest extends TestCase
         $set = BinaryLogarithm::definitionSet();
 
         $this->assertInstanceOf(Set::class, $set);
-        $this->assertSame(']0;+∞[', (string) $set);
+        $this->assertSame(']0;+∞[', $set->toString());
     }
 
     public function testLogarithmMultiplication()

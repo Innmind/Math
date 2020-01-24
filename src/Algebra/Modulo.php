@@ -120,12 +120,12 @@ final class Modulo implements Operation, Number
         return new Signum($this);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         $number = $this->number instanceof Operation ?
-            '('.$this->number.')' : $this->number;
+            '('.$this->number->toString().')' : $this->number->toString();
         $modulus = $this->modulus instanceof Operation ?
-            '('.$this->modulus.')' : $this->modulus;
+            '('.$this->modulus->toString().')' : $this->modulus->toString();
 
         return $number.' % '.$modulus;
     }

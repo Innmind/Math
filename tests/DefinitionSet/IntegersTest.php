@@ -25,7 +25,7 @@ class IntegersTest extends TestCase
 
     public function testStringCast()
     {
-        $this->assertSame('ℤ', (string) new Integers);
+        $this->assertSame('ℤ', (new Integers)->toString());
     }
 
     public function testContains()
@@ -43,7 +43,7 @@ class IntegersTest extends TestCase
         $union = (new Integers)->union(new Integers);
 
         $this->assertInstanceOf(Union::class, $union);
-        $this->assertSame('ℤ∪ℤ', (string) $union);
+        $this->assertSame('ℤ∪ℤ', $union->toString());
     }
 
     public function testIntersect()
@@ -51,6 +51,6 @@ class IntegersTest extends TestCase
         $intersection = (new Integers)->intersect(new Integers);
 
         $this->assertInstanceOf(Intersection::class, $intersection);
-        $this->assertSame('ℤ∩ℤ', (string) $intersection);
+        $this->assertSame('ℤ∩ℤ', $intersection->toString());
     }
 }

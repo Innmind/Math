@@ -218,13 +218,13 @@ class DivisionTest extends TestCase
     {
         $this->assertSame(
             '(2 + 2) ÷ 2',
-            (string) new Division(
+            (new Division(
                 new Addition(
                     new Number\Number(2),
                     new Number\Number(2)
                 ),
                 new Number\Number(2)
-            )
+            ))->toString()
         );
     }
 

@@ -118,8 +118,8 @@ final class Signum implements Operation, Number
         return new self($this);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
-        return sprintf('sgn(%s)', $this->number);
+        return sprintf('sgn(%s)', $this->number->toString());
     }
 }

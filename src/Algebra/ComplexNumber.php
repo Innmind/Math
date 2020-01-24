@@ -157,12 +157,12 @@ final class ComplexNumber
             $this->imaginary->equals($number->imaginary());
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         $real = $this->real instanceof Operation ?
-            '('.$this->real.')' : $this->real;
+            '('.$this->real->toString().')' : $this->real->toString();
         $imaginary = $this->imaginary instanceof Operation ?
-            '('.$this->imaginary.')' : $this->imaginary;
+            '('.$this->imaginary->toString().')' : $this->imaginary->toString();
 
         return sprintf('(%s + %si)', $real, $imaginary);
     }

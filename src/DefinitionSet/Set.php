@@ -13,5 +13,5 @@ interface Set
     public function contains(Number $number): bool;
     public function union(self $set): self;
     public function intersect(self $set): self;
-    public function __toString(): string;
+    public function toString(): string;
 }

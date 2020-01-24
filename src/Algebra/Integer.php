@@ -125,8 +125,8 @@ final class Integer implements Number
         return new self($this->number->value() - 1);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
-        return (string) $this->number;
+        return $this->number->toString();
     }
 }

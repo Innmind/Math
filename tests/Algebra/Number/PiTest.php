@@ -34,7 +34,7 @@ class PiTest extends TestCase
 
     public function testStringCast()
     {
-        $this->assertSame('π', (string) new Pi);
+        $this->assertSame('π', (new Pi)->toString());
     }
 
     public function testEquals()

@@ -20,7 +20,7 @@ class DimensionTest extends TestCase
         $this->assertInstanceOf(Integer::class, $dimension->columns());
         $this->assertSame(2, $dimension->rows()->value());
         $this->assertSame(3, $dimension->columns()->value());
-        $this->assertSame('2 x 3', (string) $dimension);
+        $this->assertSame('2 x 3', $dimension->toString());
     }
 
     public function testThrowWhenNegativeRows()

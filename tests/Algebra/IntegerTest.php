@@ -42,7 +42,7 @@ class IntegerTest extends TestCase
         $number = new Integer(42);
 
         $this->assertSame(42, $number->value());
-        $this->assertSame('42', (string) $number);
+        $this->assertSame('42', $number->toString());
     }
 
     public function testEquals()
@@ -162,7 +162,7 @@ class IntegerTest extends TestCase
         $number = new Integer(3);
 
         $this->assertInstanceOf(Factorial::class, $number->factorial());
-        $this->assertSame('3!', (string) $number->factorial());
+        $this->assertSame('3!', $number->factorial()->toString());
     }
 
     public function testExponential()

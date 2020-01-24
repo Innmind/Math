@@ -25,7 +25,7 @@ class IntegersExceptZeroTest extends TestCase
 
     public function testStringCast()
     {
-        $this->assertSame('ℤ*', (string) new IntegersExceptZero);
+        $this->assertSame('ℤ*', (new IntegersExceptZero)->toString());
     }
 
     public function testContains()
@@ -43,7 +43,7 @@ class IntegersExceptZeroTest extends TestCase
         $union = (new IntegersExceptZero)->union(new IntegersExceptZero);
 
         $this->assertInstanceOf(Union::class, $union);
-        $this->assertSame('ℤ*∪ℤ*', (string) $union);
+        $this->assertSame('ℤ*∪ℤ*', $union->toString());
     }
 
     public function testIntersect()
@@ -51,6 +51,6 @@ class IntegersExceptZeroTest extends TestCase
         $intersection = (new IntegersExceptZero)->intersect(new IntegersExceptZero);
 
         $this->assertInstanceOf(Intersection::class, $intersection);
-        $this->assertSame('ℤ*∩ℤ*', (string) $intersection);
+        $this->assertSame('ℤ*∩ℤ*', $intersection->toString());
     }
 }

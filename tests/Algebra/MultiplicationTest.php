@@ -293,7 +293,7 @@ class MultiplicationTest extends TestCase
             new Number\Number(66)
         );
 
-        $this->assertSame('(12 + 12) x 42 x 66', (string) $multiplication);
+        $this->assertSame('(12 + 12) x 42 x 66', $multiplication->toString());
     }
 
     public function testDistributivity()

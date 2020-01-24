@@ -56,7 +56,7 @@ class SquareRootTest extends TestCase
     {
         $this->assertSame(
             '√4',
-            (string) new SquareRoot(new Number\Number(4))
+            (new SquareRoot(new Number\Number(4)))->toString()
         );
     }
 

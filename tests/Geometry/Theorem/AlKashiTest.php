@@ -16,7 +16,7 @@ class AlKashiTest extends TestCase
 {
     public function testStringCast()
     {
-        $this->assertSame('C²=A²+B²-2AB*cos(A,B)', (string) new AlKashi);
+        $this->assertSame('C²=A²+B²-2AB*cos(A,B)', (new AlKashi)->toString());
     }
 
     public function testSide()
@@ -30,7 +30,7 @@ class AlKashiTest extends TestCase
         $this->assertInstanceOf(Segment::class, $c);
         $this->assertSame(
             '√(((5^2) + (7^2)) - (((2 x 5) x 7) x cos(49°)))',
-            (string) $c->length()
+            $c->length()->toString()
         );
         $this->assertSame(
             5.298666621959197,

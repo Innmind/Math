@@ -37,8 +37,8 @@ class ArcSineTest extends TestCase
 
         $this->assertInstanceOf(Number::class, $asin);
         $this->assertInstanceOf(Degree::class, $asin->toDegree());
-        $this->assertSame('sin⁻¹(sin(42°))', (string) $asin);
-        $this->assertSame('42°', (string) $asin->toDegree());
+        $this->assertSame('sin⁻¹(sin(42°))', $asin->toString());
+        $this->assertSame('42°', $asin->toDegree()->toString());
     }
 
     public function testEquals()

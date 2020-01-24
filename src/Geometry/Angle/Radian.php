@@ -60,7 +60,7 @@ final class Radian
         return $this->number;
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         return $this->number->value().' rad';
     }

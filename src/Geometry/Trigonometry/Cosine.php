@@ -133,8 +133,8 @@ final class Cosine implements Number
         );
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
-        return sprintf('cos(%s)', $this->degree);
+        return sprintf('cos(%s)', $this->degree->toString());
     }
 }

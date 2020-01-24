@@ -140,16 +140,16 @@ final class Addition implements Operation, Number, \Iterator
         return $this->result = Number\Number::wrap($value);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         return (string) $this
             ->values
             ->map(static function(Number $number): string {
                 if ($number instanceof Operation) {
-                    return '('.$number.')';
+                    return '('.$number->toString().')';
                 }
 
-                return (string) $number;
+                return $number->toString();
             })
             ->join(' + ');
     }

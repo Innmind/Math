@@ -57,7 +57,7 @@ class RowVectorTest extends TestCase
         );
 
         $this->assertInstanceOf(Matrix::class, $matrix);
-        $this->assertSame('3 x 2', (string) $matrix->dimension());
+        $this->assertSame('3 x 2', $matrix->dimension()->toString());
         $this->assertSame(
             [
                 [-4, 8],

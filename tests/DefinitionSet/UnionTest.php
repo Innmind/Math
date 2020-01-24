@@ -28,7 +28,7 @@ class UnionTest extends TestCase
 
     public function testStringCast()
     {
-        $this->assertSame('∅∪∅', (string) new Union(new Set, new Set));
+        $this->assertSame('∅∪∅', (new Union(new Set, new Set))->toString());
     }
 
     public function testContains()
@@ -58,7 +58,7 @@ class UnionTest extends TestCase
         $union = (new Union(new Set, new Set))->union(new Set);
 
         $this->assertInstanceOf(Union::class, $union);
-        $this->assertSame('∅∪∅∪∅', (string) $union);
+        $this->assertSame('∅∪∅∪∅', $union->toString());
     }
 
     public function testIntersect()
@@ -66,6 +66,6 @@ class UnionTest extends TestCase
         $intersection = (new Union(new Set, new Set))->intersect(new Set);
 
         $this->assertInstanceOf(Intersection::class, $intersection);
-        $this->assertSame('∅∪∅∩∅', (string) $intersection);
+        $this->assertSame('∅∪∅∩∅', $intersection->toString());
     }
 }

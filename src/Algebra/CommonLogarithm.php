@@ -142,8 +142,8 @@ final class CommonLogarithm implements Operation, Number
         );
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
-        return sprintf('lg(%s)', $this->number);
+        return sprintf('lg(%s)', $this->number->toString());
     }
 }

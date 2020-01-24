@@ -142,8 +142,8 @@ final class BinaryLogarithm implements Operation, Number
         );
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
-        return sprintf('lb(%s)', $this->number);
+        return sprintf('lb(%s)', $this->number->toString());
     }
 }
