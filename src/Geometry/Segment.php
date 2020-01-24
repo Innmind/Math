@@ -17,7 +17,7 @@ final class Segment
     public function __construct(Number $length)
     {
         if (!$length->higherThan(new Integer(0))) {
-            throw new LengthMustBePositive;
+            throw new LengthMustBePositive((string) $length);
         }
 
         $this->length = $length;

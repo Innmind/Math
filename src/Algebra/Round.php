@@ -23,7 +23,7 @@ final class Round implements Number
         string $mode = self::UP
     ) {
         if ($precision < 0) {
-            throw new PrecisionMustBePositive;
+            throw new PrecisionMustBePositive((string) $precision);
         }
 
         $this->number = $number;

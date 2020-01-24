@@ -104,7 +104,7 @@ final class Quantile
                 return $this->max;
         }
 
-        throw new OutOfRangeException;
+        throw new OutOfRangeException((string) $index);
     }
 
     /**

@@ -23,7 +23,7 @@ final class CommonLogarithm implements Operation, Number
     public function __construct(Number $number)
     {
         if (!self::definitionSet()->contains($number)) {
-            throw new OutOfDefinitionSet;
+            throw new OutOfDefinitionSet(self::definitionSet(), $number);
         }
 
         $this->number = $number;

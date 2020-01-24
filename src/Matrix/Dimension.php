@@ -16,13 +16,14 @@ final class Dimension
 
     public function __construct(Integer $rows, Integer $columns)
     {
+        $this->string = sprintf('%s x %s', $rows, $columns);
+
         if ($rows->value() < 0 || $columns->value() < 0) {
-            throw new DimensionMustBePositive;
+            throw new DimensionMustBePositive($this->string);
         }
 
         $this->rows = $rows;
         $this->columns = $columns;
-        $this->string = sprintf('%s x %s', $rows, $columns);
     }
 
     public function rows(): Integer

@@ -13,7 +13,7 @@ final class Factorial implements Operation, Number
     public function __construct(int $value)
     {
         if ($value < 0) {
-            throw new FactorialMustBePositive;
+            throw new FactorialMustBePositive((string) $value);
         }
 
         $this->value = $value;
