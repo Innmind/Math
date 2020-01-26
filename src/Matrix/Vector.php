@@ -156,10 +156,12 @@ final class Vector
     }
 
     /**
-     * @param mixed $carry
-     * @param callable $reducer
+     * @template R
      *
-     * @return mixed
+     * @param R $carry
+     * @param callable(R, Number): R $reducer
+     *
+     * @return R
      */
     public function reduce($carry, callable $reducer)
     {
@@ -191,7 +193,6 @@ final class Vector
      */
     public function lead(): Number
     {
-        /** @var Number */
         return $this->reduce(
             new Integer(0),
             static function(Number $lead, Number $number): Number {

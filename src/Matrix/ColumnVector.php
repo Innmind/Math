@@ -117,10 +117,12 @@ final class ColumnVector
     }
 
     /**
-     * @param mixed $carry
-     * @param callable $reducer
+     * @template R
      *
-     * @return mixed
+     * @param R $carry
+     * @param callable(R, Number): R $reducer
+     *
+     * @return R
      */
     public function reduce($carry, callable $reducer)
     {
