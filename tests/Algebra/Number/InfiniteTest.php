@@ -3,25 +3,27 @@ declare(strict_types = 1);
 
 namespace Tests\Innmind\Math\Algebra\Number;
 
-use Innmind\Math\Algebra\{
-    Number\Infinite,
-    Number,
-    Addition,
-    Subtraction,
-    Multiplication,
-    Division,
-    Round,
-    Floor,
-    Ceil,
-    Modulo,
-    Absolute,
-    Power,
-    SquareRoot,
-    Exponential,
-    BinaryLogarithm,
-    NaturalLogarithm,
-    CommonLogarithm,
-    Signum
+use Innmind\Math\{
+    Algebra\Number\Infinite,
+    Algebra\Number,
+    Algebra\Addition,
+    Algebra\Subtraction,
+    Algebra\Multiplication,
+    Algebra\Division,
+    Algebra\Round,
+    Algebra\Floor,
+    Algebra\Ceil,
+    Algebra\Modulo,
+    Algebra\Absolute,
+    Algebra\Power,
+    Algebra\SquareRoot,
+    Algebra\Exponential,
+    Algebra\BinaryLogarithm,
+    Algebra\NaturalLogarithm,
+    Algebra\CommonLogarithm,
+    Algebra\Signum,
+    Exception\NotANumber,
+    Exception\OutOfDefinitionSet
 };
 use PHPUnit\Framework\TestCase;
 
@@ -34,8 +36,8 @@ class InfiniteTest extends TestCase
 
     public function testStringCast()
     {
-        $this->assertSame('+∞', (string) Infinite::positive());
-        $this->assertSame('-∞', (string) Infinite::negative());
+        $this->assertSame('+∞', Infinite::positive()->toString());
+        $this->assertSame('-∞', Infinite::negative()->toString());
     }
 
     public function testEquals()
@@ -89,10 +91,11 @@ class InfiniteTest extends TestCase
     public function testRound()
     {
         $number = Infinite::positive();
-        $number = $number->round(2);
 
-        $this->assertInstanceOf(Round::class, $number);
-        $this->assertSame(INF, $number->value());
+        $this->assertEquals(Round::up($number, 2), $number->roundUp(2));
+        $this->assertEquals(Round::down($number, 2), $number->roundDown(2));
+        $this->assertEquals(Round::even($number, 2), $number->roundEven(2));
+        $this->assertEquals(Round::odd($number, 2), $number->roundOdd(2));
     }
 
     public function testFloor()
@@ -113,12 +116,12 @@ class InfiniteTest extends TestCase
         $this->assertSame(INF, $number->value());
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\NotANumber
-     */
     public function testModulo()
     {
         $number = Infinite::positive();
+
+        $this->expectException(NotANumber::class);
+
         $number->modulo(new Number\Number(1))->value();
     }
 
@@ -157,27 +160,24 @@ class InfiniteTest extends TestCase
         $this->assertSame(INF, $number->value());
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\OutOfDefinitionSet
-     */
     public function testBinaryLogarithm()
     {
+        $this->expectException(OutOfDefinitionSet::class);
+
         Infinite::positive()->binaryLogarithm();
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\OutOfDefinitionSet
-     */
     public function testNaturalLogarithm()
     {
+        $this->expectException(OutOfDefinitionSet::class);
+
         Infinite::positive()->naturalLogarithm();
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\OutOfDefinitionSet
-     */
     public function testCommonLogarithm()
     {
+        $this->expectException(OutOfDefinitionSet::class);
+
         Infinite::positive()->commonLogarithm();
     }
 

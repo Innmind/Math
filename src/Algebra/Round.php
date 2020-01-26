@@ -7,39 +7,49 @@ use Innmind\Math\Exception\PrecisionMustBePositive;
 
 final class Round implements Number
 {
-    public const UP = 'UP';
-    public const DOWN = 'DOWN';
-    public const EVEN = 'EVEN';
-    public const ODD = 'ODD';
-
-    private $number;
-    private $precision;
-    private $mode;
+    private Number $number;
+    private int $precision;
+    private int $mode;
+    /** @var int|float|null */
     private $value;
 
-    public function __construct(
-        Number $number,
-        int $precision = 0,
-        string $mode = self::UP
-    ) {
+    private function __construct(Number $number, int $precision, int $mode)
+    {
         if ($precision < 0) {
-            throw new PrecisionMustBePositive;
+            throw new PrecisionMustBePositive((string) $precision);
         }
 
         $this->number = $number;
         $this->precision = $precision;
-        $this->mode = constant('PHP_ROUND_HALF_'.$mode);
+        $this->mode = $mode;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    public static function up(Number $number, int $precision = 0): self
+    {
+        return new self($number, $precision, \PHP_ROUND_HALF_UP);
+    }
+
+    public static function down(Number $number, int $precision = 0): self
+    {
+        return new self($number, $precision, \PHP_ROUND_HALF_DOWN);
+    }
+
+    public static function even(Number $number, int $precision = 0): self
+    {
+        return new self($number, $precision, \PHP_ROUND_HALF_EVEN);
+    }
+
+    public static function odd(Number $number, int $precision = 0): self
+    {
+        return new self($number, $precision, \PHP_ROUND_HALF_ODD);
+    }
+
     public function value()
     {
-        return $this->value ?? $this->value = round(
+        return $this->value ??= \round(
             $this->number->value(),
             $this->precision,
-            $this->mode
+            $this->mode,
         );
     }
 
@@ -73,9 +83,24 @@ final class Round implements Number
         return new Multiplication($this, $number, ...$numbers);
     }
 
-    public function round(int $precision = 0, string $mode = Round::UP): Number
+    public function roundUp(int $precision = 0): Number
     {
-        return new self($this, $precision, $mode);
+        return self::up($this, $precision);
+    }
+
+    public function roundDown(int $precision = 0): Number
+    {
+        return self::down($this, $precision);
+    }
+
+    public function roundEven(int $precision = 0): Number
+    {
+        return self::even($this, $precision);
+    }
+
+    public function roundOdd(int $precision = 0): Number
+    {
+        return self::odd($this, $precision);
     }
 
     public function floor(): Number
@@ -133,8 +158,8 @@ final class Round implements Number
         return new Signum($this);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
-        return var_export($this->value(), true);
+        return \var_export($this->value(), true);
     }
 }

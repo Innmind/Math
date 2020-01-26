@@ -37,8 +37,8 @@ class ArcSineTest extends TestCase
 
         $this->assertInstanceOf(Number::class, $asin);
         $this->assertInstanceOf(Degree::class, $asin->toDegree());
-        $this->assertSame('sin⁻¹(sin(42°))', (string) $asin);
-        $this->assertSame('42°', (string) $asin->toDegree());
+        $this->assertSame('sin⁻¹(sin(42°))', $asin->toString());
+        $this->assertSame('42°', $asin->toDegree()->toString());
     }
 
     public function testEquals()
@@ -109,13 +109,14 @@ class ArcSineTest extends TestCase
 
     public function testRound()
     {
-        $asin = new ArcSine(
+        $number = new ArcSine(
             new Sine(new Degree(new Number\Number(42)))
         );
-        $number = $asin->round(1);
 
-        $this->assertInstanceOf(Round::class, $number);
-        $this->assertSame(42.0, $number->value());
+        $this->assertEquals(42.0, $number->roundUp(1)->value());
+        $this->assertEquals(42.0, $number->roundDown(1)->value());
+        $this->assertEquals(42.0, $number->roundEven(1)->value());
+        $this->assertEquals(42.0, $number->roundOdd(1)->value());
     }
 
     public function testFloor()

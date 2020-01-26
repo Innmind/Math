@@ -5,8 +5,8 @@ namespace Innmind\Math\Algebra;
 
 final class Exponential implements Operation, Number
 {
-    private $power;
-    private $result;
+    private Number $power;
+    private ?Number $result = null;
 
     public function __construct(Number $power)
     {
@@ -16,7 +16,7 @@ final class Exponential implements Operation, Number
     public function result(): Number
     {
         return $this->result ?? $this->result = Number\Number::wrap(
-            exp($this->power->value())
+            \exp($this->power->value()),
         );
     }
 
@@ -58,9 +58,24 @@ final class Exponential implements Operation, Number
         return new Multiplication($this, $number, ...$numbers);
     }
 
-    public function round(int $precision = 0, string $mode = Round::UP): Number
+    public function roundUp(int $precision = 0): Number
     {
-        return new Round($this, $precision, $mode);
+        return Round::up($this, $precision);
+    }
+
+    public function roundDown(int $precision = 0): Number
+    {
+        return Round::down($this, $precision);
+    }
+
+    public function roundEven(int $precision = 0): Number
+    {
+        return Round::even($this, $precision);
+    }
+
+    public function roundOdd(int $precision = 0): Number
+    {
+        return Round::odd($this, $precision);
     }
 
     public function floor(): Number
@@ -118,10 +133,10 @@ final class Exponential implements Operation, Number
         return new Signum($this);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         $power = $this->power instanceof Operation ?
-            '('.$this->power.')' : $this->power;
+            '('.$this->power->toString().')' : $this->power->toString();
 
         return 'e^'.$power;
     }

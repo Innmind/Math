@@ -3,26 +3,27 @@ declare(strict_types = 1);
 
 namespace Tests\Innmind\Math\Algebra;
 
-use Innmind\Math\Algebra\{
-    Factorial,
-    Integer,
-    Number,
-    Addition,
-    Subtraction,
-    Multiplication,
-    Division,
-    Round,
-    Floor,
-    Ceil,
-    Modulo,
-    Absolute,
-    Power,
-    SquareRoot,
-    Exponential,
-    BinaryLogarithm,
-    NaturalLogarithm,
-    CommonLogarithm,
-    Signum
+use Innmind\Math\{
+    Algebra\Factorial,
+    Algebra\Integer,
+    Algebra\Number,
+    Algebra\Addition,
+    Algebra\Subtraction,
+    Algebra\Multiplication,
+    Algebra\Division,
+    Algebra\Round,
+    Algebra\Floor,
+    Algebra\Ceil,
+    Algebra\Modulo,
+    Algebra\Absolute,
+    Algebra\Power,
+    Algebra\SquareRoot,
+    Algebra\Exponential,
+    Algebra\BinaryLogarithm,
+    Algebra\NaturalLogarithm,
+    Algebra\CommonLogarithm,
+    Algebra\Signum,
+    Exception\FactorialMustBePositive
 };
 use PHPUnit\Framework\TestCase;
 
@@ -36,11 +37,10 @@ class FactorialTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\FactorialMustBePositive
-     */
     public function testThrowWhenNegativeFactorial()
     {
+        $this->expectException(FactorialMustBePositive::class);
+
         new Factorial(-1);
     }
 
@@ -49,7 +49,7 @@ class FactorialTest extends TestCase
         $number = new Factorial(3);
 
         $this->assertSame(6, $number->value());
-        $this->assertSame('3!', (string) $number);
+        $this->assertSame('3!', $number->toString());
     }
 
     public function testEquals()
@@ -104,10 +104,11 @@ class FactorialTest extends TestCase
     public function testRound()
     {
         $number = new Factorial(3);
-        $number = $number->round(1);
 
-        $this->assertInstanceOf(Round::class, $number);
-        $this->assertSame(6.0, $number->value());
+        $this->assertEquals(Round::up($number, 2), $number->roundUp(2));
+        $this->assertEquals(Round::down($number, 2), $number->roundDown(2));
+        $this->assertEquals(Round::even($number, 2), $number->roundEven(2));
+        $this->assertEquals(Round::odd($number, 2), $number->roundOdd(2));
     }
 
     public function testFloor()

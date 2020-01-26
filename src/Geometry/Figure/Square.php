@@ -7,12 +7,12 @@ use function Innmind\Math\multiply;
 use Innmind\Math\{
     Geometry\Figure,
     Geometry\Segment,
-    Algebra\Number
+    Algebra\Number,
 };
 
 final class Square implements Figure
 {
-    private $side;
+    private Segment $side;
 
     public function __construct(Segment $side)
     {

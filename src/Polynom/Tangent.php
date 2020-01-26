@@ -5,16 +5,16 @@ namespace Innmind\Math\Polynom;
 
 use function Innmind\Math\{
     add,
-    multiply
+    multiply,
 };
 use Innmind\Math\Algebra\Number;
 
 final class Tangent
 {
-    private $polynom;
-    private $derivative;
-    private $abscissa;
-    private $intercept;
+    private Polynom $polynom;
+    private Number $derivative;
+    private Number $abscissa;
+    private Number $intercept;
 
     public function __construct(
         Polynom $polynom,
@@ -42,9 +42,9 @@ final class Tangent
         return add(
             multiply(
                 $this->derivative,
-                $x->subtract($this->abscissa)
+                $x->subtract($this->abscissa),
             ),
-            $this->intercept
+            $this->intercept,
         );
     }
 

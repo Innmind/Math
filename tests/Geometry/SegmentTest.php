@@ -7,7 +7,8 @@ use Innmind\Math\{
     Geometry\Segment,
     Geometry\Angle,
     Geometry\Angle\Degree,
-    Algebra\Integer
+    Algebra\Integer,
+    Exception\LengthMustBePositive
 };
 use PHPUnit\Framework\TestCase;
 
@@ -20,19 +21,22 @@ class SegmentTest extends TestCase
         $this->assertSame($length, $segment->length());
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\LengthMustBePositive
-     */
+    public function testStringCast()
+    {
+        $this->assertSame('2', (new Segment(new Integer(2)))->toString());
+    }
+
     public function testThrowWhenNullSegment()
     {
+        $this->expectException(LengthMustBePositive::class);
+
         new Segment(new Integer(0));
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\LengthMustBePositive
-     */
     public function testThrowWhenNegativeLength()
     {
+        $this->expectException(LengthMustBePositive::class);
+
         new Segment(new Integer(-1));
     }
 

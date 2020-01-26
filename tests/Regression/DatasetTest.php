@@ -8,7 +8,8 @@ use Innmind\Math\{
     Regression\Dataset,
     Matrix\RowVector,
     Matrix\ColumnVector,
-    Matrix\Dimension
+    Matrix\Dimension,
+    Exception\VectorsMustContainsOnlyTwoValues
 };
 use PHPUnit\Framework\TestCase;
 
@@ -17,13 +18,12 @@ class DatasetTest extends TestCase
     public function testInterface()
     {
         $dataset = new Dataset(
-            new RowVector(...numerize(1, 2)),
-            new RowVector(...numerize(3, 4))
+            $first = new RowVector(...numerize(1, 2)),
+            $second = new RowVector(...numerize(3, 4)),
         );
 
-        $this->assertInstanceOf(\Iterator::class, $dataset);
         $this->assertInstanceOf(Dimension::class, $dataset->dimension());
-        $this->assertSame('2 x 2', (string) $dataset->dimension());
+        $this->assertSame('2 x 2', $dataset->dimension()->toString());
         $this->assertSame(
             [[1, 2], [3, 4]],
             $dataset->toArray()
@@ -38,13 +38,14 @@ class DatasetTest extends TestCase
             [2, 4],
             $dataset->ordinates()->toArray()
         );
+        $this->assertSame($first, $dataset->row(0));
+        $this->assertSame($second, $dataset->row(1));
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\VectorsMustContainsOnlyTwoValues
-     */
     public function testThrowWhenNotUsingTwoDimensionalDataset()
     {
+        $this->expectException(VectorsMustContainsOnlyTwoValues::class);
+
         new Dataset(
             new RowVector(...numerize(1, 2, 3))
         );
@@ -52,7 +53,7 @@ class DatasetTest extends TestCase
 
     public function testFromArray()
     {
-        $dataset = Dataset::fromArray([
+        $dataset = Dataset::of([
             1,
             2,
             3,

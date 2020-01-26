@@ -25,8 +25,8 @@ class FrequenceTest extends TestCase
 
         $this->assertInstanceOf(Division::class, $frequence(new Integer(1)));
         $this->assertInstanceOf(Division::class, $frequence(new Integer(4)));
-        $this->assertSame('2 ÷ 5', (string) $frequence(new Integer(1)));
-        $this->assertSame('0 ÷ 5', (string) $frequence(new Integer(4)));
+        $this->assertSame('2 ÷ 5', $frequence(new Integer(1))->toString());
+        $this->assertSame('0 ÷ 5', $frequence(new Integer(4))->toString());
         $this->assertInstanceOf(Number::class, $frequence->size());
         $this->assertSame(5, $frequence->size()->value());
     }

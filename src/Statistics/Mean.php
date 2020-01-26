@@ -5,24 +5,25 @@ namespace Innmind\Math\Statistics;
 
 use Innmind\Math\Algebra\{
     Number,
-    Round
+    Round,
 };
 use Innmind\Immutable\Sequence;
 
 final class Mean implements Number
 {
-    private $result;
+    private Number $result;
 
     public function __construct(Number $first, Number ...$values)
     {
-        $sequence = new Sequence($first, ...$values);
+        /** @var Sequence<Number> */
+        $sequence = Sequence::of(Number::class, $first, ...$values);
         $sum = $sequence
             ->drop(1)
             ->reduce(
                 $sequence->first(),
                 static function(Number $carry, Number $number): Number {
                     return $carry->add($number);
-                }
+                },
             );
         $this->result = $sum->divideBy(new Number\Number($sequence->size()));
     }
@@ -70,9 +71,24 @@ final class Mean implements Number
         return $this->result->multiplyBy($number, ...$numbers);
     }
 
-    public function round(int $precision = 0, string $mode = Round::UP): Number
+    public function roundUp(int $precision = 0): Number
     {
-        return $this->result->round($precision, $mode);
+        return $this->result->roundUp($precision);
+    }
+
+    public function roundDown(int $precision = 0): Number
+    {
+        return $this->result->roundDown($precision);
+    }
+
+    public function roundEven(int $precision = 0): Number
+    {
+        return $this->result->roundEven($precision);
+    }
+
+    public function roundOdd(int $precision = 0): Number
+    {
+        return $this->result->roundOdd($precision);
     }
 
     public function floor(): Number
@@ -130,8 +146,8 @@ final class Mean implements Number
         return $this->result->signum();
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
-        return (string) $this->result;
+        return $this->result->toString();
     }
 }

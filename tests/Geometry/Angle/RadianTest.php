@@ -17,7 +17,7 @@ class RadianTest extends TestCase
      */
     public function testStringCast($radian, $expected)
     {
-        $this->assertSame($expected, (string) new Radian(new Number($radian)));
+        $this->assertSame($expected, (new Radian(new Number($radian)))->toString());
     }
 
     public function testIsRight()
@@ -63,7 +63,7 @@ class RadianTest extends TestCase
         $degree = $radian->toDegree();
 
         $this->assertInstanceOf(Degree::class, $degree);
-        $this->assertSame($expected, (string) $degree);
+        $this->assertSame($expected, $degree->toString());
     }
 
     public function radians(): array

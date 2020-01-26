@@ -3,17 +3,20 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\DefinitionSet;
 
-use Innmind\Math\Algebra\Number;
+use Innmind\Math\{
+    Algebra\Number,
+    Exception\OutOfDefinitionSet,
+};
 
 final class Range implements Set
 {
     public const INCLUSIVE = true;
     public const EXCLUSIVE = false;
 
-    private $lowerInclusivity;
-    private $upperInclusivity;
-    private $lower;
-    private $upper;
+    private bool $lowerInclusivity;
+    private bool $upperInclusivity;
+    private Number $lower;
+    private Number $upper;
 
     public function __construct(
         bool $lowerInclusivity,
@@ -64,6 +67,13 @@ final class Range implements Set
         return true;
     }
 
+    public function accept(Number $number): void
+    {
+        if (!$this->contains($number)) {
+            throw new OutOfDefinitionSet($this, $number);
+        }
+    }
+
     public function union(Set $set): Set
     {
         return new Union($this, $set);
@@ -74,14 +84,14 @@ final class Range implements Set
         return new Intersection($this, $set);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
-        return sprintf(
+        return \sprintf(
             '%s%s;%s%s',
             $this->lowerInclusivity === self::INCLUSIVE ? '[' : ']',
-            $this->lower,
-            $this->upper,
-            $this->upperInclusivity === self::INCLUSIVE ? ']' : '['
+            $this->lower->toString(),
+            $this->upper->toString(),
+            $this->upperInclusivity === self::INCLUSIVE ? ']' : '[',
         );
     }
 }

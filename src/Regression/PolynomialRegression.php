@@ -9,14 +9,15 @@ use Innmind\Math\{
     Algebra\Integer,
     Polynom\Polynom,
     Matrix,
-    Matrix\RowVector
+    Matrix\RowVector,
 };
 use Innmind\Immutable\Sequence;
+use function Innmind\Immutable\unwrap;
 
 final class PolynomialRegression
 {
-    private $polynom;
-    private $deviation;
+    private Polynom $polynom;
+    private Number $deviation;
 
     public function __construct(Dataset $dataset, Integer $degree)
     {
@@ -41,7 +42,7 @@ final class PolynomialRegression
 
             $this->polynom = $this->polynom->withDegree(
                 new Integer($i),
-                $coefficients->get($i)
+                $coefficients->get($i),
             );
         }
 
@@ -65,22 +66,23 @@ final class PolynomialRegression
 
     private function buildMatrix(Dataset $dataset, Integer $degree): Matrix
     {
-        $powers = new RowVector(...numerize(...range(0, $degree->value())));
+        $powers = new RowVector(...numerize(...\range(0, $degree->value())));
 
+        /** @var Sequence<RowVector> */
         $rows = $dataset
             ->abscissas()
             ->reduce(
-                new Sequence,
+                Sequence::of(RowVector::class),
                 static function(Sequence $rows, Number $x) use ($powers): Sequence {
                     $xToThePowers = $powers->map(static function(Number $power) use ($x): Number {
                         return $x->power($power);
                     });
 
-                    return $rows->add($xToThePowers);
+                    return ($rows)($xToThePowers);
                 }
             );
 
-        return new Matrix(...$rows);
+        return new Matrix(...unwrap($rows));
     }
 
     private function buildVector(Dataset $dataset, Integer $degree): Matrix
@@ -93,16 +95,14 @@ final class PolynomialRegression
         $values = $dataset->ordinates();
         $estimated = $dataset
             ->abscissas()
-            ->map(function(Number $x): Number {
-                return $this($x);
-            });
+            ->map(fn(Number $x): Number => $this($x));
 
         return $values
             ->subtract($estimated)
             ->power(new Integer(2))
             ->sum()
             ->divideBy(
-                $values->dimension()
+                $values->dimension(),
             )
             ->squareRoot();
     }

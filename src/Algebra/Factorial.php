@@ -7,13 +7,13 @@ use Innmind\Math\Exception\FactorialMustBePositive;
 
 final class Factorial implements Operation, Number
 {
-    private $value;
-    private $number;
+    private int $value;
+    private ?Number $number = null;
 
     public function __construct(int $value)
     {
         if ($value < 0) {
-            throw new FactorialMustBePositive;
+            throw new FactorialMustBePositive((string) $value);
         }
 
         $this->value = $value;
@@ -57,9 +57,24 @@ final class Factorial implements Operation, Number
         return $this->result()->multiplyBy($number, ...$numbers);
     }
 
-    public function round(int $precision = 0, string $mode = Round::UP): Number
+    public function roundUp(int $precision = 0): Number
     {
-        return $this->result()->round($precision, $mode);
+        return Round::up($this, $precision);
+    }
+
+    public function roundDown(int $precision = 0): Number
+    {
+        return Round::down($this, $precision);
+    }
+
+    public function roundEven(int $precision = 0): Number
+    {
+        return Round::even($this, $precision);
+    }
+
+    public function roundOdd(int $precision = 0): Number
+    {
+        return Round::odd($this, $precision);
     }
 
     public function floor(): Number
@@ -136,7 +151,7 @@ final class Factorial implements Operation, Number
         return $this->number = Number\Number::wrap($factorial);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         return $this->value.'!';
     }

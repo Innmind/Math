@@ -120,14 +120,15 @@ class MeanTest extends TestCase
 
     public function testRound()
     {
-        $mean = new Mean(
+        $number = new Mean(
             new Number\Number(1),
             new Number\Number(7.12)
         );
-        $number = $mean->round(1);
 
-        $this->assertInstanceOf(Round::class, $number);
-        $this->assertSame(4.1, $number->value());
+        $this->assertEquals(4.1, $number->roundUp(1)->value());
+        $this->assertEquals(4.1, $number->roundDown(1)->value());
+        $this->assertEquals(4.1, $number->roundEven(1)->value());
+        $this->assertEquals(4.1, $number->roundOdd(1)->value());
     }
 
     public function testFloor()
@@ -265,6 +266,6 @@ class MeanTest extends TestCase
             new Number\Number(7.1)
         );
 
-        $this->assertSame('(1 + 7.1) ÷ 2', (string) $mean);
+        $this->assertSame('(1 + 7.1) ÷ 2', $mean->toString());
     }
 }

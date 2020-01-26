@@ -7,17 +7,17 @@ use Innmind\Math\{
     Geometry\Angle\Degree,
     Algebra\Number,
     Algebra\Integer,
-    Exception\LengthMustBePositive
+    Exception\LengthMustBePositive,
 };
 
 final class Segment
 {
-    private $length;
+    private Number $length;
 
     public function __construct(Number $length)
     {
         if (!$length->higherThan(new Integer(0))) {
-            throw new LengthMustBePositive;
+            throw new LengthMustBePositive($length->toString());
         }
 
         $this->length = $length;
@@ -33,7 +33,7 @@ final class Segment
         return new Angle($this, $angle, $segment);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         return (string) $this->length->value();
     }

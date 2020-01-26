@@ -6,29 +6,38 @@ namespace Innmind\Math\Polynom;
 use function Innmind\Math\{
     add,
     divide,
-    subtract
+    subtract,
 };
 use Innmind\Math\Algebra\{
     Number,
     Integer,
-    Operation
+    Operation,
 };
-use Innmind\Immutable\Map;
+use Innmind\Immutable\{
+    Map,
+    Sequence,
+};
+use function Innmind\Immutable\{
+    unwrap,
+    join,
+};
 
 final class Polynom
 {
-    private $intercept;
-    private $degrees;
+    private Number $intercept;
+    /** @var Map<int, Degree> */
+    private Map $degrees;
 
     public function __construct(Number $intercept = null, Degree ...$degrees)
     {
         $this->intercept = $intercept ?? new Integer(0);
-        $this->degrees = new Map('int', Degree::class);
+        /** @var Map<int, Degree> */
+        $this->degrees = Map::of('int', Degree::class);
 
         foreach ($degrees as $degree) {
-            $this->degrees = $this->degrees->put(
+            $this->degrees = ($this->degrees)(
                 $degree->degree()->value(),
-                $degree
+                $degree,
             );
         }
     }
@@ -43,14 +52,14 @@ final class Polynom
      */
     public function withDegree(Integer $degree, Number $coeff): self
     {
-        $degrees = $this->degrees->put(
+        $degrees = ($this->degrees)(
             $degree->value(),
-            new Degree($degree, $coeff)
+            new Degree($degree, $coeff),
         );
 
         return new self(
             $this->intercept,
-            ...$degrees->values()
+            ...unwrap($degrees->values()),
         );
     }
 
@@ -97,17 +106,17 @@ final class Polynom
      */
     public function __invoke(Number $x): Number
     {
-        return add(
-            $this->intercept,
-            ...$this->degrees->values()->reduce(
-                [],
-                static function(array $carry, Degree $degree) use ($x): array {
-                    $carry[] = $degree($x);
+        /** @var list<Number> */
+        $values = $this->degrees->values()->reduce(
+            [],
+            static function(array $carry, Degree $degree) use ($x): array {
+                $carry[] = $degree($x);
 
-                    return $carry;
-                }
-            )
+                return $carry;
+            }
         );
+
+        return add($this->intercept, ...$values);
     }
 
     /**
@@ -125,9 +134,9 @@ final class Polynom
         return divide(
             subtract(
                 $this(add($x, $limit)),
-                $this($x)
+                $this($x),
             ),
-            $limit
+            $limit,
         );
     }
 
@@ -154,17 +163,18 @@ final class Polynom
             });
 
         if (!$this->intercept->equals(new Integer(0))) {
-            $degrees = $degrees->add(
+            $degrees = ($degrees)(
                 new Degree(new Integer(1), $this->intercept)
             );
         }
 
-        return new self(new Integer(0), ...$degrees);
+        return new self(new Integer(0), ...unwrap($degrees));
     }
 
     public function derivative(): self
     {
         $degrees = $this->degrees;
+        $intercept = new Integer(0);
 
         if ($degrees->contains(1)) {
             $intercept = $degrees->get(1)->coeff();
@@ -172,12 +182,12 @@ final class Polynom
         }
 
         return new self(
-            $intercept ?? new Integer(0),
-            ...$degrees
+            $intercept,
+            ...unwrap($degrees
                 ->values()
                 ->map(static function(Degree $degree): Degree {
                     return $degree->derivative();
-                })
+                })),
         );
     }
 
@@ -186,25 +196,29 @@ final class Polynom
         return new Integral($this);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
-        $polynom = $this
+        $degrees = $this
             ->degrees
             ->values()
-            ->sort(static function(Degree $a, Degree $b): bool {
-                return $b->degree()->higherThan($a->degree());
+            ->sort(static function(Degree $a, Degree $b): int {
+                return (int) $b->degree()->higherThan($a->degree());
             })
-            ->join(' + ');
+            ->mapTo(
+                'string',
+                static fn(Degree $degree): string => $degree->toString(),
+            );
+        $polynom = join(' + ', $degrees);
 
         if (!$this->intercept->equals(new Integer(0))) {
             $intercept = $this->intercept instanceof Operation ?
-                '('.$this->intercept.')' : (string) $this->intercept;
+                '('.$this->intercept->toString().')' : $this->intercept->toString();
 
             $polynom = $polynom
                 ->append(' + ')
                 ->append($intercept);
         }
 
-        return (string) $polynom;
+        return $polynom->toString();
     }
 }

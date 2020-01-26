@@ -7,12 +7,12 @@ use Innmind\Math\{
     Regression\Dataset,
     Matrix\ColumnVector,
     Algebra\Number,
-    Algebra\Integer
+    Algebra\Integer,
 };
 
 final class Variance
 {
-    private $variance;
+    private Number $variance;
 
     public function __construct(Dataset $dataset)
     {
@@ -22,8 +22,8 @@ final class Variance
             ->subtract(
                 ColumnVector::initialize(
                     $dataset->abscissas()->dimension(),
-                    $expectation
-                )
+                    $expectation,
+                ),
             )
             ->power(new Integer(2))
             ->multiplyBy($dataset->ordinates())

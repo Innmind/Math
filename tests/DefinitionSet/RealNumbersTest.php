@@ -26,7 +26,7 @@ class RealNumbersTest extends TestCase
 
     public function testStringCast()
     {
-        $this->assertSame('ℝ', (string) new RealNumbers);
+        $this->assertSame('ℝ', (new RealNumbers)->toString());
     }
 
     public function testContains()
@@ -41,12 +41,24 @@ class RealNumbersTest extends TestCase
         $this->assertTrue($set->contains(new Pi));
     }
 
+    public function testAccept()
+    {
+        $set = new RealNumbers;
+
+        $this->assertNull($set->accept(new Integer(1)));
+        $this->assertNull($set->accept(new Integer(0)));
+        $this->assertNull($set->accept(new Integer(-1)));
+        $this->assertNull($set->accept(new Number(0.75)));
+        $this->assertNull($set->accept(new Number(-0.75)));
+        $this->assertNull($set->accept(new Pi));
+    }
+
     public function testUnion()
     {
         $union = (new RealNumbers)->union(new RealNumbers);
 
         $this->assertInstanceOf(Union::class, $union);
-        $this->assertSame('ℝ∪ℝ', (string) $union);
+        $this->assertSame('ℝ∪ℝ', $union->toString());
     }
 
     public function testIntersect()
@@ -54,6 +66,6 @@ class RealNumbersTest extends TestCase
         $intersection = (new RealNumbers)->intersect(new RealNumbers);
 
         $this->assertInstanceOf(Intersection::class, $intersection);
-        $this->assertSame('ℝ∩ℝ', (string) $intersection);
+        $this->assertSame('ℝ∩ℝ', $intersection->toString());
     }
 }

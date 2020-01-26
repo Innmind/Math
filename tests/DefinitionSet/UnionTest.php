@@ -9,7 +9,8 @@ use Innmind\Math\{
     DefinitionSet\Set\Set,
     DefinitionSet\Intersection,
     Algebra\Integer,
-    Algebra\Number\Number
+    Algebra\Number\Number,
+    Exception\OutOfDefinitionSet,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -28,7 +29,7 @@ class UnionTest extends TestCase
 
     public function testStringCast()
     {
-        $this->assertSame('∅∪∅', (string) new Union(new Set, new Set));
+        $this->assertSame('∅∪∅', (new Union(new Set, new Set))->toString());
     }
 
     public function testContains()
@@ -53,12 +54,33 @@ class UnionTest extends TestCase
         $this->assertFalse($union->contains(new Number(0)));
     }
 
+    public function testAccept()
+    {
+        $set = new Union(
+            new Set(
+                new Integer(1),
+                new Integer(2)
+            ),
+            new Set(
+                new Integer(4),
+                new Integer(5)
+            )
+        );
+
+        $this->assertNull($set->accept(new Integer(1)));
+
+        $this->expectException(OutOfDefinitionSet::class);
+        $this->expectExceptionMessage('0.1 ∉ {1;2}∪{4;5}');
+
+        $set->accept(new Number(0.1));
+    }
+
     public function testUnion()
     {
         $union = (new Union(new Set, new Set))->union(new Set);
 
         $this->assertInstanceOf(Union::class, $union);
-        $this->assertSame('∅∪∅∪∅', (string) $union);
+        $this->assertSame('∅∪∅∪∅', $union->toString());
     }
 
     public function testIntersect()
@@ -66,6 +88,6 @@ class UnionTest extends TestCase
         $intersection = (new Union(new Set, new Set))->intersect(new Set);
 
         $this->assertInstanceOf(Intersection::class, $intersection);
-        $this->assertSame('∅∪∅∩∅', (string) $intersection);
+        $this->assertSame('∅∪∅∩∅', $intersection->toString());
     }
 }

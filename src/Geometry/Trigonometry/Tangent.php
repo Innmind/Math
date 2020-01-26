@@ -6,7 +6,7 @@ namespace Innmind\Math\Geometry\Trigonometry;
 use Innmind\Math\{
     Geometry\Angle\Degree,
     Algebra\Number,
-    Algebra\Round
+    Algebra\Round,
 };
 
 /**
@@ -18,8 +18,8 @@ use Innmind\Math\{
  */
 final class Tangent implements Number
 {
-    private $degree;
-    private $tangent;
+    private Degree $degree;
+    private ?Number $tangent = null;
 
     public function __construct(Degree $degree)
     {
@@ -64,9 +64,24 @@ final class Tangent implements Number
         return $this->tangent()->multiplyBy($number, ...$numbers);
     }
 
-    public function round(int $precision = 0, string $mode = Round::UP): Number
+    public function roundUp(int $precision = 0): Number
     {
-        return $this->tangent()->round($precision, $mode);
+        return $this->tangent()->roundUp($precision);
+    }
+
+    public function roundDown(int $precision = 0): Number
+    {
+        return $this->tangent()->roundDown($precision);
+    }
+
+    public function roundEven(int $precision = 0): Number
+    {
+        return $this->tangent()->roundEven($precision);
+    }
+
+    public function roundOdd(int $precision = 0): Number
+    {
+        return $this->tangent()->roundOdd($precision);
     }
 
     public function floor(): Number
@@ -127,14 +142,14 @@ final class Tangent implements Number
     private function tangent(): Number
     {
         return $this->tangent ?? $this->tangent = new Number\Number(
-            tan(
-                $this->degree->toRadian()->number()->value()
-            )
+            \tan(
+                $this->degree->toRadian()->number()->value(),
+            ),
         );
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
-        return sprintf('tan(%s)', $this->degree);
+        return \sprintf('tan(%s)', $this->degree->toString());
     }
 }

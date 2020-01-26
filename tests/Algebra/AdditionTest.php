@@ -30,27 +30,14 @@ class AdditionTest extends TestCase
     public function testInterface()
     {
         $addition = new Addition(
-            $first = new Number\Number(24),
-            $second = new Number\Number(42),
-            $third = new Number\Number(66)
+            new Number\Number(24),
+            new Number\Number(42),
+            new Number\Number(66)
         );
 
         $this->assertInstanceOf(Operation::class, $addition);
         $this->assertInstanceOf(Number::class, $addition);
-        $this->assertInstanceOf(\Iterator::class, $addition);
-        $this->assertSame($first, $addition->current());
-        $this->assertSame(0, $addition->key());
-        $this->assertTrue($addition->valid());
-        $this->assertNull($addition->next());
-        $this->assertSame($second, $addition->current());
-        $this->assertSame(1, $addition->key());
-        $addition->next();
-        $this->assertSame($third, $addition->current());
-        $this->assertSame(2, $addition->key());
-        $addition->next();
-        $this->assertFalse($addition->valid());
-        $this->assertNull($addition->rewind());
-        $this->assertSame($first, $addition->current());
+        $this->assertSame('24 + 42 + 66', $addition->toString());
     }
 
     public function testResult()
@@ -153,14 +140,15 @@ class AdditionTest extends TestCase
 
     public function testRound()
     {
-        $addition = new Addition(
+        $number = new Addition(
             new Number\Number(2.1),
             new Number\Number(4.24)
         );
-        $number = $addition->round(1);
 
-        $this->assertInstanceOf(Round::class, $number);
-        $this->assertSame(6.3, $number->value());
+        $this->assertEquals(Round::up($number, 2), $number->roundUp(2));
+        $this->assertEquals(Round::down($number, 2), $number->roundDown(2));
+        $this->assertEquals(Round::even($number, 2), $number->roundEven(2));
+        $this->assertEquals(Round::odd($number, 2), $number->roundOdd(2));
     }
 
     public function testFloor()
@@ -197,7 +185,7 @@ class AdditionTest extends TestCase
             )
         );
 
-        $this->assertSame('24 + (42 + 66)', (string) $addition);
+        $this->assertSame('24 + (42 + 66)', $addition->toString());
     }
 
     public function testModulo()

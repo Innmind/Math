@@ -3,26 +3,27 @@ declare(strict_types = 1);
 
 namespace Tests\Innmind\Math\Algebra;
 
-use Innmind\Math\Algebra\{
-    Integer,
-    Number,
-    Addition,
-    Subtraction,
-    Multiplication,
-    Division,
-    Round,
-    Floor,
-    Ceil,
-    Modulo,
-    Absolute,
-    Power,
-    SquareRoot,
-    Factorial,
-    Exponential,
-    BinaryLogarithm,
-    NaturalLogarithm,
-    CommonLogarithm,
-    Signum
+use Innmind\Math\{
+    Algebra\Integer,
+    Algebra\Number,
+    Algebra\Addition,
+    Algebra\Subtraction,
+    Algebra\Multiplication,
+    Algebra\Division,
+    Algebra\Round,
+    Algebra\Floor,
+    Algebra\Ceil,
+    Algebra\Modulo,
+    Algebra\Absolute,
+    Algebra\Power,
+    Algebra\SquareRoot,
+    Algebra\Factorial,
+    Algebra\Exponential,
+    Algebra\BinaryLogarithm,
+    Algebra\NaturalLogarithm,
+    Algebra\CommonLogarithm,
+    Algebra\Signum,
+    Exception\FactorialMustBePositive
 };
 use PHPUnit\Framework\TestCase;
 
@@ -41,7 +42,7 @@ class IntegerTest extends TestCase
         $number = new Integer(42);
 
         $this->assertSame(42, $number->value());
-        $this->assertSame('42', (string) $number);
+        $this->assertSame('42', $number->toString());
     }
 
     public function testEquals()
@@ -96,10 +97,11 @@ class IntegerTest extends TestCase
     public function testRound()
     {
         $number = new Integer(42);
-        $number = $number->round(1);
 
-        $this->assertInstanceOf(Round::class, $number);
-        $this->assertSame(42.0, $number->value());
+        $this->assertEquals(42.0, $number->roundUp(1)->value());
+        $this->assertEquals(42.0, $number->roundDown(1)->value());
+        $this->assertEquals(42.0, $number->roundEven(1)->value());
+        $this->assertEquals(42.0, $number->roundOdd(1)->value());
     }
 
     public function testFloor()
@@ -161,7 +163,7 @@ class IntegerTest extends TestCase
         $number = new Integer(3);
 
         $this->assertInstanceOf(Factorial::class, $number->factorial());
-        $this->assertSame('3!', (string) $number->factorial());
+        $this->assertSame('3!', $number->factorial()->toString());
     }
 
     public function testExponential()
@@ -204,11 +206,10 @@ class IntegerTest extends TestCase
         $this->assertSame(1, $number->value());
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\FactorialMustBePositive
-     */
     public function testThrowWhenNegativeFactorial()
     {
+        $this->expectException(FactorialMustBePositive::class);
+
         (new Integer(-1))->factorial();
     }
 

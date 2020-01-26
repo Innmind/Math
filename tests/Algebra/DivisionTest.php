@@ -3,25 +3,26 @@ declare(strict_types = 1);
 
 namespace Tests\Innmind\Math\Algebra;
 
-use Innmind\Math\Algebra\{
-    Division,
-    Number,
-    Operation,
-    Addition,
-    Subtraction,
-    Multiplication,
-    Round,
-    Floor,
-    Ceil,
-    Modulo,
-    Absolute,
-    Power,
-    SquareRoot,
-    Exponential,
-    BinaryLogarithm,
-    NaturalLogarithm,
-    CommonLogarithm,
-    Signum
+use Innmind\Math\{
+    Algebra\Division,
+    Algebra\Number,
+    Algebra\Operation,
+    Algebra\Addition,
+    Algebra\Subtraction,
+    Algebra\Multiplication,
+    Algebra\Round,
+    Algebra\Floor,
+    Algebra\Ceil,
+    Algebra\Modulo,
+    Algebra\Absolute,
+    Algebra\Power,
+    Algebra\SquareRoot,
+    Algebra\Exponential,
+    Algebra\BinaryLogarithm,
+    Algebra\NaturalLogarithm,
+    Algebra\CommonLogarithm,
+    Algebra\Signum,
+    Exception\DivisionByZero,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -112,11 +113,12 @@ class DivisionTest extends TestCase
 
     public function testRound()
     {
-        $division = new Division(new Number\Number(6.66), new Number\Number(3));
-        $number = $division->round(1);
+        $number = new Division(new Number\Number(6.66), new Number\Number(3));
 
-        $this->assertInstanceOf(Round::class, $number);
-        $this->assertSame(2.2, $number->value());
+        $this->assertEquals(Round::up($number, 2), $number->roundUp(2));
+        $this->assertEquals(Round::down($number, 2), $number->roundDown(2));
+        $this->assertEquals(Round::even($number, 2), $number->roundEven(2));
+        $this->assertEquals(Round::odd($number, 2), $number->roundOdd(2));
     }
 
     public function testFloor()
@@ -217,21 +219,20 @@ class DivisionTest extends TestCase
     {
         $this->assertSame(
             '(2 + 2) ÷ 2',
-            (string) new Division(
+            (new Division(
                 new Addition(
                     new Number\Number(2),
                     new Number\Number(2)
                 ),
                 new Number\Number(2)
-            )
+            ))->toString()
         );
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\DivisionByZeroError
-     */
     public function testThrowWhenTryingToDivideByZero()
     {
+        $this->expectException(DivisionByZero::class);
+
         new Division(new Number\Number(4), new Number\Number(-0.0));
     }
 }

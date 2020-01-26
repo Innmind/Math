@@ -26,15 +26,15 @@ class DegreeTest extends TestCase
     {
         $d = new Degree(new Integer(8), new Number(2));
 
-        $this->assertSame('2x^8', (string) $d);
+        $this->assertSame('2x^8', $d->toString());
 
         $d = new Degree(new Integer(1), new Number(2));
 
-        $this->assertSame('2x', (string) $d);
+        $this->assertSame('2x', $d->toString());
 
         $d = new Degree(new Integer(8), divide(1, 4));
 
-        $this->assertSame('(1 ÷ 4)x^8', (string) $d);
+        $this->assertSame('(1 ÷ 4)x^8', $d->toString());
     }
 
     public function testPrimitive()
@@ -44,8 +44,8 @@ class DegreeTest extends TestCase
 
         $this->assertInstanceOf(Degree::class, $primitive);
         $this->assertNotSame($d, $primitive);
-        $this->assertSame('2x^8', (string) $d);
-        $this->assertSame('(2 ÷ (8 + 1))x^9', (string) $primitive);
+        $this->assertSame('2x^8', $d->toString());
+        $this->assertSame('(2 ÷ (8 + 1))x^9', $primitive->toString());
     }
 
     public function testDerivative()
@@ -55,7 +55,7 @@ class DegreeTest extends TestCase
 
         $this->assertInstanceOf(Degree::class, $derivative);
         $this->assertNotSame($degree, $derivative);
-        $this->assertSame('2x^2', (string) $degree);
-        $this->assertSame('(2 x 2)x', (string) $derivative);
+        $this->assertSame('2x^2', $degree->toString());
+        $this->assertSame('(2 x 2)x', $derivative->toString());
     }
 }

@@ -5,9 +5,9 @@ namespace Innmind\Math\Algebra;
 
 final class Modulo implements Operation, Number
 {
-    private $number;
-    private $modulus;
-    private $result;
+    private Number $number;
+    private Number $modulus;
+    private ?Number $result = null;
 
     public function __construct(Number $number, Number $modulus)
     {
@@ -17,8 +17,8 @@ final class Modulo implements Operation, Number
 
     public function result(): Number
     {
-        return $this->result ?? $this->result = Number\Number::wrap(
-            fmod($this->number->value(), $this->modulus->value())
+        return $this->result ??= Number\Number::wrap(
+            \fmod($this->number->value(), $this->modulus->value()),
         );
     }
 
@@ -60,9 +60,24 @@ final class Modulo implements Operation, Number
         return new Multiplication($this, $number, ...$numbers);
     }
 
-    public function round(int $precision = 0, string $mode = Round::UP): Number
+    public function roundUp(int $precision = 0): Number
     {
-        return new Round($this, $precision, $mode);
+        return Round::up($this, $precision);
+    }
+
+    public function roundDown(int $precision = 0): Number
+    {
+        return Round::down($this, $precision);
+    }
+
+    public function roundEven(int $precision = 0): Number
+    {
+        return Round::even($this, $precision);
+    }
+
+    public function roundOdd(int $precision = 0): Number
+    {
+        return Round::odd($this, $precision);
     }
 
     public function floor(): Number
@@ -120,12 +135,12 @@ final class Modulo implements Operation, Number
         return new Signum($this);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         $number = $this->number instanceof Operation ?
-            '('.$this->number.')' : $this->number;
+            '('.$this->number->toString().')' : $this->number->toString();
         $modulus = $this->modulus instanceof Operation ?
-            '('.$this->modulus.')' : $this->modulus;
+            '('.$this->modulus->toString().')' : $this->modulus->toString();
 
         return $number.' % '.$modulus;
     }

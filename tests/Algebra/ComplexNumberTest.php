@@ -31,14 +31,14 @@ class ComplexNumberTest extends TestCase
             new Integer(2)
         );
 
-        $this->assertSame('(1 + 2i)', (string) $number);
+        $this->assertSame('(1 + 2i)', $number->toString());
 
         $number = new ComplexNumber(
             add(1, 2),
             add(2, 3)
         );
 
-        $this->assertSame('((1 + 2) + (2 + 3)i)', (string) $number);
+        $this->assertSame('((1 + 2) + (2 + 3)i)', $number->toString());
     }
 
     public function testAdd()
@@ -111,8 +111,8 @@ class ComplexNumberTest extends TestCase
 
         $this->assertInstanceOf(ComplexNumber::class, $conjugate);
         $this->assertNotSame($number, $conjugate);
-        $this->assertSame('(2 + 3i)', (string) $number);
-        $this->assertSame('(2 + (-1 x 3)i)', (string) $conjugate);
+        $this->assertSame('(2 + 3i)', $number->toString());
+        $this->assertSame('(2 + (-1 x 3)i)', $conjugate->toString());
     }
 
     public function testAbsolute()
@@ -137,10 +137,10 @@ class ComplexNumberTest extends TestCase
 
         $this->assertInstanceOf(ComplexNumber::class, $reciprocal);
         $this->assertNotSame($number, $reciprocal);
-        $this->assertSame('(2 + 3i)', (string) $number);
+        $this->assertSame('(2 + 3i)', $number->toString());
         $this->assertSame(
             '((2 ÷ ((2^2) + (3^2))) + (-1 x (3 ÷ ((2^2) + (3^2))))i)',
-            (string) $reciprocal
+            $reciprocal->toString()
         );
     }
 
@@ -154,8 +154,8 @@ class ComplexNumberTest extends TestCase
 
         $this->assertInstanceOf(ComplexNumber::class, $negation);
         $this->assertNotSame($number, $negation);
-        $this->assertSame('(2 + 3i)', (string) $number);
-        $this->assertSame('((-1 x 2) + (-1 x 3)i)', (string) $negation);
+        $this->assertSame('(2 + 3i)', $number->toString());
+        $this->assertSame('((-1 x 2) + (-1 x 3)i)', $negation->toString());
     }
 
     public function testSquareRoot()
@@ -168,12 +168,12 @@ class ComplexNumberTest extends TestCase
 
         $this->assertInstanceOf(ComplexNumber::class, $squareRoot);
         $this->assertNotSame($number, $squareRoot);
-        $this->assertSame('(3 + 4i)', (string) $number);
+        $this->assertSame('(3 + 4i)', $number->toString());
         $this->assertSame(2.0, $squareRoot->real()->value());
         $this->assertSame(1.0, $squareRoot->imaginary()->value());
         $this->assertSame(
             '((√((3 + (√((3^2) + (4^2)))) ÷ 2)) + ((sgn(4)) x (√(((-1 x 3) + (√((3^2) + (4^2)))) ÷ 2)))i)',
-            (string) $squareRoot
+            $squareRoot->toString()
         );
     }
 

@@ -18,7 +18,10 @@ use function Innmind\Math\{
     modulo,
     multiply,
     power,
-    round,
+    roundUp,
+    roundDown,
+    roundEven,
+    roundOdd,
     sine,
     squareRoot,
     subtract,
@@ -33,7 +36,8 @@ use function Innmind\Math\{
     commonLogarithm,
     signum,
     arcSine,
-    arcTangent
+    arcTangent,
+    toRadian,
 };
 use Innmind\Math\{
     Algebra\Number,
@@ -150,10 +154,10 @@ class FunctionsTest extends TestCase
 
     public function testRound()
     {
-        $round = round(4.85, 1, 'down');
-
-        $this->assertInstanceOf(Round::class, $round);
-        $this->assertSame(4.8, $round->value());
+        $this->assertEquals(Round::up(new Number\Number(4.85), 1), roundUp(4.85, 1));
+        $this->assertEquals(Round::down(new Number\Number(4.85), 1), roundDown(4.85, 1));
+        $this->assertEquals(Round::even(new Number\Number(4.85), 1), roundEven(4.85, 1));
+        $this->assertEquals(Round::odd(new Number\Number(4.85), 1), roundOdd(4.85, 1));
     }
 
     public function testSquareRoot()
@@ -285,6 +289,7 @@ class FunctionsTest extends TestCase
 
         $this->assertInstanceOf(Number::class, $int);
         $this->assertSame(6, $int->value());
+        $this->assertSame(24, factorial(new Integer(4))->value());
     }
 
     public function testMax()
@@ -316,7 +321,7 @@ class FunctionsTest extends TestCase
         $exp = exponential(4);
 
         $this->assertInstanceOf(Exponential::class, $exp);
-        $this->assertSame('e^4', (string) $exp);
+        $this->assertSame('e^4', $exp->toString());
     }
 
     public function testBinaryLogarithm()
@@ -324,7 +329,7 @@ class FunctionsTest extends TestCase
         $lb = binaryLogarithm(1);
 
         $this->assertInstanceOf(BinaryLogarithm::class, $lb);
-        $this->assertSame('lb(1)', (string) $lb);
+        $this->assertSame('lb(1)', $lb->toString());
     }
 
     public function testNaturalLogarithm()
@@ -332,7 +337,7 @@ class FunctionsTest extends TestCase
         $ln = naturalLogarithm(1);
 
         $this->assertInstanceOf(NaturalLogarithm::class, $ln);
-        $this->assertSame('ln(1)', (string) $ln);
+        $this->assertSame('ln(1)', $ln->toString());
     }
 
     public function testLogarithm()
@@ -340,7 +345,7 @@ class FunctionsTest extends TestCase
         $ln = logarithm(1);
 
         $this->assertInstanceOf(NaturalLogarithm::class, $ln);
-        $this->assertSame('ln(1)', (string) $ln);
+        $this->assertSame('ln(1)', $ln->toString());
     }
 
     public function testCommonLogarithm()
@@ -348,7 +353,7 @@ class FunctionsTest extends TestCase
         $lg = commonLogarithm(1);
 
         $this->assertInstanceOf(CommonLogarithm::class, $lg);
-        $this->assertSame('lg(1)', (string) $lg);
+        $this->assertSame('lg(1)', $lg->toString());
     }
 
     public function testSignum()
@@ -356,7 +361,19 @@ class FunctionsTest extends TestCase
         $sgn = signum(1);
 
         $this->assertInstanceOf(Signum::class, $sgn);
-        $this->assertSame('sgn(1)', (string) $sgn);
+        $this->assertSame('sgn(1)', $sgn->toString());
+    }
+
+    public function testToRadian()
+    {
+        $radian = new Radian(new Number\Number(1));
+
+        $this->assertSame($radian, toRadian($radian));
+        $this->assertEquals($radian, toRadian(1));
+
+        $degree = new Degree(new Number\Number(90));
+
+        $this->assertEquals($degree->toRadian(), toRadian($degree));
     }
 
     public function cosines(): array

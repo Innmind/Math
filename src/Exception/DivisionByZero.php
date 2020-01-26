@@ -3,6 +3,6 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Exception;
 
-interface Exception extends \Throwable
+class DivisionByZero extends \DivisionByZeroError implements Exception
 {
 }

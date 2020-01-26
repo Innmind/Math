@@ -12,6 +12,11 @@ final class RealNumbers implements Set
         return true;
     }
 
+    public function accept(Number $number): void
+    {
+        // it accepts everything
+    }
+
     public function union(Set $set): Set
     {
         return new Union($this, $set);
@@ -22,7 +27,7 @@ final class RealNumbers implements Set
         return new Intersection($this, $set);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         return 'ℝ';
     }

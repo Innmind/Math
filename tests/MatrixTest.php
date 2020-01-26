@@ -10,9 +10,13 @@ use Innmind\Math\{
     Matrix\RowVector,
     Matrix\ColumnVector,
     Algebra\Number\Number,
-    Algebra\Integer
+    Algebra\Integer,
+    Exception\VectorsMustMeOfTheSameDimension,
+    Exception\MatricesMustBeOfTheSameDimension,
+    Exception\MatrixMustBeSquare,
+    Exception\MatrixNotInvertible
 };
-use Innmind\Immutable\StreamInterface;
+use Innmind\Immutable\Sequence;
 use PHPUnit\Framework\TestCase;
 
 class MatrixTest extends TestCase
@@ -25,9 +29,8 @@ class MatrixTest extends TestCase
         ];
         $matrix = new Matrix(...$rows);
 
-        $this->assertInstanceOf(\Iterator::class, $matrix);
         $this->assertInstanceOf(Dimension::class, $matrix->dimension());
-        $this->assertSame('2 x 3', (string) $matrix->dimension());
+        $this->assertSame('2 x 3', $matrix->dimension()->toString());
         $this->assertInstanceOf(RowVector::class, $matrix->row(0));
         $this->assertInstanceOf(RowVector::class, $matrix->row(1));
         $this->assertSame($rows[0], $matrix->row(0));
@@ -58,33 +61,32 @@ class MatrixTest extends TestCase
 
     public function testRows()
     {
-        $matrix = Matrix::fromArray([
+        $matrix = Matrix::of([
             [1, 2, 3],
             [1, 2, 3],
         ]);
 
-        $this->assertInstanceOf(StreamInterface::class, $matrix->rows());
+        $this->assertInstanceOf(Sequence::class, $matrix->rows());
         $this->assertSame(RowVector::class, (string) $matrix->rows()->type());
         $this->assertCount(2, $matrix->rows());
     }
 
     public function testColumns()
     {
-        $matrix = Matrix::fromArray([
+        $matrix = Matrix::of([
             [1, 2, 3],
             [1, 2, 3],
         ]);
 
-        $this->assertInstanceOf(StreamInterface::class, $matrix->columns());
+        $this->assertInstanceOf(Sequence::class, $matrix->columns());
         $this->assertSame(ColumnVector::class, (string) $matrix->columns()->type());
         $this->assertCount(3, $matrix->columns());
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\VectorsMustMeOfTheSameDimension
-     */
     public function testThrowWhenBuildingMatrixWithIncoherentRows()
     {
+        $this->expectException(VectorsMustMeOfTheSameDimension::class);
+
         new Matrix(
             new RowVector(...numerize(1, 2)),
             new RowVector(...numerize(1, 2, 3))
@@ -93,7 +95,7 @@ class MatrixTest extends TestCase
 
     public function testFromArray()
     {
-        $matrix = Matrix::fromArray($values = [
+        $matrix = Matrix::of($values = [
             [1, 2, 3],
             [2, 3, 4],
         ]);
@@ -122,7 +124,7 @@ class MatrixTest extends TestCase
 
     public function testTranspose()
     {
-        $matrix = Matrix::fromArray([
+        $matrix = Matrix::of([
             [1, 2, 3],
             [3, 4, 5],
             [2, 3, 4],
@@ -141,11 +143,11 @@ class MatrixTest extends TestCase
 
     public function testDot()
     {
-        $matrix = Matrix::fromArray([
+        $matrix = Matrix::of([
             [1, 2, 3],
             [4, 5, 6],
         ])->dot(
-            Matrix::fromArray([
+            Matrix::of([
                 [7, 8],
                 [9, 10],
                 [11, 12],
@@ -183,29 +185,28 @@ class MatrixTest extends TestCase
     public function testIsSquare()
     {
         $this->assertTrue(
-            Matrix::fromArray([
+            Matrix::of([
                 [1, 2],
                 [3, 4],
             ])->isSquare()
         );
         $this->assertFalse(
-            Matrix::fromArray([
+            Matrix::of([
                 [1, 2],
             ])->isSquare()
         );
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\MatrixMustBeSquare
-     */
     public function testThrowWhenAskingForNonSquareDiagonal()
     {
-        Matrix::fromArray([[1, 2]])->diagonal();
+        $this->expectException(MatrixMustBeSquare::class);
+
+        Matrix::of([[1, 2]])->diagonal();
     }
 
     public function testDiagonal()
     {
-        $matrix = Matrix::fromArray($initial = [
+        $matrix = Matrix::of($initial = [
             [1, 2, 3],
             [4, 5, 6],
             [7, 8, 9],
@@ -225,17 +226,16 @@ class MatrixTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\MatrixMustBeSquare
-     */
     public function testThrowWhenAskingForNonSquareIdentity()
     {
-        Matrix::fromArray([[1, 2]])->identity();
+        $this->expectException(MatrixMustBeSquare::class);
+
+        Matrix::of([[1, 2]])->identity();
     }
 
     public function testIdentity()
     {
-        $matrix = Matrix::fromArray($initial = [
+        $matrix = Matrix::of($initial = [
             [1, 2, 3],
             [4, 5, 6],
             [7, 8, 9],
@@ -255,23 +255,22 @@ class MatrixTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\MatricesMustBeOfTheSameDimension
-     */
     public function testThrowWhenAddindMatricesOfDifferentDimensions()
     {
-        Matrix::fromArray([[1]])->add(
-            Matrix::fromArray([[1, 2]])
+        $this->expectException(MatricesMustBeOfTheSameDimension::class);
+
+        Matrix::of([[1]])->add(
+            Matrix::of([[1, 2]])
         );
     }
 
     public function testAdd()
     {
-        $a = Matrix::fromArray($aValues = [
+        $a = Matrix::of($aValues = [
             [1, 0, -1],
             [2, 1, 4],
         ]);
-        $b = Matrix::fromArray($bValues = [
+        $b = Matrix::of($bValues = [
             [0, -1, -2],
             [-3, 1, 5],
         ]);
@@ -291,23 +290,22 @@ class MatrixTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\MatricesMustBeOfTheSameDimension
-     */
     public function testThrowWhenSubtractingMatricesOfDifferentDimensions()
     {
-        Matrix::fromArray([[1]])->subtract(
-            Matrix::fromArray([[1, 2]])
+        $this->expectException(MatricesMustBeOfTheSameDimension::class);
+
+        Matrix::of([[1]])->subtract(
+            Matrix::of([[1, 2]])
         );
     }
 
     public function testSubtract()
     {
-        $a = Matrix::fromArray($aValues = [
+        $a = Matrix::of($aValues = [
             [1, 0, -1],
             [2, 1, 4],
         ]);
-        $b = Matrix::fromArray($bValues = [
+        $b = Matrix::of($bValues = [
             [0, -1, -2],
             [-3, 1, 5],
         ]);
@@ -329,7 +327,7 @@ class MatrixTest extends TestCase
 
     public function testMultiplyBy()
     {
-        $matrix = Matrix::fromArray($initial = [
+        $matrix = Matrix::of($initial = [
             [1, 0, -1],
             [2, 3, 4],
         ]);
@@ -349,16 +347,22 @@ class MatrixTest extends TestCase
 
     public function testEquals()
     {
-        $matrix = Matrix::fromArray([
+        $matrix = Matrix::of([
             [1, 0, -1],
             [2, 3, 4],
         ]);
 
         $this->assertTrue($matrix->equals($matrix));
         $this->assertTrue($matrix->equals(
-            Matrix::fromArray([
+            Matrix::of([
                 [1, 0, -1],
                 [2, 3, 4],
+            ])
+        ));
+        $this->assertFalse($matrix->equals(
+            Matrix::of([
+                [2, 3, 4],
+                [1, 0, -1],
             ])
         ));
         $this->assertFalse($matrix->equals($matrix->transpose()));
@@ -366,14 +370,14 @@ class MatrixTest extends TestCase
 
     public function testIsSymmetric()
     {
-        $matrix = Matrix::fromArray([
+        $matrix = Matrix::of([
             [1, 0, -1],
             [2, 3, 4],
         ]);
 
         $this->assertFalse($matrix->isSymmetric());
 
-        $matrix = Matrix::fromArray([
+        $matrix = Matrix::of([
             [1, 0, 1],
             [0, 1, 0],
             [1, 0, 1],
@@ -384,14 +388,14 @@ class MatrixTest extends TestCase
 
     public function testIsAntisymmetric()
     {
-        $matrix = Matrix::fromArray([
+        $matrix = Matrix::of([
             [1, 0, -1],
             [2, 3, 4],
         ]);
 
         $this->assertFalse($matrix->isAntisymmetric());
 
-        $matrix = Matrix::fromArray([
+        $matrix = Matrix::of([
             [0, 2, 3, 4],
             [-2, 0, -1, 7],
             [-3, 1, 0, -6],
@@ -403,7 +407,7 @@ class MatrixTest extends TestCase
 
     public function testIsInRowEchelonForm()
     {
-        $matrix = Matrix::fromArray([
+        $matrix = Matrix::of([
             [3, 1, 1, -2, 1, 0, -3],
             [0, 0, 0, 3, 1, 1, 0],
             [0, 0, 0, 0, -1, 7, 9],
@@ -413,7 +417,7 @@ class MatrixTest extends TestCase
 
         $this->assertTrue($matrix->isInRowEchelonForm());
 
-        $matrix = Matrix::fromArray([
+        $matrix = Matrix::of([
             [3, 1, 1, -2, 1, 0, -3],
             [0, 0, 0, 3, 1, 1, 0],
             [0, 0, 0, 0, 0, 7, 9],
@@ -426,7 +430,7 @@ class MatrixTest extends TestCase
 
     public function testDropRow()
     {
-        $matrix = Matrix::fromArray($initial = [
+        $matrix = Matrix::of($initial = [
             [0, 2, 3, 4],
             [-2, 0, -1, 7],
             [-3, 1, 0, -6],
@@ -457,7 +461,7 @@ class MatrixTest extends TestCase
 
     public function testDropColumn()
     {
-        $matrix = Matrix::fromArray($initial = [
+        $matrix = Matrix::of($initial = [
             [0, 2, 3, 4],
             [-2, 0, -1, 7],
             [-3, 1, 0, -6],
@@ -490,7 +494,7 @@ class MatrixTest extends TestCase
 
     public function testAugmentWith()
     {
-        $matrix = Matrix::fromArray($initial = [
+        $matrix = Matrix::of($initial = [
             [2, 3, 4],
             [5, 6, 7],
             [8, 9, 10],
@@ -515,7 +519,7 @@ class MatrixTest extends TestCase
      */
     public function testInverse($initial, $expected)
     {
-        $matrix = Matrix::fromArray($initial);
+        $matrix = Matrix::of($initial);
         $inversed = $matrix->inverse();
 
         $this->assertInstanceOf(Matrix::class, $inversed);
@@ -524,9 +528,19 @@ class MatrixTest extends TestCase
         $this->assertSame($expected, $inversed->toArray());
     }
 
+    public function testThrowWhenTryingToInverseNonSquareMatrix()
+    {
+        $this->expectException(MatrixMustBeSquare::class);
+
+        Matrix::of([
+            [1, 2, 3],
+            [4, 5, 6],
+        ])->inverse();
+    }
+
     public function testInverseIdentityProperty()
     {
-        $matrix = Matrix::fromArray($initial = [
+        $matrix = Matrix::of($initial = [
             [1, 2, 1],
             [4, 0, -1],
             [-1, 2, 2],
@@ -539,12 +553,11 @@ class MatrixTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\MatrixNotInvertible
-     */
     public function testThrowWhenMatrixNotInvertible()
     {
-        Matrix::fromArray([
+        $this->expectException(MatrixNotInvertible::class);
+
+        Matrix::of([
             [  2,   -3,    9,   -27,    81],
             [ -3,    9,  -27,    81,  -243],
             [  9,  -27,   81,  -243,   729],

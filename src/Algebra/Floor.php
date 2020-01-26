@@ -5,7 +5,8 @@ namespace Innmind\Math\Algebra;
 
 final class Floor implements Number
 {
-    private $number;
+    private Number $number;
+    /** @var int|float|null */
     private $value;
 
     public function __construct(Number $number)
@@ -18,7 +19,7 @@ final class Floor implements Number
      */
     public function value()
     {
-        return $this->value ?? $this->value = floor($this->number->value());
+        return $this->value ??= \floor($this->number->value());
     }
 
     public function equals(Number $number): bool
@@ -51,9 +52,24 @@ final class Floor implements Number
         return new Multiplication($this, $number, ...$numbers);
     }
 
-    public function round(int $precision = 0, string $mode = Round::UP): Number
+    public function roundUp(int $precision = 0): Number
     {
-        return new Round($this, $precision, $mode);
+        return Round::up($this, $precision);
+    }
+
+    public function roundDown(int $precision = 0): Number
+    {
+        return Round::down($this, $precision);
+    }
+
+    public function roundEven(int $precision = 0): Number
+    {
+        return Round::even($this, $precision);
+    }
+
+    public function roundOdd(int $precision = 0): Number
+    {
+        return Round::odd($this, $precision);
     }
 
     public function floor(): Number
@@ -111,8 +127,8 @@ final class Floor implements Number
         return new Signum($this);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
-        return var_export($this->value(), true);
+        return \var_export($this->value(), true);
     }
 }

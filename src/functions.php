@@ -34,14 +34,14 @@ use Innmind\Math\{
     Statistics\Frequence,
     Statistics\Mean,
     Statistics\Median,
-    Statistics\Scope
+    Statistics\Scope,
 };
 use Innmind\Immutable\Sequence;
 
 /**
  * @param int|float|Number $numbers
  */
-function add(...$numbers): Number
+function add(...$numbers): Addition
 {
     return new Addition(...numerize(...$numbers));
 }
@@ -107,15 +107,45 @@ function power($number, $power): Number
 
 /**
  * @param int|float|Number $number
- * @param int|float|Number $precision
- * @param string $mode
  */
-function round($number, $precision = 0, $mode = Round::UP): Number
+function roundUp($number, int $precision = 0): Number
 {
-    return new Round(
+    return Round::up(
         numerize($number)[0],
         $precision,
-        strtoupper($mode)
+    );
+}
+
+/**
+ * @param int|float|Number $number
+ */
+function roundDown($number, int $precision = 0): Number
+{
+    return Round::down(
+        numerize($number)[0],
+        $precision,
+    );
+}
+
+/**
+ * @param int|float|Number $number
+ */
+function roundEven($number, int $precision = 0): Number
+{
+    return Round::even(
+        numerize($number)[0],
+        $precision,
+    );
+}
+
+/**
+ * @param int|float|Number $number
+ */
+function roundOdd($number, int $precision = 0): Number
+{
+    return Round::odd(
+        numerize($number)[0],
+        $precision,
     );
 }
 
@@ -130,7 +160,7 @@ function squareRoot($number): Number
 /**
  * @param int|float|Number $numbers
  */
-function subtract(...$numbers): Number
+function subtract(...$numbers): Subtraction
 {
     return new Subtraction(...numerize(...$numbers));
 }
@@ -227,7 +257,7 @@ function frequence(...$numbers): Frequence
  * @param int|float|Number $first
  * @param int|float|Number $numbers
  */
-function mean($first, ...$numbers): Number
+function mean($first, ...$numbers): Mean
 {
     return new Mean(...numerize($first, ...$numbers));
 }
@@ -333,9 +363,12 @@ function signum($number): Signum
  */
 function max($first, ...$numbers): Number
 {
-    return (new Sequence(...numerize($first, ...$numbers)))
-        ->sort(static function(Number $a, Number $b) {
-            return $b->higherThan($a);
+    /** @var Sequence<Number> */
+    $numbers = Sequence::of(Number::class, ...numerize($first, ...$numbers));
+
+    return $numbers
+        ->sort(static function(Number $a, Number $b): int {
+            return (int) $b->higherThan($a);
         })
         ->first();
 }
@@ -348,9 +381,12 @@ function max($first, ...$numbers): Number
  */
 function min($first, ...$numbers): Number
 {
-    return (new Sequence(...numerize($first, ...$numbers)))
-        ->sort(static function(Number $a, Number $b) {
-            return $a->higherThan($b);
+    /** @var Sequence<Number> */
+    $numbers = Sequence::of(Number::class, ...numerize($first, ...$numbers));
+
+    return $numbers
+        ->sort(static function(Number $a, Number $b): int {
+            return (int) $a->higherThan($b);
         })
         ->first();
 }
@@ -358,17 +394,12 @@ function min($first, ...$numbers): Number
 /**
  * @param int|float|Number $numbers
  *
- * @return Number[]
+ * @return list<Number>
  */
 function numerize(...$numbers): array
 {
-    foreach ($numbers as &$number) {
-        if ($number instanceof Number) {
-            continue;
-        }
-
-        $number = Number\Number::wrap($number);
-    }
-
-    return $numbers;
+    return \array_map(
+        static fn($number): Number => $number instanceof Number ? $number : Number\Number::wrap($number),
+        $numbers,
+    );
 }

@@ -37,8 +37,8 @@ class ArcTangentTest extends TestCase
 
         $this->assertInstanceOf(Number::class, $atan);
         $this->assertInstanceOf(Degree::class, $atan->toDegree());
-        $this->assertSame('tan⁻¹(tan(42°))', (string) $atan);
-        $this->assertSame('42°', (string) $atan->toDegree());
+        $this->assertSame('tan⁻¹(tan(42°))', $atan->toString());
+        $this->assertSame('42°', $atan->toDegree()->toString());
     }
 
     public function testEquals()
@@ -109,13 +109,14 @@ class ArcTangentTest extends TestCase
 
     public function testRound()
     {
-        $atan = new ArcTangent(
+        $number = new ArcTangent(
             new Tangent(new Degree(new Number\Number(42)))
         );
-        $number = $atan->round(1);
 
-        $this->assertInstanceOf(Round::class, $number);
-        $this->assertSame(42.0, $number->value());
+        $this->assertEquals(42.0, $number->roundUp(1)->value());
+        $this->assertEquals(42.0, $number->roundDown(1)->value());
+        $this->assertEquals(42.0, $number->roundEven(1)->value());
+        $this->assertEquals(42.0, $number->roundOdd(1)->value());
     }
 
     public function testFloor()

@@ -7,7 +7,7 @@ use Innmind\Math\{
     Geometry\Angle\Degree,
     Geometry\Angle\Radian,
     Algebra\Number,
-    Algebra\Round
+    Algebra\Round,
 };
 
 /**
@@ -15,8 +15,8 @@ use Innmind\Math\{
  */
 final class ArcTangent implements Number
 {
-    private $number;
-    private $arcTangent;
+    private Number $number;
+    private ?Degree $arcTangent = null;
 
     public function __construct(Number $number)
     {
@@ -72,9 +72,24 @@ final class ArcTangent implements Number
         return $this->arcTangent()->number()->multiplyBy($number, ...$numbers);
     }
 
-    public function round(int $precision = 0, string $mode = Round::UP): Number
+    public function roundUp(int $precision = 0): Number
     {
-        return $this->arcTangent()->number()->round($precision, $mode);
+        return $this->arcTangent()->number()->roundUp($precision);
+    }
+
+    public function roundDown(int $precision = 0): Number
+    {
+        return $this->arcTangent()->number()->roundDown($precision);
+    }
+
+    public function roundEven(int $precision = 0): Number
+    {
+        return $this->arcTangent()->number()->roundEven($precision);
+    }
+
+    public function roundOdd(int $precision = 0): Number
+    {
+        return $this->arcTangent()->number()->roundOdd($precision);
     }
 
     public function floor(): Number
@@ -139,16 +154,16 @@ final class ArcTangent implements Number
         }
 
         $radians = new Number\Number(
-            atan(
-                $this->number->value()
-            )
+            \atan(
+                $this->number->value(),
+            ),
         );
 
         return $this->arcTangent = (new Radian($radians))->toDegree();
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
-        return sprintf('tan⁻¹(%s)', $this->number);
+        return \sprintf('tan⁻¹(%s)', $this->number->toString());
     }
 }

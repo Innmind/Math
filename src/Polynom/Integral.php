@@ -8,7 +8,7 @@ use Innmind\Math\Algebra\Number;
 
 final class Integral
 {
-    private $polynom;
+    private Polynom $polynom;
 
     public function __construct(Polynom $polynom)
     {
@@ -27,12 +27,12 @@ final class Integral
         return subtract($primitive($b), $primitive($a));
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
-        return sprintf(
+        return \sprintf(
             '∫(%s)dx = [%s]',
-            $this->polynom,
-            $this->polynom->primitive()
+            $this->polynom->toString(),
+            $this->polynom->primitive()->toString(),
         );
     }
 }

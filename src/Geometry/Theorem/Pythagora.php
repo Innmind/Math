@@ -5,7 +5,7 @@ namespace Innmind\Math\Geometry\Theorem;
 
 use Innmind\Math\{
     Algebra\Integer,
-    Geometry\Segment
+    Geometry\Segment,
 };
 
 /**
@@ -45,7 +45,7 @@ final class Pythagora
         return new Segment($side);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         return 'C²=A²+B²';
     }

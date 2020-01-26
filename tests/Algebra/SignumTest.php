@@ -58,7 +58,7 @@ class SignumTest extends TestCase
             new Number\Number(42.24)
         );
 
-        $this->assertSame('sgn(42.24)', (string) $sgn);
+        $this->assertSame('sgn(42.24)', $sgn->toString());
     }
 
     public function testStringCastOperations()
@@ -70,7 +70,7 @@ class SignumTest extends TestCase
             )
         );
 
-        $this->assertSame('sgn(1 + 1)', (string) $sgn);
+        $this->assertSame('sgn(1 + 1)', $sgn->toString());
     }
 
     public function testEquals()
@@ -139,13 +139,14 @@ class SignumTest extends TestCase
 
     public function testRound()
     {
-        $sgn = new Signum(
+        $number = new Signum(
             new Number\Number(2)
         );
-        $number = $sgn->round(1);
 
-        $this->assertInstanceOf(Round::class, $number);
-        $this->assertSame(1.0, $number->value());
+        $this->assertEquals(Round::up($number, 2), $number->roundUp(2));
+        $this->assertEquals(Round::down($number, 2), $number->roundDown(2));
+        $this->assertEquals(Round::even($number, 2), $number->roundEven(2));
+        $this->assertEquals(Round::odd($number, 2), $number->roundOdd(2));
     }
 
     public function testFloor()

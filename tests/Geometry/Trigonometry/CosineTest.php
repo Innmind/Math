@@ -34,7 +34,7 @@ class CosineTest extends TestCase
 
         $this->assertInstanceOf(Number::class, $cos);
         $this->assertSame(0.74314482547739, $cos->value());
-        $this->assertSame('cos(42°)', (string) $cos);
+        $this->assertSame('cos(42°)', $cos->toString());
     }
 
     public function testEquals()
@@ -93,11 +93,12 @@ class CosineTest extends TestCase
 
     public function testRound()
     {
-        $cos = new Cosine(new Degree(new Number\Number(42)));
-        $number = $cos->round(1);
+        $number = new Cosine(new Degree(new Number\Number(42)));
 
-        $this->assertInstanceOf(Round::class, $number);
-        $this->assertSame(0.7, $number->value());
+        $this->assertEquals(0.7, $number->roundUp(1)->value());
+        $this->assertEquals(0.7, $number->roundDown(1)->value());
+        $this->assertEquals(0.7, $number->roundEven(1)->value());
+        $this->assertEquals(0.7, $number->roundOdd(1)->value());
     }
 
     public function testFloor()

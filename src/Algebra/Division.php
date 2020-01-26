@@ -3,18 +3,18 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Algebra;
 
-use Innmind\Math\Exception\DivisionByZeroError;
+use Innmind\Math\Exception\DivisionByZero;
 
 final class Division implements Operation, Number
 {
-    private $dividend;
-    private $divisor;
-    private $result;
+    private Number $dividend;
+    private Number $divisor;
+    private ?Number $result = null;
 
     public function __construct(Number $dividend, Number $divisor)
     {
         if ($divisor->equals(new Integer(0))) {
-            throw new DivisionByZeroError;
+            throw new DivisionByZero;
         }
 
         $this->dividend = $dividend;
@@ -69,9 +69,24 @@ final class Division implements Operation, Number
         return new Multiplication($this, $number, ...$numbers);
     }
 
-    public function round(int $precision = 0, string $mode = Round::UP): Number
+    public function roundUp(int $precision = 0): Number
     {
-        return new Round($this, $precision, $mode);
+        return Round::up($this, $precision);
+    }
+
+    public function roundDown(int $precision = 0): Number
+    {
+        return Round::down($this, $precision);
+    }
+
+    public function roundEven(int $precision = 0): Number
+    {
+        return Round::even($this, $precision);
+    }
+
+    public function roundOdd(int $precision = 0): Number
+    {
+        return Round::odd($this, $precision);
     }
 
     public function floor(): Number
@@ -136,22 +151,22 @@ final class Division implements Operation, Number
 
     public function result(): Number
     {
-        return $this->result ?? $this->result = Number\Number::wrap(
-            $this->dividend->value() / $this->divisor->value()
+        return $this->result ??= Number\Number::wrap(
+            $this->dividend->value() / $this->divisor->value(),
         );
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         $dividend = $this->dividend instanceof Operation ?
-            '('.$this->dividend.')' : (string) $this->dividend;
+            '('.$this->dividend->toString().')' : $this->dividend->toString();
         $divisor = $this->divisor instanceof Operation ?
-            '('.$this->divisor.')' : (string) $this->divisor;
+            '('.$this->divisor->toString().')' : $this->divisor->toString();
 
-        return sprintf(
+        return \sprintf(
             '%s ÷ %s',
             $dividend,
-            $divisor
+            $divisor,
         );
     }
 }

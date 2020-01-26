@@ -4,18 +4,21 @@ declare(strict_types = 1);
 namespace Innmind\Math\Algebra;
 
 use Innmind\Immutable\Sequence;
+use function Innmind\Immutable\join;
 
-final class Addition implements Operation, Number, \Iterator
+final class Addition implements Operation, Number
 {
-    private $values;
-    private $result;
+    /** @var Sequence<Number> */
+    private Sequence $values;
+    private ?Number $result = null;
 
     public function __construct(
         Number $first,
         Number $second,
         Number ...$values
     ) {
-        $this->values = new Sequence($first, $second, ...$values);
+        /** @var Sequence<Number> */
+        $this->values = Sequence::of(Number::class, $first, $second, ...$values);
     }
 
     /**
@@ -56,9 +59,24 @@ final class Addition implements Operation, Number, \Iterator
         return new Multiplication($this, $number, ...$numbers);
     }
 
-    public function round(int $precision = 0, string $mode = Round::UP): Number
+    public function roundUp(int $precision = 0): Number
     {
-        return new Round($this, $precision, $mode);
+        return Round::up($this, $precision);
+    }
+
+    public function roundDown(int $precision = 0): Number
+    {
+        return Round::down($this, $precision);
+    }
+
+    public function roundEven(int $precision = 0): Number
+    {
+        return Round::even($this, $precision);
+    }
+
+    public function roundOdd(int $precision = 0): Number
+    {
+        return Round::odd($this, $precision);
     }
 
     public function floor(): Number
@@ -127,70 +145,41 @@ final class Addition implements Operation, Number, \Iterator
             return $this->result;
         }
 
+        /**
+         * @psalm-suppress MixedOperand
+         * @psalm-suppress MissingClosureParamType
+         * @psalm-suppress MissingClosureReturnType
+         * @var callable(int|float, Number): (int|float)
+         */
+        $reduce = static function($carry, Number $number) {
+            return $carry + $number->value();
+        };
+
+        /** @var int|float */
         $value = $this
             ->values
             ->drop(1)
             ->reduce(
                 $this->values->first()->value(),
-                static function($carry, Number $number) {
-                    return $carry + $number->value();
-                }
+                $reduce,
             );
 
         return $this->result = Number\Number::wrap($value);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
-        return (string) $this
-            ->values
-            ->map(static function(Number $number): string {
+        $values = $this->values->mapTo(
+            'string',
+            static function(Number $number): string {
                 if ($number instanceof Operation) {
-                    return '('.$number.')';
+                    return '('.$number->toString().')';
                 }
 
-                return (string) $number;
-            })
-            ->join(' + ');
-    }
+                return $number->toString();
+            },
+        );
 
-    /**
-     * {@inheritdoc}
-     */
-    public function current()
-    {
-        return $this->values->current();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function key()
-    {
-        return $this->values->key();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function next()
-    {
-        $this->values->next();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function rewind()
-    {
-        $this->values->rewind();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function valid()
-    {
-        return $this->values->valid();
+        return join(' + ', $values)->toString();
     }
 }

@@ -3,27 +3,28 @@ declare(strict_types = 1);
 
 namespace Tests\Innmind\Math\Algebra\Number;
 
-use Innmind\Math\Algebra\{
-    Number\Number,
-    Number as NumberInterface,
-    Addition,
-    Subtraction,
-    Multiplication,
-    Division,
-    Round,
-    Floor,
-    Ceil,
-    Modulo,
-    Absolute,
-    Power,
-    SquareRoot,
-    Exponential,
-    BinaryLogarithm,
-    NaturalLogarithm,
-    CommonLogarithm,
-    Integer,
-    Number\Infinite,
-    Signum
+use Innmind\Math\{
+    Algebra\Number\Number,
+    Algebra\Number as NumberInterface,
+    Algebra\Addition,
+    Algebra\Subtraction,
+    Algebra\Multiplication,
+    Algebra\Division,
+    Algebra\Round,
+    Algebra\Floor,
+    Algebra\Ceil,
+    Algebra\Modulo,
+    Algebra\Absolute,
+    Algebra\Power,
+    Algebra\SquareRoot,
+    Algebra\Exponential,
+    Algebra\BinaryLogarithm,
+    Algebra\NaturalLogarithm,
+    Algebra\CommonLogarithm,
+    Algebra\Integer,
+    Algebra\Number\Infinite,
+    Algebra\Signum,
+    Exception\NotANumber,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -37,20 +38,18 @@ class NumberTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\TypeError
-     * @expectedExceptionMessage Number must be an int or a float
-     */
     public function testThrowWhenValueNotAnIntNorAFloat()
     {
+        $this->expectException(\TypeError::class);
+        $this->expectExceptionMessage('Argument 1 must be of type int|float, string given');
+
         new Number('42');
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\NotANumber
-     */
     public function testThrowWhenNotANumber()
     {
+        $this->expectException(NotANumber::class);
+
         new Number(NAN);
     }
 
@@ -59,22 +58,22 @@ class NumberTest extends TestCase
         $number = Number::wrap(42.1);
 
         $this->assertInstanceOf(Number::class, $number);
-        $this->assertSame('42.1', (string) $number);
+        $this->assertSame('42.1', $number->toString());
 
         $number = Number::wrap(42);
 
         $this->assertInstanceOf(Integer::class, $number);
-        $this->assertSame('42', (string) $number);
+        $this->assertSame('42', $number->toString());
 
         $number = Number::wrap(INF);
 
         $this->assertInstanceOf(Infinite::class, $number);
-        $this->assertSame('+∞', (string) $number);
+        $this->assertSame('+∞', $number->toString());
 
         $number = Number::wrap(-INF);
 
         $this->assertInstanceOf(Infinite::class, $number);
-        $this->assertSame('-∞', (string) $number);
+        $this->assertSame('-∞', $number->toString());
     }
 
     public function testInt()
@@ -82,7 +81,7 @@ class NumberTest extends TestCase
         $number = new Number(42);
 
         $this->assertSame(42, $number->value());
-        $this->assertSame('42', (string) $number);
+        $this->assertSame('42', $number->toString());
     }
 
     public function testFloat()
@@ -90,7 +89,7 @@ class NumberTest extends TestCase
         $number = new Number(42.24);
 
         $this->assertSame(42.24, $number->value());
-        $this->assertSame('42.24', (string) $number);
+        $this->assertSame('42.24', $number->toString());
     }
 
     public function testEquals()
@@ -151,10 +150,11 @@ class NumberTest extends TestCase
     public function testRound()
     {
         $number = new Number(42.25);
-        $number = $number->round(1);
 
-        $this->assertInstanceOf(Round::class, $number);
-        $this->assertSame(42.3, $number->value());
+        $this->assertEquals(Round::up($number, 1), $number->roundUp(1));
+        $this->assertEquals(Round::down($number, 1), $number->roundDown(1));
+        $this->assertEquals(Round::even($number, 1), $number->roundEven(1));
+        $this->assertEquals(Round::odd($number, 1), $number->roundOdd(1));
     }
 
     public function testFloor()

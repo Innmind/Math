@@ -6,7 +6,7 @@ namespace Innmind\Math\Geometry\Trigonometry;
 use Innmind\Math\{
     Geometry\Angle\Degree,
     Algebra\Number,
-    Algebra\Round
+    Algebra\Round,
 };
 
 /**
@@ -18,8 +18,8 @@ use Innmind\Math\{
  */
 final class Sine implements Number
 {
-    private $degree;
-    private $sine;
+    private Degree $degree;
+    private ?Number $sine = null;
 
     public function __construct(Degree $degree)
     {
@@ -64,9 +64,24 @@ final class Sine implements Number
         return $this->sine()->multiplyBy($number, ...$numbers);
     }
 
-    public function round(int $precision = 0, string $mode = Round::UP): Number
+    public function roundUp(int $precision = 0): Number
     {
-        return $this->sine()->round($precision, $mode);
+        return $this->sine()->roundUp($precision);
+    }
+
+    public function roundDown(int $precision = 0): Number
+    {
+        return $this->sine()->roundDown($precision);
+    }
+
+    public function roundEven(int $precision = 0): Number
+    {
+        return $this->sine()->roundEven($precision);
+    }
+
+    public function roundOdd(int $precision = 0): Number
+    {
+        return $this->sine()->roundOdd($precision);
     }
 
     public function floor(): Number
@@ -126,15 +141,15 @@ final class Sine implements Number
 
     private function sine(): Number
     {
-        return $this->sine ?? $this->sine = new Number\Number(
-            sin(
-                $this->degree->toRadian()->number()->value()
-            )
+        return $this->sine ??= new Number\Number(
+            \sin(
+                $this->degree->toRadian()->number()->value(),
+            ),
         );
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
-        return sprintf('sin(%s)', $this->degree);
+        return \sprintf('sin(%s)', $this->degree->toString());
     }
 }

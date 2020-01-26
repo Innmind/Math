@@ -7,24 +7,35 @@ use Innmind\Math\{
     DefinitionSet\Set as SetInterface,
     DefinitionSet\Union,
     DefinitionSet\Intersection,
-    Algebra\Number
+    Algebra\Number,
+    Exception\OutOfDefinitionSet,
 };
 use Innmind\Immutable\Sequence;
+use function Innmind\Immutable\join;
 
 final class Set implements SetInterface
 {
-    private $values;
+    /** @var Sequence<int|float> */
+    private Sequence $values;
 
     public function __construct(Number ...$values)
     {
-        $this->values = (new Sequence(...$values))->map(static function(Number $v) {
-            return $v->value();
-        });
+        $this->values = Sequence::mixed(...$values)->mapTo(
+            'int|float',
+            static fn(Number $v) => $v->value(),
+        );
     }
 
     public function contains(Number $number): bool
     {
         return $this->values->contains($number->value());
+    }
+
+    public function accept(Number $number): void
+    {
+        if (!$this->contains($number)) {
+            throw new OutOfDefinitionSet($this, $number);
+        }
     }
 
     public function union(SetInterface $set): SetInterface
@@ -37,16 +48,20 @@ final class Set implements SetInterface
         return new Intersection($this, $set);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         if ($this->values->size() === 0) {
             return '∅';
         }
 
-        return (string) $this
-            ->values
-            ->join(';')
+        $values = $this->values->mapTo(
+            'string',
+            static fn($number): string => (string) $number,
+        );
+
+        return join(';', $values)
             ->prepend('{')
-            ->append('}');
+            ->append('}')
+            ->toString();
     }
 }

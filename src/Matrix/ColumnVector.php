@@ -6,12 +6,12 @@ namespace Innmind\Math\Matrix;
 use Innmind\Math\{
     Matrix,
     Algebra\Number,
-    Algebra\Integer
+    Algebra\Integer,
 };
 
-final class ColumnVector implements \Iterator
+final class ColumnVector
 {
-    private $vector;
+    private Vector $vector;
 
     public function __construct(Number $number, Number ...$numbers)
     {
@@ -20,11 +20,11 @@ final class ColumnVector implements \Iterator
 
     public static function initialize(Integer $dimension, Number $value): self
     {
-        return new self(...array_fill(0, $dimension->value(), $value));
+        return new self(...\array_fill(0, $dimension->value(), $value));
     }
 
     /**
-     * @return int|float[]
+     * @return list<int|float>
      */
     public function toArray(): array
     {
@@ -41,7 +41,7 @@ final class ColumnVector implements \Iterator
      */
     public function dot(RowVector $row): Number
     {
-        return $this->vector->dot(new Vector(...$row));
+        return $this->vector->dot(new Vector(...$row->numbers()));
     }
 
     /**
@@ -51,10 +51,10 @@ final class ColumnVector implements \Iterator
     {
         $rows = [];
 
-        foreach ($this->vector as $number) {
+        foreach ($this->vector->numbers() as $number) {
             $values = [];
 
-            foreach ($row as $rowNumber) {
+            foreach ($row->numbers() as $rowNumber) {
                 $values[] = $number->multiplyBy($rowNumber);
             }
 
@@ -67,35 +67,35 @@ final class ColumnVector implements \Iterator
     public function multiplyBy(self $column): self
     {
         return new self(
-            ...$this->vector->multiplyBy($column->vector)
+            ...$this->vector->multiplyBy($column->vector)->numbers(),
         );
     }
 
     public function divideBy(self $column): self
     {
         return new self(
-            ...$this->vector->divideBy($column->vector)
+            ...$this->vector->divideBy($column->vector)->numbers(),
         );
     }
 
     public function subtract(self $column): self
     {
         return new self(
-            ...$this->vector->subtract($column->vector)
+            ...$this->vector->subtract($column->vector)->numbers(),
         );
     }
 
     public function add(self $column): self
     {
         return new self(
-            ...$this->vector->add($column->vector)
+            ...$this->vector->add($column->vector)->numbers(),
         );
     }
 
     public function power(Number $power): self
     {
         return new self(
-            ...$this->vector->power($power)
+            ...$this->vector->power($power)->numbers(),
         );
     }
 
@@ -104,25 +104,25 @@ final class ColumnVector implements \Iterator
         return $this->vector->sum();
     }
 
-    public function foreach(callable $function): self
+    public function foreach(callable $function): void
     {
         $this->vector->foreach($function);
-
-        return $this;
     }
 
     public function map(callable $function): self
     {
         return new self(
-            ...$this->vector->map($function)
+            ...$this->vector->map($function)->numbers(),
         );
     }
 
     /**
-     * @param mixed $carry
-     * @param callable $reducer
+     * @template R
      *
-     * @return mixed
+     * @param R $carry
+     * @param callable(R, Number): R $reducer
+     *
+     * @return R
      */
     public function reduce($carry, callable $reducer)
     {
@@ -147,28 +147,11 @@ final class ColumnVector implements \Iterator
         return $this->vector->lead();
     }
 
-    public function current(): Number
+    /**
+     * @return list<Number>
+     */
+    public function numbers(): array
     {
-        return $this->vector->current();
-    }
-
-    public function key(): int
-    {
-        return $this->vector->key();
-    }
-
-    public function next(): void
-    {
-        $this->vector->next();
-    }
-
-    public function rewind(): void
-    {
-        $this->vector->rewind();
-    }
-
-    public function valid(): bool
-    {
-        return $this->vector->valid();
+        return $this->vector->numbers();
     }
 }

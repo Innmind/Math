@@ -5,18 +5,16 @@ namespace Innmind\Math\Algebra;
 
 final class Integer implements Number
 {
-    private $number;
+    private Number $number;
 
     public function __construct(int $value)
     {
         $this->number = new Number\Number($value);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function value(): int
     {
+        /** @var int */
         return $this->number->value();
     }
 
@@ -50,9 +48,24 @@ final class Integer implements Number
         return $this->number->multiplyBy($number, ...$numbers);
     }
 
-    public function round(int $precision = 0, string $mode = Round::UP): Number
+    public function roundUp(int $precision = 0): Number
     {
-        return $this->number->round($precision, $mode);
+        return $this->number->roundUp($precision);
+    }
+
+    public function roundDown(int $precision = 0): Number
+    {
+        return $this->number->roundDown($precision);
+    }
+
+    public function roundEven(int $precision = 0): Number
+    {
+        return $this->number->roundEven($precision);
+    }
+
+    public function roundOdd(int $precision = 0): Number
+    {
+        return $this->number->roundOdd($precision);
     }
 
     public function floor(): Number
@@ -87,6 +100,7 @@ final class Integer implements Number
 
     public function factorial(): Factorial
     {
+        /** @psalm-suppress PossiblyInvalidArgument */
         return new Factorial($this->number->value());
     }
 
@@ -117,16 +131,18 @@ final class Integer implements Number
 
     public function increment(): self
     {
+        /** @psalm-suppress PossiblyInvalidArgument */
         return new self($this->number->value() + 1);
     }
 
     public function decrement(): self
     {
+        /** @psalm-suppress PossiblyInvalidArgument */
         return new self($this->number->value() - 1);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
-        return (string) $this->number;
+        return $this->number->toString();
     }
 }

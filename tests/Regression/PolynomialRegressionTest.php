@@ -16,7 +16,7 @@ class PolynomialRegressionTest extends TestCase
 {
     public function testSquareRegression()
     {
-        $dataset = Dataset::fromArray([
+        $dataset = Dataset::of([
             [-8, 64],
             [-4, 16],
             [0, 0],
@@ -46,7 +46,7 @@ class PolynomialRegressionTest extends TestCase
 
     public function testCubicRegression()
     {
-        $dataset = Dataset::fromArray([
+        $dataset = Dataset::of([
             [-8, -512],
             [-4, -64],
             [0, 0],
@@ -68,7 +68,7 @@ class PolynomialRegressionTest extends TestCase
 
     public function testRegression()
     {
-        $dataset = Dataset::fromArray([
+        $dataset = Dataset::of([
             [0, 0],
             [1, 1],
             [2, 2],

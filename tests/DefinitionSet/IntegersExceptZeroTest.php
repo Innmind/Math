@@ -9,7 +9,8 @@ use Innmind\Math\{
     DefinitionSet\Union,
     DefinitionSet\Intersection,
     Algebra\Integer,
-    Algebra\Number\Number
+    Algebra\Number\Number,
+    Exception\OutOfDefinitionSet,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -25,7 +26,7 @@ class IntegersExceptZeroTest extends TestCase
 
     public function testStringCast()
     {
-        $this->assertSame('ℤ*', (string) new IntegersExceptZero);
+        $this->assertSame('ℤ*', (new IntegersExceptZero)->toString());
     }
 
     public function testContains()
@@ -38,12 +39,22 @@ class IntegersExceptZeroTest extends TestCase
         $this->assertFalse($set->contains(new Number(0.75)));
     }
 
+    public function testAccept()
+    {
+        $this->assertNull((new IntegersExceptZero)->accept(new Integer(1)));
+
+        $this->expectException(OutOfDefinitionSet::class);
+        $this->expectExceptionMessage('0 ∉ ℤ*');
+
+        (new IntegersExceptZero)->accept(new Integer(0));
+    }
+
     public function testUnion()
     {
         $union = (new IntegersExceptZero)->union(new IntegersExceptZero);
 
         $this->assertInstanceOf(Union::class, $union);
-        $this->assertSame('ℤ*∪ℤ*', (string) $union);
+        $this->assertSame('ℤ*∪ℤ*', $union->toString());
     }
 
     public function testIntersect()
@@ -51,6 +62,6 @@ class IntegersExceptZeroTest extends TestCase
         $intersection = (new IntegersExceptZero)->intersect(new IntegersExceptZero);
 
         $this->assertInstanceOf(Intersection::class, $intersection);
-        $this->assertSame('ℤ*∩ℤ*', (string) $intersection);
+        $this->assertSame('ℤ*∩ℤ*', $intersection->toString());
     }
 }

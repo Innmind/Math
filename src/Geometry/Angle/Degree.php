@@ -5,13 +5,13 @@ namespace Innmind\Math\Geometry\Angle;
 
 use Innmind\Math\Algebra\{
     Number,
-    Integer
+    Integer,
 };
 
 final class Degree
 {
-    private $number;
-    private $radian;
+    private Number $number;
+    private ?Radian $radian = null;
 
     public function __construct(Number $number)
     {
@@ -24,10 +24,10 @@ final class Degree
 
     public function toRadian(): Radian
     {
-        return $this->radian ?? $this->radian = new Radian(
+        return $this->radian ??= new Radian(
             new Number\Number(
-                deg2rad($this->number->value())
-            )
+                \deg2rad($this->number->value()),
+            ),
         );
     }
 
@@ -61,7 +61,7 @@ final class Degree
         return $this->number;
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         return $this->number->value().'°';
     }

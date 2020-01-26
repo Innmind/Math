@@ -34,7 +34,7 @@ class TangentTest extends TestCase
 
         $this->assertInstanceOf(Number::class, $tan);
         $this->assertSame(0.90040404429784, $tan->value());
-        $this->assertSame('tan(42°)', (string) $tan);
+        $this->assertSame('tan(42°)', $tan->toString());
     }
 
     public function testEquals()
@@ -93,11 +93,12 @@ class TangentTest extends TestCase
 
     public function testRound()
     {
-        $tan = new Tangent(new Degree(new Number\Number(42)));
-        $number = $tan->round(1);
+        $number = new Tangent(new Degree(new Number\Number(42)));
 
-        $this->assertInstanceOf(Round::class, $number);
-        $this->assertSame(0.9, $number->value());
+        $this->assertEquals(0.9, $number->roundUp(1)->value());
+        $this->assertEquals(0.9, $number->roundDown(1)->value());
+        $this->assertEquals(0.9, $number->roundEven(1)->value());
+        $this->assertEquals(0.9, $number->roundOdd(1)->value());
     }
 
     public function testFloor()

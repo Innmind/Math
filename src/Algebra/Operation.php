@@ -6,5 +6,5 @@ namespace Innmind\Math\Algebra;
 interface Operation
 {
     public function result(): Number;
-    public function __toString(): string;
+    public function toString(): string;
 }

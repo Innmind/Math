@@ -15,7 +15,10 @@ interface Number
     public function subtract(self $number, self ...$numbers): self;
     public function divideBy(self $number): self;
     public function multiplyBy(self $number, self ...$numbers): self;
-    public function round(int $precision = 0, string $mode = Round::UP): self;
+    public function roundUp(int $precision = 0): self;
+    public function roundDown(int $precision = 0): self;
+    public function roundEven(int $precision = 0): self;
+    public function roundOdd(int $precision = 0): self;
     public function floor(): self;
     public function ceil(): self;
     public function modulo(self $modulus): self;
@@ -27,5 +30,5 @@ interface Number
     public function naturalLogarithm(): self;
     public function commonLogarithm(): self;
     public function signum(): self;
-    public function __toString(): string;
+    public function toString(): string;
 }

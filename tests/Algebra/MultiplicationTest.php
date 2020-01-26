@@ -30,23 +30,13 @@ class MultiplicationTest extends TestCase
     public function testInterface()
     {
         $multiplication = new Multiplication(
-            $first = new Number\Number(4),
-            $second = new Number\Number(42)
+            new Number\Number(4),
+            new Number\Number(42)
         );
 
         $this->assertInstanceOf(Operation::class, $multiplication);
         $this->assertInstanceOf(Number::class, $multiplication);
-        $this->assertInstanceOf(\Iterator::class, $multiplication);
-        $this->assertSame($first, $multiplication->current());
-        $this->assertSame(0, $multiplication->key());
-        $this->assertTrue($multiplication->valid());
-        $this->assertNull($multiplication->next());
-        $this->assertSame($second, $multiplication->current());
-        $this->assertSame(1, $multiplication->key());
-        $multiplication->next();
-        $this->assertFalse($multiplication->valid());
-        $this->assertNull($multiplication->rewind());
-        $this->assertSame($first, $multiplication->current());
+        $this->assertSame('4 x 42', $multiplication->toString());
     }
 
     public function testResult()
@@ -145,14 +135,15 @@ class MultiplicationTest extends TestCase
 
     public function testRound()
     {
-        $multiplication = new Multiplication(
+        $number = new Multiplication(
             new Number\Number(2.22),
             new Number\Number(3)
         );
-        $number = $multiplication->round(1);
 
-        $this->assertInstanceOf(Round::class, $number);
-        $this->assertSame(6.7, $number->value());
+        $this->assertEquals(Round::up($number, 2), $number->roundUp(2));
+        $this->assertEquals(Round::down($number, 2), $number->roundDown(2));
+        $this->assertEquals(Round::even($number, 2), $number->roundEven(2));
+        $this->assertEquals(Round::odd($number, 2), $number->roundOdd(2));
     }
 
     public function testFloor()
@@ -293,7 +284,7 @@ class MultiplicationTest extends TestCase
             new Number\Number(66)
         );
 
-        $this->assertSame('(12 + 12) x 42 x 66', (string) $multiplication);
+        $this->assertSame('(12 + 12) x 42 x 66', $multiplication->toString());
     }
 
     public function testDistributivity()

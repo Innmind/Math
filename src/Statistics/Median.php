@@ -5,35 +5,36 @@ namespace Innmind\Math\Statistics;
 
 use Innmind\Math\Algebra\{
     Number,
-    Round
+    Round,
 };
 use Innmind\Immutable\Sequence;
 
 final class Median implements Number
 {
-    private $result;
+    private Number $result;
 
     public function __construct(Number $first, Number ...$values) {
-        $sequence = (new Sequence($first, ...$values))
-            ->sort(static function(Number $a, Number $b): bool {
-                return $a->higherThan($b);
-            });
+        /** @var Sequence<Number> */
+        $sequence = Sequence::of(Number::class, $first, ...$values);
+        $sequence = $sequence->sort(static function(Number $a, Number $b): int {
+            return (int) $a->higherThan($b);
+        });
         switch ($sequence->size() % 2) {
             case 1:
                 //mathematically the index to choose is (size+1/2) but here we
                 //do (size-1)/2 as the sequence indexes start at 0
                 $this->result = $sequence->get(
-                    ($sequence->size() - 1) / 2
+                    (int) (($sequence->size() - 1) / 2),
                 );
                 break;
 
             default:
                 //mathematically the value is mean(size/2, size/2+1) but here we
                 //do mean(size/2-1, size/2) as the sequence indexes start at 0
-                $index = $sequence->size() / 2;
+                $index = (int) ($sequence->size() / 2);
                 $this->result = new Mean(
                     $sequence->get($index - 1),
-                    $sequence->get($index)
+                    $sequence->get($index),
                 );
                 break;
         }
@@ -82,9 +83,24 @@ final class Median implements Number
         return $this->result->multiplyBy($number, ...$numbers);
     }
 
-    public function round(int $precision = 0, string $mode = Round::UP): Number
+    public function roundUp(int $precision = 0): Number
     {
-        return $this->result->round($precision, $mode);
+        return $this->result->roundUp($precision);
+    }
+
+    public function roundDown(int $precision = 0): Number
+    {
+        return $this->result->roundDown($precision);
+    }
+
+    public function roundEven(int $precision = 0): Number
+    {
+        return $this->result->roundEven($precision);
+    }
+
+    public function roundOdd(int $precision = 0): Number
+    {
+        return $this->result->roundOdd($precision);
     }
 
     public function floor(): Number
@@ -142,8 +158,8 @@ final class Median implements Number
         return $this->result->signum();
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
-        return (string) $this->result;
+        return $this->result->toString();
     }
 }

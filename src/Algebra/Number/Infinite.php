@@ -20,31 +20,26 @@ use Innmind\Math\Algebra\{
     BinaryLogarithm,
     NaturalLogarithm,
     CommonLogarithm,
-    Signum
+    Signum,
 };
 
 final class Infinite implements NumberInterface
 {
-    private $value;
+    private float $value;
 
-    private function __construct()
+    private function __construct(float $value)
     {
+        $this->value = $value;
     }
 
     public static function positive(): self
     {
-        $self = new self;
-        $self->value = INF;
-
-        return $self;
+        return new self(\INF);
     }
 
     public static function negative(): self
     {
-        $self = new self;
-        $self->value = -INF;
-
-        return $self;
+        return new self(-\INF);
     }
 
     /**
@@ -91,9 +86,24 @@ final class Infinite implements NumberInterface
         return new Multiplication($this, $number, ...$numbers);
     }
 
-    public function round(int $precision = 0, string $mode = Round::UP): NumberInterface
+    public function roundUp(int $precision = 0): NumberInterface
     {
-        return new Round($this, $precision, $mode);
+        return Round::up($this, $precision);
+    }
+
+    public function roundDown(int $precision = 0): NumberInterface
+    {
+        return Round::down($this, $precision);
+    }
+
+    public function roundEven(int $precision = 0): NumberInterface
+    {
+        return Round::even($this, $precision);
+    }
+
+    public function roundOdd(int $precision = 0): NumberInterface
+    {
+        return Round::odd($this, $precision);
     }
 
     public function floor(): NumberInterface
@@ -151,7 +161,7 @@ final class Infinite implements NumberInterface
         return new Signum($this);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         return $this->value() > 0 ? '+∞' : '-∞';
     }

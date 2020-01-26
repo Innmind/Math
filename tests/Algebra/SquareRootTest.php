@@ -56,7 +56,7 @@ class SquareRootTest extends TestCase
     {
         $this->assertSame(
             '√4',
-            (string) new SquareRoot(new Number\Number(4))
+            (new SquareRoot(new Number\Number(4)))->toString()
         );
     }
 
@@ -114,11 +114,12 @@ class SquareRootTest extends TestCase
 
     public function testRound()
     {
-        $sqrt = new SquareRoot(new Number\Number(2));
-        $number = $sqrt->round();
+        $number = new SquareRoot(new Number\Number(2));
 
-        $this->assertInstanceOf(Round::class, $number);
-        $this->assertSame(1.0, $number->value());
+        $this->assertEquals(Round::up($number, 2), $number->roundUp(2));
+        $this->assertEquals(Round::down($number, 2), $number->roundDown(2));
+        $this->assertEquals(Round::even($number, 2), $number->roundEven(2));
+        $this->assertEquals(Round::odd($number, 2), $number->roundOdd(2));
     }
 
     public function testFloor()

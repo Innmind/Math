@@ -20,7 +20,7 @@ use Innmind\Math\Algebra\{
     BinaryLogarithm,
     NaturalLogarithm,
     CommonLogarithm,
-    Signum
+    Signum,
 };
 
 /**
@@ -33,7 +33,7 @@ final class E implements NumberInterface
      */
     public function value()
     {
-        return M_E;
+        return \M_E;
     }
 
     public function equals(NumberInterface $number): bool
@@ -72,9 +72,24 @@ final class E implements NumberInterface
         return new Multiplication($this, $number, ...$numbers);
     }
 
-    public function round(int $precision = 0, string $mode = Round::UP): NumberInterface
+    public function roundUp(int $precision = 0): NumberInterface
     {
-        return new Round($this, $precision, $mode);
+        return Round::up($this, $precision);
+    }
+
+    public function roundDown(int $precision = 0): NumberInterface
+    {
+        return Round::down($this, $precision);
+    }
+
+    public function roundEven(int $precision = 0): NumberInterface
+    {
+        return Round::even($this, $precision);
+    }
+
+    public function roundOdd(int $precision = 0): NumberInterface
+    {
+        return Round::odd($this, $precision);
     }
 
     public function floor(): NumberInterface
@@ -132,7 +147,7 @@ final class E implements NumberInterface
         return new Signum($this);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         return 'e';
     }

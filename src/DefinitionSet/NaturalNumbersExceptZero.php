@@ -3,9 +3,10 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\DefinitionSet;
 
-use Innmind\Math\Algebra\{
-    Number,
-    Integer
+use Innmind\Math\{
+    Algebra\Number,
+    Algebra\Integer,
+    Exception\OutOfDefinitionSet,
 };
 
 final class NaturalNumbersExceptZero implements Set
@@ -25,6 +26,13 @@ final class NaturalNumbersExceptZero implements Set
             ->equals(new Integer(0));
     }
 
+    public function accept(Number $number): void
+    {
+        if (!$this->contains($number)) {
+            throw new OutOfDefinitionSet($this, $number);
+        }
+    }
+
     public function union(Set $set): Set
     {
         return new Union($this, $set);
@@ -35,7 +43,7 @@ final class NaturalNumbersExceptZero implements Set
         return new Intersection($this, $set);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         return 'ℕ*';
     }

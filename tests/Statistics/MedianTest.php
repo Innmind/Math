@@ -142,14 +142,15 @@ class MedianTest extends TestCase
 
     public function testRound()
     {
-        $median = new Median(
+        $number = new Median(
             new Number\Number(1),
             new Number\Number(7.12)
         );
-        $number = $median->round(1);
 
-        $this->assertInstanceOf(Round::class, $number);
-        $this->assertSame(4.1, $number->value());
+        $this->assertEquals(4.1, $number->roundUp(1)->value());
+        $this->assertEquals(4.1, $number->roundDown(1)->value());
+        $this->assertEquals(4.1, $number->roundEven(1)->value());
+        $this->assertEquals(4.1, $number->roundOdd(1)->value());
     }
 
     public function testFloor()
@@ -287,6 +288,6 @@ class MedianTest extends TestCase
             new Number\Number(7.1)
         );
 
-        $this->assertSame('(1 + 7.1) ÷ 2', (string) $median);
+        $this->assertSame('(1 + 7.1) ÷ 2', $median->toString());
     }
 }

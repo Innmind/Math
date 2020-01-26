@@ -7,7 +7,7 @@ use Innmind\Math\{
     Geometry\Angle\Degree,
     Geometry\Angle\Radian,
     Algebra\Number,
-    Algebra\Round
+    Algebra\Round,
 };
 
 /**
@@ -15,8 +15,8 @@ use Innmind\Math\{
  */
 final class ArcSine implements Number
 {
-    private $number;
-    private $arcSine;
+    private Number $number;
+    private ?Degree $arcSine = null;
 
     public function __construct(Number $number)
     {
@@ -66,9 +66,24 @@ final class ArcSine implements Number
         return $this->arcSine()->number()->multiplyBy($number, ...$numbers);
     }
 
-    public function round(int $precision = 0, string $mode = Round::UP): Number
+    public function roundUp(int $precision = 0): Number
     {
-        return $this->arcSine()->number()->round($precision, $mode);
+        return $this->arcSine()->number()->roundUp($precision);
+    }
+
+    public function roundDown(int $precision = 0): Number
+    {
+        return $this->arcSine()->number()->roundDown($precision);
+    }
+
+    public function roundEven(int $precision = 0): Number
+    {
+        return $this->arcSine()->number()->roundEven($precision);
+    }
+
+    public function roundOdd(int $precision = 0): Number
+    {
+        return $this->arcSine()->number()->roundOdd($precision);
     }
 
     public function floor(): Number
@@ -133,16 +148,16 @@ final class ArcSine implements Number
         }
 
         $radians = new Number\Number(
-            asin(
-                $this->number->value()
-            )
+            \asin(
+                $this->number->value(),
+            ),
         );
 
         return $this->arcSine = (new Radian($radians))->toDegree();
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
-        return sprintf('sin⁻¹(%s)', $this->number);
+        return \sprintf('sin⁻¹(%s)', $this->number->toString());
     }
 }

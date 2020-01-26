@@ -6,16 +6,16 @@ namespace Innmind\Math\Probabilities;
 use function Innmind\Math\{
     divide,
     multiply,
-    subtract
+    subtract,
 };
 use Innmind\Math\{
     Algebra\Number,
-    Algebra\Integer
+    Algebra\Integer,
 };
 
 final class BinomialDistribution
 {
-    private $probability;
+    private Number $probability;
 
     public function __construct(Number $probability)
     {
@@ -24,19 +24,20 @@ final class BinomialDistribution
 
     public function __invoke(Integer $trials, Integer $success): Number
     {
+        /** @psalm-suppress PossiblyInvalidArgument */
         $errors = new Integer($trials->subtract($success)->value());
         $coefficient = divide(
             $trials->factorial(),
             multiply(
                 $success->factorial(),
-                $errors->factorial()
-            )
+                $errors->factorial(),
+            ),
         );
 
         return multiply(
             $coefficient,
             $this->probability->power($success),
-            subtract(1, $this->probability)->power($errors)
+            subtract(1, $this->probability)->power($errors),
         );
     }
 }

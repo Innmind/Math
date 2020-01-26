@@ -10,7 +10,7 @@ use Innmind\Math\Algebra\Number;
  */
 final class Quartile
 {
-    private $value;
+    private Number $value;
 
     public function __construct(Number $value)
     {

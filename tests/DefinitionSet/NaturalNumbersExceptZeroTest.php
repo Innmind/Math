@@ -9,7 +9,8 @@ use Innmind\Math\{
     DefinitionSet\Union,
     DefinitionSet\Intersection,
     Algebra\Integer,
-    Algebra\Number\Number
+    Algebra\Number\Number,
+    Exception\OutOfDefinitionSet,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -25,7 +26,7 @@ class NaturalNumbersExceptZeroTest extends TestCase
 
     public function testStringCast()
     {
-        $this->assertSame('ℕ*', (string) new NaturalNumbersExceptZero);
+        $this->assertSame('ℕ*', (new NaturalNumbersExceptZero)->toString());
     }
 
     public function testContains()
@@ -37,6 +38,19 @@ class NaturalNumbersExceptZeroTest extends TestCase
         $this->assertFalse($set->contains(new Integer(0)));
         $this->assertFalse($set->contains(new Integer(-1)));
         $this->assertFalse($set->contains(new Number(0.75)));
+        $this->assertFalse($set->contains(new Number(1.75)));
+    }
+
+    public function testAccept()
+    {
+        $set = new NaturalNumbersExceptZero;
+
+        $this->assertNull($set->accept(new Integer(1)));
+
+        $this->expectException(OutOfDefinitionSet::class);
+        $this->expectExceptionMessage('0.1 ∉ ℕ*');
+
+        $set->accept(new Number(0.1));
     }
 
     public function testUnion()
@@ -44,7 +58,7 @@ class NaturalNumbersExceptZeroTest extends TestCase
         $union = (new NaturalNumbersExceptZero)->union(new NaturalNumbersExceptZero);
 
         $this->assertInstanceOf(Union::class, $union);
-        $this->assertSame('ℕ*∪ℕ*', (string) $union);
+        $this->assertSame('ℕ*∪ℕ*', $union->toString());
     }
 
     public function testIntersect()
@@ -52,6 +66,6 @@ class NaturalNumbersExceptZeroTest extends TestCase
         $intersection = (new NaturalNumbersExceptZero)->intersect(new NaturalNumbersExceptZero);
 
         $this->assertInstanceOf(Intersection::class, $intersection);
-        $this->assertSame('ℕ*∩ℕ*', (string) $intersection);
+        $this->assertSame('ℕ*∩ℕ*', $intersection->toString());
     }
 }

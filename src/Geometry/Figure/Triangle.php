@@ -9,22 +9,23 @@ use function Innmind\Math\{
     multiply,
     subtract,
     max,
-    divide
+    divide,
 };
 use Innmind\Math\{
     Geometry\Figure,
     Geometry\Segment,
     Algebra\Number,
-    Algebra\Integer
+    Algebra\Integer,
 };
 
 final class Triangle implements Figure
 {
-    private $a;
-    private $b;
-    private $c;
-    private $height;
-    private $base;
+    private Number $a;
+    private Number $b;
+    private Number $c;
+    private Segment $height;
+    /** @psalm-suppress PropertyNotSetInConstructor */
+    private Segment $base;
 
     public function __construct(
         Segment $a,
@@ -52,7 +53,7 @@ final class Triangle implements Figure
 
         $this->height = new Segment(multiply(
             2,
-            divide($this->area(), $base)
+            divide($this->area(), $base),
         ));
     }
 
@@ -71,8 +72,8 @@ final class Triangle implements Figure
                 $p,
                 subtract($p, $this->a),
                 subtract($p, $this->b),
-                subtract($p, $this->c)
-            )
+                subtract($p, $this->c),
+            ),
         );
     }
 

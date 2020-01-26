@@ -9,7 +9,8 @@ use Innmind\Math\{
     DefinitionSet\Union,
     DefinitionSet\Intersection,
     Algebra\Integer,
-    Algebra\Number\Number
+    Algebra\Number\Number,
+    Exception\OutOfDefinitionSet,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -27,29 +28,29 @@ class RangeTest extends TestCase
     {
         $this->assertSame(
             '[1;2]',
-            (string) Range::inclusive(new Integer(1), new Integer(2))
+            Range::inclusive(new Integer(1), new Integer(2))->toString()
         );
         $this->assertSame(
             ']1;2[',
-            (string) Range::exclusive(new Integer(1), new Integer(2))
+            Range::exclusive(new Integer(1), new Integer(2))->toString()
         );
         $this->assertSame(
             '[1;2[',
-            (string) new Range(
+            (new Range(
                 Range::INCLUSIVE,
                 new Integer(1),
                 new Integer(2),
                 Range::EXCLUSIVE
-            )
+            ))->toString()
         );
         $this->assertSame(
             ']1;2]',
-            (string) new Range(
+            (new Range(
                 Range::EXCLUSIVE,
                 new Integer(1),
                 new Integer(2),
                 Range::INCLUSIVE
-            )
+            ))->toString()
         );
     }
 
@@ -72,13 +73,25 @@ class RangeTest extends TestCase
         $this->assertFalse($exclusive->contains(new Number(2.1)));
     }
 
+    public function testAccept()
+    {
+        $set = Range::inclusive(new Integer(1), new Integer(2));
+
+        $this->assertNull($set->accept(new Integer(1)));
+
+        $this->expectException(OutOfDefinitionSet::class);
+        $this->expectExceptionMessage('0.1 ∉ [1;2]');
+
+        $set->accept(new Number(0.1));
+    }
+
     public function testUnion()
     {
         $range = Range::inclusive(new Integer(1), new Integer(2));
         $union = $range->union($range);
 
         $this->assertInstanceOf(Union::class, $union);
-        $this->assertSame('[1;2]∪[1;2]', (string) $union);
+        $this->assertSame('[1;2]∪[1;2]', $union->toString());
     }
 
     public function testIntersect()
@@ -87,6 +100,6 @@ class RangeTest extends TestCase
         $intersection = $range->intersect($range);
 
         $this->assertInstanceOf(Intersection::class, $intersection);
-        $this->assertSame('[1;2]∩[1;2]', (string) $intersection);
+        $this->assertSame('[1;2]∩[1;2]', $intersection->toString());
     }
 }

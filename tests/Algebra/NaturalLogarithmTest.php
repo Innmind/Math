@@ -22,7 +22,8 @@ use Innmind\Math\{
     Algebra\BinaryLogarithm,
     Algebra\CommonLogarithm,
     Algebra\Signum,
-    DefinitionSet\Set
+    DefinitionSet\Set,
+    Exception\OutOfDefinitionSet
 };
 use PHPUnit\Framework\TestCase;
 
@@ -36,11 +37,10 @@ class NaturalLogarithmTest extends TestCase
         $this->assertInstanceOf(Operation::class, $ln);
     }
 
-    /**
-     * @expectedException Innmind\Math\Exception\OutOfDefinitionSet
-     */
     public function testThrowWhenNotAllowedValue()
     {
+        $this->expectException(OutOfDefinitionSet::class);
+
         new NaturalLogarithm(new Number\Number(0));
     }
 
@@ -65,7 +65,7 @@ class NaturalLogarithmTest extends TestCase
     {
         $this->assertSame(
             'ln(4)',
-            (string) new NaturalLogarithm(new Number\Number(4))
+            (new NaturalLogarithm(new Number\Number(4)))->toString()
         );
     }
 
@@ -123,11 +123,12 @@ class NaturalLogarithmTest extends TestCase
 
     public function testRound()
     {
-        $ln = new NaturalLogarithm(new Number\Number(1));
-        $number = $ln->round();
+        $number = new NaturalLogarithm(new Number\Number(1));
 
-        $this->assertInstanceOf(Round::class, $number);
-        $this->assertSame(0.0, $number->value());
+        $this->assertEquals(Round::up($number, 2), $number->roundUp(2));
+        $this->assertEquals(Round::down($number, 2), $number->roundDown(2));
+        $this->assertEquals(Round::even($number, 2), $number->roundEven(2));
+        $this->assertEquals(Round::odd($number, 2), $number->roundOdd(2));
     }
 
     public function testFloor()
@@ -229,7 +230,7 @@ class NaturalLogarithmTest extends TestCase
         $set = BinaryLogarithm::definitionSet();
 
         $this->assertInstanceOf(Set::class, $set);
-        $this->assertSame(']0;+∞[', (string) $set);
+        $this->assertSame(']0;+∞[', $set->toString());
     }
 
     public function testLogarithmMultiplication()

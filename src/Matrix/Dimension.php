@@ -5,24 +5,25 @@ namespace Innmind\Math\Matrix;
 
 use Innmind\Math\{
     Algebra\Integer,
-    Exception\DimensionMustBePositive
+    Exception\DimensionMustBePositive,
 };
 
 final class Dimension
 {
-    private $rows;
-    private $columns;
-    private $string;
+    private Integer $rows;
+    private Integer $columns;
+    private string $string;
 
     public function __construct(Integer $rows, Integer $columns)
     {
+        $this->string = \sprintf('%s x %s', $rows->toString(), $columns->toString());
+
         if ($rows->value() < 0 || $columns->value() < 0) {
-            throw new DimensionMustBePositive;
+            throw new DimensionMustBePositive($this->string);
         }
 
         $this->rows = $rows;
         $this->columns = $columns;
-        $this->string = sprintf('%s x %s', $rows, $columns);
     }
 
     public function rows(): Integer
@@ -41,7 +42,7 @@ final class Dimension
             $this->columns->equals($dimension->columns());
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         return $this->string;
     }

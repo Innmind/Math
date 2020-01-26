@@ -9,37 +9,37 @@ use function Innmind\Math\{
     mean,
     median,
     min,
-    max
+    max,
 };
 use Innmind\Math\{
     Regression\Dataset,
     Algebra\Number,
     Matrix\ColumnVector,
-    Exception\OutOfRangeException
+    Statistics\Mean,
+    Exception\UnknownQuartile,
 };
 
 final class Quantile
 {
-    private $min;
-    private $max;
-    private $mean;
-    private $median;
-    private $firstQuartile;
-    private $thirdQuartile;
+    private Quartile $min;
+    private Quartile $max;
+    private Mean $mean;
+    private Quartile $median;
+    private Quartile $firstQuartile;
+    private Quartile $thirdQuartile;
 
     public function __construct(Dataset $dataset)
     {
         $values = $dataset->ordinates()->toArray();
-        sort($values);
-        $dataset = Dataset::fromArray($values);
+        \sort($values);
+        $dataset = Dataset::of($values);
 
-        $this
-            ->buildMin($dataset)
-            ->buildMax($dataset)
-            ->buildMean($dataset)
-            ->buildMedian($dataset)
-            ->buildFirstQuartile($dataset)
-            ->buildThirdQuartile($dataset);
+        $this->min = $this->buildMin($dataset);
+        $this->max = $this->buildMax($dataset);
+        $this->mean = $this->buildMean($dataset);
+        $this->median = $this->buildMedian($dataset);
+        $this->firstQuartile = $this->buildFirstQuartile($dataset);
+        $this->thirdQuartile = $this->buildThirdQuartile($dataset);
     }
 
     /**
@@ -104,106 +104,65 @@ final class Quantile
                 return $this->max;
         }
 
-        throw new OutOfRangeException;
+        throw new UnknownQuartile((string) $index);
     }
 
     /**
      * Extract the minimum value from the dataset
-     *
-     * @param Dataset $dataset
-     *
-     * @return self
      */
-    private function buildMin(Dataset $dataset): self
+    private function buildMin(Dataset $dataset): Quartile
     {
-        $this->min = new Quartile(min(...$dataset->ordinates()));
-
-        return $this;
+        return new Quartile(min(...$dataset->ordinates()->numbers()));
     }
 
     /**
      * Extract the maximum value from the dataset
-     *
-     * @param Dataset $dataset
-     *
-     * @return self
      */
-    private function buildMax(Dataset $dataset): self
+    private function buildMax(Dataset $dataset): Quartile
     {
-        $this->max = new Quartile(max(...$dataset->ordinates()));
-
-        return $this;
+        return new Quartile(max(...$dataset->ordinates()->numbers()));
     }
 
     /**
      * Build the mean value from the dataset
-     *
-     * @param Dataset $dataset
-     *
-     * @return self
      */
-    private function buildMean(Dataset $dataset): self
+    private function buildMean(Dataset $dataset): Mean
     {
-        $this->mean = mean(...$dataset->ordinates());
-
-        return $this;
+        return mean(...$dataset->ordinates()->numbers());
     }
 
     /**
      * Extract the median from the dataset
-     *
-     * @param Dataset $dataset
-     *
-     * @return self
      */
-    private function buildMedian(Dataset $dataset): self
+    private function buildMedian(Dataset $dataset): Quartile
     {
-        $this->median = new Quartile(median(...$dataset->ordinates()));
-
-        return $this;
+        return new Quartile(median(...$dataset->ordinates()->numbers()));
     }
 
     /**
      * Extract the first quartile
-     *
-     * @param Dataset $dataset
-     *
-     * @return self
      */
-    private function buildFirstQuartile(Dataset $dataset): self
+    private function buildFirstQuartile(Dataset $dataset): Quartile
     {
-        $this->firstQuartile = new Quartile($this->buildQuartile(
+        return new Quartile($this->buildQuartile(
             new Number\Number(0.25),
-            $dataset->ordinates()
+            $dataset->ordinates(),
         ));
-
-        return $this;
     }
 
     /**
-     * Extract the first quartile
-     *
-     * @param Dataset $dataset
-     *
-     * @return self
+     * Extract the third quartile
      */
-    private function buildThirdQuartile(Dataset $dataset): self
+    private function buildThirdQuartile(Dataset $dataset): Quartile
     {
-        $this->thirdQuartile = new Quartile($this->buildQuartile(
+        return new Quartile($this->buildQuartile(
             new Number\Number(0.75),
-            $dataset->ordinates()
+            $dataset->ordinates(),
         ));
-
-        return $this;
     }
 
     /**
-     * Return the value describing the the quartile at the given percentage
-     *
-     * @param Number $percentage
-     * @param ColumnVector $dataset
-     *
-     * @return float
+     * Return the value describing the quartile at the given percentage
      */
     private function buildQuartile(
         Number $percentage,
@@ -214,7 +173,7 @@ final class Quantile
         if ($dimension->value() === 2) {
             return divide(
                 add($dataset->get(0), $dataset->get(1)),
-                2
+                2,
             );
         } else if ($dimension->value() === 1) {
             return $dataset->get(0);
@@ -222,12 +181,12 @@ final class Quantile
 
         $index = (int) $dimension
             ->multiplyBy($percentage)
-            ->round()
+            ->roundUp()
             ->value();
 
         return divide(
             add($dataset->get($index), $dataset->get($index - 1)),
-            2
+            2,
         );
     }
 }

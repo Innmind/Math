@@ -9,12 +9,13 @@ use Innmind\Math\{
     Matrix\Dimension,
     Matrix\RowVector,
     Matrix\ColumnVector,
-    Exception\VectorsMustContainsOnlyTwoValues
+    Algebra\Number,
+    Exception\VectorsMustContainsOnlyTwoValues,
 };
 
-final class Dataset implements \Iterator
+final class Dataset
 {
-    private $matrix;
+    private Matrix $matrix;
 
     public function __construct(RowVector ...$rows)
     {
@@ -25,12 +26,15 @@ final class Dataset implements \Iterator
         }
     }
 
-    public static function fromArray(array $values): self
+    /**
+     * @param array<int, int|float|Number>|list<array{0: int|float|Number, 1: int|float|Number}> $values
+     */
+    public static function of(array $values): self
     {
         $rows = [];
 
         foreach ($values as $x => $y) {
-            $coordinates = is_array($y) ? $y : [$x, $y];
+            $coordinates = \is_array($y) ? $y : [$x, $y];
             $rows[] = new RowVector(...numerize(...$coordinates));
         }
 
@@ -38,7 +42,7 @@ final class Dataset implements \Iterator
     }
 
     /**
-     * @return int|float[]
+     * @return list<list<int|float>>
      */
     public function toArray(): array
     {
@@ -60,28 +64,8 @@ final class Dataset implements \Iterator
         return $this->matrix->dimension();
     }
 
-    public function current(): RowVector
+    public function row(int $position): RowVector
     {
-        return $this->matrix->current();
-    }
-
-    public function key(): int
-    {
-        return $this->matrix->key();
-    }
-
-    public function next(): void
-    {
-        $this->matrix->next();
-    }
-
-    public function rewind(): void
-    {
-        $this->matrix->rewind();
-    }
-
-    public function valid(): bool
-    {
-        return $this->matrix->valid();
+        return $this->matrix->row($position);
     }
 }

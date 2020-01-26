@@ -5,12 +5,12 @@ namespace Innmind\Math\Probabilities;
 
 use Innmind\Math\{
     Regression\Dataset,
-    Algebra\Number
+    Algebra\Number,
 };
 
 final class StandardDeviation
 {
-    private $deviation;
+    private Number $deviation;
 
     public function __construct(Dataset $dataset)
     {

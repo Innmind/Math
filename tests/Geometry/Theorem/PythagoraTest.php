@@ -14,7 +14,7 @@ class PythagoraTest extends TestCase
 {
     public function testStringCast()
     {
-        $this->assertSame('C²=A²+B²', (string) new Pythagora);
+        $this->assertSame('C²=A²+B²', (new Pythagora)->toString());
     }
 
     public function testHypotenuse()

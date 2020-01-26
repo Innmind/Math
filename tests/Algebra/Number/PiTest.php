@@ -34,7 +34,7 @@ class PiTest extends TestCase
 
     public function testStringCast()
     {
-        $this->assertSame('π', (string) new Pi);
+        $this->assertSame('π', (new Pi)->toString());
     }
 
     public function testEquals()
@@ -88,10 +88,11 @@ class PiTest extends TestCase
     public function testRound()
     {
         $number = new Pi;
-        $number = $number->round(2);
 
-        $this->assertInstanceOf(Round::class, $number);
-        $this->assertSame(3.14, $number->value());
+        $this->assertEquals(Round::up($number, 2), $number->roundUp(2));
+        $this->assertEquals(Round::down($number, 2), $number->roundDown(2));
+        $this->assertEquals(Round::even($number, 2), $number->roundEven(2));
+        $this->assertEquals(Round::odd($number, 2), $number->roundOdd(2));
     }
 
     public function testFloor()

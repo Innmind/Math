@@ -22,34 +22,43 @@ use Innmind\Math\{
     Algebra\Signum,
     Algebra\SquareRoot,
     Algebra\Subtraction,
-    Exception\TypeError,
-    Exception\NotANumber
+    Exception\NotANumber,
 };
 
 final class Number implements NumberInterface
 {
+    /** @var int|float */
     private $value;
 
+    /**
+     * @param int|float $value
+     */
     public function __construct($value)
     {
-        if (!is_int($value) && !is_float($value)) {
-            throw new TypeError('Number must be an int or a float');
+        /** @psalm-suppress DocblockTypeContradiction */
+        if (!\is_int($value) && !\is_float($value)) {
+            $given = \gettype($value);
+
+            throw new \TypeError("Argument 1 must be of type int|float, $given given");
         }
 
-        if (is_nan($value)) {
+        if (\is_nan($value)) {
             throw new NotANumber;
         }
 
         $this->value = $value;
     }
 
+    /**
+     * @param int|float $value
+     */
     public static function wrap($value): NumberInterface
     {
-        if (is_infinite($value)) {
+        if (\is_infinite($value)) {
             return $value > 0 ? Infinite::positive() : Infinite::negative();
         }
 
-        if (is_int($value)) {
+        if (\is_int($value)) {
             return new Integer($value);
         }
 
@@ -100,9 +109,24 @@ final class Number implements NumberInterface
         return new Multiplication($this, $number, ...$numbers);
     }
 
-    public function round(int $precision = 0, string $mode = Round::UP): NumberInterface
+    public function roundUp(int $precision = 0): NumberInterface
     {
-        return new Round($this, $precision, $mode);
+        return Round::up($this, $precision);
+    }
+
+    public function roundDown(int $precision = 0): NumberInterface
+    {
+        return Round::down($this, $precision);
+    }
+
+    public function roundEven(int $precision = 0): NumberInterface
+    {
+        return Round::even($this, $precision);
+    }
+
+    public function roundOdd(int $precision = 0): NumberInterface
+    {
+        return Round::odd($this, $precision);
     }
 
     public function floor(): NumberInterface
@@ -160,8 +184,8 @@ final class Number implements NumberInterface
         return new Signum($this);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
-        return var_export($this->value, true);
+        return \var_export($this->value, true);
     }
 }

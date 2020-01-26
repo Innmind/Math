@@ -3,12 +3,15 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\DefinitionSet;
 
-use Innmind\Math\Algebra\Number;
+use Innmind\Math\{
+    Algebra\Number,
+    Exception\OutOfDefinitionSet,
+};
 
 final class Intersection implements Set
 {
-    private $left;
-    private $right;
+    private Set $left;
+    private Set $right;
 
     public function __construct(Set $left, Set $right)
     {
@@ -22,6 +25,13 @@ final class Intersection implements Set
             $this->right->contains($number);
     }
 
+    public function accept(Number $number): void
+    {
+        if (!$this->contains($number)) {
+            throw new OutOfDefinitionSet($this, $number);
+        }
+    }
+
     public function union(Set $set): Set
     {
         return new Union($this, $set);
@@ -32,8 +42,8 @@ final class Intersection implements Set
         return new self($this, $set);
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
-        return $this->left.'∩'.$this->right;
+        return $this->left->toString().'∩'.$this->right->toString();
     }
 }

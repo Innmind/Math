@@ -5,18 +5,20 @@ namespace Innmind\Math\Statistics;
 
 use Innmind\Math\Algebra\{
     Number,
-    Division
+    Division,
 };
 use Innmind\Immutable\Sequence;
 
 final class Frequence
 {
-    private $values;
-    private $size;
+    /** @var Sequence<Number> */
+    private Sequence $values;
+    private Number $size;
 
     public function __construct(Number ...$values)
     {
-        $this->values = new Sequence(...$values);
+        /** @var Sequence<Number> */
+        $this->values = Sequence::of(Number::class, ...$values);
         $this->size = new Number\Number($this->values->size());
     }
 
