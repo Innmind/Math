@@ -181,7 +181,7 @@ final class Quantile
 
         $index = (int) $dimension
             ->multiplyBy($percentage)
-            ->round()
+            ->roundUp()
             ->value();
 
         return divide(

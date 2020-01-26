@@ -7,21 +7,16 @@ use Innmind\Math\Exception\PrecisionMustBePositive;
 
 final class Round implements Number
 {
-    public const UP = 'UP';
-    public const DOWN = 'DOWN';
-    public const EVEN = 'EVEN';
-    public const ODD = 'ODD';
-
     private Number $number;
     private int $precision;
     private int $mode;
     /** @var int|float|null */
     private $value;
 
-    public function __construct(
+    private function __construct(
         Number $number,
-        int $precision = 0,
-        string $mode = self::UP
+        int $precision,
+        int $mode
     ) {
         if ($precision < 0) {
             throw new PrecisionMustBePositive((string) $precision);
@@ -29,8 +24,27 @@ final class Round implements Number
 
         $this->number = $number;
         $this->precision = $precision;
-        /** @var int */
-        $this->mode = constant('PHP_ROUND_HALF_'.$mode);
+        $this->mode = $mode;
+    }
+
+    public static function up(Number $number, int $precision = 0): self
+    {
+        return new self($number, $precision, \PHP_ROUND_HALF_UP);
+    }
+
+    public static function down(Number $number, int $precision = 0): self
+    {
+        return new self($number, $precision, \PHP_ROUND_HALF_DOWN);
+    }
+
+    public static function even(Number $number, int $precision = 0): self
+    {
+        return new self($number, $precision, \PHP_ROUND_HALF_EVEN);
+    }
+
+    public static function odd(Number $number, int $precision = 0): self
+    {
+        return new self($number, $precision, \PHP_ROUND_HALF_ODD);
     }
 
     public function value()
@@ -72,9 +86,24 @@ final class Round implements Number
         return new Multiplication($this, $number, ...$numbers);
     }
 
-    public function round(int $precision = 0, string $mode = Round::UP): Number
+    public function roundUp(int $precision = 0): Number
     {
-        return new self($this, $precision, $mode);
+        return self::up($this, $precision);
+    }
+
+    public function roundDown(int $precision = 0): Number
+    {
+        return self::down($this, $precision);
+    }
+
+    public function roundEven(int $precision = 0): Number
+    {
+        return self::even($this, $precision);
+    }
+
+    public function roundOdd(int $precision = 0): Number
+    {
+        return self::odd($this, $precision);
     }
 
     public function floor(): Number

@@ -88,10 +88,11 @@ class ETest extends TestCase
     public function testRound()
     {
         $number = new E;
-        $number = $number->round(2);
 
-        $this->assertInstanceOf(Round::class, $number);
-        $this->assertSame(2.72, $number->value());
+        $this->assertEquals(Round::up($number, 2), $number->roundUp(2));
+        $this->assertEquals(Round::down($number, 2), $number->roundDown(2));
+        $this->assertEquals(Round::even($number, 2), $number->roundEven(2));
+        $this->assertEquals(Round::odd($number, 2), $number->roundOdd(2));
     }
 
     public function testFloor()

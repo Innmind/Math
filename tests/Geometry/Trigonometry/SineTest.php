@@ -93,11 +93,12 @@ class SineTest extends TestCase
 
     public function testRound()
     {
-        $sin = new Sine(new Degree(new Number\Number(42)));
-        $number = $sin->round(1);
+        $number = new Sine(new Degree(new Number\Number(42)));
 
-        $this->assertInstanceOf(Round::class, $number);
-        $this->assertSame(0.7, $number->value());
+        $this->assertEquals(0.7, $number->roundUp(1)->value());
+        $this->assertEquals(0.7, $number->roundDown(1)->value());
+        $this->assertEquals(0.7, $number->roundEven(1)->value());
+        $this->assertEquals(0.7, $number->roundOdd(1)->value());
     }
 
     public function testFloor()

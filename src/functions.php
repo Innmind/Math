@@ -107,14 +107,45 @@ function power($number, $power): Number
 
 /**
  * @param int|float|Number $number
- * @param string $mode
  */
-function round($number, int $precision = 0, $mode = Round::UP): Number
+function roundUp($number, int $precision = 0): Number
 {
-    return new Round(
+    return Round::up(
         numerize($number)[0],
         $precision,
-        strtoupper($mode)
+    );
+}
+
+/**
+ * @param int|float|Number $number
+ */
+function roundDown($number, int $precision = 0): Number
+{
+    return Round::down(
+        numerize($number)[0],
+        $precision,
+    );
+}
+
+/**
+ * @param int|float|Number $number
+ */
+function roundEven($number, int $precision = 0): Number
+{
+    return Round::even(
+        numerize($number)[0],
+        $precision,
+    );
+}
+
+/**
+ * @param int|float|Number $number
+ */
+function roundOdd($number, int $precision = 0): Number
+{
+    return Round::odd(
+        numerize($number)[0],
+        $precision,
     );
 }
 

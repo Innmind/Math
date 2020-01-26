@@ -113,11 +113,12 @@ class DivisionTest extends TestCase
 
     public function testRound()
     {
-        $division = new Division(new Number\Number(6.66), new Number\Number(3));
-        $number = $division->round(1);
+        $number = new Division(new Number\Number(6.66), new Number\Number(3));
 
-        $this->assertInstanceOf(Round::class, $number);
-        $this->assertSame(2.2, $number->value());
+        $this->assertEquals(Round::up($number, 2), $number->roundUp(2));
+        $this->assertEquals(Round::down($number, 2), $number->roundDown(2));
+        $this->assertEquals(Round::even($number, 2), $number->roundEven(2));
+        $this->assertEquals(Round::odd($number, 2), $number->roundOdd(2));
     }
 
     public function testFloor()

@@ -123,11 +123,12 @@ class CommonLogarithmTest extends TestCase
 
     public function testRound()
     {
-        $lg = new CommonLogarithm(new Number\Number(1));
-        $number = $lg->round();
+        $number = new CommonLogarithm(new Number\Number(1));
 
-        $this->assertInstanceOf(Round::class, $number);
-        $this->assertSame(0.0, $number->value());
+        $this->assertEquals(Round::up($number, 2), $number->roundUp(2));
+        $this->assertEquals(Round::down($number, 2), $number->roundDown(2));
+        $this->assertEquals(Round::even($number, 2), $number->roundEven(2));
+        $this->assertEquals(Round::odd($number, 2), $number->roundOdd(2));
     }
 
     public function testFloor()

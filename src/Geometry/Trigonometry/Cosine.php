@@ -64,9 +64,24 @@ final class Cosine implements Number
         return $this->cosine()->multiplyBy($number, ...$numbers);
     }
 
-    public function round(int $precision = 0, string $mode = Round::UP): Number
+    public function roundUp(int $precision = 0): Number
     {
-        return $this->cosine()->round($precision, $mode);
+        return $this->cosine()->roundUp($precision);
+    }
+
+    public function roundDown(int $precision = 0): Number
+    {
+        return $this->cosine()->roundDown($precision);
+    }
+
+    public function roundEven(int $precision = 0): Number
+    {
+        return $this->cosine()->roundEven($precision);
+    }
+
+    public function roundOdd(int $precision = 0): Number
+    {
+        return $this->cosine()->roundOdd($precision);
     }
 
     public function floor(): Number

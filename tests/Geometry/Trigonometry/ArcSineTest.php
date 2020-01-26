@@ -109,13 +109,14 @@ class ArcSineTest extends TestCase
 
     public function testRound()
     {
-        $asin = new ArcSine(
+        $number = new ArcSine(
             new Sine(new Degree(new Number\Number(42)))
         );
-        $number = $asin->round(1);
 
-        $this->assertInstanceOf(Round::class, $number);
-        $this->assertSame(42.0, $number->value());
+        $this->assertEquals(42.0, $number->roundUp(1)->value());
+        $this->assertEquals(42.0, $number->roundDown(1)->value());
+        $this->assertEquals(42.0, $number->roundEven(1)->value());
+        $this->assertEquals(42.0, $number->roundOdd(1)->value());
     }
 
     public function testFloor()

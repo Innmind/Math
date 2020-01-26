@@ -66,9 +66,24 @@ final class ArcSine implements Number
         return $this->arcSine()->number()->multiplyBy($number, ...$numbers);
     }
 
-    public function round(int $precision = 0, string $mode = Round::UP): Number
+    public function roundUp(int $precision = 0): Number
     {
-        return $this->arcSine()->number()->round($precision, $mode);
+        return $this->arcSine()->number()->roundUp($precision);
+    }
+
+    public function roundDown(int $precision = 0): Number
+    {
+        return $this->arcSine()->number()->roundDown($precision);
+    }
+
+    public function roundEven(int $precision = 0): Number
+    {
+        return $this->arcSine()->number()->roundEven($precision);
+    }
+
+    public function roundOdd(int $precision = 0): Number
+    {
+        return $this->arcSine()->number()->roundOdd($precision);
     }
 
     public function floor(): Number

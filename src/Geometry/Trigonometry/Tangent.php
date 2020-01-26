@@ -64,9 +64,24 @@ final class Tangent implements Number
         return $this->tangent()->multiplyBy($number, ...$numbers);
     }
 
-    public function round(int $precision = 0, string $mode = Round::UP): Number
+    public function roundUp(int $precision = 0): Number
     {
-        return $this->tangent()->round($precision, $mode);
+        return $this->tangent()->roundUp($precision);
+    }
+
+    public function roundDown(int $precision = 0): Number
+    {
+        return $this->tangent()->roundDown($precision);
+    }
+
+    public function roundEven(int $precision = 0): Number
+    {
+        return $this->tangent()->roundEven($precision);
+    }
+
+    public function roundOdd(int $precision = 0): Number
+    {
+        return $this->tangent()->roundOdd($precision);
     }
 
     public function floor(): Number

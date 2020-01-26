@@ -121,14 +121,15 @@ class ScopeTest extends TestCase
 
     public function testRound()
     {
-        $scope = new Scope(
+        $number = new Scope(
             new Number\Number(1),
             new Number\Number(7.12)
         );
-        $number = $scope->round(1);
 
-        $this->assertInstanceOf(Round::class, $number);
-        $this->assertSame(6.1, $number->value());
+        $this->assertEquals(6.1, $number->roundUp(1)->value());
+        $this->assertEquals(6.1, $number->roundDown(1)->value());
+        $this->assertEquals(6.1, $number->roundEven(1)->value());
+        $this->assertEquals(6.1, $number->roundOdd(1)->value());
     }
 
     public function testFloor()

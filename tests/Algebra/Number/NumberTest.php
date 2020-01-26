@@ -151,10 +151,11 @@ class NumberTest extends TestCase
     public function testRound()
     {
         $number = new Number(42.25);
-        $number = $number->round(1);
 
-        $this->assertInstanceOf(Round::class, $number);
-        $this->assertSame(42.3, $number->value());
+        $this->assertEquals(Round::up($number, 1), $number->roundUp(1));
+        $this->assertEquals(Round::down($number, 1), $number->roundDown(1));
+        $this->assertEquals(Round::even($number, 1), $number->roundEven(1));
+        $this->assertEquals(Round::odd($number, 1), $number->roundOdd(1));
     }
 
     public function testFloor()

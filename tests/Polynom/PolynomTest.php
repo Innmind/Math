@@ -92,7 +92,7 @@ class PolynomTest extends TestCase
         );
         $this->assertSame(
             4.000,
-            $polynom->derived(new Integer(2))->round(3)->value()
+            $polynom->derived(new Integer(2))->roundUp(3)->value()
         );
     }
 

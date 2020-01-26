@@ -18,7 +18,10 @@ use function Innmind\Math\{
     modulo,
     multiply,
     power,
-    round,
+    roundUp,
+    roundDown,
+    roundEven,
+    roundOdd,
     sine,
     squareRoot,
     subtract,
@@ -151,10 +154,10 @@ class FunctionsTest extends TestCase
 
     public function testRound()
     {
-        $round = round(4.85, 1, 'down');
-
-        $this->assertInstanceOf(Round::class, $round);
-        $this->assertSame(4.8, $round->value());
+        $this->assertEquals(Round::up(new Number\Number(4.85), 1), roundUp(4.85, 1));
+        $this->assertEquals(Round::down(new Number\Number(4.85), 1), roundDown(4.85, 1));
+        $this->assertEquals(Round::even(new Number\Number(4.85), 1), roundEven(4.85, 1));
+        $this->assertEquals(Round::odd(new Number\Number(4.85), 1), roundOdd(4.85, 1));
     }
 
     public function testSquareRoot()

@@ -136,13 +136,14 @@ class ExponentialTest extends TestCase
 
     public function testRound()
     {
-        $power = new Exponential(
+        $number = new Exponential(
             new Number\Number(2.1)
         );
-        $number = $power->round(1);
 
-        $this->assertInstanceOf(Round::class, $number);
-        $this->assertSame(8.2, $number->value());
+        $this->assertEquals(Round::up($number, 2), $number->roundUp(2));
+        $this->assertEquals(Round::down($number, 2), $number->roundDown(2));
+        $this->assertEquals(Round::even($number, 2), $number->roundEven(2));
+        $this->assertEquals(Round::odd($number, 2), $number->roundOdd(2));
     }
 
     public function testFloor()
