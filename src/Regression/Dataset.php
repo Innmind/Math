@@ -9,6 +9,7 @@ use Innmind\Math\{
     Matrix\Dimension,
     Matrix\RowVector,
     Matrix\ColumnVector,
+    Algebra\Number,
     Exception\VectorsMustContainsOnlyTwoValues
 };
 
@@ -25,6 +26,9 @@ final class Dataset
         }
     }
 
+    /**
+     * @param array<int, int|float|Number>|list<array{0: int|float|Number, 1: int|float|Number}> $values
+     */
     public static function fromArray(array $values): self
     {
         $rows = [];
@@ -38,7 +42,7 @@ final class Dataset
     }
 
     /**
-     * @return int|float[]
+     * @return list<list<int|float>>
      */
     public function toArray(): array
     {

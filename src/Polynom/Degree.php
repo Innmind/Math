@@ -37,6 +37,7 @@ final class Degree
 
     public function primitive(): self
     {
+        /** @psalm-suppress ArgumentTypeCoercion */
         return new self(
             add($this->degree, 1)->result(),
             divide(
@@ -48,6 +49,7 @@ final class Degree
 
     public function derivative(): self
     {
+        /** @psalm-suppress ArgumentTypeCoercion */
         return new self(
             subtract($this->degree, 1)->result(),
             $this->coeff->multiplyBy($this->degree)

@@ -24,6 +24,7 @@ final class BinomialDistribution
 
     public function __invoke(Integer $trials, Integer $success): Number
     {
+        /** @psalm-suppress PossiblyInvalidArgument */
         $errors = new Integer($trials->subtract($success)->value());
         $coefficient = divide(
             $trials->factorial(),

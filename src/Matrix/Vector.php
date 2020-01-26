@@ -15,11 +15,13 @@ use function Innmind\Immutable\unwrap;
 
 final class Vector
 {
+    /** @var Sequence<Number> */
     private Sequence $numbers;
     private Integer $dimension;
 
     public function __construct(Number $number, Number ...$numbers)
     {
+        /** @var Sequence<Number> */
         $this->numbers = Sequence::of(Number::class, $number, ...$numbers);
         $this->dimension = new Integer($this->numbers->size());
     }
@@ -30,7 +32,7 @@ final class Vector
     }
 
     /**
-     * @return int|float[]
+     * @return list<int|float>
      */
     public function toArray(): array
     {
@@ -191,6 +193,7 @@ final class Vector
      */
     public function lead(): Number
     {
+        /** @var Number */
         return $this->reduce(
             new Integer(0),
             static function(Number $lead, Number $number): Number {

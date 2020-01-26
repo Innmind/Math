@@ -15,7 +15,7 @@ use Innmind\Math\{
  */
 final class NaturalLogarithm implements Operation, Number
 {
-    private static Set $definitionSet;
+    private static ?Set $definitionSet = null;
 
     private Number $number;
     private ?Number $result = null;

@@ -23,7 +23,7 @@ final class LinearRegression
 
     public function __construct(Dataset $data)
     {
-        list($slope, $intercept) = $this->compute($data);
+        [$slope, $intercept] = $this->compute($data);
         $this->polynom = (new Polynom($intercept))->withDegree(
             new Integer(1),
             $slope
@@ -73,9 +73,7 @@ final class LinearRegression
      *
      * @see https://richardathome.wordpress.com/2006/01/25/a-php-linear-regression-function/
      *
-     * @param Dataset $data
-     *
-     * @return array
+     * @return array{0: Number, 1: Number}
      */
     private function compute(Dataset $data): array
     {

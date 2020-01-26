@@ -31,8 +31,12 @@ final class Number implements NumberInterface
     /** @var int|float */
     private $value;
 
+    /**
+     * @param int|float $value
+     */
     public function __construct($value)
     {
+        /** @psalm-suppress DocblockTypeContradiction */
         if (!is_int($value) && !is_float($value)) {
             throw new TypeError('Number must be an int or a float');
         }
@@ -44,6 +48,9 @@ final class Number implements NumberInterface
         $this->value = $value;
     }
 
+    /**
+     * @param int|float $value
+     */
     public static function wrap($value): NumberInterface
     {
         if (is_infinite($value)) {

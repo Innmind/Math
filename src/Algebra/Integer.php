@@ -12,11 +12,9 @@ final class Integer implements Number
         $this->number = new Number\Number($value);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function value(): int
     {
+        /** @var int */
         return $this->number->value();
     }
 
@@ -87,6 +85,7 @@ final class Integer implements Number
 
     public function factorial(): Factorial
     {
+        /** @psalm-suppress PossiblyInvalidArgument */
         return new Factorial($this->number->value());
     }
 
@@ -117,11 +116,13 @@ final class Integer implements Number
 
     public function increment(): self
     {
+        /** @psalm-suppress PossiblyInvalidArgument */
         return new self($this->number->value() + 1);
     }
 
     public function decrement(): self
     {
+        /** @psalm-suppress PossiblyInvalidArgument */
         return new self($this->number->value() - 1);
     }
 

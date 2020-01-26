@@ -31,6 +31,7 @@ final class Polynom
     public function __construct(Number $intercept = null, Degree ...$degrees)
     {
         $this->intercept = $intercept ?? new Integer(0);
+        /** @var Map<int, Degree> */
         $this->degrees = Map::of('int', Degree::class);
 
         foreach ($degrees as $degree) {
@@ -105,17 +106,17 @@ final class Polynom
      */
     public function __invoke(Number $x): Number
     {
-        return add(
-            $this->intercept,
-            ...$this->degrees->values()->reduce(
-                [],
-                static function(array $carry, Degree $degree) use ($x): array {
-                    $carry[] = $degree($x);
+        /** @var list<Number> */
+        $values = $this->degrees->values()->reduce(
+            [],
+            static function(array $carry, Degree $degree) use ($x): array {
+                $carry[] = $degree($x);
 
-                    return $carry;
-                }
-            )
+                return $carry;
+            }
         );
+
+        return add($this->intercept, ...$values);
     }
 
     /**
@@ -173,6 +174,7 @@ final class Polynom
     public function derivative(): self
     {
         $degrees = $this->degrees;
+        $intercept = new Integer(0);
 
         if ($degrees->contains(1)) {
             $intercept = $degrees->get(1)->coeff();
@@ -180,7 +182,7 @@ final class Polynom
         }
 
         return new self(
-            $intercept ?? new Integer(0),
+            $intercept,
             ...unwrap($degrees
                 ->values()
                 ->map(static function(Degree $degree): Degree {
@@ -199,8 +201,8 @@ final class Polynom
         $degrees = $this
             ->degrees
             ->values()
-            ->sort(static function(Degree $a, Degree $b): bool {
-                return $b->degree()->higherThan($a->degree());
+            ->sort(static function(Degree $a, Degree $b): int {
+                return (int) $b->degree()->higherThan($a->degree());
             })
             ->mapTo(
                 'string',

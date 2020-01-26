@@ -27,24 +27,19 @@ final class Infinite implements NumberInterface
 {
     private float $value;
 
-    private function __construct()
+    private function __construct(float $value)
     {
+        $this->value = $value;
     }
 
     public static function positive(): self
     {
-        $self = new self;
-        $self->value = INF;
-
-        return $self;
+        return new self(\INF);
     }
 
     public static function negative(): self
     {
-        $self = new self;
-        $self->value = -INF;
-
-        return $self;
+        return new self(-\INF);
     }
 
     /**

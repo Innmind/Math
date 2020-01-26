@@ -30,6 +30,7 @@ final class Matrix
 
     public function __construct(RowVector $first, RowVector ...$rows)
     {
+        /** @var Sequence<RowVector> */
         $this->rows = Sequence::of(RowVector::class, $first, ...$rows);
 
         $this
@@ -41,6 +42,7 @@ final class Matrix
                 }
             });
 
+        /** @var Sequence<ColumnVector> */
         $this->columns = Sequence::of(ColumnVector::class);
         $this->dimension = new Dimension(
             new Integer($this->rows->size()),
@@ -49,6 +51,9 @@ final class Matrix
         $this->buildColumns();
     }
 
+    /**
+     * @param list<list<int|float|number>> $values
+     */
     public static function fromArray(array $values): self
     {
         $rows = [];
@@ -102,18 +107,20 @@ final class Matrix
         return $this->dimension;
     }
 
+    /**
+     * @return list<list<int|float>>
+     */
     public function toArray(): array
     {
-        return $this
-            ->rows
-            ->reduce(
-                [],
-                static function(array $carry, RowVector $row) {
-                    $carry[] = $row->toArray();
+        /** @var list<list<int|float>> */
+        return $this->rows->reduce(
+            [],
+            static function(array $carry, RowVector $row): array {
+                $carry[] = $row->toArray();
 
-                    return $carry;
-                }
-            );
+                return $carry;
+            },
+        );
     }
 
     public function row(int $row): RowVector
@@ -211,6 +218,7 @@ final class Matrix
 
     public function transpose(): self
     {
+        /** @var list<RowVector> */
         $rows = $this->columns->reduce(
             [],
             static function(array $rows, ColumnVector $column): array {
@@ -225,9 +233,11 @@ final class Matrix
 
     public function dot(self $matrix): self
     {
+        /** @var Sequence<list<Number>> */
         $rows = $this->rows->reduce(
             Sequence::of('array'),
             static function(Sequence $rows, RowVector $row) use ($matrix): Sequence {
+                /** @var Sequence<Number> */
                 $newRow = $matrix
                     ->columns()
                     ->reduce(
@@ -255,6 +265,7 @@ final class Matrix
             throw new MatrixMustBeSquare;
         }
 
+        /** @var Sequence<RowVector> */
         $rows = $this->rows->reduce(
             Sequence::of(RowVector::class),
             static function(Sequence $rows, RowVector $row): Sequence {
@@ -276,6 +287,7 @@ final class Matrix
             throw new MatrixMustBeSquare;
         }
 
+        /** @var Sequence<RowVector> */
         $rows = $this->rows->reduce(
             Sequence::of(RowVector::class),
             static function(Sequence $rows, RowVector $row): Sequence {
@@ -321,6 +333,7 @@ final class Matrix
     public function isInRowEchelonForm(): bool
     {
         $zero = new Integer(0);
+        /** @var Sequence<int> */
         $leadingZeros = $this->rows->reduce(
             Sequence::ints(),
             static function(Sequence $carry, RowVector $row) use ($zero): Sequence {
@@ -398,6 +411,7 @@ final class Matrix
         $columns = $this->dimension->columns()->value();
 
         for ($i = 0; $i < $columns; ++$i) {
+            /** @var list<Number> */
             $values = $this->rows->reduce(
                 [],
                 static function(array $values, RowVector $row) use ($i) {
@@ -419,6 +433,7 @@ final class Matrix
             //reduce the matrix to an echelon form with leading ones
             [$echeloned, $toEchelon] = unwrap($rows->splitAt($index + 1));
             $reference = $echeloned->last();
+            /** @var Sequence<RowVector> */
             $rows = $toEchelon->reduce(
                 $echeloned,
                 static function(Sequence $rows, RowVector $row) use ($reference, $index): Sequence {
@@ -468,6 +483,7 @@ final class Matrix
             //for each line remove the lines below by mutuplying them
             //by the number in j column of the row being manipulated
             [$reduced, $toReduce] = unwrap($rows->splitAt($reference + 1));
+            /** @var Sequence<RowVector> */
             $rows = $toReduce->reduce(
                 $reduced,
                 static function(Sequence $rows, RowVector $row) use ($index, $reduced): Sequence {

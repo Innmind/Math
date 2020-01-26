@@ -24,7 +24,7 @@ final class RowVector
     }
 
     /**
-     * @return int|float[]
+     * @return list<int|float>
      */
     public function toArray(): array
     {

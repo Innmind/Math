@@ -17,6 +17,7 @@ final class Frequence
 
     public function __construct(Number ...$values)
     {
+        /** @var Sequence<Number> */
         $this->values = Sequence::of(Number::class, ...$values);
         $this->size = new Number\Number($this->values->size());
     }

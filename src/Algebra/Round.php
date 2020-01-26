@@ -15,7 +15,7 @@ final class Round implements Number
     private Number $number;
     private int $precision;
     private int $mode;
-    /** @var int|float */
+    /** @var int|float|null */
     private $value;
 
     public function __construct(
@@ -29,12 +29,10 @@ final class Round implements Number
 
         $this->number = $number;
         $this->precision = $precision;
+        /** @var int */
         $this->mode = constant('PHP_ROUND_HALF_'.$mode);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function value()
     {
         return $this->value ??= round(

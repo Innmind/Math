@@ -6,7 +6,8 @@ namespace Innmind\Math\Geometry\Theorem;
 use function Innmind\Math\{
     cosine,
     arcCosine,
-    add
+    add,
+    max,
 };
 use Innmind\Math\{
     Algebra\Number,
@@ -62,6 +63,7 @@ final class AlKashi
         $b = $b->length();
         $c = $c->length();
         $longest = max($a, $b, $c);
+        /** @var Set<Number> */
         $opposites = Set::of(Number::class, $a, $b, $c)->remove($longest);
         $opposites = add(...unwrap($opposites));
 

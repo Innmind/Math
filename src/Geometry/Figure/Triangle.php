@@ -24,6 +24,7 @@ final class Triangle implements Figure
     private Number $b;
     private Number $c;
     private Segment $height;
+    /** @psalm-suppress PropertyNotSetInConstructor */
     private Segment $base;
 
     public function __construct(

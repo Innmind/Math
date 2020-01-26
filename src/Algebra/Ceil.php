@@ -6,7 +6,7 @@ namespace Innmind\Math\Algebra;
 final class Ceil implements Number
 {
     private Number $number;
-    /** @var int|float */
+    /** @var int|float|null */
     private $value;
 
     public function __construct(Number $number)

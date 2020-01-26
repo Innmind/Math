@@ -68,6 +68,7 @@ final class PolynomialRegression
     {
         $powers = new RowVector(...numerize(...range(0, $degree->value())));
 
+        /** @var Sequence<RowVector> */
         $rows = $dataset
             ->abscissas()
             ->reduce(
