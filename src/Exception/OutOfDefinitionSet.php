@@ -5,7 +5,7 @@ namespace Innmind\Math\Exception;
 
 use Innmind\Math\{
     DefinitionSet\Set,
-    Algebra\Number
+    Algebra\Number,
 };
 
 final class OutOfDefinitionSet extends LogicException
