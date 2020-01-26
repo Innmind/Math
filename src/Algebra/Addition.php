@@ -4,9 +4,11 @@ declare(strict_types = 1);
 namespace Innmind\Math\Algebra;
 
 use Innmind\Immutable\Sequence;
+use function Innmind\Immutable\join;
 
 final class Addition implements Operation, Number
 {
+    /** @var Sequence<Number> */
     private Sequence $values;
     private ?Number $result = null;
 
@@ -15,7 +17,7 @@ final class Addition implements Operation, Number
         Number $second,
         Number ...$values
     ) {
-        $this->values = new Sequence($first, $second, ...$values);
+        $this->values = Sequence::of(Number::class, $first, $second, ...$values);
     }
 
     /**
@@ -142,15 +144,17 @@ final class Addition implements Operation, Number
 
     public function toString(): string
     {
-        return (string) $this
-            ->values
-            ->map(static function(Number $number): string {
+        $values = $this->values->mapTo(
+            'string',
+            static function(Number $number): string {
                 if ($number instanceof Operation) {
                     return '('.$number->toString().')';
                 }
 
                 return $number->toString();
-            })
-            ->join(' + ');
+            },
+        );
+
+        return join(' + ', $values)->toString();
     }
 }

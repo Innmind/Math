@@ -16,6 +16,7 @@ use Innmind\Math\{
     Exception\SegmentsCannotBeJoined
 };
 use Innmind\Immutable\Set;
+use function Innmind\Immutable\unwrap;
 
 /**
  * Also known as the law of cosines
@@ -61,12 +62,8 @@ final class AlKashi
         $b = $b->length();
         $c = $c->length();
         $longest = max($a, $b, $c);
-        $opposites = (new Set(Number::class))
-            ->add($a)
-            ->add($b)
-            ->add($c)
-            ->remove($longest);
-        $opposites = add(...$opposites);
+        $opposites = Set::of(Number::class, $a, $b, $c)->remove($longest);
+        $opposites = add(...unwrap($opposites));
 
         if ($longest->higherThan($opposites) && !$longest->equals($opposites)) {
             throw new SegmentsCannotBeJoined;

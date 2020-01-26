@@ -17,26 +17,20 @@ use Innmind\Math\{
     Algebra\Number,
     Algebra\Integer
 };
-use Innmind\Immutable\{
-    Sequence,
-    StreamInterface,
-    Stream
-};
+use Innmind\Immutable\Sequence;
+use function Innmind\Immutable\unwrap;
 
 final class Matrix
 {
     private Dimension $dimension;
-    private Stream $rows;
-    private Stream $columns;
+    /** @var Sequence<RowVector> */
+    private Sequence $rows;
+    /** @var Sequence<ColumnVector> */
+    private Sequence $columns;
 
     public function __construct(RowVector $first, RowVector ...$rows)
     {
-        $this->rows = (new Sequence($first, ...$rows))->reduce(
-            new Stream(RowVector::class),
-            static function(Stream $carry, RowVector $row): Stream {
-                return $carry->add($row);
-            }
-        );
+        $this->rows = Sequence::of(RowVector::class, $first, ...$rows);
 
         $this
             ->rows
@@ -47,7 +41,7 @@ final class Matrix
                 }
             });
 
-        $this->columns = new Stream(ColumnVector::class);
+        $this->columns = Sequence::of(ColumnVector::class);
         $this->dimension = new Dimension(
             new Integer($this->rows->size()),
             $this->rows->get(0)->dimension()
@@ -70,13 +64,14 @@ final class Matrix
         ColumnVector $first,
         ColumnVector ...$columns
     ): self {
-        $self = self::fromArray(
-            (new Sequence($first, ...$columns))
-                ->map(static function(ColumnVector $column): array {
-                    return $column->numbers();
-                })
-                ->toPrimitive()
+        $numbers = Sequence::of(ColumnVector::class, $first, ...$columns)->mapTo(
+            'array',
+            static function(ColumnVector $column): array {
+                return $column->numbers();
+            },
         );
+
+        $self = self::fromArray(unwrap($numbers));
 
         return $self->transpose();
     }
@@ -132,17 +127,17 @@ final class Matrix
     }
 
     /**
-     * @return StreamInterface<RowVector>
+     * @return Sequence<RowVector>
      */
-    public function rows(): StreamInterface
+    public function rows(): Sequence
     {
         return $this->rows;
     }
 
     /**
-     * @return StreamInterface<ColumnVector>
+     * @return Sequence<ColumnVector>
      */
-    public function columns(): StreamInterface
+    public function columns(): Sequence
     {
         return $this->columns;
     }
@@ -150,24 +145,24 @@ final class Matrix
     public function dropRow(int $row): self
     {
         return new self(
-            ...$this
+            ...unwrap($this
                 ->rows
                 ->slice(0, $row)
                 ->append(
                     $this->rows->slice($row + 1, $this->rows->size())
-                )
+                )),
         );
     }
 
     public function dropColumn(int $column): self
     {
         return self::fromColumns(
-            ...$this
+            ...unwrap($this
                 ->columns
                 ->slice(0, $column)
                 ->append(
                     $this->columns->slice($column + 1, $this->columns->size())
-                )
+                )),
         );
     }
 
@@ -211,7 +206,7 @@ final class Matrix
             static fn(RowVector $row): RowVector => $row->multiplyBy($multiplier),
         );
 
-        return new self(...$rows);
+        return new self(...unwrap($rows));
     }
 
     public function transpose(): self
@@ -231,24 +226,22 @@ final class Matrix
     public function dot(self $matrix): self
     {
         $rows = $this->rows->reduce(
-            new Sequence,
+            Sequence::of('array'),
             static function(Sequence $rows, RowVector $row) use ($matrix): Sequence {
                 $newRow = $matrix
                     ->columns()
                     ->reduce(
-                        new Sequence,
+                        Sequence::of(Number::class),
                         static function(Sequence $carry, ColumnVector $column) use ($row): Sequence {
-                            return $carry->add(
-                                $row->dot($column)
-                            );
+                            return ($carry)($row->dot($column));
                         }
                     );
 
-                return $rows->add($newRow);
+                return ($rows)(unwrap($newRow));
             }
         );
 
-        return self::fromArray($rows->toPrimitive());
+        return self::fromArray(unwrap($rows));
     }
 
     public function isSquare(): bool
@@ -263,18 +256,18 @@ final class Matrix
         }
 
         $rows = $this->rows->reduce(
-            new Sequence,
+            Sequence::of(RowVector::class),
             static function(Sequence $rows, RowVector $row): Sequence {
                 $numbers = $row->toArray();
                 $newRow = array_fill(0, $row->dimension()->value(), 0);
                 $index = $rows->size();
                 $newRow[$index] = $numbers[$index];
 
-                return $rows->add(new RowVector(...numerize(...$newRow)));
+                return ($rows)(new RowVector(...numerize(...$newRow)));
             }
         );
 
-        return new self(...$rows);
+        return new self(...unwrap($rows));
     }
 
     public function identity(): self
@@ -284,16 +277,16 @@ final class Matrix
         }
 
         $rows = $this->rows->reduce(
-            new Sequence,
+            Sequence::of(RowVector::class),
             static function(Sequence $rows, RowVector $row): Sequence {
                 $newRow = array_fill(0, $row->dimension()->value(), 0);
                 $newRow[$rows->size()] = 1;
 
-                return $rows->add(new RowVector(...numerize(...$newRow)));
+                return ($rows)(new RowVector(...numerize(...$newRow)));
             }
         );
 
-        return new self(...$rows);
+        return new self(...unwrap($rows));
     }
 
     public function equals(self $matrix): bool
@@ -329,7 +322,7 @@ final class Matrix
     {
         $zero = new Integer(0);
         $leadingZeros = $this->rows->reduce(
-            new Sequence,
+            Sequence::ints(),
             static function(Sequence $carry, RowVector $row) use ($zero): Sequence {
                 $numbers = $row->numbers();
                 $dimension = $row->dimension()->value();
@@ -343,7 +336,7 @@ final class Matrix
                     ++$count;
                 }
 
-                return $carry->add($count);
+                return ($carry)($count);
             }
         );
 
@@ -366,7 +359,7 @@ final class Matrix
     public function augmentWith(self $matrix): self
     {
         return self::fromColumns(
-            ...$this->columns->append($matrix->columns())
+            ...unwrap($this->columns->append($matrix->columns())),
         );
     }
 
@@ -392,11 +385,11 @@ final class Matrix
         }
 
         return Matrix::fromColumns(
-            ...$matrix
+            ...unwrap($matrix
                 ->columns()
                 ->takeEnd(
                     $this->dimension->columns()->value()
-                )
+                )),
         );
     }
 
@@ -424,11 +417,11 @@ final class Matrix
 
         do {
             //reduce the matrix to an echelon form with leading ones
-            [$echeloned, $toEchelon] = $rows->splitAt($index + 1);
+            [$echeloned, $toEchelon] = unwrap($rows->splitAt($index + 1));
             $reference = $echeloned->last();
             $rows = $toEchelon->reduce(
                 $echeloned,
-                static function(StreamInterface $rows, RowVector $row) use ($reference, $index): StreamInterface {
+                static function(Sequence $rows, RowVector $row) use ($reference, $index): Sequence {
                     $multiplier = $row
                         ->get($index)
                         ->divideBy(
@@ -460,7 +453,7 @@ final class Matrix
             ++$index;
         } while ($index < $this->dimension()->rows()->value());
 
-        return new self(...$rows);
+        return new self(...unwrap($rows));
     }
 
     private function reduceUpperTriangle(self $matrix): self
@@ -474,10 +467,10 @@ final class Matrix
         do {
             //for each line remove the lines below by mutuplying them
             //by the number in j column of the row being manipulated
-            [$reduced, $toReduce] = $rows->splitAt($reference + 1);
+            [$reduced, $toReduce] = unwrap($rows->splitAt($reference + 1));
             $rows = $toReduce->reduce(
                 $reduced,
-                static function(StreamInterface $rows, RowVector $row) use ($index, $reduced): StreamInterface {
+                static function(Sequence $rows, RowVector $row) use ($index, $reduced): Sequence {
                     return $rows->add(
                         $row->subtract(
                             $reduced->last()->multiplyBy(
@@ -494,6 +487,6 @@ final class Matrix
             ++$reference;
         } while ($index >= 0);
 
-        return new self(...$rows->reverse());
+        return new self(...unwrap($rows->reverse()));
     }
 }

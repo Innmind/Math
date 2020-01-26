@@ -11,12 +11,13 @@ use Innmind\Immutable\Sequence;
 
 final class Frequence
 {
+    /** @var Sequence<Number> */
     private Sequence $values;
     private Number $size;
 
     public function __construct(Number ...$values)
     {
-        $this->values = new Sequence(...$values);
+        $this->values = Sequence::of(Number::class, ...$values);
         $this->size = new Number\Number($this->values->size());
     }
 

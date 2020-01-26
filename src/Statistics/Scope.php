@@ -18,7 +18,7 @@ final class Scope implements Number
         Number $second,
         Number ...$values
     ) {
-        $sequence = (new Sequence($first, $second, ...$values))
+        $sequence = Sequence::of(Number::class, $first, $second, ...$values)
             ->sort(static function(Number $a, Number $b): bool {
                 return $a->higherThan($b);
             });

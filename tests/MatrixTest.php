@@ -16,7 +16,7 @@ use Innmind\Math\{
     Exception\MatrixMustBeSquare,
     Exception\MatrixNotInvertible
 };
-use Innmind\Immutable\StreamInterface;
+use Innmind\Immutable\Sequence;
 use PHPUnit\Framework\TestCase;
 
 class MatrixTest extends TestCase
@@ -66,7 +66,7 @@ class MatrixTest extends TestCase
             [1, 2, 3],
         ]);
 
-        $this->assertInstanceOf(StreamInterface::class, $matrix->rows());
+        $this->assertInstanceOf(Sequence::class, $matrix->rows());
         $this->assertSame(RowVector::class, (string) $matrix->rows()->type());
         $this->assertCount(2, $matrix->rows());
     }
@@ -78,7 +78,7 @@ class MatrixTest extends TestCase
             [1, 2, 3],
         ]);
 
-        $this->assertInstanceOf(StreamInterface::class, $matrix->columns());
+        $this->assertInstanceOf(Sequence::class, $matrix->columns());
         $this->assertSame(ColumnVector::class, (string) $matrix->columns()->type());
         $this->assertCount(3, $matrix->columns());
     }

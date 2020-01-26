@@ -17,21 +17,26 @@ use Innmind\Immutable\{
     Map,
     Sequence,
 };
+use function Innmind\Immutable\{
+    unwrap,
+    join,
+};
 
 final class Polynom
 {
     private Number $intercept;
+    /** @var Map<int, Degree> */
     private Map $degrees;
 
     public function __construct(Number $intercept = null, Degree ...$degrees)
     {
         $this->intercept = $intercept ?? new Integer(0);
-        $this->degrees = new Map('int', Degree::class);
+        $this->degrees = Map::of('int', Degree::class);
 
         foreach ($degrees as $degree) {
-            $this->degrees = $this->degrees->put(
+            $this->degrees = ($this->degrees)(
                 $degree->degree()->value(),
-                $degree
+                $degree,
             );
         }
     }
@@ -46,14 +51,14 @@ final class Polynom
      */
     public function withDegree(Integer $degree, Number $coeff): self
     {
-        $degrees = $this->degrees->put(
+        $degrees = ($this->degrees)(
             $degree->value(),
-            new Degree($degree, $coeff)
+            new Degree($degree, $coeff),
         );
 
         return new self(
             $this->intercept,
-            ...$degrees->values()
+            ...unwrap($degrees->values()),
         );
     }
 
@@ -157,12 +162,12 @@ final class Polynom
             });
 
         if (!$this->intercept->equals(new Integer(0))) {
-            $degrees = $degrees->add(
+            $degrees = ($degrees)(
                 new Degree(new Integer(1), $this->intercept)
             );
         }
 
-        return new self(new Integer(0), ...$degrees);
+        return new self(new Integer(0), ...unwrap($degrees));
     }
 
     public function derivative(): self
@@ -176,11 +181,11 @@ final class Polynom
 
         return new self(
             $intercept ?? new Integer(0),
-            ...$degrees
+            ...unwrap($degrees
                 ->values()
                 ->map(static function(Degree $degree): Degree {
                     return $degree->derivative();
-                })
+                })),
         );
     }
 
@@ -196,12 +201,14 @@ final class Polynom
             ->values()
             ->sort(static function(Degree $a, Degree $b): bool {
                 return $b->degree()->higherThan($a->degree());
-            });
-        $polynom = Sequence::of(...$degrees)
-            ->map(function(Degree $degree): string {
-                return $degree->toString();
             })
-            ->join(' + ');
+            ->mapTo(
+                'string',
+                function(Degree $degree): string {
+                    return $degree->toString();
+                },
+            );
+        $polynom = join(' + ', $degrees);
 
         if (!$this->intercept->equals(new Integer(0))) {
             $intercept = $this->intercept instanceof Operation ?
@@ -212,6 +219,6 @@ final class Polynom
                 ->append($intercept);
         }
 
-        return (string) $polynom;
+        return $polynom->toString();
     }
 }

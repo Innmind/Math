@@ -10,16 +10,19 @@ use Innmind\Math\{
     Algebra\Number
 };
 use Innmind\Immutable\Sequence;
+use function Innmind\Immutable\join;
 
 final class Set implements SetInterface
 {
+    /** @var Sequence<int|float> */
     private Sequence $values;
 
     public function __construct(Number ...$values)
     {
-        $this->values = (new Sequence(...$values))->map(static function(Number $v) {
-            return $v->value();
-        });
+        $this->values = Sequence::mixed(...$values)->mapTo(
+            'int|float',
+            static fn(Number $v) => $v->value(),
+        );
     }
 
     public function contains(Number $number): bool
@@ -43,10 +46,14 @@ final class Set implements SetInterface
             return '∅';
         }
 
-        return (string) $this
-            ->values
-            ->join(';')
+        $values = $this->values->mapTo(
+            'string',
+            static fn($number): string => (string) $number,
+        );
+
+        return join(';', $values)
             ->prepend('{')
-            ->append('}');
+            ->append('}')
+            ->toString();
     }
 }

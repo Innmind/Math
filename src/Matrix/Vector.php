@@ -11,6 +11,7 @@ use Innmind\Math\{
     Algebra\Integer
 };
 use Innmind\Immutable\Sequence;
+use function Innmind\Immutable\unwrap;
 
 final class Vector
 {
@@ -19,7 +20,7 @@ final class Vector
 
     public function __construct(Number $number, Number ...$numbers)
     {
-        $this->numbers = new Sequence($number, ...$numbers);
+        $this->numbers = Sequence::of(Number::class, $number, ...$numbers);
         $this->dimension = new Integer($this->numbers->size());
     }
 
@@ -33,12 +34,12 @@ final class Vector
      */
     public function toArray(): array
     {
-        return $this
-            ->numbers
-            ->map(static function(Number $number) {
-                return $number->value();
-            })
-            ->toPrimitive();
+        $values = $this->numbers->mapTo(
+            'int|float',
+            static fn(Number $number) => $number->value(),
+        );
+
+        return unwrap($values);
     }
 
     public function dimension(): Integer
@@ -132,12 +133,12 @@ final class Vector
             return $number->power($power);
         });
 
-        return new self(...$numbers);
+        return new self(...unwrap($numbers));
     }
 
     public function sum(): Number
     {
-        return add(...$this->numbers);
+        return add(...unwrap($this->numbers));
     }
 
     public function foreach(callable $function): self
@@ -150,7 +151,7 @@ final class Vector
     public function map(callable $function): self
     {
         return new self(
-            ...$this->numbers->map($function)
+            ...unwrap($this->numbers->map($function)),
         );
     }
 
@@ -207,31 +208,6 @@ final class Vector
      */
     public function numbers(): array
     {
-        return \iterator_to_array($this->numbers);
-    }
-
-    public function current(): Number
-    {
-        return $this->numbers->current();
-    }
-
-    public function key(): int
-    {
-        return $this->numbers->key();
-    }
-
-    public function next(): void
-    {
-        $this->numbers->next();
-    }
-
-    public function rewind(): void
-    {
-        $this->numbers->rewind();
-    }
-
-    public function valid(): bool
-    {
-        return $this->numbers->valid();
+        return unwrap($this->numbers);
     }
 }

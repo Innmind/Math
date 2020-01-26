@@ -15,7 +15,7 @@ final class Mean implements Number
 
     public function __construct(Number $first, Number ...$values)
     {
-        $sequence = new Sequence($first, ...$values);
+        $sequence = Sequence::of(Number::class, $first, ...$values);
         $sum = $sequence
             ->drop(1)
             ->reduce(

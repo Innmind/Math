@@ -12,6 +12,7 @@ use Innmind\Math\{
     Matrix\RowVector
 };
 use Innmind\Immutable\Sequence;
+use function Innmind\Immutable\unwrap;
 
 final class PolynomialRegression
 {
@@ -70,17 +71,17 @@ final class PolynomialRegression
         $rows = $dataset
             ->abscissas()
             ->reduce(
-                new Sequence,
+                Sequence::of(RowVector::class),
                 static function(Sequence $rows, Number $x) use ($powers): Sequence {
                     $xToThePowers = $powers->map(static function(Number $power) use ($x): Number {
                         return $x->power($power);
                     });
 
-                    return $rows->add($xToThePowers);
+                    return ($rows)($xToThePowers);
                 }
             );
 
-        return new Matrix(...$rows);
+        return new Matrix(...unwrap($rows));
     }
 
     private function buildVector(Dataset $dataset, Integer $degree): Matrix

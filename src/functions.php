@@ -333,7 +333,7 @@ function signum($number): Signum
  */
 function max($first, ...$numbers): Number
 {
-    return (new Sequence(...numerize($first, ...$numbers)))
+    return Sequence::of(Number::class, ...numerize($first, ...$numbers))
         ->sort(static function(Number $a, Number $b) {
             return $b->higherThan($a);
         })
@@ -348,7 +348,7 @@ function max($first, ...$numbers): Number
  */
 function min($first, ...$numbers): Number
 {
-    return (new Sequence(...numerize($first, ...$numbers)))
+    return Sequence::of(Number::class, ...numerize($first, ...$numbers))
         ->sort(static function(Number $a, Number $b) {
             return $a->higherThan($b);
         })
