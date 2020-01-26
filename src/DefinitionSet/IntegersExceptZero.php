@@ -3,9 +3,10 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\DefinitionSet;
 
-use Innmind\Math\Algebra\{
-    Number,
-    Integer
+use Innmind\Math\{
+    Algebra\Number,
+    Algebra\Integer,
+    Exception\OutOfDefinitionSet,
 };
 
 final class IntegersExceptZero implements Set
@@ -23,6 +24,13 @@ final class IntegersExceptZero implements Set
         return $number
             ->modulo(new Integer(1))
             ->equals(new Integer(0));
+    }
+
+    public function accept(Number $number): void
+    {
+        if (!$this->contains($number)) {
+            throw new OutOfDefinitionSet($this, $number);
+        }
     }
 
     public function union(Set $set): Set

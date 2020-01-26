@@ -9,7 +9,8 @@ use Innmind\Math\{
     DefinitionSet\Union,
     DefinitionSet\Intersection,
     Algebra\Integer,
-    Algebra\Number\Number
+    Algebra\Number\Number,
+    Exception\OutOfDefinitionSet,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -36,6 +37,18 @@ class NaturalNumbersTest extends TestCase
         $this->assertTrue($set->contains(new Integer(0)));
         $this->assertFalse($set->contains(new Integer(-1)));
         $this->assertFalse($set->contains(new Number(0.75)));
+    }
+
+    public function testAccept()
+    {
+        $set = new NaturalNumbers;
+
+        $this->assertNull($set->accept(new Integer(1)));
+
+        $this->expectException(OutOfDefinitionSet::class);
+        $this->expectExceptionMessage('0.1 ∉ ℕ');
+
+        $set->accept(new Number(0.1));
     }
 
     public function testUnion()

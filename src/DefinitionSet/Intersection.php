@@ -3,7 +3,10 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\DefinitionSet;
 
-use Innmind\Math\Algebra\Number;
+use Innmind\Math\{
+    Algebra\Number,
+    Exception\OutOfDefinitionSet,
+};
 
 final class Intersection implements Set
 {
@@ -20,6 +23,13 @@ final class Intersection implements Set
     {
         return $this->left->contains($number) &&
             $this->right->contains($number);
+    }
+
+    public function accept(Number $number): void
+    {
+        if (!$this->contains($number)) {
+            throw new OutOfDefinitionSet($this, $number);
+        }
     }
 
     public function union(Set $set): Set

@@ -7,7 +7,8 @@ use Innmind\Math\{
     DefinitionSet\Set as SetInterface,
     DefinitionSet\Union,
     DefinitionSet\Intersection,
-    Algebra\Number
+    Algebra\Number,
+    Exception\OutOfDefinitionSet,
 };
 use Innmind\Immutable\Sequence;
 use function Innmind\Immutable\join;
@@ -28,6 +29,13 @@ final class Set implements SetInterface
     public function contains(Number $number): bool
     {
         return $this->values->contains($number->value());
+    }
+
+    public function accept(Number $number): void
+    {
+        if (!$this->contains($number)) {
+            throw new OutOfDefinitionSet($this, $number);
+        }
     }
 
     public function union(SetInterface $set): SetInterface

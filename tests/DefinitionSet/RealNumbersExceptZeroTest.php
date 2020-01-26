@@ -10,7 +10,8 @@ use Innmind\Math\{
     DefinitionSet\Intersection,
     Algebra\Integer,
     Algebra\Number\Number,
-    Algebra\Number\Pi
+    Algebra\Number\Pi,
+    Exception\OutOfDefinitionSet,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -39,6 +40,18 @@ class RealNumbersExceptZeroTest extends TestCase
         $this->assertTrue($set->contains(new Number(-0.75)));
         $this->assertTrue($set->contains(new Pi));
         $this->assertFalse($set->contains(new Integer(0)));
+    }
+
+    public function testAccept()
+    {
+        $set = new RealNumbersExceptZero;
+
+        $this->assertNull($set->accept(new Integer(1)));
+
+        $this->expectException(OutOfDefinitionSet::class);
+        $this->expectExceptionMessage('0 ∉ ℝ*');
+
+        $set->accept(new Number(0));
     }
 
     public function testUnion()

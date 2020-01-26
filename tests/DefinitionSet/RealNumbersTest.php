@@ -41,6 +41,18 @@ class RealNumbersTest extends TestCase
         $this->assertTrue($set->contains(new Pi));
     }
 
+    public function testAccept()
+    {
+        $set = new RealNumbers;
+
+        $this->assertNull($set->accept(new Integer(1)));
+        $this->assertNull($set->accept(new Integer(0)));
+        $this->assertNull($set->accept(new Integer(-1)));
+        $this->assertNull($set->accept(new Number(0.75)));
+        $this->assertNull($set->accept(new Number(-0.75)));
+        $this->assertNull($set->accept(new Pi));
+    }
+
     public function testUnion()
     {
         $union = (new RealNumbers)->union(new RealNumbers);

@@ -12,6 +12,11 @@ final class RealNumbers implements Set
         return true;
     }
 
+    public function accept(Number $number): void
+    {
+        // it accepts everything
+    }
+
     public function union(Set $set): Set
     {
         return new Union($this, $set);

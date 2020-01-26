@@ -3,7 +3,10 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\DefinitionSet;
 
-use Innmind\Math\Algebra\Number;
+use Innmind\Math\{
+    Algebra\Number,
+    Exception\OutOfDefinitionSet,
+};
 
 final class Range implements Set
 {
@@ -62,6 +65,13 @@ final class Range implements Set
         }
 
         return true;
+    }
+
+    public function accept(Number $number): void
+    {
+        if (!$this->contains($number)) {
+            throw new OutOfDefinitionSet($this, $number);
+        }
     }
 
     public function union(Set $set): Set

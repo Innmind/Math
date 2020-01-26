@@ -9,7 +9,8 @@ use Innmind\Math\{
     DefinitionSet\Union,
     DefinitionSet\Intersection,
     Algebra\Integer,
-    Algebra\Number\Number
+    Algebra\Number\Number,
+    Exception\OutOfDefinitionSet,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -70,6 +71,18 @@ class RangeTest extends TestCase
         $this->assertFalse($exclusive->contains(new Number(2)));
         $this->assertFalse($exclusive->contains(new Number(0)));
         $this->assertFalse($exclusive->contains(new Number(2.1)));
+    }
+
+    public function testAccept()
+    {
+        $set = Range::inclusive(new Integer(1), new Integer(2));
+
+        $this->assertNull($set->accept(new Integer(1)));
+
+        $this->expectException(OutOfDefinitionSet::class);
+        $this->expectExceptionMessage('0.1 ∉ [1;2]');
+
+        $set->accept(new Number(0.1));
     }
 
     public function testUnion()

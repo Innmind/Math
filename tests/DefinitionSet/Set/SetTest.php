@@ -9,7 +9,8 @@ use Innmind\Math\{
     DefinitionSet\Union,
     DefinitionSet\Intersection,
     Algebra\Integer,
-    Algebra\Number\Number
+    Algebra\Number\Number,
+    Exception\OutOfDefinitionSet,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -45,6 +46,16 @@ class SetTest extends TestCase
         $this->assertTrue($set->contains(new Integer(2)));
         $this->assertFalse($set->contains(new Integer(3)));
         $this->assertFalse($set->contains(new Integer(0)));
+    }
+
+    public function testAccept()
+    {
+        $this->assertNull((new Set(new Integer(1)))->accept(new Integer(1)));
+
+        $this->expectException(OutOfDefinitionSet::class);
+        $this->expectExceptionMessage('2 ∉ {1}');
+
+        (new Set(new Integer(1)))->accept(new Integer(2));
     }
 
     public function testUnion()
