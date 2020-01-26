@@ -117,7 +117,7 @@ final class Quantile
      */
     private function buildMin(Dataset $dataset): self
     {
-        $this->min = new Quartile(min(...$dataset->ordinates()));
+        $this->min = new Quartile(min(...$dataset->ordinates()->numbers()));
 
         return $this;
     }
@@ -131,7 +131,7 @@ final class Quantile
      */
     private function buildMax(Dataset $dataset): self
     {
-        $this->max = new Quartile(max(...$dataset->ordinates()));
+        $this->max = new Quartile(max(...$dataset->ordinates()->numbers()));
 
         return $this;
     }
@@ -145,7 +145,7 @@ final class Quantile
      */
     private function buildMean(Dataset $dataset): self
     {
-        $this->mean = mean(...$dataset->ordinates());
+        $this->mean = mean(...$dataset->ordinates()->numbers());
 
         return $this;
     }
@@ -159,7 +159,7 @@ final class Quantile
      */
     private function buildMedian(Dataset $dataset): self
     {
-        $this->median = new Quartile(median(...$dataset->ordinates()));
+        $this->median = new Quartile(median(...$dataset->ordinates()->numbers()));
 
         return $this;
     }

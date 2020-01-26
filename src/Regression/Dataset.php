@@ -12,7 +12,7 @@ use Innmind\Math\{
     Exception\VectorsMustContainsOnlyTwoValues
 };
 
-final class Dataset implements \Iterator
+final class Dataset
 {
     private Matrix $matrix;
 
@@ -60,28 +60,8 @@ final class Dataset implements \Iterator
         return $this->matrix->dimension();
     }
 
-    public function current(): RowVector
+    public function row(int $position): RowVector
     {
-        return $this->matrix->current();
-    }
-
-    public function key(): int
-    {
-        return $this->matrix->key();
-    }
-
-    public function next(): void
-    {
-        $this->matrix->next();
-    }
-
-    public function rewind(): void
-    {
-        $this->matrix->rewind();
-    }
-
-    public function valid(): bool
-    {
-        return $this->matrix->valid();
+        return $this->matrix->row($position);
     }
 }

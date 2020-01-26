@@ -30,23 +30,13 @@ class MultiplicationTest extends TestCase
     public function testInterface()
     {
         $multiplication = new Multiplication(
-            $first = new Number\Number(4),
-            $second = new Number\Number(42)
+            new Number\Number(4),
+            new Number\Number(42)
         );
 
         $this->assertInstanceOf(Operation::class, $multiplication);
         $this->assertInstanceOf(Number::class, $multiplication);
-        $this->assertInstanceOf(\Iterator::class, $multiplication);
-        $this->assertSame($first, $multiplication->current());
-        $this->assertSame(0, $multiplication->key());
-        $this->assertTrue($multiplication->valid());
-        $this->assertNull($multiplication->next());
-        $this->assertSame($second, $multiplication->current());
-        $this->assertSame(1, $multiplication->key());
-        $multiplication->next();
-        $this->assertFalse($multiplication->valid());
-        $this->assertNull($multiplication->rewind());
-        $this->assertSame($first, $multiplication->current());
+        $this->assertSame('4 x 42', $multiplication->toString());
     }
 
     public function testResult()

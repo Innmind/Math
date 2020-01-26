@@ -5,7 +5,7 @@ namespace Innmind\Math\Algebra;
 
 use Innmind\Immutable\Sequence;
 
-final class Addition implements Operation, Number, \Iterator
+final class Addition implements Operation, Number
 {
     private Sequence $values;
     private ?Number $result = null;
@@ -152,45 +152,5 @@ final class Addition implements Operation, Number, \Iterator
                 return $number->toString();
             })
             ->join(' + ');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function current()
-    {
-        return $this->values->current();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function key()
-    {
-        return $this->values->key();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function next()
-    {
-        $this->values->next();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function rewind()
-    {
-        $this->values->rewind();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function valid()
-    {
-        return $this->values->valid();
     }
 }

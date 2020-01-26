@@ -9,7 +9,7 @@ use Innmind\Math\{
     Algebra\Integer
 };
 
-final class RowVector implements \Iterator
+final class RowVector
 {
     private Vector $vector;
 
@@ -38,7 +38,7 @@ final class RowVector implements \Iterator
 
     public function dot(ColumnVector $column): Number
     {
-        return $this->vector->dot(new Vector(...$column));
+        return $this->vector->dot(new Vector(...$column->numbers()));
     }
 
     /**
@@ -48,10 +48,10 @@ final class RowVector implements \Iterator
     {
         $rows = [];
 
-        foreach ($column as $number) {
+        foreach ($column->numbers() as $number) {
             $values = [];
 
-            foreach ($this->vector as $rowNumber) {
+            foreach ($this->vector->numbers() as $rowNumber) {
                 $values[] = $rowNumber->multiplyBy($number);
             }
 
@@ -64,35 +64,35 @@ final class RowVector implements \Iterator
     public function multiplyBy(self $row): self
     {
         return new self(
-            ...$this->vector->multiplyBy($row->vector)
+            ...$this->vector->multiplyBy($row->vector)->numbers(),
         );
     }
 
     public function divideBy(self $row): self
     {
         return new self(
-            ...$this->vector->divideBy($row->vector)
+            ...$this->vector->divideBy($row->vector)->numbers(),
         );
     }
 
     public function subtract(self $row): self
     {
         return new self(
-            ...$this->vector->subtract($row->vector)
+            ...$this->vector->subtract($row->vector)->numbers(),
         );
     }
 
     public function add(self $row): self
     {
         return new self(
-            ...$this->vector->add($row->vector)
+            ...$this->vector->add($row->vector)->numbers(),
         );
     }
 
     public function power(Number $power): self
     {
         return new self(
-            ...$this->vector->power($power)
+            ...$this->vector->power($power)->numbers(),
         );
     }
 
@@ -111,7 +111,7 @@ final class RowVector implements \Iterator
     public function map(callable $function): self
     {
         return new self(
-            ...$this->vector->map($function)
+            ...$this->vector->map($function)->numbers(),
         );
     }
 
@@ -144,28 +144,11 @@ final class RowVector implements \Iterator
         return $this->vector->lead();
     }
 
-    public function current(): Number
+    /**
+     * @return list<Number>
+     */
+    public function numbers(): array
     {
-        return $this->vector->current();
-    }
-
-    public function key(): int
-    {
-        return $this->vector->key();
-    }
-
-    public function next(): void
-    {
-        $this->vector->next();
-    }
-
-    public function rewind(): void
-    {
-        $this->vector->rewind();
-    }
-
-    public function valid(): bool
-    {
-        return $this->vector->valid();
+        return $this->vector->numbers();
     }
 }

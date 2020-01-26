@@ -30,23 +30,13 @@ class SubtractionTest extends TestCase
     public function testInterface()
     {
         $subtraction = new Subtraction(
-            $first = new Number\Number(4),
-            $second = new Number\Number(2)
+            new Number\Number(4),
+            new Number\Number(2)
         );
 
         $this->assertInstanceOf(Operation::class, $subtraction);
         $this->assertInstanceOf(Number::class, $subtraction);
-        $this->assertInstanceOf(\Iterator::class, $subtraction);
-        $this->assertSame($first, $subtraction->current());
-        $this->assertSame(0, $subtraction->key());
-        $this->assertTrue($subtraction->valid());
-        $this->assertNull($subtraction->next());
-        $this->assertSame($second, $subtraction->current());
-        $this->assertSame(1, $subtraction->key());
-        $subtraction->next();
-        $this->assertFalse($subtraction->valid());
-        $this->assertNull($subtraction->rewind());
-        $this->assertSame($first, $subtraction->current());
+        $this->assertSame('4 - 2', $subtraction->toString());
     }
 
     public function testResult()

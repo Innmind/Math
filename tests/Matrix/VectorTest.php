@@ -19,7 +19,6 @@ class VectorTest extends TestCase
         $vector = new Vector(...numerize(1, 2, 3));
 
         $this->assertCount(3, $vector->toArray());
-        $this->assertInstanceOf(\Iterator::class, $vector);
         $this->assertSame(3, $vector->dimension()->value());
         $this->assertInstanceOf(Number::class, $vector->get(0));
         $this->assertInstanceOf(Number::class, $vector->get(1));
@@ -28,6 +27,7 @@ class VectorTest extends TestCase
         $this->assertSame(2, $vector->get(1)->value());
         $this->assertSame(3, $vector->get(2)->value());
         $this->assertSame([1, 2, 3], $vector->toArray());
+        $this->assertEquals(numerize(1, 2, 3), $vector->numbers());
     }
 
     public function testDot()

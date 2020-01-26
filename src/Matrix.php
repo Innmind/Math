@@ -23,7 +23,7 @@ use Innmind\Immutable\{
     Stream
 };
 
-final class Matrix implements \Iterator
+final class Matrix
 {
     private Dimension $dimension;
     private Stream $rows;
@@ -73,7 +73,7 @@ final class Matrix implements \Iterator
         $self = self::fromArray(
             (new Sequence($first, ...$columns))
                 ->map(static function(ColumnVector $column): array {
-                    return iterator_to_array($column);
+                    return $column->numbers();
                 })
                 ->toPrimitive()
         );
@@ -177,13 +177,12 @@ final class Matrix implements \Iterator
             throw new MatricesMustBeOfTheSameDimension;
         }
 
-        $matrix->rewind();
-        $rows = $this->rows->map(static function(RowVector $row) use ($matrix) {
-            $row = $row->add($matrix->current());
-            $matrix->next();
+        $numberOfRows = $this->rows->size();
+        $rows = [];
 
-            return $row;
-        });
+        for ($i=0; $i < $numberOfRows; $i++) {
+            $rows[] = $this->row($i)->add($matrix->row($i));
+        }
 
         return new self(...$rows);
     }
@@ -194,28 +193,22 @@ final class Matrix implements \Iterator
             throw new MatricesMustBeOfTheSameDimension;
         }
 
-        $matrix->rewind();
-        $rows = $this->rows->map(static function(RowVector $row) use ($matrix) {
-            $row = $row->subtract($matrix->current());
-            $matrix->next();
+        $numberOfRows = $this->rows->size();
+        $rows = [];
 
-            return $row;
-        });
+        for ($i=0; $i < $numberOfRows; $i++) {
+            $rows[] = $this->row($i)->subtract($matrix->row($i));
+        }
 
         return new self(...$rows);
     }
 
     public function multiplyBy(Number $number): self
     {
-        $rows = $this->rows->reduce(
-            new Sequence,
-            static function(Sequence $rows, RowVector $row) use ($number): Sequence {
-                return $rows->add(
-                    $row->multiplyBy(
-                        RowVector::initialize($row->dimension(), $number)
-                    )
-                );
-            }
+        $multiplier = RowVector::initialize($this->row(0)->dimension(), $number);
+
+        $rows = $this->rows->map(
+            static fn(RowVector $row): RowVector => $row->multiplyBy($multiplier),
         );
 
         return new self(...$rows);
@@ -226,7 +219,7 @@ final class Matrix implements \Iterator
         $rows = $this->columns->reduce(
             [],
             static function(array $rows, ColumnVector $column): array {
-                $rows[] = new RowVector(...$column);
+                $rows[] = new RowVector(...$column->numbers());
 
                 return $rows;
             }
@@ -309,17 +302,15 @@ final class Matrix implements \Iterator
             return false;
         }
 
-        $matrix->rewind();
+        $numberOfRows = $this->rows->size();
 
-        return $this->rows->reduce(
-            true,
-            static function(bool $carry, RowVector $row) use ($matrix): bool {
-                $carry = $carry && $row->equals($matrix->current());
-                $matrix->next();
-
-                return $carry;
+        for ($i = 0; $i < $numberOfRows; $i++) {
+            if (!$this->row($i)->equals($matrix->row($i))) {
+                return false;
             }
-        );
+        }
+
+        return true;
     }
 
     public function isSymmetric(): bool
@@ -340,7 +331,7 @@ final class Matrix implements \Iterator
         $leadingZeros = $this->rows->reduce(
             new Sequence,
             static function(Sequence $carry, RowVector $row) use ($zero): Sequence {
-                $numbers = iterator_to_array($row);
+                $numbers = $row->numbers();
                 $dimension = $row->dimension()->value();
                 $count = 0;
 
@@ -356,19 +347,20 @@ final class Matrix implements \Iterator
             }
         );
 
+        $numberOfRows = $this->rows->size();
         $previous = $leadingZeros->first();
 
-        return $leadingZeros
-            ->drop(1)
-            ->reduce(
-                true,
-                static function(bool $carry, int $count) use (&$previous): bool {
-                    $carry = $carry && $count > $previous;
-                    $previous = $count;
+        for ($i = 1; $i < $numberOfRows; $i++) {
+            $count = $leadingZeros->get($i);
 
-                    return $carry;
-                }
-            );
+            if ($count <= $previous) {
+                return false;
+            }
+
+            $previous = $count;
+        }
+
+        return true;
     }
 
     public function augmentWith(self $matrix): self
@@ -406,31 +398,6 @@ final class Matrix implements \Iterator
                     $this->dimension->columns()->value()
                 )
         );
-    }
-
-    public function current(): RowVector
-    {
-        return $this->rows->current();
-    }
-
-    public function key(): int
-    {
-        return $this->rows->key();
-    }
-
-    public function next(): void
-    {
-        $this->rows->next();
-    }
-
-    public function rewind(): void
-    {
-        $this->rows->rewind();
-    }
-
-    public function valid(): bool
-    {
-        return $this->rows->valid();
     }
 
     private function buildColumns(): void

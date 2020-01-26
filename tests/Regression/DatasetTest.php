@@ -18,11 +18,10 @@ class DatasetTest extends TestCase
     public function testInterface()
     {
         $dataset = new Dataset(
-            new RowVector(...numerize(1, 2)),
-            new RowVector(...numerize(3, 4))
+            $first = new RowVector(...numerize(1, 2)),
+            $second = new RowVector(...numerize(3, 4)),
         );
 
-        $this->assertInstanceOf(\Iterator::class, $dataset);
         $this->assertInstanceOf(Dimension::class, $dataset->dimension());
         $this->assertSame('2 x 2', $dataset->dimension()->toString());
         $this->assertSame(
@@ -39,6 +38,8 @@ class DatasetTest extends TestCase
             [2, 4],
             $dataset->ordinates()->toArray()
         );
+        $this->assertSame($first, $dataset->row(0));
+        $this->assertSame($second, $dataset->row(1));
     }
 
     public function testThrowWhenNotUsingTwoDimensionalDataset()

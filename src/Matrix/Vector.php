@@ -12,7 +12,7 @@ use Innmind\Math\{
 };
 use Innmind\Immutable\Sequence;
 
-final class Vector implements \Iterator
+final class Vector
 {
     private Sequence $numbers;
     private Integer $dimension;
@@ -55,19 +55,15 @@ final class Vector implements \Iterator
             throw new VectorsMustMeOfTheSameDimension;
         }
 
-        $vector->rewind();
+        $value = new Integer(0);
 
-        return $this->numbers->reduce(
-            new Integer(0),
-            static function(Number $carry, Number $number) use ($vector): Number {
-                $value = $carry->add(
-                    $number->multiplyBy($vector->current())
-                );
-                $vector->next();
+        for ($i = 0; $i < $this->dimension->value(); $i++) {
+            $value = $value->add(
+                $this->get($i)->multiplyBy($vector->get($i)),
+            );
+        }
 
-                return $value;
-            }
-        );
+        return $value;
     }
 
     public function multiplyBy(self $vector): self
@@ -76,13 +72,11 @@ final class Vector implements \Iterator
             throw new VectorsMustMeOfTheSameDimension;
         }
 
-        $vector->rewind();
-        $numbers = $this->numbers->map(static function(Number $number) use ($vector): Number {
-            $number = $number->multiplyBy($vector->current());
-            $vector->next();
+        $numbers = [];
 
-            return $number;
-        });
+        for ($i = 0; $i < $this->dimension->value(); $i++) {
+            $numbers[] = $this->get($i)->multiplyBy($vector->get($i));
+        }
 
         return new self(...$numbers);
     }
@@ -93,13 +87,11 @@ final class Vector implements \Iterator
             throw new VectorsMustMeOfTheSameDimension;
         }
 
-        $vector->rewind();
-        $numbers = $this->numbers->map(static function(Number $number) use ($vector): Number {
-            $number = $number->divideBy($vector->current());
-            $vector->next();
+        $numbers = [];
 
-            return $number;
-        });
+        for ($i = 0; $i < $this->dimension->value(); $i++) {
+            $numbers[] = $this->get($i)->divideBy($vector->get($i));
+        }
 
         return new self(...$numbers);
     }
@@ -110,16 +102,11 @@ final class Vector implements \Iterator
             throw new VectorsMustMeOfTheSameDimension;
         }
 
-        $vector->rewind();
-        $numbers = $this->numbers->reduce(
-            [],
-            static function(array $numbers, Number $number) use ($vector): array {
-                $numbers[] = $number->subtract($vector->current());
-                $vector->next();
+        $numbers = [];
 
-                return $numbers;
-            }
-        );
+        for ($i = 0; $i < $this->dimension->value(); $i++) {
+            $numbers[] = $this->get($i)->subtract($vector->get($i));
+        }
 
         return new self(...$numbers);
     }
@@ -130,16 +117,11 @@ final class Vector implements \Iterator
             throw new VectorsMustMeOfTheSameDimension;
         }
 
-        $vector->rewind();
-        $numbers = $this->numbers->reduce(
-            [],
-            static function(array $numbers, Number $number) use ($vector): array {
-                $numbers[] = $number->add($vector->current());
-                $vector->next();
+        $numbers = [];
 
-                return $numbers;
-            }
-        );
+        for ($i = 0; $i < $this->dimension->value(); $i++) {
+            $numbers[] = $this->get($i)->add($vector->get($i));
+        }
 
         return new self(...$numbers);
     }
@@ -194,17 +176,13 @@ final class Vector implements \Iterator
             return false;
         }
 
-        $vector->rewind();
-
-        return $this->reduce(
-            true,
-            static function(bool $carry, Number $number) use ($vector): bool {
-                $carry = $carry && $number->equals($vector->current());
-                $vector->next();
-
-                return $carry;
+        for ($i=0; $i < $this->dimension->value(); $i++) {
+            if (!$this->get($i)->equals($vector->get($i))) {
+                return false;
             }
-        );
+        }
+
+        return true;
     }
 
     /**
@@ -222,6 +200,14 @@ final class Vector implements \Iterator
                 return $number;
             }
         );
+    }
+
+    /**
+     * @return list<Number>
+     */
+    public function numbers(): array
+    {
+        return \iterator_to_array($this->numbers);
     }
 
     public function current(): Number
