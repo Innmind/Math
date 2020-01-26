@@ -29,7 +29,7 @@ final class Dataset
     /**
      * @param array<int, int|float|Number>|list<array{0: int|float|Number, 1: int|float|Number}> $values
      */
-    public static function fromArray(array $values): self
+    public static function of(array $values): self
     {
         $rows = [];
 

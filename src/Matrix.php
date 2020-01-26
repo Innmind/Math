@@ -54,7 +54,7 @@ final class Matrix
     /**
      * @param list<list<int|float|number>> $values
      */
-    public static function fromArray(array $values): self
+    public static function of(array $values): self
     {
         $rows = [];
 
@@ -76,7 +76,7 @@ final class Matrix
             },
         );
 
-        $self = self::fromArray(unwrap($numbers));
+        $self = self::of(unwrap($numbers));
 
         return $self->transpose();
     }
@@ -251,7 +251,7 @@ final class Matrix
             },
         );
 
-        return self::fromArray(unwrap($rows));
+        return self::of(unwrap($rows));
     }
 
     public function isSquare(): bool

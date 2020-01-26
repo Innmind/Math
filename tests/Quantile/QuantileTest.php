@@ -19,7 +19,7 @@ class QuantileTest extends TestCase
      */
     public function testQuartiles($dataset, $min, $max, $mean, $median, $first, $third)
     {
-        $quantile = new Quantile(Dataset::fromArray($dataset));
+        $quantile = new Quantile(Dataset::of($dataset));
 
         $this->assertInstanceOf(Quartile::class, $quantile->min());
         $this->assertInstanceOf(Number::class, $quantile->min()->value());
@@ -60,7 +60,7 @@ class QuantileTest extends TestCase
 
     public function testThrowWhenAccessingUnknownQuartile()
     {
-        $q = new Quantile(Dataset::fromArray([1,2,3]));
+        $q = new Quantile(Dataset::of([1,2,3]));
 
         $this->expectException(UnknownQuartile::class);
 

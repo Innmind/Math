@@ -53,7 +53,7 @@ class DatasetTest extends TestCase
 
     public function testFromArray()
     {
-        $dataset = Dataset::fromArray([
+        $dataset = Dataset::of([
             1,
             2,
             3,

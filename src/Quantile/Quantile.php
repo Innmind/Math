@@ -32,7 +32,7 @@ final class Quantile
     {
         $values = $dataset->ordinates()->toArray();
         \sort($values);
-        $dataset = Dataset::fromArray($values);
+        $dataset = Dataset::of($values);
 
         $this->min = $this->buildMin($dataset);
         $this->max = $this->buildMax($dataset);
