@@ -14,7 +14,7 @@ use function Innmind\Math\multiply;
 use Innmind\Math\Algebra\Number\Pi;
 
 $perimeter = multiply(2, new Pi, $r = 42); //value still not calculated
-echo $perimeter; //2 x π x 42 (value still not calculated)
+echo $perimeter->toString(); //2 x π x 42 (value still not calculated)
 echo $perimeter->value(); //263.89378290154
 ```
 
@@ -28,16 +28,16 @@ Have a look at the [`functions`](src/functions.php) file to see all the operatio
 use Innmind\Math\{
     DefinitionSet\Range,
     Algebra\Integer,
-    Algebra\Number\Infinite
+    Algebra\Number\Infinite,
 };
 
 $set = Range::exlusive(new Integer(0), Infinite::positive());
-echo $set; //]0;+∞[
+echo $set->toString(); //]0;+∞[
 $set->contains(new Integer(42)); //true
 $set->contains(new Integer(-42)); //false
 
 $set = $set->union(
-    Range::exclusive(Infinite::negative(), new Integer(0))
+    Range::exclusive(Infinite::negative(), new Integer(0)),
 );
 echo $set; //]-∞;0[∪]0;+∞[
 $set->contains(new Integer(-42)); //true
@@ -57,7 +57,7 @@ $p->degree(1)->coeff()->value(); // 0.5
 $p->degree(2)->coeff()->value(); // 0.1
 $p->hasDegree(3); // false
 $p(new Integer(4))->value(); // 4.6
-echo $p; //0.1x^2 + 0.5x + 1
+echo $p->toString(); //0.1x^2 + 0.5x + 1
 ```
 
 You also can call the `derived` number for any point `x` (as well as the `tangent`). You can have access to the `primitive` and `derivative` of the polynom, the last one is notably used to calculate an `Integral`.
@@ -67,7 +67,7 @@ use Innmind\Math\Polynom\Integral;
 
 $integral = new Integral($somePolynom);
 $area = $integral(new Integer(0), new Integral(42)); //find the area beneath the curve between point 0 and 42
-echo $integral; //∫(-1x^2 + 4x)dx = [(-1 ÷ (2 + 1))x^3 + (4 ÷ (1 + 1))x^2] (if the polynom is -1x^2 + 4x)
+echo $integral->toString(); //∫(-1x^2 + 4x)dx = [(-1 ÷ (2 + 1))x^3 + (4 ÷ (1 + 1))x^2] (if the polynom is -1x^2 + 4x)
 ```
 
 **Note**: a `Polynom` object is immutable, and so calling `withDegree` return a new instance. If you want to ommit intermediates object, you can pass a list of [`Degree`](src/Polynom/Degree.php) objects after the intercept.
@@ -80,18 +80,18 @@ echo $integral; //∫(-1x^2 + 4x)dx = [(-1 ÷ (2 + 1))x^3 + (4 ÷ (1 + 1))x^2] (
 use Innmind\Math\{
     Regression\PolynomialRegression,
     Regression\Dataset,
-    Algebra\Integer
+    Algebra\Integer,
 };
 
 $regression = new PolynomialRegression(
-    Dataset::fromArray([
+    Dataset::of([
         [-8, 64],
         [-4, 16],
         [0, 0],
         [2, 4],
         [4, 16],
         [8, 64],
-    ])
+    ]),
 );
 $regression->intercept()->value(); //≈ 0.0
 $regression->degree(1)->coeff()->value(); //≈0.0
@@ -106,10 +106,10 @@ $regression(new Integer(9))->value(); //81.0
 use Innmind\Math\{
     Regression\LinearRegression,
     Regression\Dataset,
-    Algebra\Integer
+    Algebra\Integer;
 };
 
-$r = new LinearRegression(Dataset::fromArray([0, 1, 0, 2]));
+$r = new LinearRegression(Dataset::of([0, 1, 0, 2]));
 $r->intercept()->value(); // 0.0
 $r->slope()->value(); // 0.5
 $r(new Integer(4))->value(); // 2.0
@@ -122,10 +122,10 @@ use Innmind\Math\{
     Regression\Dataset,
     Probabilities\Expectation,
     Probabilities\StandardDeviation,
-    Probabilities\Variance
+    Probabilities\Variance,
 };
 
-$dataset = Dataset::fromArray([
+$dataset = Dataset::of([
     [-1, 4/6], //4 6th of a chance to obtain a -1
     [2, 1/6],
     [3, 1/6],
@@ -140,10 +140,10 @@ echo (new Variance($dataset))()->value(); //101/36
 ```php
 use Innmind\Math\{
     Quantile\Quantile,
-    Regression\Dataset
+    Regression\Dataset,
 };
 
-$q = new Quantile(Dataset::fromArray(range(1,12)));
+$q = new Quantile(Dataset::of(range(1,12)));
 $q->min()->value(); // 1
 $q->max()->value(); // 12
 $q->mean(); // 6.5
