@@ -24,8 +24,7 @@ use Innmind\Math\{
     Algebra\Integer,
     Algebra\Number\Infinite,
     Algebra\Signum,
-    Exception\TypeError,
-    Exception\NotANumber
+    Exception\NotANumber,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -41,8 +40,8 @@ class NumberTest extends TestCase
 
     public function testThrowWhenValueNotAnIntNorAFloat()
     {
-        $this->expectException(TypeError::class);
-        $this->expectExceptionMessage('Number must be an int or a float');
+        $this->expectException(\TypeError::class);
+        $this->expectExceptionMessage('Argument 1 must be of type int|float, string given');
 
         new Number('42');
     }

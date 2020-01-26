@@ -22,7 +22,6 @@ use Innmind\Math\{
     Algebra\Signum,
     Algebra\SquareRoot,
     Algebra\Subtraction,
-    Exception\TypeError,
     Exception\NotANumber,
 };
 
@@ -38,7 +37,9 @@ final class Number implements NumberInterface
     {
         /** @psalm-suppress DocblockTypeContradiction */
         if (!\is_int($value) && !\is_float($value)) {
-            throw new TypeError('Number must be an int or a float');
+            $given = \gettype($value);
+
+            throw new \TypeError("Argument 1 must be of type int|float, $given given");
         }
 
         if (\is_nan($value)) {
