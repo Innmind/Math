@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Algebra;
 
-use Innmind\Math\Exception\DivisionByZeroError;
+use Innmind\Math\Exception\DivisionByZero;
 
 final class Division implements Operation, Number
 {
@@ -14,7 +14,7 @@ final class Division implements Operation, Number
     public function __construct(Number $dividend, Number $divisor)
     {
         if ($divisor->equals(new Integer(0))) {
-            throw new DivisionByZeroError;
+            throw new DivisionByZero;
         }
 
         $this->dividend = $dividend;

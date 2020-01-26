@@ -10,7 +10,7 @@ use Innmind\Math\{
     Exception\VectorsMustMeOfTheSameDimension,
     Exception\MatrixMustBeSquare,
     Exception\MatricesMustBeOfTheSameDimension,
-    Exception\DivisionByZeroError,
+    Exception\DivisionByZero,
     Exception\NotANumber,
     Exception\MatrixNotInvertible,
     Matrix\Dimension,
@@ -393,7 +393,7 @@ final class Matrix
         try {
             $matrix = $this->reduceLowerTriangle($matrix);
             $matrix = $this->reduceUpperTriangle($matrix);
-        } catch (DivisionByZeroError | NotANumber $e) {
+        } catch (DivisionByZero | NotANumber $e) {
             throw new MatrixNotInvertible;
         }
 

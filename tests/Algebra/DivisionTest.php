@@ -22,7 +22,7 @@ use Innmind\Math\{
     Algebra\NaturalLogarithm,
     Algebra\CommonLogarithm,
     Algebra\Signum,
-    Exception\DivisionByZeroError
+    Exception\DivisionByZero,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -231,7 +231,7 @@ class DivisionTest extends TestCase
 
     public function testThrowWhenTryingToDivideByZero()
     {
-        $this->expectException(DivisionByZeroError::class);
+        $this->expectException(DivisionByZero::class);
 
         new Division(new Number\Number(4), new Number\Number(-0.0));
     }
