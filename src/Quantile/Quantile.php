@@ -16,7 +16,7 @@ use Innmind\Math\{
     Algebra\Number,
     Matrix\ColumnVector,
     Statistics\Mean,
-    Exception\OutOfRangeException,
+    Exception\UnknownQuartile,
 };
 
 final class Quantile
@@ -104,7 +104,7 @@ final class Quantile
                 return $this->max;
         }
 
-        throw new OutOfRangeException((string) $index);
+        throw new UnknownQuartile((string) $index);
     }
 
     /**
