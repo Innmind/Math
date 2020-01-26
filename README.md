@@ -1,10 +1,9 @@
 # Math
 
-| `master` | `develop` |
-|----------|-----------|
-| [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Innmind/Math/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Innmind/Math/?branch=master) | [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Innmind/Math/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/Innmind/Math/?branch=develop) |
-| [![Code Coverage](https://scrutinizer-ci.com/g/Innmind/Math/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Innmind/Math/?branch=master) | [![Code Coverage](https://scrutinizer-ci.com/g/Innmind/Math/badges/coverage.png?b=develop)](https://scrutinizer-ci.com/g/Innmind/Math/?branch=develop) |
-| [![Build Status](https://scrutinizer-ci.com/g/Innmind/Math/badges/build.png?b=master)](https://scrutinizer-ci.com/g/Innmind/Math/build-status/master) | [![Build Status](https://scrutinizer-ci.com/g/Innmind/Math/badges/build.png?b=develop)](https://scrutinizer-ci.com/g/Innmind/Math/build-status/develop) |
+| `develop` |
+|-----------|
+| [![codecov](https://codecov.io/gh/Innmind/Math/branch/develop/graph/badge.svg)](https://codecov.io/gh/Innmind/Math) |
+| [![Build Status](https://github.com/Innmind/Math/workflows/CI/badge.svg)](https://github.com/Innmind/Math/actions?query=workflow%3ACI) |
 
 Expose some math concepts as objects.
 
