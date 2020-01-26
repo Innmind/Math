@@ -37,6 +37,7 @@ class NaturalNumbersExceptZeroTest extends TestCase
         $this->assertFalse($set->contains(new Integer(0)));
         $this->assertFalse($set->contains(new Integer(-1)));
         $this->assertFalse($set->contains(new Number(0.75)));
+        $this->assertFalse($set->contains(new Number(1.75)));
     }
 
     public function testUnion()

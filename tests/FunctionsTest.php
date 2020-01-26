@@ -33,7 +33,8 @@ use function Innmind\Math\{
     commonLogarithm,
     signum,
     arcSine,
-    arcTangent
+    arcTangent,
+    toRadian,
 };
 use Innmind\Math\{
     Algebra\Number,
@@ -285,6 +286,7 @@ class FunctionsTest extends TestCase
 
         $this->assertInstanceOf(Number::class, $int);
         $this->assertSame(6, $int->value());
+        $this->assertSame(24, factorial(new Integer(4))->value());
     }
 
     public function testMax()
@@ -357,6 +359,18 @@ class FunctionsTest extends TestCase
 
         $this->assertInstanceOf(Signum::class, $sgn);
         $this->assertSame('sgn(1)', $sgn->toString());
+    }
+
+    public function testToRadian()
+    {
+        $radian = new Radian(new Number\Number(1));
+
+        $this->assertSame($radian, toRadian($radian));
+        $this->assertEquals($radian, toRadian(1));
+
+        $degree = new Degree(new Number\Number(90));
+
+        $this->assertEquals($degree->toRadian(), toRadian($degree));
     }
 
     public function cosines(): array

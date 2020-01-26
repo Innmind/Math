@@ -21,6 +21,11 @@ class SegmentTest extends TestCase
         $this->assertSame($length, $segment->length());
     }
 
+    public function testStringCast()
+    {
+        $this->assertSame('2', (new Segment(new Integer(2)))->toString());
+    }
+
     public function testThrowWhenNullSegment()
     {
         $this->expectException(LengthMustBePositive::class);

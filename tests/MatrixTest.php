@@ -359,6 +359,12 @@ class MatrixTest extends TestCase
                 [2, 3, 4],
             ])
         ));
+        $this->assertFalse($matrix->equals(
+            Matrix::fromArray([
+                [2, 3, 4],
+                [1, 0, -1],
+            ])
+        ));
         $this->assertFalse($matrix->equals($matrix->transpose()));
     }
 
@@ -520,6 +526,16 @@ class MatrixTest extends TestCase
         $this->assertNotSame($matrix, $inversed);
         $this->assertSame($initial, $matrix->toArray());
         $this->assertSame($expected, $inversed->toArray());
+    }
+
+    public function testThrowWhenTryingToInverseNonSquareMatrix()
+    {
+        $this->expectException(MatrixMustBeSquare::class);
+
+        Matrix::fromArray([
+            [1, 2, 3],
+            [4, 5, 6],
+        ])->inverse();
     }
 
     public function testInverseIdentityProperty()
