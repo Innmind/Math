@@ -29,10 +29,10 @@ final class Integral
 
     public function toString(): string
     {
-        return sprintf(
+        return \sprintf(
             '∫(%s)dx = [%s]',
             $this->polynom->toString(),
-            $this->polynom->primitive()->toString()
+            $this->polynom->primitive()->toString(),
         );
     }
 }

@@ -6,11 +6,11 @@ namespace Innmind\Math\Probabilities;
 use function Innmind\Math\{
     divide,
     multiply,
-    subtract
+    subtract,
 };
 use Innmind\Math\{
     Algebra\Number,
-    Algebra\Integer
+    Algebra\Integer,
 };
 
 final class BinomialDistribution
@@ -30,14 +30,14 @@ final class BinomialDistribution
             $trials->factorial(),
             multiply(
                 $success->factorial(),
-                $errors->factorial()
-            )
+                $errors->factorial(),
+            ),
         );
 
         return multiply(
             $coefficient,
             $this->probability->power($success),
-            subtract(1, $this->probability)->power($errors)
+            subtract(1, $this->probability)->power($errors),
         );
     }
 }

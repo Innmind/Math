@@ -18,7 +18,7 @@ final class Power implements Operation, Number
     public function result(): Number
     {
         return $this->result ??= Number\Number::wrap(
-            $this->number->value() ** $this->power->value()
+            $this->number->value() ** $this->power->value(),
         );
     }
 

@@ -16,7 +16,7 @@ final class Signum implements Operation, Number
     public function result(): Number
     {
         return $this->result ??= Number\Number::wrap(
-            $this->number->value() <=> 0
+            $this->number->value() <=> 0,
         );
     }
 
@@ -135,6 +135,6 @@ final class Signum implements Operation, Number
 
     public function toString(): string
     {
-        return sprintf('sgn(%s)', $this->number->toString());
+        return \sprintf('sgn(%s)', $this->number->toString());
     }
 }

@@ -5,7 +5,7 @@ namespace Innmind\Math\Statistics;
 
 use Innmind\Math\Algebra\{
     Number,
-    Round
+    Round,
 };
 use Innmind\Immutable\Sequence;
 

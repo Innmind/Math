@@ -5,7 +5,7 @@ namespace Innmind\Math\Geometry\Angle;
 
 use Innmind\Math\Algebra\{
     Number,
-    Integer
+    Integer,
 };
 
 final class Degree
@@ -26,8 +26,8 @@ final class Degree
     {
         return $this->radian ??= new Radian(
             new Number\Number(
-                deg2rad($this->number->value())
-            )
+                \deg2rad($this->number->value()),
+            ),
         );
     }
 

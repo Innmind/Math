@@ -7,7 +7,7 @@ use Innmind\Math\{
     Geometry\Angle\Degree,
     Geometry\Angle\Radian,
     Algebra\Number,
-    Algebra\Round
+    Algebra\Round,
 };
 
 /**
@@ -148,9 +148,9 @@ final class ArcCosine implements Number
         }
 
         $radians = new Number\Number(
-            acos(
-                $this->number->value()
-            )
+            \acos(
+                $this->number->value(),
+            ),
         );
 
         return $this->arcCosine = (new Radian($radians))->toDegree();
@@ -158,6 +158,6 @@ final class ArcCosine implements Number
 
     public function toString(): string
     {
-        return sprintf('cos⁻¹(%s)', $this->number->toString());
+        return \sprintf('cos⁻¹(%s)', $this->number->toString());
     }
 }

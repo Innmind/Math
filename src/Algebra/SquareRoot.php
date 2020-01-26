@@ -24,7 +24,7 @@ final class SquareRoot implements Operation, Number
     public function result(): Number
     {
         return $this->result ??= Number\Number::wrap(
-            sqrt($this->number->value())
+            \sqrt($this->number->value()),
         );
     }
 

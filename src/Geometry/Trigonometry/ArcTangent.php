@@ -7,7 +7,7 @@ use Innmind\Math\{
     Geometry\Angle\Degree,
     Geometry\Angle\Radian,
     Algebra\Number,
-    Algebra\Round
+    Algebra\Round,
 };
 
 /**
@@ -154,9 +154,9 @@ final class ArcTangent implements Number
         }
 
         $radians = new Number\Number(
-            atan(
-                $this->number->value()
-            )
+            \atan(
+                $this->number->value(),
+            ),
         );
 
         return $this->arcTangent = (new Radian($radians))->toDegree();
@@ -164,6 +164,6 @@ final class ArcTangent implements Number
 
     public function toString(): string
     {
-        return sprintf('tan⁻¹(%s)', $this->number->toString());
+        return \sprintf('tan⁻¹(%s)', $this->number->toString());
     }
 }

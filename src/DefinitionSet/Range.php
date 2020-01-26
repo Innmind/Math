@@ -86,12 +86,12 @@ final class Range implements Set
 
     public function toString(): string
     {
-        return sprintf(
+        return \sprintf(
             '%s%s;%s%s',
             $this->lowerInclusivity === self::INCLUSIVE ? '[' : ']',
             $this->lower->toString(),
             $this->upper->toString(),
-            $this->upperInclusivity === self::INCLUSIVE ? ']' : '['
+            $this->upperInclusivity === self::INCLUSIVE ? ']' : '[',
         );
     }
 }

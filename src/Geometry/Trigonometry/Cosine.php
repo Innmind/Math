@@ -6,7 +6,7 @@ namespace Innmind\Math\Geometry\Trigonometry;
 use Innmind\Math\{
     Geometry\Angle\Degree,
     Algebra\Number,
-    Algebra\Round
+    Algebra\Round,
 };
 
 /**
@@ -142,14 +142,14 @@ final class Cosine implements Number
     private function cosine(): Number
     {
         return $this->cosine ??= new Number\Number(
-            cos(
-                $this->degree->toRadian()->number()->value()
-            )
+            \cos(
+                $this->degree->toRadian()->number()->value(),
+            ),
         );
     }
 
     public function toString(): string
     {
-        return sprintf('cos(%s)', $this->degree->toString());
+        return \sprintf('cos(%s)', $this->degree->toString());
     }
 }

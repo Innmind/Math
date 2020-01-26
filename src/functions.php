@@ -34,7 +34,7 @@ use Innmind\Math\{
     Statistics\Frequence,
     Statistics\Mean,
     Statistics\Median,
-    Statistics\Scope
+    Statistics\Scope,
 };
 use Innmind\Immutable\Sequence;
 

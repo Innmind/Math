@@ -8,7 +8,7 @@ use Innmind\Math\{
     Geometry\Figure,
     Geometry\Segment,
     Algebra\Number,
-    Algebra\Number\Pi
+    Algebra\Number\Pi,
 };
 
 final class Circle implements Figure
@@ -20,7 +20,7 @@ final class Circle implements Figure
     {
         $this->radius = $radius;
         $this->diameter = new Segment(
-            multiply(2, $radius->length())
+            multiply(2, $radius->length()),
         );
     }
 
@@ -34,7 +34,7 @@ final class Circle implements Figure
         return multiply(
             $this->radius->length(),
             $this->radius->length(),
-            new Pi
+            new Pi,
         );
     }
 

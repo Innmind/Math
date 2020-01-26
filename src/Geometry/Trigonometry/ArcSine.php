@@ -7,7 +7,7 @@ use Innmind\Math\{
     Geometry\Angle\Degree,
     Geometry\Angle\Radian,
     Algebra\Number,
-    Algebra\Round
+    Algebra\Round,
 };
 
 /**
@@ -148,9 +148,9 @@ final class ArcSine implements Number
         }
 
         $radians = new Number\Number(
-            asin(
-                $this->number->value()
-            )
+            \asin(
+                $this->number->value(),
+            ),
         );
 
         return $this->arcSine = (new Radian($radians))->toDegree();
@@ -158,6 +158,6 @@ final class ArcSine implements Number
 
     public function toString(): string
     {
-        return sprintf('sin⁻¹(%s)', $this->number->toString());
+        return \sprintf('sin⁻¹(%s)', $this->number->toString());
     }
 }

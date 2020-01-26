@@ -5,7 +5,7 @@ namespace Innmind\Math\Polynom;
 
 use function Innmind\Math\{
     add,
-    multiply
+    multiply,
 };
 use Innmind\Math\Algebra\Number;
 
@@ -42,9 +42,9 @@ final class Tangent
         return add(
             multiply(
                 $this->derivative,
-                $x->subtract($this->abscissa)
+                $x->subtract($this->abscissa),
             ),
-            $this->intercept
+            $this->intercept,
         );
     }
 

@@ -142,7 +142,7 @@ final class NaturalLogarithm implements Operation, Number
     public function result(): Number
     {
         return $this->result ??= Number\Number::wrap(
-            log($this->number->value())
+            \log($this->number->value()),
         );
     }
 
@@ -150,12 +150,12 @@ final class NaturalLogarithm implements Operation, Number
     {
         return self::$definitionSet ??= Range::exclusive(
             new Integer(0),
-            Infinite::positive()
+            Infinite::positive(),
         );
     }
 
     public function toString(): string
     {
-        return sprintf('ln(%s)', $this->number->toString());
+        return \sprintf('ln(%s)', $this->number->toString());
     }
 }

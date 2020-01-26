@@ -8,7 +8,7 @@ use Innmind\Math\{
     Exception\VectorsMustMeOfTheSameDimension,
     Matrix,
     Algebra\Number,
-    Algebra\Integer
+    Algebra\Integer,
 };
 use Innmind\Immutable\Sequence;
 use function Innmind\Immutable\unwrap;
@@ -28,7 +28,7 @@ final class Vector
 
     public static function initialize(Integer $dimension, Number $value): self
     {
-        return new self(...array_fill(0, $dimension->value(), $value));
+        return new self(...\array_fill(0, $dimension->value(), $value));
     }
 
     /**
@@ -143,11 +143,9 @@ final class Vector
         return add(...unwrap($this->numbers));
     }
 
-    public function foreach(callable $function): self
+    public function foreach(callable $function): void
     {
         $this->numbers->foreach($function);
-
-        return $this;
     }
 
     public function map(callable $function): self
@@ -179,7 +177,7 @@ final class Vector
             return false;
         }
 
-        for ($i=0; $i < $this->dimension->value(); $i++) {
+        for ($i = 0; $i < $this->dimension->value(); $i++) {
             if (!$this->get($i)->equals($vector->get($i))) {
                 return false;
             }

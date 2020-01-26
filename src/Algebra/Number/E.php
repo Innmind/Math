@@ -20,7 +20,7 @@ use Innmind\Math\Algebra\{
     BinaryLogarithm,
     NaturalLogarithm,
     CommonLogarithm,
-    Signum
+    Signum,
 };
 
 /**
@@ -33,7 +33,7 @@ final class E implements NumberInterface
      */
     public function value()
     {
-        return M_E;
+        return \M_E;
     }
 
     public function equals(NumberInterface $number): bool

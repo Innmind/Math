@@ -6,7 +6,7 @@ namespace Innmind\Math\Geometry\Angle;
 use function Innmind\Math\multiply;
 use Innmind\Math\Algebra\{
     Number,
-    Number\Pi
+    Number\Pi,
 };
 
 final class Radian
@@ -17,7 +17,7 @@ final class Radian
     public function __construct(Number $number)
     {
         $this->number = $number->modulo(
-            multiply(2, new Pi)
+            multiply(2, new Pi),
         );
     }
 
@@ -25,8 +25,8 @@ final class Radian
     {
         return $this->degree ??= new Degree(
             new Number\Number(
-                rad2deg($this->number->value())
-            )
+                \rad2deg($this->number->value()),
+            ),
         );
     }
 

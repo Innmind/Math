@@ -6,7 +6,7 @@ namespace Innmind\Math\Geometry\Trigonometry;
 use Innmind\Math\{
     Geometry\Angle\Degree,
     Algebra\Number,
-    Algebra\Round
+    Algebra\Round,
 };
 
 /**
@@ -142,14 +142,14 @@ final class Sine implements Number
     private function sine(): Number
     {
         return $this->sine ??= new Number\Number(
-            sin(
-                $this->degree->toRadian()->number()->value()
-            )
+            \sin(
+                $this->degree->toRadian()->number()->value(),
+            ),
         );
     }
 
     public function toString(): string
     {
-        return sprintf('sin(%s)', $this->degree->toString());
+        return \sprintf('sin(%s)', $this->degree->toString());
     }
 }

@@ -10,7 +10,7 @@ use Innmind\Math\{
     Matrix\RowVector,
     Matrix\ColumnVector,
     Algebra\Number,
-    Exception\VectorsMustContainsOnlyTwoValues
+    Exception\VectorsMustContainsOnlyTwoValues,
 };
 
 final class Dataset
@@ -34,7 +34,7 @@ final class Dataset
         $rows = [];
 
         foreach ($values as $x => $y) {
-            $coordinates = is_array($y) ? $y : [$x, $y];
+            $coordinates = \is_array($y) ? $y : [$x, $y];
             $rows[] = new RowVector(...numerize(...$coordinates));
         }
 

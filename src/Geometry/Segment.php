@@ -7,7 +7,7 @@ use Innmind\Math\{
     Geometry\Angle\Degree,
     Algebra\Number,
     Algebra\Integer,
-    Exception\LengthMustBePositive
+    Exception\LengthMustBePositive,
 };
 
 final class Segment

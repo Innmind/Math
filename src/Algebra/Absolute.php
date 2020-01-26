@@ -24,7 +24,7 @@ final class Absolute implements Operation, Number
     public function result(): Number
     {
         return $this->result ??= Number\Number::wrap(
-            abs($this->number->value())
+            \abs($this->number->value()),
         );
     }
 

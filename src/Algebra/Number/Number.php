@@ -23,7 +23,7 @@ use Innmind\Math\{
     Algebra\SquareRoot,
     Algebra\Subtraction,
     Exception\TypeError,
-    Exception\NotANumber
+    Exception\NotANumber,
 };
 
 final class Number implements NumberInterface
@@ -37,11 +37,11 @@ final class Number implements NumberInterface
     public function __construct($value)
     {
         /** @psalm-suppress DocblockTypeContradiction */
-        if (!is_int($value) && !is_float($value)) {
+        if (!\is_int($value) && !\is_float($value)) {
             throw new TypeError('Number must be an int or a float');
         }
 
-        if (is_nan($value)) {
+        if (\is_nan($value)) {
             throw new NotANumber;
         }
 
@@ -53,11 +53,11 @@ final class Number implements NumberInterface
      */
     public static function wrap($value): NumberInterface
     {
-        if (is_infinite($value)) {
+        if (\is_infinite($value)) {
             return $value > 0 ? Infinite::positive() : Infinite::negative();
         }
 
-        if (is_int($value)) {
+        if (\is_int($value)) {
             return new Integer($value);
         }
 
@@ -185,6 +185,6 @@ final class Number implements NumberInterface
 
     public function toString(): string
     {
-        return var_export($this->value, true);
+        return \var_export($this->value, true);
     }
 }

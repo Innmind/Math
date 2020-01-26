@@ -5,7 +5,7 @@ namespace Innmind\Math\Statistics;
 
 use Innmind\Math\Algebra\{
     Number,
-    Division
+    Division,
 };
 use Innmind\Immutable\Sequence;
 

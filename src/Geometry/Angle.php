@@ -5,12 +5,12 @@ namespace Innmind\Math\Geometry;
 
 use function Innmind\Math\{
     cosine,
-    multiply
+    multiply,
 };
 use Innmind\Math\{
     Geometry\Angle\Degree,
     Geometry\Theorem\AlKashi,
-    Algebra\Number
+    Algebra\Number,
 };
 
 final class Angle
@@ -53,7 +53,7 @@ final class Angle
         return AlKashi::side(
             $this->firstSegment,
             $this->degree,
-            $this->secondSegment
+            $this->secondSegment,
         );
     }
 
@@ -62,7 +62,7 @@ final class Angle
         return multiply(
             $this->firstSegment->length(),
             $this->secondSegment->length(),
-            cosine($this->degree)
+            cosine($this->degree),
         );
     }
 }

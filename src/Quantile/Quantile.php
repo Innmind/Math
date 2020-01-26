@@ -9,14 +9,14 @@ use function Innmind\Math\{
     mean,
     median,
     min,
-    max
+    max,
 };
 use Innmind\Math\{
     Regression\Dataset,
     Algebra\Number,
     Matrix\ColumnVector,
     Statistics\Mean,
-    Exception\OutOfRangeException
+    Exception\OutOfRangeException,
 };
 
 final class Quantile
@@ -31,7 +31,7 @@ final class Quantile
     public function __construct(Dataset $dataset)
     {
         $values = $dataset->ordinates()->toArray();
-        sort($values);
+        \sort($values);
         $dataset = Dataset::fromArray($values);
 
         $this->min = $this->buildMin($dataset);
@@ -173,7 +173,7 @@ final class Quantile
         if ($dimension->value() === 2) {
             return divide(
                 add($dataset->get(0), $dataset->get(1)),
-                2
+                2,
             );
         } else if ($dimension->value() === 1) {
             return $dataset->get(0);
@@ -186,7 +186,7 @@ final class Quantile
 
         return divide(
             add($dataset->get($index), $dataset->get($index - 1)),
-            2
+            2,
         );
     }
 }

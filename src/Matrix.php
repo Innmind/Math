@@ -15,7 +15,7 @@ use Innmind\Math\{
     Exception\MatrixNotInvertible,
     Matrix\Dimension,
     Algebra\Number,
-    Algebra\Integer
+    Algebra\Integer,
 };
 use Innmind\Immutable\Sequence;
 use function Innmind\Immutable\unwrap;
@@ -46,7 +46,7 @@ final class Matrix
         $this->columns = Sequence::of(ColumnVector::class);
         $this->dimension = new Dimension(
             new Integer($this->rows->size()),
-            $this->rows->get(0)->dimension()
+            $this->rows->get(0)->dimension(),
         );
         $this->buildColumns();
     }
@@ -91,11 +91,11 @@ final class Matrix
 
         for ($i = 0; $i < $count; ++$i) {
             $rows[] = new RowVector(
-                ...array_fill(
+                ...\array_fill(
                     0,
                     $dimension->columns()->value(),
-                    $value
-                )
+                    $value,
+                ),
             );
         }
 
@@ -244,11 +244,11 @@ final class Matrix
                         Sequence::of(Number::class),
                         static function(Sequence $carry, ColumnVector $column) use ($row): Sequence {
                             return ($carry)($row->dot($column));
-                        }
+                        },
                     );
 
                 return ($rows)(unwrap($newRow));
-            }
+            },
         );
 
         return self::fromArray(unwrap($rows));
@@ -270,12 +270,12 @@ final class Matrix
             Sequence::of(RowVector::class),
             static function(Sequence $rows, RowVector $row): Sequence {
                 $numbers = $row->toArray();
-                $newRow = array_fill(0, $row->dimension()->value(), 0);
+                $newRow = \array_fill(0, $row->dimension()->value(), 0);
                 $index = $rows->size();
                 $newRow[$index] = $numbers[$index];
 
                 return ($rows)(new RowVector(...numerize(...$newRow)));
-            }
+            },
         );
 
         return new self(...unwrap($rows));
@@ -291,11 +291,11 @@ final class Matrix
         $rows = $this->rows->reduce(
             Sequence::of(RowVector::class),
             static function(Sequence $rows, RowVector $row): Sequence {
-                $newRow = array_fill(0, $row->dimension()->value(), 0);
+                $newRow = \array_fill(0, $row->dimension()->value(), 0);
                 $newRow[$rows->size()] = 1;
 
                 return ($rows)(new RowVector(...numerize(...$newRow)));
-            }
+            },
         );
 
         return new self(...unwrap($rows));
@@ -350,7 +350,7 @@ final class Matrix
                 }
 
                 return ($carry)($count);
-            }
+            },
         );
 
         $numberOfRows = $this->rows->size();
@@ -418,9 +418,9 @@ final class Matrix
                     $values[] = $row->get($i);
 
                     return $values;
-                }
+                },
             );
-            $this->columns = $this->columns->add(new ColumnVector(...$values));
+            $this->columns = ($this->columns)(new ColumnVector(...$values));
         }
     }
 
@@ -440,28 +440,28 @@ final class Matrix
                     $multiplier = $row
                         ->get($index)
                         ->divideBy(
-                            $reference->get($index)
+                            $reference->get($index),
                         );
 
-                    return $rows->add(
+                    return ($rows)(
                         $row->subtract(
                             $reference->multiplyBy(
                                 RowVector::initialize(
                                     $row->dimension(),
-                                    $multiplier
-                                )
-                            )
-                        )
+                                    $multiplier,
+                                ),
+                            ),
+                        ),
                     );
-                }
+                },
             );
 
             $rows = $rows->map(static function(RowVector $row): RowVector {
                 return $row->multiplyBy(
                     RowVector::initialize(
                         $row->dimension(),
-                        (new Integer(1))->divideBy($row->lead())
-                    )
+                        (new Integer(1))->divideBy($row->lead()),
+                    ),
                 );
             });
 
@@ -487,17 +487,17 @@ final class Matrix
             $rows = $toReduce->reduce(
                 $reduced,
                 static function(Sequence $rows, RowVector $row) use ($index, $reduced): Sequence {
-                    return $rows->add(
+                    return ($rows)(
                         $row->subtract(
                             $reduced->last()->multiplyBy(
                                 RowVector::initialize(
                                     $row->dimension(),
-                                    $row->get($index)
-                                )
-                            )
-                        )
+                                    $row->get($index),
+                                ),
+                            ),
+                        ),
                     );
-                }
+                },
             );
             --$index;
             ++$reference;

@@ -5,7 +5,7 @@ namespace Innmind\Math\Statistics;
 
 use Innmind\Math\Algebra\{
     Number,
-    Round
+    Round,
 };
 use Innmind\Immutable\Sequence;
 
@@ -24,7 +24,7 @@ final class Median implements Number
                 //mathematically the index to choose is (size+1/2) but here we
                 //do (size-1)/2 as the sequence indexes start at 0
                 $this->result = $sequence->get(
-                    (int) (($sequence->size() - 1) / 2)
+                    (int) (($sequence->size() - 1) / 2),
                 );
                 break;
 
@@ -34,7 +34,7 @@ final class Median implements Number
                 $index = (int) ($sequence->size() / 2);
                 $this->result = new Mean(
                     $sequence->get($index - 1),
-                    $sequence->get($index)
+                    $sequence->get($index),
                 );
                 break;
         }

@@ -7,7 +7,7 @@ use function Innmind\Math\multiply;
 use Innmind\Math\{
     Geometry\Figure,
     Geometry\Segment,
-    Algebra\Number
+    Algebra\Number,
 };
 
 final class Square implements Figure

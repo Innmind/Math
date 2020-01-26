@@ -6,7 +6,7 @@ namespace Innmind\Math\Matrix;
 use Innmind\Math\{
     Matrix,
     Algebra\Number,
-    Algebra\Integer
+    Algebra\Integer,
 };
 
 final class RowVector
@@ -20,7 +20,7 @@ final class RowVector
 
     public static function initialize(Integer $dimension, Number $value): self
     {
-        return new self(...array_fill(0, $dimension->value(), $value));
+        return new self(...\array_fill(0, $dimension->value(), $value));
     }
 
     /**
@@ -101,11 +101,9 @@ final class RowVector
         return $this->vector->sum();
     }
 
-    public function foreach(callable $function): self
+    public function foreach(callable $function): void
     {
         $this->vector->foreach($function);
-
-        return $this;
     }
 
     public function map(callable $function): self

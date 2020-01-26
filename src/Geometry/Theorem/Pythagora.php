@@ -5,7 +5,7 @@ namespace Innmind\Math\Geometry\Theorem;
 
 use Innmind\Math\{
     Algebra\Integer,
-    Geometry\Segment
+    Geometry\Segment,
 };
 
 /**

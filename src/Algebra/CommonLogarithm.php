@@ -142,7 +142,7 @@ final class CommonLogarithm implements Operation, Number
     public function result(): Number
     {
         return $this->result ??= Number\Number::wrap(
-            log10($this->number->value())
+            \log10($this->number->value()),
         );
     }
 
@@ -150,12 +150,12 @@ final class CommonLogarithm implements Operation, Number
     {
         return self::$definitionSet ??= Range::exclusive(
             new Integer(0),
-            Infinite::positive()
+            Infinite::positive(),
         );
     }
 
     public function toString(): string
     {
-        return sprintf('lg(%s)', $this->number->toString());
+        return \sprintf('lg(%s)', $this->number->toString());
     }
 }

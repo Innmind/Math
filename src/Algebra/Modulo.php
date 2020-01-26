@@ -18,7 +18,7 @@ final class Modulo implements Operation, Number
     public function result(): Number
     {
         return $this->result ??= Number\Number::wrap(
-            fmod($this->number->value(), $this->modulus->value())
+            \fmod($this->number->value(), $this->modulus->value()),
         );
     }
 

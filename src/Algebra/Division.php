@@ -152,7 +152,7 @@ final class Division implements Operation, Number
     public function result(): Number
     {
         return $this->result ??= Number\Number::wrap(
-            $this->dividend->value() / $this->divisor->value()
+            $this->dividend->value() / $this->divisor->value(),
         );
     }
 
@@ -163,10 +163,10 @@ final class Division implements Operation, Number
         $divisor = $this->divisor instanceof Operation ?
             '('.$this->divisor->toString().')' : $this->divisor->toString();
 
-        return sprintf(
+        return \sprintf(
             '%s ÷ %s',
             $dividend,
-            $divisor
+            $divisor,
         );
     }
 }

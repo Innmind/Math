@@ -9,7 +9,7 @@ use function Innmind\Math\{
     divide,
     power,
     subtract,
-    squareRoot
+    squareRoot,
 };
 
 final class ComplexNumber
@@ -37,7 +37,7 @@ final class ComplexNumber
     {
         return new self(
             $this->real->add($number->real()),
-            $this->imaginary->add($number->imaginary())
+            $this->imaginary->add($number->imaginary()),
         );
     }
 
@@ -45,7 +45,7 @@ final class ComplexNumber
     {
         return new self(
             $this->real->subtract($number->real()),
-            $this->imaginary->subtract($number->imaginary())
+            $this->imaginary->subtract($number->imaginary()),
         );
     }
 
@@ -56,14 +56,14 @@ final class ComplexNumber
             multiply(
                 multiply(
                     $this->imaginary,
-                    $number->imaginary()
+                    $number->imaginary(),
                 ),
-                -1 //because i^2 == -1
-            )
+                -1, //because i^2 == -1
+            ),
         );
         $imaginary = add(
             multiply($this->real, $number->imaginary()),
-            multiply($this->imaginary, $number->real())
+            multiply($this->imaginary, $number->real()),
         );
 
         return new self($real, $imaginary);
@@ -76,8 +76,8 @@ final class ComplexNumber
             power($number->real(), 2),
             multiply(
                 -1,
-                power($number->imaginary(), 2)
-            )
+                power($number->imaginary(), 2),
+            ),
         );
         $real = divide($dividend->real(), $divisor);
         $imaginary = divide($dividend->imaginary(), $divisor);
@@ -89,7 +89,7 @@ final class ComplexNumber
     {
         return new self(
             $this->real,
-            multiply(-1, $this->imaginary())
+            multiply(-1, $this->imaginary()),
         );
     }
 
@@ -98,8 +98,8 @@ final class ComplexNumber
         return squareRoot(
             add(
                 power($this->real, 2),
-                power($this->imaginary, 2)
-            )
+                power($this->imaginary, 2),
+            ),
         );
     }
 
@@ -107,12 +107,12 @@ final class ComplexNumber
     {
         $divisor = add(
             power($this->real, 2),
-            power($this->imaginary, 2)
+            power($this->imaginary, 2),
         );
 
         return new self(
             divide($this->real, $divisor),
-            multiply(-1, divide($this->imaginary, $divisor))
+            multiply(-1, divide($this->imaginary, $divisor)),
         );
     }
 
@@ -120,7 +120,7 @@ final class ComplexNumber
     {
         return new self(
             multiply(-1, $this->real),
-            multiply(-1, $this->imaginary)
+            multiply(-1, $this->imaginary),
         );
     }
 
@@ -130,10 +130,10 @@ final class ComplexNumber
             divide(
                 add(
                     $this->real,
-                    $this->absolute()
+                    $this->absolute(),
                 ),
-                2
-            )
+                2,
+            ),
         );
         $imaginary = multiply(
             $this->imaginary->signum(),
@@ -141,11 +141,11 @@ final class ComplexNumber
                 divide(
                     add(
                         multiply(-1, $this->real),
-                        $this->absolute()
+                        $this->absolute(),
                     ),
-                    2
-                )
-            )
+                    2,
+                ),
+            ),
         );
 
         return new self($real, $imaginary);
@@ -164,6 +164,6 @@ final class ComplexNumber
         $imaginary = $this->imaginary instanceof Operation ?
             '('.$this->imaginary->toString().')' : $this->imaginary->toString();
 
-        return sprintf('(%s + %si)', $real, $imaginary);
+        return \sprintf('(%s + %si)', $real, $imaginary);
     }
 }

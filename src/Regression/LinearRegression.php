@@ -7,13 +7,13 @@ use function Innmind\Math\{
     add,
     multiply,
     divide,
-    subtract
+    subtract,
 };
 use Innmind\Math\{
     Polynom\Polynom,
     Algebra\Number,
     Algebra\Integer,
-    Matrix
+    Matrix,
 };
 
 final class LinearRegression
@@ -26,7 +26,7 @@ final class LinearRegression
         [$slope, $intercept] = $this->compute($data);
         $this->polynom = (new Polynom($intercept))->withDegree(
             new Integer(1),
-            $slope
+            $slope,
         );
         $this->deviation = $this->buildRmsd($data);
     }
@@ -95,19 +95,19 @@ final class LinearRegression
         $slope = divide(
             subtract(
                 $dimension->multiplyBy($xySum),
-                $xSum->multiplyBy($ySum)
+                $xSum->multiplyBy($ySum),
             ),
             subtract(
                 $dimension->multiplyBy($xxSum),
-                $xSum->power(new Integer(2))
-            )
+                $xSum->power(new Integer(2)),
+            ),
         );
         $intercept = divide(
             subtract(
                 $ySum,
-                $slope->multiplyBy($xSum)
+                $slope->multiplyBy($xSum),
             ),
-            $dimension
+            $dimension,
         );
 
         return [$slope, $intercept];
@@ -118,16 +118,14 @@ final class LinearRegression
         $values = $dataset->ordinates();
         $estimated = $dataset
             ->abscissas()
-            ->map(function(Number $x): Number {
-                return $this($x);
-            });
+            ->map(fn(Number $x): Number => $this($x));
 
         return $values
             ->subtract($estimated)
             ->power(new Integer(2))
             ->sum()
             ->divideBy(
-                $values->dimension()
+                $values->dimension(),
             )
             ->squareRoot();
     }

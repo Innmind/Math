@@ -5,7 +5,7 @@ namespace Innmind\Math\Probabilities;
 
 use Innmind\Math\{
     Regression\Dataset,
-    Algebra\Number
+    Algebra\Number,
 };
 
 final class Expectation

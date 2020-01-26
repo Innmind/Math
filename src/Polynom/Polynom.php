@@ -6,12 +6,12 @@ namespace Innmind\Math\Polynom;
 use function Innmind\Math\{
     add,
     divide,
-    subtract
+    subtract,
 };
 use Innmind\Math\Algebra\{
     Number,
     Integer,
-    Operation
+    Operation,
 };
 use Innmind\Immutable\{
     Map,
@@ -134,9 +134,9 @@ final class Polynom
         return divide(
             subtract(
                 $this(add($x, $limit)),
-                $this($x)
+                $this($x),
             ),
-            $limit
+            $limit,
         );
     }
 
@@ -206,9 +206,7 @@ final class Polynom
             })
             ->mapTo(
                 'string',
-                function(Degree $degree): string {
-                    return $degree->toString();
-                },
+                static fn(Degree $degree): string => $degree->toString(),
             );
         $polynom = join(' + ', $degrees);
 

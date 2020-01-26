@@ -20,7 +20,7 @@ use Innmind\Math\Algebra\{
     BinaryLogarithm,
     NaturalLogarithm,
     CommonLogarithm,
-    Signum
+    Signum,
 };
 
 final class Pi implements NumberInterface
@@ -30,7 +30,7 @@ final class Pi implements NumberInterface
      */
     public function value()
     {
-        return pi();
+        return \pi();
     }
 
     public function equals(NumberInterface $number): bool

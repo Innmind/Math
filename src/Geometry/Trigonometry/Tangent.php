@@ -6,7 +6,7 @@ namespace Innmind\Math\Geometry\Trigonometry;
 use Innmind\Math\{
     Geometry\Angle\Degree,
     Algebra\Number,
-    Algebra\Round
+    Algebra\Round,
 };
 
 /**
@@ -142,14 +142,14 @@ final class Tangent implements Number
     private function tangent(): Number
     {
         return $this->tangent ?? $this->tangent = new Number\Number(
-            tan(
-                $this->degree->toRadian()->number()->value()
-            )
+            \tan(
+                $this->degree->toRadian()->number()->value(),
+            ),
         );
     }
 
     public function toString(): string
     {
-        return sprintf('tan(%s)', $this->degree->toString());
+        return \sprintf('tan(%s)', $this->degree->toString());
     }
 }

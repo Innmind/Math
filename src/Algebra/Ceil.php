@@ -19,7 +19,7 @@ final class Ceil implements Number
      */
     public function value()
     {
-        return $this->value ??= ceil($this->number->value());
+        return $this->value ??= \ceil($this->number->value());
     }
 
     public function equals(Number $number): bool
@@ -129,6 +129,6 @@ final class Ceil implements Number
 
     public function toString(): string
     {
-        return var_export($this->value(), true);
+        return \var_export($this->value(), true);
     }
 }

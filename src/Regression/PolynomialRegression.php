@@ -9,7 +9,7 @@ use Innmind\Math\{
     Algebra\Integer,
     Polynom\Polynom,
     Matrix,
-    Matrix\RowVector
+    Matrix\RowVector,
 };
 use Innmind\Immutable\Sequence;
 use function Innmind\Immutable\unwrap;
@@ -42,7 +42,7 @@ final class PolynomialRegression
 
             $this->polynom = $this->polynom->withDegree(
                 new Integer($i),
-                $coefficients->get($i)
+                $coefficients->get($i),
             );
         }
 
@@ -66,7 +66,7 @@ final class PolynomialRegression
 
     private function buildMatrix(Dataset $dataset, Integer $degree): Matrix
     {
-        $powers = new RowVector(...numerize(...range(0, $degree->value())));
+        $powers = new RowVector(...numerize(...\range(0, $degree->value())));
 
         /** @var Sequence<RowVector> */
         $rows = $dataset
@@ -95,16 +95,14 @@ final class PolynomialRegression
         $values = $dataset->ordinates();
         $estimated = $dataset
             ->abscissas()
-            ->map(function(Number $x): Number {
-                return $this($x);
-            });
+            ->map(fn(Number $x): Number => $this($x));
 
         return $values
             ->subtract($estimated)
             ->power(new Integer(2))
             ->sum()
             ->divideBy(
-                $values->dimension()
+                $values->dimension(),
             )
             ->squareRoot();
     }

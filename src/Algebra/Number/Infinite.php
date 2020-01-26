@@ -20,7 +20,7 @@ use Innmind\Math\Algebra\{
     BinaryLogarithm,
     NaturalLogarithm,
     CommonLogarithm,
-    Signum
+    Signum,
 };
 
 final class Infinite implements NumberInterface

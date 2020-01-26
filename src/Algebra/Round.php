@@ -13,11 +13,8 @@ final class Round implements Number
     /** @var int|float|null */
     private $value;
 
-    private function __construct(
-        Number $number,
-        int $precision,
-        int $mode
-    ) {
+    private function __construct(Number $number, int $precision, int $mode)
+    {
         if ($precision < 0) {
             throw new PrecisionMustBePositive((string) $precision);
         }
@@ -49,10 +46,10 @@ final class Round implements Number
 
     public function value()
     {
-        return $this->value ??= round(
+        return $this->value ??= \round(
             $this->number->value(),
             $this->precision,
-            $this->mode
+            $this->mode,
         );
     }
 
@@ -163,6 +160,6 @@ final class Round implements Number
 
     public function toString(): string
     {
-        return var_export($this->value(), true);
+        return \var_export($this->value(), true);
     }
 }

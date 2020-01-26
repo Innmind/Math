@@ -6,12 +6,12 @@ namespace Innmind\Math\Polynom;
 use function Innmind\Math\{
     add,
     divide,
-    subtract
+    subtract,
 };
 use Innmind\Math\{
     Algebra\Number,
     Algebra\Integer,
-    Algebra\Operation
+    Algebra\Operation,
 };
 
 final class Degree
@@ -42,8 +42,8 @@ final class Degree
             add($this->degree, 1)->result(),
             divide(
                 $this->coeff,
-                add($this->degree, 1)
-            )
+                add($this->degree, 1),
+            ),
         );
     }
 
@@ -52,7 +52,7 @@ final class Degree
         /** @psalm-suppress ArgumentTypeCoercion */
         return new self(
             subtract($this->degree, 1)->result(),
-            $this->coeff->multiplyBy($this->degree)
+            $this->coeff->multiplyBy($this->degree),
         );
     }
 
@@ -73,10 +73,10 @@ final class Degree
             return $coeff.'x';
         }
 
-        return sprintf(
+        return \sprintf(
             '%sx^%s',
             $coeff,
-            $this->degree->toString()
+            $this->degree->toString(),
         );
     }
 }

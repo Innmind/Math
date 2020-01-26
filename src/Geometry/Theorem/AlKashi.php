@@ -14,7 +14,7 @@ use Innmind\Math\{
     Algebra\Integer,
     Geometry\Angle\Degree,
     Geometry\Segment,
-    Exception\SegmentsCannotBeJoined
+    Exception\SegmentsCannotBeJoined,
 };
 use Innmind\Immutable\Set;
 use function Innmind\Immutable\unwrap;
@@ -38,13 +38,13 @@ final class AlKashi
         $side = $a
             ->power(new Integer(2))
             ->add(
-                $b->power(new Integer(2))
+                $b->power(new Integer(2)),
             )
             ->subtract(
                 (new Integer(2))
                     ->multiplyBy($a)
                     ->multiplyBy($b)
-                    ->multiplyBy(cosine($degree))
+                    ->multiplyBy(cosine($degree)),
             )
             ->squareRoot();
 
@@ -78,7 +78,7 @@ final class AlKashi
             ->divideBy(
                 (new Integer(2))
                     ->multiplyBy($a)
-                    ->multiplyBy($b)
+                    ->multiplyBy($b),
             );
 
         return arcCosine($cosAB)->toDegree();

@@ -5,7 +5,7 @@ namespace Innmind\Math\Statistics;
 
 use Innmind\Math\Algebra\{
     Number,
-    Round
+    Round,
 };
 use Innmind\Immutable\Sequence;
 
@@ -23,7 +23,7 @@ final class Mean implements Number
                 $sequence->first(),
                 static function(Number $carry, Number $number): Number {
                     return $carry->add($number);
-                }
+                },
             );
         $this->result = $sum->divideBy(new Number\Number($sequence->size()));
     }

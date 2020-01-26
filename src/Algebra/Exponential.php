@@ -16,7 +16,7 @@ final class Exponential implements Operation, Number
     public function result(): Number
     {
         return $this->result ?? $this->result = Number\Number::wrap(
-            exp($this->power->value())
+            \exp($this->power->value()),
         );
     }
 

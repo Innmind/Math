@@ -5,12 +5,12 @@ namespace Innmind\Math\Geometry\Figure;
 
 use function Innmind\Math\{
     add,
-    multiply
+    multiply,
 };
 use Innmind\Math\{
     Geometry\Figure,
     Geometry\Segment,
-    Algebra\Number
+    Algebra\Number,
 };
 
 final class Rectangle implements Figure
@@ -28,7 +28,7 @@ final class Rectangle implements Figure
     {
         return add(
             multiply($this->length->length(), 2),
-            multiply($this->width->length(), 2)
+            multiply($this->width->length(), 2),
         );
     }
 
@@ -36,7 +36,7 @@ final class Rectangle implements Figure
     {
         return multiply(
             $this->length->length(),
-            $this->width->length()
+            $this->width->length(),
         );
     }
 
