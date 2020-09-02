@@ -95,10 +95,10 @@ class TangentTest extends TestCase
     {
         $number = new Tangent(new Degree(new Number\Number(42)));
 
-        $this->assertEquals(0.9, $number->roundUp(1)->value());
-        $this->assertEquals(0.9, $number->roundDown(1)->value());
-        $this->assertEquals(0.9, $number->roundEven(1)->value());
-        $this->assertEquals(0.9, $number->roundOdd(1)->value());
+        $this->assertSame(0.9, $number->roundUp(1)->value());
+        $this->assertSame(0.9, $number->roundDown(1)->value());
+        $this->assertSame(0.9, $number->roundEven(1)->value());
+        $this->assertSame(0.9, $number->roundOdd(1)->value());
     }
 
     public function testFloor()
