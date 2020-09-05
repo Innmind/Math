@@ -20,6 +20,7 @@ final class Set implements SetInterface
 
     public function __construct(Number ...$values)
     {
+        /** @psalm-suppress MixedArgumentTypeCoercion No need to revalidate the type */
         $this->values = Sequence::mixed(...$values)->mapTo(
             'int|float',
             static fn(Number $v) => $v->value(),
@@ -54,6 +55,7 @@ final class Set implements SetInterface
             return '∅';
         }
 
+        /** @var Sequence<string> */
         $values = $this->values->mapTo(
             'string',
             static fn($number): string => (string) $number,

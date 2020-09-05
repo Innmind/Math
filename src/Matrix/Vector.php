@@ -143,11 +143,17 @@ final class Vector
         return add(...unwrap($this->numbers));
     }
 
+    /**
+     * @param callable(Number): void $function
+     */
     public function foreach(callable $function): void
     {
         $this->numbers->foreach($function);
     }
 
+    /**
+     * @param callable(Number): Number $function
+     */
     public function map(callable $function): self
     {
         return new self(
