@@ -126,10 +126,10 @@ class ScopeTest extends TestCase
             new Number\Number(7.12)
         );
 
-        $this->assertEquals(6.1, $number->roundUp(1)->value());
-        $this->assertEquals(6.1, $number->roundDown(1)->value());
-        $this->assertEquals(6.1, $number->roundEven(1)->value());
-        $this->assertEquals(6.1, $number->roundOdd(1)->value());
+        $this->assertSame(6.1, $number->roundUp(1)->value());
+        $this->assertSame(6.1, $number->roundDown(1)->value());
+        $this->assertSame(6.1, $number->roundEven(1)->value());
+        $this->assertSame(6.1, $number->roundOdd(1)->value());
     }
 
     public function testFloor()

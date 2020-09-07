@@ -113,10 +113,10 @@ class ArcCosineTest extends TestCase
             new Cosine(new Degree(new Number\Number(42)))
         );
 
-        $this->assertEquals(42.0, $number->roundUp(1)->value());
-        $this->assertEquals(42.0, $number->roundDown(1)->value());
-        $this->assertEquals(42.0, $number->roundEven(1)->value());
-        $this->assertEquals(42.0, $number->roundOdd(1)->value());
+        $this->assertSame(42.0, $number->roundUp(1)->value());
+        $this->assertSame(42.0, $number->roundDown(1)->value());
+        $this->assertSame(42.0, $number->roundEven(1)->value());
+        $this->assertSame(42.0, $number->roundOdd(1)->value());
     }
 
     public function testFloor()

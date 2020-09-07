@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Innmind\Math;
+namespace Tests\Innmind\Math;
 
 use function Innmind\Math\{
     numerize,
@@ -38,6 +38,7 @@ use function Innmind\Math\{
     arcSine,
     arcTangent,
     toRadian,
+    scope,
 };
 use Innmind\Math\{
     Algebra\Number,

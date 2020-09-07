@@ -95,10 +95,10 @@ class SineTest extends TestCase
     {
         $number = new Sine(new Degree(new Number\Number(42)));
 
-        $this->assertEquals(0.7, $number->roundUp(1)->value());
-        $this->assertEquals(0.7, $number->roundDown(1)->value());
-        $this->assertEquals(0.7, $number->roundEven(1)->value());
-        $this->assertEquals(0.7, $number->roundOdd(1)->value());
+        $this->assertSame(0.7, $number->roundUp(1)->value());
+        $this->assertSame(0.7, $number->roundDown(1)->value());
+        $this->assertSame(0.7, $number->roundEven(1)->value());
+        $this->assertSame(0.7, $number->roundOdd(1)->value());
     }
 
     public function testFloor()
