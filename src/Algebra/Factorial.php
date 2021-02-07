@@ -19,9 +19,6 @@ final class Factorial implements Operation, Number
         $this->value = $value;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function value()
     {
         return $this->result()->value();

@@ -49,14 +49,14 @@ final class PolynomialRegression
         $this->deviation = $this->buildRmsd($dataset);
     }
 
-    public function polynom(): Polynom
-    {
-        return $this->polynom;
-    }
-
     public function __invoke(Number $x): Number
     {
         return ($this->polynom)($x);
+    }
+
+    public function polynom(): Polynom
+    {
+        return $this->polynom;
     }
 
     public function rootMeanSquareDeviation(): Number

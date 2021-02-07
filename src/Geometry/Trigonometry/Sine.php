@@ -26,9 +26,6 @@ final class Sine implements Number
         $this->degree = $degree;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function value()
     {
         return $this->sine()->value();
@@ -139,6 +136,11 @@ final class Sine implements Number
         return $this->sine()->signum();
     }
 
+    public function toString(): string
+    {
+        return \sprintf('sin(%s)', $this->degree->toString());
+    }
+
     private function sine(): Number
     {
         return $this->sine ??= new Number\Number(
@@ -146,10 +148,5 @@ final class Sine implements Number
                 $this->degree->toRadian()->number()->value(),
             ),
         );
-    }
-
-    public function toString(): string
-    {
-        return \sprintf('sin(%s)', $this->degree->toString());
     }
 }

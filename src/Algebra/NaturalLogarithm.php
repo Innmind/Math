@@ -26,9 +26,6 @@ final class NaturalLogarithm implements Operation, Number
         $this->number = $number;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function value()
     {
         return $this->result()->value();

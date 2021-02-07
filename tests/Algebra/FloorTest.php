@@ -173,7 +173,7 @@ class FloorTest extends TestCase
         $number = (new Floor(new Number\Number(4.5)))->exponential();
 
         $this->assertInstanceOf(Exponential::class, $number);
-        $this->assertSame(exp(4), $number->value());
+        $this->assertSame(\exp(4), $number->value());
     }
 
     public function testBinaryLogarithm()
@@ -181,7 +181,7 @@ class FloorTest extends TestCase
         $number = (new Floor(new Number\Number(3.5)))->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
-        $this->assertSame(log(3, 2), $number->value());
+        $this->assertSame(\log(3, 2), $number->value());
     }
 
     public function testNaturalLogarithm()
@@ -189,7 +189,7 @@ class FloorTest extends TestCase
         $number = (new Floor(new Number\Number(3.5)))->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
-        $this->assertSame(log(3), $number->value());
+        $this->assertSame(\log(3), $number->value());
     }
 
     public function testCommonLogarithm()
@@ -197,7 +197,7 @@ class FloorTest extends TestCase
         $number = (new Floor(new Number\Number(3.5)))->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
-        $this->assertSame(log10(3), $number->value());
+        $this->assertSame(\log10(3), $number->value());
     }
 
     public function testSignum()

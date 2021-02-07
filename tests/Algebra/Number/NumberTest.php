@@ -50,7 +50,7 @@ class NumberTest extends TestCase
     {
         $this->expectException(NotANumber::class);
 
-        new Number(NAN);
+        new Number(\NAN);
     }
 
     public function testWrap()
@@ -65,12 +65,12 @@ class NumberTest extends TestCase
         $this->assertInstanceOf(Integer::class, $number);
         $this->assertSame('42', $number->toString());
 
-        $number = Number::wrap(INF);
+        $number = Number::wrap(\INF);
 
         $this->assertInstanceOf(Infinite::class, $number);
         $this->assertSame('+∞', $number->toString());
 
-        $number = Number::wrap(-INF);
+        $number = Number::wrap(-\INF);
 
         $this->assertInstanceOf(Infinite::class, $number);
         $this->assertSame('-∞', $number->toString());
@@ -216,7 +216,7 @@ class NumberTest extends TestCase
         $number = (new Number(4))->exponential();
 
         $this->assertInstanceOf(Exponential::class, $number);
-        $this->assertSame(exp(4), $number->value());
+        $this->assertSame(\exp(4), $number->value());
     }
 
     public function testBinaryLogarithm()
@@ -224,7 +224,7 @@ class NumberTest extends TestCase
         $number = (new Number(4))->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
-        $this->assertSame(log(4, 2), $number->value());
+        $this->assertSame(\log(4, 2), $number->value());
     }
 
     public function testNaturalLogarithm()
@@ -232,7 +232,7 @@ class NumberTest extends TestCase
         $number = (new Number(4))->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
-        $this->assertSame(log(4), $number->value());
+        $this->assertSame(\log(4), $number->value());
     }
 
     public function testCommonLogarithm()
@@ -240,7 +240,7 @@ class NumberTest extends TestCase
         $number = (new Number(4))->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
-        $this->assertSame(log10(4), $number->value());
+        $this->assertSame(\log10(4), $number->value());
     }
 
     public function testSignum()

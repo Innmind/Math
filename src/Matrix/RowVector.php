@@ -55,7 +55,7 @@ final class RowVector
                 $values[] = $rowNumber->multiplyBy($number);
             }
 
-            $rows[] = new RowVector(...$values);
+            $rows[] = new self(...$values);
         }
 
         return new Matrix(...$rows);

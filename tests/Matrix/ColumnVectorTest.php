@@ -193,7 +193,7 @@ class ColumnVectorTest extends TestCase
     {
         $vector = new ColumnVector(...numerize(1, 2, 3, -4));
         $count = 0;
-        $vector->foreach(function() use (&$count) {
+        $vector->foreach(static function() use (&$count) {
             ++$count;
         });
 
@@ -203,7 +203,7 @@ class ColumnVectorTest extends TestCase
     public function testMap()
     {
         $vector = new ColumnVector(...numerize(1, 2, 3, -4));
-        $vector2 = $vector->map(function($number) {
+        $vector2 = $vector->map(static function($number) {
             return $number->multiplyBy($number);
         });
 
@@ -221,7 +221,7 @@ class ColumnVectorTest extends TestCase
             2,
             $vector->reduce(
                 0,
-                function(int $carry, $number): int {
+                static function(int $carry, $number): int {
                     return $carry + $number->value();
                 }
             )

@@ -158,7 +158,7 @@ class MatrixTest extends TestCase
         $this->assertSame(
             [
                 [58, 64],
-                [139, 154]
+                [139, 154],
             ],
             $matrix->toArray()
         );

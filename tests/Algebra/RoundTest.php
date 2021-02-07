@@ -183,7 +183,7 @@ class RoundTest extends TestCase
         $number = Round::up(new Number\Number(3.6))->exponential();
 
         $this->assertInstanceOf(Exponential::class, $number);
-        $this->assertSame(exp(4), $number->value());
+        $this->assertSame(\exp(4), $number->value());
     }
 
     public function testBinaryLogarithm()
@@ -191,7 +191,7 @@ class RoundTest extends TestCase
         $number = Round::up(new Number\Number(3.6))->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
-        $this->assertSame(log(4, 2), $number->value());
+        $this->assertSame(\log(4, 2), $number->value());
     }
 
     public function testNaturalLogarithm()
@@ -199,7 +199,7 @@ class RoundTest extends TestCase
         $number = Round::up(new Number\Number(3.6))->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
-        $this->assertSame(log(4), $number->value());
+        $this->assertSame(\log(4), $number->value());
     }
 
     public function testCommonLogarithm()
@@ -207,7 +207,7 @@ class RoundTest extends TestCase
         $number = Round::up(new Number\Number(3.6))->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
-        $this->assertSame(log10(4), $number->value());
+        $this->assertSame(\log10(4), $number->value());
     }
 
     public function testSignum()

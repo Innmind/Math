@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Innmind\Math;
 
-use function Innmind\Math\numerize;
+use function Innmind\Math\numerize as wrap;
 use Innmind\Math\{
     Matrix\RowVector,
     Matrix\ColumnVector,
@@ -59,7 +59,7 @@ final class Matrix
         $rows = [];
 
         foreach ($values as $numbers) {
-            $rows[] = new RowVector(...numerize(...$numbers));
+            $rows[] = new RowVector(...wrap(...$numbers));
         }
 
         return new self(...$rows);
@@ -274,7 +274,7 @@ final class Matrix
                 $index = $rows->size();
                 $newRow[$index] = $numbers[$index];
 
-                return ($rows)(new RowVector(...numerize(...$newRow)));
+                return ($rows)(new RowVector(...wrap(...$newRow)));
             },
         );
 
@@ -294,7 +294,7 @@ final class Matrix
                 $newRow = \array_fill(0, $row->dimension()->value(), 0);
                 $newRow[$rows->size()] = 1;
 
-                return ($rows)(new RowVector(...numerize(...$newRow)));
+                return ($rows)(new RowVector(...wrap(...$newRow)));
             },
         );
 
@@ -397,7 +397,7 @@ final class Matrix
             throw new MatrixNotInvertible;
         }
 
-        return Matrix::fromColumns(
+        return self::fromColumns(
             ...unwrap($matrix
                 ->columns()
                 ->takeEnd(

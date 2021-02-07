@@ -14,9 +14,6 @@ final class Ceil implements Number
         $this->number = $number;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function value()
     {
         return $this->value ??= \ceil($this->number->value());

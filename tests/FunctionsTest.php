@@ -7,11 +7,11 @@ use function Innmind\Math\{
     numerize,
     add,
     absolute,
-    ceil,
+    ceil as ceiling,
     cosine,
     divide,
     factorial,
-    floor,
+    floor as floor_,
     frequence,
     mean,
     median,
@@ -26,8 +26,8 @@ use function Innmind\Math\{
     squareRoot,
     subtract,
     tangent,
-    max,
-    min,
+    max as maximum,
+    min as minimum,
     arcCosine,
     exponential,
     binaryLogarithm,
@@ -106,7 +106,7 @@ class FunctionsTest extends TestCase
 
     public function testCeil()
     {
-        $ceil = ceil(4.2);
+        $ceil = ceiling(4.2);
 
         $this->assertInstanceOf(Ceil::class, $ceil);
         $this->assertSame(5.0, $ceil->value());
@@ -122,7 +122,7 @@ class FunctionsTest extends TestCase
 
     public function testFloor()
     {
-        $floor = floor(4.2);
+        $floor = floor_(4.2);
 
         $this->assertInstanceOf(Floor::class, $floor);
         $this->assertSame(4.0, $floor->value());
@@ -294,7 +294,7 @@ class FunctionsTest extends TestCase
 
     public function testMax()
     {
-        $number = max(
+        $number = maximum(
             1,
             new Number\Number(2),
             $expected = new Number\Number(4),
@@ -306,7 +306,7 @@ class FunctionsTest extends TestCase
 
     public function testMin()
     {
-        $number = min(
+        $number = minimum(
             2,
             $expected = new Number\Number(1),
             new Number\Number(4),

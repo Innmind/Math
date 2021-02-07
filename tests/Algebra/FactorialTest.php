@@ -170,7 +170,7 @@ class FactorialTest extends TestCase
         $number = (new Factorial(4))->exponential();
 
         $this->assertInstanceOf(Exponential::class, $number);
-        $this->assertSame(exp(24), $number->value());
+        $this->assertSame(\exp(24), $number->value());
     }
 
     public function testBinaryLogarithm()
@@ -178,7 +178,7 @@ class FactorialTest extends TestCase
         $number = (new Factorial(4))->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
-        $this->assertSame(log(24, 2), $number->value());
+        $this->assertSame(\log(24, 2), $number->value());
     }
 
     public function testNaturalLogarithm()
@@ -186,7 +186,7 @@ class FactorialTest extends TestCase
         $number = (new Factorial(4))->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
-        $this->assertSame(log(24), $number->value());
+        $this->assertSame(\log(24), $number->value());
     }
 
     public function testCommonLogarithm()
@@ -194,7 +194,7 @@ class FactorialTest extends TestCase
         $number = (new Factorial(4))->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
-        $this->assertSame(log10(24), $number->value());
+        $this->assertSame(\log10(24), $number->value());
     }
 
     public function testSignum()

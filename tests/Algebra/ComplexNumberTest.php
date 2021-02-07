@@ -124,7 +124,7 @@ class ComplexNumberTest extends TestCase
         $absolute = $number->absolute();
 
         $this->assertInstanceOf(Number::class, $absolute);
-        $this->assertSame(sqrt(13), $absolute->value());
+        $this->assertSame(\sqrt(13), $absolute->value());
     }
 
     public function testReciprocal()

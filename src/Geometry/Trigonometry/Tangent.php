@@ -26,9 +26,6 @@ final class Tangent implements Number
         $this->degree = $degree;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function value()
     {
         return $this->tangent()->value();
@@ -139,6 +136,11 @@ final class Tangent implements Number
         return $this->tangent()->signum();
     }
 
+    public function toString(): string
+    {
+        return \sprintf('tan(%s)', $this->degree->toString());
+    }
+
     private function tangent(): Number
     {
         return $this->tangent ?? $this->tangent = new Number\Number(
@@ -146,10 +148,5 @@ final class Tangent implements Number
                 $this->degree->toRadian()->number()->value(),
             ),
         );
-    }
-
-    public function toString(): string
-    {
-        return \sprintf('tan(%s)', $this->degree->toString());
     }
 }

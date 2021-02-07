@@ -65,9 +65,6 @@ final class Number implements NumberInterface
         return new self($value);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function value()
     {
         return $this->value;

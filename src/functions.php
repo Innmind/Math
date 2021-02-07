@@ -283,8 +283,6 @@ function scope($first, $second, ...$numbers): Number
 
 /**
  * @param int|Integer $int
- *
- * @return Factorial
  */
 function factorial($int): Factorial
 {
@@ -297,8 +295,6 @@ function factorial($int): Factorial
 
 /**
  * @param int|float|Number $number
- *
- * @return Exponential
  */
 function exponential($number): Exponential
 {
@@ -307,8 +303,6 @@ function exponential($number): Exponential
 
 /**
  * @param int|float|Number $number
- *
- * @return BinaryLogarithm
  */
 function binaryLogarithm($number): BinaryLogarithm
 {
@@ -317,8 +311,6 @@ function binaryLogarithm($number): BinaryLogarithm
 
 /**
  * @param int|float|Number $number
- *
- * @return NaturalLogarithm
  */
 function naturalLogarithm($number): NaturalLogarithm
 {
@@ -327,8 +319,6 @@ function naturalLogarithm($number): NaturalLogarithm
 
 /**
  * @param int|float|Number $number
- *
- * @return NaturalLogarithm
  */
 function logarithm($number): NaturalLogarithm
 {
@@ -337,8 +327,6 @@ function logarithm($number): NaturalLogarithm
 
 /**
  * @param int|float|Number $number
- *
- * @return CommonLogarithm
  */
 function commonLogarithm($number): CommonLogarithm
 {
@@ -347,8 +335,6 @@ function commonLogarithm($number): CommonLogarithm
 
 /**
  * @param int|float|Number $number
- *
- * @return Signum
  */
 function signum($number): Signum
 {
@@ -358,8 +344,6 @@ function signum($number): Signum
 /**
  * @param int|float|Number $first
  * @param int|float|Number $numbers
- *
- * @return Number
  */
 function max($first, ...$numbers): Number
 {
@@ -376,8 +360,6 @@ function max($first, ...$numbers): Number
 /**
  * @param int|float|Number $first
  * @param int|float|Number $numbers
- *
- * @return Number
  */
 function min($first, ...$numbers): Number
 {

@@ -28,9 +28,6 @@ final class ArcCosine implements Number
         return $this->arcCosine();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function value()
     {
         return $this->arcCosine()->number()->value();
@@ -141,6 +138,11 @@ final class ArcCosine implements Number
         return $this->arcCosine()->number()->signum();
     }
 
+    public function toString(): string
+    {
+        return \sprintf('cos⁻¹(%s)', $this->number->toString());
+    }
+
     private function arcCosine(): Degree
     {
         if ($this->arcCosine) {
@@ -154,10 +156,5 @@ final class ArcCosine implements Number
         );
 
         return $this->arcCosine = (new Radian($radians))->toDegree();
-    }
-
-    public function toString(): string
-    {
-        return \sprintf('cos⁻¹(%s)', $this->number->toString());
     }
 }

@@ -31,9 +31,6 @@ final class Scope implements Number
         return $this->result;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function value()
     {
         return $this->result->value();
