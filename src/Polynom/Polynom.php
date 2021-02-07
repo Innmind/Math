@@ -175,7 +175,11 @@ final class Polynom
             ->degrees
             ->values()
             ->sort(static function(Degree $a, Degree $b): int {
-                return (int) $b->degree()->higherThan($a->degree());
+                if ($a->degree()->equals($b->degree())) {
+                    return 0;
+                }
+
+                return $b->degree()->higherThan($a->degree()) ? 1 : -1;
             })
             ->mapTo(
                 'string',

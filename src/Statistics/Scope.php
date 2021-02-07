@@ -21,7 +21,11 @@ final class Scope implements Number
         /** @var Sequence<Number> */
         $sequence = Sequence::of(Number::class, $first, $second, ...$values);
         $sequence = $sequence->sort(static function(Number $a, Number $b): int {
-            return (int) $a->higherThan($b);
+            if ($a->equals($b)) {
+                return 0;
+            }
+
+            return $a->higherThan($b) ? 1 : -1;
         });
         $this->result = $sequence->last()->subtract($sequence->first());
     }

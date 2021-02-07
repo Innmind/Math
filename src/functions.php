@@ -352,7 +352,11 @@ function max($first, ...$numbers): Number
 
     return $numbers
         ->sort(static function(Number $a, Number $b): int {
-            return (int) $b->higherThan($a);
+            if ($a->equals($b)) {
+                return 0;
+            }
+
+            return $b->higherThan($a) ? 1 : -1;
         })
         ->first();
 }
@@ -368,7 +372,11 @@ function min($first, ...$numbers): Number
 
     return $numbers
         ->sort(static function(Number $a, Number $b): int {
-            return (int) $a->higherThan($b);
+            if ($a->equals($b)) {
+                return 0;
+            }
+
+            return $a->higherThan($b) ? 1 : -1;
         })
         ->first();
 }
