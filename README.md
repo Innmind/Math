@@ -1,9 +1,8 @@
 # Math
 
-| `develop` |
-|-----------|
-| [![codecov](https://codecov.io/gh/Innmind/Math/branch/develop/graph/badge.svg)](https://codecov.io/gh/Innmind/Math) |
-| [![Build Status](https://github.com/Innmind/Math/workflows/CI/badge.svg)](https://github.com/Innmind/Math/actions?query=workflow%3ACI) |
+[![Build Status](https://github.com/innmind/math/workflows/CI/badge.svg?branch=master)](https://github.com/innmind/math/actions?query=workflow%3ACI)
+[![codecov](https://codecov.io/gh/innmind/math/branch/develop/graph/badge.svg)](https://codecov.io/gh/innmind/math)
+[![Type Coverage](https://shepherd.dev/github/innmind/math/coverage.svg)](https://shepherd.dev/github/innmind/math)
 
 Expose some math concepts as objects.
 
