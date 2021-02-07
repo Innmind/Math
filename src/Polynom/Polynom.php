@@ -43,66 +43,7 @@ final class Polynom
     }
 
     /**
-     * Create a new polynom with this added degree
-     *
-     * @param Integer $degree
-     * @param Number $coeff
-     *
-     * @return self
-     */
-    public function withDegree(Integer $degree, Number $coeff): self
-    {
-        $degrees = ($this->degrees)(
-            $degree->value(),
-            new Degree($degree, $coeff),
-        );
-
-        return new self(
-            $this->intercept,
-            ...unwrap($degrees->values()),
-        );
-    }
-
-    /**
-     * Return the intercept value
-     *
-     * @return Number
-     */
-    public function intercept(): Number
-    {
-        return $this->intercept;
-    }
-
-    /**
-     * Return the given degree
-     *
-     * @param int $degree
-     *
-     * @return Degree
-     */
-    public function degree(int $degree): Degree
-    {
-        return $this->degrees->get($degree);
-    }
-
-    /**
-     * Check if the polynom has the given degree
-     *
-     * @param int $degree
-     *
-     * @return bool
-     */
-    public function hasDegree(int $degree): bool
-    {
-        return $this->degrees->contains($degree);
-    }
-
-    /**
      * Compute the value for the given x
-     *
-     * @param Number $x
-     *
-     * @return Number
      */
     public function __invoke(Number $x): Number
     {
@@ -120,12 +61,49 @@ final class Polynom
     }
 
     /**
+     * Create a new polynom with this added degree
+     */
+    public function withDegree(Integer $degree, Number $coeff): self
+    {
+        $degrees = ($this->degrees)(
+            $degree->value(),
+            new Degree($degree, $coeff),
+        );
+
+        return new self(
+            $this->intercept,
+            ...unwrap($degrees->values()),
+        );
+    }
+
+    /**
+     * Return the intercept value
+     */
+    public function intercept(): Number
+    {
+        return $this->intercept;
+    }
+
+    /**
+     * Return the given degree
+     */
+    public function degree(int $degree): Degree
+    {
+        return $this->degrees->get($degree);
+    }
+
+    /**
+     * Check if the polynom has the given degree
+     */
+    public function hasDegree(int $degree): bool
+    {
+        return $this->degrees->contains($degree);
+    }
+
+    /**
      * Compute the derived number of x
      *
-     * @param Number $x
      * @param Number|null $limit Value that tend to 0 (default to 0.000000000001)
-     *
-     * @return Number
      */
     public function derived(Number $x, Number $limit = null): Number
     {
@@ -142,11 +120,6 @@ final class Polynom
 
     /**
      * Return the affine function (tangent) in the position x
-     *
-     * @param Number $x
-     * @param Number|null $limit
-     *
-     * @return Tangent
      */
     public function tangent(Number $x, Number $limit = null): Tangent
     {
@@ -202,7 +175,11 @@ final class Polynom
             ->degrees
             ->values()
             ->sort(static function(Degree $a, Degree $b): int {
-                return (int) $b->degree()->higherThan($a->degree());
+                if ($a->degree()->equals($b->degree())) {
+                    return 0;
+                }
+
+                return $b->degree()->higherThan($a->degree()) ? 1 : -1;
             })
             ->mapTo(
                 'string',

@@ -181,7 +181,7 @@ class SquareRootTest extends TestCase
         $number = (new SquareRoot(new Number\Number(16)))->exponential();
 
         $this->assertInstanceOf(Exponential::class, $number);
-        $this->assertSame(exp(4), $number->value());
+        $this->assertSame(\exp(4), $number->value());
     }
 
     public function testBinaryLogarithm()
@@ -189,7 +189,7 @@ class SquareRootTest extends TestCase
         $number = (new SquareRoot(new Number\Number(16)))->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
-        $this->assertSame(log(4, 2), $number->value());
+        $this->assertSame(\log(4, 2), $number->value());
     }
 
     public function testNaturalLogarithm()
@@ -197,7 +197,7 @@ class SquareRootTest extends TestCase
         $number = (new SquareRoot(new Number\Number(16)))->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
-        $this->assertSame(log(4), $number->value());
+        $this->assertSame(\log(4), $number->value());
     }
 
     public function testCommonLogarithm()
@@ -205,7 +205,7 @@ class SquareRootTest extends TestCase
         $number = (new SquareRoot(new Number\Number(16)))->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
-        $this->assertSame(log10(4), $number->value());
+        $this->assertSame(\log10(4), $number->value());
     }
 
     public function testSignum()

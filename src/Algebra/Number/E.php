@@ -28,9 +28,6 @@ use Innmind\Math\Algebra\{
  */
 final class E implements NumberInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function value()
     {
         return \M_E;

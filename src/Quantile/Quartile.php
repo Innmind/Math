@@ -19,8 +19,6 @@ final class Quartile
 
     /**
      * Return the quartile value
-     *
-     * @return Number
      */
     public function value(): Number
     {

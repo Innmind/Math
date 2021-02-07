@@ -7,7 +7,7 @@ use function Innmind\Math\{
     cosine,
     arcCosine,
     add,
-    max,
+    max as maximum,
 };
 use Innmind\Math\{
     Algebra\Number,
@@ -62,7 +62,7 @@ final class AlKashi
         $a = $a->length();
         $b = $b->length();
         $c = $c->length();
-        $longest = max($a, $b, $c);
+        $longest = maximum($a, $b, $c);
         /** @var Set<Number> */
         $opposites = Set::of(Number::class, $a, $b, $c)->remove($longest);
         $opposites = add(...unwrap($opposites));

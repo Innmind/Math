@@ -32,9 +32,15 @@ final class LinearRegression
     }
 
     /**
+     * Compute the value at the given x value
+     */
+    public function __invoke(Number $x): Number
+    {
+        return ($this->polynom)($x);
+    }
+
+    /**
      * Return the intercept value
-     *
-     * @return Number
      */
     public function intercept(): Number
     {
@@ -43,24 +49,10 @@ final class LinearRegression
 
     /**
      * Return the slope value
-     *
-     * @return Number
      */
     public function slope(): Number
     {
         return $this->polynom->degree(1)->coeff();
-    }
-
-    /**
-     * Compute the value at the given x value
-     *
-     * @param Number $x
-     *
-     * @return Number
-     */
-    public function __invoke(Number $x): Number
-    {
-        return ($this->polynom)($x);
     }
 
     public function rootMeanSquareDeviation(): Number

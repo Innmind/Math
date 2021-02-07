@@ -73,7 +73,7 @@ class PiTest extends TestCase
         $number = $number->divideBy(new Number\Number(2));
 
         $this->assertInstanceOf(Division::class, $number);
-        $this->assertSame(M_PI_2, $number->value());
+        $this->assertSame(\M_PI_2, $number->value());
     }
 
     public function testMulitplyBy()
@@ -82,7 +82,7 @@ class PiTest extends TestCase
         $number = $number->multiplyBy(new Number\Number(2));
 
         $this->assertInstanceOf(Multiplication::class, $number);
-        $this->assertSame(pi() * 2, $number->value());
+        $this->assertSame(\pi() * 2, $number->value());
     }
 
     public function testRound()
@@ -149,7 +149,7 @@ class PiTest extends TestCase
         $number = $number->squareRoot();
 
         $this->assertInstanceOf(SquareRoot::class, $number);
-        $this->assertSame(M_SQRTPI, $number->value());
+        $this->assertSame(\M_SQRTPI, $number->value());
     }
 
     public function testExponential()
@@ -157,7 +157,7 @@ class PiTest extends TestCase
         $number = (new Pi)->exponential();
 
         $this->assertInstanceOf(Exponential::class, $number);
-        $this->assertSame(exp(M_PI), $number->value());
+        $this->assertSame(\exp(\M_PI), $number->value());
     }
 
     public function testBinaryLogarithm()
@@ -165,7 +165,7 @@ class PiTest extends TestCase
         $number = (new Pi)->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
-        $this->assertSame(log(M_PI, 2), $number->value());
+        $this->assertSame(\log(\M_PI, 2), $number->value());
     }
 
     public function testNaturalLogarithm()
@@ -173,7 +173,7 @@ class PiTest extends TestCase
         $number = (new Pi)->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
-        $this->assertSame(log(M_PI), $number->value());
+        $this->assertSame(\log(\M_PI), $number->value());
     }
 
     public function testCommonLogarithm()
@@ -181,7 +181,7 @@ class PiTest extends TestCase
         $number = (new Pi)->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
-        $this->assertSame(log10(M_PI), $number->value());
+        $this->assertSame(\log10(\M_PI), $number->value());
     }
 
     public function testSignum()

@@ -13,12 +13,18 @@ final class Median implements Number
 {
     private Number $result;
 
-    public function __construct(Number $first, Number ...$values) {
+    public function __construct(Number $first, Number ...$values)
+    {
         /** @var Sequence<Number> */
         $sequence = Sequence::of(Number::class, $first, ...$values);
         $sequence = $sequence->sort(static function(Number $a, Number $b): int {
-            return (int) $a->higherThan($b);
+            if ($a->equals($b)) {
+                return 0;
+            }
+
+            return $a->higherThan($b) ? 1 : -1;
         });
+
         switch ($sequence->size() % 2) {
             case 1:
                 //mathematically the index to choose is (size+1/2) but here we
@@ -45,9 +51,6 @@ final class Median implements Number
         return $this->result;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function value()
     {
         return $this->result->value();

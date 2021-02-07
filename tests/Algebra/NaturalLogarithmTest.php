@@ -198,7 +198,7 @@ class NaturalLogarithmTest extends TestCase
         $number = (new NaturalLogarithm(new Number\Number(2)))->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
-        $this->assertSame(log(log(2), 2), $number->value());
+        $this->assertSame(\log(\log(2), 2), $number->value());
     }
 
     public function testNaturalLogarithm()
@@ -206,7 +206,7 @@ class NaturalLogarithmTest extends TestCase
         $number = (new NaturalLogarithm(new Number\Number(2)))->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
-        $this->assertSame(log(log(2)), $number->value());
+        $this->assertSame(\log(\log(2)), $number->value());
     }
 
     public function testCommonLogarithm()
@@ -214,7 +214,7 @@ class NaturalLogarithmTest extends TestCase
         $number = (new NaturalLogarithm(new Number\Number(2)))->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
-        $this->assertSame(log10(log(2)), $number->value());
+        $this->assertSame(\log10(\log(2)), $number->value());
     }
 
     public function testSignum()

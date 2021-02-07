@@ -42,9 +42,6 @@ final class Infinite implements NumberInterface
         return new self(-\INF);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function value()
     {
         return $this->value;

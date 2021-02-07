@@ -60,7 +60,7 @@ class QuantileTest extends TestCase
 
     public function testThrowWhenAccessingUnknownQuartile()
     {
-        $q = new Quantile(Dataset::of([1,2,3]));
+        $q = new Quantile(Dataset::of([1, 2, 3]));
 
         $this->expectException(UnknownQuartile::class);
 
@@ -71,7 +71,7 @@ class QuantileTest extends TestCase
     {
         return [
             [
-                [1,2,2,5,6,8,17,18,22,25,30,35,36,40,41],
+                [1, 2, 2, 5, 6, 8, 17, 18, 22, 25, 30, 35, 36, 40, 41],
                 1,
                 41,
                 19.2,
@@ -80,7 +80,7 @@ class QuantileTest extends TestCase
                 32.5,
             ],
             [
-                range(1,12),
+                \range(1, 12),
                 1,
                 12,
                 6.5,
@@ -89,7 +89,7 @@ class QuantileTest extends TestCase
                 9.5,
             ],
             [
-                [2,3,5,5,6,8,8,9,9,12,12,13,13,13,14,14,15,16,17,18,19],
+                [2, 3, 5, 5, 6, 8, 8, 9, 9, 12, 12, 13, 13, 13, 14, 14, 15, 16, 17, 18, 19],
                 2,
                 19,
                 11,
@@ -98,7 +98,7 @@ class QuantileTest extends TestCase
                 14.5,
             ],
             [
-                [3,5,5,6,8,8,9,9,12,12,13,13,13,14,14,15,16,17,18,19],
+                [3, 5, 5, 6, 8, 8, 9, 9, 12, 12, 13, 13, 13, 14, 14, 15, 16, 17, 18, 19],
                 3,
                 19,
                 11.45,
@@ -107,7 +107,7 @@ class QuantileTest extends TestCase
                 14.5,
             ],
             [
-                [1,2.0,3,4,5,6,7,8,9,10,11,12],
+                [1, 2.0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
                 1,
                 12,
                 6.5,
@@ -116,7 +116,7 @@ class QuantileTest extends TestCase
                 9.5,
             ],
             [
-                [1,2],
+                [1, 2],
                 1,
                 2,
                 1.5,
@@ -125,7 +125,7 @@ class QuantileTest extends TestCase
                 1.5,
             ],
             [
-                [1,2,3],
+                [1, 2, 3],
                 1,
                 3,
                 2,

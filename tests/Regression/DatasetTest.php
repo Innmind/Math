@@ -57,7 +57,7 @@ class DatasetTest extends TestCase
             1,
             2,
             3,
-            [3.2, 4]
+            [3.2, 4],
         ]);
 
         $this->assertInstanceOf(Dataset::class, $dataset);

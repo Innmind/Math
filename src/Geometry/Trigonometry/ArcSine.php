@@ -28,9 +28,6 @@ final class ArcSine implements Number
         return $this->arcSine();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function value()
     {
         return $this->arcSine()->number()->value();
@@ -141,6 +138,11 @@ final class ArcSine implements Number
         return $this->arcSine()->number()->signum();
     }
 
+    public function toString(): string
+    {
+        return \sprintf('sin⁻¹(%s)', $this->number->toString());
+    }
+
     private function arcSine(): Degree
     {
         if ($this->arcSine) {
@@ -154,10 +156,5 @@ final class ArcSine implements Number
         );
 
         return $this->arcSine = (new Radian($radians))->toDegree();
-    }
-
-    public function toString(): string
-    {
-        return \sprintf('sin⁻¹(%s)', $this->number->toString());
     }
 }

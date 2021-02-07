@@ -55,7 +55,7 @@ final class RowVector
                 $values[] = $rowNumber->multiplyBy($number);
             }
 
-            $rows[] = new RowVector(...$values);
+            $rows[] = new self(...$values);
         }
 
         return new Matrix(...$rows);
@@ -101,11 +101,17 @@ final class RowVector
         return $this->vector->sum();
     }
 
+    /**
+     * @param callable(Number): void $function
+     */
     public function foreach(callable $function): void
     {
         $this->vector->foreach($function);
     }
 
+    /**
+     * @param callable(Number): Number $function
+     */
     public function map(callable $function): self
     {
         return new self(

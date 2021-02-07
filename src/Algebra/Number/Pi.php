@@ -25,9 +25,6 @@ use Innmind\Math\Algebra\{
 
 final class Pi implements NumberInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function value()
     {
         return \pi();

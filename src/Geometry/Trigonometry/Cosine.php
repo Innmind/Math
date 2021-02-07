@@ -26,9 +26,6 @@ final class Cosine implements Number
         $this->degree = $degree;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function value()
     {
         return $this->cosine()->value();
@@ -139,6 +136,11 @@ final class Cosine implements Number
         return $this->cosine()->signum();
     }
 
+    public function toString(): string
+    {
+        return \sprintf('cos(%s)', $this->degree->toString());
+    }
+
     private function cosine(): Number
     {
         return $this->cosine ??= new Number\Number(
@@ -146,10 +148,5 @@ final class Cosine implements Number
                 $this->degree->toRadian()->number()->value(),
             ),
         );
-    }
-
-    public function toString(): string
-    {
-        return \sprintf('cos(%s)', $this->degree->toString());
     }
 }

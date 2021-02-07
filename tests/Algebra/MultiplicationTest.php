@@ -226,7 +226,7 @@ class MultiplicationTest extends TestCase
         ))->exponential();
 
         $this->assertInstanceOf(Exponential::class, $number);
-        $this->assertSame(exp(4), $number->value());
+        $this->assertSame(\exp(4), $number->value());
     }
 
     public function testBinaryLogarithm()
@@ -237,7 +237,7 @@ class MultiplicationTest extends TestCase
         ))->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
-        $this->assertSame(log(4, 2), $number->value());
+        $this->assertSame(\log(4, 2), $number->value());
     }
 
     public function testNaturalLogarithm()
@@ -248,7 +248,7 @@ class MultiplicationTest extends TestCase
         ))->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
-        $this->assertSame(log(4), $number->value());
+        $this->assertSame(\log(4), $number->value());
     }
 
     public function testCommonLogarithm()
@@ -259,7 +259,7 @@ class MultiplicationTest extends TestCase
         ))->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
-        $this->assertSame(log10(4), $number->value());
+        $this->assertSame(\log10(4), $number->value());
     }
 
     public function testSignum()

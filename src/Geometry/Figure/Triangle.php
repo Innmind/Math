@@ -8,7 +8,7 @@ use function Innmind\Math\{
     add,
     multiply,
     subtract,
-    max,
+    max as maximum,
     divide,
 };
 use Innmind\Math\{
@@ -35,7 +35,7 @@ final class Triangle implements Figure
         $this->a = $a->length();
         $this->b = $b->length();
         $this->c = $c->length();
-        $base = max($this->a, $this->b, $this->c);
+        $base = maximum($this->a, $this->b, $this->c);
 
         switch ($base) {
             case $this->a:

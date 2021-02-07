@@ -58,7 +58,7 @@ class InfiniteTest extends TestCase
         $number = $number->add(new Number\Number(66));
 
         $this->assertInstanceOf(Addition::class, $number);
-        $this->assertSame(INF, $number->value());
+        $this->assertSame(\INF, $number->value());
     }
 
     public function testSubtract()
@@ -67,7 +67,7 @@ class InfiniteTest extends TestCase
         $number = $number->subtract(new Number\Number(66));
 
         $this->assertInstanceOf(Subtraction::class, $number);
-        $this->assertSame(INF, $number->value());
+        $this->assertSame(\INF, $number->value());
     }
 
     public function testDivideBy()
@@ -76,7 +76,7 @@ class InfiniteTest extends TestCase
         $number = $number->divideBy(new Number\Number(2));
 
         $this->assertInstanceOf(Division::class, $number);
-        $this->assertSame(INF, $number->value());
+        $this->assertSame(\INF, $number->value());
     }
 
     public function testMulitplyBy()
@@ -85,7 +85,7 @@ class InfiniteTest extends TestCase
         $number = $number->multiplyBy(new Number\Number(2));
 
         $this->assertInstanceOf(Multiplication::class, $number);
-        $this->assertSame(INF, $number->value());
+        $this->assertSame(\INF, $number->value());
     }
 
     public function testRound()
@@ -104,7 +104,7 @@ class InfiniteTest extends TestCase
         $number = $number->floor();
 
         $this->assertInstanceOf(Floor::class, $number);
-        $this->assertSame(INF, $number->value());
+        $this->assertSame(\INF, $number->value());
     }
 
     public function testCeil()
@@ -113,7 +113,7 @@ class InfiniteTest extends TestCase
         $number = $number->ceil();
 
         $this->assertInstanceOf(Ceil::class, $number);
-        $this->assertSame(INF, $number->value());
+        $this->assertSame(\INF, $number->value());
     }
 
     public function testModulo()
@@ -131,7 +131,7 @@ class InfiniteTest extends TestCase
         $number = $number->absolute();
 
         $this->assertInstanceOf(Absolute::class, $number);
-        $this->assertSame(INF, $number->value());
+        $this->assertSame(\INF, $number->value());
     }
 
     public function testPower()
@@ -140,7 +140,7 @@ class InfiniteTest extends TestCase
         $number = $number->power(new Number\Number(2));
 
         $this->assertInstanceOf(Power::class, $number);
-        $this->assertSame(INF, $number->value());
+        $this->assertSame(\INF, $number->value());
     }
 
     public function testSquareRoot()
@@ -149,7 +149,7 @@ class InfiniteTest extends TestCase
         $number = $number->squareRoot();
 
         $this->assertInstanceOf(SquareRoot::class, $number);
-        $this->assertSame(INF, $number->value());
+        $this->assertSame(\INF, $number->value());
     }
 
     public function testExponential()
@@ -157,7 +157,7 @@ class InfiniteTest extends TestCase
         $number = Infinite::positive()->exponential();
 
         $this->assertInstanceOf(Exponential::class, $number);
-        $this->assertSame(INF, $number->value());
+        $this->assertSame(\INF, $number->value());
     }
 
     public function testBinaryLogarithm()

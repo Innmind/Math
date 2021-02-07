@@ -14,9 +14,6 @@ final class Floor implements Number
         $this->number = $number;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function value()
     {
         return $this->value ??= \floor($this->number->value());

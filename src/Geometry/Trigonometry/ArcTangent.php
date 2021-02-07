@@ -28,9 +28,6 @@ final class ArcTangent implements Number
         return $this->arcTangent();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function value()
     {
         return $this->arcTangent()->number()->value();
@@ -147,6 +144,11 @@ final class ArcTangent implements Number
         return $this->arcTangent()->number()->signum();
     }
 
+    public function toString(): string
+    {
+        return \sprintf('tan⁻¹(%s)', $this->number->toString());
+    }
+
     private function arcTangent(): Degree
     {
         if ($this->arcTangent) {
@@ -160,10 +162,5 @@ final class ArcTangent implements Number
         );
 
         return $this->arcTangent = (new Radian($radians))->toDegree();
-    }
-
-    public function toString(): string
-    {
-        return \sprintf('tan⁻¹(%s)', $this->number->toString());
     }
 }

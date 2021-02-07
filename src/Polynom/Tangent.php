@@ -27,16 +27,6 @@ final class Tangent
         $this->intercept = $polynom($abscissa);
     }
 
-    public function polynom(): Polynom
-    {
-        return $this->polynom;
-    }
-
-    public function abscissa(): Number
-    {
-        return $this->abscissa;
-    }
-
     public function __invoke(Number $x): Number
     {
         return add(
@@ -46,6 +36,16 @@ final class Tangent
             ),
             $this->intercept,
         );
+    }
+
+    public function polynom(): Polynom
+    {
+        return $this->polynom;
+    }
+
+    public function abscissa(): Number
+    {
+        return $this->abscissa;
     }
 
     public static function limit(): Number

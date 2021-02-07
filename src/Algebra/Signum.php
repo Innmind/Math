@@ -15,14 +15,11 @@ final class Signum implements Operation, Number
 
     public function result(): Number
     {
-        return $this->result ??= Number\Number::wrap(
+        return $this->result ??= new Integer(
             $this->number->value() <=> 0,
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function value()
     {
         return $this->result()->value();

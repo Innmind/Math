@@ -31,9 +31,6 @@ final class Division implements Operation, Number
         return $this->divisor;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function value()
     {
         return $this->result()->value();

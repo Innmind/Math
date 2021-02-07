@@ -20,9 +20,6 @@ final class Exponential implements Operation, Number
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function value()
     {
         return $this->result()->value();

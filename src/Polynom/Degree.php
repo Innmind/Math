@@ -25,6 +25,14 @@ final class Degree
         $this->coeff = $coeff;
     }
 
+    /**
+     * Compute the value for the given x
+     */
+    public function __invoke(Number $x): Number
+    {
+        return $this->coeff->multiplyBy($x->power($this->degree));
+    }
+
     public function degree(): Integer
     {
         return $this->degree;
@@ -54,14 +62,6 @@ final class Degree
             subtract($this->degree, 1)->result(),
             $this->coeff->multiplyBy($this->degree),
         );
-    }
-
-    /**
-     * Compute the value for the given x
-     */
-    public function __invoke(Number $x): Number
-    {
-        return $this->coeff->multiplyBy($x->power($this->degree));
     }
 
     public function toString(): string

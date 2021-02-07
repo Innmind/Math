@@ -15,16 +15,16 @@ final class Integral
         $this->polynom = $polynom;
     }
 
-    public function polynom(): Polynom
-    {
-        return $this->polynom;
-    }
-
     public function __invoke(Number $a, Number $b): Number
     {
         $primitive = $this->polynom->primitive();
 
         return subtract($primitive($b), $primitive($a));
+    }
+
+    public function polynom(): Polynom
+    {
+        return $this->polynom;
     }
 
     public function toString(): string

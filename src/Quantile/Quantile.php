@@ -8,8 +8,8 @@ use function Innmind\Math\{
     add,
     mean,
     median,
-    min,
-    max,
+    min as minimum,
+    max as maximum,
 };
 use Innmind\Math\{
     Regression\Dataset,
@@ -44,8 +44,6 @@ final class Quantile
 
     /**
      * Return the minimum value
-     *
-     * @return Quartile
      */
     public function min(): Quartile
     {
@@ -53,9 +51,7 @@ final class Quantile
     }
 
     /**
-     * Return the maxinum value
-     *
-     * @return Quartile
+     * Return the maximum value
      */
     public function max(): Quartile
     {
@@ -64,8 +60,6 @@ final class Quantile
 
     /**
      * Return the mean value
-     *
-     * @return Number
      */
     public function mean(): Number
     {
@@ -74,8 +68,6 @@ final class Quantile
 
     /**
      * Return the median value
-     *
-     * @return Quartile
      */
     public function median(): Quartile
     {
@@ -84,10 +76,6 @@ final class Quantile
 
     /**
      * Return the quartile at the wished index
-     *
-     * @param int $index
-     *
-     * @return Quartile
      */
     public function quartile(int $index): Quartile
     {
@@ -112,7 +100,7 @@ final class Quantile
      */
     private function buildMin(Dataset $dataset): Quartile
     {
-        return new Quartile(min(...$dataset->ordinates()->numbers()));
+        return new Quartile(minimum(...$dataset->ordinates()->numbers()));
     }
 
     /**
@@ -120,7 +108,7 @@ final class Quantile
      */
     private function buildMax(Dataset $dataset): Quartile
     {
-        return new Quartile(max(...$dataset->ordinates()->numbers()));
+        return new Quartile(maximum(...$dataset->ordinates()->numbers()));
     }
 
     /**
@@ -175,7 +163,9 @@ final class Quantile
                 add($dataset->get(0), $dataset->get(1)),
                 2,
             );
-        } else if ($dimension->value() === 1) {
+        }
+
+        if ($dimension->value() === 1) {
             return $dataset->get(0);
         }
 

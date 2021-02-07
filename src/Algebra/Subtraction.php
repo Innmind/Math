@@ -21,9 +21,6 @@ final class Subtraction implements Operation, Number
         $this->values = Sequence::of(Number::class, $first, $second, ...$values);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function value()
     {
         return $this->result()->value();
