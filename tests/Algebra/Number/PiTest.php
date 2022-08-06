@@ -64,7 +64,7 @@ class PiTest extends TestCase
         $number = $number->subtract(new Number\Number(66));
 
         $this->assertInstanceOf(Subtraction::class, $number);
-        $this->assertSame(-62.8584073464, $number->value());
+        $this->assertSame(-62.8584073464102, $number->value());
     }
 
     public function testDivideBy()
@@ -149,7 +149,8 @@ class PiTest extends TestCase
         $number = $number->squareRoot();
 
         $this->assertInstanceOf(SquareRoot::class, $number);
-        $this->assertSame(\M_SQRTPI, $number->value());
+        $this->assertEqualsWithDelta(\M_SQRTPI, $number->value(), 0.000000000000001);
+        $this->assertSame(1.7724538509055159, $number->value());
     }
 
     public function testExponential()

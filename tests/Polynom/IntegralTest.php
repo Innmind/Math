@@ -44,6 +44,7 @@ class IntegralTest extends TestCase
         $area = $integral(new Integer(0), new Integer(4));
 
         $this->assertInstanceOf(Number::class, $area);
-        $this->assertSame(32/3, $area->value());
+        // 32/3
+        $this->assertSame(10.666666666666668, $area->value());
     }
 }

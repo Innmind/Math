@@ -26,7 +26,7 @@ class PythagoraTest extends TestCase
 
         $this->assertInstanceOf(Segment::class, $hypotenuse);
         $this->assertSame(
-            3.6055512755,
+            3.605551275463989,
             $hypotenuse->length()->value(),
         );
     }
@@ -40,7 +40,7 @@ class PythagoraTest extends TestCase
 
         $this->assertInstanceOf(Segment::class, $side);
         $this->assertSame(
-            4.582575695,
+            4.58257569495584,
             $side->length()->value(),
         );
     }

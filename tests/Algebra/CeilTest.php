@@ -138,7 +138,7 @@ class CeilTest extends TestCase
         $number = $ceil->modulo(new Number\Number(2.1));
 
         $this->assertInstanceOf(Modulo::class, $number);
-        $this->assertSame(1.0, $number->value());
+        $this->assertEqualsWithDelta(1.0, $number->value(), 0.0001);
     }
 
     public function testAbsolute()

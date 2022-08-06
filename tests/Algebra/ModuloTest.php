@@ -47,7 +47,7 @@ class ModuloTest extends TestCase
         $result = $modulo->result();
 
         $this->assertInstanceOf(Number::class, $result);
-        $this->assertSame(0.24, $result->value());
+        $this->assertEqualsWithDelta(0.24, $result->value(), 0.0001);
         $this->assertSame($result, $modulo->result());
     }
 
@@ -144,7 +144,7 @@ class ModuloTest extends TestCase
         $number = $modulo->multiplyBy(new Number\Number(2));
 
         $this->assertInstanceOf(Multiplication::class, $number);
-        $this->assertSame(0.48, $number->value());
+        $this->assertEqualsWithDelta(0.48, $number->value(), 0.0001);
     }
 
     public function testRound()
@@ -205,7 +205,7 @@ class ModuloTest extends TestCase
         $number = $modulo->absolute();
 
         $this->assertInstanceOf(Absolute::class, $number);
-        $this->assertSame(0.24, $number->value());
+        $this->assertEqualsWithDelta(0.24, $number->value(), 0.00001);
     }
 
     public function testPower()

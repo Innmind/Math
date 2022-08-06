@@ -98,7 +98,7 @@ class ExponentialTest extends TestCase
         $number = $power->add(new Number\Number(66));
 
         $this->assertInstanceOf(Addition::class, $number);
-        $this->assertSame(74.1661699126, $number->value());
+        $this->assertSame(74.16616991256765, $number->value());
     }
 
     public function testSubtract()
@@ -176,7 +176,7 @@ class ExponentialTest extends TestCase
         $number = $power->modulo(new Number\Number(8));
 
         $this->assertInstanceOf(Modulo::class, $number);
-        $this->assertSame(0.1661699126, $number->value());
+        $this->assertSame(0.16616991256765168, $number->value());
     }
 
     public function testAbsolute()
@@ -187,7 +187,7 @@ class ExponentialTest extends TestCase
         $number = $power->absolute();
 
         $this->assertInstanceOf(Absolute::class, $number);
-        $this->assertSame(0.1224564283, $number->value());
+        $this->assertSame(0.1224564282529819, $number->value());
     }
 
     public function testPower()
@@ -209,7 +209,7 @@ class ExponentialTest extends TestCase
         $number = $power->squareRoot();
 
         $this->assertInstanceOf(SquareRoot::class, $number);
-        $this->assertSame(2.8576511181, $number->value());
+        $this->assertSame(2.857651118063164, $number->value());
     }
 
     public function testExponential()

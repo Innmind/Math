@@ -33,7 +33,7 @@ class CosineTest extends TestCase
         $cos = new Cosine(new Degree(new Number\Number(42)));
 
         $this->assertInstanceOf(Number::class, $cos);
-        $this->assertSame(0.74314482547739, $cos->value());
+        $this->assertSame(0.7431448254773942, $cos->value());
         $this->assertSame('cos(42°)', $cos->toString());
     }
 

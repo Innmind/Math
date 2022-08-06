@@ -42,7 +42,7 @@ class LinearRegressionTest extends TestCase
 
         $this->assertSame(-0.15, $r->slope()->value());
         $this->assertSame(1.35, $r->intercept()->value());
-        $this->assertSame(0.0, $r(new Integer(9))->value());
+        $this->assertEqualsWithDelta(0.0, $r(new Integer(9))->value(), 0.0001);
     }
 
     public function testRootMeanSquareDeviation()

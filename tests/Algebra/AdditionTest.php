@@ -197,7 +197,7 @@ class AdditionTest extends TestCase
         $number = $addition->modulo(new Number\Number(0.1));
 
         $this->assertInstanceOf(Modulo::class, $number);
-        $this->assertSame(0.04, $number->value());
+        $this->assertEqualsWithDelta(0.04, $number->value(), 0.0001);
     }
 
     public function testAbsolute()

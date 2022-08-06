@@ -162,7 +162,7 @@ class FactorialTest extends TestCase
         $number = $number->squareRoot();
 
         $this->assertInstanceOf(SquareRoot::class, $number);
-        $this->assertSame(2.4494897428, $number->value());
+        $this->assertSame(2.449489742783178, $number->value());
     }
 
     public function testExponential()

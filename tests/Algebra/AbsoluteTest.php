@@ -149,7 +149,7 @@ class AbsoluteTest extends TestCase
         $number = $absolute->modulo(new Number\Number(2.1));
 
         $this->assertInstanceOf(Modulo::class, $number);
-        $this->assertSame(0.45, $number->value());
+        $this->assertEqualsWithDelta(0.45, $number->value(), 0.001);
     }
 
     public function testPower()

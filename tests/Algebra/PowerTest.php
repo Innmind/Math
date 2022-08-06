@@ -47,7 +47,7 @@ class PowerTest extends TestCase
         $result = $power->result();
 
         $this->assertInstanceOf(Number::class, $result);
-        $this->assertSame(2594.3000857236, $result->value());
+        $this->assertSame(2594.300085723648, $result->value());
         $this->assertSame($result, $power->result());
     }
 

@@ -64,7 +64,7 @@ class ETest extends TestCase
         $number = $number->subtract(new Number\Number(2));
 
         $this->assertInstanceOf(Subtraction::class, $number);
-        $this->assertSame(0.71828182845904, $number->value());
+        $this->assertSame(0.7182818284590451, $number->value());
     }
 
     public function testDivideBy()
@@ -119,7 +119,7 @@ class ETest extends TestCase
         $number = $number->modulo(new Number\Number(2));
 
         $this->assertInstanceOf(Modulo::class, $number);
-        $this->assertSame(0.71828182845904, $number->value());
+        $this->assertSame(0.7182818284590451, $number->value());
     }
 
     public function testAbsolute()
@@ -137,7 +137,8 @@ class ETest extends TestCase
         $number = $number->power(new Number\Number(2));
 
         $this->assertInstanceOf(Power::class, $number);
-        $this->assertSame(\exp(2), $number->value());
+        $this->assertEqualsWithDelta(\exp(2), $number->value(), 0.00000000000001);
+        $this->assertSame(7.3890560989306495, $number->value());
     }
 
     public function testSquareRoot()
