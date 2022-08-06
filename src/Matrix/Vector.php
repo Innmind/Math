@@ -3,12 +3,12 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Matrix;
 
-use function Innmind\Math\add;
 use Innmind\Math\{
     Exception\VectorsMustMeOfTheSameDimension,
     Matrix,
     Algebra\Number,
     Algebra\Integer,
+    Monoid\Addition,
 };
 use Innmind\Immutable\{
     Sequence,
@@ -142,7 +142,7 @@ final class Vector
 
     public function sum(): Number
     {
-        return add(...$this->numbers->toList());
+        return $this->numbers->fold(new Addition);
     }
 
     /**
