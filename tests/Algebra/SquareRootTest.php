@@ -21,7 +21,8 @@ use Innmind\Math\Algebra\{
     BinaryLogarithm,
     NaturalLogarithm,
     CommonLogarithm,
-    Signum
+    Signum,
+    Integer,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -295,5 +296,26 @@ class SquareRootTest extends TestCase
                     $a->power(new Number\Number(0.5)),
                 ),
         );
+    }
+
+    public function testCollapseSquare()
+    {
+        $result = (new Integer(2))
+            ->power(new Integer(2))
+            ->squareRoot()
+            ->collapse()
+            ->value();
+
+        $this->assertSame(2, $result);
+
+        $result = (new Integer(2))
+            ->power(new Integer(2))
+            ->squareRoot()
+            ->power(new Integer(2))
+            ->squareRoot()
+            ->collapse()
+            ->value();
+
+        $this->assertSame(2, $result);
     }
 }

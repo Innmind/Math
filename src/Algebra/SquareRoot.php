@@ -134,7 +134,16 @@ final class SquareRoot implements Operation, Number
 
     public function collapse(): Number
     {
+        if ($this->number instanceof Power && $this->number->square()) {
+            return $this->number->number()->collapse();
+        }
+
         return $this->result();
+    }
+
+    public function number(): Number
+    {
+        return $this->number;
     }
 
     public function toString(): string

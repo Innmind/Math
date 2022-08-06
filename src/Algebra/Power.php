@@ -136,7 +136,21 @@ final class Power implements Operation, Number
 
     public function collapse(): Number
     {
+        if ($this->number instanceof SquareRoot && $this->square()) {
+            return $this->number->number()->collapse();
+        }
+
         return $this->result();
+    }
+
+    public function number(): Number
+    {
+        return $this->number;
+    }
+
+    public function square(): bool
+    {
+        return $this->power->equals(new Integer(2));
     }
 
     public function toString(): string
