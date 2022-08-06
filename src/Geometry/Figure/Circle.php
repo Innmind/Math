@@ -11,6 +11,9 @@ use Innmind\Math\{
     Algebra\Number\Pi,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class Circle implements Figure
 {
     private Segment $radius;

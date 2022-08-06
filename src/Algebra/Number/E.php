@@ -25,6 +25,7 @@ use Innmind\Math\Algebra\{
 
 /**
  * 1/0! + 1/1! + 1/2! + 1/3! + ... + 1/n!
+ * @psalm-immutable
  */
 final class E implements NumberInterface
 {

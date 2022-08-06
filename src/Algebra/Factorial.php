@@ -5,6 +5,9 @@ namespace Innmind\Math\Algebra;
 
 use Innmind\Math\Exception\FactorialMustBePositive;
 
+/**
+ * @psalm-immutable
+ */
 final class Factorial implements Operation, Number
 {
     private int $value;

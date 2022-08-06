@@ -12,6 +12,7 @@ use Innmind\Math\{
 
 /**
  * Inverse of sine, such as a===Sine(ArcSine(a))
+ * @psalm-immutable
  */
 final class ArcSine implements Number
 {

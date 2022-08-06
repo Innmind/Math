@@ -8,6 +8,9 @@ use Innmind\Math\{
     Exception\OutOfDefinitionSet,
 };
 
+/**
+ * @psalm-immutable
+ */
 interface Set
 {
     /**

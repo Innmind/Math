@@ -3,6 +3,9 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Algebra;
 
+/**
+ * @psalm-immutable
+ */
 final class Modulo implements Operation, Number
 {
     private Number $number;

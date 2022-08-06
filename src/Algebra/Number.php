@@ -3,6 +3,9 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Algebra;
 
+/**
+ * @psalm-immutable
+ */
 interface Number
 {
     public function value(): int|float;

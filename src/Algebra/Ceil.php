@@ -3,6 +3,9 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Algebra;
 
+/**
+ * @psalm-immutable
+ */
 final class Ceil implements Number
 {
     private Number $number;

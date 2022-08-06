@@ -19,6 +19,9 @@ use Innmind\Math\{
 };
 use Innmind\Immutable\Sequence;
 
+/**
+ * @psalm-immutable
+ */
 final class Matrix
 {
     private Dimension $dimension;
@@ -40,16 +43,16 @@ final class Matrix
                 }
             });
 
-        /** @var Sequence<ColumnVector> */
-        $this->columns = Sequence::of();
         $this->dimension = new Dimension(
             new Integer($this->rows->size()),
             $first->dimension(),
         );
-        $this->buildColumns();
+        $this->columns = $this->buildColumns();
     }
 
     /**
+     * @psalm-pure
+     *
      * @param list<list<int|float|number>> $values
      */
     public static function of(array $values): self
@@ -63,6 +66,9 @@ final class Matrix
         return new self(...$rows);
     }
 
+    /**
+     * @psalm-pure
+     */
     public static function fromColumns(
         ColumnVector $first,
         ColumnVector ...$columns,
@@ -413,11 +419,16 @@ final class Matrix
         );
     }
 
-    private function buildColumns(): void
+    /**
+     * @return Sequence<ColumnVector>
+     */
+    private function buildColumns(): Sequence
     {
-        $columns = $this->dimension->columns()->value();
+        $size = $this->dimension->columns()->value();
+        /** @var Sequence<ColumnVector> */
+        $columns = Sequence::of();
 
-        for ($i = 0; $i < $columns; ++$i) {
+        for ($i = 0; $i < $size; ++$i) {
             /** @var list<Number> */
             $values = $this->rows->reduce(
                 [],
@@ -427,8 +438,10 @@ final class Matrix
                     return $values;
                 },
             );
-            $this->columns = ($this->columns)(new ColumnVector(...$values));
+            $columns = ($columns)(new ColumnVector(...$values));
         }
+
+        return $columns;
     }
 
     private function reduceLowerTriangle(self $matrix): self

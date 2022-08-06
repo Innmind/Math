@@ -25,6 +25,9 @@ use Innmind\Math\{
     Exception\NotANumber,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class Number implements NumberInterface
 {
     private int|float $value;
@@ -38,6 +41,9 @@ final class Number implements NumberInterface
         $this->value = $value;
     }
 
+    /**
+     * @psalm-pure
+     */
     public static function wrap(int|float $value): NumberInterface
     {
         if (\is_infinite($value)) {

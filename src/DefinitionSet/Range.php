@@ -8,6 +8,9 @@ use Innmind\Math\{
     Exception\OutOfDefinitionSet,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class Range implements Set
 {
     public const INCLUSIVE = true;

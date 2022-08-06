@@ -13,6 +13,9 @@ use Innmind\Math\{
     Algebra\Integer,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class BinomialDistribution
 {
     private Number $probability;

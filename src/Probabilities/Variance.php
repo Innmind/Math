@@ -10,6 +10,9 @@ use Innmind\Math\{
     Algebra\Integer,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class Variance
 {
     private Number $variance;

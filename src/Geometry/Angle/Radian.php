@@ -9,6 +9,9 @@ use Innmind\Math\Algebra\{
     Number\Pi,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class Radian
 {
     private Number $number;

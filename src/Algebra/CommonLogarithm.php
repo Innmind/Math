@@ -11,6 +11,7 @@ use Innmind\Math\{
 
 /**
  * Base 10 logarithm
+ * @psalm-immutable
  */
 final class CommonLogarithm implements Operation, Number
 {

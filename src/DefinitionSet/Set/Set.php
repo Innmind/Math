@@ -15,6 +15,9 @@ use Innmind\Immutable\{
     Str,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class Set implements SetInterface
 {
     /** @var Sequence<int|float> */

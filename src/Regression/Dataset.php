@@ -13,6 +13,9 @@ use Innmind\Math\{
     Exception\VectorsMustContainsOnlyTwoValues,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class Dataset
 {
     private Matrix $matrix;

@@ -23,9 +23,13 @@ use Innmind\Immutable\Set;
  *
  * It allows to calculate the length of a triangle's third side via the lengths
  * of the other sides and the opposite angle
+ * @psalm-immutable
  */
 final class AlKashi
 {
+    /**
+     * @psalm-pure
+     */
     public static function side(
         Segment $a,
         Degree $degree,
@@ -52,6 +56,7 @@ final class AlKashi
 
     /**
      * Return the angle between a and b sides
+     * @psalm-pure
      */
     public static function angle(
         Segment $a,

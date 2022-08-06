@@ -12,6 +12,7 @@ use Innmind\Math\{
 
 /**
  * Inverse of tangent, such as a===Tangent(ArcTangent(a))
+ * @psalm-immutable
  */
 final class ArcTangent implements Number
 {

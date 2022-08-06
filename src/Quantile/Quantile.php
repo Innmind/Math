@@ -19,6 +19,9 @@ use Innmind\Math\{
     Exception\UnknownQuartile,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class Quantile
 {
     private Quartile $min;

@@ -13,6 +13,9 @@ use Innmind\Math\{
     Algebra\Number,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class Rectangle implements Figure
 {
     private Segment $length;

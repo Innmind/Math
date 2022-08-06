@@ -10,11 +10,13 @@ use Innmind\Math\{
 
 /**
  * The hypotenuse is referenced as C, adjacent sides are referenced as A and B
+ * @psalm-immutable
  */
 final class Pythagora
 {
     /**
      * Compute the hypotenuse for adjacent sides A and B
+     * @psalm-pure
      */
     public static function hypotenuse(
         Segment $a,
@@ -31,6 +33,7 @@ final class Pythagora
 
     /**
      * Compute a side A or B from the hypotenuse and one side
+     * @psalm-pure
      */
     public static function adjacentSide(
         Segment $hypotenuse,

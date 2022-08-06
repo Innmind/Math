@@ -9,6 +9,9 @@ use function Innmind\Math\{
 };
 use Innmind\Math\Algebra\Number;
 
+/**
+ * @psalm-immutable
+ */
 final class Tangent
 {
     private Polynom $polynom;
@@ -48,6 +51,9 @@ final class Tangent
         return $this->abscissa;
     }
 
+    /**
+     * @psalm-pure
+     */
     public static function limit(): Number
     {
         return new Number\Number(0.000000000001);

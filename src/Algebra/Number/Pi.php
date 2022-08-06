@@ -23,11 +23,14 @@ use Innmind\Math\Algebra\{
     Signum,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class Pi implements NumberInterface
 {
     public function value(): int|float
     {
-        return \pi();
+        return \M_PI;
     }
 
     public function equals(NumberInterface $number): bool

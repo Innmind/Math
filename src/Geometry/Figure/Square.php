@@ -10,6 +10,9 @@ use Innmind\Math\{
     Algebra\Number,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class Square implements Figure
 {
     private Segment $side;

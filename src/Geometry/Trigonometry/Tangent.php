@@ -15,6 +15,7 @@ use Innmind\Math\{
  * tan(angle) = oppositeSide / adjacentSide
  *
  * Where angle is the one between the adjacent side and the hypothenuse
+ * @psalm-immutable
  */
 final class Tangent implements Number
 {

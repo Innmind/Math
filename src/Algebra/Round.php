@@ -5,6 +5,9 @@ namespace Innmind\Math\Algebra;
 
 use Innmind\Math\Exception\PrecisionMustBePositive;
 
+/**
+ * @psalm-immutable
+ */
 final class Round implements Number
 {
     private Number $number;
@@ -22,21 +25,33 @@ final class Round implements Number
         $this->mode = $mode;
     }
 
+    /**
+     * @psalm-pure
+     */
     public static function up(Number $number, int $precision = 0): self
     {
         return new self($number, $precision, \PHP_ROUND_HALF_UP);
     }
 
+    /**
+     * @psalm-pure
+     */
     public static function down(Number $number, int $precision = 0): self
     {
         return new self($number, $precision, \PHP_ROUND_HALF_DOWN);
     }
 
+    /**
+     * @psalm-pure
+     */
     public static function even(Number $number, int $precision = 0): self
     {
         return new self($number, $precision, \PHP_ROUND_HALF_EVEN);
     }
 
+    /**
+     * @psalm-pure
+     */
     public static function odd(Number $number, int $precision = 0): self
     {
         return new self($number, $precision, \PHP_ROUND_HALF_ODD);

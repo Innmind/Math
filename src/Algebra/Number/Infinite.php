@@ -23,6 +23,9 @@ use Innmind\Math\Algebra\{
     Signum,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class Infinite implements NumberInterface
 {
     private float $value;
@@ -32,11 +35,17 @@ final class Infinite implements NumberInterface
         $this->value = $value;
     }
 
+    /**
+     * @psalm-pure
+     */
     public static function positive(): self
     {
         return new self(\INF);
     }
 
+    /**
+     * @psalm-pure
+     */
     public static function negative(): self
     {
         return new self(-\INF);

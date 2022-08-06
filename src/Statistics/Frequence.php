@@ -9,6 +9,9 @@ use Innmind\Math\Algebra\{
 };
 use Innmind\Immutable\Sequence;
 
+/**
+ * @psalm-immutable
+ */
 final class Frequence
 {
     /** @var Sequence<Number> */

@@ -12,6 +12,9 @@ use function Innmind\Math\{
     squareRoot,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class ComplexNumber
 {
     private Number $real;

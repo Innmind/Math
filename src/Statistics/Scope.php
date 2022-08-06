@@ -12,6 +12,9 @@ use Innmind\Immutable\{
     Maybe,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class Scope implements Number
 {
     private Number $result;

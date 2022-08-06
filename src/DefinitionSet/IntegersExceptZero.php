@@ -9,6 +9,9 @@ use Innmind\Math\{
     Exception\OutOfDefinitionSet,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class IntegersExceptZero implements Set
 {
     public function contains(Number $number): bool

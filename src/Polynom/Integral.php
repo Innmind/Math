@@ -6,6 +6,9 @@ namespace Innmind\Math\Polynom;
 use function Innmind\Math\subtract;
 use Innmind\Math\Algebra\Number;
 
+/**
+ * @psalm-immutable
+ */
 final class Integral
 {
     private Polynom $polynom;

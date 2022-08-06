@@ -16,6 +16,9 @@ use Innmind\Math\{
     Matrix,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class LinearRegression
 {
     private Polynom $polynom;

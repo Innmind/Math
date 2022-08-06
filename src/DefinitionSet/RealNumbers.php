@@ -5,6 +5,9 @@ namespace Innmind\Math\DefinitionSet;
 
 use Innmind\Math\Algebra\Number;
 
+/**
+ * @psalm-immutable
+ */
 final class RealNumbers implements Set
 {
     public function contains(Number $number): bool

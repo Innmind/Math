@@ -11,6 +11,7 @@ use Innmind\Math\{
 
 /**
  * Base 2 logarithm
+ * @psalm-immutable
  */
 final class BinaryLogarithm implements Operation, Number
 {

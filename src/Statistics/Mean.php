@@ -10,6 +10,9 @@ use Innmind\Math\Algebra\{
 };
 use Innmind\Immutable\Sequence;
 
+/**
+ * @psalm-immutable
+ */
 final class Mean implements Number
 {
     private Number $result;

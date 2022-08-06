@@ -14,6 +14,9 @@ use Innmind\Math\{
     Algebra\Operation,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class Degree
 {
     private Integer $degree;

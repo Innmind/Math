@@ -8,6 +8,9 @@ use Innmind\Math\{
     Algebra\Number,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class Expectation
 {
     private Number $expectation;

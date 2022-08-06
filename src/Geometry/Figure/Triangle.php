@@ -18,6 +18,9 @@ use Innmind\Math\{
     Algebra\Integer,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class Triangle implements Figure
 {
     private Number $a;

@@ -19,6 +19,9 @@ use Innmind\Immutable\{
     Str,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class Polynom
 {
     private Number $intercept;

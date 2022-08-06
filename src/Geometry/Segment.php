@@ -10,6 +10,9 @@ use Innmind\Math\{
     Exception\LengthMustBePositive,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class Segment
 {
     private Number $length;

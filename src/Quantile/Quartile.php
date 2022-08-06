@@ -7,6 +7,7 @@ use Innmind\Math\Algebra\Number;
 
 /**
  * Holds a quartile value
+ * @psalm-immutable
  */
 final class Quartile
 {

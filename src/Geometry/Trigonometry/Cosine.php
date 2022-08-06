@@ -15,6 +15,7 @@ use Innmind\Math\{
  * cos(angle) = adjacentSide / hypothenuse
  *
  * Where angle is the one between the adjacent side and the hypothenuse
+ * @psalm-immutable
  */
 final class Cosine implements Number
 {

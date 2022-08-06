@@ -9,6 +9,9 @@ use Innmind\Math\Algebra\{
 };
 use Innmind\Immutable\Sequence;
 
+/**
+ * @psalm-immutable
+ */
 final class Median implements Number
 {
     private Number $result;

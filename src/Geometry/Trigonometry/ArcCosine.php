@@ -12,6 +12,7 @@ use Innmind\Math\{
 
 /**
  * Inverse of cosine, such as a===Cosine(ArcCosine(a))
+ * @psalm-immutable
  */
 final class ArcCosine implements Number
 {

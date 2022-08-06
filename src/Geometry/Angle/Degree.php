@@ -8,6 +8,9 @@ use Innmind\Math\Algebra\{
     Integer,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class Degree
 {
     private Number $number;

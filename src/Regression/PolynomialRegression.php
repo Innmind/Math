@@ -13,6 +13,9 @@ use Innmind\Math\{
 };
 use Innmind\Immutable\Sequence;
 
+/**
+ * @psalm-immutable
+ */
 final class PolynomialRegression
 {
     private Polynom $polynom;

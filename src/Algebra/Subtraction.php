@@ -8,6 +8,9 @@ use Innmind\Immutable\{
     Str,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class Subtraction implements Operation, Number
 {
     private Number $first;

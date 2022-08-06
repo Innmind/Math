@@ -10,8 +10,14 @@ use Innmind\Math\{
     Algebra\Number,
     Algebra\Integer,
 };
-use Innmind\Immutable\Sequence;
+use Innmind\Immutable\{
+    Sequence,
+    SideEffect,
+};
 
+/**
+ * @psalm-immutable
+ */
 final class Vector
 {
     /** @var Sequence<Number> */
@@ -142,9 +148,9 @@ final class Vector
     /**
      * @param callable(Number): void $function
      */
-    public function foreach(callable $function): void
+    public function foreach(callable $function): SideEffect
     {
-        $_ = $this->numbers->foreach($function);
+        return $this->numbers->foreach($function);
     }
 
     /**

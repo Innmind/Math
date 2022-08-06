@@ -8,6 +8,9 @@ use Innmind\Math\{
     Exception\DimensionMustBePositive,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class Dimension
 {
     private Integer $rows;

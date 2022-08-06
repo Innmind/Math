@@ -8,6 +8,9 @@ use Innmind\Immutable\{
     Str,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class Multiplication implements Operation, Number
 {
     /** @var Sequence<Number> */

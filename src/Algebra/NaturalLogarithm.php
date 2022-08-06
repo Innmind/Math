@@ -11,6 +11,7 @@ use Innmind\Math\{
 
 /**
  * base e logarithm
+ * @psalm-immutable
  */
 final class NaturalLogarithm implements Operation, Number
 {

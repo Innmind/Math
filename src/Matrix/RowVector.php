@@ -8,7 +8,11 @@ use Innmind\Math\{
     Algebra\Number,
     Algebra\Integer,
 };
+use Innmind\Immutable\SideEffect;
 
+/**
+ * @psalm-immutable
+ */
 final class RowVector
 {
     private Vector $vector;
@@ -18,6 +22,9 @@ final class RowVector
         $this->vector = new Vector($number, ...$numbers);
     }
 
+    /**
+     * @psalm-pure
+     */
     public static function initialize(Integer $dimension, Number $value): self
     {
         return new self(...\array_fill(0, $dimension->value(), $value));
@@ -104,9 +111,9 @@ final class RowVector
     /**
      * @param callable(Number): void $function
      */
-    public function foreach(callable $function): void
+    public function foreach(callable $function): SideEffect
     {
-        $this->vector->foreach($function);
+        return $this->vector->foreach($function);
     }
 
     /**

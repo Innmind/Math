@@ -40,22 +40,32 @@ use Innmind\Immutable\Sequence;
 
 /**
  * @no-named-arguments
+ * @psalm-pure
  */
 function add(int|float|Number ...$numbers): Addition
 {
     return new Addition(...numerize(...$numbers));
 }
 
+/**
+ * @psalm-pure
+ */
 function absolute(int|float|Number $number): Number
 {
     return new Absolute(numerize($number)[0]);
 }
 
+/**
+ * @psalm-pure
+ */
 function ceil(int|float|Number $number): Number
 {
     return new Ceil(numerize($number)[0]);
 }
 
+/**
+ * @psalm-pure
+ */
 function divide(
     int|float|Number $dividend,
     int|float|Number $divisor,
@@ -63,11 +73,17 @@ function divide(
     return new Division(...numerize($dividend, $divisor));
 }
 
+/**
+ * @psalm-pure
+ */
 function floor(int|float|Number $number): Number
 {
     return new Floor(numerize($number)[0]);
 }
 
+/**
+ * @psalm-pure
+ */
 function modulo(
     int|float|Number $number,
     int|float|Number $modulus,
@@ -77,6 +93,7 @@ function modulo(
 
 /**
  * @no-named-arguments
+ * @psalm-pure
  */
 function multiply(int|float|Number ...$numbers): Number
 {
@@ -85,6 +102,7 @@ function multiply(int|float|Number ...$numbers): Number
 
 /**
  * @no-named-arguments
+ * @psalm-pure
  */
 function power(
     int|float|Number $number,
@@ -93,6 +111,9 @@ function power(
     return new Power(...numerize($number, $power));
 }
 
+/**
+ * @psalm-pure
+ */
 function roundUp(int|float|Number $number, int $precision = 0): Number
 {
     return Round::up(
@@ -101,6 +122,9 @@ function roundUp(int|float|Number $number, int $precision = 0): Number
     );
 }
 
+/**
+ * @psalm-pure
+ */
 function roundDown(int|float|Number $number, int $precision = 0): Number
 {
     return Round::down(
@@ -109,6 +133,9 @@ function roundDown(int|float|Number $number, int $precision = 0): Number
     );
 }
 
+/**
+ * @psalm-pure
+ */
 function roundEven(int|float|Number $number, int $precision = 0): Number
 {
     return Round::even(
@@ -117,6 +144,9 @@ function roundEven(int|float|Number $number, int $precision = 0): Number
     );
 }
 
+/**
+ * @psalm-pure
+ */
 function roundOdd(int|float|Number $number, int $precision = 0): Number
 {
     return Round::odd(
@@ -125,6 +155,9 @@ function roundOdd(int|float|Number $number, int $precision = 0): Number
     );
 }
 
+/**
+ * @psalm-pure
+ */
 function squareRoot(int|float|Number $number): Number
 {
     return new SquareRoot(numerize($number)[0]);
@@ -132,12 +165,16 @@ function squareRoot(int|float|Number $number): Number
 
 /**
  * @no-named-arguments
+ * @psalm-pure
  */
 function subtract(int|float|Number ...$numbers): Subtraction
 {
     return new Subtraction(...numerize(...$numbers));
 }
 
+/**
+ * @psalm-pure
+ */
 function toDegree(Degree|Radian|int|float|Number $degree): Degree
 {
     if ($degree instanceof Degree) {
@@ -151,6 +188,9 @@ function toDegree(Degree|Radian|int|float|Number $degree): Degree
     return new Degree(numerize($degree)[0]);
 }
 
+/**
+ * @psalm-pure
+ */
 function toRadian(Degree|Radian|int|float|Number $radian): Radian
 {
     if ($radian instanceof Radian) {
@@ -164,31 +204,49 @@ function toRadian(Degree|Radian|int|float|Number $radian): Radian
     return new Radian(numerize($radian)[0]);
 }
 
+/**
+ * @psalm-pure
+ */
 function cosine(Degree|Radian|int|float|Number $degree): Number
 {
     return new Cosine(toDegree($degree));
 }
 
+/**
+ * @psalm-pure
+ */
 function arcCosine(int|float|Number $number): ArcCosine
 {
     return new ArcCosine(...numerize($number));
 }
 
+/**
+ * @psalm-pure
+ */
 function arcSine(int|float|Number $number): ArcSine
 {
     return new ArcSine(...numerize($number));
 }
 
+/**
+ * @psalm-pure
+ */
 function arcTangent(int|float|Number $number): ArcTangent
 {
     return new ArcTangent(...numerize($number));
 }
 
+/**
+ * @psalm-pure
+ */
 function sine(Degree|Radian|int|float|Number $degree): Number
 {
     return new Sine(toDegree($degree));
 }
 
+/**
+ * @psalm-pure
+ */
 function tangent(Degree|Radian|int|float|Number $degree): Number
 {
     return new Tangent(toDegree($degree));
@@ -196,6 +254,7 @@ function tangent(Degree|Radian|int|float|Number $degree): Number
 
 /**
  * @no-named-arguments
+ * @psalm-pure
  */
 function frequence(int|float|Number ...$numbers): Frequence
 {
@@ -204,6 +263,7 @@ function frequence(int|float|Number ...$numbers): Frequence
 
 /**
  * @no-named-arguments
+ * @psalm-pure
  */
 function mean(
     int|float|Number $first,
@@ -214,6 +274,7 @@ function mean(
 
 /**
  * @no-named-arguments
+ * @psalm-pure
  */
 function median(
     int|float|Number $first,
@@ -224,6 +285,7 @@ function median(
 
 /**
  * @no-named-arguments
+ * @psalm-pure
  */
 function scope(
     int|float|Number $first,
@@ -233,6 +295,9 @@ function scope(
     return new Scope(...numerize($first, $second, ...$numbers));
 }
 
+/**
+ * @psalm-pure
+ */
 function factorial(int|Integer $int): Factorial
 {
     if ($int instanceof Integer) {
@@ -242,31 +307,49 @@ function factorial(int|Integer $int): Factorial
     return new Factorial($int);
 }
 
+/**
+ * @psalm-pure
+ */
 function exponential(int|float|Number $number): Exponential
 {
     return new Exponential(...numerize($number));
 }
 
+/**
+ * @psalm-pure
+ */
 function binaryLogarithm(int|float|Number $number): BinaryLogarithm
 {
     return new BinaryLogarithm(...numerize($number));
 }
 
+/**
+ * @psalm-pure
+ */
 function naturalLogarithm(int|float|Number $number): NaturalLogarithm
 {
     return new NaturalLogarithm(...numerize($number));
 }
 
+/**
+ * @psalm-pure
+ */
 function logarithm(int|float|Number $number): NaturalLogarithm
 {
     return naturalLogarithm($number);
 }
 
+/**
+ * @psalm-pure
+ */
 function commonLogarithm(int|float|Number $number): CommonLogarithm
 {
     return new CommonLogarithm(...numerize($number));
 }
 
+/**
+ * @psalm-pure
+ */
 function signum(int|float|Number $number): Signum
 {
     return new Signum(...numerize($number));
@@ -274,6 +357,7 @@ function signum(int|float|Number $number): Signum
 
 /**
  * @no-named-arguments
+ * @psalm-pure
  */
 function max(
     int|float|Number $first,
@@ -298,6 +382,7 @@ function max(
 
 /**
  * @no-named-arguments
+ * @psalm-pure
  */
 function min(
     int|float|Number $first,
@@ -322,6 +407,7 @@ function min(
 
 /**
  * @no-named-arguments
+ * @psalm-pure
  *
  * @return list<Number>
  */

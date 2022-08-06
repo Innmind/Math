@@ -8,7 +8,11 @@ use Innmind\Math\{
     Algebra\Number,
     Algebra\Integer,
 };
+use Innmind\Immutable\SideEffect;
 
+/**
+ * @psalm-immutable
+ */
 final class ColumnVector
 {
     private Vector $vector;
@@ -107,9 +111,9 @@ final class ColumnVector
     /**
      * @param callable(Number): void $function
      */
-    public function foreach(callable $function): void
+    public function foreach(callable $function): SideEffect
     {
-        $this->vector->foreach($function);
+        return $this->vector->foreach($function);
     }
 
     /**

@@ -8,6 +8,9 @@ use Innmind\Math\{
     Exception\OutOfDefinitionSet,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class Union implements Set
 {
     private Set $left;

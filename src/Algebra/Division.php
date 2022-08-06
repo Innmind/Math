@@ -5,6 +5,9 @@ namespace Innmind\Math\Algebra;
 
 use Innmind\Math\Exception\DivisionByZero;
 
+/**
+ * @psalm-immutable
+ */
 final class Division implements Operation, Number
 {
     private Number $dividend;
