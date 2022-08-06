@@ -6,7 +6,6 @@ namespace Innmind\Math\Geometry\Theorem;
 use function Innmind\Math\{
     cosine,
     arcCosine,
-    add,
     max as maximum,
 };
 use Innmind\Math\{
@@ -16,7 +15,6 @@ use Innmind\Math\{
     Geometry\Segment,
     Exception\SegmentsCannotBeJoined,
 };
-use Innmind\Immutable\Set;
 
 /**
  * Also known as the law of cosines
@@ -67,8 +65,11 @@ final class AlKashi
         $b = $b->length();
         $c = $c->length();
         $longest = maximum($a, $b, $c);
-        $opposites = Set::of($a, $b, $c)->remove($longest);
-        $opposites = add(...$opposites->toList());
+        $opposites = match ($longest) {
+            $a => $b->add($c),
+            $b => $a->add($c),
+            $c => $a->add($b),
+        };
 
         if ($longest->higherThan($opposites) && !$longest->equals($opposites)) {
             throw new SegmentsCannotBeJoined;
