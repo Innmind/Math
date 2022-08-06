@@ -55,7 +55,7 @@ final class ColumnVector
             $values = [];
 
             foreach ($row->numbers() as $rowNumber) {
-                $values[] = $number->multiplyBy($rowNumber);
+                $values[] = $number->multiplyBy($rowNumber)->collapse();
             }
 
             $rows[] = new RowVector(...$values);

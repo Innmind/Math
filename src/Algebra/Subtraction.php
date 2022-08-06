@@ -13,7 +13,6 @@ final class Subtraction implements Operation, Number
     private Number $first;
     /** @var Sequence<Number> */
     private Sequence $values;
-    private ?Number $result = null;
 
     public function __construct(
         Number $first,
@@ -141,10 +140,6 @@ final class Subtraction implements Operation, Number
 
     public function result(): Number
     {
-        if ($this->result) {
-            return $this->result;
-        }
-
         $value = $this
             ->values
             ->drop(1)
@@ -153,7 +148,7 @@ final class Subtraction implements Operation, Number
                 static fn(int|float $carry, $number): int|float => $carry - $number->value(),
             );
 
-        return $this->result = Number\Number::wrap($value);
+        return Number\Number::wrap($value);
     }
 
     public function collapse(): Number

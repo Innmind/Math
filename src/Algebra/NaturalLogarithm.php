@@ -14,10 +14,7 @@ use Innmind\Math\{
  */
 final class NaturalLogarithm implements Operation, Number
 {
-    private static ?Set $definitionSet = null;
-
     private Number $number;
-    private ?Number $result = null;
 
     public function __construct(Number $number)
     {
@@ -138,14 +135,14 @@ final class NaturalLogarithm implements Operation, Number
 
     public function result(): Number
     {
-        return $this->result ??= Number\Number::wrap(
+        return Number\Number::wrap(
             \log($this->number->value()),
         );
     }
 
     public static function definitionSet(): Set
     {
-        return self::$definitionSet ??= Range::exclusive(
+        return Range::exclusive(
             new Integer(0),
             Infinite::positive(),
         );

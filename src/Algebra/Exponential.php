@@ -6,7 +6,6 @@ namespace Innmind\Math\Algebra;
 final class Exponential implements Operation, Number
 {
     private Number $power;
-    private ?Number $result = null;
 
     public function __construct(Number $power)
     {
@@ -15,7 +14,7 @@ final class Exponential implements Operation, Number
 
     public function result(): Number
     {
-        return $this->result ?? $this->result = Number\Number::wrap(
+        return Number\Number::wrap(
             \exp($this->power->value()),
         );
     }

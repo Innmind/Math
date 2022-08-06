@@ -42,7 +42,6 @@ class SquareRootTest extends TestCase
 
         $this->assertInstanceOf(Number::class, $result);
         $this->assertSame(2.0, $result->value());
-        $this->assertSame($result, $sqrt->result());
     }
 
     public function testValue()

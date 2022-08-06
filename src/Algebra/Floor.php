@@ -6,7 +6,6 @@ namespace Innmind\Math\Algebra;
 final class Floor implements Number
 {
     private Number $number;
-    private int|float|null $value = null;
 
     public function __construct(Number $number)
     {
@@ -15,7 +14,7 @@ final class Floor implements Number
 
     public function value(): int|float
     {
-        return $this->value ??= \floor($this->number->value());
+        return \floor($this->number->value());
     }
 
     public function equals(Number $number): bool

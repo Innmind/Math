@@ -46,7 +46,6 @@ class ExponentialTest extends TestCase
 
         $this->assertInstanceOf(Number::class, $result);
         $this->assertSame(8.166169912567652, $result->value());
-        $this->assertSame($result, $power->result());
     }
 
     public function testStringCast()

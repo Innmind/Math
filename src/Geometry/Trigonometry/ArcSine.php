@@ -16,7 +16,6 @@ use Innmind\Math\{
 final class ArcSine implements Number
 {
     private Number $number;
-    private ?Degree $arcSine = null;
 
     public function __construct(Number $number)
     {
@@ -150,16 +149,12 @@ final class ArcSine implements Number
 
     private function arcSine(): Degree
     {
-        if ($this->arcSine) {
-            return $this->arcSine;
-        }
-
         $radians = new Number\Number(
             \asin(
                 $this->number->value(),
             ),
         );
 
-        return $this->arcSine = (new Radian($radians))->toDegree();
+        return (new Radian($radians))->toDegree();
     }
 }

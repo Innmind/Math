@@ -19,7 +19,6 @@ use Innmind\Math\{
 final class Tangent implements Number
 {
     private Degree $degree;
-    private ?Number $tangent = null;
 
     public function __construct(Degree $degree)
     {
@@ -148,7 +147,7 @@ final class Tangent implements Number
 
     private function tangent(): Number
     {
-        return $this->tangent ?? $this->tangent = new Number\Number(
+        return new Number\Number(
             \tan(
                 $this->degree->toRadian()->number()->value(),
             ),

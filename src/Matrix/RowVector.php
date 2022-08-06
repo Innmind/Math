@@ -52,7 +52,7 @@ final class RowVector
             $values = [];
 
             foreach ($this->vector->numbers() as $rowNumber) {
-                $values[] = $rowNumber->multiplyBy($number);
+                $values[] = $rowNumber->multiplyBy($number)->collapse();
             }
 
             $rows[] = new self(...$values);

@@ -46,7 +46,6 @@ class SignumTest extends TestCase
 
         $this->assertInstanceOf(Number::class, $result);
         $this->assertSame(1, $result->value());
-        $this->assertSame($result, $sgn->result());
 
         $this->assertSame(-1, (new Signum(new Number\Number(-42)))->value());
         $this->assertSame(0, (new Signum(new Number\Number(0)))->value());

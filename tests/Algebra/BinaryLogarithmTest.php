@@ -51,7 +51,6 @@ class BinaryLogarithmTest extends TestCase
 
         $this->assertInstanceOf(Number::class, $result);
         $this->assertSame(0.0, $result->value());
-        $this->assertSame($result, $lb->result());
     }
 
     public function testValue()

@@ -16,7 +16,6 @@ use Innmind\Math\{
 final class ArcTangent implements Number
 {
     private Number $number;
-    private ?Degree $arcTangent = null;
 
     public function __construct(Number $number)
     {
@@ -156,16 +155,12 @@ final class ArcTangent implements Number
 
     private function arcTangent(): Degree
     {
-        if ($this->arcTangent) {
-            return $this->arcTangent;
-        }
-
         $radians = new Number\Number(
             \atan(
                 $this->number->value(),
             ),
         );
 
-        return $this->arcTangent = (new Radian($radians))->toDegree();
+        return (new Radian($radians))->toDegree();
     }
 }

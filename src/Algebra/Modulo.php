@@ -7,7 +7,6 @@ final class Modulo implements Operation, Number
 {
     private Number $number;
     private Number $modulus;
-    private ?Number $result = null;
 
     public function __construct(Number $number, Number $modulus)
     {
@@ -17,7 +16,7 @@ final class Modulo implements Operation, Number
 
     public function result(): Number
     {
-        return $this->result ??= Number\Number::wrap(
+        return Number\Number::wrap(
             \fmod($this->number->value(), $this->modulus->value()),
         );
     }

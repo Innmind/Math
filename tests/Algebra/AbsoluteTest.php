@@ -43,7 +43,6 @@ class AbsoluteTest extends TestCase
         $absolute = new Absolute(new Number\Number($number));
 
         $this->assertSame($expected, $absolute->value());
-        $this->assertSame($absolute->result(), $absolute->result());
     }
 
     public function testStringCast()

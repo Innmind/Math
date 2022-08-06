@@ -6,7 +6,6 @@ namespace Innmind\Math\Algebra;
 final class Ceil implements Number
 {
     private Number $number;
-    private int|float|null $value = null;
 
     public function __construct(Number $number)
     {
@@ -15,7 +14,7 @@ final class Ceil implements Number
 
     public function value(): int|float
     {
-        return $this->value ??= \ceil($this->number->value());
+        return \ceil($this->number->value());
     }
 
     public function equals(Number $number): bool

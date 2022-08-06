@@ -8,7 +8,6 @@ use Innmind\Math\Exception\FactorialMustBePositive;
 final class Factorial implements Operation, Number
 {
     private int $value;
-    private ?Number $number = null;
 
     public function __construct(int $value)
     {
@@ -131,12 +130,8 @@ final class Factorial implements Operation, Number
 
     public function result(): Number
     {
-        if ($this->number) {
-            return $this->number;
-        }
-
         if ($this->value < 2) {
-            return $this->number = new Integer(1);
+            return new Integer(1);
         }
 
         $factorial = $i = $this->value;
@@ -145,7 +140,7 @@ final class Factorial implements Operation, Number
             $factorial *= --$i;
         } while ($i > 1);
 
-        return $this->number = Number\Number::wrap($factorial);
+        return Number\Number::wrap($factorial);
     }
 
     public function collapse(): Number

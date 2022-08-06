@@ -48,7 +48,6 @@ class ModuloTest extends TestCase
 
         $this->assertInstanceOf(Number::class, $result);
         $this->assertEqualsWithDelta(0.24, $result->value(), 0.0001);
-        $this->assertSame($result, $modulo->result());
     }
 
     public function testStringCast()

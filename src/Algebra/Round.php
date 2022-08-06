@@ -10,7 +10,6 @@ final class Round implements Number
     private Number $number;
     private int $precision;
     private int $mode;
-    private int|float|null $value = null;
 
     private function __construct(Number $number, int $precision, int $mode)
     {
@@ -45,7 +44,7 @@ final class Round implements Number
 
     public function value(): int|float
     {
-        return $this->value ??= \round(
+        return \round(
             $this->number->value(),
             $this->precision,
             $this->mode,

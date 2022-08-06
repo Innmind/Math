@@ -19,7 +19,6 @@ use Innmind\Math\{
 final class Cosine implements Number
 {
     private Degree $degree;
-    private ?Number $cosine = null;
 
     public function __construct(Degree $degree)
     {
@@ -148,7 +147,7 @@ final class Cosine implements Number
 
     private function cosine(): Number
     {
-        return $this->cosine ??= new Number\Number(
+        return new Number\Number(
             \cos(
                 $this->degree->toRadian()->number()->value(),
             ),

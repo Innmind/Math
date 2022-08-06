@@ -9,7 +9,6 @@ final class Division implements Operation, Number
 {
     private Number $dividend;
     private Number $divisor;
-    private ?Number $result = null;
 
     public function __construct(Number $dividend, Number $divisor)
     {
@@ -148,7 +147,7 @@ final class Division implements Operation, Number
 
     public function result(): Number
     {
-        return $this->result ??= Number\Number::wrap(
+        return Number\Number::wrap(
             $this->dividend->value() / $this->divisor->value(),
         );
     }

@@ -51,7 +51,6 @@ class NaturalLogarithmTest extends TestCase
 
         $this->assertInstanceOf(Number::class, $result);
         $this->assertSame(0.0, $result->value());
-        $this->assertSame($result, $ln->result());
     }
 
     public function testValue()

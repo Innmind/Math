@@ -19,7 +19,6 @@ use Innmind\Math\{
 final class Sine implements Number
 {
     private Degree $degree;
-    private ?Number $sine = null;
 
     public function __construct(Degree $degree)
     {
@@ -148,7 +147,7 @@ final class Sine implements Number
 
     private function sine(): Number
     {
-        return $this->sine ??= new Number\Number(
+        return new Number\Number(
             \sin(
                 $this->degree->toRadian()->number()->value(),
             ),

@@ -58,7 +58,7 @@ final class Vector
 
         for ($i = 0; $i < $this->dimension->value(); $i++) {
             $value = $value->add(
-                $this->get($i)->multiplyBy($vector->get($i)),
+                $this->get($i)->multiplyBy($vector->get($i))->collapse(),
             );
         }
 
@@ -74,7 +74,7 @@ final class Vector
         $numbers = [];
 
         for ($i = 0; $i < $this->dimension->value(); $i++) {
-            $numbers[] = $this->get($i)->multiplyBy($vector->get($i));
+            $numbers[] = $this->get($i)->multiplyBy($vector->get($i))->collapse();
         }
 
         return new self(...$numbers);

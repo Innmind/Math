@@ -6,7 +6,6 @@ namespace Innmind\Math\Algebra;
 final class SquareRoot implements Operation, Number
 {
     private Number $number;
-    private ?Number $result = null;
 
     public function __construct(Number $number)
     {
@@ -20,7 +19,7 @@ final class SquareRoot implements Operation, Number
 
     public function result(): Number
     {
-        return $this->result ??= Number\Number::wrap(
+        return Number\Number::wrap(
             \sqrt($this->number->value()),
         );
     }

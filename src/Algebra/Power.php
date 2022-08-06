@@ -7,7 +7,6 @@ final class Power implements Operation, Number
 {
     private Number $number;
     private Number $power;
-    private ?Number $result = null;
 
     public function __construct(Number $number, Number $power)
     {
@@ -17,7 +16,7 @@ final class Power implements Operation, Number
 
     public function result(): Number
     {
-        return $this->result ??= Number\Number::wrap(
+        return Number\Number::wrap(
             $this->number->value() ** $this->power->value(),
         );
     }

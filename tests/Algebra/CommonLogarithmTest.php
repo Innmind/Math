@@ -51,7 +51,6 @@ class CommonLogarithmTest extends TestCase
 
         $this->assertInstanceOf(Number::class, $result);
         $this->assertSame(0.0, $result->value());
-        $this->assertSame($result, $lg->result());
     }
 
     public function testValue()
