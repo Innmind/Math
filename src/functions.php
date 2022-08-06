@@ -39,6 +39,8 @@ use Innmind\Math\{
 use Innmind\Immutable\Sequence;
 
 /**
+ * @no-named-arguments
+ *
  * @param int|float|Number $numbers
  */
 function add(...$numbers): Addition
@@ -89,6 +91,8 @@ function modulo($number, $modulus): Number
 }
 
 /**
+ * @no-named-arguments
+ *
  * @param int|float|Number $numbers
  */
 function multiply(...$numbers): Number
@@ -97,6 +101,8 @@ function multiply(...$numbers): Number
 }
 
 /**
+ * @no-named-arguments
+ *
  * @param int|float|Number $number
  * @param int|float|Number $power
  */
@@ -158,6 +164,8 @@ function squareRoot($number): Number
 }
 
 /**
+ * @no-named-arguments
+ *
  * @param int|float|Number $numbers
  */
 function subtract(...$numbers): Subtraction
@@ -246,6 +254,8 @@ function tangent($degree): Number
 }
 
 /**
+ * @no-named-arguments
+ *
  * @param int|float|Number $numbers
  */
 function frequence(...$numbers): Frequence
@@ -254,6 +264,8 @@ function frequence(...$numbers): Frequence
 }
 
 /**
+ * @no-named-arguments
+ *
  * @param int|float|Number $first
  * @param int|float|Number $numbers
  */
@@ -263,6 +275,8 @@ function mean($first, ...$numbers): Mean
 }
 
 /**
+ * @no-named-arguments
+ *
  * @param int|float|Number $first
  * @param int|float|Number $numbers
  */
@@ -272,6 +286,8 @@ function median($first, ...$numbers): Number
 }
 
 /**
+ * @no-named-arguments
+ *
  * @param int|float|Number $first
  * @param int|float|Number $second
  * @param int|float|Number $numbers
@@ -380,6 +396,8 @@ function min($first, ...$numbers): Number
 }
 
 /**
+ * @no-named-arguments
+ *
  * @param int|float|Number $numbers
  *
  * @return list<Number>
