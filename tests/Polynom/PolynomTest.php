@@ -49,7 +49,7 @@ class PolynomTest extends TestCase
     {
         $p = new Polynom;
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(\LogicException::class);
 
         $p->degree(2);
     }

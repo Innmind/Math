@@ -3,8 +3,10 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Algebra;
 
-use Innmind\Immutable\Sequence;
-use function Innmind\Immutable\join;
+use Innmind\Immutable\{
+    Sequence,
+    Str,
+};
 
 final class Multiplication implements Operation, Number
 {
@@ -17,7 +19,7 @@ final class Multiplication implements Operation, Number
         Number $second,
         Number ...$values,
     ) {
-        $this->values = Sequence::of(Number::class, $first, $second, ...$values);
+        $this->values = Sequence::of($first, $second, ...$values);
     }
 
     public function value(): int|float
@@ -141,21 +143,17 @@ final class Multiplication implements Operation, Number
             return $this->result;
         }
 
-        $value = $this
-            ->values
-            ->drop(1)
-            ->reduce(
-                $this->values->first()->value(),
-                static fn(int|float $carry, $number): int|float => $carry * $number->value(),
-            );
+        $value = $this->values->reduce(
+            1,
+            static fn(int|float $carry, $number): int|float => $carry * $number->value(),
+        );
 
         return $this->result = Number\Number::wrap($value);
     }
 
     public function toString(): string
     {
-        $values = $this->values->mapTo(
-            'string',
+        $values = $this->values->map(
             static function(Number $number) {
                 if ($number instanceof Operation) {
                     return '('.$number->toString().')';
@@ -165,6 +163,6 @@ final class Multiplication implements Operation, Number
             },
         );
 
-        return join(' x ', $values)->toString();
+        return Str::of(' x ')->join($values)->toString();
     }
 }

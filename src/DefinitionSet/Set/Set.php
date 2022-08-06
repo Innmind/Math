@@ -10,19 +10,22 @@ use Innmind\Math\{
     Algebra\Number,
     Exception\OutOfDefinitionSet,
 };
-use Innmind\Immutable\Sequence;
-use function Innmind\Immutable\join;
+use Innmind\Immutable\{
+    Sequence,
+    Str,
+};
 
 final class Set implements SetInterface
 {
     /** @var Sequence<int|float> */
     private Sequence $values;
 
+    /**
+     * @no-named-arguments
+     */
     public function __construct(Number ...$values)
     {
-        /** @psalm-suppress MixedArgumentTypeCoercion No need to revalidate the type */
-        $this->values = Sequence::mixed(...$values)->mapTo(
-            'int|float',
+        $this->values = Sequence::of(...$values)->map(
             static fn(Number $v) => $v->value(),
         );
     }
@@ -56,12 +59,12 @@ final class Set implements SetInterface
         }
 
         /** @var Sequence<string> */
-        $values = $this->values->mapTo(
-            'string',
+        $values = $this->values->map(
             static fn($number): string => (string) $number,
         );
 
-        return join(';', $values)
+        return Str::of(';')
+            ->join($values)
             ->prepend('{')
             ->append('}')
             ->toString();

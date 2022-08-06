@@ -3,11 +3,14 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Algebra;
 
-use Innmind\Immutable\Sequence;
-use function Innmind\Immutable\join;
+use Innmind\Immutable\{
+    Sequence,
+    Str,
+};
 
 final class Subtraction implements Operation, Number
 {
+    private Number $first;
     /** @var Sequence<Number> */
     private Sequence $values;
     private ?Number $result = null;
@@ -17,7 +20,8 @@ final class Subtraction implements Operation, Number
         Number $second,
         Number ...$values,
     ) {
-        $this->values = Sequence::of(Number::class, $first, $second, ...$values);
+        $this->first = $first;
+        $this->values = Sequence::of($first, $second, ...$values);
     }
 
     public function value(): int|float
@@ -145,7 +149,7 @@ final class Subtraction implements Operation, Number
             ->values
             ->drop(1)
             ->reduce(
-                $this->values->first()->value(),
+                $this->first->value(),
                 static fn(int|float $carry, $number): int|float => $carry - $number->value(),
             );
 
@@ -154,8 +158,7 @@ final class Subtraction implements Operation, Number
 
     public function toString(): string
     {
-        $values = $this->values->mapTo(
-            'string',
+        $values = $this->values->map(
             static function(Number $number) {
                 if ($number instanceof Operation) {
                     return '('.$number->toString().')';
@@ -165,6 +168,6 @@ final class Subtraction implements Operation, Number
             },
         );
 
-        return join(' - ', $values)->toString();
+        return Str::of(' - ')->join($values)->toString();
     }
 }

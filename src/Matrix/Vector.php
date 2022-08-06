@@ -11,7 +11,6 @@ use Innmind\Math\{
     Algebra\Integer,
 };
 use Innmind\Immutable\Sequence;
-use function Innmind\Immutable\unwrap;
 
 final class Vector
 {
@@ -21,7 +20,7 @@ final class Vector
 
     public function __construct(Number $number, Number ...$numbers)
     {
-        $this->numbers = Sequence::of(Number::class, $number, ...$numbers);
+        $this->numbers = Sequence::of($number, ...$numbers);
         $this->dimension = new Integer($this->numbers->size());
     }
 
@@ -35,12 +34,10 @@ final class Vector
      */
     public function toArray(): array
     {
-        $values = $this->numbers->mapTo(
-            'int|float',
-            static fn(Number $number) => $number->value(),
-        );
-
-        return unwrap($values);
+        return $this
+            ->numbers
+            ->map(static fn(Number $number) => $number->value())
+            ->toList();
     }
 
     public function dimension(): Integer
@@ -134,12 +131,12 @@ final class Vector
             return $number->power($power);
         });
 
-        return new self(...unwrap($numbers));
+        return new self(...$numbers->toList());
     }
 
     public function sum(): Number
     {
-        return add(...unwrap($this->numbers));
+        return add(...$this->numbers->toList());
     }
 
     /**
@@ -147,7 +144,7 @@ final class Vector
      */
     public function foreach(callable $function): void
     {
-        $this->numbers->foreach($function);
+        $_ = $this->numbers->foreach($function);
     }
 
     /**
@@ -156,7 +153,7 @@ final class Vector
     public function map(callable $function): self
     {
         return new self(
-            ...unwrap($this->numbers->map($function)),
+            ...$this->numbers->map($function)->toList(),
         );
     }
 
@@ -175,7 +172,10 @@ final class Vector
 
     public function get(int $position): Number
     {
-        return $this->numbers->get($position);
+        return $this->numbers->get($position)->match(
+            static fn($number) => $number,
+            static fn() => throw new \LogicException,
+        );
     }
 
     public function equals(self $vector): bool
@@ -215,6 +215,6 @@ final class Vector
      */
     public function numbers(): array
     {
-        return unwrap($this->numbers);
+        return $this->numbers->toList();
     }
 }

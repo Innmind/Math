@@ -15,7 +15,7 @@ final class Median implements Number
 
     public function __construct(Number $first, Number ...$values)
     {
-        $sequence = Sequence::of(Number::class, $first, ...$values);
+        $sequence = Sequence::of($first, ...$values);
         $sequence = $sequence->sort(static function(Number $a, Number $b): int {
             if ($a->equals($b)) {
                 return 0;
@@ -28,9 +28,14 @@ final class Median implements Number
             case 1:
                 //mathematically the index to choose is (size+1/2) but here we
                 //do (size-1)/2 as the sequence indexes start at 0
-                $this->result = $sequence->get(
-                    (int) (($sequence->size() - 1) / 2),
-                );
+                $this->result = $sequence
+                    ->get(
+                        (int) (($sequence->size() - 1) / 2),
+                    )
+                    ->match(
+                        static fn($result) => $result,
+                        static fn() => throw new \LogicException,
+                    );
                 break;
 
             default:
@@ -38,8 +43,14 @@ final class Median implements Number
                 //do mean(size/2-1, size/2) as the sequence indexes start at 0
                 $index = (int) ($sequence->size() / 2);
                 $this->result = new Mean(
-                    $sequence->get($index - 1),
-                    $sequence->get($index),
+                    $sequence->get($index - 1)->match(
+                        static fn($number) => $number,
+                        static fn() => throw new \LogicException,
+                    ),
+                    $sequence->get($index)->match(
+                        static fn($number) => $number,
+                        static fn() => throw new \LogicException,
+                    ),
                 );
                 break;
         }

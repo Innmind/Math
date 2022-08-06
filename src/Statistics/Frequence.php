@@ -15,9 +15,12 @@ final class Frequence
     private Sequence $values;
     private Number $size;
 
+    /**
+     * @no-named-arguments
+     */
     public function __construct(Number ...$values)
     {
-        $this->values = Sequence::of(Number::class, ...$values);
+        $this->values = Sequence::of(...$values);
         $this->size = new Number\Number($this->values->size());
     }
 

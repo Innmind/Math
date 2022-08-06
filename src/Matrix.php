@@ -18,7 +18,6 @@ use Innmind\Math\{
     Algebra\Integer,
 };
 use Innmind\Immutable\Sequence;
-use function Innmind\Immutable\unwrap;
 
 final class Matrix
 {
@@ -30,9 +29,9 @@ final class Matrix
 
     public function __construct(RowVector $first, RowVector ...$rows)
     {
-        $this->rows = Sequence::of(RowVector::class, $first, ...$rows);
+        $this->rows = Sequence::of($first, ...$rows);
 
-        $this
+        $_ = $this
             ->rows
             ->drop(1)
             ->foreach(static function(RowVector $row) use ($first): void {
@@ -42,10 +41,10 @@ final class Matrix
             });
 
         /** @var Sequence<ColumnVector> */
-        $this->columns = Sequence::of(ColumnVector::class);
+        $this->columns = Sequence::of();
         $this->dimension = new Dimension(
             new Integer($this->rows->size()),
-            $this->rows->get(0)->dimension(),
+            $first->dimension(),
         );
         $this->buildColumns();
     }
@@ -68,14 +67,13 @@ final class Matrix
         ColumnVector $first,
         ColumnVector ...$columns,
     ): self {
-        $numbers = Sequence::of(ColumnVector::class, $first, ...$columns)->mapTo(
-            'array',
+        $numbers = Sequence::of($first, ...$columns)->map(
             static function(ColumnVector $column): array {
                 return $column->numbers();
             },
         );
 
-        $self = self::of(unwrap($numbers));
+        $self = self::of($numbers->toList());
 
         return $self->transpose();
     }
@@ -124,12 +122,18 @@ final class Matrix
 
     public function row(int $row): RowVector
     {
-        return $this->rows->get($row);
+        return $this->rows->get($row)->match(
+            static fn($row) => $row,
+            static fn() => throw new \LogicException,
+        );
     }
 
     public function column(int $column): ColumnVector
     {
-        return $this->columns->get($column);
+        return $this->columns->get($column)->match(
+            static fn($column) => $column,
+            static fn() => throw new \LogicException,
+        );
     }
 
     /**
@@ -151,24 +155,26 @@ final class Matrix
     public function dropRow(int $row): self
     {
         return new self(
-            ...unwrap($this
+            ...$this
                 ->rows
                 ->slice(0, $row)
                 ->append(
                     $this->rows->slice($row + 1, $this->rows->size()),
-                ), ),
+                )
+                ->toList(),
         );
     }
 
     public function dropColumn(int $column): self
     {
         return self::fromColumns(
-            ...unwrap($this
+            ...$this
                 ->columns
                 ->slice(0, $column)
                 ->append(
                     $this->columns->slice($column + 1, $this->columns->size()),
-                ), ),
+                )
+                ->toList(),
         );
     }
 
@@ -212,7 +218,7 @@ final class Matrix
             static fn(RowVector $row): RowVector => $row->multiplyBy($multiplier),
         );
 
-        return new self(...unwrap($rows));
+        return new self(...$rows->toList());
     }
 
     public function transpose(): self
@@ -234,23 +240,23 @@ final class Matrix
     {
         /** @var Sequence<list<Number>> */
         $rows = $this->rows->reduce(
-            Sequence::of('array'),
+            Sequence::of(),
             static function(Sequence $rows, RowVector $row) use ($matrix): Sequence {
                 /** @var Sequence<Number> */
                 $newRow = $matrix
                     ->columns()
                     ->reduce(
-                        Sequence::of(Number::class),
+                        Sequence::of(),
                         static function(Sequence $carry, ColumnVector $column) use ($row): Sequence {
                             return ($carry)($row->dot($column));
                         },
                     );
 
-                return ($rows)(unwrap($newRow));
+                return ($rows)($newRow->toList());
             },
         );
 
-        return self::of(unwrap($rows));
+        return self::of($rows->toList());
     }
 
     public function isSquare(): bool
@@ -266,7 +272,7 @@ final class Matrix
 
         /** @var Sequence<RowVector> */
         $rows = $this->rows->reduce(
-            Sequence::of(RowVector::class),
+            Sequence::of(),
             static function(Sequence $rows, RowVector $row): Sequence {
                 $numbers = $row->toArray();
                 $newRow = \array_fill(0, $row->dimension()->value(), 0);
@@ -277,7 +283,7 @@ final class Matrix
             },
         );
 
-        return new self(...unwrap($rows));
+        return new self(...$rows->toList());
     }
 
     public function identity(): self
@@ -288,7 +294,7 @@ final class Matrix
 
         /** @var Sequence<RowVector> */
         $rows = $this->rows->reduce(
-            Sequence::of(RowVector::class),
+            Sequence::of(),
             static function(Sequence $rows, RowVector $row): Sequence {
                 $newRow = \array_fill(0, $row->dimension()->value(), 0);
                 $newRow[$rows->size()] = 1;
@@ -297,7 +303,7 @@ final class Matrix
             },
         );
 
-        return new self(...unwrap($rows));
+        return new self(...$rows->toList());
     }
 
     public function equals(self $matrix): bool
@@ -371,7 +377,7 @@ final class Matrix
     public function augmentWith(self $matrix): self
     {
         return self::fromColumns(
-            ...unwrap($this->columns->append($matrix->columns())),
+            ...$this->columns->append($matrix->columns())->toList(),
         );
     }
 
@@ -396,12 +402,14 @@ final class Matrix
             throw new MatrixNotInvertible;
         }
 
+        /** @psalm-suppress ArgumentTypeCoercion */
         return self::fromColumns(
-            ...unwrap($matrix
+            ...$matrix
                 ->columns()
                 ->takeEnd(
                     $this->dimension->columns()->value(),
-                ), ),
+                )
+                ->toList(),
         );
     }
 
@@ -430,8 +438,12 @@ final class Matrix
 
         do {
             //reduce the matrix to an echelon form with leading ones
-            [$echeloned, $toEchelon] = unwrap($rows->splitAt($index + 1));
-            $reference = $echeloned->last();
+            $echeloned = $rows->take($index + 1);
+            $toEchelon = $rows->drop($index + 1);
+            $reference = $echeloned->last()->match(
+                static fn($reference) => $reference,
+                static fn() => throw new \LogicException,
+            );
             /** @var Sequence<RowVector> */
             $rows = $toEchelon->reduce(
                 $echeloned,
@@ -467,7 +479,7 @@ final class Matrix
             ++$index;
         } while ($index < $this->dimension()->rows()->value());
 
-        return new self(...unwrap($rows));
+        return new self(...$rows->toList());
     }
 
     private function reduceUpperTriangle(self $matrix): self
@@ -481,14 +493,20 @@ final class Matrix
         do {
             //for each line remove the lines below by mutuplying them
             //by the number in j column of the row being manipulated
-            [$reduced, $toReduce] = unwrap($rows->splitAt($reference + 1));
+            $reduced = $rows->take($reference + 1);
+            $toReduce = $rows->drop($reference + 1);
             /** @var Sequence<RowVector> */
             $rows = $toReduce->reduce(
                 $reduced,
                 static function(Sequence $rows, RowVector $row) use ($index, $reduced): Sequence {
+                    $last = $reduced->last()->match(
+                        static fn($reduced) => $reduced,
+                        static fn() => throw new \LogicException,
+                    );
+
                     return ($rows)(
                         $row->subtract(
-                            $reduced->last()->multiplyBy(
+                            $last->multiplyBy(
                                 RowVector::initialize(
                                     $row->dimension(),
                                     $row->get($index),
@@ -502,6 +520,6 @@ final class Matrix
             ++$reference;
         } while ($index >= 0);
 
-        return new self(...unwrap($rows->reverse()));
+        return new self(...$rows->reverse()->toList());
     }
 }

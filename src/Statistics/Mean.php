@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Statistics;
 
+use function Innmind\Math\add;
 use Innmind\Math\Algebra\{
     Number,
     Round,
@@ -15,15 +16,8 @@ final class Mean implements Number
 
     public function __construct(Number $first, Number ...$values)
     {
-        $sequence = Sequence::of(Number::class, $first, ...$values);
-        $sum = $sequence
-            ->drop(1)
-            ->reduce(
-                $sequence->first(),
-                static function(Number $carry, Number $number): Number {
-                    return $carry->add($number);
-                },
-            );
+        $sequence = Sequence::of($first, ...$values);
+        $sum = add($first, ...$values);
         $this->result = $sum->divideBy(new Number\Number($sequence->size()));
     }
 

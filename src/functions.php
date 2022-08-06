@@ -279,7 +279,7 @@ function max(
     int|float|Number $first,
     int|float|Number ...$numbers,
 ): Number {
-    $numbers = Sequence::of(Number::class, ...numerize($first, ...$numbers));
+    $numbers = Sequence::of(...numerize($first, ...$numbers));
 
     return $numbers
         ->sort(static function(Number $a, Number $b): int {
@@ -289,7 +289,11 @@ function max(
 
             return $b->higherThan($a) ? 1 : -1;
         })
-        ->first();
+        ->first()
+        ->match(
+            static fn($max) => $max,
+            static fn() => throw new \LogicException('Unreachable'),
+        );
 }
 
 /**
@@ -299,7 +303,7 @@ function min(
     int|float|Number $first,
     int|float|Number ...$numbers,
 ): Number {
-    $numbers = Sequence::of(Number::class, ...numerize($first, ...$numbers));
+    $numbers = Sequence::of(...numerize($first, ...$numbers));
 
     return $numbers
         ->sort(static function(Number $a, Number $b): int {
@@ -309,7 +313,11 @@ function min(
 
             return $a->higherThan($b) ? 1 : -1;
         })
-        ->first();
+        ->first()
+        ->match(
+            static fn($min) => $min,
+            static fn() => throw new \LogicException('Unreachable'),
+        );
 }
 
 /**

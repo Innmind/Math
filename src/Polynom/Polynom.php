@@ -16,10 +16,7 @@ use Innmind\Math\Algebra\{
 use Innmind\Immutable\{
     Map,
     Sequence,
-};
-use function Innmind\Immutable\{
-    unwrap,
-    join,
+    Str,
 };
 
 final class Polynom
@@ -32,7 +29,7 @@ final class Polynom
     {
         $this->intercept = $intercept ?? new Integer(0);
         /** @var Map<int, Degree> */
-        $this->degrees = Map::of('int', Degree::class);
+        $this->degrees = Map::of();
 
         foreach ($degrees as $degree) {
             $this->degrees = ($this->degrees)(
@@ -72,7 +69,7 @@ final class Polynom
 
         return new self(
             $this->intercept,
-            ...unwrap($degrees->values()),
+            ...$degrees->values()->toList(),
         );
     }
 
@@ -89,7 +86,10 @@ final class Polynom
      */
     public function degree(int $degree): Degree
     {
-        return $this->degrees->get($degree);
+        return $this->degrees->get($degree)->match(
+            static fn($degree) => $degree,
+            static fn() => throw new \LogicException,
+        );
     }
 
     /**
@@ -141,26 +141,27 @@ final class Polynom
             );
         }
 
-        return new self(new Integer(0), ...unwrap($degrees));
+        return new self(new Integer(0), ...$degrees->toList());
     }
 
     public function derivative(): self
     {
-        $degrees = $this->degrees;
-        $intercept = new Integer(0);
-
-        if ($degrees->contains(1)) {
-            $intercept = $degrees->get(1)->coeff();
-            $degrees = $degrees->remove(1);
-        }
+        [$intercept, $degrees] = $this
+            ->degrees
+            ->get(1)
+            ->match(
+                fn($degree) => [$degree->coeff(), $this->degrees->remove(1)],
+                fn() => [new Integer(0), $this->degrees],
+            );
 
         return new self(
             $intercept,
-            ...unwrap($degrees
+            ...$degrees
                 ->values()
                 ->map(static function(Degree $degree): Degree {
                     return $degree->derivative();
-                }), ),
+                })
+                ->toList(),
         );
     }
 
@@ -181,11 +182,8 @@ final class Polynom
 
                 return $b->degree()->higherThan($a->degree()) ? 1 : -1;
             })
-            ->mapTo(
-                'string',
-                static fn(Degree $degree): string => $degree->toString(),
-            );
-        $polynom = join(' + ', $degrees);
+            ->map(static fn(Degree $degree): string => $degree->toString());
+        $polynom = Str::of(' + ')->join($degrees);
 
         if (!$this->intercept->equals(new Integer(0))) {
             $intercept = $this->intercept instanceof Operation ?
