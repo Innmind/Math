@@ -73,7 +73,7 @@ final class Ceil implements Number
         return new Floor($this);
     }
 
-    public function ceil(): Number
+    public function ceil(): self
     {
         return new self($this);
     }

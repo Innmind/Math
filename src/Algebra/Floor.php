@@ -68,7 +68,7 @@ final class Floor implements Number
         return Round::odd($this, $precision);
     }
 
-    public function floor(): Number
+    public function floor(): self
     {
         return new self($this);
     }

@@ -97,7 +97,7 @@ final class Power implements Operation, Number
         return new Absolute($this);
     }
 
-    public function power(Number $power): Number
+    public function power(Number $power): self
     {
         return new self($this, $power);
     }

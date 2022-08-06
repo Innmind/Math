@@ -87,7 +87,7 @@ final class Modulo implements Operation, Number
         return new Ceil($this);
     }
 
-    public function modulo(Number $modulus): Number
+    public function modulo(Number $modulus): self
     {
         return new self($this, $modulus);
     }

@@ -125,7 +125,7 @@ final class Signum implements Operation, Number
         return new CommonLogarithm($this);
     }
 
-    public function signum(): Number
+    public function signum(): self
     {
         return new self($this);
     }

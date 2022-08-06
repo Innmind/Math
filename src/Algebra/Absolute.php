@@ -90,7 +90,7 @@ final class Absolute implements Operation, Number
         return new Modulo($this, $modulus);
     }
 
-    public function absolute(): Number
+    public function absolute(): self
     {
         return new self($this);
     }

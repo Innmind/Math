@@ -35,7 +35,7 @@ final class Addition implements Operation, Number
         return $this->result()->higherThan($number);
     }
 
-    public function add(Number $number, Number ...$numbers): Number
+    public function add(Number $number, Number ...$numbers): self
     {
         return new self($this, $number, ...$numbers);
     }

@@ -40,7 +40,7 @@ final class Subtraction implements Operation, Number
         return new Addition($this, $number, ...$numbers);
     }
 
-    public function subtract(Number $number, Number ...$numbers): Number
+    public function subtract(Number $number, Number ...$numbers): self
     {
         return new self($this, $number, ...$numbers);
     }

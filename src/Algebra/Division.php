@@ -56,7 +56,7 @@ final class Division implements Operation, Number
         return new Subtraction($this, $number, ...$numbers);
     }
 
-    public function divideBy(Number $number): Number
+    public function divideBy(Number $number): self
     {
         return new self($this, $number);
     }

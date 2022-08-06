@@ -50,7 +50,7 @@ final class Multiplication implements Operation, Number
         return new Division($this, $number);
     }
 
-    public function multiplyBy(Number $number, Number ...$numbers): Number
+    public function multiplyBy(Number $number, Number ...$numbers): self
     {
         return new self($this, $number, ...$numbers);
     }

@@ -105,7 +105,7 @@ final class Exponential implements Operation, Number
         return new SquareRoot($this);
     }
 
-    public function exponential(): Number
+    public function exponential(): self
     {
         return new self($this);
     }

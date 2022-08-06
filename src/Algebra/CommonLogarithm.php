@@ -126,7 +126,7 @@ final class CommonLogarithm implements Operation, Number
         return new NaturalLogarithm($this);
     }
 
-    public function commonLogarithm(): Number
+    public function commonLogarithm(): self
     {
         return new self($this);
     }

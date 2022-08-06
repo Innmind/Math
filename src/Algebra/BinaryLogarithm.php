@@ -116,7 +116,7 @@ final class BinaryLogarithm implements Operation, Number
         return new Exponential($this);
     }
 
-    public function binaryLogarithm(): Number
+    public function binaryLogarithm(): self
     {
         return new self($this);
     }

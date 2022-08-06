@@ -100,7 +100,7 @@ final class SquareRoot implements Operation, Number
         return new Power($this, $power);
     }
 
-    public function squareRoot(): Number
+    public function squareRoot(): self
     {
         return new self($this);
     }

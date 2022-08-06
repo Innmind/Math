@@ -121,7 +121,7 @@ final class NaturalLogarithm implements Operation, Number
         return new BinaryLogarithm($this);
     }
 
-    public function naturalLogarithm(): Number
+    public function naturalLogarithm(): self
     {
         return new self($this);
     }
