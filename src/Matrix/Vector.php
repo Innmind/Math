@@ -21,7 +21,6 @@ final class Vector
 
     public function __construct(Number $number, Number ...$numbers)
     {
-        /** @var Sequence<Number> */
         $this->numbers = Sequence::of(Number::class, $number, ...$numbers);
         $this->dimension = new Integer($this->numbers->size());
     }

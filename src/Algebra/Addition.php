@@ -17,7 +17,6 @@ final class Addition implements Operation, Number
         Number $second,
         Number ...$values,
     ) {
-        /** @var Sequence<Number> */
         $this->values = Sequence::of(Number::class, $first, $second, ...$values);
     }
 
@@ -152,7 +151,6 @@ final class Addition implements Operation, Number
             return $carry + $number->value();
         };
 
-        /** @var int|float */
         $value = $this
             ->values
             ->drop(1)

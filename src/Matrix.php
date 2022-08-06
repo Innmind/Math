@@ -30,7 +30,6 @@ final class Matrix
 
     public function __construct(RowVector $first, RowVector ...$rows)
     {
-        /** @var Sequence<RowVector> */
         $this->rows = Sequence::of(RowVector::class, $first, ...$rows);
 
         $this

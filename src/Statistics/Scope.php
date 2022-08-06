@@ -18,7 +18,6 @@ final class Scope implements Number
         Number $second,
         Number ...$values,
     ) {
-        /** @var Sequence<Number> */
         $sequence = Sequence::of(Number::class, $first, $second, ...$values);
         $sequence = $sequence->sort(static function(Number $a, Number $b): int {
             if ($a->equals($b)) {

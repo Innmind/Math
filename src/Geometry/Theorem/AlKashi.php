@@ -63,7 +63,6 @@ final class AlKashi
         $b = $b->length();
         $c = $c->length();
         $longest = maximum($a, $b, $c);
-        /** @var Set<Number> */
         $opposites = Set::of(Number::class, $a, $b, $c)->remove($longest);
         $opposites = add(...unwrap($opposites));
 

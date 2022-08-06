@@ -347,7 +347,6 @@ function signum($number): Signum
  */
 function max($first, ...$numbers): Number
 {
-    /** @var Sequence<Number> */
     $numbers = Sequence::of(Number::class, ...numerize($first, ...$numbers));
 
     return $numbers
@@ -367,7 +366,6 @@ function max($first, ...$numbers): Number
  */
 function min($first, ...$numbers): Number
 {
-    /** @var Sequence<Number> */
     $numbers = Sequence::of(Number::class, ...numerize($first, ...$numbers));
 
     return $numbers

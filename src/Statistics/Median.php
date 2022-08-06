@@ -15,7 +15,6 @@ final class Median implements Number
 
     public function __construct(Number $first, Number ...$values)
     {
-        /** @var Sequence<Number> */
         $sequence = Sequence::of(Number::class, $first, ...$values);
         $sequence = $sequence->sort(static function(Number $a, Number $b): int {
             if ($a->equals($b)) {
