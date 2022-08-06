@@ -157,6 +157,11 @@ final class Round implements Number
         return new Signum($this);
     }
 
+    public function collapse(): Number
+    {
+        return $this;
+    }
+
     public function toString(): string
     {
         return \var_export($this->value(), true);

@@ -151,6 +151,11 @@ final class NaturalLogarithm implements Operation, Number
         );
     }
 
+    public function collapse(): Number
+    {
+        return $this->result();
+    }
+
     public function toString(): string
     {
         return \sprintf('ln(%s)', $this->number->toString());

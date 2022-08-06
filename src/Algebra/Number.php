@@ -28,4 +28,13 @@ interface Number
     public function commonLogarithm(): self;
     public function signum(): self;
     public function toString(): string;
+
+    /**
+     * Compute the underlying number like the value() method but it will try to
+     * skip some operations to provide the most accurate number
+     *
+     * For example instead of computing each operation of `sqrt(square(x))` it
+     * will directly return `x`
+     */
+    public function collapse(): self;
 }

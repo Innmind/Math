@@ -136,6 +136,11 @@ final class Tangent implements Number
         return $this->tangent()->signum();
     }
 
+    public function collapse(): Number
+    {
+        return $this;
+    }
+
     public function toString(): string
     {
         return \sprintf('tan(%s)', $this->degree->toString());

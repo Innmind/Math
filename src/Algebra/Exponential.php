@@ -130,6 +130,11 @@ final class Exponential implements Operation, Number
         return new Signum($this);
     }
 
+    public function collapse(): Number
+    {
+        return $this->result();
+    }
+
     public function toString(): string
     {
         $power = $this->power instanceof Operation ?

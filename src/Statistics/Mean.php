@@ -136,6 +136,11 @@ final class Mean implements Number
         return $this->result->signum();
     }
 
+    public function collapse(): Number
+    {
+        return $this;
+    }
+
     public function toString(): string
     {
         return $this->result->toString();

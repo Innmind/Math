@@ -144,6 +144,11 @@ final class ArcTangent implements Number
         return $this->arcTangent()->number()->signum();
     }
 
+    public function collapse(): Number
+    {
+        return $this;
+    }
+
     public function toString(): string
     {
         return \sprintf('tan⁻¹(%s)', $this->number->toString());

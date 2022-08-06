@@ -151,6 +151,11 @@ final class CommonLogarithm implements Operation, Number
         );
     }
 
+    public function collapse(): Number
+    {
+        return $this->result();
+    }
+
     public function toString(): string
     {
         return \sprintf('lg(%s)', $this->number->toString());

@@ -130,6 +130,11 @@ final class SquareRoot implements Operation, Number
         return new Signum($this);
     }
 
+    public function collapse(): Number
+    {
+        return $this->result();
+    }
+
     public function toString(): string
     {
         $number = $this->number instanceof Operation ?

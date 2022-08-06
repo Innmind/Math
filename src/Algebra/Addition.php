@@ -150,6 +150,11 @@ final class Addition implements Operation, Number
         return $this->result = Number\Number::wrap($value);
     }
 
+    public function collapse(): Number
+    {
+        return $this->result();
+    }
+
     public function toString(): string
     {
         $values = $this->values->map(

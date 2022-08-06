@@ -136,6 +136,11 @@ final class Cosine implements Number
         return $this->cosine()->signum();
     }
 
+    public function collapse(): Number
+    {
+        return $this;
+    }
+
     public function toString(): string
     {
         return \sprintf('cos(%s)', $this->degree->toString());

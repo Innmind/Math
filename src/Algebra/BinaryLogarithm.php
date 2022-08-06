@@ -151,6 +151,11 @@ final class BinaryLogarithm implements Operation, Number
         );
     }
 
+    public function collapse(): Number
+    {
+        return $this->result();
+    }
+
     public function toString(): string
     {
         return \sprintf('lb(%s)', $this->number->toString());

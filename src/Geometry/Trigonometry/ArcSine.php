@@ -138,6 +138,11 @@ final class ArcSine implements Number
         return $this->arcSine()->number()->signum();
     }
 
+    public function collapse(): Number
+    {
+        return $this;
+    }
+
     public function toString(): string
     {
         return \sprintf('sin⁻¹(%s)', $this->number->toString());

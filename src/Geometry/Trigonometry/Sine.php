@@ -136,6 +136,11 @@ final class Sine implements Number
         return $this->sine()->signum();
     }
 
+    public function collapse(): Number
+    {
+        return $this;
+    }
+
     public function toString(): string
     {
         return \sprintf('sin(%s)', $this->degree->toString());

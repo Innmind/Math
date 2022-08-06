@@ -130,6 +130,11 @@ final class Absolute implements Operation, Number
         return new Signum($this);
     }
 
+    public function collapse(): Number
+    {
+        return $this->result();
+    }
+
     public function toString(): string
     {
         return '|'.$this->number->toString().'|';

@@ -158,6 +158,11 @@ final class Infinite implements NumberInterface
         return new Signum($this);
     }
 
+    public function collapse(): NumberInterface
+    {
+        return $this;
+    }
+
     public function toString(): string
     {
         return $this->value() > 0 ? '+∞' : '-∞';

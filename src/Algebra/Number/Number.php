@@ -167,6 +167,11 @@ final class Number implements NumberInterface
         return new Signum($this);
     }
 
+    public function collapse(): NumberInterface
+    {
+        return $this;
+    }
+
     public function toString(): string
     {
         return \var_export($this->value, true);

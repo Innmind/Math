@@ -138,6 +138,11 @@ final class ArcCosine implements Number
         return $this->arcCosine()->number()->signum();
     }
 
+    public function collapse(): Number
+    {
+        return $this;
+    }
+
     public function toString(): string
     {
         return \sprintf('cos⁻¹(%s)', $this->number->toString());

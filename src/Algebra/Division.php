@@ -153,6 +153,11 @@ final class Division implements Operation, Number
         );
     }
 
+    public function collapse(): Number
+    {
+        return $this->result();
+    }
+
     public function toString(): string
     {
         $dividend = $this->dividend instanceof Operation ?

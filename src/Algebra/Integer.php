@@ -141,6 +141,11 @@ final class Integer implements Number
         return new self($this->number->value() - 1);
     }
 
+    public function collapse(): Number
+    {
+        return $this;
+    }
+
     public function toString(): string
     {
         return $this->number->toString();
