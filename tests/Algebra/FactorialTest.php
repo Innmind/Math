@@ -33,7 +33,7 @@ class FactorialTest extends TestCase
     {
         $this->assertInstanceOf(
             Number::class,
-            new Factorial(42)
+            new Factorial(42),
         );
     }
 

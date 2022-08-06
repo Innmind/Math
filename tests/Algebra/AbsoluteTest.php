@@ -50,7 +50,7 @@ class AbsoluteTest extends TestCase
     {
         $this->assertSame(
             '|42.45|',
-            (new Absolute(new Number\Number(42.45)))->toString()
+            (new Absolute(new Number\Number(42.45)))->toString(),
         );
     }
 

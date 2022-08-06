@@ -25,36 +25,36 @@ class QuantileTest extends TestCase
         $this->assertInstanceOf(Number::class, $quantile->min()->value());
         $this->assertSame(
             $min,
-            $quantile->min()->value()->value()
+            $quantile->min()->value()->value(),
         );
         $this->assertInstanceOf(Quartile::class, $quantile->max());
         $this->assertInstanceOf(Number::class, $quantile->max()->value());
         $this->assertSame(
             $max,
-            $quantile->max()->value()->value()
+            $quantile->max()->value()->value(),
         );
         $this->assertInstanceOf(Number::class, $quantile->mean());
         $this->assertSame(
             $mean,
-            $quantile->mean()->value()
+            $quantile->mean()->value(),
         );
         $this->assertInstanceOf(Quartile::class, $quantile->median());
         $this->assertInstanceOf(Number::class, $quantile->median()->value());
         $this->assertSame(
             $median,
-            $quantile->median()->value()->value()
+            $quantile->median()->value()->value(),
         );
         $this->assertInstanceOf(Quartile::class, $quantile->quartile(1));
         $this->assertInstanceOf(Number::class, $quantile->quartile(1)->value());
         $this->assertSame(
             $first,
-            $quantile->quartile(1)->value()->value()
+            $quantile->quartile(1)->value()->value(),
         );
         $this->assertInstanceOf(Quartile::class, $quantile->quartile(3));
         $this->assertInstanceOf(Number::class, $quantile->quartile(3)->value());
         $this->assertSame(
             $third,
-            $quantile->quartile(3)->value()->value()
+            $quantile->quartile(3)->value()->value(),
         );
     }
 

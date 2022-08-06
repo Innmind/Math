@@ -32,7 +32,7 @@ class ArcCosineTest extends TestCase
     public function testInterface()
     {
         $acos = new ArcCosine(
-            new Cosine(new Degree(new Number\Number(42)))
+            new Cosine(new Degree(new Number\Number(42))),
         );
 
         $this->assertInstanceOf(Number::class, $acos);
@@ -44,7 +44,7 @@ class ArcCosineTest extends TestCase
     public function testEquals()
     {
         $acos = new ArcCosine(
-            new Cosine(new Degree(new Number\Number(42)))
+            new Cosine(new Degree(new Number\Number(42))),
         );
 
         $this->assertTrue($acos->equals($acos));
@@ -55,7 +55,7 @@ class ArcCosineTest extends TestCase
     public function testHigherThan()
     {
         $acos = new ArcCosine(
-            new Cosine(new Degree(new Number\Number(42)))
+            new Cosine(new Degree(new Number\Number(42))),
         );
 
         $this->assertFalse($acos->higherThan($acos));
@@ -66,7 +66,7 @@ class ArcCosineTest extends TestCase
     public function testAdd()
     {
         $acos = new ArcCosine(
-            new Cosine(new Degree(new Number\Number(42)))
+            new Cosine(new Degree(new Number\Number(42))),
         );
         $number = $acos->add(new Number\Number(1));
 
@@ -77,7 +77,7 @@ class ArcCosineTest extends TestCase
     public function testSubtract()
     {
         $acos = new ArcCosine(
-            new Cosine(new Degree(new Number\Number(42)))
+            new Cosine(new Degree(new Number\Number(42))),
         );
         $number = $acos->subtract(new Number\Number(66));
 
@@ -88,7 +88,7 @@ class ArcCosineTest extends TestCase
     public function testDivideBy()
     {
         $acos = new ArcCosine(
-            new Cosine(new Degree(new Number\Number(42)))
+            new Cosine(new Degree(new Number\Number(42))),
         );
         $number = $acos->divideBy(new Number\Number(2));
 
@@ -99,7 +99,7 @@ class ArcCosineTest extends TestCase
     public function testMulitplyBy()
     {
         $acos = new ArcCosine(
-            new Cosine(new Degree(new Number\Number(42)))
+            new Cosine(new Degree(new Number\Number(42))),
         );
         $number = $acos->multiplyBy(new Number\Number(2));
 
@@ -110,7 +110,7 @@ class ArcCosineTest extends TestCase
     public function testRound()
     {
         $number = new ArcCosine(
-            new Cosine(new Degree(new Number\Number(42)))
+            new Cosine(new Degree(new Number\Number(42))),
         );
 
         $this->assertEquals(42.0, $number->roundUp(1)->value());
@@ -122,7 +122,7 @@ class ArcCosineTest extends TestCase
     public function testFloor()
     {
         $acos = new ArcCosine(
-            new Cosine(new Degree(new Number\Number(42)))
+            new Cosine(new Degree(new Number\Number(42))),
         );
         $number = $acos->floor();
 
@@ -133,7 +133,7 @@ class ArcCosineTest extends TestCase
     public function testCeil()
     {
         $acos = new ArcCosine(
-            new Cosine(new Degree(new Number\Number(42)))
+            new Cosine(new Degree(new Number\Number(42))),
         );
         $number = $acos->ceil();
 
@@ -144,7 +144,7 @@ class ArcCosineTest extends TestCase
     public function testModulo()
     {
         $acos = new ArcCosine(
-            new Cosine(new Degree(new Number\Number(42)))
+            new Cosine(new Degree(new Number\Number(42))),
         );
         $number = $acos->modulo(new Number\Number(3));
 
@@ -155,7 +155,7 @@ class ArcCosineTest extends TestCase
     public function testAbsolute()
     {
         $acos = new ArcCosine(
-            new Cosine(new Degree(new Number\Number(42)))
+            new Cosine(new Degree(new Number\Number(42))),
         );
         $number = $acos->absolute();
 
@@ -166,7 +166,7 @@ class ArcCosineTest extends TestCase
     public function testPower()
     {
         $acos = new ArcCosine(
-            new Cosine(new Degree(new Number\Number(42)))
+            new Cosine(new Degree(new Number\Number(42))),
         );
         $number = $acos->power(new Number\Number(2));
 
@@ -177,7 +177,7 @@ class ArcCosineTest extends TestCase
     public function testSquareRoot()
     {
         $acos = new ArcCosine(
-            new Cosine(new Degree(new Number\Number(42)))
+            new Cosine(new Degree(new Number\Number(42))),
         );
         $number = $acos->squareRoot();
 
@@ -188,7 +188,7 @@ class ArcCosineTest extends TestCase
     public function testExponential()
     {
         $acos = new ArcCosine(
-            new Cosine(new Degree(new Number\Number(42)))
+            new Cosine(new Degree(new Number\Number(42))),
         );
         $number = $acos->exponential();
 
@@ -199,7 +199,7 @@ class ArcCosineTest extends TestCase
     public function testBinaryLogarithm()
     {
         $number = (new ArcCosine(
-            new Cosine(new Degree(new Number\Number(42)))
+            new Cosine(new Degree(new Number\Number(42))),
         ))->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
@@ -209,7 +209,7 @@ class ArcCosineTest extends TestCase
     public function testNaturalLogarithm()
     {
         $number = (new ArcCosine(
-            new Cosine(new Degree(new Number\Number(42)))
+            new Cosine(new Degree(new Number\Number(42))),
         ))->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
@@ -219,7 +219,7 @@ class ArcCosineTest extends TestCase
     public function testCommonLogarithm()
     {
         $number = (new ArcCosine(
-            new Cosine(new Degree(new Number\Number(42)))
+            new Cosine(new Degree(new Number\Number(42))),
         ))->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
@@ -229,7 +229,7 @@ class ArcCosineTest extends TestCase
     public function testSignum()
     {
         $number = (new ArcCosine(
-            new Cosine(new Degree(new Number\Number(42)))
+            new Cosine(new Degree(new Number\Number(42))),
         ))->signum();
 
         $this->assertInstanceOf(Signum::class, $number);

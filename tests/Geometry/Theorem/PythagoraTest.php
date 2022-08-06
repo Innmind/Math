@@ -21,13 +21,13 @@ class PythagoraTest extends TestCase
     {
         $hypotenuse = Pythagora::hypotenuse(
             new Segment(new Number(3)),
-            new Segment(new Number(2))
+            new Segment(new Number(2)),
         );
 
         $this->assertInstanceOf(Segment::class, $hypotenuse);
         $this->assertSame(
             3.6055512755,
-            $hypotenuse->length()->value()
+            $hypotenuse->length()->value(),
         );
     }
 
@@ -35,13 +35,13 @@ class PythagoraTest extends TestCase
     {
         $side = Pythagora::adjacentSide(
             new Segment(new Number(5)),
-            new Segment(new Number(2))
+            new Segment(new Number(2)),
         );
 
         $this->assertInstanceOf(Segment::class, $side);
         $this->assertSame(
             4.582575695,
-            $side->length()->value()
+            $side->length()->value(),
         );
     }
 }

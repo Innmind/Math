@@ -21,7 +21,7 @@ class RealNumbersExceptZeroTest extends TestCase
     {
         $this->assertInstanceOf(
             Set::class,
-            new RealNumbersExceptZero
+            new RealNumbersExceptZero,
         );
     }
 

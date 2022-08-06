@@ -77,7 +77,7 @@ class FunctionsTest extends TestCase
         $numbers = numerize(
             1,
             4.2,
-            $zero = new Number\Number(0)
+            $zero = new Number\Number(0),
         );
 
         $this->assertCount(3, $numbers);
@@ -232,7 +232,7 @@ class FunctionsTest extends TestCase
         $this->assertInstanceOf(Number::class, $tan);
         $this->assertSame(
             divide(sine($number), cosine($number))->value(),
-            $tan->value()
+            $tan->value(),
         );
     }
 
@@ -243,19 +243,19 @@ class FunctionsTest extends TestCase
         $this->assertInstanceOf(Frequence::class, $frequence);
         $this->assertSame(
             divide(2, 6)->value(),
-            $frequence(new Number\Number(1))->value()
+            $frequence(new Number\Number(1))->value(),
         );
         $this->assertSame(
             divide(2, 6)->value(),
-            $frequence(new Number\Number(4))->value()
+            $frequence(new Number\Number(4))->value(),
         );
         $this->assertSame(
             divide(1, 6)->value(),
-            $frequence(new Number\Number(2))->value()
+            $frequence(new Number\Number(2))->value(),
         );
         $this->assertSame(
             divide(1, 6)->value(),
-            $frequence(new Number\Number(3))->value()
+            $frequence(new Number\Number(3))->value(),
         );
     }
 
@@ -298,7 +298,7 @@ class FunctionsTest extends TestCase
             1,
             new Number\Number(2),
             $expected = new Number\Number(4),
-            3
+            3,
         );
 
         $this->assertSame($expected, $number);
@@ -310,7 +310,7 @@ class FunctionsTest extends TestCase
             2,
             $expected = new Number\Number(1),
             new Number\Number(4),
-            3
+            3,
         );
 
         $this->assertSame($expected, $number);

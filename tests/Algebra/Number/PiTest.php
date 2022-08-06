@@ -139,7 +139,7 @@ class PiTest extends TestCase
         $this->assertInstanceOf(Power::class, $number);
         $this->assertSame(
             (new Pi)->multiplyBy(new Pi)->value(),
-            $number->value()
+            $number->value(),
         );
     }
 

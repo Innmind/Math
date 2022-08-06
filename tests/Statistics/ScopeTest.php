@@ -39,7 +39,7 @@ class ScopeTest extends TestCase
             new Number\Number(5),
             new Number\Number(6),
             new Number\Number(6),
-            new Number\Number(7)
+            new Number\Number(7),
         );
 
         $this->assertInstanceOf(Number::class, $scope->result());
@@ -52,7 +52,7 @@ class ScopeTest extends TestCase
     {
         $scope = new Scope(
             new Number\Number(1),
-            new Number\Number(7)
+            new Number\Number(7),
         );
 
         $this->assertTrue($scope->equals(new Number\Number(6)));
@@ -64,7 +64,7 @@ class ScopeTest extends TestCase
     {
         $scope = new Scope(
             new Number\Number(1),
-            new Number\Number(7)
+            new Number\Number(7),
         );
 
         $this->assertTrue($scope->higherThan(new Number\Number(5.9)));
@@ -75,7 +75,7 @@ class ScopeTest extends TestCase
     {
         $scope = new Scope(
             new Number\Number(1),
-            new Number\Number(7)
+            new Number\Number(7),
         );
         $number = $scope->add(new Number\Number(66));
 
@@ -87,7 +87,7 @@ class ScopeTest extends TestCase
     {
         $scope = new Scope(
             new Number\Number(1),
-            new Number\Number(7)
+            new Number\Number(7),
         );
         $number = $scope->subtract(new Number\Number(66));
 
@@ -99,7 +99,7 @@ class ScopeTest extends TestCase
     {
         $scope = new Scope(
             new Number\Number(1),
-            new Number\Number(7)
+            new Number\Number(7),
         );
         $number = $scope->divideBy(new Number\Number(2));
 
@@ -111,7 +111,7 @@ class ScopeTest extends TestCase
     {
         $scope = new Scope(
             new Number\Number(1),
-            new Number\Number(7)
+            new Number\Number(7),
         );
         $number = $scope->multiplyBy(new Number\Number(2));
 
@@ -123,7 +123,7 @@ class ScopeTest extends TestCase
     {
         $number = new Scope(
             new Number\Number(1),
-            new Number\Number(7.12)
+            new Number\Number(7.12),
         );
 
         $this->assertEquals(6.1, $number->roundUp(1)->value());
@@ -136,7 +136,7 @@ class ScopeTest extends TestCase
     {
         $scope = new Scope(
             new Number\Number(1),
-            new Number\Number(7.1)
+            new Number\Number(7.1),
         );
         $number = $scope->floor();
 
@@ -148,7 +148,7 @@ class ScopeTest extends TestCase
     {
         $scope = new Scope(
             new Number\Number(1),
-            new Number\Number(7.1)
+            new Number\Number(7.1),
         );
         $number = $scope->ceil();
 
@@ -160,7 +160,7 @@ class ScopeTest extends TestCase
     {
         $scope = new Scope(
             new Number\Number(1),
-            new Number\Number(7)
+            new Number\Number(7),
         );
         $number = $scope->modulo(new Number\Number(5));
 
@@ -172,7 +172,7 @@ class ScopeTest extends TestCase
     {
         $scope = new Scope(
             new Number\Number(-1),
-            new Number\Number(-7)
+            new Number\Number(-7),
         );
         $number = $scope->absolute();
 
@@ -184,7 +184,7 @@ class ScopeTest extends TestCase
     {
         $scope = new Scope(
             new Number\Number(1),
-            new Number\Number(7)
+            new Number\Number(7),
         );
         $number = $scope->power(new Number\Number(2));
 
@@ -196,7 +196,7 @@ class ScopeTest extends TestCase
     {
         $scope = new Scope(
             new Number\Number(1),
-            new Number\Number(5)
+            new Number\Number(5),
         );
         $number = $scope->squareRoot();
 
@@ -208,7 +208,7 @@ class ScopeTest extends TestCase
     {
         $mean = new Scope(
             new Number\Number(1),
-            new Number\Number(5)
+            new Number\Number(5),
         );
         $number = $mean->exponential();
 
@@ -220,7 +220,7 @@ class ScopeTest extends TestCase
     {
         $number = (new Scope(
             new Number\Number(1),
-            new Number\Number(5)
+            new Number\Number(5),
         ))->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
@@ -231,7 +231,7 @@ class ScopeTest extends TestCase
     {
         $number = (new Scope(
             new Number\Number(1),
-            new Number\Number(5)
+            new Number\Number(5),
         ))->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
@@ -242,7 +242,7 @@ class ScopeTest extends TestCase
     {
         $number = (new Scope(
             new Number\Number(1),
-            new Number\Number(5)
+            new Number\Number(5),
         ))->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
@@ -253,7 +253,7 @@ class ScopeTest extends TestCase
     {
         $number = (new Scope(
             new Number\Number(1),
-            new Number\Number(7)
+            new Number\Number(7),
         ))->signum();
 
         $this->assertInstanceOf(Signum::class, $number);
@@ -264,7 +264,7 @@ class ScopeTest extends TestCase
     {
         $scope = new Scope(
             new Number\Number(1),
-            new Number\Number(7.1)
+            new Number\Number(7.1),
         );
 
         $this->assertSame('7.1 - 1', $scope->toString());

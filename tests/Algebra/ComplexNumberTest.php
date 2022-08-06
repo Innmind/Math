@@ -17,7 +17,7 @@ class ComplexNumberTest extends TestCase
     {
         $number = new ComplexNumber(
             $real = new Integer(1),
-            $imaginary = new Integer(2)
+            $imaginary = new Integer(2),
         );
 
         $this->assertSame($real, $number->real());
@@ -28,14 +28,14 @@ class ComplexNumberTest extends TestCase
     {
         $number = new ComplexNumber(
             new Integer(1),
-            new Integer(2)
+            new Integer(2),
         );
 
         $this->assertSame('(1 + 2i)', $number->toString());
 
         $number = new ComplexNumber(
             add(1, 2),
-            add(2, 3)
+            add(2, 3),
         );
 
         $this->assertSame('((1 + 2) + (2 + 3)i)', $number->toString());
@@ -45,10 +45,10 @@ class ComplexNumberTest extends TestCase
     {
         $number = (new ComplexNumber(
             new Integer(2),
-            new Integer(3)
+            new Integer(3),
         ))->add(new ComplexNumber(
             new Integer(4),
-            new Integer(5)
+            new Integer(5),
         ));
 
         $this->assertInstanceOf(ComplexNumber::class, $number);
@@ -60,10 +60,10 @@ class ComplexNumberTest extends TestCase
     {
         $number = (new ComplexNumber(
             new Integer(2),
-            new Integer(3)
+            new Integer(3),
         ))->subtract(new ComplexNumber(
             new Integer(4),
-            new Integer(5)
+            new Integer(5),
         ));
 
         $this->assertInstanceOf(ComplexNumber::class, $number);
@@ -75,10 +75,10 @@ class ComplexNumberTest extends TestCase
     {
         $number = (new ComplexNumber(
             new Integer(2),
-            new Integer(3)
+            new Integer(3),
         ))->multiplyBy(new ComplexNumber(
             new Integer(4),
-            new Integer(5)
+            new Integer(5),
         ));
 
         $this->assertInstanceOf(ComplexNumber::class, $number);
@@ -90,10 +90,10 @@ class ComplexNumberTest extends TestCase
     {
         $number = (new ComplexNumber(
             new Integer(2),
-            new Integer(3)
+            new Integer(3),
         ))->divideBy(new ComplexNumber(
             new Integer(4),
-            new Integer(5)
+            new Integer(5),
         ));
 
         $this->assertInstanceOf(ComplexNumber::class, $number);
@@ -105,7 +105,7 @@ class ComplexNumberTest extends TestCase
     {
         $number = new ComplexNumber(
             new Integer(2),
-            new Integer(3)
+            new Integer(3),
         );
         $conjugate = $number->conjugate();
 
@@ -119,7 +119,7 @@ class ComplexNumberTest extends TestCase
     {
         $number = new ComplexNumber(
             new Integer(2),
-            new Integer(3)
+            new Integer(3),
         );
         $absolute = $number->absolute();
 
@@ -131,7 +131,7 @@ class ComplexNumberTest extends TestCase
     {
         $number = new ComplexNumber(
             new Integer(2),
-            new Integer(3)
+            new Integer(3),
         );
         $reciprocal = $number->reciprocal();
 
@@ -140,7 +140,7 @@ class ComplexNumberTest extends TestCase
         $this->assertSame('(2 + 3i)', $number->toString());
         $this->assertSame(
             '((2 ÷ ((2^2) + (3^2))) + (-1 x (3 ÷ ((2^2) + (3^2))))i)',
-            $reciprocal->toString()
+            $reciprocal->toString(),
         );
     }
 
@@ -148,7 +148,7 @@ class ComplexNumberTest extends TestCase
     {
         $number = new ComplexNumber(
             new Integer(2),
-            new Integer(3)
+            new Integer(3),
         );
         $negation = $number->negation();
 
@@ -162,7 +162,7 @@ class ComplexNumberTest extends TestCase
     {
         $number = new ComplexNumber(
             new Integer(3),
-            new Integer(4)
+            new Integer(4),
         );
         $squareRoot = $number->squareRoot();
 
@@ -173,7 +173,7 @@ class ComplexNumberTest extends TestCase
         $this->assertSame(1.0, $squareRoot->imaginary()->value());
         $this->assertSame(
             '((√((3 + (√((3^2) + (4^2)))) ÷ 2)) + ((sgn(4)) x (√(((-1 x 3) + (√((3^2) + (4^2)))) ÷ 2)))i)',
-            $squareRoot->toString()
+            $squareRoot->toString(),
         );
     }
 
@@ -181,21 +181,21 @@ class ComplexNumberTest extends TestCase
     {
         $number = new ComplexNumber(
             new Integer(2),
-            new Integer(3)
+            new Integer(3),
         );
 
         $this->assertTrue($number->equals($number));
         $this->assertTrue($number->equals(
             new ComplexNumber(
                 new Integer(2),
-                new Integer(3)
-            )
+                new Integer(3),
+            ),
         ));
         $this->assertFalse($number->equals(
             new ComplexNumber(
                 new Integer(3),
-                new Integer(3)
-            )
+                new Integer(3),
+            ),
         ));
     }
 }

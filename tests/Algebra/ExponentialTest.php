@@ -30,7 +30,7 @@ class ExponentialTest extends TestCase
     public function testInterface()
     {
         $power = new Exponential(
-            $this->createMock(Number::class)
+            $this->createMock(Number::class),
         );
 
         $this->assertInstanceOf(Number::class, $power);
@@ -40,7 +40,7 @@ class ExponentialTest extends TestCase
     public function testResult()
     {
         $power = new Exponential(
-            new Number\Number(2.1)
+            new Number\Number(2.1),
         );
         $result = $power->result();
 
@@ -52,7 +52,7 @@ class ExponentialTest extends TestCase
     public function testStringCast()
     {
         $power = new Exponential(
-            new Number\Number(2.1)
+            new Number\Number(2.1),
         );
 
         $this->assertSame('e^2.1', $power->toString());
@@ -63,8 +63,8 @@ class ExponentialTest extends TestCase
         $power = new Exponential(
             new Addition(
                 new Number\Number(2),
-                new Number\Number(2)
-            )
+                new Number\Number(2),
+            ),
         );
 
         $this->assertSame('e^(2 + 2)', $power->toString());
@@ -73,7 +73,7 @@ class ExponentialTest extends TestCase
     public function testEquals()
     {
         $power = new Exponential(
-            new Number\Number(2.1)
+            new Number\Number(2.1),
         );
 
         $this->assertTrue($power->equals(new Number\Number(8.166169912567652)));
@@ -83,7 +83,7 @@ class ExponentialTest extends TestCase
     public function testHigherThan()
     {
         $power = new Exponential(
-            new Number\Number(2.1)
+            new Number\Number(2.1),
         );
 
         $this->assertTrue($power->higherThan(new Number\Number(8.16)));
@@ -93,7 +93,7 @@ class ExponentialTest extends TestCase
     public function testAdd()
     {
         $power = new Exponential(
-            new Number\Number(2.1)
+            new Number\Number(2.1),
         );
         $number = $power->add(new Number\Number(66));
 
@@ -104,7 +104,7 @@ class ExponentialTest extends TestCase
     public function testSubtract()
     {
         $power = new Exponential(
-            new Number\Number(2.1)
+            new Number\Number(2.1),
         );
         $number = $power->subtract(new Number\Number(66));
 
@@ -115,7 +115,7 @@ class ExponentialTest extends TestCase
     public function testDivideBy()
     {
         $power = new Exponential(
-            new Number\Number(2.1)
+            new Number\Number(2.1),
         );
         $number = $power->divideBy(new Number\Number(2));
 
@@ -126,7 +126,7 @@ class ExponentialTest extends TestCase
     public function testMulitplyBy()
     {
         $power = new Exponential(
-            new Number\Number(2.1)
+            new Number\Number(2.1),
         );
         $number = $power->multiplyBy(new Number\Number(2));
 
@@ -137,7 +137,7 @@ class ExponentialTest extends TestCase
     public function testRound()
     {
         $number = new Exponential(
-            new Number\Number(2.1)
+            new Number\Number(2.1),
         );
 
         $this->assertEquals(Round::up($number, 2), $number->roundUp(2));
@@ -149,7 +149,7 @@ class ExponentialTest extends TestCase
     public function testFloor()
     {
         $power = new Exponential(
-            new Number\Number(2.1)
+            new Number\Number(2.1),
         );
         $number = $power->floor();
 
@@ -160,7 +160,7 @@ class ExponentialTest extends TestCase
     public function testCeil()
     {
         $power = new Exponential(
-            new Number\Number(2.1)
+            new Number\Number(2.1),
         );
         $number = $power->ceil();
 
@@ -171,7 +171,7 @@ class ExponentialTest extends TestCase
     public function testModulo()
     {
         $power = new Exponential(
-            new Number\Number(2.1)
+            new Number\Number(2.1),
         );
         $number = $power->modulo(new Number\Number(8));
 
@@ -182,7 +182,7 @@ class ExponentialTest extends TestCase
     public function testAbsolute()
     {
         $power = new Exponential(
-            new Number\Number(-2.1)
+            new Number\Number(-2.1),
         );
         $number = $power->absolute();
 
@@ -193,7 +193,7 @@ class ExponentialTest extends TestCase
     public function testPower()
     {
         $power = new Exponential(
-            new Number\Number(2.1)
+            new Number\Number(2.1),
         );
         $number = $power->power(new Number\Number(2));
 
@@ -204,7 +204,7 @@ class ExponentialTest extends TestCase
     public function testSquareRoot()
     {
         $power = new Exponential(
-            new Number\Number(2.1)
+            new Number\Number(2.1),
         );
         $number = $power->squareRoot();
 

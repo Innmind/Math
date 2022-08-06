@@ -20,7 +20,7 @@ class RealNumbersTest extends TestCase
     {
         $this->assertInstanceOf(
             Set::class,
-            new RealNumbers
+            new RealNumbers,
         );
     }
 

@@ -65,7 +65,7 @@ class NaturalLogarithmTest extends TestCase
     {
         $this->assertSame(
             'ln(4)',
-            (new NaturalLogarithm(new Number\Number(4)))->toString()
+            (new NaturalLogarithm(new Number\Number(4)))->toString(),
         );
     }
 
@@ -239,13 +239,13 @@ class NaturalLogarithmTest extends TestCase
         $this->assertTrue(
             (new NaturalLogarithm(
                 ($a = new Number\Number(2))->multiplyBy(
-                    $b = new Number\Number(4)
-                )
+                    $b = new Number\Number(4),
+                ),
             ))->equals(
                 (new NaturalLogarithm($a))->add(
-                    new NaturalLogarithm($b)
-                )
-            )
+                    new NaturalLogarithm($b),
+                ),
+            ),
         );
     }
 
@@ -255,13 +255,13 @@ class NaturalLogarithmTest extends TestCase
         $this->assertTrue(
             (new NaturalLogarithm(
                 ($a = new Number\Number(2))->divideBy(
-                    $b = new Number\Number(4)
-                )
+                    $b = new Number\Number(4),
+                ),
             ))->equals(
                 (new NaturalLogarithm($a))->subtract(
-                    new NaturalLogarithm($b)
-                )
-            )
+                    new NaturalLogarithm($b),
+                ),
+            ),
         );
     }
 }

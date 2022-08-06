@@ -22,8 +22,8 @@ class IntersectionTest extends TestCase
             SetInterface::class,
             new Intersection(
                 $this->createMock(SetInterface::class),
-                $this->createMock(SetInterface::class)
-            )
+                $this->createMock(SetInterface::class),
+            ),
         );
     }
 
@@ -37,12 +37,12 @@ class IntersectionTest extends TestCase
         $union = new Intersection(
             new Set(
                 new Integer(1),
-                new Integer(2)
+                new Integer(2),
             ),
             new Set(
                 new Integer(4),
-                new Integer(5)
-            )
+                new Integer(5),
+            ),
         );
 
         $this->assertFalse($union->contains(new Number(1)));
@@ -59,12 +59,12 @@ class IntersectionTest extends TestCase
         $set = new Intersection(
             new Set(
                 new Integer(1),
-                new Integer(2)
+                new Integer(2),
             ),
             new Set(
                 new Integer(2),
-                new Integer(5)
-            )
+                new Integer(5),
+            ),
         );
 
         $this->assertNull($set->accept(new Integer(2)));

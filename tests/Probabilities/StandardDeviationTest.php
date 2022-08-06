@@ -20,13 +20,13 @@ class StandardDeviationTest extends TestCase
                 [-1, divide(4, 6)],
                 [2, divide(1, 6)],
                 [3, divide(1, 6)],
-            ])
+            ]),
         );
 
         $this->assertInstanceOf(Number::class, $deviation());
         $this->assertSame(
             divide(101, 36)->squareRoot()->value(),
-            $deviation()->value()
+            $deviation()->value(),
         );
     }
 }

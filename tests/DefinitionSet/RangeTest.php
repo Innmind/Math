@@ -20,7 +20,7 @@ class RangeTest extends TestCase
     {
         $this->assertInstanceOf(
             Set::class,
-            Range::inclusive(new Integer(1), new Integer(2))
+            Range::inclusive(new Integer(1), new Integer(2)),
         );
     }
 
@@ -28,11 +28,11 @@ class RangeTest extends TestCase
     {
         $this->assertSame(
             '[1;2]',
-            Range::inclusive(new Integer(1), new Integer(2))->toString()
+            Range::inclusive(new Integer(1), new Integer(2))->toString(),
         );
         $this->assertSame(
             ']1;2[',
-            Range::exclusive(new Integer(1), new Integer(2))->toString()
+            Range::exclusive(new Integer(1), new Integer(2))->toString(),
         );
         $this->assertSame(
             '[1;2[',
@@ -40,8 +40,8 @@ class RangeTest extends TestCase
                 Range::INCLUSIVE,
                 new Integer(1),
                 new Integer(2),
-                Range::EXCLUSIVE
-            ))->toString()
+                Range::EXCLUSIVE,
+            ))->toString(),
         );
         $this->assertSame(
             ']1;2]',
@@ -49,8 +49,8 @@ class RangeTest extends TestCase
                 Range::EXCLUSIVE,
                 new Integer(1),
                 new Integer(2),
-                Range::INCLUSIVE
-            ))->toString()
+                Range::INCLUSIVE,
+            ))->toString(),
         );
     }
 

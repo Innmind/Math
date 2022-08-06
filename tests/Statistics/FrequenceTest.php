@@ -20,7 +20,7 @@ class FrequenceTest extends TestCase
             new Integer(2),
             new Integer(2),
             new Integer(1),
-            new Integer(3)
+            new Integer(3),
         );
 
         $this->assertInstanceOf(Division::class, $frequence(new Integer(1)));

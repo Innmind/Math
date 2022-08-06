@@ -40,22 +40,22 @@ class MatrixTest extends TestCase
                 [1, 2, 3],
                 [2, 3, 4],
             ],
-            $matrix->toArray()
+            $matrix->toArray(),
         );
         $this->assertInstanceOf(ColumnVector::class, $matrix->column(0));
         $this->assertInstanceOf(ColumnVector::class, $matrix->column(1));
         $this->assertInstanceOf(ColumnVector::class, $matrix->column(2));
         $this->assertSame(
             [1, 2],
-            $matrix->column(0)->toArray()
+            $matrix->column(0)->toArray(),
         );
         $this->assertSame(
             [2, 3],
-            $matrix->column(1)->toArray()
+            $matrix->column(1)->toArray(),
         );
         $this->assertSame(
             [3, 4],
-            $matrix->column(2)->toArray()
+            $matrix->column(2)->toArray(),
         );
     }
 
@@ -89,7 +89,7 @@ class MatrixTest extends TestCase
 
         new Matrix(
             new RowVector(...numerize(1, 2)),
-            new RowVector(...numerize(1, 2, 3))
+            new RowVector(...numerize(1, 2, 3)),
         );
     }
 
@@ -108,7 +108,7 @@ class MatrixTest extends TestCase
     {
         $matrix = Matrix::fromColumns(
             new ColumnVector(...numerize(1, 2, 3)),
-            new ColumnVector(...numerize(4, 5, 6))
+            new ColumnVector(...numerize(4, 5, 6)),
         );
 
         $this->assertInstanceOf(Matrix::class, $matrix);
@@ -118,7 +118,7 @@ class MatrixTest extends TestCase
                 [2, 5],
                 [3, 6],
             ],
-            $matrix->toArray()
+            $matrix->toArray(),
         );
     }
 
@@ -137,7 +137,7 @@ class MatrixTest extends TestCase
                 [2, 4, 3],
                 [3, 5, 4],
             ],
-            $matrix->toArray()
+            $matrix->toArray(),
         );
     }
 
@@ -151,7 +151,7 @@ class MatrixTest extends TestCase
                 [7, 8],
                 [9, 10],
                 [11, 12],
-            ])
+            ]),
         );
 
         $this->assertInstanceOf(Matrix::class, $matrix);
@@ -160,7 +160,7 @@ class MatrixTest extends TestCase
                 [58, 64],
                 [139, 154],
             ],
-            $matrix->toArray()
+            $matrix->toArray(),
         );
     }
 
@@ -168,7 +168,7 @@ class MatrixTest extends TestCase
     {
         $matrix = Matrix::initialize(
             new Dimension(new Integer(3), new Integer(2)),
-            new Number(4.2)
+            new Number(4.2),
         );
 
         $this->assertInstanceOf(Matrix::class, $matrix);
@@ -178,7 +178,7 @@ class MatrixTest extends TestCase
                 [4.2, 4.2],
                 [4.2, 4.2],
                 ],
-                $matrix->toArray()
+            $matrix->toArray(),
         );
     }
 
@@ -188,12 +188,12 @@ class MatrixTest extends TestCase
             Matrix::of([
                 [1, 2],
                 [3, 4],
-            ])->isSquare()
+            ])->isSquare(),
         );
         $this->assertFalse(
             Matrix::of([
                 [1, 2],
-            ])->isSquare()
+            ])->isSquare(),
         );
     }
 
@@ -222,7 +222,7 @@ class MatrixTest extends TestCase
                 [0, 5, 0],
                 [0, 0, 9],
             ],
-            $diagonal->toArray()
+            $diagonal->toArray(),
         );
     }
 
@@ -251,7 +251,7 @@ class MatrixTest extends TestCase
                 [0, 1, 0],
                 [0, 0, 1],
             ],
-            $identity->toArray()
+            $identity->toArray(),
         );
     }
 
@@ -260,7 +260,7 @@ class MatrixTest extends TestCase
         $this->expectException(MatricesMustBeOfTheSameDimension::class);
 
         Matrix::of([[1]])->add(
-            Matrix::of([[1, 2]])
+            Matrix::of([[1, 2]]),
         );
     }
 
@@ -286,7 +286,7 @@ class MatrixTest extends TestCase
                 [1, -1, -3],
                 [-1, 2, 9],
             ],
-            $c->toArray()
+            $c->toArray(),
         );
     }
 
@@ -295,7 +295,7 @@ class MatrixTest extends TestCase
         $this->expectException(MatricesMustBeOfTheSameDimension::class);
 
         Matrix::of([[1]])->subtract(
-            Matrix::of([[1, 2]])
+            Matrix::of([[1, 2]]),
         );
     }
 
@@ -321,7 +321,7 @@ class MatrixTest extends TestCase
                 [1, 1, 1],
                 [5, 0, -1],
             ],
-            $c->toArray()
+            $c->toArray(),
         );
     }
 
@@ -341,7 +341,7 @@ class MatrixTest extends TestCase
                 [3, 0, -3],
                 [6, 9, 12],
             ],
-            $result->toArray()
+            $result->toArray(),
         );
     }
 
@@ -357,13 +357,13 @@ class MatrixTest extends TestCase
             Matrix::of([
                 [1, 0, -1],
                 [2, 3, 4],
-            ])
+            ]),
         ));
         $this->assertFalse($matrix->equals(
             Matrix::of([
                 [2, 3, 4],
                 [1, 0, -1],
-            ])
+            ]),
         ));
         $this->assertFalse($matrix->equals($matrix->transpose()));
     }
@@ -447,7 +447,7 @@ class MatrixTest extends TestCase
                 [-3, 1, 0, -6],
                 [-4, -7, 6, 0],
             ],
-            $dropped->toArray()
+            $dropped->toArray(),
         );
         $this->assertSame(
             [
@@ -455,7 +455,7 @@ class MatrixTest extends TestCase
                 [-2, 0, -1, 7],
                 [-4, -7, 6, 0],
             ],
-            $matrix->dropRow(2)->toArray()
+            $matrix->dropRow(2)->toArray(),
         );
     }
 
@@ -479,7 +479,7 @@ class MatrixTest extends TestCase
                 [1, 0, -6],
                 [-7, 6, 0],
             ],
-            $dropped->toArray()
+            $dropped->toArray(),
         );
         $this->assertSame(
             [
@@ -488,7 +488,7 @@ class MatrixTest extends TestCase
                 [-3, 1, -6],
                 [-4, -7, 0],
             ],
-            $matrix->dropColumn(2)->toArray()
+            $matrix->dropColumn(2)->toArray(),
         );
     }
 
@@ -510,7 +510,7 @@ class MatrixTest extends TestCase
                 [5, 6, 7, 0, 1, 0],
                 [8, 9, 10, 0, 0, 1],
             ],
-            $augmented->toArray()
+            $augmented->toArray(),
         );
     }
 
@@ -548,8 +548,8 @@ class MatrixTest extends TestCase
 
         $this->assertTrue(
             $matrix->dot($matrix->inverse())->equals(
-                $matrix->identity()
-            )
+                $matrix->identity(),
+            ),
         );
     }
 

@@ -22,7 +22,7 @@ final class Angle
     public function __construct(
         Segment $firstSegment,
         Degree $degree,
-        Segment $secondSegment
+        Segment $secondSegment,
     ) {
         $this->firstSegment = $firstSegment;
         $this->secondSegment = $secondSegment;

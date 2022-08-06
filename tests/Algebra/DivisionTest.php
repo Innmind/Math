@@ -32,7 +32,7 @@ class DivisionTest extends TestCase
     {
         $division = new Division(
             $dividend = new Number\Number(4),
-            $divisor = new Number\Number(2)
+            $divisor = new Number\Number(2),
         );
 
         $this->assertInstanceOf(Operation::class, $division);
@@ -222,10 +222,10 @@ class DivisionTest extends TestCase
             (new Division(
                 new Addition(
                     new Number\Number(2),
-                    new Number\Number(2)
+                    new Number\Number(2),
                 ),
-                new Number\Number(2)
-            ))->toString()
+                new Number\Number(2),
+            ))->toString(),
         );
     }
 

@@ -16,7 +16,7 @@ final class Scope implements Number
     public function __construct(
         Number $first,
         Number $second,
-        Number ...$values
+        Number ...$values,
     ) {
         /** @var Sequence<Number> */
         $sequence = Sequence::of(Number::class, $first, $second, ...$values);

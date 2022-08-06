@@ -39,7 +39,7 @@ class MedianTest extends TestCase
             new Number\Number(5),
             new Number\Number(6),
             new Number\Number(6),
-            new Number\Number(7)
+            new Number\Number(7),
         );
 
         $this->assertInstanceOf(Number::class, $median->result());
@@ -60,7 +60,7 @@ class MedianTest extends TestCase
             new Number\Number(6),
             new Number\Number(6),
             new Number\Number(7),
-            new Number\Number(8)
+            new Number\Number(8),
         );
 
         $this->assertInstanceOf(Number::class, $median->result());
@@ -73,7 +73,7 @@ class MedianTest extends TestCase
     {
         $median = new Median(
             new Number\Number(1),
-            new Number\Number(7)
+            new Number\Number(7),
         );
 
         $this->assertTrue($median->equals(new Number\Number(4)));
@@ -85,7 +85,7 @@ class MedianTest extends TestCase
     {
         $median = new Median(
             new Number\Number(1),
-            new Number\Number(7)
+            new Number\Number(7),
         );
 
         $this->assertTrue($median->higherThan(new Number\Number(3.9)));
@@ -96,7 +96,7 @@ class MedianTest extends TestCase
     {
         $median = new Median(
             new Number\Number(1),
-            new Number\Number(7)
+            new Number\Number(7),
         );
         $number = $median->add(new Number\Number(66));
 
@@ -108,7 +108,7 @@ class MedianTest extends TestCase
     {
         $median = new Median(
             new Number\Number(1),
-            new Number\Number(7)
+            new Number\Number(7),
         );
         $number = $median->subtract(new Number\Number(66));
 
@@ -120,7 +120,7 @@ class MedianTest extends TestCase
     {
         $median = new Median(
             new Number\Number(1),
-            new Number\Number(7)
+            new Number\Number(7),
         );
         $number = $median->divideBy(new Number\Number(2));
 
@@ -132,7 +132,7 @@ class MedianTest extends TestCase
     {
         $median = new Median(
             new Number\Number(1),
-            new Number\Number(7)
+            new Number\Number(7),
         );
         $number = $median->multiplyBy(new Number\Number(2));
 
@@ -144,7 +144,7 @@ class MedianTest extends TestCase
     {
         $number = new Median(
             new Number\Number(1),
-            new Number\Number(7.12)
+            new Number\Number(7.12),
         );
 
         $this->assertEquals(4.1, $number->roundUp(1)->value());
@@ -157,7 +157,7 @@ class MedianTest extends TestCase
     {
         $median = new Median(
             new Number\Number(1),
-            new Number\Number(7.1)
+            new Number\Number(7.1),
         );
         $number = $median->floor();
 
@@ -169,7 +169,7 @@ class MedianTest extends TestCase
     {
         $median = new Median(
             new Number\Number(1),
-            new Number\Number(7.1)
+            new Number\Number(7.1),
         );
         $number = $median->ceil();
 
@@ -181,7 +181,7 @@ class MedianTest extends TestCase
     {
         $median = new Median(
             new Number\Number(1),
-            new Number\Number(7)
+            new Number\Number(7),
         );
         $number = $median->modulo(new Number\Number(3));
 
@@ -193,7 +193,7 @@ class MedianTest extends TestCase
     {
         $median = new Median(
             new Number\Number(-1),
-            new Number\Number(-7)
+            new Number\Number(-7),
         );
         $number = $median->absolute();
 
@@ -205,7 +205,7 @@ class MedianTest extends TestCase
     {
         $median = new Median(
             new Number\Number(1),
-            new Number\Number(7)
+            new Number\Number(7),
         );
         $number = $median->power(new Number\Number(2));
 
@@ -217,7 +217,7 @@ class MedianTest extends TestCase
     {
         $median = new Median(
             new Number\Number(1),
-            new Number\Number(7)
+            new Number\Number(7),
         );
         $number = $median->squareRoot();
 
@@ -229,7 +229,7 @@ class MedianTest extends TestCase
     {
         $mean = new Median(
             new Number\Number(1),
-            new Number\Number(7)
+            new Number\Number(7),
         );
         $number = $mean->exponential();
 
@@ -241,7 +241,7 @@ class MedianTest extends TestCase
     {
         $number = (new Median(
             new Number\Number(1),
-            new Number\Number(7)
+            new Number\Number(7),
         ))->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
@@ -252,7 +252,7 @@ class MedianTest extends TestCase
     {
         $number = (new Median(
             new Number\Number(1),
-            new Number\Number(7)
+            new Number\Number(7),
         ))->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
@@ -263,7 +263,7 @@ class MedianTest extends TestCase
     {
         $number = (new Median(
             new Number\Number(1),
-            new Number\Number(7)
+            new Number\Number(7),
         ))->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
@@ -274,7 +274,7 @@ class MedianTest extends TestCase
     {
         $number = (new Median(
             new Number\Number(1),
-            new Number\Number(7)
+            new Number\Number(7),
         ))->signum();
 
         $this->assertInstanceOf(Signum::class, $number);
@@ -285,7 +285,7 @@ class MedianTest extends TestCase
     {
         $median = new Median(
             new Number\Number(1),
-            new Number\Number(7.1)
+            new Number\Number(7.1),
         );
 
         $this->assertSame('(1 + 7.1) ÷ 2', $median->toString());

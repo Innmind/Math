@@ -19,15 +19,15 @@ class CircleTest extends TestCase
         $this->assertInstanceOf(
             Figure::class,
             new Circle(
-                new Segment(new Integer(2))
-            )
+                new Segment(new Integer(2)),
+            ),
         );
     }
 
     public function testPerimeter()
     {
         $circle = new Circle(
-            new Segment(new Integer(4))
+            new Segment(new Integer(4)),
         );
 
         $this->assertInstanceOf(Number::class, $circle->perimeter());
@@ -37,7 +37,7 @@ class CircleTest extends TestCase
     public function testArea()
     {
         $circle = new Circle(
-            new Segment(new Integer(4))
+            new Segment(new Integer(4)),
         );
 
         $this->assertInstanceOf(Number::class, $circle->area());
@@ -47,7 +47,7 @@ class CircleTest extends TestCase
     public function testRadius()
     {
         $circle = new Circle(
-            $expected = new Segment(new Integer(4))
+            $expected = new Segment(new Integer(4)),
         );
 
         $this->assertSame($expected, $circle->radius());
@@ -56,7 +56,7 @@ class CircleTest extends TestCase
     public function testDiameter()
     {
         $circle = new Circle(
-            new Segment(new Integer(4))
+            new Segment(new Integer(4)),
         );
 
         $this->assertInstanceOf(Segment::class, $circle->diameter());

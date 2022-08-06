@@ -33,7 +33,7 @@ class IntegerTest extends TestCase
     {
         $this->assertInstanceOf(
             Number::class,
-            new Integer(42)
+            new Integer(42),
         );
     }
 

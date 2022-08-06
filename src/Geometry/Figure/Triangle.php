@@ -30,7 +30,7 @@ final class Triangle implements Figure
     public function __construct(
         Segment $a,
         Segment $b,
-        Segment $c
+        Segment $c,
     ) {
         $this->a = $a->length();
         $this->b = $b->length();

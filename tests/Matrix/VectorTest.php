@@ -33,7 +33,7 @@ class VectorTest extends TestCase
     public function testDot()
     {
         $number = (new Vector(...numerize(-1, 2)))->dot(
-            new Vector(...numerize(4, 1))
+            new Vector(...numerize(4, 1)),
         );
 
         $this->assertInstanceOf(Number::class, $number);
@@ -45,7 +45,7 @@ class VectorTest extends TestCase
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
         (new Vector(...numerize(-1, 2)))->dot(
-            new Vector(...numerize(4, 1, 0))
+            new Vector(...numerize(4, 1, 0)),
         );
     }
 
@@ -53,7 +53,7 @@ class VectorTest extends TestCase
     {
         $vector = new Vector(...numerize(25, 5, 1));
         $vector2 = $vector->multiplyBy(
-            Vector::initialize(new Integer(3), new Number\Number(2.56))
+            Vector::initialize(new Integer(3), new Number\Number(2.56)),
         );
 
         $this->assertInstanceOf(Vector::class, $vector2);
@@ -70,7 +70,7 @@ class VectorTest extends TestCase
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
         Vector::initialize(new Integer(1), new Number\Number(1))->multiplyBy(
-            Vector::initialize(new Integer(2), new Number\Number(1))
+            Vector::initialize(new Integer(2), new Number\Number(1)),
         );
     }
 
@@ -78,7 +78,7 @@ class VectorTest extends TestCase
     {
         $vector = new Vector(...numerize(25, 5, 1));
         $vector2 = $vector->divideBy(
-            Vector::initialize(new Integer(3), new Number\Number(5))
+            Vector::initialize(new Integer(3), new Number\Number(5)),
         );
 
         $this->assertInstanceOf(Vector::class, $vector2);
@@ -95,7 +95,7 @@ class VectorTest extends TestCase
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
         Vector::initialize(new Integer(1), new Number\Number(1))->divideBy(
-            Vector::initialize(new Integer(2), new Number\Number(1))
+            Vector::initialize(new Integer(2), new Number\Number(1)),
         );
     }
 
@@ -131,7 +131,7 @@ class VectorTest extends TestCase
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
         Vector::initialize(new Integer(1), new Number\Number(1))->subtract(
-            Vector::initialize(new Integer(2), new Number\Number(1))
+            Vector::initialize(new Integer(2), new Number\Number(1)),
         );
     }
 
@@ -156,7 +156,7 @@ class VectorTest extends TestCase
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
         Vector::initialize(new Integer(1), new Number\Number(1))->add(
-            Vector::initialize(new Integer(2), new Number\Number(1))
+            Vector::initialize(new Integer(2), new Number\Number(1)),
         );
     }
 
@@ -216,8 +216,8 @@ class VectorTest extends TestCase
                 0,
                 static function(int $carry, $number): int {
                     return $carry + $number->value();
-                }
-            )
+                },
+            ),
         );
     }
 

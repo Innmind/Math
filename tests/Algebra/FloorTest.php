@@ -47,7 +47,7 @@ class FloorTest extends TestCase
     {
         $this->assertSame(
             '42.0',
-            (new Floor(new Number\Number(42.45)))->toString()
+            (new Floor(new Number\Number(42.45)))->toString(),
         );
     }
 

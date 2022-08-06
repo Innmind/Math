@@ -54,7 +54,7 @@ final class Polynom
                 $carry[] = $degree($x);
 
                 return $carry;
-            }
+            },
         );
 
         return add($this->intercept, ...$values);
@@ -160,7 +160,7 @@ final class Polynom
                 ->values()
                 ->map(static function(Degree $degree): Degree {
                     return $degree->derivative();
-                })),
+                }), ),
         );
     }
 

@@ -24,17 +24,17 @@ class AlKashiTest extends TestCase
         $c = AlKashi::side(
             new Segment(new Integer(5)),
             new Degree(new Integer(49)),
-            new Segment(new Integer(7))
+            new Segment(new Integer(7)),
         );
 
         $this->assertInstanceOf(Segment::class, $c);
         $this->assertSame(
             '√(((5^2) + (7^2)) - (((2 x 5) x 7) x cos(49°)))',
-            $c->length()->toString()
+            $c->length()->toString(),
         );
         $this->assertSame(
             5.298666621959197,
-            $c->length()->value()
+            $c->length()->value(),
         );
     }
 
@@ -43,7 +43,7 @@ class AlKashiTest extends TestCase
         $ab = AlKashi::angle(
             new Segment(new Integer(6)),
             new Segment(new Integer(7)),
-            new Segment(new Integer(8))
+            new Segment(new Integer(8)),
         );
 
         $this->assertInstanceOf(Degree::class, $ab);
@@ -57,7 +57,7 @@ class AlKashiTest extends TestCase
         AlKashi::angle(
             new Segment(new Integer(1)),
             new Segment(new Integer(42)),
-            new Segment(new Integer(20))
+            new Segment(new Integer(20)),
         );
     }
 }

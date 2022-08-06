@@ -20,7 +20,7 @@ class NaturalNumbersTest extends TestCase
     {
         $this->assertInstanceOf(
             Set::class,
-            new NaturalNumbers
+            new NaturalNumbers,
         );
     }
 

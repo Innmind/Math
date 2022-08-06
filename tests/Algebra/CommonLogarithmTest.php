@@ -65,7 +65,7 @@ class CommonLogarithmTest extends TestCase
     {
         $this->assertSame(
             'lg(4)',
-            (new CommonLogarithm(new Number\Number(4)))->toString()
+            (new CommonLogarithm(new Number\Number(4)))->toString(),
         );
     }
 
@@ -239,13 +239,13 @@ class CommonLogarithmTest extends TestCase
         $this->assertTrue(
             (new CommonLogarithm(
                 ($a = new Number\Number(2))->multiplyBy(
-                    $b = new Number\Number(4)
-                )
+                    $b = new Number\Number(4),
+                ),
             ))->equals(
                 (new CommonLogarithm($a))->add(
-                    new CommonLogarithm($b)
-                )
-            )
+                    new CommonLogarithm($b),
+                ),
+            ),
         );
     }
 
@@ -255,13 +255,13 @@ class CommonLogarithmTest extends TestCase
         $this->assertTrue(
             (new CommonLogarithm(
                 ($a = new Number\Number(2))->divideBy(
-                    $b = new Number\Number(4)
-                )
+                    $b = new Number\Number(4),
+                ),
             ))->equals(
                 (new CommonLogarithm($a))->subtract(
-                    new CommonLogarithm($b)
-                )
-            )
+                    new CommonLogarithm($b),
+                ),
+            ),
         );
     }
 }

@@ -30,7 +30,7 @@ class IntegralTest extends TestCase
 
         $this->assertSame(
             '∫(-1x^2 + 4x)dx = [(-1 ÷ (2 + 1))x^3 + (4 ÷ (1 + 1))x^2]',
-            $integral->toString()
+            $integral->toString(),
         );
     }
 

@@ -47,7 +47,7 @@ class CeilTest extends TestCase
     {
         $this->assertSame(
             '43.0',
-            (new Ceil(new Number\Number(42.45)))->toString()
+            (new Ceil(new Number\Number(42.45)))->toString(),
         );
     }
 

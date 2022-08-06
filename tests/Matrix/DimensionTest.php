@@ -43,16 +43,16 @@ class DimensionTest extends TestCase
 
         $this->assertTrue($dimension->equals($dimension));
         $this->assertTrue($dimension->equals(
-            new Dimension(new Integer(2), new Integer(3))
+            new Dimension(new Integer(2), new Integer(3)),
         ));
         $this->assertFalse($dimension->equals(
-            new Dimension(new Integer(1), new Integer(3))
+            new Dimension(new Integer(1), new Integer(3)),
         ));
         $this->assertFalse($dimension->equals(
-            new Dimension(new Integer(2), new Integer(2))
+            new Dimension(new Integer(2), new Integer(2)),
         ));
         $this->assertFalse($dimension->equals(
-            new Dimension(new Integer(1), new Integer(2))
+            new Dimension(new Integer(1), new Integer(2)),
         ));
     }
 }

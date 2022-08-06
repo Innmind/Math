@@ -34,7 +34,7 @@ class ColumnVectorTest extends TestCase
     public function testDot()
     {
         $number = (new ColumnVector(...numerize(-1, 2)))->dot(
-            new RowVector(...numerize(4, 1))
+            new RowVector(...numerize(4, 1)),
         );
 
         $this->assertInstanceOf(Number::class, $number);
@@ -46,14 +46,14 @@ class ColumnVectorTest extends TestCase
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
         (new ColumnVector(...numerize(-1, 2)))->dot(
-            new RowVector(...numerize(4, 1, 0))
+            new RowVector(...numerize(4, 1, 0)),
         );
     }
 
     public function testMatrix()
     {
         $matrix = (new ColumnVector(...numerize(-1, 2)))->matrix(
-            new RowVector(...numerize(4, 1, 2))
+            new RowVector(...numerize(4, 1, 2)),
         );
 
         $this->assertInstanceOf(Matrix::class, $matrix);
@@ -63,7 +63,7 @@ class ColumnVectorTest extends TestCase
                 [-4, -1, -2],
                 [8, 2, 4],
             ],
-            $matrix->toArray()
+            $matrix->toArray(),
         );
     }
 
@@ -71,7 +71,7 @@ class ColumnVectorTest extends TestCase
     {
         $column = new ColumnVector(...numerize(25, 5, 1));
         $column2 = $column->multiplyBy(
-            ColumnVector::initialize(new Integer(3), new Number\Number(2.56))
+            ColumnVector::initialize(new Integer(3), new Number\Number(2.56)),
         );
 
         $this->assertInstanceOf(ColumnVector::class, $column2);
@@ -84,7 +84,7 @@ class ColumnVectorTest extends TestCase
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
         ColumnVector::initialize(new Integer(1), new Number\Number(1))->multiplyBy(
-            ColumnVector::initialize(new Integer(2), new Number\Number(1))
+            ColumnVector::initialize(new Integer(2), new Number\Number(1)),
         );
     }
 
@@ -92,7 +92,7 @@ class ColumnVectorTest extends TestCase
     {
         $column = new ColumnVector(...numerize(25, 5, 1));
         $column2 = $column->divideBy(
-            ColumnVector::initialize(new Integer(3), new Number\Number(5))
+            ColumnVector::initialize(new Integer(3), new Number\Number(5)),
         );
 
         $this->assertInstanceOf(ColumnVector::class, $column2);
@@ -105,7 +105,7 @@ class ColumnVectorTest extends TestCase
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
         ColumnVector::initialize(new Integer(1), new Number\Number(1))->divideBy(
-            ColumnVector::initialize(new Integer(2), new Number\Number(1))
+            ColumnVector::initialize(new Integer(2), new Number\Number(1)),
         );
     }
 
@@ -129,7 +129,7 @@ class ColumnVectorTest extends TestCase
         $this->assertNotSame($vector3, $vector2);
         $this->assertEquals(
             [0.5, -0.5, 0.2, -0.2],
-            $vector3->toArray()
+            $vector3->toArray(),
         );
     }
 
@@ -138,7 +138,7 @@ class ColumnVectorTest extends TestCase
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
         ColumnVector::initialize(new Integer(1), new Number\Number(1))->subtract(
-            ColumnVector::initialize(new Integer(2), new Number\Number(1))
+            ColumnVector::initialize(new Integer(2), new Number\Number(1)),
         );
     }
 
@@ -154,7 +154,7 @@ class ColumnVectorTest extends TestCase
         $this->assertNotSame($vector3, $vector2);
         $this->assertEquals(
             [1.5, 4.5, 5.8, 8.2],
-            $vector3->toArray()
+            $vector3->toArray(),
         );
     }
 
@@ -163,7 +163,7 @@ class ColumnVectorTest extends TestCase
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
         ColumnVector::initialize(new Integer(1), new Number\Number(1))->add(
-            ColumnVector::initialize(new Integer(2), new Number\Number(1))
+            ColumnVector::initialize(new Integer(2), new Number\Number(1)),
         );
     }
 
@@ -177,7 +177,7 @@ class ColumnVectorTest extends TestCase
         $this->assertNotSame($vector2, $vector1);
         $this->assertEquals(
             [1.0, 8.0, 27.0, -64.0],
-            $vector2->toArray()
+            $vector2->toArray(),
         );
     }
 
@@ -223,8 +223,8 @@ class ColumnVectorTest extends TestCase
                 0,
                 static function(int $carry, $number): int {
                     return $carry + $number->value();
-                }
-            )
+                },
+            ),
         );
     }
 

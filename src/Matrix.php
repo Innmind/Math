@@ -67,7 +67,7 @@ final class Matrix
 
     public static function fromColumns(
         ColumnVector $first,
-        ColumnVector ...$columns
+        ColumnVector ...$columns,
     ): self {
         $numbers = Sequence::of(ColumnVector::class, $first, ...$columns)->mapTo(
             'array',
@@ -156,8 +156,8 @@ final class Matrix
                 ->rows
                 ->slice(0, $row)
                 ->append(
-                    $this->rows->slice($row + 1, $this->rows->size())
-                )),
+                    $this->rows->slice($row + 1, $this->rows->size()),
+                ), ),
         );
     }
 
@@ -168,8 +168,8 @@ final class Matrix
                 ->columns
                 ->slice(0, $column)
                 ->append(
-                    $this->columns->slice($column + 1, $this->columns->size())
-                )),
+                    $this->columns->slice($column + 1, $this->columns->size()),
+                ), ),
         );
     }
 
@@ -225,7 +225,7 @@ final class Matrix
                 $rows[] = new RowVector(...$column->numbers());
 
                 return $rows;
-            }
+            },
         );
 
         return new self(...$rows);
@@ -401,8 +401,8 @@ final class Matrix
             ...unwrap($matrix
                 ->columns()
                 ->takeEnd(
-                    $this->dimension->columns()->value()
-                )),
+                    $this->dimension->columns()->value(),
+                ), ),
         );
     }
 

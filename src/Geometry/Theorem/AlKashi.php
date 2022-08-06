@@ -30,7 +30,7 @@ final class AlKashi
     public static function side(
         Segment $a,
         Degree $degree,
-        Segment $b
+        Segment $b,
     ): Segment {
         $a = $a->length();
         $b = $b->length();
@@ -57,7 +57,7 @@ final class AlKashi
     public static function angle(
         Segment $a,
         Segment $b,
-        Segment $c
+        Segment $c,
     ): Degree {
         $a = $a->length();
         $b = $b->length();

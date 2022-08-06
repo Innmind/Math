@@ -22,8 +22,8 @@ class UnionTest extends TestCase
             SetInterface::class,
             new Union(
                 $this->createMock(SetInterface::class),
-                $this->createMock(SetInterface::class)
-            )
+                $this->createMock(SetInterface::class),
+            ),
         );
     }
 
@@ -37,12 +37,12 @@ class UnionTest extends TestCase
         $union = new Union(
             new Set(
                 new Integer(1),
-                new Integer(2)
+                new Integer(2),
             ),
             new Set(
                 new Integer(4),
-                new Integer(5)
-            )
+                new Integer(5),
+            ),
         );
 
         $this->assertTrue($union->contains(new Number(1)));
@@ -59,12 +59,12 @@ class UnionTest extends TestCase
         $set = new Union(
             new Set(
                 new Integer(1),
-                new Integer(2)
+                new Integer(2),
             ),
             new Set(
                 new Integer(4),
-                new Integer(5)
-            )
+                new Integer(5),
+            ),
         );
 
         $this->assertNull($set->accept(new Integer(1)));

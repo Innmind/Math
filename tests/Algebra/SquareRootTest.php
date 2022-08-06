@@ -56,7 +56,7 @@ class SquareRootTest extends TestCase
     {
         $this->assertSame(
             '√4',
-            (new SquareRoot(new Number\Number(4)))->toString()
+            (new SquareRoot(new Number\Number(4)))->toString(),
         );
     }
 
@@ -223,7 +223,7 @@ class SquareRootTest extends TestCase
             ($a = new Number\Number(9))
                 ->squareRoot()
                 ->power(new Number\Number(2))
-                ->equals($a)
+                ->equals($a),
         );
     }
 
@@ -238,9 +238,9 @@ class SquareRootTest extends TestCase
                     $a
                         ->squareRoot()
                         ->multiplyBy(
-                            $b->squareRoot()
-                        )
-                )
+                            $b->squareRoot(),
+                        ),
+                ),
         );
     }
 
@@ -255,9 +255,9 @@ class SquareRootTest extends TestCase
                     $a
                         ->squareRoot()
                         ->divideBy(
-                            $b->squareRoot()
-                        )
-                )
+                            $b->squareRoot(),
+                        ),
+                ),
         );
     }
 
@@ -271,18 +271,18 @@ class SquareRootTest extends TestCase
                 ->add(
                     ($b = new Number\Number(4))
                         ->multiplyBy($n)
-                        ->squareRoot()
+                        ->squareRoot(),
                 )
                 ->equals(
                     $a
                         ->squareRoot()
                         ->add(
-                            $b->squareRoot()
+                            $b->squareRoot(),
                         )
                         ->power(new Number\Number(2))
                         ->multiplyBy($n)
-                        ->squareRoot()
-                )
+                        ->squareRoot(),
+                ),
         );
     }
 
@@ -293,8 +293,8 @@ class SquareRootTest extends TestCase
             ($a = new Number\Number(4))
                 ->squareRoot()
                 ->equals(
-                    $a->power(new Number\Number(0.5))
-                )
+                    $a->power(new Number\Number(0.5)),
+                ),
         );
     }
 }

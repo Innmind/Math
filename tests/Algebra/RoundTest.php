@@ -55,7 +55,7 @@ class RoundTest extends TestCase
     {
         $this->assertSame(
             '42.5',
-            (Round::up(new Number\Number(42.45), 1))->toString()
+            (Round::up(new Number\Number(42.45), 1))->toString(),
         );
     }
 
@@ -65,7 +65,7 @@ class RoundTest extends TestCase
 
         $this->assertTrue($round->equals(new Number\Number(42.5)));
         $this->assertTrue($round->equals(new Number\Number(
-            42.499999999999999 # with a precision over 14 digits php will round it
+            42.499999999999999, # with a precision over 14 digits php will round it
         )));
         $this->assertFalse($round->equals(new Number\Number(42)));
     }

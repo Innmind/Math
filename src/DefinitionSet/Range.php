@@ -22,7 +22,7 @@ final class Range implements Set
         bool $lowerInclusivity,
         Number $lower,
         Number $upper,
-        bool $upperInclusivity
+        bool $upperInclusivity,
     ) {
         $this->lowerInclusivity = $lowerInclusivity;
         $this->lower = $lower;

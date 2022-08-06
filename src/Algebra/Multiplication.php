@@ -15,7 +15,7 @@ final class Multiplication implements Operation, Number
     public function __construct(
         Number $first,
         Number $second,
-        Number ...$values
+        Number ...$values,
     ) {
         /** @var Sequence<Number> */
         $this->values = Sequence::of(Number::class, $first, $second, ...$values);

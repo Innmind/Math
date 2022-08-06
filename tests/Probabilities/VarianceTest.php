@@ -20,13 +20,13 @@ class VarianceTest extends TestCase
                 [-1, divide(4, 6)],
                 [2, divide(1, 6)],
                 [3, divide(1, 6)],
-            ])
+            ]),
         );
 
         $this->assertInstanceOf(Number::class, $variance());
         $this->assertSame(
             divide(101, 36)->value(),
-            $variance()->value()
+            $variance()->value(),
         );
     }
 }

@@ -82,14 +82,14 @@ final class Number implements NumberInterface
 
     public function add(
         NumberInterface $number,
-        NumberInterface ...$numbers
+        NumberInterface ...$numbers,
     ): NumberInterface {
         return new Addition($this, $number, ...$numbers);
     }
 
     public function subtract(
         NumberInterface $number,
-        NumberInterface ...$numbers
+        NumberInterface ...$numbers,
     ): NumberInterface {
         return new Subtraction($this, $number, ...$numbers);
     }
@@ -101,7 +101,7 @@ final class Number implements NumberInterface
 
     public function multiplyBy(
         NumberInterface $number,
-        NumberInterface ...$numbers
+        NumberInterface ...$numbers,
     ): NumberInterface {
         return new Multiplication($this, $number, ...$numbers);
     }

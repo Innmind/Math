@@ -36,11 +36,11 @@ class PolynomialRegressionTest extends TestCase
         $this->assertSame(81.0, $polynom(new Integer(9))->value());
         $this->assertInstanceOf(
             Number::class,
-            $regression->rootMeanSquareDeviation()
+            $regression->rootMeanSquareDeviation(),
         );
         $this->assertSame(
             0.0,
-            $regression->rootMeanSquareDeviation()->value()
+            $regression->rootMeanSquareDeviation()->value(),
         );
     }
 
@@ -95,11 +95,11 @@ class PolynomialRegressionTest extends TestCase
         $this->assertSame(0.021452505827514, $polynom->degree(4)->coeff()->value());
         $this->assertInstanceOf(
             Number::class,
-            $regression->rootMeanSquareDeviation()
+            $regression->rootMeanSquareDeviation(),
         );
         $this->assertSame(
             1.087684019744029,
-            $regression->rootMeanSquareDeviation()->value()
+            $regression->rootMeanSquareDeviation()->value(),
         );
     }
 }

@@ -20,8 +20,8 @@ class RectangleTest extends TestCase
             Figure::class,
             new Rectangle(
                 new Segment(new Integer(2)),
-                new Segment(new Integer(4))
-            )
+                new Segment(new Integer(4)),
+            ),
         );
     }
 
@@ -29,7 +29,7 @@ class RectangleTest extends TestCase
     {
         $rectangle = new Rectangle(
             new Segment(new Integer(2)),
-            new Segment(new Integer(4))
+            new Segment(new Integer(4)),
         );
 
         $this->assertInstanceOf(Number::class, $rectangle->perimeter());
@@ -40,7 +40,7 @@ class RectangleTest extends TestCase
     {
         $rectangle = new Rectangle(
             new Segment(new Integer(2)),
-            new Segment(new Integer(4))
+            new Segment(new Integer(4)),
         );
 
         $this->assertInstanceOf(Number::class, $rectangle->area());
@@ -51,7 +51,7 @@ class RectangleTest extends TestCase
     {
         $rectangle = new Rectangle(
             $expected = new Segment(new Integer(2)),
-            new Segment(new Integer(4))
+            new Segment(new Integer(4)),
         );
 
         $this->assertSame($expected, $rectangle->length());
@@ -61,7 +61,7 @@ class RectangleTest extends TestCase
     {
         $rectangle = new Rectangle(
             new Segment(new Integer(2)),
-            $expected = new Segment(new Integer(4))
+            $expected = new Segment(new Integer(4)),
         );
 
         $this->assertSame($expected, $rectangle->width());

@@ -26,17 +26,17 @@ class DatasetTest extends TestCase
         $this->assertSame('2 x 2', $dataset->dimension()->toString());
         $this->assertSame(
             [[1, 2], [3, 4]],
-            $dataset->toArray()
+            $dataset->toArray(),
         );
         $this->assertInstanceOf(ColumnVector::class, $dataset->abscissas());
         $this->assertInstanceOf(ColumnVector::class, $dataset->ordinates());
         $this->assertSame(
             [1, 3],
-            $dataset->abscissas()->toArray()
+            $dataset->abscissas()->toArray(),
         );
         $this->assertSame(
             [2, 4],
-            $dataset->ordinates()->toArray()
+            $dataset->ordinates()->toArray(),
         );
         $this->assertSame($first, $dataset->row(0));
         $this->assertSame($second, $dataset->row(1));
@@ -47,7 +47,7 @@ class DatasetTest extends TestCase
         $this->expectException(VectorsMustContainsOnlyTwoValues::class);
 
         new Dataset(
-            new RowVector(...numerize(1, 2, 3))
+            new RowVector(...numerize(1, 2, 3)),
         );
     }
 
@@ -68,7 +68,7 @@ class DatasetTest extends TestCase
                 [2, 3],
                 [3.2, 4],
             ],
-            $dataset->toArray()
+            $dataset->toArray(),
         );
     }
 }

@@ -20,7 +20,7 @@ class SetTest extends TestCase
     {
         $this->assertInstanceOf(
             SetInterface::class,
-            new Set
+            new Set,
         );
     }
 

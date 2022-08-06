@@ -154,7 +154,7 @@ final class Quantile
      */
     private function buildQuartile(
         Number $percentage,
-        ColumnVector $dataset
+        ColumnVector $dataset,
     ): Number {
         $dimension = $dataset->dimension();
 

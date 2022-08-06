@@ -31,7 +31,7 @@ class ModuloTest extends TestCase
     {
         $modulo = new Modulo(
             $this->createMock(Number::class),
-            $this->createMock(Number::class)
+            $this->createMock(Number::class),
         );
 
         $this->assertInstanceOf(Number::class, $modulo);
@@ -42,7 +42,7 @@ class ModuloTest extends TestCase
     {
         $modulo = new Modulo(
             new Number\Number(42.24),
-            new Number\Number(2.1)
+            new Number\Number(2.1),
         );
         $result = $modulo->result();
 
@@ -55,7 +55,7 @@ class ModuloTest extends TestCase
     {
         $modulo = new Modulo(
             new Number\Number(42.24),
-            new Number\Number(2.1)
+            new Number\Number(2.1),
         );
 
         $this->assertSame('42.24 % 2.1', $modulo->toString());
@@ -66,12 +66,12 @@ class ModuloTest extends TestCase
         $modulo = new Modulo(
             new Addition(
                 new Number\Number(1),
-                new Number\Number(1)
+                new Number\Number(1),
             ),
             new Addition(
                 new Number\Number(2),
-                new Number\Number(2)
-            )
+                new Number\Number(2),
+            ),
         );
 
         $this->assertSame('(1 + 1) % (2 + 2)', $modulo->toString());
@@ -81,7 +81,7 @@ class ModuloTest extends TestCase
     {
         $modulo = new Modulo(
             new Number\Number(42.24),
-            new Number\Number(2.1)
+            new Number\Number(2.1),
         );
 
         $this->assertTrue($modulo->equals(new Number\Number(0.2400000000000002)));
@@ -92,7 +92,7 @@ class ModuloTest extends TestCase
     {
         $modulo = new Modulo(
             new Number\Number(42.24),
-            new Number\Number(2.1)
+            new Number\Number(2.1),
         );
 
         $this->assertTrue($modulo->higherThan(new Number\Number(0.23)));
@@ -103,7 +103,7 @@ class ModuloTest extends TestCase
     {
         $modulo = new Modulo(
             new Number\Number(42.24),
-            new Number\Number(2.1)
+            new Number\Number(2.1),
         );
         $number = $modulo->add(new Number\Number(66));
 
@@ -115,7 +115,7 @@ class ModuloTest extends TestCase
     {
         $modulo = new Modulo(
             new Number\Number(42.24),
-            new Number\Number(2.1)
+            new Number\Number(2.1),
         );
         $number = $modulo->subtract(new Number\Number(66));
 
@@ -127,7 +127,7 @@ class ModuloTest extends TestCase
     {
         $modulo = new Modulo(
             new Number\Number(42.24),
-            new Number\Number(2.1)
+            new Number\Number(2.1),
         );
         $number = $modulo->divideBy(new Number\Number(2));
 
@@ -139,7 +139,7 @@ class ModuloTest extends TestCase
     {
         $modulo = new Modulo(
             new Number\Number(42.24),
-            new Number\Number(2.1)
+            new Number\Number(2.1),
         );
         $number = $modulo->multiplyBy(new Number\Number(2));
 
@@ -151,7 +151,7 @@ class ModuloTest extends TestCase
     {
         $number = new Modulo(
             new Number\Number(42.24),
-            new Number\Number(2.1)
+            new Number\Number(2.1),
         );
 
         $this->assertEquals(Round::up($number, 2), $number->roundUp(2));
@@ -164,7 +164,7 @@ class ModuloTest extends TestCase
     {
         $modulo = new Modulo(
             new Number\Number(42.24),
-            new Number\Number(2.1)
+            new Number\Number(2.1),
         );
         $number = $modulo->floor();
 
@@ -176,7 +176,7 @@ class ModuloTest extends TestCase
     {
         $modulo = new Modulo(
             new Number\Number(42.24),
-            new Number\Number(2.1)
+            new Number\Number(2.1),
         );
         $number = $modulo->ceil();
 
@@ -188,7 +188,7 @@ class ModuloTest extends TestCase
     {
         $modulo = new Modulo(
             new Number\Number(42.24),
-            new Number\Number(2.1)
+            new Number\Number(2.1),
         );
         $number = $modulo->modulo(new Number\Number(0.1));
 
@@ -200,7 +200,7 @@ class ModuloTest extends TestCase
     {
         $modulo = new Modulo(
             new Number\Number(-42.24),
-            new Number\Number(2.1)
+            new Number\Number(2.1),
         );
         $number = $modulo->absolute();
 
@@ -212,7 +212,7 @@ class ModuloTest extends TestCase
     {
         $modulo = new Modulo(
             new Number\Number(9),
-            new Number\Number(2)
+            new Number\Number(2),
         );
         $number = $modulo->power(new Number\Number(2));
 
@@ -224,7 +224,7 @@ class ModuloTest extends TestCase
     {
         $modulo = new Modulo(
             new Number\Number(12),
-            new Number\Number(8)
+            new Number\Number(8),
         );
         $number = $modulo->squareRoot();
 
@@ -236,7 +236,7 @@ class ModuloTest extends TestCase
     {
         $number = (new Modulo(
             new Number\Number(12),
-            new Number\Number(8)
+            new Number\Number(8),
         ))->exponential();
 
         $this->assertInstanceOf(Exponential::class, $number);
@@ -247,7 +247,7 @@ class ModuloTest extends TestCase
     {
         $number = (new Modulo(
             new Number\Number(12),
-            new Number\Number(8)
+            new Number\Number(8),
         ))->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
@@ -258,7 +258,7 @@ class ModuloTest extends TestCase
     {
         $number = (new Modulo(
             new Number\Number(12),
-            new Number\Number(8)
+            new Number\Number(8),
         ))->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
@@ -269,7 +269,7 @@ class ModuloTest extends TestCase
     {
         $number = (new Modulo(
             new Number\Number(12),
-            new Number\Number(8)
+            new Number\Number(8),
         ))->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
@@ -280,7 +280,7 @@ class ModuloTest extends TestCase
     {
         $number = (new Modulo(
             new Number\Number(12),
-            new Number\Number(8)
+            new Number\Number(8),
         ))->signum();
 
         $this->assertInstanceOf(Signum::class, $number);

@@ -51,11 +51,11 @@ class LinearRegressionTest extends TestCase
 
         $this->assertInstanceOf(
             Number::class,
-            $regression->rootMeanSquareDeviation()
+            $regression->rootMeanSquareDeviation(),
         );
         $this->assertSame(
             1.8079684731764545,
-            $regression->rootMeanSquareDeviation()->value()
+            $regression->rootMeanSquareDeviation()->value(),
         );
     }
 }

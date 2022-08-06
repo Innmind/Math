@@ -21,13 +21,13 @@ class TangentTest extends TestCase
             new Integer(0),
             new Degree(
                 new Integer(1),
-                new Integer(2)
-            )
+                new Integer(2),
+            ),
         );
         //t -> f'(2)(x - 2) + f(2)
         $tangent = new Tangent(
             $polynom,
-            $abscissa = new Integer(2)
+            $abscissa = new Integer(2),
         );
 
         $this->assertSame($polynom, $tangent->polynom());
@@ -35,7 +35,7 @@ class TangentTest extends TestCase
         $this->assertInstanceOf(Number::class, $tangent(new Integer(0)));
         $this->assertSame(
             4.0,
-            $tangent(new Integer(2))->value()
+            $tangent(new Integer(2))->value(),
         );
     }
 }

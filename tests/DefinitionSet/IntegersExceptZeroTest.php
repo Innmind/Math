@@ -20,7 +20,7 @@ class IntegersExceptZeroTest extends TestCase
     {
         $this->assertInstanceOf(
             Set::class,
-            new IntegersExceptZero
+            new IntegersExceptZero,
         );
     }
 

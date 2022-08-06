@@ -65,7 +65,7 @@ class BinaryLogarithmTest extends TestCase
     {
         $this->assertSame(
             'lb(4)',
-            (new BinaryLogarithm(new Number\Number(4)))->toString()
+            (new BinaryLogarithm(new Number\Number(4)))->toString(),
         );
     }
 
@@ -239,13 +239,13 @@ class BinaryLogarithmTest extends TestCase
         $this->assertTrue(
             (new BinaryLogarithm(
                 ($a = new Number\Number(2))->multiplyBy(
-                    $b = new Number\Number(4)
-                )
+                    $b = new Number\Number(4),
+                ),
             ))->equals(
                 (new BinaryLogarithm($a))->add(
-                    new BinaryLogarithm($b)
-                )
-            )
+                    new BinaryLogarithm($b),
+                ),
+            ),
         );
     }
 
@@ -255,13 +255,13 @@ class BinaryLogarithmTest extends TestCase
         $this->assertTrue(
             (new BinaryLogarithm(
                 ($a = new Number\Number(2))->divideBy(
-                    $b = new Number\Number(4)
-                )
+                    $b = new Number\Number(4),
+                ),
             ))->equals(
                 (new BinaryLogarithm($a))->subtract(
-                    new BinaryLogarithm($b)
-                )
-            )
+                    new BinaryLogarithm($b),
+                ),
+            ),
         );
     }
 }

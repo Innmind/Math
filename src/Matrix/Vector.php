@@ -207,7 +207,7 @@ final class Vector
                 }
 
                 return $number;
-            }
+            },
         );
     }
 

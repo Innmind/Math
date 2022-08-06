@@ -79,7 +79,7 @@ final class PolynomialRegression
                     });
 
                     return ($rows)($xToThePowers);
-                }
+                },
             );
 
         return new Matrix(...unwrap($rows));

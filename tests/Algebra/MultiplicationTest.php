@@ -31,7 +31,7 @@ class MultiplicationTest extends TestCase
     {
         $multiplication = new Multiplication(
             new Number\Number(4),
-            new Number\Number(42)
+            new Number\Number(42),
         );
 
         $this->assertInstanceOf(Operation::class, $multiplication);
@@ -43,7 +43,7 @@ class MultiplicationTest extends TestCase
     {
         $multiplication = new Multiplication(
             new Number\Number(42),
-            new Number\Number(24)
+            new Number\Number(24),
         );
         $result = $multiplication->result();
 
@@ -57,7 +57,7 @@ class MultiplicationTest extends TestCase
     {
         $multiplication = new Multiplication(
             new Number\Number(4),
-            new Number\Number(2)
+            new Number\Number(2),
         );
 
         $this->assertSame(8, $multiplication->value());
@@ -67,7 +67,7 @@ class MultiplicationTest extends TestCase
     {
         $multiplication = new Multiplication(
             new Number\Number(4),
-            new Number\Number(2)
+            new Number\Number(2),
         );
 
         $this->assertTrue($multiplication->equals(new Number\Number(8)));
@@ -78,7 +78,7 @@ class MultiplicationTest extends TestCase
     {
         $multiplication = new Multiplication(
             new Number\Number(4),
-            new Number\Number(2)
+            new Number\Number(2),
         );
 
         $this->assertFalse($multiplication->higherThan(new Number\Number(8)));
@@ -89,7 +89,7 @@ class MultiplicationTest extends TestCase
     {
         $multiplication = new Multiplication(
             new Number\Number(4),
-            new Number\Number(2)
+            new Number\Number(2),
         );
         $number = $multiplication->add(new Number\Number(66));
 
@@ -101,7 +101,7 @@ class MultiplicationTest extends TestCase
     {
         $multiplication = new Multiplication(
             new Number\Number(4),
-            new Number\Number(2)
+            new Number\Number(2),
         );
         $number = $multiplication->subtract(new Number\Number(66));
 
@@ -113,7 +113,7 @@ class MultiplicationTest extends TestCase
     {
         $multiplication = new Multiplication(
             new Number\Number(4.5),
-            new Number\Number(2)
+            new Number\Number(2),
         );
         $number = $multiplication->divideBy(new Number\Number(3));
 
@@ -125,7 +125,7 @@ class MultiplicationTest extends TestCase
     {
         $multiplication = new Addition(
             new Number\Number(24),
-            new Number\Number(42)
+            new Number\Number(42),
         );
         $number = $multiplication->multiplyBy(new Number\Number(2));
 
@@ -137,7 +137,7 @@ class MultiplicationTest extends TestCase
     {
         $number = new Multiplication(
             new Number\Number(2.22),
-            new Number\Number(3)
+            new Number\Number(3),
         );
 
         $this->assertEquals(Round::up($number, 2), $number->roundUp(2));
@@ -150,7 +150,7 @@ class MultiplicationTest extends TestCase
     {
         $multiplication = new Multiplication(
             new Number\Number(2.22),
-            new Number\Number(3)
+            new Number\Number(3),
         );
         $number = $multiplication->floor();
 
@@ -162,7 +162,7 @@ class MultiplicationTest extends TestCase
     {
         $multiplication = new Multiplication(
             new Number\Number(2.22),
-            new Number\Number(3)
+            new Number\Number(3),
         );
         $number = $multiplication->ceil();
 
@@ -174,7 +174,7 @@ class MultiplicationTest extends TestCase
     {
         $multiplication = new Multiplication(
             new Number\Number(3),
-            new Number\Number(3)
+            new Number\Number(3),
         );
         $number = $multiplication->modulo(new Number\Number(2));
 
@@ -186,7 +186,7 @@ class MultiplicationTest extends TestCase
     {
         $multiplication = new Multiplication(
             new Number\Number(-3),
-            new Number\Number(3)
+            new Number\Number(3),
         );
         $number = $multiplication->absolute();
 
@@ -198,7 +198,7 @@ class MultiplicationTest extends TestCase
     {
         $multiplication = new Multiplication(
             new Number\Number(-3),
-            new Number\Number(3)
+            new Number\Number(3),
         );
         $number = $multiplication->power(new Number\Number(2));
 
@@ -210,7 +210,7 @@ class MultiplicationTest extends TestCase
     {
         $multiplication = new Multiplication(
             new Number\Number(2),
-            new Number\Number(2)
+            new Number\Number(2),
         );
         $number = $multiplication->squareRoot();
 
@@ -222,7 +222,7 @@ class MultiplicationTest extends TestCase
     {
         $number = (new Multiplication(
             new Number\Number(2),
-            new Number\Number(2)
+            new Number\Number(2),
         ))->exponential();
 
         $this->assertInstanceOf(Exponential::class, $number);
@@ -233,7 +233,7 @@ class MultiplicationTest extends TestCase
     {
         $number = (new Multiplication(
             new Number\Number(2),
-            new Number\Number(2)
+            new Number\Number(2),
         ))->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
@@ -244,7 +244,7 @@ class MultiplicationTest extends TestCase
     {
         $number = (new Multiplication(
             new Number\Number(2),
-            new Number\Number(2)
+            new Number\Number(2),
         ))->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
@@ -255,7 +255,7 @@ class MultiplicationTest extends TestCase
     {
         $number = (new Multiplication(
             new Number\Number(2),
-            new Number\Number(2)
+            new Number\Number(2),
         ))->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
@@ -266,7 +266,7 @@ class MultiplicationTest extends TestCase
     {
         $number = (new Multiplication(
             new Number\Number(2),
-            new Number\Number(2)
+            new Number\Number(2),
         ))->signum();
 
         $this->assertInstanceOf(Signum::class, $number);
@@ -278,10 +278,10 @@ class MultiplicationTest extends TestCase
         $multiplication = new Multiplication(
             new Addition(
                 new Number\Number(12),
-                new Number\Number(12)
+                new Number\Number(12),
             ),
             new Number\Number(42),
-            new Number\Number(66)
+            new Number\Number(66),
         );
 
         $this->assertSame('(12 + 12) x 42 x 66', $multiplication->toString());
@@ -293,13 +293,13 @@ class MultiplicationTest extends TestCase
         $this->assertTrue(
             ($a = new Number\Number(2))
                 ->multiplyBy(
-                    ($b = new Number\Number(3))->add($c = new Number\Number(4))
+                    ($b = new Number\Number(3))->add($c = new Number\Number(4)),
                 )
                 ->equals(
                     $a
                         ->multiplyBy($b)
-                        ->add($a->multiplyBy($c))
-                )
+                        ->add($a->multiplyBy($c)),
+                ),
         );
     }
 
@@ -310,15 +310,15 @@ class MultiplicationTest extends TestCase
             ($a = new Number\Number(2))
                 ->add($b = new Number\Number(3))
                 ->multiplyBy(
-                    ($c = new Number\Number(4))->add($d = new Number\Number(5))
+                    ($c = new Number\Number(4))->add($d = new Number\Number(5)),
                 )
                 ->equals(
                     $a
                         ->multiplyBy($c)
                         ->add($a->multiplyBy($d))
                         ->add($b->multiplyBy($c))
-                        ->add($b->multiplyBy($d))
-                )
+                        ->add($b->multiplyBy($d)),
+                ),
         );
     }
 
@@ -335,10 +335,10 @@ class MultiplicationTest extends TestCase
                         ->add(
                             (new Number\Number(2))
                                 ->multiplyBy($a)
-                                ->multiplyBy($b)
+                                ->multiplyBy($b),
                         )
-                        ->add($b->power(new Number\Number(2)))
-                )
+                        ->add($b->power(new Number\Number(2))),
+                ),
         );
 
         //(a-b)^2 = a^2 - 2ab + b^2
@@ -352,10 +352,10 @@ class MultiplicationTest extends TestCase
                         ->subtract(
                             (new Number\Number(2))
                                 ->multiplyBy($a)
-                                ->multiplyBy($b)
+                                ->multiplyBy($b),
                         )
-                        ->add($b->power(new Number\Number(2)))
-                )
+                        ->add($b->power(new Number\Number(2))),
+                ),
         );
 
         //(a+b)(a-b) = a^2 - b^2
@@ -366,8 +366,8 @@ class MultiplicationTest extends TestCase
                 ->equals(
                     $a
                         ->power(new Number\Number(2))
-                        ->subtract($b->power(new Number\Number(2)))
-                )
+                        ->subtract($b->power(new Number\Number(2))),
+                ),
         );
     }
 }

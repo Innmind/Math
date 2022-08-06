@@ -19,7 +19,7 @@ final class Tangent
     public function __construct(
         Polynom $polynom,
         Number $abscissa,
-        Number $limit = null
+        Number $limit = null,
     ) {
         $this->polynom = $polynom;
         $this->derivative = $polynom->derived($abscissa, $limit);

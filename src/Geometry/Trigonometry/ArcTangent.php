@@ -45,14 +45,14 @@ final class ArcTangent implements Number
 
     public function add(
         Number $number,
-        Number ...$numbers
+        Number ...$numbers,
     ): Number {
         return $this->arcTangent()->number()->add($number, ...$numbers);
     }
 
     public function subtract(
         Number $number,
-        Number ...$numbers
+        Number ...$numbers,
     ): Number {
         return $this->arcTangent()->number()->subtract($number, ...$numbers);
     }
@@ -64,7 +64,7 @@ final class ArcTangent implements Number
 
     public function multiplyBy(
         Number $number,
-        Number ...$numbers
+        Number ...$numbers,
     ): Number {
         return $this->arcTangent()->number()->multiplyBy($number, ...$numbers);
     }

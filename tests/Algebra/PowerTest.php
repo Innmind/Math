@@ -31,7 +31,7 @@ class PowerTest extends TestCase
     {
         $power = new Power(
             $this->createMock(Number::class),
-            $this->createMock(Number::class)
+            $this->createMock(Number::class),
         );
 
         $this->assertInstanceOf(Number::class, $power);
@@ -42,7 +42,7 @@ class PowerTest extends TestCase
     {
         $power = new Power(
             new Number\Number(42.24),
-            new Number\Number(2.1)
+            new Number\Number(2.1),
         );
         $result = $power->result();
 
@@ -55,7 +55,7 @@ class PowerTest extends TestCase
     {
         $power = new Power(
             new Number\Number(42.24),
-            new Number\Number(2.1)
+            new Number\Number(2.1),
         );
 
         $this->assertSame('42.24^2.1', $power->toString());
@@ -66,12 +66,12 @@ class PowerTest extends TestCase
         $power = new Power(
             new Addition(
                 new Number\Number(1),
-                new Number\Number(1)
+                new Number\Number(1),
             ),
             new Addition(
                 new Number\Number(2),
-                new Number\Number(2)
-            )
+                new Number\Number(2),
+            ),
         );
 
         $this->assertSame('(1 + 1)^(2 + 2)', $power->toString());
@@ -81,7 +81,7 @@ class PowerTest extends TestCase
     {
         $power = new Power(
             new Number\Number(2),
-            new Number\Number(2.1)
+            new Number\Number(2.1),
         );
 
         $this->assertTrue($power->equals(new Number\Number(4.2870938501451725)));
@@ -92,7 +92,7 @@ class PowerTest extends TestCase
     {
         $power = new Power(
             new Number\Number(2),
-            new Number\Number(2.1)
+            new Number\Number(2.1),
         );
 
         $this->assertTrue($power->higherThan(new Number\Number(4.28709385)));
@@ -103,7 +103,7 @@ class PowerTest extends TestCase
     {
         $power = new Power(
             new Number\Number(2),
-            new Number\Number(2)
+            new Number\Number(2),
         );
         $number = $power->add(new Number\Number(66));
 
@@ -115,7 +115,7 @@ class PowerTest extends TestCase
     {
         $power = new Power(
             new Number\Number(2),
-            new Number\Number(2)
+            new Number\Number(2),
         );
         $number = $power->subtract(new Number\Number(66));
 
@@ -127,7 +127,7 @@ class PowerTest extends TestCase
     {
         $power = new Power(
             new Number\Number(2),
-            new Number\Number(2)
+            new Number\Number(2),
         );
         $number = $power->divideBy(new Number\Number(2));
 
@@ -139,7 +139,7 @@ class PowerTest extends TestCase
     {
         $power = new Power(
             new Number\Number(2),
-            new Number\Number(2)
+            new Number\Number(2),
         );
         $number = $power->multiplyBy(new Number\Number(2));
 
@@ -151,7 +151,7 @@ class PowerTest extends TestCase
     {
         $number = new Power(
             new Number\Number(2),
-            new Number\Number(2)
+            new Number\Number(2),
         );
 
         $this->assertEquals(Round::up($number, 2), $number->roundUp(2));
@@ -164,7 +164,7 @@ class PowerTest extends TestCase
     {
         $power = new Power(
             new Number\Number(2),
-            new Number\Number(2)
+            new Number\Number(2),
         );
         $number = $power->floor();
 
@@ -176,7 +176,7 @@ class PowerTest extends TestCase
     {
         $power = new Power(
             new Number\Number(2),
-            new Number\Number(2)
+            new Number\Number(2),
         );
         $number = $power->ceil();
 
@@ -188,7 +188,7 @@ class PowerTest extends TestCase
     {
         $power = new Power(
             new Number\Number(2),
-            new Number\Number(2)
+            new Number\Number(2),
         );
         $number = $power->modulo(new Number\Number(0.5));
 
@@ -200,7 +200,7 @@ class PowerTest extends TestCase
     {
         $power = new Power(
             new Number\Number(-2),
-            new Number\Number(3)
+            new Number\Number(3),
         );
         $number = $power->absolute();
 
@@ -212,7 +212,7 @@ class PowerTest extends TestCase
     {
         $power = new Power(
             new Number\Number(2),
-            new Number\Number(2)
+            new Number\Number(2),
         );
         $number = $power->power(new Number\Number(2));
 
@@ -224,7 +224,7 @@ class PowerTest extends TestCase
     {
         $power = new Power(
             new Number\Number(2),
-            new Number\Number(2)
+            new Number\Number(2),
         );
         $number = $power->squareRoot();
 
@@ -236,7 +236,7 @@ class PowerTest extends TestCase
     {
         $number = (new Power(
             new Number\Number(2),
-            new Number\Number(2)
+            new Number\Number(2),
         ))->exponential();
 
         $this->assertInstanceOf(Exponential::class, $number);
@@ -247,7 +247,7 @@ class PowerTest extends TestCase
     {
         $number = (new Power(
             new Number\Number(2),
-            new Number\Number(2)
+            new Number\Number(2),
         ))->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
@@ -258,7 +258,7 @@ class PowerTest extends TestCase
     {
         $number = (new Power(
             new Number\Number(2),
-            new Number\Number(2)
+            new Number\Number(2),
         ))->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
@@ -269,7 +269,7 @@ class PowerTest extends TestCase
     {
         $number = (new Power(
             new Number\Number(2),
-            new Number\Number(2)
+            new Number\Number(2),
         ))->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
@@ -280,7 +280,7 @@ class PowerTest extends TestCase
     {
         $number = (new Power(
             new Number\Number(2),
-            new Number\Number(2)
+            new Number\Number(2),
         ))->signum();
 
         $this->assertInstanceOf(Signum::class, $number);
@@ -296,10 +296,10 @@ class PowerTest extends TestCase
                 ->equals(
                     (new Number\Number(1))->divideBy(
                         $a->power(
-                            $n->absolute()
-                        )
-                    )
-                )
+                            $n->absolute(),
+                        ),
+                    ),
+                ),
         );
     }
 
@@ -309,15 +309,15 @@ class PowerTest extends TestCase
         $this->assertTrue(
             ($x = new Number\Number(2))
                 ->power(
-                    ($a = new Number\Number(3))->add($b = new Number\Number(4))
+                    ($a = new Number\Number(3))->add($b = new Number\Number(4)),
                 )
                 ->equals(
                     $x
                         ->power($a)
                         ->multiplyBy(
-                            $x->power($b)
-                        )
-                )
+                            $x->power($b),
+                        ),
+                ),
         );
     }
 
@@ -327,15 +327,15 @@ class PowerTest extends TestCase
         $this->assertTrue(
             ($x = new Number\Number(2))
                 ->power(
-                    ($a = new Number\Number(3))->subtract($b = new Number\Number(4))
+                    ($a = new Number\Number(3))->subtract($b = new Number\Number(4)),
                 )
                 ->equals(
                     $x
                         ->power($a)
                         ->divideBy(
-                            $x->power($b)
-                        )
-                )
+                            $x->power($b),
+                        ),
+                ),
         );
     }
 
@@ -348,9 +348,9 @@ class PowerTest extends TestCase
                 ->power($b = new Number\Number(4))
                 ->equals(
                     $x->power(
-                        $a->multiplyBy($b)
-                    )
-                )
+                        $a->multiplyBy($b),
+                    ),
+                ),
         );
     }
 
@@ -365,9 +365,9 @@ class PowerTest extends TestCase
                     $a
                         ->power($n)
                         ->multiplyBy(
-                            $b->power($n)
-                        )
-                )
+                            $b->power($n),
+                        ),
+                ),
         );
     }
 }

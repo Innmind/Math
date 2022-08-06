@@ -34,7 +34,7 @@ class RowVectorTest extends TestCase
     public function testDot()
     {
         $number = (new RowVector(...numerize(-1, 2)))->dot(
-            new ColumnVector(...numerize(4, 1))
+            new ColumnVector(...numerize(4, 1)),
         );
 
         $this->assertInstanceOf(Number::class, $number);
@@ -46,14 +46,14 @@ class RowVectorTest extends TestCase
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
         (new RowVector(...numerize(-1, 2)))->dot(
-            new ColumnVector(...numerize(4, 1, 0))
+            new ColumnVector(...numerize(4, 1, 0)),
         );
     }
 
     public function testMatrix()
     {
         $matrix = (new RowVector(...numerize(-1, 2)))->matrix(
-            new ColumnVector(...numerize(4, 1, 2))
+            new ColumnVector(...numerize(4, 1, 2)),
         );
 
         $this->assertInstanceOf(Matrix::class, $matrix);
@@ -64,7 +64,7 @@ class RowVectorTest extends TestCase
                 [-1, 2],
                 [-2, 4],
             ],
-            $matrix->toArray()
+            $matrix->toArray(),
         );
     }
 
@@ -72,7 +72,7 @@ class RowVectorTest extends TestCase
     {
         $row = new RowVector(...numerize(25, 5, 1));
         $row2 = $row->multiplyBy(
-            RowVector::initialize(new Integer(3), new Number\Number(2.56))
+            RowVector::initialize(new Integer(3), new Number\Number(2.56)),
         );
 
         $this->assertInstanceOf(RowVector::class, $row2);
@@ -85,7 +85,7 @@ class RowVectorTest extends TestCase
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
         RowVector::initialize(new Integer(1), new Number\Number(1))->multiplyBy(
-            RowVector::initialize(new Integer(2), new Number\Number(1))
+            RowVector::initialize(new Integer(2), new Number\Number(1)),
         );
     }
 
@@ -93,7 +93,7 @@ class RowVectorTest extends TestCase
     {
         $row = new RowVector(...numerize(25, 5, 1));
         $row2 = $row->divideBy(
-            RowVector::initialize(new Integer(3), new Number\Number(5))
+            RowVector::initialize(new Integer(3), new Number\Number(5)),
         );
 
         $this->assertInstanceOf(RowVector::class, $row2);
@@ -106,7 +106,7 @@ class RowVectorTest extends TestCase
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
         RowVector::initialize(new Integer(1), new Number\Number(1))->divideBy(
-            RowVector::initialize(new Integer(2), new Number\Number(1))
+            RowVector::initialize(new Integer(2), new Number\Number(1)),
         );
     }
 
@@ -130,7 +130,7 @@ class RowVectorTest extends TestCase
         $this->assertNotSame($vector3, $vector2);
         $this->assertEquals(
             [0.5, -0.5, 0.2, -0.2],
-            $vector3->toArray()
+            $vector3->toArray(),
         );
     }
 
@@ -139,7 +139,7 @@ class RowVectorTest extends TestCase
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
         RowVector::initialize(new Integer(1), new Number\Number(1))->subtract(
-            RowVector::initialize(new Integer(2), new Number\Number(1))
+            RowVector::initialize(new Integer(2), new Number\Number(1)),
         );
     }
 
@@ -155,7 +155,7 @@ class RowVectorTest extends TestCase
         $this->assertNotSame($vector3, $vector2);
         $this->assertEquals(
             [1.5, 4.5, 5.8, 8.2],
-            $vector3->toArray()
+            $vector3->toArray(),
         );
     }
 
@@ -164,7 +164,7 @@ class RowVectorTest extends TestCase
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
         RowVector::initialize(new Integer(1), new Number\Number(1))->add(
-            RowVector::initialize(new Integer(2), new Number\Number(1))
+            RowVector::initialize(new Integer(2), new Number\Number(1)),
         );
     }
 
@@ -178,7 +178,7 @@ class RowVectorTest extends TestCase
         $this->assertNotSame($vector2, $vector1);
         $this->assertEquals(
             [1, 8, 27, -64],
-            $vector2->toArray()
+            $vector2->toArray(),
         );
     }
 
@@ -224,8 +224,8 @@ class RowVectorTest extends TestCase
                 0,
                 static function(int $carry, $number): int {
                     return $carry + $number->value();
-                }
-            )
+                },
+            ),
         );
     }
 

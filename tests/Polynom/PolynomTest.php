@@ -21,7 +21,7 @@ class PolynomTest extends TestCase
 
         $this->assertNotSame(
             $p,
-            $p->withDegree(new Integer(1), new Integer(1))
+            $p->withDegree(new Integer(1), new Integer(1)),
         );
     }
 
@@ -29,7 +29,7 @@ class PolynomTest extends TestCase
     {
         $p = (new Polynom(new Integer(0)))->withDegree(
             new Integer(1),
-            new Integer(1)
+            new Integer(1),
         );
 
         $this->assertTrue($p->hasDegree(1));
@@ -38,7 +38,7 @@ class PolynomTest extends TestCase
 
         $p = new Polynom(
             null,
-            $d = new Degree(new Integer(1), new Integer(2))
+            $d = new Degree(new Integer(1), new Integer(2)),
         );
 
         $this->assertTrue($p->hasDegree(1));
@@ -88,11 +88,11 @@ class PolynomTest extends TestCase
 
         $this->assertInstanceOf(
             Number::class,
-            $polynom->derived(new Integer(2))
+            $polynom->derived(new Integer(2)),
         );
         $this->assertSame(
             4.000,
-            $polynom->derived(new Integer(2))->roundUp(3)->value()
+            $polynom->derived(new Integer(2))->roundUp(3)->value(),
         );
     }
 
@@ -103,17 +103,17 @@ class PolynomTest extends TestCase
 
         $this->assertInstanceOf(
             Tangent::class,
-            $polynom->tangent(new Integer(2))
+            $polynom->tangent(new Integer(2)),
         );
         $this->assertSame(
             $polynom,
             $polynom
                 ->tangent(new Integer(2))
-                ->polynom()
+                ->polynom(),
         );
         $this->assertSame(
             4.0,
-            $polynom->tangent(new Integer(2))(new Integer(2))->value()
+            $polynom->tangent(new Integer(2))(new Integer(2))->value(),
         );
     }
 
@@ -147,7 +147,7 @@ class PolynomTest extends TestCase
         $this->assertSame('1x^3 + 2x^2 + 3x + 42', $polynom->toString());
         $this->assertSame(
             '(1 ÷ (3 + 1))x^4 + (2 ÷ (2 + 1))x^3 + (3 ÷ (1 + 1))x^2 + 42x',
-            $primitive->toString()
+            $primitive->toString(),
         );
     }
 
@@ -158,7 +158,7 @@ class PolynomTest extends TestCase
             (new Polynom)
                 ->withDegree(new Integer(2), new Integer(2))
                 ->primitive()
-                ->toString()
+                ->toString(),
         );
     }
 
@@ -175,7 +175,7 @@ class PolynomTest extends TestCase
         $this->assertSame('1x^3 + 2x^2 + 4x', $polynom->toString());
         $this->assertSame(
             '(1 x 3)x^2 + (2 x 2)x + 4',
-            $derivative->toString()
+            $derivative->toString(),
         );
     }
 
@@ -188,7 +188,7 @@ class PolynomTest extends TestCase
         $this->assertInstanceOf(Integral::class, $integral);
         $this->assertSame(
             '∫(3x^2)dx = [(3 ÷ (2 + 1))x^3]',
-            $integral->toString()
+            $integral->toString(),
         );
     }
 }

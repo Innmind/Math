@@ -31,7 +31,7 @@ class SubtractionTest extends TestCase
     {
         $subtraction = new Subtraction(
             new Number\Number(4),
-            new Number\Number(2)
+            new Number\Number(2),
         );
 
         $this->assertInstanceOf(Operation::class, $subtraction);
@@ -43,7 +43,7 @@ class SubtractionTest extends TestCase
     {
         $subtraction = new Subtraction(
             new Number\Number(42),
-            new Number\Number(24)
+            new Number\Number(24),
         );
         $result = $subtraction->result();
 
@@ -57,7 +57,7 @@ class SubtractionTest extends TestCase
     {
         $subtraction = new Subtraction(
             new Number\Number(42),
-            new Number\Number(24)
+            new Number\Number(24),
         );
 
         $this->assertSame(18, $subtraction->value());
@@ -67,7 +67,7 @@ class SubtractionTest extends TestCase
     {
         $subtraction = new Subtraction(
             new Number\Number(42),
-            new Number\Number(24)
+            new Number\Number(24),
         );
 
         $this->assertTrue($subtraction->equals(new Number\Number(18)));
@@ -78,7 +78,7 @@ class SubtractionTest extends TestCase
     {
         $subtraction = new Subtraction(
             new Number\Number(42),
-            new Number\Number(24)
+            new Number\Number(24),
         );
 
         $this->assertFalse($subtraction->higherThan(new Number\Number(18)));
@@ -89,7 +89,7 @@ class SubtractionTest extends TestCase
     {
         $subtraction = new Subtraction(
             new Number\Number(42),
-            new Number\Number(24)
+            new Number\Number(24),
         );
         $number = $subtraction->add(new Number\Number(66));
 
@@ -101,7 +101,7 @@ class SubtractionTest extends TestCase
     {
         $subtraction = new Subtraction(
             new Number\Number(42),
-            new Number\Number(24)
+            new Number\Number(24),
         );
         $number = $subtraction->subtract(new Number\Number(66));
 
@@ -113,7 +113,7 @@ class SubtractionTest extends TestCase
     {
         $subtraction = new Subtraction(
             new Number\Number(42),
-            new Number\Number(24)
+            new Number\Number(24),
         );
         $number = $subtraction->divideBy(new Number\Number(3));
 
@@ -125,7 +125,7 @@ class SubtractionTest extends TestCase
     {
         $subtraction = new Subtraction(
             new Number\Number(42),
-            new Number\Number(24)
+            new Number\Number(24),
         );
         $number = $subtraction->multiplyBy(new Number\Number(2));
 
@@ -137,7 +137,7 @@ class SubtractionTest extends TestCase
     {
         $number = new Subtraction(
             new Number\Number(24.55),
-            new Number\Number(12.33)
+            new Number\Number(12.33),
         );
 
         $this->assertEquals(Round::up($number, 2), $number->roundUp(2));
@@ -150,7 +150,7 @@ class SubtractionTest extends TestCase
     {
         $subtraction = new Subtraction(
             new Number\Number(24.55),
-            new Number\Number(12.33)
+            new Number\Number(12.33),
         );
         $number = $subtraction->floor();
 
@@ -162,7 +162,7 @@ class SubtractionTest extends TestCase
     {
         $subtraction = new Subtraction(
             new Number\Number(24.55),
-            new Number\Number(12.33)
+            new Number\Number(12.33),
         );
         $number = $subtraction->ceil();
 
@@ -174,7 +174,7 @@ class SubtractionTest extends TestCase
     {
         $subtraction = new Subtraction(
             new Number\Number(25),
-            new Number\Number(12)
+            new Number\Number(12),
         );
         $number = $subtraction->modulo(new Number\Number(6));
 
@@ -186,7 +186,7 @@ class SubtractionTest extends TestCase
     {
         $subtraction = new Subtraction(
             new Number\Number(12),
-            new Number\Number(25)
+            new Number\Number(25),
         );
         $number = $subtraction->absolute();
 
@@ -198,7 +198,7 @@ class SubtractionTest extends TestCase
     {
         $subtraction = new Subtraction(
             new Number\Number(12),
-            new Number\Number(6)
+            new Number\Number(6),
         );
         $number = $subtraction->power(new Number\Number(2));
 
@@ -210,7 +210,7 @@ class SubtractionTest extends TestCase
     {
         $subtraction = new Subtraction(
             new Number\Number(8),
-            new Number\Number(4)
+            new Number\Number(4),
         );
         $number = $subtraction->squareRoot();
 
@@ -222,7 +222,7 @@ class SubtractionTest extends TestCase
     {
         $number = (new Subtraction(
             new Number\Number(8),
-            new Number\Number(4)
+            new Number\Number(4),
         ))->exponential();
 
         $this->assertInstanceOf(Exponential::class, $number);
@@ -233,7 +233,7 @@ class SubtractionTest extends TestCase
     {
         $number = (new Subtraction(
             new Number\Number(8),
-            new Number\Number(4)
+            new Number\Number(4),
         ))->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
@@ -244,7 +244,7 @@ class SubtractionTest extends TestCase
     {
         $number = (new Subtraction(
             new Number\Number(8),
-            new Number\Number(4)
+            new Number\Number(4),
         ))->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
@@ -255,7 +255,7 @@ class SubtractionTest extends TestCase
     {
         $number = (new Subtraction(
             new Number\Number(8),
-            new Number\Number(4)
+            new Number\Number(4),
         ))->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
@@ -266,7 +266,7 @@ class SubtractionTest extends TestCase
     {
         $number = (new Subtraction(
             new Number\Number(4),
-            new Number\Number(3)
+            new Number\Number(3),
         ))->signum();
 
         $this->assertInstanceOf(Signum::class, $number);
@@ -278,10 +278,10 @@ class SubtractionTest extends TestCase
         $subtraction = new Subtraction(
             new Addition(
                 new Number\Number(12),
-                new Number\Number(12)
+                new Number\Number(12),
             ),
             new Number\Number(42),
-            new Number\Number(66)
+            new Number\Number(66),
         );
 
         $this->assertSame('(12 + 12) - 42 - 66', $subtraction->toString());

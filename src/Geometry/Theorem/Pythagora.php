@@ -18,7 +18,7 @@ final class Pythagora
      */
     public static function hypotenuse(
         Segment $a,
-        Segment $b
+        Segment $b,
     ): Segment {
         $hypotenuse = $a
             ->length()
@@ -34,7 +34,7 @@ final class Pythagora
      */
     public static function adjacentSide(
         Segment $hypotenuse,
-        Segment $adjacentSide
+        Segment $adjacentSide,
     ): Segment {
         $side = $hypotenuse
             ->length()
