@@ -22,7 +22,7 @@ final class PolynomialRegression
     public function __construct(Dataset $dataset, Integer $degree)
     {
         $matrix = $this->buildMatrix($dataset, $degree);
-        $vector = $this->buildVector($dataset, $degree);
+        $vector = $this->buildVector($dataset);
         $coefficients = $matrix
             ->transpose()
             ->dot($matrix)
@@ -85,7 +85,7 @@ final class PolynomialRegression
         return new Matrix(...unwrap($rows));
     }
 
-    private function buildVector(Dataset $dataset, Integer $degree): Matrix
+    private function buildVector(Dataset $dataset): Matrix
     {
         return Matrix::fromColumns($dataset->ordinates());
     }
