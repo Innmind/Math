@@ -5,10 +5,7 @@ namespace Innmind\Math\Algebra;
 
 interface Number
 {
-    /**
-     * @return int|float
-     */
-    public function value();
+    public function value(): int|float;
     public function equals(self $number): bool;
     public function higherThan(self $number): bool;
     public function add(self $number, self ...$numbers): self;

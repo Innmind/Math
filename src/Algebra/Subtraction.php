@@ -20,7 +20,7 @@ final class Subtraction implements Operation, Number
         $this->values = Sequence::of(Number::class, $first, $second, ...$values);
     }
 
-    public function value()
+    public function value(): int|float
     {
         return $this->result()->value();
     }
@@ -141,22 +141,12 @@ final class Subtraction implements Operation, Number
             return $this->result;
         }
 
-        /**
-         * @psalm-suppress MixedOperand
-         * @psalm-suppress MissingClosureParamType
-         * @psalm-suppress MissingClosureReturnType
-         * @var callable(int|float, Number): (int|float)
-         */
-        $reduce = static function($carry, Number $number) {
-            return $carry - $number->value();
-        };
-
         $value = $this
             ->values
             ->drop(1)
             ->reduce(
                 $this->values->first()->value(),
-                $reduce,
+                static fn(int|float $carry, $number): int|float => $carry - $number->value(),
             );
 
         return $this->result = Number\Number::wrap($value);

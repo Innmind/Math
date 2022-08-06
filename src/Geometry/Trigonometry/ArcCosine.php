@@ -28,7 +28,7 @@ final class ArcCosine implements Number
         return $this->arcCosine();
     }
 
-    public function value()
+    public function value(): int|float
     {
         return $this->arcCosine()->number()->value();
     }

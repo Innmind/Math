@@ -28,7 +28,7 @@ final class ArcTangent implements Number
         return $this->arcTangent();
     }
 
-    public function value()
+    public function value(): int|float
     {
         return $this->arcTangent()->number()->value();
     }

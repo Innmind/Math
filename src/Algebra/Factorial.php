@@ -19,7 +19,7 @@ final class Factorial implements Operation, Number
         $this->value = $value;
     }
 
-    public function value()
+    public function value(): int|float
     {
         return $this->result()->value();
     }

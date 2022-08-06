@@ -26,7 +26,7 @@ final class Cosine implements Number
         $this->degree = $degree;
     }
 
-    public function value()
+    public function value(): int|float
     {
         return $this->cosine()->value();
     }

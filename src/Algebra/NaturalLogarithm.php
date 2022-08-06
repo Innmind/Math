@@ -26,7 +26,7 @@ final class NaturalLogarithm implements Operation, Number
         $this->number = $number;
     }
 
-    public function value()
+    public function value(): int|float
     {
         return $this->result()->value();
     }

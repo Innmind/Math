@@ -28,7 +28,7 @@ use Innmind\Math\Algebra\{
  */
 final class E implements NumberInterface
 {
-    public function value()
+    public function value(): int|float
     {
         return \M_E;
     }

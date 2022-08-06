@@ -28,7 +28,7 @@ final class ArcSine implements Number
         return $this->arcSine();
     }
 
-    public function value()
+    public function value(): int|float
     {
         return $this->arcSine()->number()->value();
     }

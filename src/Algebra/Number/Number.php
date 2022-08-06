@@ -27,8 +27,7 @@ use Innmind\Math\{
 
 final class Number implements NumberInterface
 {
-    /** @var int|float */
-    private $value;
+    private int|float $value;
 
     /**
      * @param int|float $value
@@ -65,7 +64,7 @@ final class Number implements NumberInterface
         return new self($value);
     }
 
-    public function value()
+    public function value(): int|float
     {
         return $this->value;
     }

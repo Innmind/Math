@@ -31,7 +31,7 @@ final class Division implements Operation, Number
         return $this->divisor;
     }
 
-    public function value()
+    public function value(): int|float
     {
         return $this->result()->value();
     }

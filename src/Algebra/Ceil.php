@@ -6,15 +6,14 @@ namespace Innmind\Math\Algebra;
 final class Ceil implements Number
 {
     private Number $number;
-    /** @var int|float|null */
-    private $value;
+    private int|float|null $value = null;
 
     public function __construct(Number $number)
     {
         $this->number = $number;
     }
 
-    public function value()
+    public function value(): int|float
     {
         return $this->value ??= \ceil($this->number->value());
     }

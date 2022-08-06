@@ -42,7 +42,7 @@ final class Infinite implements NumberInterface
         return new self(-\INF);
     }
 
-    public function value()
+    public function value(): int|float
     {
         return $this->value;
     }

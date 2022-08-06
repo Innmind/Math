@@ -25,7 +25,7 @@ use Innmind\Math\Algebra\{
 
 final class Pi implements NumberInterface
 {
-    public function value()
+    public function value(): int|float
     {
         return \pi();
     }

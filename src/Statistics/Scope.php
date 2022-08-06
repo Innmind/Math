@@ -34,7 +34,7 @@ final class Scope implements Number
         return $this->result;
     }
 
-    public function value()
+    public function value(): int|float
     {
         return $this->result->value();
     }
