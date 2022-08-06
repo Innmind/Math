@@ -29,18 +29,8 @@ final class Number implements NumberInterface
 {
     private int|float $value;
 
-    /**
-     * @param int|float $value
-     */
-    public function __construct($value)
+    public function __construct(int|float $value)
     {
-        /** @psalm-suppress DocblockTypeContradiction */
-        if (!\is_int($value) && !\is_float($value)) {
-            $given = \gettype($value);
-
-            throw new \TypeError("Argument 1 must be of type int|float, $given given");
-        }
-
         if (\is_nan($value)) {
             throw new NotANumber;
         }
@@ -48,10 +38,7 @@ final class Number implements NumberInterface
         $this->value = $value;
     }
 
-    /**
-     * @param int|float $value
-     */
-    public static function wrap($value): NumberInterface
+    public static function wrap(int|float $value): NumberInterface
     {
         if (\is_infinite($value)) {
             return $value > 0 ? Infinite::positive() : Infinite::negative();

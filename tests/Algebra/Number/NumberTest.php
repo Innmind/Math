@@ -38,14 +38,6 @@ class NumberTest extends TestCase
         );
     }
 
-    public function testThrowWhenValueNotAnIntNorAFloat()
-    {
-        $this->expectException(\TypeError::class);
-        $this->expectExceptionMessage('Argument 1 must be of type int|float, string given');
-
-        new Number('42');
-    }
-
     public function testThrowWhenNotANumber()
     {
         $this->expectException(NotANumber::class);
