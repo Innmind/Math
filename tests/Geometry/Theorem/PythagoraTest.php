@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Tests\Innmind\Math\Gemoretry\Theorem;
+namespace Tests\Innmind\Math\Gemoetry\Theorem;
 
 use Innmind\Math\{
     Geometry\Theorem\Pythagora,
