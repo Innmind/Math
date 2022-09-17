@@ -18,8 +18,8 @@ class DatasetTest extends TestCase
     public function testInterface()
     {
         $dataset = new Dataset(
-            $first = new RowVector(...numerize(1, 2)),
-            $second = new RowVector(...numerize(3, 4)),
+            $first = RowVector::of(...numerize(1, 2)),
+            $second = RowVector::of(...numerize(3, 4)),
         );
 
         $this->assertInstanceOf(Dimension::class, $dataset->dimension());
@@ -47,7 +47,7 @@ class DatasetTest extends TestCase
         $this->expectException(VectorsMustContainsOnlyTwoValues::class);
 
         new Dataset(
-            new RowVector(...numerize(1, 2, 3)),
+            RowVector::of(...numerize(1, 2, 3)),
         );
     }
 

@@ -60,7 +60,7 @@ final class Matrix
         $rows = [];
 
         foreach ($values as $numbers) {
-            $rows[] = new RowVector(...wrap(...$numbers));
+            $rows[] = RowVector::of(...wrap(...$numbers));
         }
 
         return new self(...$rows);
@@ -101,7 +101,7 @@ final class Matrix
         $count = $dimension->rows()->value();
 
         for ($i = 0; $i < $count; ++$i) {
-            $rows[] = new RowVector(
+            $rows[] = RowVector::of(
                 ...\array_fill(
                     0,
                     $dimension->columns()->value(),
@@ -267,7 +267,7 @@ final class Matrix
                 $index = $rows->size();
                 $newRow[$index] = $numbers[$index];
 
-                return ($rows)(new RowVector(...wrap(...$newRow)));
+                return ($rows)(RowVector::of(...wrap(...$newRow)));
             },
         );
 
@@ -287,7 +287,7 @@ final class Matrix
                 $newRow = \array_fill(0, $row->dimension()->value(), 0);
                 $newRow[$rows->size()] = 1;
 
-                return ($rows)(new RowVector(...wrap(...$newRow)));
+                return ($rows)(RowVector::of(...wrap(...$newRow)));
             },
         );
 

@@ -24,10 +24,18 @@ final class Vector
     private Sequence $numbers;
     private Integer $dimension;
 
-    public function __construct(Number $number, Number ...$numbers)
+    private function __construct(Number $number, Number ...$numbers)
     {
         $this->numbers = Sequence::of($number, ...$numbers);
         $this->dimension = new Integer($this->numbers->size());
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(Number $number, Number ...$numbers): self
+    {
+        return new self($number, ...$numbers);
     }
 
     public static function initialize(Integer $dimension, Number $value): self

@@ -68,7 +68,7 @@ final class PolynomialRegression
 
     private function buildMatrix(Dataset $dataset, Integer $degree): Matrix
     {
-        $powers = new RowVector(...numerize(...\range(0, $degree->value())));
+        $powers = RowVector::of(...numerize(...\range(0, $degree->value())));
 
         /** @var Sequence<RowVector> */
         $rows = $dataset

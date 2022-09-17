@@ -17,9 +17,17 @@ final class ColumnVector
 {
     private Vector $vector;
 
-    public function __construct(Number $number, Number ...$numbers)
+    private function __construct(Number $number, Number ...$numbers)
     {
-        $this->vector = new Vector($number, ...$numbers);
+        $this->vector = Vector::of($number, ...$numbers);
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(Number $number, Number ...$numbers): self
+    {
+        return new self($number, ...$numbers);
     }
 
     public static function initialize(Integer $dimension, Number $value): self
@@ -45,7 +53,7 @@ final class ColumnVector
      */
     public function dot(RowVector $row): Number
     {
-        return $this->vector->dot(new Vector(...$row->numbers()));
+        return $this->vector->dot(Vector::of(...$row->numbers()));
     }
 
     /**
@@ -62,7 +70,7 @@ final class ColumnVector
                 $values[] = $number->multiplyBy($rowNumber)->collapse();
             }
 
-            $rows[] = new RowVector(...$values);
+            $rows[] = RowVector::of(...$values);
         }
 
         return Matrix::fromRows(...$rows);

@@ -38,7 +38,7 @@ final class Dataset
 
         foreach ($values as $x => $y) {
             $coordinates = \is_array($y) ? $y : [$x, $y];
-            $rows[] = new RowVector(...numerize(...$coordinates));
+            $rows[] = RowVector::of(...numerize(...$coordinates));
         }
 
         return new self(...$rows);

@@ -17,9 +17,17 @@ final class RowVector
 {
     private Vector $vector;
 
-    public function __construct(Number $number, Number ...$numbers)
+    private function __construct(Number $number, Number ...$numbers)
     {
-        $this->vector = new Vector($number, ...$numbers);
+        $this->vector = Vector::of($number, ...$numbers);
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(Number $number, Number ...$numbers): self
+    {
+        return new self($number, ...$numbers);
     }
 
     /**
@@ -45,7 +53,7 @@ final class RowVector
 
     public function dot(ColumnVector $column): Number
     {
-        return $this->vector->dot(new Vector(...$column->numbers()));
+        return $this->vector->dot(Vector::of(...$column->numbers()));
     }
 
     /**
