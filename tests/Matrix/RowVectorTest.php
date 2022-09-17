@@ -129,7 +129,7 @@ class RowVectorTest extends TestCase
         $this->assertNotSame($vector3, $vector1);
         $this->assertNotSame($vector3, $vector2);
         $this->assertEquals(
-            [0.5, -0.5, 0.2, -0.2],
+            [0.5, -0.5, 0.20000000000000018, -0.20000000000000018],
             $vector3->toArray(),
         );
     }
