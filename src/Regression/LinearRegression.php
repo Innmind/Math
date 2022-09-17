@@ -74,8 +74,8 @@ final class LinearRegression
     {
         $dimension = $data->dimension()->rows();
         $elements = $dimension->value();
-        $x = $data->abscissas()->toArray();
-        $y = $data->ordinates()->toArray();
+        $x = $data->abscissas()->toList();
+        $y = $data->ordinates()->toList();
 
         $xSum = $data->abscissas()->sum();
         $ySum = $data->ordinates()->sum();

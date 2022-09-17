@@ -33,9 +33,9 @@ final class RowVector
     /**
      * @return list<int|float>
      */
-    public function toArray(): array
+    public function toList(): array
     {
-        return $this->vector->toArray();
+        return $this->vector->toList();
     }
 
     public function dimension(): Integer

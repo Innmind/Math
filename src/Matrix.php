@@ -121,13 +121,13 @@ final class Matrix
     /**
      * @return list<list<int|float>>
      */
-    public function toArray(): array
+    public function toList(): array
     {
         /** @var list<list<int|float>> */
         return $this->rows->reduce(
             [],
             static function(array $carry, RowVector $row): array {
-                $carry[] = $row->toArray();
+                $carry[] = $row->toList();
 
                 return $carry;
             },
@@ -288,7 +288,7 @@ final class Matrix
         $rows = $this->rows->reduce(
             Sequence::of(),
             static function(Sequence $rows, RowVector $row): Sequence {
-                $numbers = $row->toArray();
+                $numbers = $row->toList();
                 $newRow = \array_fill(0, $row->dimension()->value(), 0);
                 $index = $rows->size();
                 $newRow[$index] = $numbers[$index];

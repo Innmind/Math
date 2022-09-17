@@ -27,7 +27,7 @@ class ColumnVectorTest extends TestCase
         $this->assertSame(1, $vector->get(0)->value());
         $this->assertSame(2, $vector->get(1)->value());
         $this->assertSame(3, $vector->get(2)->value());
-        $this->assertSame([1, 2, 3], $vector->toArray());
+        $this->assertSame([1, 2, 3], $vector->toList());
         $this->assertEquals(numerize(1, 2, 3), $vector->numbers());
     }
 
@@ -63,7 +63,7 @@ class ColumnVectorTest extends TestCase
                 [-4, -1, -2],
                 [8, 2, 4],
             ],
-            $matrix->toArray(),
+            $matrix->toList(),
         );
     }
 
@@ -75,8 +75,8 @@ class ColumnVectorTest extends TestCase
         );
 
         $this->assertInstanceOf(ColumnVector::class, $column2);
-        $this->assertSame([25, 5, 1], $column->toArray());
-        $this->assertSame([64.0, 12.8, 2.56], $column2->toArray());
+        $this->assertSame([25, 5, 1], $column->toList());
+        $this->assertSame([64.0, 12.8, 2.56], $column2->toList());
     }
 
     public function testThrowWhenMultiplyingVectorsOfDifferentDimensions()
@@ -96,8 +96,8 @@ class ColumnVectorTest extends TestCase
         );
 
         $this->assertInstanceOf(ColumnVector::class, $column2);
-        $this->assertSame([25, 5, 1], $column->toArray());
-        $this->assertSame([5, 1, 0.2], $column2->toArray());
+        $this->assertSame([25, 5, 1], $column->toList());
+        $this->assertSame([5, 1, 0.2], $column2->toList());
     }
 
     public function testThrowWhenDividingVectorsOfDifferentDimensions()
@@ -114,7 +114,7 @@ class ColumnVectorTest extends TestCase
         $vector = ColumnVector::initialize(new Integer(4), new Number\Number(1.2));
 
         $this->assertInstanceOf(ColumnVector::class, $vector);
-        $this->assertSame([1.2, 1.2, 1.2, 1.2], $vector->toArray());
+        $this->assertSame([1.2, 1.2, 1.2, 1.2], $vector->toList());
     }
 
     public function testSubtract()
@@ -129,7 +129,7 @@ class ColumnVectorTest extends TestCase
         $this->assertNotSame($vector3, $vector2);
         $this->assertEquals(
             [0.5, -0.5, 0.20000000000000018, -0.20000000000000018],
-            $vector3->toArray(),
+            $vector3->toList(),
         );
     }
 
@@ -154,7 +154,7 @@ class ColumnVectorTest extends TestCase
         $this->assertNotSame($vector3, $vector2);
         $this->assertEquals(
             [1.5, 4.5, 5.8, 8.2],
-            $vector3->toArray(),
+            $vector3->toList(),
         );
     }
 
@@ -177,7 +177,7 @@ class ColumnVectorTest extends TestCase
         $this->assertNotSame($vector2, $vector1);
         $this->assertEquals(
             [1.0, 8.0, 27.0, -64.0],
-            $vector2->toArray(),
+            $vector2->toList(),
         );
     }
 
@@ -209,8 +209,8 @@ class ColumnVectorTest extends TestCase
 
         $this->assertInstanceOf(ColumnVector::class, $vector2);
         $this->assertNotSame($vector2, $vector);
-        $this->assertSame([1, 2, 3, -4], $vector->toArray());
-        $this->assertSame([1, 4, 9, 16], $vector2->toArray());
+        $this->assertSame([1, 2, 3, -4], $vector->toList());
+        $this->assertSame([1, 4, 9, 16], $vector2->toList());
     }
 
     public function testReduce()

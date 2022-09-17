@@ -47,9 +47,9 @@ final class Dataset
     /**
      * @return list<list<int|float>>
      */
-    public function toArray(): array
+    public function toList(): array
     {
-        return $this->matrix->toArray();
+        return $this->matrix->toList();
     }
 
     public function abscissas(): ColumnVector

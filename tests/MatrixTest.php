@@ -40,22 +40,22 @@ class MatrixTest extends TestCase
                 [1, 2, 3],
                 [2, 3, 4],
             ],
-            $matrix->toArray(),
+            $matrix->toList(),
         );
         $this->assertInstanceOf(ColumnVector::class, $matrix->column(0));
         $this->assertInstanceOf(ColumnVector::class, $matrix->column(1));
         $this->assertInstanceOf(ColumnVector::class, $matrix->column(2));
         $this->assertSame(
             [1, 2],
-            $matrix->column(0)->toArray(),
+            $matrix->column(0)->toList(),
         );
         $this->assertSame(
             [2, 3],
-            $matrix->column(1)->toArray(),
+            $matrix->column(1)->toList(),
         );
         $this->assertSame(
             [3, 4],
-            $matrix->column(2)->toArray(),
+            $matrix->column(2)->toList(),
         );
     }
 
@@ -99,7 +99,7 @@ class MatrixTest extends TestCase
         ]);
 
         $this->assertInstanceOf(Matrix::class, $matrix);
-        $this->assertSame($values, $matrix->toArray());
+        $this->assertSame($values, $matrix->toList());
     }
 
     public function testFromColumns()
@@ -116,7 +116,7 @@ class MatrixTest extends TestCase
                 [2, 5],
                 [3, 6],
             ],
-            $matrix->toArray(),
+            $matrix->toList(),
         );
     }
 
@@ -135,7 +135,7 @@ class MatrixTest extends TestCase
                 [2, 4, 3],
                 [3, 5, 4],
             ],
-            $matrix->toArray(),
+            $matrix->toList(),
         );
     }
 
@@ -158,7 +158,7 @@ class MatrixTest extends TestCase
                 [58, 64],
                 [139, 154],
             ],
-            $matrix->toArray(),
+            $matrix->toList(),
         );
     }
 
@@ -176,7 +176,7 @@ class MatrixTest extends TestCase
                 [4.2, 4.2],
                 [4.2, 4.2],
                 ],
-            $matrix->toArray(),
+            $matrix->toList(),
         );
     }
 
@@ -213,14 +213,14 @@ class MatrixTest extends TestCase
 
         $this->assertInstanceOf(Matrix::class, $diagonal);
         $this->assertNotSame($matrix, $diagonal);
-        $this->assertSame($initial, $matrix->toArray());
+        $this->assertSame($initial, $matrix->toList());
         $this->assertSame(
             [
                 [1, 0, 0],
                 [0, 5, 0],
                 [0, 0, 9],
             ],
-            $diagonal->toArray(),
+            $diagonal->toList(),
         );
     }
 
@@ -242,14 +242,14 @@ class MatrixTest extends TestCase
 
         $this->assertInstanceOf(Matrix::class, $identity);
         $this->assertNotSame($matrix, $identity);
-        $this->assertSame($initial, $matrix->toArray());
+        $this->assertSame($initial, $matrix->toList());
         $this->assertSame(
             [
                 [1, 0, 0],
                 [0, 1, 0],
                 [0, 0, 1],
             ],
-            $identity->toArray(),
+            $identity->toList(),
         );
     }
 
@@ -277,14 +277,14 @@ class MatrixTest extends TestCase
         $this->assertInstanceOf(Matrix::class, $c);
         $this->assertNotSame($c, $a);
         $this->assertNotSame($c, $b);
-        $this->assertSame($aValues, $a->toArray());
-        $this->assertSame($bValues, $b->toArray());
+        $this->assertSame($aValues, $a->toList());
+        $this->assertSame($bValues, $b->toList());
         $this->assertSame(
             [
                 [1, -1, -3],
                 [-1, 2, 9],
             ],
-            $c->toArray(),
+            $c->toList(),
         );
     }
 
@@ -312,14 +312,14 @@ class MatrixTest extends TestCase
         $this->assertInstanceOf(Matrix::class, $c);
         $this->assertNotSame($c, $a);
         $this->assertNotSame($c, $b);
-        $this->assertSame($aValues, $a->toArray());
-        $this->assertSame($bValues, $b->toArray());
+        $this->assertSame($aValues, $a->toList());
+        $this->assertSame($bValues, $b->toList());
         $this->assertSame(
             [
                 [1, 1, 1],
                 [5, 0, -1],
             ],
-            $c->toArray(),
+            $c->toList(),
         );
     }
 
@@ -333,13 +333,13 @@ class MatrixTest extends TestCase
 
         $this->assertInstanceOf(Matrix::class, $result);
         $this->assertNotSame($matrix, $result);
-        $this->assertSame($initial, $matrix->toArray());
+        $this->assertSame($initial, $matrix->toList());
         $this->assertSame(
             [
                 [3, 0, -3],
                 [6, 9, 12],
             ],
-            $result->toArray(),
+            $result->toList(),
         );
     }
 
@@ -438,14 +438,14 @@ class MatrixTest extends TestCase
 
         $this->assertInstanceOf(Matrix::class, $dropped);
         $this->assertNotSame($matrix, $dropped);
-        $this->assertSame($initial, $matrix->toArray());
+        $this->assertSame($initial, $matrix->toList());
         $this->assertSame(
             [
                 [-2, 0, -1, 7],
                 [-3, 1, 0, -6],
                 [-4, -7, 6, 0],
             ],
-            $dropped->toArray(),
+            $dropped->toList(),
         );
         $this->assertSame(
             [
@@ -453,7 +453,7 @@ class MatrixTest extends TestCase
                 [-2, 0, -1, 7],
                 [-4, -7, 6, 0],
             ],
-            $matrix->dropRow(2)->toArray(),
+            $matrix->dropRow(2)->toList(),
         );
     }
 
@@ -469,7 +469,7 @@ class MatrixTest extends TestCase
 
         $this->assertInstanceOf(Matrix::class, $dropped);
         $this->assertNotSame($matrix, $dropped);
-        $this->assertSame($initial, $matrix->toArray());
+        $this->assertSame($initial, $matrix->toList());
         $this->assertSame(
             [
                 [2, 3, 4],
@@ -477,7 +477,7 @@ class MatrixTest extends TestCase
                 [1, 0, -6],
                 [-7, 6, 0],
             ],
-            $dropped->toArray(),
+            $dropped->toList(),
         );
         $this->assertSame(
             [
@@ -486,7 +486,7 @@ class MatrixTest extends TestCase
                 [-3, 1, -6],
                 [-4, -7, 0],
             ],
-            $matrix->dropColumn(2)->toArray(),
+            $matrix->dropColumn(2)->toList(),
         );
     }
 
@@ -501,14 +501,14 @@ class MatrixTest extends TestCase
 
         $this->assertInstanceOf(Matrix::class, $augmented);
         $this->assertNotSame($matrix, $augmented);
-        $this->assertSame($initial, $matrix->toArray());
+        $this->assertSame($initial, $matrix->toList());
         $this->assertSame(
             [
                 [2, 3, 4, 1, 0, 0],
                 [5, 6, 7, 0, 1, 0],
                 [8, 9, 10, 0, 0, 1],
             ],
-            $augmented->toArray(),
+            $augmented->toList(),
         );
     }
 
@@ -522,8 +522,8 @@ class MatrixTest extends TestCase
 
         $this->assertInstanceOf(Matrix::class, $inversed);
         $this->assertNotSame($matrix, $inversed);
-        $this->assertSame($initial, $matrix->toArray());
-        $this->assertSame($expected, $inversed->toArray());
+        $this->assertSame($initial, $matrix->toList());
+        $this->assertSame($expected, $inversed->toList());
     }
 
     public function testThrowWhenTryingToInverseNonSquareMatrix()

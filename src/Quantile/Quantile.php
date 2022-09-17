@@ -33,7 +33,7 @@ final class Quantile
 
     public function __construct(Dataset $dataset)
     {
-        $values = $dataset->ordinates()->toArray();
+        $values = $dataset->ordinates()->toList();
         \sort($values);
         $dataset = Dataset::of($values);
 

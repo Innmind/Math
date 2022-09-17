@@ -38,7 +38,7 @@ final class Vector
     /**
      * @return list<int|float>
      */
-    public function toArray(): array
+    public function toList(): array
     {
         return $this
             ->numbers
