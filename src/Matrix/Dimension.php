@@ -15,18 +15,15 @@ final class Dimension
 {
     private Integer $rows;
     private Integer $columns;
-    private string $string;
 
     public function __construct(Integer $rows, Integer $columns)
     {
-        $this->string = \sprintf('%s x %s', $rows->toString(), $columns->toString());
-
-        if ($rows->value() < 0 || $columns->value() < 0) {
-            throw new DimensionMustBePositive($this->string);
-        }
-
         $this->rows = $rows;
         $this->columns = $columns;
+
+        if ($rows->value() < 0 || $columns->value() < 0) {
+            throw new DimensionMustBePositive($this->toString());
+        }
     }
 
     public function rows(): Integer
@@ -47,6 +44,6 @@ final class Dimension
 
     public function toString(): string
     {
-        return $this->string;
+        return \sprintf('%s x %s', $this->rows->toString(), $this->columns->toString());
     }
 }
