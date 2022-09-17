@@ -38,7 +38,7 @@ class AngleTest extends TestCase
 
         $this->assertInstanceOf(Segment::class, $segment);
         $this->assertSame(
-            5.298666621959196,
+            5.298666621959197,
             $segment->length()->value(),
         );
     }
@@ -54,7 +54,7 @@ class AngleTest extends TestCase
 
         $this->assertInstanceOf(Number::class, $number);
         $this->assertSame(
-            22.962066014667762,
+            22.96206601466776,
             $number->value(),
         );
     }

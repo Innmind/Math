@@ -33,7 +33,7 @@ class AlKashiTest extends TestCase
             $c->length()->toString(),
         );
         $this->assertSame(
-            5.298666621959196,
+            5.298666621959197,
             $c->length()->value(),
         );
     }
