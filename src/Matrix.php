@@ -166,32 +166,6 @@ final class Matrix
         return $this->columns;
     }
 
-    public function dropRow(int $row): self
-    {
-        return new self(
-            ...$this
-                ->rows
-                ->slice(0, $row)
-                ->append(
-                    $this->rows->slice($row + 1, $this->rows->size()),
-                )
-                ->toList(),
-        );
-    }
-
-    public function dropColumn(int $column): self
-    {
-        return self::fromColumns(
-            ...$this
-                ->columns
-                ->slice(0, $column)
-                ->append(
-                    $this->columns->slice($column + 1, $this->columns->size()),
-                )
-                ->toList(),
-        );
-    }
-
     public function add(self $matrix): self
     {
         if (!$this->dimension->equals($matrix->dimension())) {
