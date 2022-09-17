@@ -47,15 +47,11 @@ final class Polynom
      */
     public function __invoke(Number $x): Number
     {
-        /** @var list<Number> */
-        $values = $this->degrees->values()->reduce(
-            [],
-            static function(array $carry, Degree $degree) use ($x): array {
-                $carry[] = $degree($x);
-
-                return $carry;
-            },
-        );
+        $values = $this
+            ->degrees
+            ->values()
+            ->map(static fn($degree) => $degree($x))
+            ->toList();
 
         return add($this->intercept, ...$values);
     }

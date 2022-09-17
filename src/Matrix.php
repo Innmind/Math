@@ -124,14 +124,10 @@ final class Matrix
     public function toList(): array
     {
         /** @var list<list<int|float>> */
-        return $this->rows->reduce(
-            [],
-            static function(array $carry, RowVector $row): array {
-                $carry[] = $row->toList();
-
-                return $carry;
-            },
-        );
+        return $this
+            ->rows
+            ->map(static fn($row) => $row->toList())
+            ->toList();
     }
 
     public function row(int $row): RowVector
@@ -211,40 +207,27 @@ final class Matrix
 
     public function transpose(): self
     {
-        /** @var list<RowVector> */
-        $rows = $this->columns->reduce(
-            [],
-            static function(array $rows, ColumnVector $column): array {
-                $rows[] = new RowVector(...$column->numbers());
-
-                return $rows;
-            },
+        return new self(
+            ...$this
+                ->columns
+                ->map(static fn($column) => RowVector::of(...$column->numbers()))
+                ->toList(),
         );
-
-        return new self(...$rows);
     }
 
     public function dot(self $matrix): self
     {
-        /** @var Sequence<list<Number>> */
-        $rows = $this->rows->reduce(
-            Sequence::of(),
-            static function(Sequence $rows, RowVector $row) use ($matrix): Sequence {
-                /** @var Sequence<Number> */
-                $newRow = $matrix
-                    ->columns()
-                    ->reduce(
-                        Sequence::of(),
-                        static function(Sequence $carry, ColumnVector $column) use ($row): Sequence {
-                            return ($carry)($row->dot($column));
-                        },
-                    );
-
-                return ($rows)($newRow->toList());
-            },
+        return self::of(
+            $this
+                ->rows
+                ->map(
+                    static fn($row) => $matrix
+                        ->columns()
+                        ->map(static fn($column) => $row->dot($column))
+                        ->toList(),
+                )
+                ->toList(),
         );
-
-        return self::of($rows->toList());
     }
 
     public function isSquare(): bool
@@ -326,23 +309,21 @@ final class Matrix
     public function isInRowEchelonForm(): bool
     {
         $zero = new Integer(0);
-        /** @var Sequence<int> */
-        $leadingZeros = $this->rows->reduce(
-            Sequence::ints(),
-            static function(Sequence $carry, RowVector $row) use ($zero): Sequence {
+        $leadingZeros = $this->rows->map(
+            static function(RowVector $row) use ($zero): int {
                 $numbers = $row->numbers();
                 $dimension = $row->dimension()->value();
                 $count = 0;
 
                 for ($i = 1; $i < $dimension; $i++) {
                     if (!$numbers[$i]->equals($zero)) {
-                        break;
+                        return $count;
                     }
 
                     ++$count;
                 }
 
-                return ($carry)($count);
+                return $count;
             },
         );
 
@@ -411,16 +392,11 @@ final class Matrix
         $columns = Sequence::of();
 
         for ($i = 0; $i < $size; ++$i) {
-            /** @var list<Number> */
-            $values = $this->rows->reduce(
-                [],
-                static function(array $values, RowVector $row) use ($i) {
-                    $values[] = $row->get($i);
-
-                    return $values;
-                },
-            );
-            $columns = ($columns)(new ColumnVector(...$values));
+            $values = $this
+                ->rows
+                ->map(static fn($row) => $row->get($i))
+                ->toList();
+            $columns = ($columns)(ColumnVector::of(...$values));
         }
 
         return $columns;
@@ -439,37 +415,25 @@ final class Matrix
                 static fn($reference) => $reference,
                 static fn() => throw new \LogicException,
             );
-            /** @var Sequence<RowVector> */
-            $rows = $toEchelon->reduce(
-                $echeloned,
-                static function(Sequence $rows, RowVector $row) use ($reference, $index): Sequence {
-                    $multiplier = $row
-                        ->get($index)
-                        ->divideBy(
-                            $reference->get($index),
-                        );
-
-                    return ($rows)(
-                        $row->subtract(
-                            $reference->multiplyBy(
-                                RowVector::initialize(
-                                    $row->dimension(),
-                                    $multiplier,
-                                ),
+            $rows = $echeloned
+                ->append(
+                    $toEchelon->map(static fn($row) => $row->subtract(
+                        $reference->multiplyBy(
+                            RowVector::initialize(
+                                $row->dimension(),
+                                $row // multiplier
+                                    ->get($index)
+                                    ->divideBy($reference->get($index)),
                             ),
                         ),
-                    );
-                },
-            );
-
-            $rows = $rows->map(static function(RowVector $row): RowVector {
-                return $row->multiplyBy(
+                    )),
+                )
+                ->map(static fn($row) => $row->multiplyBy(
                     RowVector::initialize(
                         $row->dimension(),
                         (new Integer(1))->divideBy($row->lead()),
                     ),
-                );
-            });
+                ));
 
             ++$index;
         } while ($index < $this->dimension()->rows()->value());
@@ -490,26 +454,20 @@ final class Matrix
             //by the number in j column of the row being manipulated
             $reduced = $rows->take($reference + 1);
             $toReduce = $rows->drop($reference + 1);
-            /** @var Sequence<RowVector> */
-            $rows = $toReduce->reduce(
-                $reduced,
-                static function(Sequence $rows, RowVector $row) use ($index, $reduced): Sequence {
-                    $last = $reduced->last()->match(
-                        static fn($reduced) => $reduced,
-                        static fn() => throw new \LogicException,
-                    );
-
-                    return ($rows)(
-                        $row->subtract(
-                            $last->multiplyBy(
-                                RowVector::initialize(
-                                    $row->dimension(),
-                                    $row->get($index),
-                                ),
-                            ),
+            $rows = $reduced->append(
+                $toReduce->map(
+                    static fn($row) => $reduced
+                        ->last()
+                        ->map(static fn($last) => $last->multiplyBy(RowVector::initialize(
+                            $row->dimension(),
+                            $row->get($index),
+                        )))
+                        ->map(static fn($last) => $row->subtract($last))
+                        ->match(
+                            static fn($reduced) => $reduced,
+                            static fn() => throw new \LogicException,
                         ),
-                    );
-                },
+                ),
             );
             --$index;
             ++$reference;

@@ -212,16 +212,13 @@ final class Vector
      */
     public function lead(): Number
     {
-        return $this->reduce(
-            new Integer(0),
-            static function(Number $lead, Number $number): Number {
-                if (!$lead->equals(new Integer(0))) {
-                    return $lead;
-                }
-
-                return $number;
-            },
-        );
+        return $this
+            ->numbers
+            ->find(static fn($number) => !$number->equals(new Integer(0)))
+            ->match(
+                static fn($lead) => $lead,
+                static fn() => new Integer(0),
+            );
     }
 
     /**
