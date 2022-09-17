@@ -369,4 +369,25 @@ class MultiplicationTest extends TestCase
                 ),
         );
     }
+
+    public function testCollapse()
+    {
+        $this->assertSame(
+            3,
+            Number\Number::of(3)
+                ->divideBy(Number\Number::of(2))
+                ->multiplyBy(Number\Number::of(2))
+                ->collapse()
+                ->value(),
+        );
+        $this->assertSame(
+            3,
+            Number\Number::of(2)
+                ->multiplyBy(
+                    Number\Number::of(3)->divideBy(Number\Number::of(2)),
+                )
+                ->collapse()
+                ->value(),
+        );
+    }
 }

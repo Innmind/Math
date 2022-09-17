@@ -89,17 +89,17 @@ class PolynomialRegressionTest extends TestCase
 
         $this->assertInstanceOf(Polynom::class, $polynom);
         //values confirmed by using grapher app on mac
-        $this->assertSame(0.509615384623312, $polynom->intercept()->value());
-        $this->assertSame(-3.263621794876319, $polynom->degree(1)->coeff()->value());
-        $this->assertSame(2.892446095572402, $polynom->degree(2)->coeff()->value());
-        $this->assertSame(-0.47195512820530894, $polynom->degree(3)->coeff()->value());
-        $this->assertSame(0.02145250582751445, $polynom->degree(4)->coeff()->value());
+        $this->assertSame(0.50961538460923, $polynom->intercept()->value());
+        $this->assertSame(-3.2636217948742425, $polynom->degree(1)->coeff()->value());
+        $this->assertSame(2.8924460955725375, $polynom->degree(2)->coeff()->value());
+        $this->assertSame(-0.47195512820532226, $polynom->degree(3)->coeff()->value());
+        $this->assertSame(0.021452505827514123, $polynom->degree(4)->coeff()->value());
         $this->assertInstanceOf(
             Number::class,
             $regression->rootMeanSquareDeviation(),
         );
         $this->assertSame(
-            1.087684019744029,
+            1.0876840197440238,
             $regression->rootMeanSquareDeviation()->value(),
         );
     }

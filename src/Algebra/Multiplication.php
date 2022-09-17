@@ -13,6 +13,8 @@ use Innmind\Immutable\{
  */
 final class Multiplication implements Operation, Number
 {
+    private Number $first;
+    private Number $second;
     /** @var Sequence<Number> */
     private Sequence $values;
 
@@ -21,6 +23,8 @@ final class Multiplication implements Operation, Number
         Number $second,
         Number ...$values,
     ) {
+        $this->first = $first;
+        $this->second = $second;
         $this->values = Sequence::of($first, $second, ...$values);
     }
 
@@ -151,7 +155,14 @@ final class Multiplication implements Operation, Number
 
     public function collapse(): Number
     {
-        return $this->result();
+        return $this
+            ->values
+            ->drop(2)
+            ->reduce(
+                $this->doCollapse($this->first, $this->second),
+                $this->doCollapse(...),
+            )
+            ->collapse();
     }
 
     public function toString(): string
@@ -167,5 +178,26 @@ final class Multiplication implements Operation, Number
         );
 
         return Str::of(' x ')->join($values)->toString();
+    }
+
+    private function doCollapse(Number $a, Number $b): Number
+    {
+        if ($a instanceof Division) {
+            $divisor = $a->divisor()->collapse();
+
+            if ($b->equals($divisor)) {
+                return $a->dividend();
+            }
+        }
+
+        if ($b instanceof Division) {
+            $divisor = $b->divisor()->collapse();
+
+            if ($a->equals($divisor)) {
+                return $b->dividend();
+            }
+        }
+
+        return (new self($a->collapse(), $b->collapse()))->result();
     }
 }
