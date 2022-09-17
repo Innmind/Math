@@ -36,21 +36,21 @@ class RangeTest extends TestCase
         );
         $this->assertSame(
             '[1;2[',
-            (new Range(
-                Range::INCLUSIVE,
+            Range::inclusive(
                 new Integer(1),
                 new Integer(2),
-                Range::EXCLUSIVE,
-            ))->toString(),
+            )
+                ->excludeUpperBound()
+                ->toString(),
         );
         $this->assertSame(
             ']1;2]',
-            (new Range(
-                Range::EXCLUSIVE,
+            Range::inclusive(
                 new Integer(1),
                 new Integer(2),
-                Range::INCLUSIVE,
-            ))->toString(),
+            )
+                ->excludeLowerBound()
+                ->toString(),
         );
     }
 
