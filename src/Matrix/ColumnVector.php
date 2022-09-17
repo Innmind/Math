@@ -65,7 +65,7 @@ final class ColumnVector
             $rows[] = new RowVector(...$values);
         }
 
-        return new Matrix(...$rows);
+        return Matrix::fromRows(...$rows);
     }
 
     public function multiplyBy(self $column): self

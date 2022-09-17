@@ -22,7 +22,7 @@ final class Dataset
 
     public function __construct(RowVector ...$rows)
     {
-        $this->matrix = new Matrix(...$rows);
+        $this->matrix = Matrix::fromRows(...$rows);
 
         if ($this->matrix->dimension()->columns()->value() !== 2) {
             throw new VectorsMustContainsOnlyTwoValues;

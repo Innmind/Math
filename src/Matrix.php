@@ -30,7 +30,7 @@ final class Matrix
     /** @var Sequence<ColumnVector> */
     private Sequence $columns;
 
-    public function __construct(RowVector $first, RowVector ...$rows)
+    private function __construct(RowVector $first, RowVector ...$rows)
     {
         $this->rows = Sequence::of($first, ...$rows);
 
@@ -64,6 +64,14 @@ final class Matrix
         }
 
         return new self(...$rows);
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function fromRows(RowVector $first, RowVector ...$rows): self
+    {
+        return new self($first, ...$rows);
     }
 
     /**

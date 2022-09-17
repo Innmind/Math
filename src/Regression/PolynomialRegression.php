@@ -84,7 +84,7 @@ final class PolynomialRegression
                 },
             );
 
-        return new Matrix(...$rows->toList());
+        return Matrix::fromRows(...$rows->toList());
     }
 
     private function buildVector(Dataset $dataset): Matrix
