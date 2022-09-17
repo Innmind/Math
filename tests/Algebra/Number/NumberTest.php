@@ -47,22 +47,22 @@ class NumberTest extends TestCase
 
     public function testWrap()
     {
-        $number = Number::wrap(42.1);
+        $number = Number::of(42.1);
 
         $this->assertInstanceOf(Number::class, $number);
         $this->assertSame('42.1', $number->toString());
 
-        $number = Number::wrap(42);
+        $number = Number::of(42);
 
         $this->assertInstanceOf(Integer::class, $number);
         $this->assertSame('42', $number->toString());
 
-        $number = Number::wrap(\INF);
+        $number = Number::of(\INF);
 
         $this->assertInstanceOf(Infinite::class, $number);
         $this->assertSame('+∞', $number->toString());
 
-        $number = Number::wrap(-\INF);
+        $number = Number::of(-\INF);
 
         $this->assertInstanceOf(Infinite::class, $number);
         $this->assertSame('-∞', $number->toString());

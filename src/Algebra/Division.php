@@ -150,7 +150,7 @@ final class Division implements Operation, Number
 
     public function result(): Number
     {
-        return Number\Number::wrap(
+        return Number\Number::of(
             $this->dividend->value() / $this->divisor->value(),
         );
     }

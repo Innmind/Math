@@ -22,7 +22,7 @@ final class Absolute implements Operation, Number
 
     public function result(): Number
     {
-        return Number\Number::wrap(
+        return Number\Number::of(
             \abs($this->number->value()),
         );
     }

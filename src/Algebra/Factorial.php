@@ -143,7 +143,7 @@ final class Factorial implements Operation, Number
             $factorial *= --$i;
         } while ($i > 1);
 
-        return Number\Number::wrap($factorial);
+        return Number\Number::of($factorial);
     }
 
     public function collapse(): Number

@@ -14,7 +14,7 @@ final class Multiplication implements Monoid
 {
     public function identity(): Number
     {
-        return Number\Number::wrap(1);
+        return Number\Number::of(1);
     }
 
     public function combine(mixed $a, mixed $b): Number

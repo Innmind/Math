@@ -136,7 +136,7 @@ final class CommonLogarithm implements Operation, Number
 
     public function result(): Number
     {
-        return Number\Number::wrap(
+        return Number\Number::of(
             \log10($this->number->value()),
         );
     }

@@ -414,7 +414,7 @@ function min(
 function numerize(int|float|Number ...$numbers): array
 {
     return \array_map(
-        static fn($number): Number => $number instanceof Number ? $number : Number\Number::wrap($number),
+        static fn($number): Number => $number instanceof Number ? $number : Number\Number::of($number),
         $numbers,
     );
 }

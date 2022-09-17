@@ -14,7 +14,7 @@ final class Addition implements Monoid
 {
     public function identity(): Number
     {
-        return Number\Number::wrap(0);
+        return Number\Number::of(0);
     }
 
     public function combine(mixed $a, mixed $b): Number
