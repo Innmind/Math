@@ -27,7 +27,6 @@ final class Triangle implements Figure
     private Number $b;
     private Number $c;
     private Segment $height;
-    /** @psalm-suppress PropertyNotSetInConstructor */
     private Segment $base;
 
     private function __construct(
@@ -40,20 +39,11 @@ final class Triangle implements Figure
         $this->c = $c->length();
         $base = maximum($this->a, $this->b, $this->c);
 
-        switch ($base) {
-            case $this->a:
-                $this->base = $a;
-                break;
-
-            case $this->b:
-                $this->base = $b;
-                break;
-
-            case $this->c:
-                $this->base = $c;
-                break;
-        }
-
+        $this->base = match ($base) {
+            $this->a => $a,
+            $this->b => $b,
+            $this->c => $c,
+        };
         $this->height = Segment::of(multiply(
             2,
             divide($this->area(), $base),

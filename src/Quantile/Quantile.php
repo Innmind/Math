@@ -16,7 +16,6 @@ use Innmind\Math\{
     Algebra\Number,
     Matrix\ColumnVector,
     Statistics\Mean,
-    Exception\UnknownQuartile,
 };
 
 /**
@@ -90,20 +89,13 @@ final class Quantile
      */
     public function quartile(int $index): Quartile
     {
-        switch ($index) {
-            case 0:
-                return $this->min;
-            case 1:
-                return $this->firstQuartile;
-            case 2:
-                return $this->median;
-            case 3:
-                return $this->thirdQuartile;
-            case 4:
-                return $this->max;
-        }
-
-        throw new UnknownQuartile((string) $index);
+        return match ($index) {
+            0 => $this->min,
+            1 => $this->firstQuartile,
+            2 => $this->median,
+            3 => $this->thirdQuartile,
+            4 => $this->max,
+        };
     }
 
     /**

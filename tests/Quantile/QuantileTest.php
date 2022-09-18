@@ -62,7 +62,8 @@ class QuantileTest extends TestCase
     {
         $q = Quantile::of(Dataset::of([1, 2, 3]));
 
-        $this->expectException(UnknownQuartile::class);
+        $this->expectException(\UnhandledMatchError::class);
+        $this->expectExceptionMessage('Unhandled match case 6');
 
         $q->quartile(6);
     }
