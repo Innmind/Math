@@ -136,9 +136,7 @@ final class NaturalLogarithm implements Operation, Number
 
     public function result(): Number
     {
-        return Number\Number::of(
-            \log($this->number->value()),
-        );
+        return $this->compute($this->number);
     }
 
     public static function definitionSet(): Set
@@ -151,11 +149,18 @@ final class NaturalLogarithm implements Operation, Number
 
     public function collapse(): Number
     {
-        return $this->result();
+        return $this->compute($this->number->collapse());
     }
 
     public function toString(): string
     {
         return \sprintf('ln(%s)', $this->number->toString());
+    }
+
+    private function compute(Number $number): Number
+    {
+        return Number\Number::of(
+            \log($number->value()),
+        );
     }
 }

@@ -19,9 +19,7 @@ final class Modulo implements Operation, Number
 
     public function result(): Number
     {
-        return Number\Number::of(
-            \fmod($this->number->value(), $this->modulus->value()),
-        );
+        return $this->compute($this->number, $this->modulus);
     }
 
     public function value(): int|float
@@ -136,7 +134,10 @@ final class Modulo implements Operation, Number
 
     public function collapse(): Number
     {
-        return $this->result();
+        return $this->compute(
+            $this->number->collapse(),
+            $this->modulus->collapse(),
+        );
     }
 
     public function toString(): string
@@ -147,5 +148,12 @@ final class Modulo implements Operation, Number
             '('.$this->modulus->toString().')' : $this->modulus->toString();
 
         return $number.' % '.$modulus;
+    }
+
+    private function compute(Number $number, Number $modulus): Number
+    {
+        return Number\Number::of(
+            \fmod($number->value(), $modulus->value()),
+        );
     }
 }

@@ -140,17 +140,14 @@ final class Addition implements Operation, Number
 
     public function result(): Number
     {
-        $value = $this->values->reduce(
-            0,
-            static fn(int|float $carry, $number): int|float => $carry + $number->value(),
-        );
-
-        return Number\Number::of($value);
+        return $this->compute($this->values);
     }
 
     public function collapse(): Number
     {
-        return $this->result();
+        return $this->compute($this->values->map(
+            static fn($value) => $value->collapse(),
+        ));
     }
 
     public function toString(): string
@@ -166,5 +163,18 @@ final class Addition implements Operation, Number
         );
 
         return Str::of(' + ')->join($values)->toString();
+    }
+
+    /**
+     * @param Sequence<Number> $values
+     */
+    private function compute(Sequence $values): Number
+    {
+        $value = $values->reduce(
+            0,
+            static fn(int|float $carry, $number): int|float => $carry + $number->value(),
+        );
+
+        return Number\Number::of($value);
     }
 }

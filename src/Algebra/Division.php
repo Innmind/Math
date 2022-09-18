@@ -150,14 +150,18 @@ final class Division implements Operation, Number
 
     public function result(): Number
     {
-        return Number\Number::of(
-            $this->dividend->value() / $this->divisor->value(),
+        return $this->compute(
+            $this->dividend,
+            $this->divisor,
         );
     }
 
     public function collapse(): Number
     {
-        return $this->result();
+        return $this->compute(
+            $this->dividend->collapse(),
+            $this->divisor->collapse(),
+        );
     }
 
     public function toString(): string
@@ -171,6 +175,13 @@ final class Division implements Operation, Number
             '%s ÷ %s',
             $dividend,
             $divisor,
+        );
+    }
+
+    private function compute(Number $dividend, Number $divisor): Number
+    {
+        return Number\Number::of(
+            $dividend->value() / $divisor->value(),
         );
     }
 }

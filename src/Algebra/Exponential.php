@@ -17,9 +17,7 @@ final class Exponential implements Operation, Number
 
     public function result(): Number
     {
-        return Number\Number::of(
-            \exp($this->power->value()),
-        );
+        return $this->compute($this->power);
     }
 
     public function value(): int|float
@@ -134,7 +132,7 @@ final class Exponential implements Operation, Number
 
     public function collapse(): Number
     {
-        return $this->result();
+        return $this->compute($this->power->collapse());
     }
 
     public function toString(): string
@@ -143,5 +141,12 @@ final class Exponential implements Operation, Number
             '('.$this->power->toString().')' : $this->power->toString();
 
         return 'e^'.$power;
+    }
+
+    private function compute(Number $power): Number
+    {
+        return Number\Number::of(
+            \exp($power->value()),
+        );
     }
 }

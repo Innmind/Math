@@ -22,9 +22,7 @@ final class Absolute implements Operation, Number
 
     public function result(): Number
     {
-        return Number\Number::of(
-            \abs($this->number->value()),
-        );
+        return $this->compute($this->number);
     }
 
     public function equals(Number $number): bool
@@ -134,11 +132,18 @@ final class Absolute implements Operation, Number
 
     public function collapse(): Number
     {
-        return $this->result();
+        return $this->compute($this->number->collapse());
     }
 
     public function toString(): string
     {
         return '|'.$this->number->toString().'|';
+    }
+
+    private function compute(Number $number): Number
+    {
+        return Number\Number::of(
+            \abs($number->value()),
+        );
     }
 }

@@ -141,7 +141,7 @@ final class Mean implements Number
 
     public function collapse(): Number
     {
-        return $this;
+        return $this->result->collapse();
     }
 
     public function toString(): string

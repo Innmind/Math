@@ -17,9 +17,7 @@ final class Signum implements Operation, Number
 
     public function result(): Number
     {
-        return new Integer(
-            $this->number->value() <=> 0,
-        );
+        return $this->compute($this->number);
     }
 
     public function value(): int|float
@@ -134,11 +132,18 @@ final class Signum implements Operation, Number
 
     public function collapse(): Number
     {
-        return $this->result();
+        return $this->compute($this->number->collapse());
     }
 
     public function toString(): string
     {
         return \sprintf('sgn(%s)', $this->number->toString());
+    }
+
+    private function compute(Number $number): Integer
+    {
+        return new Integer(
+            $number->value() <=> 0,
+        );
     }
 }

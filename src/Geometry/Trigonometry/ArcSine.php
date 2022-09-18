@@ -140,7 +140,7 @@ final class ArcSine implements Number
 
     public function collapse(): Number
     {
-        return $this;
+        return new self($this->number->collapse());
     }
 
     public function toString(): string

@@ -143,20 +143,15 @@ final class Subtraction implements Operation, Number
 
     public function result(): Number
     {
-        $value = $this
-            ->values
-            ->drop(1)
-            ->reduce(
-                $this->first->value(),
-                static fn(int|float $carry, $number): int|float => $carry - $number->value(),
-            );
-
-        return Number\Number::of($value);
+        return $this->compute($this->first, $this->values);
     }
 
     public function collapse(): Number
     {
-        return $this->result();
+        return $this->compute(
+            $this->first->collapse(),
+            $this->values->map(static fn($value) => $value->collapse()),
+        );
     }
 
     public function toString(): string
@@ -172,5 +167,20 @@ final class Subtraction implements Operation, Number
         );
 
         return Str::of(' - ')->join($values)->toString();
+    }
+
+    /**
+     * @param Sequence<Number> $values
+     */
+    private function compute(Number $first, Sequence $values): Number
+    {
+        $value = $values
+            ->drop(1)
+            ->reduce(
+                $first->value(),
+                static fn(int|float $carry, $number): int|float => $carry - $number->value(),
+            );
+
+        return Number\Number::of($value);
     }
 }

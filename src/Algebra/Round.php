@@ -59,11 +59,7 @@ final class Round implements Number
 
     public function value(): int|float
     {
-        return \round(
-            $this->number->value(),
-            $this->precision,
-            $this->mode,
-        );
+        return $this->compute($this->number);
     }
 
     public function equals(Number $number): bool
@@ -173,11 +169,20 @@ final class Round implements Number
 
     public function collapse(): Number
     {
-        return $this;
+        return Number\Number::of($this->compute($this->number->collapse()));
     }
 
     public function toString(): string
     {
         return \var_export($this->value(), true);
+    }
+
+    private function compute(Number $number): int|float
+    {
+        return \round(
+            $number->value(),
+            $this->precision,
+            $this->mode,
+        );
     }
 }
