@@ -8,6 +8,7 @@ use Innmind\Math\{
     Matrix,
     Algebra\Number,
     Algebra\Integer,
+    Algebra\Value,
     Monoid\Addition,
 };
 use Innmind\Immutable\{
@@ -68,7 +69,7 @@ final class Vector
             throw new VectorsMustMeOfTheSameDimension;
         }
 
-        $value = Integer::of(0);
+        $value = Value::zero;
 
         for ($i = 0; $i < $this->dimension->value(); $i++) {
             $value = $value->add(
@@ -214,10 +215,10 @@ final class Vector
     {
         return $this
             ->numbers
-            ->find(static fn($number) => !$number->equals(Integer::of(0)))
+            ->find(static fn($number) => !$number->equals(Value::zero))
             ->match(
                 static fn($lead) => $lead,
-                static fn() => Integer::of(0),
+                static fn() => Value::zero,
             );
     }
 

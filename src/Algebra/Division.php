@@ -15,7 +15,7 @@ final class Division implements Operation, Number
 
     private function __construct(Number $dividend, Number $divisor)
     {
-        if ($divisor->equals(Integer::of(0))) {
+        if ($divisor->equals(Value::zero)) {
             throw new DivisionByZero;
         }
 

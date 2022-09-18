@@ -15,7 +15,7 @@ use Innmind\Math\{
     Geometry\Figure,
     Geometry\Segment,
     Algebra\Number,
-    Algebra\Integer,
+    Algebra\Value,
 };
 
 /**
@@ -79,7 +79,7 @@ final class Triangle implements Figure
     public function area(): Number
     {
         //Heron's formula
-        $p = $this->perimeter()->divideBy(Integer::of(2));
+        $p = $this->perimeter()->divideBy(Value::two);
 
         return squareRoot(
             multiply(

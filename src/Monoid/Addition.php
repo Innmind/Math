@@ -3,7 +3,10 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Monoid;
 
-use Innmind\Math\Algebra\Number;
+use Innmind\Math\Algebra\{
+    Number,
+    Value,
+};
 use Innmind\Immutable\Monoid;
 
 /**
@@ -14,7 +17,7 @@ final class Addition implements Monoid
 {
     public function identity(): Number
     {
-        return Number\Number::of(0);
+        return Value::zero;
     }
 
     public function combine(mixed $a, mixed $b): Number

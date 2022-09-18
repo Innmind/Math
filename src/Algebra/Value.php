@@ -8,6 +8,11 @@ namespace Innmind\Math\Algebra;
  */
 enum Value implements Number
 {
+    case zero;
+    case one;
+    case two;
+    case ten;
+    case hundred;
     /** 1/0! + 1/1! + 1/2! + 1/3! + ... + 1/n! */
     case e;
     case pi;
@@ -17,6 +22,11 @@ enum Value implements Number
     public function value(): int|float
     {
         return match ($this) {
+            self::zero => 0,
+            self::one => 1,
+            self::two => 2,
+            self::ten => 10,
+            self::hundred => 100,
             self::e => \M_E,
             self::pi => \M_PI,
             self::infinite => \INF,
@@ -143,6 +153,11 @@ enum Value implements Number
     public function toString(): string
     {
         return match ($this) {
+            self::zero => '0',
+            self::one => '1',
+            self::two => '2',
+            self::ten => '10',
+            self::hundred => '100',
             self::e => 'e',
             self::pi => 'π',
             self::infinite => '+∞',

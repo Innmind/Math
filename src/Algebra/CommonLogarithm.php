@@ -150,7 +150,7 @@ final class CommonLogarithm implements Operation, Number
     public static function definitionSet(): Set
     {
         return Range::exclusive(
-            Integer::of(0),
+            Value::zero,
             Value::infinite,
         );
     }

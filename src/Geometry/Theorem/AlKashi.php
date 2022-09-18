@@ -10,7 +10,7 @@ use function Innmind\Math\{
 };
 use Innmind\Math\{
     Algebra\Number,
-    Algebra\Integer,
+    Algebra\Value,
     Geometry\Angle\Degree,
     Geometry\Segment,
     Exception\SegmentsCannotBeJoined,
@@ -37,12 +37,12 @@ final class AlKashi
         $b = $b->length();
 
         $side = $a
-            ->power(Integer::of(2))
+            ->power(Value::two)
             ->add(
-                $b->power(Integer::of(2)),
+                $b->power(Value::two),
             )
             ->subtract(
-                Integer::of(2)
+                Value::two
                     ->multiplyBy($a)
                     ->multiplyBy($b)
                     ->multiplyBy(cosine($degree)),
@@ -76,11 +76,11 @@ final class AlKashi
         }
 
         $cosAB = $a
-            ->power(Integer::of(2))
-            ->add($b->power(Integer::of(2)))
-            ->subtract($c->power(Integer::of(2)))
+            ->power(Value::two)
+            ->add($b->power(Value::two))
+            ->subtract($c->power(Value::two))
             ->divideBy(
-                Integer::of(2)
+                Value::two
                     ->multiplyBy($a)
                     ->multiplyBy($b),
             );

@@ -158,7 +158,7 @@ final class Power implements Operation, Number
 
     public function square(): bool
     {
-        return $this->power->equals(Integer::of(2));
+        return $this->power->equals(Value::two);
     }
 
     public function toString(): string

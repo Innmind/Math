@@ -6,7 +6,7 @@ namespace Innmind\Math\Geometry;
 use Innmind\Math\{
     Geometry\Angle\Degree,
     Algebra\Number,
-    Algebra\Integer,
+    Algebra\Value,
     Exception\LengthMustBePositive,
 };
 
@@ -19,7 +19,7 @@ final class Segment
 
     private function __construct(Number $length)
     {
-        if (!$length->higherThan(Integer::of(0))) {
+        if (!$length->higherThan(Value::zero)) {
             throw new LengthMustBePositive($length->toString());
         }
 

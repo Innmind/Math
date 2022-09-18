@@ -7,6 +7,7 @@ use function Innmind\Math\numerize;
 use Innmind\Math\{
     Algebra\Number,
     Algebra\Integer,
+    Algebra\Value,
     Polynom\Polynom,
     Matrix,
     Matrix\RowVector,
@@ -34,11 +35,10 @@ final class PolynomialRegression
             ->column(0);
 
         $this->polynom = Polynom::of($coefficients->get(0));
-        $zero = Integer::of(0);
         $degrees = $degree->value();
 
         for ($i = 1; $i <= $degrees; $i++) {
-            if ($coefficients->get($i)->equals($zero)) {
+            if ($coefficients->get($i)->equals(Value::zero)) {
                 continue;
             }
 
@@ -109,7 +109,7 @@ final class PolynomialRegression
 
         return $values
             ->subtract($estimated)
-            ->power(Integer::of(2))
+            ->power(Value::two)
             ->sum()
             ->divideBy(
                 $values->dimension(),

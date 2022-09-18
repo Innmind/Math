@@ -142,7 +142,7 @@ final class Factorial implements Operation, Number
     public function result(): Number
     {
         if ($this->value < 2) {
-            return Integer::of(1);
+            return Value::one;
         }
 
         $factorial = $i = $this->value;

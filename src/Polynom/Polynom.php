@@ -12,6 +12,7 @@ use Innmind\Math\Algebra\{
     Number,
     Integer,
     Operation,
+    Value,
 };
 use Innmind\Immutable\{
     Map,
@@ -30,7 +31,7 @@ final class Polynom
 
     private function __construct(Number $intercept = null, Degree ...$degrees)
     {
-        $this->intercept = $intercept ?? Integer::of(0);
+        $this->intercept = $intercept ?? Value::zero;
         /** @var Map<int, Degree> */
         $this->degrees = Map::of();
 
@@ -142,13 +143,13 @@ final class Polynom
                 return $degree->primitive();
             });
 
-        if (!$this->intercept->equals(Integer::of(0))) {
+        if (!$this->intercept->equals(Value::zero)) {
             $degrees = ($degrees)(
                 Degree::of(Integer::of(1), $this->intercept)
             );
         }
 
-        return new self(Integer::of(0), ...$degrees->toList());
+        return new self(Value::zero, ...$degrees->toList());
     }
 
     public function derivative(): self
@@ -158,7 +159,7 @@ final class Polynom
             ->get(1)
             ->match(
                 fn($degree) => [$degree->coeff(), $this->degrees->remove(1)],
-                fn() => [Integer::of(0), $this->degrees],
+                fn() => [Value::zero, $this->degrees],
             );
 
         return new self(
@@ -192,7 +193,7 @@ final class Polynom
             ->map(static fn(Degree $degree): string => $degree->toString());
         $polynom = Str::of(' + ')->join($degrees);
 
-        if (!$this->intercept->equals(Integer::of(0))) {
+        if (!$this->intercept->equals(Value::zero)) {
             $intercept = $this->intercept instanceof Operation ?
                 '('.$this->intercept->toString().')' : $this->intercept->toString();
 

@@ -13,6 +13,7 @@ use Innmind\Math\{
     Polynom\Polynom,
     Algebra\Number,
     Algebra\Integer,
+    Algebra\Value,
     Matrix,
 };
 
@@ -87,8 +88,8 @@ final class LinearRegression
 
         $xSum = $data->abscissas()->sum();
         $ySum = $data->ordinates()->sum();
-        $xxSum = Integer::of(0);
-        $xySum = Integer::of(0);
+        $xxSum = Value::zero;
+        $xySum = Value::zero;
 
         for ($i = 0; $i < $elements; $i++) {
             $xySum = add($xySum, multiply($x[$i], $y[$i]));
@@ -102,7 +103,7 @@ final class LinearRegression
             ),
             subtract(
                 $dimension->multiplyBy($xxSum),
-                $xSum->power(Integer::of(2)),
+                $xSum->power(Value::two),
             ),
         );
         $intercept = divide(
@@ -125,7 +126,7 @@ final class LinearRegression
 
         return $values
             ->subtract($estimated)
-            ->power(Integer::of(2))
+            ->power(Value::two)
             ->sum()
             ->divideBy(
                 $values->dimension(),

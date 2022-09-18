@@ -16,6 +16,7 @@ use Innmind\Math\{
     Matrix\Dimension,
     Algebra\Number,
     Algebra\Integer,
+    Algebra\Value,
 };
 use Innmind\Immutable\Sequence;
 
@@ -308,15 +309,14 @@ final class Matrix
 
     public function isInRowEchelonForm(): bool
     {
-        $zero = Integer::of(0);
         $leadingZeros = $this->rows->map(
-            static function(RowVector $row) use ($zero): int {
+            static function(RowVector $row): int {
                 $numbers = $row->numbers();
                 $dimension = $row->dimension()->value();
                 $count = 0;
 
                 for ($i = 1; $i < $dimension; $i++) {
-                    if (!$numbers[$i]->equals($zero)) {
+                    if (!$numbers[$i]->equals(Value::zero)) {
                         return $count;
                     }
 
@@ -431,7 +431,7 @@ final class Matrix
                 ->map(static fn($row) => $row->multiplyBy(
                     RowVector::initialize(
                         $row->dimension(),
-                        Integer::of(1)->divideBy($row->lead()),
+                        Value::one->divideBy($row->lead()),
                     ),
                 ));
 

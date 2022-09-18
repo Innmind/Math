@@ -6,6 +6,7 @@ namespace Innmind\Math\DefinitionSet;
 use Innmind\Math\{
     Algebra\Number,
     Algebra\Integer,
+    Algebra\Value,
     Exception\OutOfDefinitionSet,
 };
 
@@ -21,8 +22,8 @@ final class Integers implements Set
         }
 
         return $number
-            ->modulo(Integer::of(1))
-            ->equals(Integer::of(0));
+            ->modulo(Value::one)
+            ->equals(Value::zero);
     }
 
     public function accept(Number $number): void
