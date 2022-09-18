@@ -10,7 +10,7 @@ use Innmind\Math\{
     DefinitionSet\Intersection,
     Algebra\Integer,
     Algebra\Number\Number,
-    Algebra\Number\Pi,
+    Algebra\Value,
     Exception\OutOfDefinitionSet,
 };
 use PHPUnit\Framework\TestCase;
@@ -38,7 +38,7 @@ class RealNumbersExceptZeroTest extends TestCase
         $this->assertTrue($set->contains(Integer::of(-1)));
         $this->assertTrue($set->contains(Number::of(0.75)));
         $this->assertTrue($set->contains(Number::of(-0.75)));
-        $this->assertTrue($set->contains(new Pi));
+        $this->assertTrue($set->contains(Value::pi));
         $this->assertFalse($set->contains(Integer::of(0)));
     }
 

@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace Tests\Innmind\Math\Algebra\Number;
 
 use Innmind\Math\Algebra\{
-    Number\Pi,
+    Value,
     Number,
     Addition,
     Subtraction,
@@ -29,29 +29,29 @@ class PiTest extends TestCase
 {
     public function testInterface()
     {
-        $this->assertInstanceOf(Number::class, new Pi);
+        $this->assertInstanceOf(Number::class, Value::pi);
     }
 
     public function testStringCast()
     {
-        $this->assertSame('π', (new Pi)->toString());
+        $this->assertSame('π', Value::pi->toString());
     }
 
     public function testEquals()
     {
-        $this->assertTrue((new Pi)->equals(Number\Number::of(3.141592653589793)));
-        $this->assertFalse((new Pi)->equals(Number\Number::of(3.14)));
+        $this->assertTrue(Value::pi->equals(Number\Number::of(3.141592653589793)));
+        $this->assertFalse(Value::pi->equals(Number\Number::of(3.14)));
     }
 
     public function testHigherThan()
     {
-        $this->assertTrue((new Pi)->higherThan(Number\Number::of(3.14)));
-        $this->assertFalse((new Pi)->higherThan(Number\Number::of(3.15)));
+        $this->assertTrue(Value::pi->higherThan(Number\Number::of(3.14)));
+        $this->assertFalse(Value::pi->higherThan(Number\Number::of(3.15)));
     }
 
     public function testAdd()
     {
-        $number = new Pi;
+        $number = Value::pi;
         $number = $number->add(Number\Number::of(66));
 
         $this->assertInstanceOf(Addition::class, $number);
@@ -60,7 +60,7 @@ class PiTest extends TestCase
 
     public function testSubtract()
     {
-        $number = new Pi;
+        $number = Value::pi;
         $number = $number->subtract(Number\Number::of(66));
 
         $this->assertInstanceOf(Subtraction::class, $number);
@@ -69,7 +69,7 @@ class PiTest extends TestCase
 
     public function testDivideBy()
     {
-        $number = new Pi;
+        $number = Value::pi;
         $number = $number->divideBy(Number\Number::of(2));
 
         $this->assertInstanceOf(Division::class, $number);
@@ -78,7 +78,7 @@ class PiTest extends TestCase
 
     public function testMulitplyBy()
     {
-        $number = new Pi;
+        $number = Value::pi;
         $number = $number->multiplyBy(Number\Number::of(2));
 
         $this->assertInstanceOf(Multiplication::class, $number);
@@ -87,7 +87,7 @@ class PiTest extends TestCase
 
     public function testRound()
     {
-        $number = new Pi;
+        $number = Value::pi;
 
         $this->assertEquals(Round::up($number, 2), $number->roundUp(2));
         $this->assertEquals(Round::down($number, 2), $number->roundDown(2));
@@ -97,7 +97,7 @@ class PiTest extends TestCase
 
     public function testFloor()
     {
-        $number = new Pi;
+        $number = Value::pi;
         $number = $number->floor();
 
         $this->assertInstanceOf(Floor::class, $number);
@@ -106,7 +106,7 @@ class PiTest extends TestCase
 
     public function testCeil()
     {
-        $number = new Pi;
+        $number = Value::pi;
         $number = $number->ceil();
 
         $this->assertInstanceOf(Ceil::class, $number);
@@ -115,7 +115,7 @@ class PiTest extends TestCase
 
     public function testModulo()
     {
-        $number = new Pi;
+        $number = Value::pi;
         $number = $number->modulo(Number\Number::of(0.1));
 
         $this->assertInstanceOf(Modulo::class, $number);
@@ -124,28 +124,28 @@ class PiTest extends TestCase
 
     public function testAbsolute()
     {
-        $number = new Pi;
+        $number = Value::pi;
         $number = $number->absolute();
 
         $this->assertInstanceOf(Absolute::class, $number);
-        $this->assertSame((new Pi)->value(), $number->value());
+        $this->assertSame(Value::pi->value(), $number->value());
     }
 
     public function testPower()
     {
-        $number = new Pi;
+        $number = Value::pi;
         $number = $number->power(Number\Number::of(2));
 
         $this->assertInstanceOf(Power::class, $number);
         $this->assertSame(
-            (new Pi)->multiplyBy(new Pi)->value(),
+            Value::pi->multiplyBy(Value::pi)->value(),
             $number->value(),
         );
     }
 
     public function testSquareRoot()
     {
-        $number = new Pi;
+        $number = Value::pi;
         $number = $number->squareRoot();
 
         $this->assertInstanceOf(SquareRoot::class, $number);
@@ -155,7 +155,7 @@ class PiTest extends TestCase
 
     public function testExponential()
     {
-        $number = (new Pi)->exponential();
+        $number = Value::pi->exponential();
 
         $this->assertInstanceOf(Exponential::class, $number);
         $this->assertSame(\exp(\M_PI), $number->value());
@@ -163,7 +163,7 @@ class PiTest extends TestCase
 
     public function testBinaryLogarithm()
     {
-        $number = (new Pi)->binaryLogarithm();
+        $number = Value::pi->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
         $this->assertSame(\log(\M_PI, 2), $number->value());
@@ -171,7 +171,7 @@ class PiTest extends TestCase
 
     public function testNaturalLogarithm()
     {
-        $number = (new Pi)->naturalLogarithm();
+        $number = Value::pi->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
         $this->assertSame(\log(\M_PI), $number->value());
@@ -179,7 +179,7 @@ class PiTest extends TestCase
 
     public function testCommonLogarithm()
     {
-        $number = (new Pi)->commonLogarithm();
+        $number = Value::pi->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
         $this->assertSame(\log10(\M_PI), $number->value());
@@ -187,7 +187,7 @@ class PiTest extends TestCase
 
     public function testSignum()
     {
-        $number = (new Pi)->signum();
+        $number = Value::pi->signum();
 
         $this->assertInstanceOf(Signum::class, $number);
         $this->assertSame(1, $number->value());

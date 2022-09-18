@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace Tests\Innmind\Math\Algebra\Number;
 
 use Innmind\Math\{
-    Algebra\Number\Infinite,
+    Algebra\Value,
     Algebra\Number,
     Algebra\Addition,
     Algebra\Subtraction,
@@ -31,30 +31,30 @@ class InfiniteTest extends TestCase
 {
     public function testInterface()
     {
-        $this->assertInstanceOf(Number::class, Infinite::positive());
+        $this->assertInstanceOf(Number::class, Value::infinite);
     }
 
     public function testStringCast()
     {
-        $this->assertSame('+∞', Infinite::positive()->toString());
-        $this->assertSame('-∞', Infinite::negative()->toString());
+        $this->assertSame('+∞', Value::infinite->toString());
+        $this->assertSame('-∞', Value::negativeInfinite->toString());
     }
 
     public function testEquals()
     {
-        $this->assertTrue((Infinite::positive())->equals(Infinite::positive()));
-        $this->assertFalse((Infinite::positive())->equals(Number\Number::of(3.14)));
+        $this->assertTrue((Value::infinite)->equals(Value::infinite));
+        $this->assertFalse((Value::infinite)->equals(Number\Number::of(3.14)));
     }
 
     public function testHigherThan()
     {
-        $this->assertTrue((Infinite::positive())->higherThan(Number\Number::of(3.14)));
-        $this->assertFalse((Infinite::positive())->higherThan(Infinite::positive()));
+        $this->assertTrue((Value::infinite)->higherThan(Number\Number::of(3.14)));
+        $this->assertFalse((Value::infinite)->higherThan(Value::infinite));
     }
 
     public function testAdd()
     {
-        $number = Infinite::positive();
+        $number = Value::infinite;
         $number = $number->add(Number\Number::of(66));
 
         $this->assertInstanceOf(Addition::class, $number);
@@ -63,7 +63,7 @@ class InfiniteTest extends TestCase
 
     public function testSubtract()
     {
-        $number = Infinite::positive();
+        $number = Value::infinite;
         $number = $number->subtract(Number\Number::of(66));
 
         $this->assertInstanceOf(Subtraction::class, $number);
@@ -72,7 +72,7 @@ class InfiniteTest extends TestCase
 
     public function testDivideBy()
     {
-        $number = Infinite::positive();
+        $number = Value::infinite;
         $number = $number->divideBy(Number\Number::of(2));
 
         $this->assertInstanceOf(Division::class, $number);
@@ -81,7 +81,7 @@ class InfiniteTest extends TestCase
 
     public function testMulitplyBy()
     {
-        $number = Infinite::positive();
+        $number = Value::infinite;
         $number = $number->multiplyBy(Number\Number::of(2));
 
         $this->assertInstanceOf(Multiplication::class, $number);
@@ -90,7 +90,7 @@ class InfiniteTest extends TestCase
 
     public function testRound()
     {
-        $number = Infinite::positive();
+        $number = Value::infinite;
 
         $this->assertEquals(Round::up($number, 2), $number->roundUp(2));
         $this->assertEquals(Round::down($number, 2), $number->roundDown(2));
@@ -100,7 +100,7 @@ class InfiniteTest extends TestCase
 
     public function testFloor()
     {
-        $number = Infinite::positive();
+        $number = Value::infinite;
         $number = $number->floor();
 
         $this->assertInstanceOf(Floor::class, $number);
@@ -109,7 +109,7 @@ class InfiniteTest extends TestCase
 
     public function testCeil()
     {
-        $number = Infinite::positive();
+        $number = Value::infinite;
         $number = $number->ceil();
 
         $this->assertInstanceOf(Ceil::class, $number);
@@ -118,7 +118,7 @@ class InfiniteTest extends TestCase
 
     public function testModulo()
     {
-        $number = Infinite::positive();
+        $number = Value::infinite;
 
         $this->expectException(NotANumber::class);
 
@@ -127,7 +127,7 @@ class InfiniteTest extends TestCase
 
     public function testAbsolute()
     {
-        $number = Infinite::negative();
+        $number = Value::negativeInfinite;
         $number = $number->absolute();
 
         $this->assertInstanceOf(Absolute::class, $number);
@@ -136,7 +136,7 @@ class InfiniteTest extends TestCase
 
     public function testPower()
     {
-        $number = Infinite::positive();
+        $number = Value::infinite;
         $number = $number->power(Number\Number::of(2));
 
         $this->assertInstanceOf(Power::class, $number);
@@ -145,7 +145,7 @@ class InfiniteTest extends TestCase
 
     public function testSquareRoot()
     {
-        $number = Infinite::positive();
+        $number = Value::infinite;
         $number = $number->squareRoot();
 
         $this->assertInstanceOf(SquareRoot::class, $number);
@@ -154,7 +154,7 @@ class InfiniteTest extends TestCase
 
     public function testExponential()
     {
-        $number = Infinite::positive()->exponential();
+        $number = Value::infinite->exponential();
 
         $this->assertInstanceOf(Exponential::class, $number);
         $this->assertSame(\INF, $number->value());
@@ -164,26 +164,26 @@ class InfiniteTest extends TestCase
     {
         $this->expectException(OutOfDefinitionSet::class);
 
-        Infinite::positive()->binaryLogarithm();
+        Value::infinite->binaryLogarithm();
     }
 
     public function testNaturalLogarithm()
     {
         $this->expectException(OutOfDefinitionSet::class);
 
-        Infinite::positive()->naturalLogarithm();
+        Value::infinite->naturalLogarithm();
     }
 
     public function testCommonLogarithm()
     {
         $this->expectException(OutOfDefinitionSet::class);
 
-        Infinite::positive()->commonLogarithm();
+        Value::infinite->commonLogarithm();
     }
 
     public function testSignum()
     {
-        $number = Infinite::positive()->signum();
+        $number = Value::infinite->signum();
 
         $this->assertInstanceOf(Signum::class, $number);
         $this->assertSame(1, $number->value());

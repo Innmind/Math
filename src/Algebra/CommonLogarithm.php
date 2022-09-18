@@ -151,7 +151,7 @@ final class CommonLogarithm implements Operation, Number
     {
         return Range::exclusive(
             Integer::of(0),
-            Infinite::positive(),
+            Value::infinite,
         );
     }
 

@@ -10,7 +10,7 @@ use Innmind\Math\{
     DefinitionSet\Intersection,
     Algebra\Integer,
     Algebra\Number\Number,
-    Algebra\Number\Pi
+    Algebra\Value,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -38,7 +38,7 @@ class RealNumbersTest extends TestCase
         $this->assertTrue($set->contains(Integer::of(-1)));
         $this->assertTrue($set->contains(Number::of(0.75)));
         $this->assertTrue($set->contains(Number::of(-0.75)));
-        $this->assertTrue($set->contains(new Pi));
+        $this->assertTrue($set->contains(Value::pi));
     }
 
     public function testAccept()
@@ -50,7 +50,7 @@ class RealNumbersTest extends TestCase
         $this->assertNull($set->accept(Integer::of(-1)));
         $this->assertNull($set->accept(Number::of(0.75)));
         $this->assertNull($set->accept(Number::of(-0.75)));
-        $this->assertNull($set->accept(new Pi));
+        $this->assertNull($set->accept(Value::pi));
     }
 
     public function testUnion()

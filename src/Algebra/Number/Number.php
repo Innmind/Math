@@ -22,6 +22,7 @@ use Innmind\Math\{
     Algebra\Signum,
     Algebra\SquareRoot,
     Algebra\Subtraction,
+    Algebra\Value,
     Exception\NotANumber,
 };
 
@@ -47,7 +48,7 @@ final class Number implements NumberInterface
     public static function of(int|float $value): NumberInterface
     {
         if (\is_infinite($value)) {
-            return $value > 0 ? Infinite::positive() : Infinite::negative();
+            return $value > 0 ? Value::infinite : Value::negativeInfinite;
         }
 
         if (\is_int($value)) {

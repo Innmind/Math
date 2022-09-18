@@ -8,7 +8,7 @@ use Innmind\Math\{
     Geometry\Figure,
     Geometry\Segment,
     Algebra\Number,
-    Algebra\Number\Pi,
+    Algebra\Value,
 };
 
 /**
@@ -37,7 +37,7 @@ final class Circle implements Figure
 
     public function perimeter(): Number
     {
-        return multiply(2, new Pi, $this->radius->length());
+        return multiply(2, Value::pi, $this->radius->length());
     }
 
     public function area(): Number
@@ -45,7 +45,7 @@ final class Circle implements Figure
         return multiply(
             $this->radius->length(),
             $this->radius->length(),
-            new Pi,
+            Value::pi,
         );
     }
 

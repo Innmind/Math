@@ -10,9 +10,9 @@ Expose some math concepts as objects.
 
 ```php
 use function Innmind\Math\multiply;
-use Innmind\Math\Algebra\Number\Pi;
+use Innmind\Math\Algebra\Value;
 
-$perimeter = multiply(2, new Pi, $r = 42); //value still not calculated
+$perimeter = multiply(2, Value::pi, $r = 42); //value still not calculated
 echo $perimeter->toString(); //2 x π x 42 (value still not calculated)
 echo $perimeter->value(); //263.89378290154
 ```
@@ -27,16 +27,16 @@ Have a look at the [`functions`](src/functions.php) file to see all the operatio
 use Innmind\Math\{
     DefinitionSet\Range,
     Algebra\Integer,
-    Algebra\Number\Infinite,
+    Algebra\Value,
 };
 
-$set = Range::exlusive(new Integer(0), Infinite::positive());
+$set = Range::exlusive(new Integer(0), Value::infinite);
 echo $set->toString(); //]0;+∞[
 $set->contains(new Integer(42)); //true
 $set->contains(new Integer(-42)); //false
 
 $set = $set->union(
-    Range::exclusive(Infinite::negative(), new Integer(0)),
+    Range::exclusive(Value::negativeInfinite, new Integer(0)),
 );
 echo $set; //]-∞;0[∪]0;+∞[
 $set->contains(new Integer(-42)); //true

@@ -22,7 +22,7 @@ use Innmind\Math\{
     Algebra\NaturalLogarithm,
     Algebra\CommonLogarithm,
     Algebra\Integer,
-    Algebra\Number\Infinite,
+    Algebra\Value,
     Algebra\Signum,
     Exception\NotANumber,
 };
@@ -59,12 +59,12 @@ class NumberTest extends TestCase
 
         $number = Number::of(\INF);
 
-        $this->assertInstanceOf(Infinite::class, $number);
+        $this->assertSame(Value::infinite, $number);
         $this->assertSame('+∞', $number->toString());
 
         $number = Number::of(-\INF);
 
-        $this->assertInstanceOf(Infinite::class, $number);
+        $this->assertSame(Value::negativeInfinite, $number);
         $this->assertSame('-∞', $number->toString());
     }
 

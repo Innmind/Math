@@ -3,57 +3,48 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Algebra;
 
-use Innmind\Math\{
-    Algebra\Number\Infinite,
-    DefinitionSet\Set,
-    DefinitionSet\Range,
-};
-
 /**
- * base e logarithm
  * @psalm-immutable
  */
-final class NaturalLogarithm implements Operation, Number
+enum Value implements Number
 {
-    private Number $number;
-
-    private function __construct(Number $number)
-    {
-        self::definitionSet()->accept($number);
-
-        $this->number = $number;
-    }
-
-    /**
-     * @psalm-pure
-     */
-    public static function of(Number $number): self
-    {
-        return new self($number);
-    }
+    /** 1/0! + 1/1! + 1/2! + 1/3! + ... + 1/n! */
+    case e;
+    case pi;
+    case infinite;
+    case negativeInfinite;
 
     public function value(): int|float
     {
-        return $this->result()->value();
+        return match ($this) {
+            self::e => \M_E,
+            self::pi => \M_PI,
+            self::infinite => \INF,
+            self::negativeInfinite => -\INF,
+        };
     }
 
     public function equals(Number $number): bool
     {
-        return $this->result()->equals($number);
+        return $this->value() == $number->value();
     }
 
     public function higherThan(Number $number): bool
     {
-        return $this->result()->higherThan($number);
+        return $this->value() > $number->value();
     }
 
-    public function add(Number $number, Number ...$numbers): Number
-    {
+    public function add(
+        Number $number,
+        Number ...$numbers,
+    ): Number {
         return Addition::of($this, $number, ...$numbers);
     }
 
-    public function subtract(Number $number, Number ...$numbers): Number
-    {
+    public function subtract(
+        Number $number,
+        Number ...$numbers,
+    ): Number {
         return Subtraction::of($this, $number, ...$numbers);
     }
 
@@ -62,8 +53,10 @@ final class NaturalLogarithm implements Operation, Number
         return Division::of($this, $number);
     }
 
-    public function multiplyBy(Number $number, Number ...$numbers): Number
-    {
+    public function multiplyBy(
+        Number $number,
+        Number ...$numbers,
+    ): Number {
         return Multiplication::of($this, $number, ...$numbers);
     }
 
@@ -127,9 +120,9 @@ final class NaturalLogarithm implements Operation, Number
         return BinaryLogarithm::of($this);
     }
 
-    public function naturalLogarithm(): self
+    public function naturalLogarithm(): Number
     {
-        return new self($this);
+        return NaturalLogarithm::of($this);
     }
 
     public function commonLogarithm(): Number
@@ -142,33 +135,18 @@ final class NaturalLogarithm implements Operation, Number
         return Signum::of($this);
     }
 
-    public function result(): Number
-    {
-        return $this->compute($this->number);
-    }
-
-    public static function definitionSet(): Set
-    {
-        return Range::exclusive(
-            Integer::of(0),
-            Value::infinite,
-        );
-    }
-
     public function collapse(): Number
     {
-        return $this->compute($this->number->collapse());
+        return $this;
     }
 
     public function toString(): string
     {
-        return \sprintf('ln(%s)', $this->number->toString());
-    }
-
-    private function compute(Number $number): Number
-    {
-        return Number\Number::of(
-            \log($number->value()),
-        );
+        return match ($this) {
+            self::e => 'e',
+            self::pi => 'π',
+            self::infinite => '+∞',
+            self::negativeInfinite => '-∞',
+        };
     }
 }
