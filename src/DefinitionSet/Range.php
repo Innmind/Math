@@ -86,12 +86,12 @@ final class Range implements Set
 
     public function union(Set $set): Set
     {
-        return new Union($this, $set);
+        return Union::of($this, $set);
     }
 
     public function intersect(Set $set): Set
     {
-        return new Intersection($this, $set);
+        return Intersection::of($this, $set);
     }
 
     public function toString(): string

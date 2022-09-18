@@ -19,7 +19,7 @@ final class Tangent
     private Number $abscissa;
     private Number $intercept;
 
-    public function __construct(
+    private function __construct(
         Polynom $polynom,
         Number $abscissa,
         Number $limit = null,
@@ -41,6 +41,17 @@ final class Tangent
         );
     }
 
+    /**
+     * @psalm-pure
+     */
+    public static function of(
+        Polynom $polynom,
+        Number $abscissa,
+        Number $limit = null,
+    ): self {
+        return new self($polynom, $abscissa, $limit);
+    }
+
     public function polynom(): Polynom
     {
         return $this->polynom;
@@ -56,6 +67,6 @@ final class Tangent
      */
     public static function limit(): Number
     {
-        return new Number\Number(0.000000000001);
+        return Number\Number::of(0.000000000001);
     }
 }

@@ -27,7 +27,7 @@ final class Vector
     private function __construct(Number $number, Number ...$numbers)
     {
         $this->numbers = Sequence::of($number, ...$numbers);
-        $this->dimension = new Integer($this->numbers->size());
+        $this->dimension = Integer::of($this->numbers->size());
     }
 
     /**
@@ -68,7 +68,7 @@ final class Vector
             throw new VectorsMustMeOfTheSameDimension;
         }
 
-        $value = new Integer(0);
+        $value = Integer::of(0);
 
         for ($i = 0; $i < $this->dimension->value(); $i++) {
             $value = $value->add(
@@ -214,10 +214,10 @@ final class Vector
     {
         return $this
             ->numbers
-            ->find(static fn($number) => !$number->equals(new Integer(0)))
+            ->find(static fn($number) => !$number->equals(Integer::of(0)))
             ->match(
                 static fn($lead) => $lead,
-                static fn() => new Integer(0),
+                static fn() => Integer::of(0),
             );
     }
 

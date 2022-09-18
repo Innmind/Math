@@ -17,9 +17,17 @@ final class Square implements Figure
 {
     private Segment $side;
 
-    public function __construct(Segment $side)
+    private function __construct(Segment $side)
     {
         $this->side = $side;
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(Segment $side): self
+    {
+        return new self($side);
     }
 
     public function perimeter(): Number

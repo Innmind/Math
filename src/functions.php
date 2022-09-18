@@ -44,7 +44,7 @@ use Innmind\Immutable\Sequence;
  */
 function add(int|float|Number ...$numbers): Addition
 {
-    return new Addition(...numerize(...$numbers));
+    return Addition::of(...numerize(...$numbers));
 }
 
 /**
@@ -52,7 +52,7 @@ function add(int|float|Number ...$numbers): Addition
  */
 function absolute(int|float|Number $number): Number
 {
-    return new Absolute(numerize($number)[0]);
+    return Absolute::of(numerize($number)[0]);
 }
 
 /**
@@ -60,7 +60,7 @@ function absolute(int|float|Number $number): Number
  */
 function ceil(int|float|Number $number): Number
 {
-    return new Ceil(numerize($number)[0]);
+    return Ceil::of(numerize($number)[0]);
 }
 
 /**
@@ -70,7 +70,7 @@ function divide(
     int|float|Number $dividend,
     int|float|Number $divisor,
 ): Number {
-    return new Division(...numerize($dividend, $divisor));
+    return Division::of(...numerize($dividend, $divisor));
 }
 
 /**
@@ -78,7 +78,7 @@ function divide(
  */
 function floor(int|float|Number $number): Number
 {
-    return new Floor(numerize($number)[0]);
+    return Floor::of(numerize($number)[0]);
 }
 
 /**
@@ -88,7 +88,7 @@ function modulo(
     int|float|Number $number,
     int|float|Number $modulus,
 ): Number {
-    return new Modulo(...numerize($number, $modulus));
+    return Modulo::of(...numerize($number, $modulus));
 }
 
 /**
@@ -97,7 +97,7 @@ function modulo(
  */
 function multiply(int|float|Number ...$numbers): Number
 {
-    return new Multiplication(...numerize(...$numbers));
+    return Multiplication::of(...numerize(...$numbers));
 }
 
 /**
@@ -108,7 +108,7 @@ function power(
     int|float|Number $number,
     int|float|Number $power,
 ): Number {
-    return new Power(...numerize($number, $power));
+    return Power::of(...numerize($number, $power));
 }
 
 /**
@@ -160,7 +160,7 @@ function roundOdd(int|float|Number $number, int $precision = 0): Number
  */
 function squareRoot(int|float|Number $number): Number
 {
-    return new SquareRoot(numerize($number)[0]);
+    return SquareRoot::of(numerize($number)[0]);
 }
 
 /**
@@ -169,7 +169,7 @@ function squareRoot(int|float|Number $number): Number
  */
 function subtract(int|float|Number ...$numbers): Subtraction
 {
-    return new Subtraction(...numerize(...$numbers));
+    return Subtraction::of(...numerize(...$numbers));
 }
 
 /**
@@ -185,7 +185,7 @@ function toDegree(Degree|Radian|int|float|Number $degree): Degree
         return $degree->toDegree();
     }
 
-    return new Degree(numerize($degree)[0]);
+    return Degree::of(numerize($degree)[0]);
 }
 
 /**
@@ -201,7 +201,7 @@ function toRadian(Degree|Radian|int|float|Number $radian): Radian
         return $radian->toRadian();
     }
 
-    return new Radian(numerize($radian)[0]);
+    return Radian::of(numerize($radian)[0]);
 }
 
 /**
@@ -209,7 +209,7 @@ function toRadian(Degree|Radian|int|float|Number $radian): Radian
  */
 function cosine(Degree|Radian|int|float|Number $degree): Number
 {
-    return new Cosine(toDegree($degree));
+    return Cosine::of(toDegree($degree));
 }
 
 /**
@@ -217,7 +217,7 @@ function cosine(Degree|Radian|int|float|Number $degree): Number
  */
 function arcCosine(int|float|Number $number): ArcCosine
 {
-    return new ArcCosine(...numerize($number));
+    return ArcCosine::of(...numerize($number));
 }
 
 /**
@@ -225,7 +225,7 @@ function arcCosine(int|float|Number $number): ArcCosine
  */
 function arcSine(int|float|Number $number): ArcSine
 {
-    return new ArcSine(...numerize($number));
+    return ArcSine::of(...numerize($number));
 }
 
 /**
@@ -233,7 +233,7 @@ function arcSine(int|float|Number $number): ArcSine
  */
 function arcTangent(int|float|Number $number): ArcTangent
 {
-    return new ArcTangent(...numerize($number));
+    return ArcTangent::of(...numerize($number));
 }
 
 /**
@@ -241,7 +241,7 @@ function arcTangent(int|float|Number $number): ArcTangent
  */
 function sine(Degree|Radian|int|float|Number $degree): Number
 {
-    return new Sine(toDegree($degree));
+    return Sine::of(toDegree($degree));
 }
 
 /**
@@ -249,7 +249,7 @@ function sine(Degree|Radian|int|float|Number $degree): Number
  */
 function tangent(Degree|Radian|int|float|Number $degree): Number
 {
-    return new Tangent(toDegree($degree));
+    return Tangent::of(toDegree($degree));
 }
 
 /**
@@ -258,7 +258,7 @@ function tangent(Degree|Radian|int|float|Number $degree): Number
  */
 function frequence(int|float|Number ...$numbers): Frequence
 {
-    return new Frequence(...numerize(...$numbers));
+    return Frequence::of(...numerize(...$numbers));
 }
 
 /**
@@ -269,7 +269,7 @@ function mean(
     int|float|Number $first,
     int|float|Number ...$numbers,
 ): Mean {
-    return new Mean(...numerize($first, ...$numbers));
+    return Mean::of(...numerize($first, ...$numbers));
 }
 
 /**
@@ -280,7 +280,7 @@ function median(
     int|float|Number $first,
     int|float|Number ...$numbers,
 ): Number {
-    return new Median(...numerize($first, ...$numbers));
+    return Median::of(...numerize($first, ...$numbers));
 }
 
 /**
@@ -292,7 +292,7 @@ function scope(
     int|float|Number $second,
     int|float|Number ...$numbers,
 ): Number {
-    return new Scope(...numerize($first, $second, ...$numbers));
+    return Scope::of(...numerize($first, $second, ...$numbers));
 }
 
 /**
@@ -304,7 +304,7 @@ function factorial(int|Integer $int): Factorial
         return $int->factorial();
     }
 
-    return new Factorial($int);
+    return Factorial::of($int);
 }
 
 /**
@@ -312,7 +312,7 @@ function factorial(int|Integer $int): Factorial
  */
 function exponential(int|float|Number $number): Exponential
 {
-    return new Exponential(...numerize($number));
+    return Exponential::of(...numerize($number));
 }
 
 /**
@@ -320,7 +320,7 @@ function exponential(int|float|Number $number): Exponential
  */
 function binaryLogarithm(int|float|Number $number): BinaryLogarithm
 {
-    return new BinaryLogarithm(...numerize($number));
+    return BinaryLogarithm::of(...numerize($number));
 }
 
 /**
@@ -328,7 +328,7 @@ function binaryLogarithm(int|float|Number $number): BinaryLogarithm
  */
 function naturalLogarithm(int|float|Number $number): NaturalLogarithm
 {
-    return new NaturalLogarithm(...numerize($number));
+    return NaturalLogarithm::of(...numerize($number));
 }
 
 /**
@@ -344,7 +344,7 @@ function logarithm(int|float|Number $number): NaturalLogarithm
  */
 function commonLogarithm(int|float|Number $number): CommonLogarithm
 {
-    return new CommonLogarithm(...numerize($number));
+    return CommonLogarithm::of(...numerize($number));
 }
 
 /**
@@ -352,7 +352,7 @@ function commonLogarithm(int|float|Number $number): CommonLogarithm
  */
 function signum(int|float|Number $number): Signum
 {
-    return new Signum(...numerize($number));
+    return Signum::of(...numerize($number));
 }
 
 /**

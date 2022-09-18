@@ -16,10 +16,18 @@ final class Intersection implements Set
     private Set $left;
     private Set $right;
 
-    public function __construct(Set $left, Set $right)
+    private function __construct(Set $left, Set $right)
     {
         $this->left = $left;
         $this->right = $right;
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(Set $left, Set $right): self
+    {
+        return new self($left, $right);
     }
 
     public function contains(Number $number): bool
@@ -37,7 +45,7 @@ final class Intersection implements Set
 
     public function union(Set $set): Set
     {
-        return new Union($this, $set);
+        return Union::of($this, $set);
     }
 
     public function intersect(Set $set): Set

@@ -17,36 +17,36 @@ class RadianTest extends TestCase
      */
     public function testStringCast($radian, $expected)
     {
-        $this->assertSame($expected, (new Radian(new Number($radian)))->toString());
+        $this->assertSame($expected, (Radian::of(Number::of($radian)))->toString());
     }
 
     public function testIsRight()
     {
-        $this->assertTrue((new Radian(new Number(\M_PI_2)))->isRight());
-        $this->assertFalse((new Radian(new Number(\M_PI)))->isRight());
+        $this->assertTrue((Radian::of(Number::of(\M_PI_2)))->isRight());
+        $this->assertFalse((Radian::of(Number::of(\M_PI)))->isRight());
     }
 
     public function testIsObtuse()
     {
-        $this->assertTrue((new Radian(new Number((2 * \pi()) / 3)))->isObtuse());
-        $this->assertFalse((new Radian(new Number(\pi() / 3)))->isObtuse());
+        $this->assertTrue((Radian::of(Number::of((2 * \pi()) / 3)))->isObtuse());
+        $this->assertFalse((Radian::of(Number::of(\pi() / 3)))->isObtuse());
     }
 
     public function testIsAcuse()
     {
-        $this->assertTrue((new Radian(new Number(\pi() / 3)))->isAcuse());
-        $this->assertFalse((new Radian(new Number(\M_PI_2)))->isAcuse());
+        $this->assertTrue((Radian::of(Number::of(\pi() / 3)))->isAcuse());
+        $this->assertFalse((Radian::of(Number::of(\M_PI_2)))->isAcuse());
     }
 
     public function testIsFlat()
     {
-        $this->assertTrue((new Radian(new Number(\pi())))->isFlat());
-        $this->assertFalse((new Radian(new Number((5 * \pi()) / 4)))->isFlat());
+        $this->assertTrue((Radian::of(Number::of(\pi())))->isFlat());
+        $this->assertFalse((Radian::of(Number::of((5 * \pi()) / 4)))->isFlat());
     }
 
     public function testOpposite()
     {
-        $radian = new Radian(new Number(\pi() / 4));
+        $radian = Radian::of(Number::of(\pi() / 4));
         $opposite = $radian->opposite();
 
         $this->assertNotSame($opposite, $radian);
@@ -59,7 +59,7 @@ class RadianTest extends TestCase
      */
     public function testToDegree($radian, $string, $expected)
     {
-        $radian = new Radian(new Number($radian));
+        $radian = Radian::of(Number::of($radian));
         $degree = $radian->toDegree();
 
         $this->assertInstanceOf(Degree::class, $degree);

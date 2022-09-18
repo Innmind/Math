@@ -31,7 +31,7 @@ class CommonLogarithmTest extends TestCase
 {
     public function testInterface()
     {
-        $lg = new CommonLogarithm(new Number\Number(42.42));
+        $lg = CommonLogarithm::of(Number\Number::of(42.42));
 
         $this->assertInstanceOf(Number::class, $lg);
         $this->assertInstanceOf(Operation::class, $lg);
@@ -41,12 +41,12 @@ class CommonLogarithmTest extends TestCase
     {
         $this->expectException(OutOfDefinitionSet::class);
 
-        new CommonLogarithm(new Number\Number(0));
+        CommonLogarithm::of(Number\Number::of(0));
     }
 
     public function testResult()
     {
-        $lg = new CommonLogarithm(new Number\Number(1));
+        $lg = CommonLogarithm::of(Number\Number::of(1));
         $result = $lg->result();
 
         $this->assertInstanceOf(Number::class, $result);
@@ -55,7 +55,7 @@ class CommonLogarithmTest extends TestCase
 
     public function testValue()
     {
-        $lg = new CommonLogarithm(new Number\Number(1));
+        $lg = CommonLogarithm::of(Number\Number::of(1));
 
         $this->assertSame(0.0, $lg->value());
     }
@@ -64,30 +64,30 @@ class CommonLogarithmTest extends TestCase
     {
         $this->assertSame(
             'lg(4)',
-            (new CommonLogarithm(new Number\Number(4)))->toString(),
+            CommonLogarithm::of(Number\Number::of(4))->toString(),
         );
     }
 
     public function testEquals()
     {
-        $lg = new CommonLogarithm(new Number\Number(1));
+        $lg = CommonLogarithm::of(Number\Number::of(1));
 
-        $this->assertTrue($lg->equals(new Number\Number(0)));
-        $this->assertFalse($lg->equals(new Number\Number(0.1)));
+        $this->assertTrue($lg->equals(Number\Number::of(0)));
+        $this->assertFalse($lg->equals(Number\Number::of(0.1)));
     }
 
     public function testHigherThan()
     {
-        $lg = new CommonLogarithm(new Number\Number(1));
+        $lg = CommonLogarithm::of(Number\Number::of(1));
 
-        $this->assertTrue($lg->higherThan(new Number\Number(-0.1)));
-        $this->assertFalse($lg->higherThan(new Number\Number(0)));
+        $this->assertTrue($lg->higherThan(Number\Number::of(-0.1)));
+        $this->assertFalse($lg->higherThan(Number\Number::of(0)));
     }
 
     public function testAdd()
     {
-        $lg = new CommonLogarithm(new Number\Number(1));
-        $number = $lg->add(new Number\Number(7));
+        $lg = CommonLogarithm::of(Number\Number::of(1));
+        $number = $lg->add(Number\Number::of(7));
 
         $this->assertInstanceOf(Addition::class, $number);
         $this->assertSame(7.0, $number->value());
@@ -95,8 +95,8 @@ class CommonLogarithmTest extends TestCase
 
     public function testSubtract()
     {
-        $lg = new CommonLogarithm(new Number\Number(1));
-        $number = $lg->subtract(new Number\Number(7));
+        $lg = CommonLogarithm::of(Number\Number::of(1));
+        $number = $lg->subtract(Number\Number::of(7));
 
         $this->assertInstanceOf(Subtraction::class, $number);
         $this->assertSame(-7.0, $number->value());
@@ -104,8 +104,8 @@ class CommonLogarithmTest extends TestCase
 
     public function testMultiplication()
     {
-        $lg = new CommonLogarithm(new Number\Number(1));
-        $number = $lg->multiplyBy(new Number\Number(2));
+        $lg = CommonLogarithm::of(Number\Number::of(1));
+        $number = $lg->multiplyBy(Number\Number::of(2));
 
         $this->assertInstanceOf(Multiplication::class, $number);
         $this->assertSame(0.0, $number->value());
@@ -113,8 +113,8 @@ class CommonLogarithmTest extends TestCase
 
     public function testDivision()
     {
-        $lg = new CommonLogarithm(new Number\Number(1));
-        $number = $lg->divideBy(new Number\Number(2));
+        $lg = CommonLogarithm::of(Number\Number::of(1));
+        $number = $lg->divideBy(Number\Number::of(2));
 
         $this->assertInstanceOf(Division::class, $number);
         $this->assertSame(0.0, $number->value());
@@ -122,7 +122,7 @@ class CommonLogarithmTest extends TestCase
 
     public function testRound()
     {
-        $number = new CommonLogarithm(new Number\Number(1));
+        $number = CommonLogarithm::of(Number\Number::of(1));
 
         $this->assertEquals(Round::up($number, 2), $number->roundUp(2));
         $this->assertEquals(Round::down($number, 2), $number->roundDown(2));
@@ -132,7 +132,7 @@ class CommonLogarithmTest extends TestCase
 
     public function testFloor()
     {
-        $lg = new CommonLogarithm(new Number\Number(1));
+        $lg = CommonLogarithm::of(Number\Number::of(1));
         $number = $lg->floor();
 
         $this->assertInstanceOf(Floor::class, $number);
@@ -141,7 +141,7 @@ class CommonLogarithmTest extends TestCase
 
     public function testCeil()
     {
-        $lg = new CommonLogarithm(new Number\Number(1));
+        $lg = CommonLogarithm::of(Number\Number::of(1));
         $number = $lg->ceil();
 
         $this->assertInstanceOf(Ceil::class, $number);
@@ -150,7 +150,7 @@ class CommonLogarithmTest extends TestCase
 
     public function testAbsolute()
     {
-        $lg = new CommonLogarithm(new Number\Number(0.5));
+        $lg = CommonLogarithm::of(Number\Number::of(0.5));
         $number = $lg->absolute();
 
         $this->assertInstanceOf(Absolute::class, $number);
@@ -159,8 +159,8 @@ class CommonLogarithmTest extends TestCase
 
     public function testModulo()
     {
-        $lg = new CommonLogarithm(new Number\Number(1));
-        $number = $lg->modulo(new Number\Number(2));
+        $lg = CommonLogarithm::of(Number\Number::of(1));
+        $number = $lg->modulo(Number\Number::of(2));
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertSame(0.0, $number->value());
@@ -168,8 +168,8 @@ class CommonLogarithmTest extends TestCase
 
     public function testPower()
     {
-        $lg = new CommonLogarithm(new Number\Number(1));
-        $number = $lg->power(new Number\Number(2));
+        $lg = CommonLogarithm::of(Number\Number::of(1));
+        $number = $lg->power(Number\Number::of(2));
 
         $this->assertInstanceOf(Power::class, $number);
         $this->assertSame(0.0, $number->value());
@@ -177,7 +177,7 @@ class CommonLogarithmTest extends TestCase
 
     public function testSquareRoot()
     {
-        $lg = new CommonLogarithm(new Number\Number(1));
+        $lg = CommonLogarithm::of(Number\Number::of(1));
         $number = $lg->squareRoot();
 
         $this->assertInstanceOf(SquareRoot::class, $number);
@@ -186,7 +186,7 @@ class CommonLogarithmTest extends TestCase
 
     public function testExponential()
     {
-        $number = (new CommonLogarithm(new Number\Number(1)))->exponential();
+        $number = CommonLogarithm::of(Number\Number::of(1))->exponential();
 
         $this->assertInstanceOf(Exponential::class, $number);
         $this->assertSame(1.0, $number->value());
@@ -194,7 +194,7 @@ class CommonLogarithmTest extends TestCase
 
     public function testBinaryLogarithm()
     {
-        $number = (new CommonLogarithm(new Number\Number(2)))->binaryLogarithm();
+        $number = CommonLogarithm::of(Number\Number::of(2))->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
         $this->assertSame(\log(\log10(2), 2), $number->value());
@@ -202,7 +202,7 @@ class CommonLogarithmTest extends TestCase
 
     public function testNaturalLogarithm()
     {
-        $number = (new CommonLogarithm(new Number\Number(2)))->naturalLogarithm();
+        $number = CommonLogarithm::of(Number\Number::of(2))->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
         $this->assertSame(\log(\log10(2)), $number->value());
@@ -210,7 +210,7 @@ class CommonLogarithmTest extends TestCase
 
     public function testCommonLogarithm()
     {
-        $number = (new CommonLogarithm(new Number\Number(2)))->commonLogarithm();
+        $number = CommonLogarithm::of(Number\Number::of(2))->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
         $this->assertSame(\log10(\log10(2)), $number->value());
@@ -218,7 +218,7 @@ class CommonLogarithmTest extends TestCase
 
     public function testSignum()
     {
-        $number = (new CommonLogarithm(new Number\Number(2)))->signum();
+        $number = CommonLogarithm::of(Number\Number::of(2))->signum();
 
         $this->assertInstanceOf(Signum::class, $number);
         $this->assertSame(1, $number->value());
@@ -236,13 +236,13 @@ class CommonLogarithmTest extends TestCase
     {
         //lg(axb) === lg(a) + lg(b)
         $this->assertTrue(
-            (new CommonLogarithm(
-                ($a = new Number\Number(2))->multiplyBy(
-                    $b = new Number\Number(4),
+            CommonLogarithm::of(
+                ($a = Number\Number::of(2))->multiplyBy(
+                    $b = Number\Number::of(4),
                 ),
-            ))->equals(
-                (new CommonLogarithm($a))->add(
-                    new CommonLogarithm($b),
+            )->equals(
+                CommonLogarithm::of($a)->add(
+                    CommonLogarithm::of($b),
                 ),
             ),
         );
@@ -252,13 +252,13 @@ class CommonLogarithmTest extends TestCase
     {
         //lg(a/b) === lg(a) - lg(b)
         $this->assertTrue(
-            (new CommonLogarithm(
-                ($a = new Number\Number(2))->divideBy(
-                    $b = new Number\Number(4),
+            CommonLogarithm::of(
+                ($a = Number\Number::of(2))->divideBy(
+                    $b = Number\Number::of(4),
                 ),
-            ))->equals(
-                (new CommonLogarithm($a))->subtract(
-                    new CommonLogarithm($b),
+            )->equals(
+                CommonLogarithm::of($a)->subtract(
+                    CommonLogarithm::of($b),
                 ),
             ),
         );

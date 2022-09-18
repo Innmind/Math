@@ -15,9 +15,9 @@ class ComplexNumberTest extends TestCase
 {
     public function testInterface()
     {
-        $number = new ComplexNumber(
-            $real = new Integer(1),
-            $imaginary = new Integer(2),
+        $number = ComplexNumber::of(
+            $real = Integer::of(1),
+            $imaginary = Integer::of(2),
         );
 
         $this->assertSame($real, $number->real());
@@ -26,14 +26,14 @@ class ComplexNumberTest extends TestCase
 
     public function testStringCast()
     {
-        $number = new ComplexNumber(
-            new Integer(1),
-            new Integer(2),
+        $number = ComplexNumber::of(
+            Integer::of(1),
+            Integer::of(2),
         );
 
         $this->assertSame('(1 + 2i)', $number->toString());
 
-        $number = new ComplexNumber(
+        $number = ComplexNumber::of(
             add(1, 2),
             add(2, 3),
         );
@@ -43,12 +43,12 @@ class ComplexNumberTest extends TestCase
 
     public function testAdd()
     {
-        $number = (new ComplexNumber(
-            new Integer(2),
-            new Integer(3),
-        ))->add(new ComplexNumber(
-            new Integer(4),
-            new Integer(5),
+        $number = (ComplexNumber::of(
+            Integer::of(2),
+            Integer::of(3),
+        ))->add(ComplexNumber::of(
+            Integer::of(4),
+            Integer::of(5),
         ));
 
         $this->assertInstanceOf(ComplexNumber::class, $number);
@@ -58,12 +58,12 @@ class ComplexNumberTest extends TestCase
 
     public function testSubtract()
     {
-        $number = (new ComplexNumber(
-            new Integer(2),
-            new Integer(3),
-        ))->subtract(new ComplexNumber(
-            new Integer(4),
-            new Integer(5),
+        $number = (ComplexNumber::of(
+            Integer::of(2),
+            Integer::of(3),
+        ))->subtract(ComplexNumber::of(
+            Integer::of(4),
+            Integer::of(5),
         ));
 
         $this->assertInstanceOf(ComplexNumber::class, $number);
@@ -73,12 +73,12 @@ class ComplexNumberTest extends TestCase
 
     public function testMultiplyBy()
     {
-        $number = (new ComplexNumber(
-            new Integer(2),
-            new Integer(3),
-        ))->multiplyBy(new ComplexNumber(
-            new Integer(4),
-            new Integer(5),
+        $number = (ComplexNumber::of(
+            Integer::of(2),
+            Integer::of(3),
+        ))->multiplyBy(ComplexNumber::of(
+            Integer::of(4),
+            Integer::of(5),
         ));
 
         $this->assertInstanceOf(ComplexNumber::class, $number);
@@ -88,12 +88,12 @@ class ComplexNumberTest extends TestCase
 
     public function testDivideBy()
     {
-        $number = (new ComplexNumber(
-            new Integer(2),
-            new Integer(3),
-        ))->divideBy(new ComplexNumber(
-            new Integer(4),
-            new Integer(5),
+        $number = (ComplexNumber::of(
+            Integer::of(2),
+            Integer::of(3),
+        ))->divideBy(ComplexNumber::of(
+            Integer::of(4),
+            Integer::of(5),
         ));
 
         $this->assertInstanceOf(ComplexNumber::class, $number);
@@ -103,9 +103,9 @@ class ComplexNumberTest extends TestCase
 
     public function testConjugate()
     {
-        $number = new ComplexNumber(
-            new Integer(2),
-            new Integer(3),
+        $number = ComplexNumber::of(
+            Integer::of(2),
+            Integer::of(3),
         );
         $conjugate = $number->conjugate();
 
@@ -117,9 +117,9 @@ class ComplexNumberTest extends TestCase
 
     public function testAbsolute()
     {
-        $number = new ComplexNumber(
-            new Integer(2),
-            new Integer(3),
+        $number = ComplexNumber::of(
+            Integer::of(2),
+            Integer::of(3),
         );
         $absolute = $number->absolute();
 
@@ -129,9 +129,9 @@ class ComplexNumberTest extends TestCase
 
     public function testReciprocal()
     {
-        $number = new ComplexNumber(
-            new Integer(2),
-            new Integer(3),
+        $number = ComplexNumber::of(
+            Integer::of(2),
+            Integer::of(3),
         );
         $reciprocal = $number->reciprocal();
 
@@ -146,9 +146,9 @@ class ComplexNumberTest extends TestCase
 
     public function testNegate()
     {
-        $number = new ComplexNumber(
-            new Integer(2),
-            new Integer(3),
+        $number = ComplexNumber::of(
+            Integer::of(2),
+            Integer::of(3),
         );
         $negation = $number->negation();
 
@@ -160,9 +160,9 @@ class ComplexNumberTest extends TestCase
 
     public function testSquareRoot()
     {
-        $number = new ComplexNumber(
-            new Integer(3),
-            new Integer(4),
+        $number = ComplexNumber::of(
+            Integer::of(3),
+            Integer::of(4),
         );
         $squareRoot = $number->squareRoot();
 
@@ -179,22 +179,22 @@ class ComplexNumberTest extends TestCase
 
     public function testEquals()
     {
-        $number = new ComplexNumber(
-            new Integer(2),
-            new Integer(3),
+        $number = ComplexNumber::of(
+            Integer::of(2),
+            Integer::of(3),
         );
 
         $this->assertTrue($number->equals($number));
         $this->assertTrue($number->equals(
-            new ComplexNumber(
-                new Integer(2),
-                new Integer(3),
+            ComplexNumber::of(
+                Integer::of(2),
+                Integer::of(3),
             ),
         ));
         $this->assertFalse($number->equals(
-            new ComplexNumber(
-                new Integer(3),
-                new Integer(3),
+            ComplexNumber::of(
+                Integer::of(3),
+                Integer::of(3),
             ),
         ));
     }

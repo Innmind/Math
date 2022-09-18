@@ -15,18 +15,18 @@ class FrequenceTest extends TestCase
 {
     public function testInvokation()
     {
-        $frequence = new Frequence(
-            new Integer(1),
-            new Integer(2),
-            new Integer(2),
-            new Integer(1),
-            new Integer(3),
+        $frequence = Frequence::of(
+            Integer::of(1),
+            Integer::of(2),
+            Integer::of(2),
+            Integer::of(1),
+            Integer::of(3),
         );
 
-        $this->assertInstanceOf(Division::class, $frequence(new Integer(1)));
-        $this->assertInstanceOf(Division::class, $frequence(new Integer(4)));
-        $this->assertSame('2 ÷ 5', $frequence(new Integer(1))->toString());
-        $this->assertSame('0 ÷ 5', $frequence(new Integer(4))->toString());
+        $this->assertInstanceOf(Division::class, $frequence(Integer::of(1)));
+        $this->assertInstanceOf(Division::class, $frequence(Integer::of(4)));
+        $this->assertSame('2 ÷ 5', $frequence(Integer::of(1))->toString());
+        $this->assertSame('0 ÷ 5', $frequence(Integer::of(4))->toString());
         $this->assertInstanceOf(Number::class, $frequence->size());
         $this->assertSame(5, $frequence->size()->value());
     }

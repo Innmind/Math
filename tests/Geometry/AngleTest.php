@@ -16,10 +16,10 @@ class AngleTest extends TestCase
 {
     public function testInterface()
     {
-        $angle = new Angle(
-            $first = new Segment(new Integer(1)),
-            $degree = new Degree(new Integer(42)),
-            $second = new Segment(new Integer(1)),
+        $angle = Angle::of(
+            $first = Segment::of(Integer::of(1)),
+            $degree = Degree::of(Integer::of(42)),
+            $second = Segment::of(Integer::of(1)),
         );
 
         $this->assertSame($first, $angle->firstSegment());
@@ -29,10 +29,10 @@ class AngleTest extends TestCase
 
     public function testSum()
     {
-        $angle = new Angle(
-            new Segment(new Integer(5)),
-            new Degree(new Integer(49)),
-            new Segment(new Integer(7)),
+        $angle = Angle::of(
+            Segment::of(Integer::of(5)),
+            Degree::of(Integer::of(49)),
+            Segment::of(Integer::of(7)),
         );
         $segment = $angle->sum();
 
@@ -45,10 +45,10 @@ class AngleTest extends TestCase
 
     public function testScalarProduct()
     {
-        $angle = new Angle(
-            new Segment(new Integer(5)),
-            new Degree(new Integer(49)),
-            new Segment(new Integer(7)),
+        $angle = Angle::of(
+            Segment::of(Integer::of(5)),
+            Degree::of(Integer::of(49)),
+            Segment::of(Integer::of(7)),
         );
         $number = $angle->scalarProduct();
 

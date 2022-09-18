@@ -17,28 +17,28 @@ class PolynomTest extends TestCase
 {
     public function testImmutability()
     {
-        $p = new Polynom;
+        $p = Polynom::of();
 
         $this->assertNotSame(
             $p,
-            $p->withDegree(new Integer(1), new Integer(1)),
+            $p->withDegree(Integer::of(1), Integer::of(1)),
         );
     }
 
     public function testDegree()
     {
-        $p = (new Polynom(new Integer(0)))->withDegree(
-            new Integer(1),
-            new Integer(1),
+        $p = Polynom::of(Integer::of(0))->withDegree(
+            Integer::of(1),
+            Integer::of(1),
         );
 
         $this->assertTrue($p->hasDegree(1));
         $this->assertFalse($p->hasDegree(2));
         $this->assertInstanceOf(Degree::class, $p->degree(1));
 
-        $p = new Polynom(
+        $p = Polynom::of(
             null,
-            $d = new Degree(new Integer(1), new Integer(2)),
+            $d = Degree::of(Integer::of(1), Integer::of(2)),
         );
 
         $this->assertTrue($p->hasDegree(1));
@@ -47,7 +47,7 @@ class PolynomTest extends TestCase
 
     public function testThrowIfTryingToAccessUnknownDegree()
     {
-        $p = new Polynom;
+        $p = Polynom::of();
 
         $this->expectException(\LogicException::class);
 
@@ -56,7 +56,7 @@ class PolynomTest extends TestCase
 
     public function testIntercept()
     {
-        $p = new Polynom($intercept = new Integer(42));
+        $p = Polynom::of($intercept = Integer::of(42));
 
         $this->assertSame($intercept, $p->intercept());
         $this->assertSame(42, $p->intercept()->value());
@@ -64,82 +64,82 @@ class PolynomTest extends TestCase
 
     public function testCompute()
     {
-        $p = (new Polynom(new Integer(42)))
-            ->withDegree(new Integer(1), new Integer(2))
-            ->withDegree(new Integer(2), new Integer(1));
+        $p = Polynom::of(Integer::of(42))
+            ->withDegree(Integer::of(1), Integer::of(2))
+            ->withDegree(Integer::of(2), Integer::of(1));
 
-        $this->assertInstanceOf(Number::class, $p(new Integer(2)));
-        $this->assertSame(50, $p(new Integer(2))->value());
+        $this->assertInstanceOf(Number::class, $p(Integer::of(2)));
+        $this->assertSame(50, $p(Integer::of(2))->value());
     }
 
     public function testOnlyOneDegreePresentInAPolynom()
     {
-        $p = (new Polynom(new Integer(42)))
-            ->withDegree(new Integer(2), new Integer(2))
-            ->withDegree(new Integer(2), new Integer(3));
+        $p = Polynom::of(Integer::of(42))
+            ->withDegree(Integer::of(2), Integer::of(2))
+            ->withDegree(Integer::of(2), Integer::of(3));
 
-        $this->assertSame(54, $p(new Integer(2))->value());
+        $this->assertSame(54, $p(Integer::of(2))->value());
     }
 
     public function testDerived()
     {
-        $polynom = (new Polynom)
-            ->withDegree(new Integer(2), new Integer(1));
+        $polynom = Polynom::of()
+            ->withDegree(Integer::of(2), Integer::of(1));
 
         $this->assertInstanceOf(
             Number::class,
-            $polynom->derived(new Integer(2)),
+            $polynom->derived(Integer::of(2)),
         );
         $this->assertSame(
             4.000,
-            $polynom->derived(new Integer(2))->roundUp(3)->value(),
+            $polynom->derived(Integer::of(2))->roundUp(3)->value(),
         );
     }
 
     public function testTangent()
     {
-        $polynom = (new Polynom)
-            ->withDegree(new Integer(2), new Integer(1));
+        $polynom = Polynom::of()
+            ->withDegree(Integer::of(2), Integer::of(1));
 
         $this->assertInstanceOf(
             Tangent::class,
-            $polynom->tangent(new Integer(2)),
+            $polynom->tangent(Integer::of(2)),
         );
         $this->assertSame(
             $polynom,
             $polynom
-                ->tangent(new Integer(2))
+                ->tangent(Integer::of(2))
                 ->polynom(),
         );
         $this->assertSame(
             4.0,
-            $polynom->tangent(new Integer(2))(new Integer(2))->value(),
+            $polynom->tangent(Integer::of(2))(Integer::of(2))->value(),
         );
     }
 
     public function testStringCast()
     {
-        $polynom = (new Polynom(new Integer(42)))
-            ->withDegree(new Integer(2), new Integer(2))
-            ->withDegree(new Integer(1), new Integer(3))
-            ->withDegree(new Integer(3), new Integer(1));
+        $polynom = Polynom::of(Integer::of(42))
+            ->withDegree(Integer::of(2), Integer::of(2))
+            ->withDegree(Integer::of(1), Integer::of(3))
+            ->withDegree(Integer::of(3), Integer::of(1));
 
         $this->assertSame('1x^3 + 2x^2 + 3x + 42', $polynom->toString());
 
-        $polynom = (new Polynom)
-            ->withDegree(new Integer(2), new Integer(2))
-            ->withDegree(new Integer(1), new Integer(3))
-            ->withDegree(new Integer(3), new Integer(1));
+        $polynom = Polynom::of()
+            ->withDegree(Integer::of(2), Integer::of(2))
+            ->withDegree(Integer::of(1), Integer::of(3))
+            ->withDegree(Integer::of(3), Integer::of(1));
 
         $this->assertSame('1x^3 + 2x^2 + 3x', $polynom->toString());
     }
 
     public function testPrimitive()
     {
-        $polynom = (new Polynom(new Integer(42)))
-            ->withDegree(new Integer(2), new Integer(2))
-            ->withDegree(new Integer(1), new Integer(3))
-            ->withDegree(new Integer(3), new Integer(1));
+        $polynom = Polynom::of(Integer::of(42))
+            ->withDegree(Integer::of(2), Integer::of(2))
+            ->withDegree(Integer::of(1), Integer::of(3))
+            ->withDegree(Integer::of(3), Integer::of(1));
         $primitive = $polynom->primitive();
 
         $this->assertInstanceOf(Polynom::class, $primitive);
@@ -155,8 +155,8 @@ class PolynomTest extends TestCase
     {
         $this->assertSame(
             '(2 ÷ (2 + 1))x^3',
-            (new Polynom)
-                ->withDegree(new Integer(2), new Integer(2))
+            Polynom::of()
+                ->withDegree(Integer::of(2), Integer::of(2))
                 ->primitive()
                 ->toString(),
         );
@@ -164,10 +164,10 @@ class PolynomTest extends TestCase
 
     public function testDerivative()
     {
-        $polynom = (new Polynom)
-            ->withDegree(new Integer(1), new Integer(4))
-            ->withDegree(new Integer(2), new Integer(2))
-            ->withDegree(new Integer(3), new Integer(1));
+        $polynom = Polynom::of()
+            ->withDegree(Integer::of(1), Integer::of(4))
+            ->withDegree(Integer::of(2), Integer::of(2))
+            ->withDegree(Integer::of(3), Integer::of(1));
         $derivative = $polynom->derivative();
 
         $this->assertInstanceOf(Polynom::class, $derivative);
@@ -181,8 +181,8 @@ class PolynomTest extends TestCase
 
     public function testIntegral()
     {
-        $integral = (new Polynom)
-            ->withDegree(new Integer(2), new Integer(3))
+        $integral = Polynom::of()
+            ->withDegree(Integer::of(2), Integer::of(3))
             ->integral();
 
         $this->assertInstanceOf(Integral::class, $integral);

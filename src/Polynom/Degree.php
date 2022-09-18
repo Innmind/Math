@@ -22,7 +22,7 @@ final class Degree
     private Integer $degree;
     private Number $coeff;
 
-    public function __construct(Integer $degree, Number $coeff)
+    private function __construct(Integer $degree, Number $coeff)
     {
         $this->degree = $degree;
         $this->coeff = $coeff;
@@ -34,6 +34,14 @@ final class Degree
     public function __invoke(Number $x): Number
     {
         return $this->coeff->multiplyBy($x->power($this->degree));
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(Integer $degree, Number $coeff): self
+    {
+        return new self($degree, $coeff);
     }
 
     public function degree(): Integer
@@ -72,7 +80,7 @@ final class Degree
         $coeff = $this->coeff instanceof Operation ?
             '('.$this->coeff->toString().')' : $this->coeff->toString();
 
-        if ($this->degree->equals(new Integer(1))) {
+        if ($this->degree->equals(Integer::of(1))) {
             return $coeff.'x';
         }
 

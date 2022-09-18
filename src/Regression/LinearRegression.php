@@ -24,11 +24,11 @@ final class LinearRegression
     private Polynom $polynom;
     private Number $deviation;
 
-    public function __construct(Dataset $data)
+    private function __construct(Dataset $data)
     {
         [$slope, $intercept] = $this->compute($data);
-        $this->polynom = (new Polynom($intercept))->withDegree(
-            new Integer(1),
+        $this->polynom = Polynom::of($intercept)->withDegree(
+            Integer::of(1),
             $slope,
         );
         $this->deviation = $this->buildRmsd($data);
@@ -40,6 +40,14 @@ final class LinearRegression
     public function __invoke(Number $x): Number
     {
         return ($this->polynom)($x);
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(Dataset $data): self
+    {
+        return new self($data);
     }
 
     /**
@@ -79,8 +87,8 @@ final class LinearRegression
 
         $xSum = $data->abscissas()->sum();
         $ySum = $data->ordinates()->sum();
-        $xxSum = new Integer(0);
-        $xySum = new Integer(0);
+        $xxSum = Integer::of(0);
+        $xySum = Integer::of(0);
 
         for ($i = 0; $i < $elements; $i++) {
             $xySum = add($xySum, multiply($x[$i], $y[$i]));
@@ -94,7 +102,7 @@ final class LinearRegression
             ),
             subtract(
                 $dimension->multiplyBy($xxSum),
-                $xSum->power(new Integer(2)),
+                $xSum->power(Integer::of(2)),
             ),
         );
         $intercept = divide(
@@ -117,7 +125,7 @@ final class LinearRegression
 
         return $values
             ->subtract($estimated)
-            ->power(new Integer(2))
+            ->power(Integer::of(2))
             ->sum()
             ->divideBy(
                 $values->dimension(),

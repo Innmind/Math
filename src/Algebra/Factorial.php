@@ -12,13 +12,21 @@ final class Factorial implements Operation, Number
 {
     private int $value;
 
-    public function __construct(int $value)
+    private function __construct(int $value)
     {
         if ($value < 0) {
             throw new FactorialMustBePositive((string) $value);
         }
 
         $this->value = $value;
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(int $value): self
+    {
+        return new self($value);
     }
 
     public function value(): int|float
@@ -108,33 +116,33 @@ final class Factorial implements Operation, Number
 
     public function exponential(): Number
     {
-        return new Exponential($this);
+        return Exponential::of($this);
     }
 
     public function binaryLogarithm(): Number
     {
-        return new BinaryLogarithm($this);
+        return BinaryLogarithm::of($this);
     }
 
     public function naturalLogarithm(): Number
     {
-        return new NaturalLogarithm($this);
+        return NaturalLogarithm::of($this);
     }
 
     public function commonLogarithm(): Number
     {
-        return new CommonLogarithm($this);
+        return CommonLogarithm::of($this);
     }
 
     public function signum(): Number
     {
-        return new Signum($this);
+        return Signum::of($this);
     }
 
     public function result(): Number
     {
         if ($this->value < 2) {
-            return new Integer(1);
+            return Integer::of(1);
         }
 
         $factorial = $i = $this->value;

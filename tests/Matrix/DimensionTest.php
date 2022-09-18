@@ -14,7 +14,7 @@ class DimensionTest extends TestCase
 {
     public function testInterface()
     {
-        $dimension = new Dimension(new Integer(2), new Integer(3));
+        $dimension = Dimension::of(Integer::of(2), Integer::of(3));
 
         $this->assertInstanceOf(Integer::class, $dimension->rows());
         $this->assertInstanceOf(Integer::class, $dimension->columns());
@@ -27,32 +27,32 @@ class DimensionTest extends TestCase
     {
         $this->expectException(DimensionMustBePositive::class);
 
-        new Dimension(new Integer(-1), new Integer(1));
+        Dimension::of(Integer::of(-1), Integer::of(1));
     }
 
     public function testThrowWhenNegativeColumns()
     {
         $this->expectException(DimensionMustBePositive::class);
 
-        new Dimension(new Integer(1), new Integer(-1));
+        Dimension::of(Integer::of(1), Integer::of(-1));
     }
 
     public function testEquals()
     {
-        $dimension = new Dimension(new Integer(2), new Integer(3));
+        $dimension = Dimension::of(Integer::of(2), Integer::of(3));
 
         $this->assertTrue($dimension->equals($dimension));
         $this->assertTrue($dimension->equals(
-            new Dimension(new Integer(2), new Integer(3)),
+            Dimension::of(Integer::of(2), Integer::of(3)),
         ));
         $this->assertFalse($dimension->equals(
-            new Dimension(new Integer(1), new Integer(3)),
+            Dimension::of(Integer::of(1), Integer::of(3)),
         ));
         $this->assertFalse($dimension->equals(
-            new Dimension(new Integer(2), new Integer(2)),
+            Dimension::of(Integer::of(2), Integer::of(2)),
         ));
         $this->assertFalse($dimension->equals(
-            new Dimension(new Integer(1), new Integer(2)),
+            Dimension::of(Integer::of(1), Integer::of(2)),
         ));
     }
 }

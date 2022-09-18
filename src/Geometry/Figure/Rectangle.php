@@ -21,10 +21,18 @@ final class Rectangle implements Figure
     private Segment $length;
     private Segment $width;
 
-    public function __construct(Segment $length, Segment $width)
+    private function __construct(Segment $length, Segment $width)
     {
         $this->length = $length;
         $this->width = $width;
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(Segment $length, Segment $width): self
+    {
+        return new self($length, $width);
     }
 
     public function perimeter(): Number

@@ -15,7 +15,7 @@ class VarianceTest extends TestCase
 {
     public function testInvokation()
     {
-        $variance = new Variance(
+        $variance = Variance::of(
             Dataset::of([
                 [-1, divide(4, 6)],
                 [2, divide(1, 6)],

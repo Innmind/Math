@@ -29,7 +29,7 @@ class ExponentialTest extends TestCase
 {
     public function testInterface()
     {
-        $power = new Exponential(
+        $power = Exponential::of(
             $this->createMock(Number::class),
         );
 
@@ -39,8 +39,8 @@ class ExponentialTest extends TestCase
 
     public function testResult()
     {
-        $power = new Exponential(
-            new Number\Number(2.1),
+        $power = Exponential::of(
+            Number\Number::of(2.1),
         );
         $result = $power->result();
 
@@ -50,8 +50,8 @@ class ExponentialTest extends TestCase
 
     public function testStringCast()
     {
-        $power = new Exponential(
-            new Number\Number(2.1),
+        $power = Exponential::of(
+            Number\Number::of(2.1),
         );
 
         $this->assertSame('e^2.1', $power->toString());
@@ -59,10 +59,10 @@ class ExponentialTest extends TestCase
 
     public function testStringCastOperations()
     {
-        $power = new Exponential(
-            new Addition(
-                new Number\Number(2),
-                new Number\Number(2),
+        $power = Exponential::of(
+            Addition::of(
+                Number\Number::of(2),
+                Number\Number::of(2),
             ),
         );
 
@@ -71,30 +71,30 @@ class ExponentialTest extends TestCase
 
     public function testEquals()
     {
-        $power = new Exponential(
-            new Number\Number(2.1),
+        $power = Exponential::of(
+            Number\Number::of(2.1),
         );
 
-        $this->assertTrue($power->equals(new Number\Number(8.166169912567652)));
-        $this->assertFalse($power->equals(new Number\Number(8.16)));
+        $this->assertTrue($power->equals(Number\Number::of(8.166169912567652)));
+        $this->assertFalse($power->equals(Number\Number::of(8.16)));
     }
 
     public function testHigherThan()
     {
-        $power = new Exponential(
-            new Number\Number(2.1),
+        $power = Exponential::of(
+            Number\Number::of(2.1),
         );
 
-        $this->assertTrue($power->higherThan(new Number\Number(8.16)));
-        $this->assertFalse($power->higherThan(new Number\Number(8.166169912567652)));
+        $this->assertTrue($power->higherThan(Number\Number::of(8.16)));
+        $this->assertFalse($power->higherThan(Number\Number::of(8.166169912567652)));
     }
 
     public function testAdd()
     {
-        $power = new Exponential(
-            new Number\Number(2.1),
+        $power = Exponential::of(
+            Number\Number::of(2.1),
         );
-        $number = $power->add(new Number\Number(66));
+        $number = $power->add(Number\Number::of(66));
 
         $this->assertInstanceOf(Addition::class, $number);
         $this->assertSame(74.16616991256765, $number->value());
@@ -102,10 +102,10 @@ class ExponentialTest extends TestCase
 
     public function testSubtract()
     {
-        $power = new Exponential(
-            new Number\Number(2.1),
+        $power = Exponential::of(
+            Number\Number::of(2.1),
         );
-        $number = $power->subtract(new Number\Number(66));
+        $number = $power->subtract(Number\Number::of(66));
 
         $this->assertInstanceOf(Subtraction::class, $number);
         $this->assertSame(-57.83383008743235, $number->value());
@@ -113,10 +113,10 @@ class ExponentialTest extends TestCase
 
     public function testDivideBy()
     {
-        $power = new Exponential(
-            new Number\Number(2.1),
+        $power = Exponential::of(
+            Number\Number::of(2.1),
         );
-        $number = $power->divideBy(new Number\Number(2));
+        $number = $power->divideBy(Number\Number::of(2));
 
         $this->assertInstanceOf(Division::class, $number);
         $this->assertSame(4.083084956283826, $number->value());
@@ -124,10 +124,10 @@ class ExponentialTest extends TestCase
 
     public function testMulitplyBy()
     {
-        $power = new Exponential(
-            new Number\Number(2.1),
+        $power = Exponential::of(
+            Number\Number::of(2.1),
         );
-        $number = $power->multiplyBy(new Number\Number(2));
+        $number = $power->multiplyBy(Number\Number::of(2));
 
         $this->assertInstanceOf(Multiplication::class, $number);
         $this->assertSame(16.332339825135303, $number->value());
@@ -135,8 +135,8 @@ class ExponentialTest extends TestCase
 
     public function testRound()
     {
-        $number = new Exponential(
-            new Number\Number(2.1),
+        $number = Exponential::of(
+            Number\Number::of(2.1),
         );
 
         $this->assertEquals(Round::up($number, 2), $number->roundUp(2));
@@ -147,8 +147,8 @@ class ExponentialTest extends TestCase
 
     public function testFloor()
     {
-        $power = new Exponential(
-            new Number\Number(2.1),
+        $power = Exponential::of(
+            Number\Number::of(2.1),
         );
         $number = $power->floor();
 
@@ -158,8 +158,8 @@ class ExponentialTest extends TestCase
 
     public function testCeil()
     {
-        $power = new Exponential(
-            new Number\Number(2.1),
+        $power = Exponential::of(
+            Number\Number::of(2.1),
         );
         $number = $power->ceil();
 
@@ -169,10 +169,10 @@ class ExponentialTest extends TestCase
 
     public function testModulo()
     {
-        $power = new Exponential(
-            new Number\Number(2.1),
+        $power = Exponential::of(
+            Number\Number::of(2.1),
         );
-        $number = $power->modulo(new Number\Number(8));
+        $number = $power->modulo(Number\Number::of(8));
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertSame(0.16616991256765168, $number->value());
@@ -180,8 +180,8 @@ class ExponentialTest extends TestCase
 
     public function testAbsolute()
     {
-        $power = new Exponential(
-            new Number\Number(-2.1),
+        $power = Exponential::of(
+            Number\Number::of(-2.1),
         );
         $number = $power->absolute();
 
@@ -191,10 +191,10 @@ class ExponentialTest extends TestCase
 
     public function testPower()
     {
-        $power = new Exponential(
-            new Number\Number(2.1),
+        $power = Exponential::of(
+            Number\Number::of(2.1),
         );
-        $number = $power->power(new Number\Number(2));
+        $number = $power->power(Number\Number::of(2));
 
         $this->assertInstanceOf(Power::class, $number);
         $this->assertSame(66.68633104092517, $number->value());
@@ -202,8 +202,8 @@ class ExponentialTest extends TestCase
 
     public function testSquareRoot()
     {
-        $power = new Exponential(
-            new Number\Number(2.1),
+        $power = Exponential::of(
+            Number\Number::of(2.1),
         );
         $number = $power->squareRoot();
 
@@ -213,7 +213,7 @@ class ExponentialTest extends TestCase
 
     public function testExponential()
     {
-        $number = (new Exponential(new Number\Number(0)))->exponential();
+        $number = Exponential::of(Number\Number::of(0))->exponential();
 
         $this->assertInstanceOf(Exponential::class, $number);
         $this->assertSame(\exp(1), $number->value());
@@ -221,7 +221,7 @@ class ExponentialTest extends TestCase
 
     public function testBinaryLogarithm()
     {
-        $number = (new Exponential(new Number\Number(1)))->binaryLogarithm();
+        $number = Exponential::of(Number\Number::of(1))->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
         $this->assertSame(\log(\exp(1), 2), $number->value());
@@ -229,7 +229,7 @@ class ExponentialTest extends TestCase
 
     public function testNaturalLogarithm()
     {
-        $number = (new Exponential(new Number\Number(1)))->naturalLogarithm();
+        $number = Exponential::of(Number\Number::of(1))->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
         $this->assertSame(\log(\exp(1)), $number->value());
@@ -237,7 +237,7 @@ class ExponentialTest extends TestCase
 
     public function testCommonLogarithm()
     {
-        $number = (new Exponential(new Number\Number(1)))->commonLogarithm();
+        $number = Exponential::of(Number\Number::of(1))->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
         $this->assertSame(\log10(\exp(1)), $number->value());
@@ -245,7 +245,7 @@ class ExponentialTest extends TestCase
 
     public function testSignum()
     {
-        $number = (new Exponential(new Number\Number(1)))->signum();
+        $number = Exponential::of(Number\Number::of(1))->signum();
 
         $this->assertInstanceOf(Signum::class, $number);
         $this->assertSame(1, $number->value());

@@ -20,7 +20,7 @@ final class BinomialDistribution
 {
     private Number $probability;
 
-    public function __construct(Number $probability)
+    private function __construct(Number $probability)
     {
         $this->probability = $probability;
     }
@@ -28,7 +28,7 @@ final class BinomialDistribution
     public function __invoke(Integer $trials, Integer $success): Number
     {
         /** @psalm-suppress PossiblyInvalidArgument */
-        $errors = new Integer($trials->subtract($success)->value());
+        $errors = Integer::of($trials->subtract($success)->value());
         $coefficient = divide(
             $trials->factorial(),
             multiply(
@@ -42,5 +42,13 @@ final class BinomialDistribution
             $this->probability->power($success),
             subtract(1, $this->probability)->power($errors),
         );
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(Number $probability): self
+    {
+        return new self($probability);
     }
 }

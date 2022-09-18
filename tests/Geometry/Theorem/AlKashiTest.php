@@ -22,9 +22,9 @@ class AlKashiTest extends TestCase
     public function testSide()
     {
         $c = AlKashi::side(
-            new Segment(new Integer(5)),
-            new Degree(new Integer(49)),
-            new Segment(new Integer(7)),
+            Segment::of(Integer::of(5)),
+            Degree::of(Integer::of(49)),
+            Segment::of(Integer::of(7)),
         );
 
         $this->assertInstanceOf(Segment::class, $c);
@@ -41,9 +41,9 @@ class AlKashiTest extends TestCase
     public function testAngle()
     {
         $ab = AlKashi::angle(
-            new Segment(new Integer(6)),
-            new Segment(new Integer(7)),
-            new Segment(new Integer(8)),
+            Segment::of(Integer::of(6)),
+            Segment::of(Integer::of(7)),
+            Segment::of(Integer::of(8)),
         );
 
         $this->assertInstanceOf(Degree::class, $ab);
@@ -55,9 +55,9 @@ class AlKashiTest extends TestCase
         $this->expectException(SegmentsCannotBeJoined::class);
 
         AlKashi::angle(
-            new Segment(new Integer(1)),
-            new Segment(new Integer(42)),
-            new Segment(new Integer(20)),
+            Segment::of(Integer::of(1)),
+            Segment::of(Integer::of(42)),
+            Segment::of(Integer::of(20)),
         );
     }
 }

@@ -19,12 +19,20 @@ final class Circle implements Figure
     private Segment $radius;
     private Segment $diameter;
 
-    public function __construct(Segment $radius)
+    private function __construct(Segment $radius)
     {
         $this->radius = $radius;
-        $this->diameter = new Segment(
+        $this->diameter = Segment::of(
             multiply(2, $radius->length()),
         );
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(Segment $radius): self
+    {
+        return new self($radius);
     }
 
     public function perimeter(): Number

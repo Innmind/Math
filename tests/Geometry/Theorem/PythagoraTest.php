@@ -20,8 +20,8 @@ class PythagoraTest extends TestCase
     public function testHypotenuse()
     {
         $hypotenuse = Pythagora::hypotenuse(
-            new Segment(new Number(3)),
-            new Segment(new Number(2)),
+            Segment::of(Number::of(3)),
+            Segment::of(Number::of(2)),
         );
 
         $this->assertInstanceOf(Segment::class, $hypotenuse);
@@ -34,8 +34,8 @@ class PythagoraTest extends TestCase
     public function testAdjacentSide()
     {
         $side = Pythagora::adjacentSide(
-            new Segment(new Number(5)),
-            new Segment(new Number(2)),
+            Segment::of(Number::of(5)),
+            Segment::of(Number::of(2)),
         );
 
         $this->assertInstanceOf(Segment::class, $side);

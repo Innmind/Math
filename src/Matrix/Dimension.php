@@ -16,7 +16,7 @@ final class Dimension
     private Integer $rows;
     private Integer $columns;
 
-    public function __construct(Integer $rows, Integer $columns)
+    private function __construct(Integer $rows, Integer $columns)
     {
         $this->rows = $rows;
         $this->columns = $columns;
@@ -24,6 +24,14 @@ final class Dimension
         if ($rows->value() < 0 || $columns->value() < 0) {
             throw new DimensionMustBePositive($this->toString());
         }
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(Integer $rows, Integer $columns): self
+    {
+        return new self($rows, $columns);
     }
 
     public function rows(): Integer

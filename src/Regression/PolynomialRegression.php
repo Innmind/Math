@@ -21,7 +21,7 @@ final class PolynomialRegression
     private Polynom $polynom;
     private Number $deviation;
 
-    public function __construct(Dataset $dataset, Integer $degree)
+    private function __construct(Dataset $dataset, Integer $degree)
     {
         $matrix = $this->buildMatrix($dataset, $degree);
         $vector = $this->buildVector($dataset);
@@ -33,8 +33,8 @@ final class PolynomialRegression
             ->dot($vector)
             ->column(0);
 
-        $this->polynom = new Polynom($coefficients->get(0));
-        $zero = new Integer(0);
+        $this->polynom = Polynom::of($coefficients->get(0));
+        $zero = Integer::of(0);
         $degrees = $degree->value();
 
         for ($i = 1; $i <= $degrees; $i++) {
@@ -43,7 +43,7 @@ final class PolynomialRegression
             }
 
             $this->polynom = $this->polynom->withDegree(
-                new Integer($i),
+                Integer::of($i),
                 $coefficients->get($i),
             );
         }
@@ -54,6 +54,14 @@ final class PolynomialRegression
     public function __invoke(Number $x): Number
     {
         return ($this->polynom)($x);
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(Dataset $data, Integer $degree): self
+    {
+        return new self($data, $degree);
     }
 
     public function polynom(): Polynom
@@ -101,7 +109,7 @@ final class PolynomialRegression
 
         return $values
             ->subtract($estimated)
-            ->power(new Integer(2))
+            ->power(Integer::of(2))
             ->sum()
             ->divideBy(
                 $values->dimension(),

@@ -20,47 +20,47 @@ class SetTest extends TestCase
     {
         $this->assertInstanceOf(
             SetInterface::class,
-            new Set,
+            Set::of(),
         );
     }
 
     public function testStringCast()
     {
-        $this->assertSame('∅', (new Set)->toString());
-        $this->assertSame('{1;2}', (new Set(new Integer(1), new Integer(2)))->toString());
+        $this->assertSame('∅', Set::of()->toString());
+        $this->assertSame('{1;2}', Set::of(Integer::of(1), Integer::of(2))->toString());
     }
 
     public function testContains()
     {
-        $empty = new Set;
+        $empty = Set::of();
 
-        $this->assertFalse($empty->contains(new Number(0)));
-        $this->assertFalse($empty->contains(new Number(1)));
-        $this->assertFalse($empty->contains(new Number(-1)));
-        $this->assertFalse($empty->contains(new Number(-0.75)));
-        $this->assertFalse($empty->contains(new Number(0.75)));
+        $this->assertFalse($empty->contains(Number::of(0)));
+        $this->assertFalse($empty->contains(Number::of(1)));
+        $this->assertFalse($empty->contains(Number::of(-1)));
+        $this->assertFalse($empty->contains(Number::of(-0.75)));
+        $this->assertFalse($empty->contains(Number::of(0.75)));
 
-        $set = new Set(new Integer(1), new Integer(2));
+        $set = Set::of(Integer::of(1), Integer::of(2));
 
-        $this->assertTrue($set->contains(new Integer(1)));
-        $this->assertTrue($set->contains(new Integer(2)));
-        $this->assertFalse($set->contains(new Integer(3)));
-        $this->assertFalse($set->contains(new Integer(0)));
+        $this->assertTrue($set->contains(Integer::of(1)));
+        $this->assertTrue($set->contains(Integer::of(2)));
+        $this->assertFalse($set->contains(Integer::of(3)));
+        $this->assertFalse($set->contains(Integer::of(0)));
     }
 
     public function testAccept()
     {
-        $this->assertNull((new Set(new Integer(1)))->accept(new Integer(1)));
+        $this->assertNull(Set::of(Integer::of(1))->accept(Integer::of(1)));
 
         $this->expectException(OutOfDefinitionSet::class);
         $this->expectExceptionMessage('2 ∉ {1}');
 
-        (new Set(new Integer(1)))->accept(new Integer(2));
+        Set::of(Integer::of(1))->accept(Integer::of(2));
     }
 
     public function testUnion()
     {
-        $union = (new Set)->union(new Set);
+        $union = Set::of()->union(Set::of());
 
         $this->assertInstanceOf(Union::class, $union);
         $this->assertSame('∅∪∅', $union->toString());
@@ -68,7 +68,7 @@ class SetTest extends TestCase
 
     public function testIntersect()
     {
-        $intersection = (new Set)->intersect(new Set);
+        $intersection = Set::of()->intersect(Set::of());
 
         $this->assertInstanceOf(Intersection::class, $intersection);
         $this->assertSame('∅∩∅', $intersection->toString());

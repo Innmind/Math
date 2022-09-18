@@ -37,19 +37,19 @@ final class AlKashi
         $b = $b->length();
 
         $side = $a
-            ->power(new Integer(2))
+            ->power(Integer::of(2))
             ->add(
-                $b->power(new Integer(2)),
+                $b->power(Integer::of(2)),
             )
             ->subtract(
-                (new Integer(2))
+                Integer::of(2)
                     ->multiplyBy($a)
                     ->multiplyBy($b)
                     ->multiplyBy(cosine($degree)),
             )
             ->squareRoot();
 
-        return new Segment($side);
+        return Segment::of($side);
     }
 
     /**
@@ -76,11 +76,11 @@ final class AlKashi
         }
 
         $cosAB = $a
-            ->power(new Integer(2))
-            ->add($b->power(new Integer(2)))
-            ->subtract($c->power(new Integer(2)))
+            ->power(Integer::of(2))
+            ->add($b->power(Integer::of(2)))
+            ->subtract($c->power(Integer::of(2)))
             ->divideBy(
-                (new Integer(2))
+                Integer::of(2)
                     ->multiplyBy($a)
                     ->multiplyBy($b),
             );

@@ -78,7 +78,7 @@ class FunctionsTest extends TestCase
         $numbers = numerize(
             1,
             4.2,
-            $zero = new Number\Number(0),
+            $zero = Number\Number::of(0),
         );
 
         $this->assertCount(3, $numbers);
@@ -91,7 +91,7 @@ class FunctionsTest extends TestCase
 
     public function testAdd()
     {
-        $addition = add(1, 4.2, new Number\Number(0));
+        $addition = add(1, 4.2, Number\Number::of(0));
 
         $this->assertInstanceOf(Addition::class, $addition);
         $this->assertSame(5.2, $addition->value());
@@ -155,10 +155,10 @@ class FunctionsTest extends TestCase
 
     public function testRound()
     {
-        $this->assertEquals(Round::up(new Number\Number(4.85), 1), roundUp(4.85, 1));
-        $this->assertEquals(Round::down(new Number\Number(4.85), 1), roundDown(4.85, 1));
-        $this->assertEquals(Round::even(new Number\Number(4.85), 1), roundEven(4.85, 1));
-        $this->assertEquals(Round::odd(new Number\Number(4.85), 1), roundOdd(4.85, 1));
+        $this->assertEquals(Round::up(Number\Number::of(4.85), 1), roundUp(4.85, 1));
+        $this->assertEquals(Round::down(Number\Number::of(4.85), 1), roundDown(4.85, 1));
+        $this->assertEquals(Round::even(Number\Number::of(4.85), 1), roundEven(4.85, 1));
+        $this->assertEquals(Round::odd(Number\Number::of(4.85), 1), roundOdd(4.85, 1));
     }
 
     public function testSquareRoot()
@@ -244,19 +244,19 @@ class FunctionsTest extends TestCase
         $this->assertInstanceOf(Frequence::class, $frequence);
         $this->assertSame(
             divide(2, 6)->value(),
-            $frequence(new Number\Number(1))->value(),
+            $frequence(Number\Number::of(1))->value(),
         );
         $this->assertSame(
             divide(2, 6)->value(),
-            $frequence(new Number\Number(4))->value(),
+            $frequence(Number\Number::of(4))->value(),
         );
         $this->assertSame(
             divide(1, 6)->value(),
-            $frequence(new Number\Number(2))->value(),
+            $frequence(Number\Number::of(2))->value(),
         );
         $this->assertSame(
             divide(1, 6)->value(),
-            $frequence(new Number\Number(3))->value(),
+            $frequence(Number\Number::of(3))->value(),
         );
     }
 
@@ -290,15 +290,15 @@ class FunctionsTest extends TestCase
 
         $this->assertInstanceOf(Number::class, $int);
         $this->assertSame(6, $int->value());
-        $this->assertSame(24, factorial(new Integer(4))->value());
+        $this->assertSame(24, factorial(Integer::of(4))->value());
     }
 
     public function testMax()
     {
         $number = maximum(
             1,
-            new Number\Number(2),
-            $expected = new Number\Number(4),
+            Number\Number::of(2),
+            $expected = Number\Number::of(4),
             3,
         );
 
@@ -309,8 +309,8 @@ class FunctionsTest extends TestCase
     {
         $number = minimum(
             2,
-            $expected = new Number\Number(1),
-            new Number\Number(4),
+            $expected = Number\Number::of(1),
+            Number\Number::of(4),
             3,
         );
 
@@ -367,12 +367,12 @@ class FunctionsTest extends TestCase
 
     public function testToRadian()
     {
-        $radian = new Radian(new Number\Number(1));
+        $radian = Radian::of(Number\Number::of(1));
 
         $this->assertSame($radian, toRadian($radian));
         $this->assertEquals($radian, toRadian(1));
 
-        $degree = new Degree(new Number\Number(90));
+        $degree = Degree::of(Number\Number::of(90));
 
         $this->assertEquals($degree->toRadian(), toRadian($degree));
     }
@@ -382,9 +382,9 @@ class FunctionsTest extends TestCase
         return [
             [divide(squareRoot(3), 2), 30],
             [divide(squareRoot(3), 2), 30.0],
-            [divide(squareRoot(3), 2), new Number\Number(30)],
-            [divide(squareRoot(3), 2), new Degree(new Number\Number(30))],
-            [divide(squareRoot(3), 2), (new Degree(new Number\Number(30)))->toRadian()],
+            [divide(squareRoot(3), 2), Number\Number::of(30)],
+            [divide(squareRoot(3), 2), Degree::of(Number\Number::of(30))],
+            [divide(squareRoot(3), 2), (Degree::of(Number\Number::of(30)))->toRadian()],
         ];
     }
 
@@ -393,14 +393,14 @@ class FunctionsTest extends TestCase
         return [
             [divide(squareRoot(3), 2), 60],
             [divide(squareRoot(3), 2), 60.0],
-            [divide(squareRoot(3), 2), new Number\Number(60)],
-            [divide(squareRoot(3), 2), new Degree(new Number\Number(60))],
-            [divide(squareRoot(3), 2), (new Degree(new Number\Number(60)))->toRadian()],
-            [new Number\Number(0.5), 30],
-            [new Number\Number(0.5), 30.0],
-            [new Number\Number(0.5), new Number\Number(30)],
-            [new Number\Number(0.5), new Degree(new Number\Number(30))],
-            [new Number\Number(0.5), (new Degree(new Number\Number(30)))->toRadian()],
+            [divide(squareRoot(3), 2), Number\Number::of(60)],
+            [divide(squareRoot(3), 2), Degree::of(Number\Number::of(60))],
+            [divide(squareRoot(3), 2), (Degree::of(Number\Number::of(60)))->toRadian()],
+            [Number\Number::of(0.5), 30],
+            [Number\Number::of(0.5), 30.0],
+            [Number\Number::of(0.5), Number\Number::of(30)],
+            [Number\Number::of(0.5), Degree::of(Number\Number::of(30))],
+            [Number\Number::of(0.5), (Degree::of(Number\Number::of(30)))->toRadian()],
         ];
     }
 

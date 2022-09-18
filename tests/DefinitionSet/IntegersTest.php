@@ -33,20 +33,20 @@ class IntegersTest extends TestCase
     {
         $set = new Integers;
 
-        $this->assertTrue($set->contains(new Integer(1)));
-        $this->assertTrue($set->contains(new Integer(-1)));
-        $this->assertTrue($set->contains(new Integer(0)));
-        $this->assertFalse($set->contains(new Number(0.75)));
+        $this->assertTrue($set->contains(Integer::of(1)));
+        $this->assertTrue($set->contains(Integer::of(-1)));
+        $this->assertTrue($set->contains(Integer::of(0)));
+        $this->assertFalse($set->contains(Number::of(0.75)));
     }
 
     public function testAccept()
     {
-        $this->assertNull((new Integers)->accept(new Integer(1)));
+        $this->assertNull((new Integers)->accept(Integer::of(1)));
 
         $this->expectException(OutOfDefinitionSet::class);
         $this->expectExceptionMessage('0.1 ∉ ℤ');
 
-        (new Integers)->accept(new Number(0.1));
+        (new Integers)->accept(Number::of(0.1));
     }
 
     public function testUnion()

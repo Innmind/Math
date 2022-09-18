@@ -39,20 +39,20 @@ class ETest extends TestCase
 
     public function testEquals()
     {
-        $this->assertTrue((new E)->equals(new Number\Number(\M_E)));
-        $this->assertFalse((new E)->equals(new Number\Number(2.718)));
+        $this->assertTrue((new E)->equals(Number\Number::of(\M_E)));
+        $this->assertFalse((new E)->equals(Number\Number::of(2.718)));
     }
 
     public function testHigherThan()
     {
-        $this->assertTrue((new E)->higherThan(new Number\Number(2.718)));
-        $this->assertFalse((new E)->higherThan(new Number\Number(\M_E)));
+        $this->assertTrue((new E)->higherThan(Number\Number::of(2.718)));
+        $this->assertFalse((new E)->higherThan(Number\Number::of(\M_E)));
     }
 
     public function testAdd()
     {
         $number = new E;
-        $number = $number->add(new Number\Number(66));
+        $number = $number->add(Number\Number::of(66));
 
         $this->assertInstanceOf(Addition::class, $number);
         $this->assertSame(68.71828182845904, $number->value());
@@ -61,7 +61,7 @@ class ETest extends TestCase
     public function testSubtract()
     {
         $number = new E;
-        $number = $number->subtract(new Number\Number(2));
+        $number = $number->subtract(Number\Number::of(2));
 
         $this->assertInstanceOf(Subtraction::class, $number);
         $this->assertSame(0.7182818284590451, $number->value());
@@ -70,7 +70,7 @@ class ETest extends TestCase
     public function testDivideBy()
     {
         $number = new E;
-        $number = $number->divideBy(new Number\Number(2));
+        $number = $number->divideBy(Number\Number::of(2));
 
         $this->assertInstanceOf(Division::class, $number);
         $this->assertSame(\M_E / 2, $number->value());
@@ -79,7 +79,7 @@ class ETest extends TestCase
     public function testMulitplyBy()
     {
         $number = new E;
-        $number = $number->multiplyBy(new Number\Number(2));
+        $number = $number->multiplyBy(Number\Number::of(2));
 
         $this->assertInstanceOf(Multiplication::class, $number);
         $this->assertSame(\M_E * 2, $number->value());
@@ -116,7 +116,7 @@ class ETest extends TestCase
     public function testModulo()
     {
         $number = new E;
-        $number = $number->modulo(new Number\Number(2));
+        $number = $number->modulo(Number\Number::of(2));
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertSame(0.7182818284590451, $number->value());
@@ -134,7 +134,7 @@ class ETest extends TestCase
     public function testPower()
     {
         $number = new E;
-        $number = $number->power(new Number\Number(2));
+        $number = $number->power(Number\Number::of(2));
 
         $this->assertInstanceOf(Power::class, $number);
         $this->assertEqualsWithDelta(\exp(2), $number->value(), 0.00000000000001);

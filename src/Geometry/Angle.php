@@ -22,7 +22,7 @@ final class Angle
     private Segment $secondSegment;
     private Degree $degree;
 
-    public function __construct(
+    private function __construct(
         Segment $firstSegment,
         Degree $degree,
         Segment $secondSegment,
@@ -30,6 +30,17 @@ final class Angle
         $this->firstSegment = $firstSegment;
         $this->secondSegment = $secondSegment;
         $this->degree = $degree;
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(
+        Segment $firstSegment,
+        Degree $degree,
+        Segment $secondSegment,
+    ): self {
+        return new self($firstSegment, $degree, $secondSegment);
     }
 
     public function firstSegment(): Segment

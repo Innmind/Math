@@ -10,9 +10,17 @@ final class Exponential implements Operation, Number
 {
     private Number $power;
 
-    public function __construct(Number $power)
+    private function __construct(Number $power)
     {
         $this->power = $power;
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(Number $power): self
+    {
+        return new self($power);
     }
 
     public function result(): Number
@@ -37,22 +45,22 @@ final class Exponential implements Operation, Number
 
     public function add(Number $number, Number ...$numbers): Number
     {
-        return new Addition($this, $number, ...$numbers);
+        return Addition::of($this, $number, ...$numbers);
     }
 
     public function subtract(Number $number, Number ...$numbers): Number
     {
-        return new Subtraction($this, $number, ...$numbers);
+        return Subtraction::of($this, $number, ...$numbers);
     }
 
     public function divideBy(Number $number): Number
     {
-        return new Division($this, $number);
+        return Division::of($this, $number);
     }
 
     public function multiplyBy(Number $number, Number ...$numbers): Number
     {
-        return new Multiplication($this, $number, ...$numbers);
+        return Multiplication::of($this, $number, ...$numbers);
     }
 
     public function roundUp(int $precision = 0): Number
@@ -77,32 +85,32 @@ final class Exponential implements Operation, Number
 
     public function floor(): Number
     {
-        return new Floor($this);
+        return Floor::of($this);
     }
 
     public function ceil(): Number
     {
-        return new Ceil($this);
+        return Ceil::of($this);
     }
 
     public function modulo(Number $modulus): Number
     {
-        return new Modulo($this, $modulus);
+        return Modulo::of($this, $modulus);
     }
 
     public function absolute(): Number
     {
-        return new Absolute($this);
+        return Absolute::of($this);
     }
 
     public function power(Number $power): Number
     {
-        return new Power($this, $power);
+        return Power::of($this, $power);
     }
 
     public function squareRoot(): Number
     {
-        return new SquareRoot($this);
+        return SquareRoot::of($this);
     }
 
     public function exponential(): self
@@ -112,22 +120,22 @@ final class Exponential implements Operation, Number
 
     public function binaryLogarithm(): Number
     {
-        return new BinaryLogarithm($this);
+        return BinaryLogarithm::of($this);
     }
 
     public function naturalLogarithm(): Number
     {
-        return new NaturalLogarithm($this);
+        return NaturalLogarithm::of($this);
     }
 
     public function commonLogarithm(): Number
     {
-        return new CommonLogarithm($this);
+        return CommonLogarithm::of($this);
     }
 
     public function signum(): Number
     {
-        return new Signum($this);
+        return Signum::of($this);
     }
 
     public function collapse(): Number

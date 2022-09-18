@@ -165,8 +165,8 @@ class MatrixTest extends TestCase
     public function testInitialize()
     {
         $matrix = Matrix::initialize(
-            new Dimension(new Integer(3), new Integer(2)),
-            new Number(4.2),
+            Dimension::of(Integer::of(3), Integer::of(2)),
+            Number::of(4.2),
         );
 
         $this->assertInstanceOf(Matrix::class, $matrix);
@@ -329,7 +329,7 @@ class MatrixTest extends TestCase
             [1, 0, -1],
             [2, 3, 4],
         ]);
-        $result = $matrix->multiplyBy(new Integer(3));
+        $result = $matrix->multiplyBy(Integer::of(3));
 
         $this->assertInstanceOf(Matrix::class, $result);
         $this->assertNotSame($matrix, $result);

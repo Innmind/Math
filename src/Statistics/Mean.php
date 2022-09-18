@@ -17,11 +17,19 @@ final class Mean implements Number
 {
     private Number $result;
 
-    public function __construct(Number $first, Number ...$values)
+    private function __construct(Number $first, Number ...$values)
     {
         $sequence = Sequence::of($first, ...$values);
         $sum = add($first, ...$values);
-        $this->result = $sum->divideBy(new Number\Number($sequence->size()));
+        $this->result = $sum->divideBy(Number\Number::of($sequence->size()));
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(Number $first, Number ...$values): self
+    {
+        return new self($first, ...$values);
     }
 
     public function result(): Number

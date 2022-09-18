@@ -20,7 +20,7 @@ class RangeTest extends TestCase
     {
         $this->assertInstanceOf(
             Set::class,
-            Range::inclusive(new Integer(1), new Integer(2)),
+            Range::inclusive(Integer::of(1), Integer::of(2)),
         );
     }
 
@@ -28,17 +28,17 @@ class RangeTest extends TestCase
     {
         $this->assertSame(
             '[1;2]',
-            Range::inclusive(new Integer(1), new Integer(2))->toString(),
+            Range::inclusive(Integer::of(1), Integer::of(2))->toString(),
         );
         $this->assertSame(
             ']1;2[',
-            Range::exclusive(new Integer(1), new Integer(2))->toString(),
+            Range::exclusive(Integer::of(1), Integer::of(2))->toString(),
         );
         $this->assertSame(
             '[1;2[',
             Range::inclusive(
-                new Integer(1),
-                new Integer(2),
+                Integer::of(1),
+                Integer::of(2),
             )
                 ->excludeUpperBound()
                 ->toString(),
@@ -46,8 +46,8 @@ class RangeTest extends TestCase
         $this->assertSame(
             ']1;2]',
             Range::inclusive(
-                new Integer(1),
-                new Integer(2),
+                Integer::of(1),
+                Integer::of(2),
             )
                 ->excludeLowerBound()
                 ->toString(),
@@ -56,38 +56,38 @@ class RangeTest extends TestCase
 
     public function testContains()
     {
-        $inclusive = Range::inclusive(new Integer(1), new Integer(2));
+        $inclusive = Range::inclusive(Integer::of(1), Integer::of(2));
 
-        $this->assertTrue($inclusive->contains(new Number(1)));
-        $this->assertTrue($inclusive->contains(new Number(1.5)));
-        $this->assertTrue($inclusive->contains(new Number(2)));
-        $this->assertFalse($inclusive->contains(new Number(0)));
-        $this->assertFalse($inclusive->contains(new Number(2.1)));
+        $this->assertTrue($inclusive->contains(Number::of(1)));
+        $this->assertTrue($inclusive->contains(Number::of(1.5)));
+        $this->assertTrue($inclusive->contains(Number::of(2)));
+        $this->assertFalse($inclusive->contains(Number::of(0)));
+        $this->assertFalse($inclusive->contains(Number::of(2.1)));
 
-        $exclusive = Range::exclusive(new Integer(1), new Integer(2));
+        $exclusive = Range::exclusive(Integer::of(1), Integer::of(2));
 
-        $this->assertTrue($exclusive->contains(new Number(1.5)));
-        $this->assertFalse($exclusive->contains(new Number(1)));
-        $this->assertFalse($exclusive->contains(new Number(2)));
-        $this->assertFalse($exclusive->contains(new Number(0)));
-        $this->assertFalse($exclusive->contains(new Number(2.1)));
+        $this->assertTrue($exclusive->contains(Number::of(1.5)));
+        $this->assertFalse($exclusive->contains(Number::of(1)));
+        $this->assertFalse($exclusive->contains(Number::of(2)));
+        $this->assertFalse($exclusive->contains(Number::of(0)));
+        $this->assertFalse($exclusive->contains(Number::of(2.1)));
     }
 
     public function testAccept()
     {
-        $set = Range::inclusive(new Integer(1), new Integer(2));
+        $set = Range::inclusive(Integer::of(1), Integer::of(2));
 
-        $this->assertNull($set->accept(new Integer(1)));
+        $this->assertNull($set->accept(Integer::of(1)));
 
         $this->expectException(OutOfDefinitionSet::class);
         $this->expectExceptionMessage('0.1 ∉ [1;2]');
 
-        $set->accept(new Number(0.1));
+        $set->accept(Number::of(0.1));
     }
 
     public function testUnion()
     {
-        $range = Range::inclusive(new Integer(1), new Integer(2));
+        $range = Range::inclusive(Integer::of(1), Integer::of(2));
         $union = $range->union($range);
 
         $this->assertInstanceOf(Union::class, $union);
@@ -96,7 +96,7 @@ class RangeTest extends TestCase
 
     public function testIntersect()
     {
-        $range = Range::inclusive(new Integer(1), new Integer(2));
+        $range = Range::inclusive(Integer::of(1), Integer::of(2));
         $intersection = $range->intersect($range);
 
         $this->assertInstanceOf(Intersection::class, $intersection);

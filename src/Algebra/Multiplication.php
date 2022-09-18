@@ -18,7 +18,7 @@ final class Multiplication implements Operation, Number
     /** @var Sequence<Number> */
     private Sequence $values;
 
-    public function __construct(
+    private function __construct(
         Number $first,
         Number $second,
         Number ...$values,
@@ -26,6 +26,17 @@ final class Multiplication implements Operation, Number
         $this->first = $first;
         $this->second = $second;
         $this->values = Sequence::of($first, $second, ...$values);
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(
+        Number $first,
+        Number $second,
+        Number ...$values,
+    ): self {
+        return new self($first, $second, ...$values);
     }
 
     public function value(): int|float
@@ -45,17 +56,17 @@ final class Multiplication implements Operation, Number
 
     public function add(Number $number, Number ...$numbers): Number
     {
-        return new Addition($this, $number, ...$numbers);
+        return Addition::of($this, $number, ...$numbers);
     }
 
     public function subtract(Number $number, Number ...$numbers): Number
     {
-        return new Subtraction($this, $number, ...$numbers);
+        return Subtraction::of($this, $number, ...$numbers);
     }
 
     public function divideBy(Number $number): Number
     {
-        return new Division($this, $number);
+        return Division::of($this, $number);
     }
 
     public function multiplyBy(Number $number, Number ...$numbers): self
@@ -85,57 +96,57 @@ final class Multiplication implements Operation, Number
 
     public function floor(): Number
     {
-        return new Floor($this);
+        return Floor::of($this);
     }
 
     public function ceil(): Number
     {
-        return new Ceil($this);
+        return Ceil::of($this);
     }
 
     public function modulo(Number $modulus): Number
     {
-        return new Modulo($this, $modulus);
+        return Modulo::of($this, $modulus);
     }
 
     public function absolute(): Number
     {
-        return new Absolute($this);
+        return Absolute::of($this);
     }
 
     public function power(Number $power): Number
     {
-        return new Power($this, $power);
+        return Power::of($this, $power);
     }
 
     public function squareRoot(): Number
     {
-        return new SquareRoot($this);
+        return SquareRoot::of($this);
     }
 
     public function exponential(): Number
     {
-        return new Exponential($this);
+        return Exponential::of($this);
     }
 
     public function binaryLogarithm(): Number
     {
-        return new BinaryLogarithm($this);
+        return BinaryLogarithm::of($this);
     }
 
     public function naturalLogarithm(): Number
     {
-        return new NaturalLogarithm($this);
+        return NaturalLogarithm::of($this);
     }
 
     public function commonLogarithm(): Number
     {
-        return new CommonLogarithm($this);
+        return CommonLogarithm::of($this);
     }
 
     public function signum(): Number
     {
-        return new Signum($this);
+        return Signum::of($this);
     }
 
     public function product(): Number

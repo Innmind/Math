@@ -21,10 +21,10 @@ final class Frequence
     /**
      * @no-named-arguments
      */
-    public function __construct(Number ...$values)
+    private function __construct(Number ...$values)
     {
         $this->values = Sequence::of(...$values);
-        $this->size = new Number\Number($this->values->size());
+        $this->size = Number\Number::of($this->values->size());
     }
 
     public function __invoke(Number $number): Number
@@ -36,7 +36,16 @@ final class Frequence
             })
             ->size();
 
-        return new Division(new Number\Number($frequence), $this->size);
+        return Division::of(Number\Number::of($frequence), $this->size);
+    }
+
+    /**
+     * @psalm-pure
+     * @no-named-arguments
+     */
+    public static function of(Number ...$values): self
+    {
+        return new self(...$values);
     }
 
     public function size(): Number

@@ -30,7 +30,7 @@ final class Triangle implements Figure
     /** @psalm-suppress PropertyNotSetInConstructor */
     private Segment $base;
 
-    public function __construct(
+    private function __construct(
         Segment $a,
         Segment $b,
         Segment $c,
@@ -54,10 +54,21 @@ final class Triangle implements Figure
                 break;
         }
 
-        $this->height = new Segment(multiply(
+        $this->height = Segment::of(multiply(
             2,
             divide($this->area(), $base),
         ));
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(
+        Segment $a,
+        Segment $b,
+        Segment $c,
+    ): self {
+        return new self($a, $b, $c);
     }
 
     public function perimeter(): Number
@@ -68,7 +79,7 @@ final class Triangle implements Figure
     public function area(): Number
     {
         //Heron's formula
-        $p = $this->perimeter()->divideBy(new Integer(2));
+        $p = $this->perimeter()->divideBy(Integer::of(2));
 
         return squareRoot(
             multiply(

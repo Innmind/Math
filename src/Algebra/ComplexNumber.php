@@ -20,10 +20,18 @@ final class ComplexNumber
     private Number $real;
     private Number $imaginary;
 
-    public function __construct(Number $real, Number $imaginary)
+    private function __construct(Number $real, Number $imaginary)
     {
         $this->real = $real;
         $this->imaginary = $imaginary;
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(Number $real, Number $imaginary): self
+    {
+        return new self($real, $imaginary);
     }
 
     public function real(): Number

@@ -29,7 +29,7 @@ class RoundTest extends TestCase
 {
     public function testInterface()
     {
-        $round = Round::up(new Number\Number(42.42));
+        $round = Round::up(Number\Number::of(42.42));
 
         $this->assertInstanceOf(Number::class, $round);
     }
@@ -38,7 +38,7 @@ class RoundTest extends TestCase
     {
         $this->expectException(PrecisionMustBePositive::class);
 
-        Round::up(new Number\Number(42), -1);
+        Round::up(Number\Number::of(42), -1);
     }
 
     /**
@@ -46,7 +46,7 @@ class RoundTest extends TestCase
      */
     public function testValue($number, $expected, $precision, $mode)
     {
-        $round = Round::$mode(new Number\Number($number), $precision);
+        $round = Round::$mode(Number\Number::of($number), $precision);
 
         $this->assertSame($expected, $round->value());
     }
@@ -55,33 +55,33 @@ class RoundTest extends TestCase
     {
         $this->assertSame(
             '42.5',
-            (Round::up(new Number\Number(42.45), 1))->toString(),
+            (Round::up(Number\Number::of(42.45), 1))->toString(),
         );
     }
 
     public function testEquals()
     {
-        $round = Round::up(new Number\Number(42.45), 1);
+        $round = Round::up(Number\Number::of(42.45), 1);
 
-        $this->assertTrue($round->equals(new Number\Number(42.5)));
-        $this->assertTrue($round->equals(new Number\Number(
+        $this->assertTrue($round->equals(Number\Number::of(42.5)));
+        $this->assertTrue($round->equals(Number\Number::of(
             42.499999999999999, # with a precision over 14 digits php will round it
         )));
-        $this->assertFalse($round->equals(new Number\Number(42)));
+        $this->assertFalse($round->equals(Number\Number::of(42)));
     }
 
     public function testHigherThan()
     {
-        $round = Round::up(new Number\Number(42.45), 1);
+        $round = Round::up(Number\Number::of(42.45), 1);
 
-        $this->assertTrue($round->higherThan(new Number\Number(42.4)));
-        $this->assertFalse($round->higherThan(new Number\Number(42.5)));
+        $this->assertTrue($round->higherThan(Number\Number::of(42.4)));
+        $this->assertFalse($round->higherThan(Number\Number::of(42.5)));
     }
 
     public function testAdd()
     {
-        $round = Round::up(new Number\Number(42.5));
-        $number = $round->add(new Number\Number(7));
+        $round = Round::up(Number\Number::of(42.5));
+        $number = $round->add(Number\Number::of(7));
 
         $this->assertInstanceOf(Addition::class, $number);
         $this->assertSame(50.0, $number->value());
@@ -89,8 +89,8 @@ class RoundTest extends TestCase
 
     public function testSubtract()
     {
-        $round = Round::up(new Number\Number(42.5));
-        $number = $round->subtract(new Number\Number(7));
+        $round = Round::up(Number\Number::of(42.5));
+        $number = $round->subtract(Number\Number::of(7));
 
         $this->assertInstanceOf(Subtraction::class, $number);
         $this->assertSame(36.0, $number->value());
@@ -98,8 +98,8 @@ class RoundTest extends TestCase
 
     public function testMultiplication()
     {
-        $round = Round::up(new Number\Number(42.5));
-        $number = $round->multiplyBy(new Number\Number(2));
+        $round = Round::up(Number\Number::of(42.5));
+        $number = $round->multiplyBy(Number\Number::of(2));
 
         $this->assertInstanceOf(Multiplication::class, $number);
         $this->assertSame(86.0, $number->value());
@@ -107,8 +107,8 @@ class RoundTest extends TestCase
 
     public function testDivision()
     {
-        $round = Round::up(new Number\Number(42.5));
-        $number = $round->divideBy(new Number\Number(2));
+        $round = Round::up(Number\Number::of(42.5));
+        $number = $round->divideBy(Number\Number::of(2));
 
         $this->assertInstanceOf(Division::class, $number);
         $this->assertSame(21.5, $number->value());
@@ -116,7 +116,7 @@ class RoundTest extends TestCase
 
     public function testRound()
     {
-        $number = Round::up(new Number\Number(42.45), 1);
+        $number = Round::up(Number\Number::of(42.45), 1);
 
         $this->assertEquals(Round::up($number, 2), $number->roundUp(2));
         $this->assertEquals(Round::down($number, 2), $number->roundDown(2));
@@ -126,7 +126,7 @@ class RoundTest extends TestCase
 
     public function testFloor()
     {
-        $round = Round::up(new Number\Number(42.45), 1);
+        $round = Round::up(Number\Number::of(42.45), 1);
         $number = $round->floor();
 
         $this->assertInstanceOf(Floor::class, $number);
@@ -135,7 +135,7 @@ class RoundTest extends TestCase
 
     public function testCeil()
     {
-        $round = Round::up(new Number\Number(42.45), 1);
+        $round = Round::up(Number\Number::of(42.45), 1);
         $number = $round->ceil();
 
         $this->assertInstanceOf(Ceil::class, $number);
@@ -144,8 +144,8 @@ class RoundTest extends TestCase
 
     public function testModulo()
     {
-        $round = Round::up(new Number\Number(42.45), 1);
-        $number = $round->modulo(new Number\Number(21));
+        $round = Round::up(Number\Number::of(42.45), 1);
+        $number = $round->modulo(Number\Number::of(21));
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertSame(0.5, $number->value());
@@ -153,7 +153,7 @@ class RoundTest extends TestCase
 
     public function testAbsolute()
     {
-        $round = Round::up(new Number\Number(-42.45), 1);
+        $round = Round::up(Number\Number::of(-42.45), 1);
         $number = $round->absolute();
 
         $this->assertInstanceOf(Absolute::class, $number);
@@ -162,8 +162,8 @@ class RoundTest extends TestCase
 
     public function testPower()
     {
-        $round = Round::up(new Number\Number(2.45), 1);
-        $number = $round->power(new Number\Number(2));
+        $round = Round::up(Number\Number::of(2.45), 1);
+        $number = $round->power(Number\Number::of(2));
 
         $this->assertInstanceOf(Power::class, $number);
         $this->assertSame(6.25, $number->value());
@@ -171,7 +171,7 @@ class RoundTest extends TestCase
 
     public function testSquareRoot()
     {
-        $round = Round::up(new Number\Number(4.3));
+        $round = Round::up(Number\Number::of(4.3));
         $number = $round->squareRoot();
 
         $this->assertInstanceOf(SquareRoot::class, $number);
@@ -180,7 +180,7 @@ class RoundTest extends TestCase
 
     public function testExponential()
     {
-        $number = Round::up(new Number\Number(3.6))->exponential();
+        $number = Round::up(Number\Number::of(3.6))->exponential();
 
         $this->assertInstanceOf(Exponential::class, $number);
         $this->assertSame(\exp(4), $number->value());
@@ -188,7 +188,7 @@ class RoundTest extends TestCase
 
     public function testBinaryLogarithm()
     {
-        $number = Round::up(new Number\Number(3.6))->binaryLogarithm();
+        $number = Round::up(Number\Number::of(3.6))->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
         $this->assertSame(\log(4, 2), $number->value());
@@ -196,7 +196,7 @@ class RoundTest extends TestCase
 
     public function testNaturalLogarithm()
     {
-        $number = Round::up(new Number\Number(3.6))->naturalLogarithm();
+        $number = Round::up(Number\Number::of(3.6))->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
         $this->assertSame(\log(4), $number->value());
@@ -204,7 +204,7 @@ class RoundTest extends TestCase
 
     public function testCommonLogarithm()
     {
-        $number = Round::up(new Number\Number(3.6))->commonLogarithm();
+        $number = Round::up(Number\Number::of(3.6))->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
         $this->assertSame(\log10(4), $number->value());
@@ -212,7 +212,7 @@ class RoundTest extends TestCase
 
     public function testSignum()
     {
-        $number = Round::up(new Number\Number(1))->signum();
+        $number = Round::up(Number\Number::of(1))->signum();
 
         $this->assertInstanceOf(Signum::class, $number);
         $this->assertSame(1, $number->value());

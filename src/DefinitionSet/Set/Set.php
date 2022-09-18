@@ -26,11 +26,20 @@ final class Set implements SetInterface
     /**
      * @no-named-arguments
      */
-    public function __construct(Number ...$values)
+    private function __construct(Number ...$values)
     {
         $this->values = Sequence::of(...$values)->map(
             static fn(Number $v) => $v->value(),
         );
+    }
+
+    /**
+     * @psalm-pure
+     * @no-named-arguments
+     */
+    public static function of(Number ...$values): self
+    {
+        return new self(...$values);
     }
 
     public function contains(Number $number): bool
@@ -47,12 +56,12 @@ final class Set implements SetInterface
 
     public function union(SetInterface $set): SetInterface
     {
-        return new Union($this, $set);
+        return Union::of($this, $set);
     }
 
     public function intersect(SetInterface $set): SetInterface
     {
-        return new Intersection($this, $set);
+        return Intersection::of($this, $set);
     }
 
     public function toString(): string

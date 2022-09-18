@@ -16,17 +16,25 @@ final class Radian
 {
     private Number $number;
 
-    public function __construct(Number $number)
+    private function __construct(Number $number)
     {
         $this->number = $number->modulo(
             multiply(2, new Pi),
         );
     }
 
+    /**
+     * @psalm-pure
+     */
+    public static function of(Number $number): self
+    {
+        return new self($number);
+    }
+
     public function toDegree(): Degree
     {
-        return new Degree(
-            new Number\Number(
+        return Degree::of(
+            Number\Number::of(
                 \rad2deg($this->number->value()),
             ),
         );

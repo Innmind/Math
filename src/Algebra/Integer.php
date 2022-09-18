@@ -10,9 +10,17 @@ final class Integer implements Number
 {
     private Number $number;
 
-    public function __construct(int $value)
+    private function __construct(int $value)
     {
-        $this->number = new Number\Number($value);
+        $this->number = Number\Number::int($value);
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(int $value): self
+    {
+        return new self($value);
     }
 
     public function value(): int
@@ -104,32 +112,32 @@ final class Integer implements Number
     public function factorial(): Factorial
     {
         /** @psalm-suppress PossiblyInvalidArgument */
-        return new Factorial($this->number->value());
+        return Factorial::of($this->number->value());
     }
 
     public function exponential(): Number
     {
-        return new Exponential($this);
+        return Exponential::of($this);
     }
 
     public function binaryLogarithm(): Number
     {
-        return new BinaryLogarithm($this);
+        return BinaryLogarithm::of($this);
     }
 
     public function naturalLogarithm(): Number
     {
-        return new NaturalLogarithm($this);
+        return NaturalLogarithm::of($this);
     }
 
     public function commonLogarithm(): Number
     {
-        return new CommonLogarithm($this);
+        return CommonLogarithm::of($this);
     }
 
     public function signum(): Number
     {
-        return new Signum($this);
+        return Signum::of($this);
     }
 
     public function increment(): self

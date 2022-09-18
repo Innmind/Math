@@ -19,7 +19,7 @@ final class Scope implements Number
 {
     private Number $result;
 
-    public function __construct(
+    private function __construct(
         Number $first,
         Number $second,
         Number ...$values,
@@ -38,6 +38,17 @@ final class Scope implements Number
                 static fn($result) => $result,
                 static fn() => throw new \LogicException('Unreachable'),
             );
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(
+        Number $first,
+        Number $second,
+        Number ...$values,
+    ): self {
+        return new self($first, $second, ...$values);
     }
 
     public function result(): Number

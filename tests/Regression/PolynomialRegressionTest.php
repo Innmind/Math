@@ -25,7 +25,7 @@ class PolynomialRegressionTest extends TestCase
             [8, 64],
         ]);
 
-        $regression = new PolynomialRegression($dataset, new Integer(2));
+        $regression = PolynomialRegression::of($dataset, Integer::of(2));
         $polynom = $regression->polynom();
 
         $this->assertInstanceOf(Polynom::class, $polynom);
@@ -33,7 +33,7 @@ class PolynomialRegressionTest extends TestCase
         $this->assertFalse($polynom->hasDegree(1));
         $this->assertSame(1.0, $polynom->degree(2)->coeff()->value());
         $this->assertFalse($polynom->hasDegree(3));
-        $this->assertSame(81.0, $polynom(new Integer(9))->value());
+        $this->assertSame(81.0, $polynom(Integer::of(9))->value());
         $this->assertInstanceOf(
             Number::class,
             $regression->rootMeanSquareDeviation(),
@@ -56,7 +56,7 @@ class PolynomialRegressionTest extends TestCase
             [8, 512],
         ]);
 
-        $regression = new PolynomialRegression($dataset, new Integer(3));
+        $regression = PolynomialRegression::of($dataset, Integer::of(3));
         $polynom = $regression->polynom();
 
         $this->assertInstanceOf(Polynom::class, $polynom);
@@ -64,7 +64,7 @@ class PolynomialRegressionTest extends TestCase
         $this->assertEqualsWithDelta(0.0, $polynom->degree(1)->coeff()->value(), 0.0001);
         $this->assertEqualsWithDelta(0.0, $polynom->degree(2)->coeff()->value(), 0.0001);
         $this->assertEqualsWithDelta(1.0, $polynom->degree(3)->coeff()->value(), 0.0001);
-        $this->assertEqualsWithDelta(729.0, $polynom(new Integer(9))->value(), 0.0001);
+        $this->assertEqualsWithDelta(729.0, $polynom(Integer::of(9))->value(), 0.0001);
     }
 
     public function testRegression()
@@ -84,7 +84,7 @@ class PolynomialRegressionTest extends TestCase
             [11, 0],
         ]);
 
-        $regression = new PolynomialRegression($dataset, new Integer(4));
+        $regression = PolynomialRegression::of($dataset, Integer::of(4));
         $polynom = $regression->polynom();
 
         $this->assertInstanceOf(Polynom::class, $polynom);

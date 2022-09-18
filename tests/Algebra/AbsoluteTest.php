@@ -29,7 +29,7 @@ class AbsoluteTest extends TestCase
 {
     public function testInterface()
     {
-        $absolute = new Absolute(new Number\Number(42.42));
+        $absolute = Absolute::of(Number\Number::of(42.42));
 
         $this->assertInstanceOf(Number::class, $absolute);
         $this->assertInstanceOf(Operation::class, $absolute);
@@ -40,7 +40,7 @@ class AbsoluteTest extends TestCase
      */
     public function testValue($number, $expected)
     {
-        $absolute = new Absolute(new Number\Number($number));
+        $absolute = Absolute::of(Number\Number::of($number));
 
         $this->assertSame($expected, $absolute->value());
     }
@@ -49,30 +49,30 @@ class AbsoluteTest extends TestCase
     {
         $this->assertSame(
             '|42.45|',
-            (new Absolute(new Number\Number(42.45)))->toString(),
+            Absolute::of(Number\Number::of(42.45))->toString(),
         );
     }
 
     public function testEquals()
     {
-        $absolute = new Absolute(new Number\Number(-42.45));
+        $absolute = Absolute::of(Number\Number::of(-42.45));
 
-        $this->assertTrue($absolute->equals(new Number\Number(42.45)));
-        $this->assertFalse($absolute->equals(new Number\Number(-42.45)));
+        $this->assertTrue($absolute->equals(Number\Number::of(42.45)));
+        $this->assertFalse($absolute->equals(Number\Number::of(-42.45)));
     }
 
     public function testHigherThan()
     {
-        $absolute = new Absolute(new Number\Number(-42.45));
+        $absolute = Absolute::of(Number\Number::of(-42.45));
 
-        $this->assertTrue($absolute->higherThan(new Number\Number(0)));
-        $this->assertFalse($absolute->higherThan(new Number\Number(43)));
+        $this->assertTrue($absolute->higherThan(Number\Number::of(0)));
+        $this->assertFalse($absolute->higherThan(Number\Number::of(43)));
     }
 
     public function testAdd()
     {
-        $absolute = new Absolute(new Number\Number(-43));
-        $number = $absolute->add(new Number\Number(7));
+        $absolute = Absolute::of(Number\Number::of(-43));
+        $number = $absolute->add(Number\Number::of(7));
 
         $this->assertInstanceOf(Addition::class, $number);
         $this->assertSame(50, $number->value());
@@ -80,8 +80,8 @@ class AbsoluteTest extends TestCase
 
     public function testSubtract()
     {
-        $absolute = new Absolute(new Number\Number(-43));
-        $number = $absolute->subtract(new Number\Number(7));
+        $absolute = Absolute::of(Number\Number::of(-43));
+        $number = $absolute->subtract(Number\Number::of(7));
 
         $this->assertInstanceOf(Subtraction::class, $number);
         $this->assertSame(36, $number->value());
@@ -89,8 +89,8 @@ class AbsoluteTest extends TestCase
 
     public function testMultiplication()
     {
-        $absolute = new Absolute(new Number\Number(-43));
-        $number = $absolute->multiplyBy(new Number\Number(2));
+        $absolute = Absolute::of(Number\Number::of(-43));
+        $number = $absolute->multiplyBy(Number\Number::of(2));
 
         $this->assertInstanceOf(Multiplication::class, $number);
         $this->assertSame(86, $number->value());
@@ -98,8 +98,8 @@ class AbsoluteTest extends TestCase
 
     public function testDivision()
     {
-        $absolute = new Absolute(new Number\Number(-43));
-        $number = $absolute->divideBy(new Number\Number(2));
+        $absolute = Absolute::of(Number\Number::of(-43));
+        $number = $absolute->divideBy(Number\Number::of(2));
 
         $this->assertInstanceOf(Division::class, $number);
         $this->assertSame(21.5, $number->value());
@@ -107,7 +107,7 @@ class AbsoluteTest extends TestCase
 
     public function testRound()
     {
-        $number = new Absolute(new Number\Number(-42.45));
+        $number = Absolute::of(Number\Number::of(-42.45));
 
         $this->assertEquals(Round::up($number, 2), $number->roundUp(2));
         $this->assertEquals(Round::down($number, 2), $number->roundDown(2));
@@ -117,7 +117,7 @@ class AbsoluteTest extends TestCase
 
     public function testFloor()
     {
-        $absolute = new Absolute(new Number\Number(-42.45));
+        $absolute = Absolute::of(Number\Number::of(-42.45));
         $number = $absolute->floor();
 
         $this->assertInstanceOf(Floor::class, $number);
@@ -126,7 +126,7 @@ class AbsoluteTest extends TestCase
 
     public function testCeil()
     {
-        $absolute = new Absolute(new Number\Number(-42.45));
+        $absolute = Absolute::of(Number\Number::of(-42.45));
         $number = $absolute->ceil();
 
         $this->assertInstanceOf(Ceil::class, $number);
@@ -135,7 +135,7 @@ class AbsoluteTest extends TestCase
 
     public function testAbsolute()
     {
-        $absolute = new Absolute(new Number\Number(-42.45));
+        $absolute = Absolute::of(Number\Number::of(-42.45));
         $number = $absolute->absolute();
 
         $this->assertInstanceOf(Absolute::class, $number);
@@ -144,8 +144,8 @@ class AbsoluteTest extends TestCase
 
     public function testModulo()
     {
-        $absolute = new Absolute(new Number\Number(-42.45));
-        $number = $absolute->modulo(new Number\Number(2.1));
+        $absolute = Absolute::of(Number\Number::of(-42.45));
+        $number = $absolute->modulo(Number\Number::of(2.1));
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertEqualsWithDelta(0.45, $number->value(), 0.001);
@@ -153,8 +153,8 @@ class AbsoluteTest extends TestCase
 
     public function testPower()
     {
-        $absolute = new Absolute(new Number\Number(-4));
-        $number = $absolute->power(new Number\Number(2));
+        $absolute = Absolute::of(Number\Number::of(-4));
+        $number = $absolute->power(Number\Number::of(2));
 
         $this->assertInstanceOf(Power::class, $number);
         $this->assertSame(16, $number->value());
@@ -162,7 +162,7 @@ class AbsoluteTest extends TestCase
 
     public function testSquareRoot()
     {
-        $absolute = new Absolute(new Number\Number(-4));
+        $absolute = Absolute::of(Number\Number::of(-4));
         $number = $absolute->squareRoot();
 
         $this->assertInstanceOf(SquareRoot::class, $number);
@@ -171,7 +171,7 @@ class AbsoluteTest extends TestCase
 
     public function testExponential()
     {
-        $number = (new Absolute(new Number\Number(-4)))->exponential();
+        $number = Absolute::of(Number\Number::of(-4))->exponential();
 
         $this->assertInstanceOf(Exponential::class, $number);
         $this->assertSame(\exp(4), $number->value());
@@ -179,7 +179,7 @@ class AbsoluteTest extends TestCase
 
     public function testBinaryLogarithm()
     {
-        $number = (new Absolute(new Number\Number(-4)))->binaryLogarithm();
+        $number = Absolute::of(Number\Number::of(-4))->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
         $this->assertSame(\log(4, 2), $number->value());
@@ -187,7 +187,7 @@ class AbsoluteTest extends TestCase
 
     public function testNaturalLogarithm()
     {
-        $number = (new Absolute(new Number\Number(-4)))->naturalLogarithm();
+        $number = Absolute::of(Number\Number::of(-4))->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
         $this->assertSame(\log(4), $number->value());
@@ -195,7 +195,7 @@ class AbsoluteTest extends TestCase
 
     public function testCommonLogarithm()
     {
-        $number = (new Absolute(new Number\Number(-4)))->commonLogarithm();
+        $number = Absolute::of(Number\Number::of(-4))->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
         $this->assertSame(\log10(4), $number->value());
@@ -203,7 +203,7 @@ class AbsoluteTest extends TestCase
 
     public function testSignum()
     {
-        $number = (new Absolute(new Number\Number(-4)))->signum();
+        $number = Absolute::of(Number\Number::of(-4))->signum();
 
         $this->assertInstanceOf(Signum::class, $number);
         $this->assertSame(1, $number->value());

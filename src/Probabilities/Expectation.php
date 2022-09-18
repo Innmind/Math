@@ -15,7 +15,7 @@ final class Expectation
 {
     private Number $expectation;
 
-    public function __construct(Dataset $dataset)
+    private function __construct(Dataset $dataset)
     {
         $this->expectation = $dataset
             ->abscissas()
@@ -26,5 +26,13 @@ final class Expectation
     public function __invoke(): Number
     {
         return $this->expectation;
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(Dataset $dataset): self
+    {
+        return new self($dataset);
     }
 }

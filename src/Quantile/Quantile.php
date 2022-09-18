@@ -31,7 +31,7 @@ final class Quantile
     private Quartile $firstQuartile;
     private Quartile $thirdQuartile;
 
-    public function __construct(Dataset $dataset)
+    private function __construct(Dataset $dataset)
     {
         $values = $dataset->ordinates()->toList();
         \sort($values);
@@ -43,6 +43,14 @@ final class Quantile
         $this->median = $this->buildMedian($dataset);
         $this->firstQuartile = $this->buildFirstQuartile($dataset);
         $this->thirdQuartile = $this->buildThirdQuartile($dataset);
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(DataSet $dataset): self
+    {
+        return new self($dataset);
     }
 
     /**
@@ -103,7 +111,7 @@ final class Quantile
      */
     private function buildMin(Dataset $dataset): Quartile
     {
-        return new Quartile(minimum(...$dataset->ordinates()->numbers()));
+        return Quartile::of(minimum(...$dataset->ordinates()->numbers()));
     }
 
     /**
@@ -111,7 +119,7 @@ final class Quantile
      */
     private function buildMax(Dataset $dataset): Quartile
     {
-        return new Quartile(maximum(...$dataset->ordinates()->numbers()));
+        return Quartile::of(maximum(...$dataset->ordinates()->numbers()));
     }
 
     /**
@@ -127,7 +135,7 @@ final class Quantile
      */
     private function buildMedian(Dataset $dataset): Quartile
     {
-        return new Quartile(median(...$dataset->ordinates()->numbers()));
+        return Quartile::of(median(...$dataset->ordinates()->numbers()));
     }
 
     /**
@@ -135,8 +143,8 @@ final class Quantile
      */
     private function buildFirstQuartile(Dataset $dataset): Quartile
     {
-        return new Quartile($this->buildQuartile(
-            new Number\Number(0.25),
+        return Quartile::of($this->buildQuartile(
+            Number\Number::of(0.25),
             $dataset->ordinates(),
         ));
     }
@@ -146,8 +154,8 @@ final class Quantile
      */
     private function buildThirdQuartile(Dataset $dataset): Quartile
     {
-        return new Quartile($this->buildQuartile(
-            new Number\Number(0.75),
+        return Quartile::of($this->buildQuartile(
+            Number\Number::of(0.75),
             $dataset->ordinates(),
         ));
     }

@@ -43,8 +43,8 @@ final class Matrix
                 }
             });
 
-        $this->dimension = new Dimension(
-            new Integer($this->rows->size()),
+        $this->dimension = Dimension::of(
+            Integer::of($this->rows->size()),
             $first->dimension(),
         );
         $this->columns = $this->buildColumns();
@@ -302,13 +302,13 @@ final class Matrix
     public function isAntisymmetric(): bool
     {
         return $this
-            ->multiplyBy(new Integer(-1))
+            ->multiplyBy(Integer::of(-1))
             ->equals($this->transpose());
     }
 
     public function isInRowEchelonForm(): bool
     {
-        $zero = new Integer(0);
+        $zero = Integer::of(0);
         $leadingZeros = $this->rows->map(
             static function(RowVector $row) use ($zero): int {
                 $numbers = $row->numbers();
@@ -431,7 +431,7 @@ final class Matrix
                 ->map(static fn($row) => $row->multiplyBy(
                     RowVector::initialize(
                         $row->dimension(),
-                        (new Integer(1))->divideBy($row->lead()),
+                        Integer::of(1)->divideBy($row->lead()),
                     ),
                 ));
 

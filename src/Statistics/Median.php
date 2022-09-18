@@ -16,7 +16,7 @@ final class Median implements Number
 {
     private Number $result;
 
-    public function __construct(Number $first, Number ...$values)
+    private function __construct(Number $first, Number ...$values)
     {
         $sequence = Sequence::of($first, ...$values);
         $sequence = $sequence->sort(static function(Number $a, Number $b): int {
@@ -45,7 +45,7 @@ final class Median implements Number
                 //mathematically the value is mean(size/2, size/2+1) but here we
                 //do mean(size/2-1, size/2) as the sequence indexes start at 0
                 $index = (int) ($sequence->size() / 2);
-                $this->result = new Mean(
+                $this->result = Mean::of(
                     $sequence->get($index - 1)->match(
                         static fn($number) => $number,
                         static fn() => throw new \LogicException,
@@ -57,6 +57,14 @@ final class Median implements Number
                 );
                 break;
         }
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(Number $first, Number ...$values): self
+    {
+        return new self($first, ...$values);
     }
 
     public function result(): Number

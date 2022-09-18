@@ -24,11 +24,11 @@ final class Pythagora
     ): Segment {
         $hypotenuse = $a
             ->length()
-            ->power(new Integer(2))
-            ->add($b->length()->power(new Integer(2)))
+            ->power(Integer::of(2))
+            ->add($b->length()->power(Integer::of(2)))
             ->squareRoot();
 
-        return new Segment($hypotenuse);
+        return Segment::of($hypotenuse);
     }
 
     /**
@@ -41,11 +41,11 @@ final class Pythagora
     ): Segment {
         $side = $hypotenuse
             ->length()
-            ->power(new Integer(2))
-            ->subtract($adjacentSide->length()->power(new Integer(2)))
+            ->power(Integer::of(2))
+            ->subtract($adjacentSide->length()->power(Integer::of(2)))
             ->squareRoot();
 
-        return new Segment($side);
+        return Segment::of($side);
     }
 
     public function toString(): string

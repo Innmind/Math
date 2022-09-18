@@ -20,7 +20,7 @@ final class Dataset
 {
     private Matrix $matrix;
 
-    public function __construct(RowVector ...$rows)
+    private function __construct(RowVector ...$rows)
     {
         $this->matrix = Matrix::fromRows(...$rows);
 
@@ -41,6 +41,14 @@ final class Dataset
             $rows[] = RowVector::of(...numerize(...$coordinates));
         }
 
+        return new self(...$rows);
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function ofRows(RowVector ...$rows): self
+    {
         return new self(...$rows);
     }
 

@@ -33,11 +33,11 @@ class RealNumbersTest extends TestCase
     {
         $set = new RealNumbers;
 
-        $this->assertTrue($set->contains(new Integer(1)));
-        $this->assertTrue($set->contains(new Integer(0)));
-        $this->assertTrue($set->contains(new Integer(-1)));
-        $this->assertTrue($set->contains(new Number(0.75)));
-        $this->assertTrue($set->contains(new Number(-0.75)));
+        $this->assertTrue($set->contains(Integer::of(1)));
+        $this->assertTrue($set->contains(Integer::of(0)));
+        $this->assertTrue($set->contains(Integer::of(-1)));
+        $this->assertTrue($set->contains(Number::of(0.75)));
+        $this->assertTrue($set->contains(Number::of(-0.75)));
         $this->assertTrue($set->contains(new Pi));
     }
 
@@ -45,11 +45,11 @@ class RealNumbersTest extends TestCase
     {
         $set = new RealNumbers;
 
-        $this->assertNull($set->accept(new Integer(1)));
-        $this->assertNull($set->accept(new Integer(0)));
-        $this->assertNull($set->accept(new Integer(-1)));
-        $this->assertNull($set->accept(new Number(0.75)));
-        $this->assertNull($set->accept(new Number(-0.75)));
+        $this->assertNull($set->accept(Integer::of(1)));
+        $this->assertNull($set->accept(Integer::of(0)));
+        $this->assertNull($set->accept(Integer::of(-1)));
+        $this->assertNull($set->accept(Number::of(0.75)));
+        $this->assertNull($set->accept(Number::of(-0.75)));
         $this->assertNull($set->accept(new Pi));
     }
 

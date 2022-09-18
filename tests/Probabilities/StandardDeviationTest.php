@@ -15,7 +15,7 @@ class StandardDeviationTest extends TestCase
 {
     public function testInvokation()
     {
-        $deviation = new StandardDeviation(
+        $deviation = StandardDeviation::of(
             Dataset::of([
                 [-1, divide(4, 6)],
                 [2, divide(1, 6)],

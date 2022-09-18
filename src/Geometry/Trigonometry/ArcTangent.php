@@ -18,9 +18,17 @@ final class ArcTangent implements Number
 {
     private Number $number;
 
-    public function __construct(Number $number)
+    private function __construct(Number $number)
     {
         $this->number = $number;
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(Number $number): self
+    {
+        return new self($number);
     }
 
     public function toDegree(): Degree
@@ -156,12 +164,12 @@ final class ArcTangent implements Number
 
     private function arcTangent(): Degree
     {
-        $radians = new Number\Number(
+        $radians = Number\Number::of(
             \atan(
                 $this->number->value(),
             ),
         );
 
-        return (new Radian($radians))->toDegree();
+        return Radian::of($radians)->toDegree();
     }
 }

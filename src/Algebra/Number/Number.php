@@ -32,7 +32,7 @@ final class Number implements NumberInterface
 {
     private int|float $value;
 
-    public function __construct(int|float $value)
+    private function __construct(int|float $value)
     {
         if (\is_nan($value)) {
             throw new NotANumber;
@@ -51,9 +51,17 @@ final class Number implements NumberInterface
         }
 
         if (\is_int($value)) {
-            return new Integer($value);
+            return Integer::of($value);
         }
 
+        return new self($value);
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function int(int $value): self
+    {
         return new self($value);
     }
 
@@ -76,26 +84,26 @@ final class Number implements NumberInterface
         NumberInterface $number,
         NumberInterface ...$numbers,
     ): NumberInterface {
-        return new Addition($this, $number, ...$numbers);
+        return Addition::of($this, $number, ...$numbers);
     }
 
     public function subtract(
         NumberInterface $number,
         NumberInterface ...$numbers,
     ): NumberInterface {
-        return new Subtraction($this, $number, ...$numbers);
+        return Subtraction::of($this, $number, ...$numbers);
     }
 
     public function divideBy(NumberInterface $number): NumberInterface
     {
-        return new Division($this, $number);
+        return Division::of($this, $number);
     }
 
     public function multiplyBy(
         NumberInterface $number,
         NumberInterface ...$numbers,
     ): NumberInterface {
-        return new Multiplication($this, $number, ...$numbers);
+        return Multiplication::of($this, $number, ...$numbers);
     }
 
     public function roundUp(int $precision = 0): NumberInterface
@@ -120,57 +128,57 @@ final class Number implements NumberInterface
 
     public function floor(): NumberInterface
     {
-        return new Floor($this);
+        return Floor::of($this);
     }
 
     public function ceil(): NumberInterface
     {
-        return new Ceil($this);
+        return Ceil::of($this);
     }
 
     public function modulo(NumberInterface $modulus): NumberInterface
     {
-        return new Modulo($this, $modulus);
+        return Modulo::of($this, $modulus);
     }
 
     public function absolute(): NumberInterface
     {
-        return new Absolute($this);
+        return Absolute::of($this);
     }
 
     public function power(NumberInterface $power): NumberInterface
     {
-        return new Power($this, $power);
+        return Power::of($this, $power);
     }
 
     public function squareRoot(): NumberInterface
     {
-        return new SquareRoot($this);
+        return SquareRoot::of($this);
     }
 
     public function exponential(): NumberInterface
     {
-        return new Exponential($this);
+        return Exponential::of($this);
     }
 
     public function binaryLogarithm(): NumberInterface
     {
-        return new BinaryLogarithm($this);
+        return BinaryLogarithm::of($this);
     }
 
     public function naturalLogarithm(): NumberInterface
     {
-        return new NaturalLogarithm($this);
+        return NaturalLogarithm::of($this);
     }
 
     public function commonLogarithm(): NumberInterface
     {
-        return new CommonLogarithm($this);
+        return CommonLogarithm::of($this);
     }
 
     public function signum(): NumberInterface
     {
-        return new Signum($this);
+        return Signum::of($this);
     }
 
     public function collapse(): NumberInterface

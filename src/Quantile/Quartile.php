@@ -13,9 +13,17 @@ final class Quartile
 {
     private Number $value;
 
-    public function __construct(Number $value)
+    private function __construct(Number $value)
     {
         $this->value = $value;
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(Number $value): self
+    {
+        return new self($value);
     }
 
     /**

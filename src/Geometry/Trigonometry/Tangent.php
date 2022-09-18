@@ -21,9 +21,17 @@ final class Tangent implements Number
 {
     private Degree $degree;
 
-    public function __construct(Degree $degree)
+    private function __construct(Degree $degree)
     {
         $this->degree = $degree;
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(Degree $degree): self
+    {
+        return new self($degree);
     }
 
     public function value(): int|float
@@ -148,7 +156,7 @@ final class Tangent implements Number
 
     private function tangent(): Number
     {
-        return new Number\Number(
+        return Number\Number::of(
             \tan(
                 $this->degree->toRadian()->number()->value(),
             ),

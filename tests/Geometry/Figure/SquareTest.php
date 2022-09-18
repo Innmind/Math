@@ -18,16 +18,16 @@ class SquareTest extends TestCase
     {
         $this->assertInstanceOf(
             Figure::class,
-            new Square(
-                new Segment(new Integer(2)),
+            Square::of(
+                Segment::of(Integer::of(2)),
             ),
         );
     }
 
     public function testPerimeter()
     {
-        $square = new Square(
-            new Segment(new Integer(2)),
+        $square = Square::of(
+            Segment::of(Integer::of(2)),
         );
 
         $this->assertInstanceOf(Number::class, $square->perimeter());
@@ -36,8 +36,8 @@ class SquareTest extends TestCase
 
     public function testArea()
     {
-        $square = new Square(
-            new Segment(new Integer(2)),
+        $square = Square::of(
+            Segment::of(Integer::of(2)),
         );
 
         $this->assertInstanceOf(Number::class, $square->area());
@@ -46,8 +46,8 @@ class SquareTest extends TestCase
 
     public function testSide()
     {
-        $square = new Square(
-            $expected = new Segment(new Integer(2)),
+        $square = Square::of(
+            $expected = Segment::of(Integer::of(2)),
         );
 
         $this->assertSame($expected, $square->side());

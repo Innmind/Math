@@ -28,9 +28,9 @@ final class Polynom
     /** @var Map<int, Degree> */
     private Map $degrees;
 
-    public function __construct(Number $intercept = null, Degree ...$degrees)
+    private function __construct(Number $intercept = null, Degree ...$degrees)
     {
-        $this->intercept = $intercept ?? new Integer(0);
+        $this->intercept = $intercept ?? Integer::of(0);
         /** @var Map<int, Degree> */
         $this->degrees = Map::of();
 
@@ -57,13 +57,21 @@ final class Polynom
     }
 
     /**
+     * @psalm-pure
+     */
+    public static function of(Number $intercept = null, Degree ...$degrees): self
+    {
+        return new self($intercept, ...$degrees);
+    }
+
+    /**
      * Create a new polynom with this added degree
      */
     public function withDegree(Integer $degree, Number $coeff): self
     {
         $degrees = ($this->degrees)(
             $degree->value(),
-            new Degree($degree, $coeff),
+            Degree::of($degree, $coeff),
         );
 
         return new self(
@@ -122,7 +130,7 @@ final class Polynom
      */
     public function tangent(Number $x, Number $limit = null): Tangent
     {
-        return new Tangent($this, $x, $limit);
+        return Tangent::of($this, $x, $limit);
     }
 
     public function primitive(): self
@@ -134,13 +142,13 @@ final class Polynom
                 return $degree->primitive();
             });
 
-        if (!$this->intercept->equals(new Integer(0))) {
+        if (!$this->intercept->equals(Integer::of(0))) {
             $degrees = ($degrees)(
-                new Degree(new Integer(1), $this->intercept)
+                Degree::of(Integer::of(1), $this->intercept)
             );
         }
 
-        return new self(new Integer(0), ...$degrees->toList());
+        return new self(Integer::of(0), ...$degrees->toList());
     }
 
     public function derivative(): self
@@ -150,7 +158,7 @@ final class Polynom
             ->get(1)
             ->match(
                 fn($degree) => [$degree->coeff(), $this->degrees->remove(1)],
-                fn() => [new Integer(0), $this->degrees],
+                fn() => [Integer::of(0), $this->degrees],
             );
 
         return new self(
@@ -166,7 +174,7 @@ final class Polynom
 
     public function integral(): Integral
     {
-        return new Integral($this);
+        return Integral::of($this);
     }
 
     public function toString(): string
@@ -184,7 +192,7 @@ final class Polynom
             ->map(static fn(Degree $degree): string => $degree->toString());
         $polynom = Str::of(' + ')->join($degrees);
 
-        if (!$this->intercept->equals(new Integer(0))) {
+        if (!$this->intercept->equals(Integer::of(0))) {
             $intercept = $this->intercept instanceof Operation ?
                 '('.$this->intercept->toString().')' : $this->intercept->toString();
 

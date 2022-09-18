@@ -18,18 +18,18 @@ class RectangleTest extends TestCase
     {
         $this->assertInstanceOf(
             Figure::class,
-            new Rectangle(
-                new Segment(new Integer(2)),
-                new Segment(new Integer(4)),
+            Rectangle::of(
+                Segment::of(Integer::of(2)),
+                Segment::of(Integer::of(4)),
             ),
         );
     }
 
     public function testPerimeter()
     {
-        $rectangle = new Rectangle(
-            new Segment(new Integer(2)),
-            new Segment(new Integer(4)),
+        $rectangle = Rectangle::of(
+            Segment::of(Integer::of(2)),
+            Segment::of(Integer::of(4)),
         );
 
         $this->assertInstanceOf(Number::class, $rectangle->perimeter());
@@ -38,9 +38,9 @@ class RectangleTest extends TestCase
 
     public function testArea()
     {
-        $rectangle = new Rectangle(
-            new Segment(new Integer(2)),
-            new Segment(new Integer(4)),
+        $rectangle = Rectangle::of(
+            Segment::of(Integer::of(2)),
+            Segment::of(Integer::of(4)),
         );
 
         $this->assertInstanceOf(Number::class, $rectangle->area());
@@ -49,9 +49,9 @@ class RectangleTest extends TestCase
 
     public function testLength()
     {
-        $rectangle = new Rectangle(
-            $expected = new Segment(new Integer(2)),
-            new Segment(new Integer(4)),
+        $rectangle = Rectangle::of(
+            $expected = Segment::of(Integer::of(2)),
+            Segment::of(Integer::of(4)),
         );
 
         $this->assertSame($expected, $rectangle->length());
@@ -59,9 +59,9 @@ class RectangleTest extends TestCase
 
     public function testWidth()
     {
-        $rectangle = new Rectangle(
-            new Segment(new Integer(2)),
-            $expected = new Segment(new Integer(4)),
+        $rectangle = Rectangle::of(
+            Segment::of(Integer::of(2)),
+            $expected = Segment::of(Integer::of(4)),
         );
 
         $this->assertSame($expected, $rectangle->width());
