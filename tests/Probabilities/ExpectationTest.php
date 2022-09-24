@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace Tests\Innmind\Math\Probabilities;
 
-use function Innmind\Math\divide;
 use Innmind\Math\{
     Probabilities\Expectation,
     Regression\Dataset,
@@ -17,15 +16,15 @@ class ExpectationTest extends TestCase
     {
         $expectation = Expectation::of(
             Dataset::of([
-                [-1, divide(4, 6)],
-                [2, divide(1, 6)],
-                [3, divide(1, 6)],
+                [-1, 4/6],
+                [2, 1/6],
+                [3, 1/6],
             ]),
         );
 
         $this->assertInstanceOf(Number::class, $expectation());
         $this->assertSame(
-            divide(1, 6)->value(),
+            1/6,
             $expectation()->value(),
         );
     }

@@ -3,11 +3,11 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Statistics;
 
-use function Innmind\Math\add;
 use Innmind\Math\Algebra\{
     Number,
     Round,
     Real,
+    Addition,
 };
 use Innmind\Immutable\Sequence;
 
@@ -21,7 +21,7 @@ final class Mean implements Number
     private function __construct(Number $first, Number ...$values)
     {
         $sequence = Sequence::of($first, ...$values);
-        $sum = add($first, ...$values);
+        $sum = Addition::of($first, ...$values);
         $this->result = $sum->divideBy(Real::of($sequence->size()));
     }
 

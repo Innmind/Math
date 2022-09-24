@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Polynom;
 
-use function Innmind\Math\subtract;
 use Innmind\Math\Algebra\Number;
 
 /**
@@ -22,7 +21,7 @@ final class Integral
     {
         $primitive = $this->polynom->primitive();
 
-        return subtract($primitive($b), $primitive($a));
+        return $primitive($b)->subtract($primitive($a));
     }
 
     /**

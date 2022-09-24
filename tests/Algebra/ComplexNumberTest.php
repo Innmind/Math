@@ -3,11 +3,11 @@ declare(strict_types = 1);
 
 namespace Tests\Innmind\Math\Algebra;
 
-use function Innmind\Math\add;
 use Innmind\Math\Algebra\{
     ComplexNumber,
     Integer,
-    Number
+    Number,
+    Value,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -34,8 +34,8 @@ class ComplexNumberTest extends TestCase
         $this->assertSame('(1 + 2i)', $number->toString());
 
         $number = ComplexNumber::of(
-            add(1, 2),
-            add(2, 3),
+            Value::one->add(Value::two),
+            Value::two->add(Integer::of(3)),
         );
 
         $this->assertSame('((1 + 2) + (2 + 3)i)', $number->toString());

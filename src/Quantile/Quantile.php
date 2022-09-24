@@ -4,10 +4,6 @@ declare(strict_types = 1);
 namespace Innmind\Math\Quantile;
 
 use function Innmind\Math\{
-    divide,
-    add,
-    mean,
-    median,
     min as minimum,
     max as maximum,
 };
@@ -15,8 +11,10 @@ use Innmind\Math\{
     Regression\Dataset,
     Algebra\Number,
     Algebra\Real,
+    Algebra\Value,
     Matrix\ColumnVector,
     Statistics\Mean,
+    Statistics\Median,
 };
 
 /**
@@ -120,7 +118,7 @@ final class Quantile
      */
     private function buildMean(Dataset $dataset): Mean
     {
-        return mean(...$dataset->ordinates()->numbers());
+        return Mean::of(...$dataset->ordinates()->numbers());
     }
 
     /**
@@ -128,7 +126,7 @@ final class Quantile
      */
     private function buildMedian(Dataset $dataset): Quartile
     {
-        return Quartile::of(median(...$dataset->ordinates()->numbers()));
+        return Quartile::of(Median::of(...$dataset->ordinates()->numbers()));
     }
 
     /**
@@ -163,10 +161,10 @@ final class Quantile
         $dimension = $dataset->dimension();
 
         if ($dimension->value() === 2) {
-            return divide(
-                add($dataset->get(0), $dataset->get(1)),
-                2,
-            );
+            return $dataset
+                ->get(0)
+                ->add($dataset->get(1))
+                ->divideBy(Value::two);
         }
 
         if ($dimension->value() === 1) {
@@ -178,9 +176,9 @@ final class Quantile
             ->roundUp()
             ->value();
 
-        return divide(
-            add($dataset->get($index), $dataset->get($index - 1)),
-            2,
-        );
+        return $dataset
+            ->get($index)
+            ->add($dataset->get($index - 1))
+            ->divideBy(Value::two);
     }
 }

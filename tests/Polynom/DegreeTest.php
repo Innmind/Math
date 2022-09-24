@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace Tests\Innmind\Math\Polynom;
 
-use function Innmind\Math\divide;
 use Innmind\Math\{
     Polynom\Degree,
     Algebra\Real,
@@ -32,7 +31,7 @@ class DegreeTest extends TestCase
 
         $this->assertSame('2x', $d->toString());
 
-        $d = Degree::of(Integer::of(8), divide(1, 4));
+        $d = Degree::of(Integer::of(8), Integer::of(1)->divideBy(Integer::of(4)));
 
         $this->assertSame('(1 ÷ 4)x^8', $d->toString());
     }

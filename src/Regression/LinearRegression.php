@@ -3,17 +3,16 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Regression;
 
-use function Innmind\Math\{
-    add,
-    multiply,
-    divide,
-    subtract,
-};
 use Innmind\Math\{
     Polynom\Polynom,
     Algebra\Number,
     Algebra\Integer,
     Algebra\Value,
+    Algebra\Division,
+    Algebra\Subtraction,
+    Algebra\Addition,
+    Algebra\Multiplication,
+    Algebra\Real,
     Matrix,
 };
 
@@ -92,22 +91,34 @@ final class LinearRegression
         $xySum = Value::zero;
 
         for ($i = 0; $i < $elements; $i++) {
-            $xySum = add($xySum, multiply($x[$i], $y[$i]));
-            $xxSum = add($xxSum, multiply($x[$i], $x[$i]));
+            $xySum = Addition::of(
+                $xySum,
+                Multiplication::of(
+                    Real::of($x[$i]),
+                    Real::of($y[$i]),
+                ),
+            );
+            $xxSum = Addition::of(
+                $xxSum,
+                Multiplication::of(
+                    Real::of($x[$i]),
+                    Real::of($x[$i]),
+                ),
+            );
         }
 
-        $slope = divide(
-            subtract(
+        $slope = Division::of(
+            Subtraction::of(
                 $dimension->multiplyBy($xySum),
                 $xSum->multiplyBy($ySum),
             ),
-            subtract(
+            Subtraction::of(
                 $dimension->multiplyBy($xxSum),
                 $xSum->power(Value::two),
             ),
         );
-        $intercept = divide(
-            subtract(
+        $intercept = Division::of(
+            Subtraction::of(
                 $ySum,
                 $slope->multiplyBy($xSum),
             ),

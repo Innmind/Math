@@ -3,16 +3,14 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Geometry\Theorem;
 
-use function Innmind\Math\{
-    cosine,
-    arcCosine,
-    max as maximum,
-};
+use function Innmind\Math\max as maximum;
 use Innmind\Math\{
     Algebra\Number,
     Algebra\Value,
     Geometry\Angle\Degree,
     Geometry\Segment,
+    Geometry\Trigonometry\Cosine,
+    Geometry\Trigonometry\ArcCosine,
     Exception\SegmentsCannotBeJoined,
 };
 
@@ -45,7 +43,7 @@ final class AlKashi
                 Value::two
                     ->multiplyBy($a)
                     ->multiplyBy($b)
-                    ->multiplyBy(cosine($degree)),
+                    ->multiplyBy(Cosine::of($degree)),
             )
             ->squareRoot();
 
@@ -85,7 +83,7 @@ final class AlKashi
                     ->multiplyBy($b),
             );
 
-        return arcCosine($cosAB)->toDegree();
+        return ArcCosine::of($cosAB)->toDegree();
     }
 
     public function toString(): string

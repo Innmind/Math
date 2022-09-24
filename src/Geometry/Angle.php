@@ -3,13 +3,10 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Geometry;
 
-use function Innmind\Math\{
-    cosine,
-    multiply,
-};
 use Innmind\Math\{
     Geometry\Angle\Degree,
     Geometry\Theorem\AlKashi,
+    Geometry\Trigonometry\Cosine,
     Algebra\Number,
 };
 
@@ -73,10 +70,10 @@ final class Angle
 
     public function scalarProduct(): Number
     {
-        return multiply(
-            $this->firstSegment->length(),
-            $this->secondSegment->length(),
-            cosine($this->degree),
-        );
+        return $this
+            ->firstSegment
+            ->length()
+            ->multiplyBy($this->secondSegment->length())
+            ->multiplyBy(Cosine::of($this->degree));
     }
 }

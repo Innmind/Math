@@ -3,14 +3,10 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Probabilities;
 
-use function Innmind\Math\{
-    divide,
-    multiply,
-    subtract,
-};
-use Innmind\Math\{
-    Algebra\Number,
-    Algebra\Integer,
+use Innmind\Math\Algebra\{
+    Number,
+    Integer,
+    Value,
 };
 
 /**
@@ -27,21 +23,19 @@ final class BinomialDistribution
 
     public function __invoke(Integer $trials, Integer $success): Number
     {
-        /** @psalm-suppress PossiblyInvalidArgument */
-        $errors = Integer::of($trials->subtract($success)->value());
-        $coefficient = divide(
-            $trials->factorial(),
-            multiply(
-                $success->factorial(),
-                $errors->factorial(),
-            ),
-        );
+        /** @var Integer */
+        $errors = $trials->subtract($success)->collapse();
+        $coefficient = $trials
+            ->factorial()
+            ->divideBy(
+                $success->factorial()->multiplyBy(
+                    $errors->factorial(),
+                ),
+            );
 
-        return multiply(
-            $coefficient,
-            $this->probability->power($success),
-            subtract(1, $this->probability)->power($errors),
-        );
+        return $coefficient
+            ->multiplyBy($this->probability->power($success))
+            ->multiplyBy(Value::one->subtract($this->probability)->power($errors));
     }
 
     /**

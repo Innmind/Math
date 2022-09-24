@@ -3,10 +3,6 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Polynom;
 
-use function Innmind\Math\{
-    add,
-    multiply,
-};
 use Innmind\Math\Algebra\{
     Number,
     Real,
@@ -35,13 +31,10 @@ final class Tangent
 
     public function __invoke(Number $x): Number
     {
-        return add(
-            multiply(
-                $this->derivative,
-                $x->subtract($this->abscissa),
-            ),
-            $this->intercept,
-        );
+        return $this
+            ->derivative
+            ->multiplyBy($x->subtract($this->abscissa))
+            ->add($this->intercept);
     }
 
     /**

@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Geometry\Angle;
 
-use function Innmind\Math\multiply;
 use Innmind\Math\Algebra\{
     Number,
     Value,
@@ -20,7 +19,7 @@ final class Radian
     private function __construct(Number $number)
     {
         $this->number = $number->modulo(
-            multiply(2, Value::pi),
+            Value::pi->multiplyBy(Value::two),
         );
     }
 

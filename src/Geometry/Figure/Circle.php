@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Geometry\Figure;
 
-use function Innmind\Math\multiply;
 use Innmind\Math\{
     Geometry\Figure,
     Geometry\Segment,
@@ -23,7 +22,7 @@ final class Circle implements Figure
     {
         $this->radius = $radius;
         $this->diameter = Segment::of(
-            multiply(2, $radius->length()),
+            $radius->length()->multiplyBy(Value::two),
         );
     }
 
@@ -37,16 +36,16 @@ final class Circle implements Figure
 
     public function perimeter(): Number
     {
-        return multiply(2, Value::pi, $this->radius->length());
+        return Value::pi
+            ->multiplyBy(Value::two)
+            ->multiplyBy($this->radius->length());
     }
 
     public function area(): Number
     {
-        return multiply(
-            $this->radius->length(),
-            $this->radius->length(),
-            Value::pi,
-        );
+        return Value::pi
+            ->multiplyBy($this->radius->length())
+            ->multiplyBy($this->radius->length());
     }
 
     public function radius(): Segment

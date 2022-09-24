@@ -3,11 +3,6 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Polynom;
 
-use function Innmind\Math\{
-    add,
-    divide,
-    subtract,
-};
 use Innmind\Math\{
     Algebra\Number,
     Algebra\Integer,
@@ -57,21 +52,16 @@ final class Degree
 
     public function primitive(): self
     {
-        /** @psalm-suppress ArgumentTypeCoercion */
         return new self(
-            add($this->degree, 1)->result(),
-            divide(
-                $this->coeff,
-                add($this->degree, 1),
-            ),
+            $this->degree->increment(),
+            $this->coeff->divideBy($this->degree->add(Value::one)),
         );
     }
 
     public function derivative(): self
     {
-        /** @psalm-suppress ArgumentTypeCoercion */
         return new self(
-            subtract($this->degree, 1)->result(),
+            $this->degree->decrement(),
             $this->coeff->multiplyBy($this->degree),
         );
     }

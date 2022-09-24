@@ -3,19 +3,13 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Geometry\Figure;
 
-use function Innmind\Math\{
-    squareRoot,
-    add,
-    multiply,
-    subtract,
-    max as maximum,
-    divide,
-};
+use function Innmind\Math\max as maximum;
 use Innmind\Math\{
     Geometry\Figure,
     Geometry\Segment,
     Algebra\Number,
     Algebra\Value,
+    Algebra\Addition,
 };
 
 /**
@@ -44,10 +38,12 @@ final class Triangle implements Figure
             $this->b => $b,
             $this->c => $c,
         };
-        $this->height = Segment::of(multiply(
-            2,
-            divide($this->area(), $base),
-        ));
+        $this->height = Segment::of(
+            $this
+                ->area()
+                ->divideBy($base)
+                ->multiplyBy(Value::two),
+        );
     }
 
     /**
@@ -63,22 +59,19 @@ final class Triangle implements Figure
 
     public function perimeter(): Number
     {
-        return add($this->a, $this->b, $this->c);
+        return Addition::of($this->a, $this->b, $this->c);
     }
 
     public function area(): Number
     {
-        //Heron's formula
+        // Heron's formula
         $p = $this->perimeter()->divideBy(Value::two);
 
-        return squareRoot(
-            multiply(
-                $p,
-                subtract($p, $this->a),
-                subtract($p, $this->b),
-                subtract($p, $this->c),
-            ),
-        );
+        return $p
+            ->multiplyBy($p->subtract($this->a))
+            ->multiplyBy($p->subtract($this->b))
+            ->multiplyBy($p->subtract($this->c))
+            ->squareRoot();
     }
 
     public function base(): Segment

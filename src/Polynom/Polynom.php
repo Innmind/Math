@@ -3,16 +3,12 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Polynom;
 
-use function Innmind\Math\{
-    add,
-    divide,
-    subtract,
-};
 use Innmind\Math\Algebra\{
     Number,
     Integer,
     Operation,
     Value,
+    Addition,
 };
 use Innmind\Immutable\{
     Map,
@@ -54,7 +50,7 @@ final class Polynom
             ->map(static fn($degree) => $degree($x))
             ->toList();
 
-        return add($this->intercept, ...$values);
+        return Addition::of($this->intercept, ...$values);
     }
 
     /**
@@ -117,13 +113,9 @@ final class Polynom
     {
         $limit = $limit ?? Tangent::limit();
 
-        return divide(
-            subtract(
-                $this(add($x, $limit)),
-                $this($x),
-            ),
-            $limit,
-        );
+        return $this($x->add($limit))
+            ->subtract($this($x))
+            ->divideBy($limit);
     }
 
     /**
