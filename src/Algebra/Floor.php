@@ -135,7 +135,7 @@ final class Floor implements Number
 
     public function collapse(): Number
     {
-        return Number\Number::of($this->compute($this->number->collapse()));
+        return Real::of($this->compute($this->number->collapse()));
     }
 
     public function toString(): string

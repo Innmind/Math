@@ -21,7 +21,8 @@ use Innmind\Math\Algebra\{
     BinaryLogarithm,
     NaturalLogarithm,
     CommonLogarithm,
-    Signum
+    Signum,
+    Real,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -30,8 +31,8 @@ class SubtractionTest extends TestCase
     public function testInterface()
     {
         $subtraction = Subtraction::of(
-            Number\Number::of(4),
-            Number\Number::of(2),
+            Real::of(4),
+            Real::of(2),
         );
 
         $this->assertInstanceOf(Operation::class, $subtraction);
@@ -42,8 +43,8 @@ class SubtractionTest extends TestCase
     public function testResult()
     {
         $subtraction = Subtraction::of(
-            Number\Number::of(42),
-            Number\Number::of(24),
+            Real::of(42),
+            Real::of(24),
         );
         $result = $subtraction->result();
 
@@ -55,8 +56,8 @@ class SubtractionTest extends TestCase
     public function testValue()
     {
         $subtraction = Subtraction::of(
-            Number\Number::of(42),
-            Number\Number::of(24),
+            Real::of(42),
+            Real::of(24),
         );
 
         $this->assertSame(18, $subtraction->value());
@@ -65,32 +66,32 @@ class SubtractionTest extends TestCase
     public function testEquals()
     {
         $subtraction = Subtraction::of(
-            Number\Number::of(42),
-            Number\Number::of(24),
+            Real::of(42),
+            Real::of(24),
         );
 
-        $this->assertTrue($subtraction->equals(Number\Number::of(18)));
-        $this->assertFalse($subtraction->equals(Number\Number::of(18.1)));
+        $this->assertTrue($subtraction->equals(Real::of(18)));
+        $this->assertFalse($subtraction->equals(Real::of(18.1)));
     }
 
     public function testHigherThan()
     {
         $subtraction = Subtraction::of(
-            Number\Number::of(42),
-            Number\Number::of(24),
+            Real::of(42),
+            Real::of(24),
         );
 
-        $this->assertFalse($subtraction->higherThan(Number\Number::of(18)));
-        $this->assertTrue($subtraction->higherThan(Number\Number::of(17.9)));
+        $this->assertFalse($subtraction->higherThan(Real::of(18)));
+        $this->assertTrue($subtraction->higherThan(Real::of(17.9)));
     }
 
     public function testAdd()
     {
         $subtraction = Subtraction::of(
-            Number\Number::of(42),
-            Number\Number::of(24),
+            Real::of(42),
+            Real::of(24),
         );
-        $number = $subtraction->add(Number\Number::of(66));
+        $number = $subtraction->add(Real::of(66));
 
         $this->assertInstanceOf(Addition::class, $number);
         $this->assertSame(84, $number->value());
@@ -99,10 +100,10 @@ class SubtractionTest extends TestCase
     public function testSubtract()
     {
         $subtraction = Subtraction::of(
-            Number\Number::of(42),
-            Number\Number::of(24),
+            Real::of(42),
+            Real::of(24),
         );
-        $number = $subtraction->subtract(Number\Number::of(66));
+        $number = $subtraction->subtract(Real::of(66));
 
         $this->assertInstanceOf(Subtraction::class, $number);
         $this->assertSame(-48, $number->value());
@@ -111,10 +112,10 @@ class SubtractionTest extends TestCase
     public function testDivideBy()
     {
         $subtraction = Subtraction::of(
-            Number\Number::of(42),
-            Number\Number::of(24),
+            Real::of(42),
+            Real::of(24),
         );
-        $number = $subtraction->divideBy(Number\Number::of(3));
+        $number = $subtraction->divideBy(Real::of(3));
 
         $this->assertInstanceOf(Division::class, $number);
         $this->assertSame(6, $number->value());
@@ -123,10 +124,10 @@ class SubtractionTest extends TestCase
     public function testMulitplyBy()
     {
         $subtraction = Subtraction::of(
-            Number\Number::of(42),
-            Number\Number::of(24),
+            Real::of(42),
+            Real::of(24),
         );
-        $number = $subtraction->multiplyBy(Number\Number::of(2));
+        $number = $subtraction->multiplyBy(Real::of(2));
 
         $this->assertInstanceOf(Multiplication::class, $number);
         $this->assertSame(36, $number->value());
@@ -135,8 +136,8 @@ class SubtractionTest extends TestCase
     public function testRound()
     {
         $number = Subtraction::of(
-            Number\Number::of(24.55),
-            Number\Number::of(12.33),
+            Real::of(24.55),
+            Real::of(12.33),
         );
 
         $this->assertEquals(Round::up($number, 2), $number->roundUp(2));
@@ -148,8 +149,8 @@ class SubtractionTest extends TestCase
     public function testFloor()
     {
         $subtraction = Subtraction::of(
-            Number\Number::of(24.55),
-            Number\Number::of(12.33),
+            Real::of(24.55),
+            Real::of(12.33),
         );
         $number = $subtraction->floor();
 
@@ -160,8 +161,8 @@ class SubtractionTest extends TestCase
     public function testCeil()
     {
         $subtraction = Subtraction::of(
-            Number\Number::of(24.55),
-            Number\Number::of(12.33),
+            Real::of(24.55),
+            Real::of(12.33),
         );
         $number = $subtraction->ceil();
 
@@ -172,10 +173,10 @@ class SubtractionTest extends TestCase
     public function testModulo()
     {
         $subtraction = Subtraction::of(
-            Number\Number::of(25),
-            Number\Number::of(12),
+            Real::of(25),
+            Real::of(12),
         );
-        $number = $subtraction->modulo(Number\Number::of(6));
+        $number = $subtraction->modulo(Real::of(6));
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertSame(1.0, $number->value());
@@ -184,8 +185,8 @@ class SubtractionTest extends TestCase
     public function testAbsolute()
     {
         $subtraction = Subtraction::of(
-            Number\Number::of(12),
-            Number\Number::of(25),
+            Real::of(12),
+            Real::of(25),
         );
         $number = $subtraction->absolute();
 
@@ -196,10 +197,10 @@ class SubtractionTest extends TestCase
     public function testPower()
     {
         $subtraction = Subtraction::of(
-            Number\Number::of(12),
-            Number\Number::of(6),
+            Real::of(12),
+            Real::of(6),
         );
-        $number = $subtraction->power(Number\Number::of(2));
+        $number = $subtraction->power(Real::of(2));
 
         $this->assertInstanceOf(Power::class, $number);
         $this->assertSame(36, $number->value());
@@ -208,8 +209,8 @@ class SubtractionTest extends TestCase
     public function testSquareRoot()
     {
         $subtraction = Subtraction::of(
-            Number\Number::of(8),
-            Number\Number::of(4),
+            Real::of(8),
+            Real::of(4),
         );
         $number = $subtraction->squareRoot();
 
@@ -220,8 +221,8 @@ class SubtractionTest extends TestCase
     public function testExponential()
     {
         $number = Subtraction::of(
-            Number\Number::of(8),
-            Number\Number::of(4),
+            Real::of(8),
+            Real::of(4),
         )->exponential();
 
         $this->assertInstanceOf(Exponential::class, $number);
@@ -231,8 +232,8 @@ class SubtractionTest extends TestCase
     public function testBinaryLogarithm()
     {
         $number = Subtraction::of(
-            Number\Number::of(8),
-            Number\Number::of(4),
+            Real::of(8),
+            Real::of(4),
         )->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
@@ -242,8 +243,8 @@ class SubtractionTest extends TestCase
     public function testNaturalLogarithm()
     {
         $number = Subtraction::of(
-            Number\Number::of(8),
-            Number\Number::of(4),
+            Real::of(8),
+            Real::of(4),
         )->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
@@ -253,8 +254,8 @@ class SubtractionTest extends TestCase
     public function testCommonLogarithm()
     {
         $number = Subtraction::of(
-            Number\Number::of(8),
-            Number\Number::of(4),
+            Real::of(8),
+            Real::of(4),
         )->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
@@ -264,8 +265,8 @@ class SubtractionTest extends TestCase
     public function testSignum()
     {
         $number = Subtraction::of(
-            Number\Number::of(4),
-            Number\Number::of(3),
+            Real::of(4),
+            Real::of(3),
         )->signum();
 
         $this->assertInstanceOf(Signum::class, $number);
@@ -276,11 +277,11 @@ class SubtractionTest extends TestCase
     {
         $subtraction = Subtraction::of(
             Addition::of(
-                Number\Number::of(12),
-                Number\Number::of(12),
+                Real::of(12),
+                Real::of(12),
             ),
-            Number\Number::of(42),
-            Number\Number::of(66),
+            Real::of(42),
+            Real::of(66),
         );
 
         $this->assertSame('(12 + 12) - 42 - 66', $subtraction->toString());

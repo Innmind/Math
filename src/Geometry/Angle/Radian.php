@@ -7,6 +7,7 @@ use function Innmind\Math\multiply;
 use Innmind\Math\Algebra\{
     Number,
     Value,
+    Real,
 };
 
 /**
@@ -34,7 +35,7 @@ final class Radian
     public function toDegree(): Degree
     {
         return Degree::of(
-            Number\Number::of(
+            Real::of(
                 \rad2deg($this->number->value()),
             ),
         );

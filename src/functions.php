@@ -23,6 +23,7 @@ use Innmind\Math\{
     Algebra\NaturalLogarithm,
     Algebra\CommonLogarithm,
     Algebra\Signum,
+    Algebra\Real,
     Geometry\Angle\Degree,
     Geometry\Angle\Radian,
     Geometry\Trigonometry\Cosine,
@@ -414,7 +415,7 @@ function min(
 function numerize(int|float|Number ...$numbers): array
 {
     return \array_map(
-        static fn($number): Number => $number instanceof Number ? $number : Number\Number::of($number),
+        static fn($number): Number => $number instanceof Number ? $number : Real::of($number),
         $numbers,
     );
 }

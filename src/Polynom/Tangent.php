@@ -7,7 +7,10 @@ use function Innmind\Math\{
     add,
     multiply,
 };
-use Innmind\Math\Algebra\Number;
+use Innmind\Math\Algebra\{
+    Number,
+    Real,
+};
 
 /**
  * @psalm-immutable
@@ -67,6 +70,6 @@ final class Tangent
      */
     public static function limit(): Number
     {
-        return Number\Number::of(0.000000000001);
+        return Real::of(0.000000000001);
     }
 }

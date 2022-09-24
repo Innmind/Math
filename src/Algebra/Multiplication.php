@@ -161,7 +161,7 @@ final class Multiplication implements Operation, Number
             static fn(int|float $carry, $number): int|float => $carry * $number->value(),
         );
 
-        return Number\Number::of($value);
+        return Real::of($value);
     }
 
     public function collapse(): Number

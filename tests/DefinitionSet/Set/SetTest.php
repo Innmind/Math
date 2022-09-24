@@ -9,7 +9,7 @@ use Innmind\Math\{
     DefinitionSet\Union,
     DefinitionSet\Intersection,
     Algebra\Integer,
-    Algebra\Number\Number,
+    Algebra\Real,
     Exception\OutOfDefinitionSet,
 };
 use PHPUnit\Framework\TestCase;
@@ -34,11 +34,11 @@ class SetTest extends TestCase
     {
         $empty = Set::of();
 
-        $this->assertFalse($empty->contains(Number::of(0)));
-        $this->assertFalse($empty->contains(Number::of(1)));
-        $this->assertFalse($empty->contains(Number::of(-1)));
-        $this->assertFalse($empty->contains(Number::of(-0.75)));
-        $this->assertFalse($empty->contains(Number::of(0.75)));
+        $this->assertFalse($empty->contains(Real::of(0)));
+        $this->assertFalse($empty->contains(Real::of(1)));
+        $this->assertFalse($empty->contains(Real::of(-1)));
+        $this->assertFalse($empty->contains(Real::of(-0.75)));
+        $this->assertFalse($empty->contains(Real::of(0.75)));
 
         $set = Set::of(Integer::of(1), Integer::of(2));
 

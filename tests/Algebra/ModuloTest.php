@@ -21,7 +21,8 @@ use Innmind\Math\Algebra\{
     BinaryLogarithm,
     NaturalLogarithm,
     CommonLogarithm,
-    Signum
+    Signum,
+    Real,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -41,8 +42,8 @@ class ModuloTest extends TestCase
     public function testResult()
     {
         $modulo = Modulo::of(
-            Number\Number::of(42.24),
-            Number\Number::of(2.1),
+            Real::of(42.24),
+            Real::of(2.1),
         );
         $result = $modulo->result();
 
@@ -53,8 +54,8 @@ class ModuloTest extends TestCase
     public function testStringCast()
     {
         $modulo = Modulo::of(
-            Number\Number::of(42.24),
-            Number\Number::of(2.1),
+            Real::of(42.24),
+            Real::of(2.1),
         );
 
         $this->assertSame('42.24 % 2.1', $modulo->toString());
@@ -64,12 +65,12 @@ class ModuloTest extends TestCase
     {
         $modulo = Modulo::of(
             Addition::of(
-                Number\Number::of(1),
-                Number\Number::of(1),
+                Real::of(1),
+                Real::of(1),
             ),
             Addition::of(
-                Number\Number::of(2),
-                Number\Number::of(2),
+                Real::of(2),
+                Real::of(2),
             ),
         );
 
@@ -79,32 +80,32 @@ class ModuloTest extends TestCase
     public function testEquals()
     {
         $modulo = Modulo::of(
-            Number\Number::of(42.24),
-            Number\Number::of(2.1),
+            Real::of(42.24),
+            Real::of(2.1),
         );
 
-        $this->assertTrue($modulo->equals(Number\Number::of(0.2400000000000002)));
-        $this->assertFalse($modulo->equals(Number\Number::of(1.24)));
+        $this->assertTrue($modulo->equals(Real::of(0.2400000000000002)));
+        $this->assertFalse($modulo->equals(Real::of(1.24)));
     }
 
     public function testHigherThan()
     {
         $modulo = Modulo::of(
-            Number\Number::of(42.24),
-            Number\Number::of(2.1),
+            Real::of(42.24),
+            Real::of(2.1),
         );
 
-        $this->assertTrue($modulo->higherThan(Number\Number::of(0.23)));
-        $this->assertFalse($modulo->higherThan(Number\Number::of(0.2400000000000002)));
+        $this->assertTrue($modulo->higherThan(Real::of(0.23)));
+        $this->assertFalse($modulo->higherThan(Real::of(0.2400000000000002)));
     }
 
     public function testAdd()
     {
         $modulo = Modulo::of(
-            Number\Number::of(42.24),
-            Number\Number::of(2.1),
+            Real::of(42.24),
+            Real::of(2.1),
         );
-        $number = $modulo->add(Number\Number::of(66));
+        $number = $modulo->add(Real::of(66));
 
         $this->assertInstanceOf(Addition::class, $number);
         $this->assertSame(66.24, $number->value());
@@ -113,10 +114,10 @@ class ModuloTest extends TestCase
     public function testSubtract()
     {
         $modulo = Modulo::of(
-            Number\Number::of(42.24),
-            Number\Number::of(2.1),
+            Real::of(42.24),
+            Real::of(2.1),
         );
-        $number = $modulo->subtract(Number\Number::of(66));
+        $number = $modulo->subtract(Real::of(66));
 
         $this->assertInstanceOf(Subtraction::class, $number);
         $this->assertSame(-65.76, $number->value());
@@ -125,10 +126,10 @@ class ModuloTest extends TestCase
     public function testDivideBy()
     {
         $modulo = Modulo::of(
-            Number\Number::of(42.24),
-            Number\Number::of(2.1),
+            Real::of(42.24),
+            Real::of(2.1),
         );
-        $number = $modulo->divideBy(Number\Number::of(2));
+        $number = $modulo->divideBy(Real::of(2));
 
         $this->assertInstanceOf(Division::class, $number);
         $this->assertSame(0.12, $number->value());
@@ -137,10 +138,10 @@ class ModuloTest extends TestCase
     public function testMulitplyBy()
     {
         $modulo = Modulo::of(
-            Number\Number::of(42.24),
-            Number\Number::of(2.1),
+            Real::of(42.24),
+            Real::of(2.1),
         );
-        $number = $modulo->multiplyBy(Number\Number::of(2));
+        $number = $modulo->multiplyBy(Real::of(2));
 
         $this->assertInstanceOf(Multiplication::class, $number);
         $this->assertEqualsWithDelta(0.48, $number->value(), 0.0001);
@@ -149,8 +150,8 @@ class ModuloTest extends TestCase
     public function testRound()
     {
         $number = Modulo::of(
-            Number\Number::of(42.24),
-            Number\Number::of(2.1),
+            Real::of(42.24),
+            Real::of(2.1),
         );
 
         $this->assertEquals(Round::up($number, 2), $number->roundUp(2));
@@ -162,8 +163,8 @@ class ModuloTest extends TestCase
     public function testFloor()
     {
         $modulo = Modulo::of(
-            Number\Number::of(42.24),
-            Number\Number::of(2.1),
+            Real::of(42.24),
+            Real::of(2.1),
         );
         $number = $modulo->floor();
 
@@ -174,8 +175,8 @@ class ModuloTest extends TestCase
     public function testCeil()
     {
         $modulo = Modulo::of(
-            Number\Number::of(42.24),
-            Number\Number::of(2.1),
+            Real::of(42.24),
+            Real::of(2.1),
         );
         $number = $modulo->ceil();
 
@@ -186,10 +187,10 @@ class ModuloTest extends TestCase
     public function testModulo()
     {
         $modulo = Modulo::of(
-            Number\Number::of(42.24),
-            Number\Number::of(2.1),
+            Real::of(42.24),
+            Real::of(2.1),
         );
-        $number = $modulo->modulo(Number\Number::of(0.1));
+        $number = $modulo->modulo(Real::of(0.1));
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertSame(0.04, $number->value());
@@ -198,8 +199,8 @@ class ModuloTest extends TestCase
     public function testAbsolute()
     {
         $modulo = Modulo::of(
-            Number\Number::of(-42.24),
-            Number\Number::of(2.1),
+            Real::of(-42.24),
+            Real::of(2.1),
         );
         $number = $modulo->absolute();
 
@@ -210,10 +211,10 @@ class ModuloTest extends TestCase
     public function testPower()
     {
         $modulo = Modulo::of(
-            Number\Number::of(9),
-            Number\Number::of(2),
+            Real::of(9),
+            Real::of(2),
         );
-        $number = $modulo->power(Number\Number::of(2));
+        $number = $modulo->power(Real::of(2));
 
         $this->assertInstanceOf(Power::class, $number);
         $this->assertSame(1.0, $number->value());
@@ -222,8 +223,8 @@ class ModuloTest extends TestCase
     public function testSquareRoot()
     {
         $modulo = Modulo::of(
-            Number\Number::of(12),
-            Number\Number::of(8),
+            Real::of(12),
+            Real::of(8),
         );
         $number = $modulo->squareRoot();
 
@@ -234,8 +235,8 @@ class ModuloTest extends TestCase
     public function testExponential()
     {
         $number = Modulo::of(
-            Number\Number::of(12),
-            Number\Number::of(8),
+            Real::of(12),
+            Real::of(8),
         )->exponential();
 
         $this->assertInstanceOf(Exponential::class, $number);
@@ -245,8 +246,8 @@ class ModuloTest extends TestCase
     public function testBinaryLogarithm()
     {
         $number = Modulo::of(
-            Number\Number::of(12),
-            Number\Number::of(8),
+            Real::of(12),
+            Real::of(8),
         )->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
@@ -256,8 +257,8 @@ class ModuloTest extends TestCase
     public function testNaturalLogarithm()
     {
         $number = Modulo::of(
-            Number\Number::of(12),
-            Number\Number::of(8),
+            Real::of(12),
+            Real::of(8),
         )->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
@@ -267,8 +268,8 @@ class ModuloTest extends TestCase
     public function testCommonLogarithm()
     {
         $number = Modulo::of(
-            Number\Number::of(12),
-            Number\Number::of(8),
+            Real::of(12),
+            Real::of(8),
         )->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
@@ -278,8 +279,8 @@ class ModuloTest extends TestCase
     public function testSignum()
     {
         $number = Modulo::of(
-            Number\Number::of(12),
-            Number\Number::of(8),
+            Real::of(12),
+            Real::of(8),
         )->signum();
 
         $this->assertInstanceOf(Signum::class, $number);

@@ -150,7 +150,7 @@ final class Absolute implements Operation, Number
 
     private function compute(Number $number): Number
     {
-        return Number\Number::of(
+        return Real::of(
             \abs($number->value()),
         );
     }

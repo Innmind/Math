@@ -21,7 +21,8 @@ use Innmind\Math\Algebra\{
     BinaryLogarithm,
     NaturalLogarithm,
     CommonLogarithm,
-    Signum
+    Signum,
+    Real,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -30,9 +31,9 @@ class AdditionTest extends TestCase
     public function testInterface()
     {
         $addition = Addition::of(
-            Number\Number::of(24),
-            Number\Number::of(42),
-            Number\Number::of(66),
+            Real::of(24),
+            Real::of(42),
+            Real::of(66),
         );
 
         $this->assertInstanceOf(Operation::class, $addition);
@@ -43,9 +44,9 @@ class AdditionTest extends TestCase
     public function testResult()
     {
         $addition = Addition::of(
-            Number\Number::of(24),
-            Number\Number::of(42),
-            Number\Number::of(66),
+            Real::of(24),
+            Real::of(42),
+            Real::of(66),
         );
         $result = $addition->result();
 
@@ -57,9 +58,9 @@ class AdditionTest extends TestCase
     public function testValue()
     {
         $addition = Addition::of(
-            Number\Number::of(24),
-            Number\Number::of(42),
-            Number\Number::of(66),
+            Real::of(24),
+            Real::of(42),
+            Real::of(66),
         );
 
         $this->assertSame(132, $addition->value());
@@ -68,34 +69,34 @@ class AdditionTest extends TestCase
     public function testEquals()
     {
         $addition = Addition::of(
-            Number\Number::of(24),
-            Number\Number::of(42),
-            Number\Number::of(66),
+            Real::of(24),
+            Real::of(42),
+            Real::of(66),
         );
 
-        $this->assertTrue($addition->equals(Number\Number::of(132)));
-        $this->assertFalse($addition->equals(Number\Number::of(131)));
+        $this->assertTrue($addition->equals(Real::of(132)));
+        $this->assertFalse($addition->equals(Real::of(131)));
     }
 
     public function testHigherThan()
     {
         $addition = Addition::of(
-            Number\Number::of(24),
-            Number\Number::of(42),
-            Number\Number::of(66),
+            Real::of(24),
+            Real::of(42),
+            Real::of(66),
         );
 
-        $this->assertFalse($addition->higherThan(Number\Number::of(132)));
-        $this->assertTrue($addition->higherThan(Number\Number::of(131)));
+        $this->assertFalse($addition->higherThan(Real::of(132)));
+        $this->assertTrue($addition->higherThan(Real::of(131)));
     }
 
     public function testAdd()
     {
         $addition = Addition::of(
-            Number\Number::of(24),
-            Number\Number::of(42),
+            Real::of(24),
+            Real::of(42),
         );
-        $number = $addition->add(Number\Number::of(66));
+        $number = $addition->add(Real::of(66));
 
         $this->assertInstanceOf(Addition::class, $number);
         $this->assertSame(132, $number->value());
@@ -104,10 +105,10 @@ class AdditionTest extends TestCase
     public function testSubtract()
     {
         $addition = Addition::of(
-            Number\Number::of(24),
-            Number\Number::of(42),
+            Real::of(24),
+            Real::of(42),
         );
-        $number = $addition->subtract(Number\Number::of(66));
+        $number = $addition->subtract(Real::of(66));
 
         $this->assertInstanceOf(Subtraction::class, $number);
         $this->assertSame(0, $number->value());
@@ -116,10 +117,10 @@ class AdditionTest extends TestCase
     public function testDivideBy()
     {
         $addition = Addition::of(
-            Number\Number::of(24),
-            Number\Number::of(42),
+            Real::of(24),
+            Real::of(42),
         );
-        $number = $addition->divideBy(Number\Number::of(3));
+        $number = $addition->divideBy(Real::of(3));
 
         $this->assertInstanceOf(Division::class, $number);
         $this->assertSame(22, $number->value());
@@ -128,10 +129,10 @@ class AdditionTest extends TestCase
     public function testMulitplyBy()
     {
         $addition = Addition::of(
-            Number\Number::of(24),
-            Number\Number::of(42),
+            Real::of(24),
+            Real::of(42),
         );
-        $number = $addition->multiplyBy(Number\Number::of(2));
+        $number = $addition->multiplyBy(Real::of(2));
 
         $this->assertInstanceOf(Multiplication::class, $number);
         $this->assertSame(132, $number->value());
@@ -140,8 +141,8 @@ class AdditionTest extends TestCase
     public function testRound()
     {
         $number = Addition::of(
-            Number\Number::of(2.1),
-            Number\Number::of(4.24),
+            Real::of(2.1),
+            Real::of(4.24),
         );
 
         $this->assertEquals(Round::up($number, 2), $number->roundUp(2));
@@ -153,8 +154,8 @@ class AdditionTest extends TestCase
     public function testFloor()
     {
         $addition = Addition::of(
-            Number\Number::of(2.1),
-            Number\Number::of(4.24),
+            Real::of(2.1),
+            Real::of(4.24),
         );
         $number = $addition->floor();
 
@@ -165,8 +166,8 @@ class AdditionTest extends TestCase
     public function testCeil()
     {
         $addition = Addition::of(
-            Number\Number::of(2.1),
-            Number\Number::of(4.24),
+            Real::of(2.1),
+            Real::of(4.24),
         );
         $number = $addition->ceil();
 
@@ -177,10 +178,10 @@ class AdditionTest extends TestCase
     public function testStringCast()
     {
         $addition = Addition::of(
-            Number\Number::of(24),
+            Real::of(24),
             Addition::of(
-                Number\Number::of(42),
-                Number\Number::of(66),
+                Real::of(42),
+                Real::of(66),
             ),
         );
 
@@ -190,10 +191,10 @@ class AdditionTest extends TestCase
     public function testModulo()
     {
         $addition = Addition::of(
-            Number\Number::of(2.1),
-            Number\Number::of(4.24),
+            Real::of(2.1),
+            Real::of(4.24),
         );
-        $number = $addition->modulo(Number\Number::of(0.1));
+        $number = $addition->modulo(Real::of(0.1));
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertEqualsWithDelta(0.04, $number->value(), 0.0001);
@@ -202,8 +203,8 @@ class AdditionTest extends TestCase
     public function testAbsolute()
     {
         $addition = Addition::of(
-            Number\Number::of(2.1),
-            Number\Number::of(4.24),
+            Real::of(2.1),
+            Real::of(4.24),
         );
         $number = $addition->absolute();
 
@@ -214,10 +215,10 @@ class AdditionTest extends TestCase
     public function testPower()
     {
         $addition = Addition::of(
-            Number\Number::of(2),
-            Number\Number::of(4),
+            Real::of(2),
+            Real::of(4),
         );
-        $number = $addition->power(Number\Number::of(2));
+        $number = $addition->power(Real::of(2));
 
         $this->assertInstanceOf(Power::class, $number);
         $this->assertSame(36, $number->value());
@@ -226,8 +227,8 @@ class AdditionTest extends TestCase
     public function testSquareRoot()
     {
         $addition = Addition::of(
-            Number\Number::of(2),
-            Number\Number::of(2),
+            Real::of(2),
+            Real::of(2),
         );
         $number = $addition->squareRoot();
 
@@ -238,8 +239,8 @@ class AdditionTest extends TestCase
     public function testExponential()
     {
         $number = Addition::of(
-            Number\Number::of(2),
-            Number\Number::of(2),
+            Real::of(2),
+            Real::of(2),
         )->exponential();
 
         $this->assertInstanceOf(Exponential::class, $number);
@@ -249,8 +250,8 @@ class AdditionTest extends TestCase
     public function testBinaryLogarithm()
     {
         $number = Addition::of(
-            Number\Number::of(2),
-            Number\Number::of(2),
+            Real::of(2),
+            Real::of(2),
         )->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
@@ -260,8 +261,8 @@ class AdditionTest extends TestCase
     public function testNaturalLogarithm()
     {
         $number = Addition::of(
-            Number\Number::of(2),
-            Number\Number::of(2),
+            Real::of(2),
+            Real::of(2),
         )->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
@@ -271,8 +272,8 @@ class AdditionTest extends TestCase
     public function testCommonLogarithm()
     {
         $number = Addition::of(
-            Number\Number::of(2),
-            Number\Number::of(2),
+            Real::of(2),
+            Real::of(2),
         )->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
@@ -282,8 +283,8 @@ class AdditionTest extends TestCase
     public function testSignum()
     {
         $number = Addition::of(
-            Number\Number::of(2),
-            Number\Number::of(2),
+            Real::of(2),
+            Real::of(2),
         )->signum();
 
         $this->assertInstanceOf(Signum::class, $number);

@@ -10,6 +10,7 @@ use Innmind\Math\{
     Matrix,
     Algebra\Number,
     Algebra\Integer,
+    Algebra\Real,
     Exception\VectorsMustMeOfTheSameDimension
 };
 use PHPUnit\Framework\TestCase;
@@ -72,7 +73,7 @@ class RowVectorTest extends TestCase
     {
         $row = RowVector::of(...numerize(25, 5, 1));
         $row2 = $row->multiplyBy(
-            RowVector::initialize(Integer::of(3), Number\Number::of(2.56)),
+            RowVector::initialize(Integer::of(3), Real::of(2.56)),
         );
 
         $this->assertInstanceOf(RowVector::class, $row2);
@@ -84,8 +85,8 @@ class RowVectorTest extends TestCase
     {
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
-        RowVector::initialize(Integer::of(1), Number\Number::of(1))->multiplyBy(
-            RowVector::initialize(Integer::of(2), Number\Number::of(1)),
+        RowVector::initialize(Integer::of(1), Real::of(1))->multiplyBy(
+            RowVector::initialize(Integer::of(2), Real::of(1)),
         );
     }
 
@@ -93,7 +94,7 @@ class RowVectorTest extends TestCase
     {
         $row = RowVector::of(...numerize(25, 5, 1));
         $row2 = $row->divideBy(
-            RowVector::initialize(Integer::of(3), Number\Number::of(5)),
+            RowVector::initialize(Integer::of(3), Real::of(5)),
         );
 
         $this->assertInstanceOf(RowVector::class, $row2);
@@ -105,14 +106,14 @@ class RowVectorTest extends TestCase
     {
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
-        RowVector::initialize(Integer::of(1), Number\Number::of(1))->divideBy(
-            RowVector::initialize(Integer::of(2), Number\Number::of(1)),
+        RowVector::initialize(Integer::of(1), Real::of(1))->divideBy(
+            RowVector::initialize(Integer::of(2), Real::of(1)),
         );
     }
 
     public function testInitialize()
     {
-        $vector = RowVector::initialize(Integer::of(4), Number\Number::of(1.2));
+        $vector = RowVector::initialize(Integer::of(4), Real::of(1.2));
 
         $this->assertInstanceOf(RowVector::class, $vector);
         $this->assertSame([1.2, 1.2, 1.2, 1.2], $vector->toList());
@@ -138,8 +139,8 @@ class RowVectorTest extends TestCase
     {
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
-        RowVector::initialize(Integer::of(1), Number\Number::of(1))->subtract(
-            RowVector::initialize(Integer::of(2), Number\Number::of(1)),
+        RowVector::initialize(Integer::of(1), Real::of(1))->subtract(
+            RowVector::initialize(Integer::of(2), Real::of(1)),
         );
     }
 
@@ -163,8 +164,8 @@ class RowVectorTest extends TestCase
     {
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
-        RowVector::initialize(Integer::of(1), Number\Number::of(1))->add(
-            RowVector::initialize(Integer::of(2), Number\Number::of(1)),
+        RowVector::initialize(Integer::of(1), Real::of(1))->add(
+            RowVector::initialize(Integer::of(2), Real::of(1)),
         );
     }
 
@@ -172,7 +173,7 @@ class RowVectorTest extends TestCase
     {
         $vector1 = RowVector::of(...numerize(1, 2, 3, -4));
 
-        $vector2 = $vector1->power(Number\Number::of(3));
+        $vector2 = $vector1->power(Real::of(3));
 
         $this->assertInstanceOf(RowVector::class, $vector2);
         $this->assertNotSame($vector2, $vector1);

@@ -6,6 +6,7 @@ namespace Innmind\Math\Geometry\Angle;
 use Innmind\Math\Algebra\{
     Number,
     Integer,
+    Real,
 };
 
 /**
@@ -17,7 +18,7 @@ final class Degree
 
     private function __construct(Number $number)
     {
-        $modulus = Number\Number::of(360);
+        $modulus = Integer::of(360);
         $this->number = $number
             ->modulo($modulus)
             ->add($modulus)
@@ -35,7 +36,7 @@ final class Degree
     public function toRadian(): Radian
     {
         return Radian::of(
-            Number\Number::of(
+            Real::of(
                 \deg2rad($this->number->value()),
             ),
         );

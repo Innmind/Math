@@ -6,6 +6,7 @@ namespace Innmind\Math\Statistics;
 use Innmind\Math\Algebra\{
     Number,
     Division,
+    Real,
 };
 use Innmind\Immutable\Sequence;
 
@@ -24,7 +25,7 @@ final class Frequence
     private function __construct(Number ...$values)
     {
         $this->values = Sequence::of(...$values);
-        $this->size = Number\Number::of($this->values->size());
+        $this->size = Real::of($this->values->size());
     }
 
     public function __invoke(Number $number): Number
@@ -36,7 +37,7 @@ final class Frequence
             })
             ->size();
 
-        return Division::of(Number\Number::of($frequence), $this->size);
+        return Division::of(Real::of($frequence), $this->size);
     }
 
     /**

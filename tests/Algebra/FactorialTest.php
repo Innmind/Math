@@ -23,6 +23,7 @@ use Innmind\Math\{
     Algebra\NaturalLogarithm,
     Algebra\CommonLogarithm,
     Algebra\Signum,
+    Algebra\Real,
     Exception\FactorialMustBePositive
 };
 use PHPUnit\Framework\TestCase;
@@ -55,14 +56,14 @@ class FactorialTest extends TestCase
     public function testEquals()
     {
         $this->assertTrue(Factorial::of(3)->equals(Factorial::of(3)));
-        $this->assertTrue(Factorial::of(3)->equals(Number\Number::of(6.0)));
-        $this->assertFalse(Factorial::of(3)->equals(Number\Number::of(42.24)));
+        $this->assertTrue(Factorial::of(3)->equals(Real::of(6.0)));
+        $this->assertFalse(Factorial::of(3)->equals(Real::of(42.24)));
     }
 
     public function testHigherThan()
     {
         $this->assertFalse(Factorial::of(3)->higherThan(Factorial::of(3)));
-        $this->assertTrue(Factorial::of(3)->higherThan(Number\Number::of(1.24)));
+        $this->assertTrue(Factorial::of(3)->higherThan(Real::of(1.24)));
     }
 
     public function testAdd()

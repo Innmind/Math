@@ -9,7 +9,7 @@ use Innmind\Math\{
     DefinitionSet\Union,
     DefinitionSet\Intersection,
     Algebra\Integer,
-    Algebra\Number\Number,
+    Algebra\Real,
     Exception\OutOfDefinitionSet,
 };
 use PHPUnit\Framework\TestCase;
@@ -58,19 +58,19 @@ class RangeTest extends TestCase
     {
         $inclusive = Range::inclusive(Integer::of(1), Integer::of(2));
 
-        $this->assertTrue($inclusive->contains(Number::of(1)));
-        $this->assertTrue($inclusive->contains(Number::of(1.5)));
-        $this->assertTrue($inclusive->contains(Number::of(2)));
-        $this->assertFalse($inclusive->contains(Number::of(0)));
-        $this->assertFalse($inclusive->contains(Number::of(2.1)));
+        $this->assertTrue($inclusive->contains(Real::of(1)));
+        $this->assertTrue($inclusive->contains(Real::of(1.5)));
+        $this->assertTrue($inclusive->contains(Real::of(2)));
+        $this->assertFalse($inclusive->contains(Real::of(0)));
+        $this->assertFalse($inclusive->contains(Real::of(2.1)));
 
         $exclusive = Range::exclusive(Integer::of(1), Integer::of(2));
 
-        $this->assertTrue($exclusive->contains(Number::of(1.5)));
-        $this->assertFalse($exclusive->contains(Number::of(1)));
-        $this->assertFalse($exclusive->contains(Number::of(2)));
-        $this->assertFalse($exclusive->contains(Number::of(0)));
-        $this->assertFalse($exclusive->contains(Number::of(2.1)));
+        $this->assertTrue($exclusive->contains(Real::of(1.5)));
+        $this->assertFalse($exclusive->contains(Real::of(1)));
+        $this->assertFalse($exclusive->contains(Real::of(2)));
+        $this->assertFalse($exclusive->contains(Real::of(0)));
+        $this->assertFalse($exclusive->contains(Real::of(2.1)));
     }
 
     public function testAccept()
@@ -82,7 +82,7 @@ class RangeTest extends TestCase
         $this->expectException(OutOfDefinitionSet::class);
         $this->expectExceptionMessage('0.1 ∉ [1;2]');
 
-        $set->accept(Number::of(0.1));
+        $set->accept(Real::of(0.1));
     }
 
     public function testUnion()

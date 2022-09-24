@@ -8,6 +8,7 @@ use Innmind\Math\{
     Geometry\Angle\Radian,
     Algebra\Number,
     Algebra\Round,
+    Algebra\Real,
 };
 
 /**
@@ -164,7 +165,7 @@ final class ArcTangent implements Number
 
     private function arcTangent(): Degree
     {
-        $radians = Number\Number::of(
+        $radians = Real::of(
             \atan(
                 $this->number->value(),
             ),

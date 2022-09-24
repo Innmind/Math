@@ -167,7 +167,7 @@ final class CommonLogarithm implements Operation, Number
 
     private function compute(Number $number): Number
     {
-        return Number\Number::of(
+        return Real::of(
             \log10($number->value()),
         );
     }

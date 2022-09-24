@@ -188,7 +188,7 @@ final class Division implements Operation, Number
 
     private function compute(Number $dividend, Number $divisor): Number
     {
-        return Number\Number::of(
+        return Real::of(
             $dividend->value() / $divisor->value(),
         );
     }

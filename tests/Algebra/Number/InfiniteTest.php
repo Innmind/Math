@@ -22,6 +22,7 @@ use Innmind\Math\{
     Algebra\NaturalLogarithm,
     Algebra\CommonLogarithm,
     Algebra\Signum,
+    Algebra\Real,
     Exception\NotANumber,
     Exception\OutOfDefinitionSet
 };
@@ -43,19 +44,19 @@ class InfiniteTest extends TestCase
     public function testEquals()
     {
         $this->assertTrue((Value::infinite)->equals(Value::infinite));
-        $this->assertFalse((Value::infinite)->equals(Number\Number::of(3.14)));
+        $this->assertFalse((Value::infinite)->equals(Real::of(3.14)));
     }
 
     public function testHigherThan()
     {
-        $this->assertTrue((Value::infinite)->higherThan(Number\Number::of(3.14)));
+        $this->assertTrue((Value::infinite)->higherThan(Real::of(3.14)));
         $this->assertFalse((Value::infinite)->higherThan(Value::infinite));
     }
 
     public function testAdd()
     {
         $number = Value::infinite;
-        $number = $number->add(Number\Number::of(66));
+        $number = $number->add(Real::of(66));
 
         $this->assertInstanceOf(Addition::class, $number);
         $this->assertSame(\INF, $number->value());
@@ -64,7 +65,7 @@ class InfiniteTest extends TestCase
     public function testSubtract()
     {
         $number = Value::infinite;
-        $number = $number->subtract(Number\Number::of(66));
+        $number = $number->subtract(Real::of(66));
 
         $this->assertInstanceOf(Subtraction::class, $number);
         $this->assertSame(\INF, $number->value());
@@ -73,7 +74,7 @@ class InfiniteTest extends TestCase
     public function testDivideBy()
     {
         $number = Value::infinite;
-        $number = $number->divideBy(Number\Number::of(2));
+        $number = $number->divideBy(Real::of(2));
 
         $this->assertInstanceOf(Division::class, $number);
         $this->assertSame(\INF, $number->value());
@@ -82,7 +83,7 @@ class InfiniteTest extends TestCase
     public function testMulitplyBy()
     {
         $number = Value::infinite;
-        $number = $number->multiplyBy(Number\Number::of(2));
+        $number = $number->multiplyBy(Real::of(2));
 
         $this->assertInstanceOf(Multiplication::class, $number);
         $this->assertSame(\INF, $number->value());
@@ -122,7 +123,7 @@ class InfiniteTest extends TestCase
 
         $this->expectException(NotANumber::class);
 
-        $number->modulo(Number\Number::of(1))->value();
+        $number->modulo(Real::of(1))->value();
     }
 
     public function testAbsolute()
@@ -137,7 +138,7 @@ class InfiniteTest extends TestCase
     public function testPower()
     {
         $number = Value::infinite;
-        $number = $number->power(Number\Number::of(2));
+        $number = $number->power(Real::of(2));
 
         $this->assertInstanceOf(Power::class, $number);
         $this->assertSame(\INF, $number->value());

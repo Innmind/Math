@@ -153,7 +153,7 @@ final class Exponential implements Operation, Number
 
     private function compute(Number $power): Number
     {
-        return Number\Number::of(
+        return Real::of(
             \exp($power->value()),
         );
     }

@@ -160,7 +160,7 @@ final class Modulo implements Operation, Number
 
     private function compute(Number $number, Number $modulus): Number
     {
-        return Number\Number::of(
+        return Real::of(
             \fmod($number->value(), $modulus->value()),
         );
     }

@@ -9,7 +9,7 @@ use Innmind\Math\{
     DefinitionSet\Union,
     DefinitionSet\Intersection,
     Algebra\Integer,
-    Algebra\Number\Number,
+    Algebra\Real,
     Algebra\Value,
 };
 use PHPUnit\Framework\TestCase;
@@ -36,8 +36,8 @@ class RealNumbersTest extends TestCase
         $this->assertTrue($set->contains(Integer::of(1)));
         $this->assertTrue($set->contains(Integer::of(0)));
         $this->assertTrue($set->contains(Integer::of(-1)));
-        $this->assertTrue($set->contains(Number::of(0.75)));
-        $this->assertTrue($set->contains(Number::of(-0.75)));
+        $this->assertTrue($set->contains(Real::of(0.75)));
+        $this->assertTrue($set->contains(Real::of(-0.75)));
         $this->assertTrue($set->contains(Value::pi));
     }
 
@@ -48,8 +48,8 @@ class RealNumbersTest extends TestCase
         $this->assertNull($set->accept(Integer::of(1)));
         $this->assertNull($set->accept(Integer::of(0)));
         $this->assertNull($set->accept(Integer::of(-1)));
-        $this->assertNull($set->accept(Number::of(0.75)));
-        $this->assertNull($set->accept(Number::of(-0.75)));
+        $this->assertNull($set->accept(Real::of(0.75)));
+        $this->assertNull($set->accept(Real::of(-0.75)));
         $this->assertNull($set->accept(Value::pi));
     }
 

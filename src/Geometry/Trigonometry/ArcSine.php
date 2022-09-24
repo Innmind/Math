@@ -8,6 +8,7 @@ use Innmind\Math\{
     Geometry\Angle\Radian,
     Algebra\Number,
     Algebra\Round,
+    Algebra\Real,
 };
 
 /**
@@ -158,7 +159,7 @@ final class ArcSine implements Number
 
     private function arcSine(): Degree
     {
-        $radians = Number\Number::of(
+        $radians = Real::of(
             \asin(
                 $this->number->value(),
             ),

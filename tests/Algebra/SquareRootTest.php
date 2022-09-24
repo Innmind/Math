@@ -23,6 +23,7 @@ use Innmind\Math\Algebra\{
     CommonLogarithm,
     Signum,
     Integer,
+    Real,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -30,7 +31,7 @@ class SquareRootTest extends TestCase
 {
     public function testInterface()
     {
-        $sqrt = SquareRoot::of(Number\Number::of(42.42));
+        $sqrt = SquareRoot::of(Real::of(42.42));
 
         $this->assertInstanceOf(Number::class, $sqrt);
         $this->assertInstanceOf(Operation::class, $sqrt);
@@ -38,7 +39,7 @@ class SquareRootTest extends TestCase
 
     public function testResult()
     {
-        $sqrt = SquareRoot::of(Number\Number::of(4));
+        $sqrt = SquareRoot::of(Real::of(4));
         $result = $sqrt->result();
 
         $this->assertInstanceOf(Number::class, $result);
@@ -47,7 +48,7 @@ class SquareRootTest extends TestCase
 
     public function testValue()
     {
-        $sqrt = SquareRoot::of(Number\Number::of(4));
+        $sqrt = SquareRoot::of(Real::of(4));
 
         $this->assertSame(2.0, $sqrt->value());
     }
@@ -56,30 +57,30 @@ class SquareRootTest extends TestCase
     {
         $this->assertSame(
             '√4',
-            SquareRoot::of(Number\Number::of(4))->toString(),
+            SquareRoot::of(Real::of(4))->toString(),
         );
     }
 
     public function testEquals()
     {
-        $sqrt = SquareRoot::of(Number\Number::of(4));
+        $sqrt = SquareRoot::of(Real::of(4));
 
-        $this->assertTrue($sqrt->equals(Number\Number::of(2)));
-        $this->assertFalse($sqrt->equals(Number\Number::of(4.1)));
+        $this->assertTrue($sqrt->equals(Real::of(2)));
+        $this->assertFalse($sqrt->equals(Real::of(4.1)));
     }
 
     public function testHigherThan()
     {
-        $sqrt = SquareRoot::of(Number\Number::of(4));
+        $sqrt = SquareRoot::of(Real::of(4));
 
-        $this->assertTrue($sqrt->higherThan(Number\Number::of(0)));
-        $this->assertFalse($sqrt->higherThan(Number\Number::of(4)));
+        $this->assertTrue($sqrt->higherThan(Real::of(0)));
+        $this->assertFalse($sqrt->higherThan(Real::of(4)));
     }
 
     public function testAdd()
     {
-        $sqrt = SquareRoot::of(Number\Number::of(4));
-        $number = $sqrt->add(Number\Number::of(7));
+        $sqrt = SquareRoot::of(Real::of(4));
+        $number = $sqrt->add(Real::of(7));
 
         $this->assertInstanceOf(Addition::class, $number);
         $this->assertSame(9.0, $number->value());
@@ -87,8 +88,8 @@ class SquareRootTest extends TestCase
 
     public function testSubtract()
     {
-        $sqrt = SquareRoot::of(Number\Number::of(4));
-        $number = $sqrt->subtract(Number\Number::of(7));
+        $sqrt = SquareRoot::of(Real::of(4));
+        $number = $sqrt->subtract(Real::of(7));
 
         $this->assertInstanceOf(Subtraction::class, $number);
         $this->assertSame(-5.0, $number->value());
@@ -96,8 +97,8 @@ class SquareRootTest extends TestCase
 
     public function testMultiplication()
     {
-        $sqrt = SquareRoot::of(Number\Number::of(4));
-        $number = $sqrt->multiplyBy(Number\Number::of(2));
+        $sqrt = SquareRoot::of(Real::of(4));
+        $number = $sqrt->multiplyBy(Real::of(2));
 
         $this->assertInstanceOf(Multiplication::class, $number);
         $this->assertSame(4.0, $number->value());
@@ -105,8 +106,8 @@ class SquareRootTest extends TestCase
 
     public function testDivision()
     {
-        $sqrt = SquareRoot::of(Number\Number::of(4));
-        $number = $sqrt->divideBy(Number\Number::of(2));
+        $sqrt = SquareRoot::of(Real::of(4));
+        $number = $sqrt->divideBy(Real::of(2));
 
         $this->assertInstanceOf(Division::class, $number);
         $this->assertSame(1.0, $number->value());
@@ -114,7 +115,7 @@ class SquareRootTest extends TestCase
 
     public function testRound()
     {
-        $number = SquareRoot::of(Number\Number::of(2));
+        $number = SquareRoot::of(Real::of(2));
 
         $this->assertEquals(Round::up($number, 2), $number->roundUp(2));
         $this->assertEquals(Round::down($number, 2), $number->roundDown(2));
@@ -124,7 +125,7 @@ class SquareRootTest extends TestCase
 
     public function testFloor()
     {
-        $sqrt = SquareRoot::of(Number\Number::of(2));
+        $sqrt = SquareRoot::of(Real::of(2));
         $number = $sqrt->floor();
 
         $this->assertInstanceOf(Floor::class, $number);
@@ -133,7 +134,7 @@ class SquareRootTest extends TestCase
 
     public function testCeil()
     {
-        $sqrt = SquareRoot::of(Number\Number::of(2));
+        $sqrt = SquareRoot::of(Real::of(2));
         $number = $sqrt->ceil();
 
         $this->assertInstanceOf(Ceil::class, $number);
@@ -142,7 +143,7 @@ class SquareRootTest extends TestCase
 
     public function testAbsolute()
     {
-        $sqrt = SquareRoot::of(Number\Number::of(4));
+        $sqrt = SquareRoot::of(Real::of(4));
         $number = $sqrt->absolute();
 
         $this->assertInstanceOf(Absolute::class, $number);
@@ -151,8 +152,8 @@ class SquareRootTest extends TestCase
 
     public function testModulo()
     {
-        $sqrt = SquareRoot::of(Number\Number::of(4));
-        $number = $sqrt->modulo(Number\Number::of(2));
+        $sqrt = SquareRoot::of(Real::of(4));
+        $number = $sqrt->modulo(Real::of(2));
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertSame(0.0, $number->value());
@@ -160,8 +161,8 @@ class SquareRootTest extends TestCase
 
     public function testPower()
     {
-        $sqrt = SquareRoot::of(Number\Number::of(4));
-        $number = $sqrt->power(Number\Number::of(2));
+        $sqrt = SquareRoot::of(Real::of(4));
+        $number = $sqrt->power(Real::of(2));
 
         $this->assertInstanceOf(Power::class, $number);
         $this->assertSame(4.0, $number->value());
@@ -169,7 +170,7 @@ class SquareRootTest extends TestCase
 
     public function testSquareRoot()
     {
-        $sqrt = SquareRoot::of(Number\Number::of(16));
+        $sqrt = SquareRoot::of(Real::of(16));
         $number = $sqrt->squareRoot();
 
         $this->assertInstanceOf(SquareRoot::class, $number);
@@ -178,7 +179,7 @@ class SquareRootTest extends TestCase
 
     public function testExponential()
     {
-        $number = SquareRoot::of(Number\Number::of(16))->exponential();
+        $number = SquareRoot::of(Real::of(16))->exponential();
 
         $this->assertInstanceOf(Exponential::class, $number);
         $this->assertSame(\exp(4), $number->value());
@@ -186,7 +187,7 @@ class SquareRootTest extends TestCase
 
     public function testBinaryLogarithm()
     {
-        $number = SquareRoot::of(Number\Number::of(16))->binaryLogarithm();
+        $number = SquareRoot::of(Real::of(16))->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
         $this->assertSame(\log(4, 2), $number->value());
@@ -194,7 +195,7 @@ class SquareRootTest extends TestCase
 
     public function testNaturalLogarithm()
     {
-        $number = SquareRoot::of(Number\Number::of(16))->naturalLogarithm();
+        $number = SquareRoot::of(Real::of(16))->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
         $this->assertSame(\log(4), $number->value());
@@ -202,7 +203,7 @@ class SquareRootTest extends TestCase
 
     public function testCommonLogarithm()
     {
-        $number = SquareRoot::of(Number\Number::of(16))->commonLogarithm();
+        $number = SquareRoot::of(Real::of(16))->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
         $this->assertSame(\log10(4), $number->value());
@@ -210,7 +211,7 @@ class SquareRootTest extends TestCase
 
     public function testSignum()
     {
-        $number = SquareRoot::of(Number\Number::of(16))->signum();
+        $number = SquareRoot::of(Real::of(16))->signum();
 
         $this->assertInstanceOf(Signum::class, $number);
         $this->assertSame(1, $number->value());
@@ -220,9 +221,9 @@ class SquareRootTest extends TestCase
     {
         //sqrt(a)^2 === a
         $this->assertTrue(
-            ($a = Number\Number::of(9))
+            ($a = Real::of(9))
                 ->squareRoot()
-                ->power(Number\Number::of(2))
+                ->power(Real::of(2))
                 ->equals($a),
         );
     }
@@ -231,8 +232,8 @@ class SquareRootTest extends TestCase
     {
         //sqrt(a*b) === sqrt(a) * sqrt(b)
         $this->assertTrue(
-            ($a = Number\Number::of(4))
-                ->multiplyBy($b = Number\Number::of(9))
+            ($a = Real::of(4))
+                ->multiplyBy($b = Real::of(9))
                 ->squareRoot()
                 ->equals(
                     $a
@@ -248,8 +249,8 @@ class SquareRootTest extends TestCase
     {
         //sqrt(a/b) === sqrt(a) / sqrt(b)
         $this->assertTrue(
-            ($a = Number\Number::of(4))
-                ->divideBy($b = Number\Number::of(9))
+            ($a = Real::of(4))
+                ->divideBy($b = Real::of(9))
                 ->squareRoot()
                 ->equals(
                     $a
@@ -265,11 +266,11 @@ class SquareRootTest extends TestCase
     {
         //sqrt(a*n) + sqrt(b*n) === sqrt((sqrt(a) + sqrt(b))^2 * n)
         $this->assertTrue(
-            ($a = Number\Number::of(9))
-                ->multiplyBy($n = Number\Number::of(2))
+            ($a = Real::of(9))
+                ->multiplyBy($n = Real::of(2))
                 ->squareRoot()
                 ->add(
-                    ($b = Number\Number::of(4))
+                    ($b = Real::of(4))
                         ->multiplyBy($n)
                         ->squareRoot(),
                 )
@@ -279,7 +280,7 @@ class SquareRootTest extends TestCase
                         ->add(
                             $b->squareRoot(),
                         )
-                        ->power(Number\Number::of(2))
+                        ->power(Real::of(2))
                         ->multiplyBy($n)
                         ->squareRoot(),
                 ),
@@ -290,10 +291,10 @@ class SquareRootTest extends TestCase
     {
         //sqrt(a) === a^0.5
         $this->assertTrue(
-            ($a = Number\Number::of(4))
+            ($a = Real::of(4))
                 ->squareRoot()
                 ->equals(
-                    $a->power(Number\Number::of(0.5)),
+                    $a->power(Real::of(0.5)),
                 ),
         );
     }

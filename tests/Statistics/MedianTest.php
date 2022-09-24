@@ -21,7 +21,8 @@ use Innmind\Math\{
     Algebra\BinaryLogarithm,
     Algebra\NaturalLogarithm,
     Algebra\CommonLogarithm,
-    Algebra\Signum
+    Algebra\Signum,
+    Algebra\Real,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -30,16 +31,16 @@ class MedianTest extends TestCase
     public function testEvenSetResult()
     {
         $median = Median::of(
-            Number\Number::of(1),
-            Number\Number::of(2),
-            Number\Number::of(2),
-            Number\Number::of(2),
-            Number\Number::of(3),
-            Number\Number::of(5),
-            Number\Number::of(5),
-            Number\Number::of(6),
-            Number\Number::of(6),
-            Number\Number::of(7),
+            Real::of(1),
+            Real::of(2),
+            Real::of(2),
+            Real::of(2),
+            Real::of(3),
+            Real::of(5),
+            Real::of(5),
+            Real::of(6),
+            Real::of(6),
+            Real::of(7),
         );
 
         $this->assertInstanceOf(Number::class, $median->result());
@@ -50,17 +51,17 @@ class MedianTest extends TestCase
     public function testOddSetResult()
     {
         $median = Median::of(
-            Number\Number::of(1),
-            Number\Number::of(2),
-            Number\Number::of(2),
-            Number\Number::of(2),
-            Number\Number::of(3),
-            $expected = Number\Number::of(5),
-            Number\Number::of(5),
-            Number\Number::of(6),
-            Number\Number::of(6),
-            Number\Number::of(7),
-            Number\Number::of(8),
+            Real::of(1),
+            Real::of(2),
+            Real::of(2),
+            Real::of(2),
+            Real::of(3),
+            $expected = Real::of(5),
+            Real::of(5),
+            Real::of(6),
+            Real::of(6),
+            Real::of(7),
+            Real::of(8),
         );
 
         $this->assertInstanceOf(Number::class, $median->result());
@@ -72,33 +73,33 @@ class MedianTest extends TestCase
     public function testEquals()
     {
         $median = Median::of(
-            Number\Number::of(1),
-            Number\Number::of(7),
+            Real::of(1),
+            Real::of(7),
         );
 
-        $this->assertTrue($median->equals(Number\Number::of(4)));
-        $this->assertTrue($median->equals(Number\Number::of(4.0)));
-        $this->assertFalse($median->equals(Number\Number::of(4.1)));
+        $this->assertTrue($median->equals(Real::of(4)));
+        $this->assertTrue($median->equals(Real::of(4.0)));
+        $this->assertFalse($median->equals(Real::of(4.1)));
     }
 
     public function testHigherThan()
     {
         $median = Median::of(
-            Number\Number::of(1),
-            Number\Number::of(7),
+            Real::of(1),
+            Real::of(7),
         );
 
-        $this->assertTrue($median->higherThan(Number\Number::of(3.9)));
-        $this->assertFalse($median->higherThan(Number\Number::of(4)));
+        $this->assertTrue($median->higherThan(Real::of(3.9)));
+        $this->assertFalse($median->higherThan(Real::of(4)));
     }
 
     public function testAdd()
     {
         $median = Median::of(
-            Number\Number::of(1),
-            Number\Number::of(7),
+            Real::of(1),
+            Real::of(7),
         );
-        $number = $median->add(Number\Number::of(66));
+        $number = $median->add(Real::of(66));
 
         $this->assertInstanceOf(Addition::class, $number);
         $this->assertSame(70, $number->value());
@@ -107,10 +108,10 @@ class MedianTest extends TestCase
     public function testSubtract()
     {
         $median = Median::of(
-            Number\Number::of(1),
-            Number\Number::of(7),
+            Real::of(1),
+            Real::of(7),
         );
-        $number = $median->subtract(Number\Number::of(66));
+        $number = $median->subtract(Real::of(66));
 
         $this->assertInstanceOf(Subtraction::class, $number);
         $this->assertSame(-62, $number->value());
@@ -119,10 +120,10 @@ class MedianTest extends TestCase
     public function testDivideBy()
     {
         $median = Median::of(
-            Number\Number::of(1),
-            Number\Number::of(7),
+            Real::of(1),
+            Real::of(7),
         );
-        $number = $median->divideBy(Number\Number::of(2));
+        $number = $median->divideBy(Real::of(2));
 
         $this->assertInstanceOf(Division::class, $number);
         $this->assertSame(2, $number->value());
@@ -131,10 +132,10 @@ class MedianTest extends TestCase
     public function testMulitplyBy()
     {
         $median = Median::of(
-            Number\Number::of(1),
-            Number\Number::of(7),
+            Real::of(1),
+            Real::of(7),
         );
-        $number = $median->multiplyBy(Number\Number::of(2));
+        $number = $median->multiplyBy(Real::of(2));
 
         $this->assertInstanceOf(Multiplication::class, $number);
         $this->assertSame(8, $number->value());
@@ -143,8 +144,8 @@ class MedianTest extends TestCase
     public function testRound()
     {
         $number = Median::of(
-            Number\Number::of(1),
-            Number\Number::of(7.12),
+            Real::of(1),
+            Real::of(7.12),
         );
 
         $this->assertEquals(4.1, $number->roundUp(1)->value());
@@ -156,8 +157,8 @@ class MedianTest extends TestCase
     public function testFloor()
     {
         $median = Median::of(
-            Number\Number::of(1),
-            Number\Number::of(7.1),
+            Real::of(1),
+            Real::of(7.1),
         );
         $number = $median->floor();
 
@@ -168,8 +169,8 @@ class MedianTest extends TestCase
     public function testCeil()
     {
         $median = Median::of(
-            Number\Number::of(1),
-            Number\Number::of(7.1),
+            Real::of(1),
+            Real::of(7.1),
         );
         $number = $median->ceil();
 
@@ -180,10 +181,10 @@ class MedianTest extends TestCase
     public function testModulo()
     {
         $median = Median::of(
-            Number\Number::of(1),
-            Number\Number::of(7),
+            Real::of(1),
+            Real::of(7),
         );
-        $number = $median->modulo(Number\Number::of(3));
+        $number = $median->modulo(Real::of(3));
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertSame(1.0, $number->value());
@@ -192,8 +193,8 @@ class MedianTest extends TestCase
     public function testAbsolute()
     {
         $median = Median::of(
-            Number\Number::of(-1),
-            Number\Number::of(-7),
+            Real::of(-1),
+            Real::of(-7),
         );
         $number = $median->absolute();
 
@@ -204,10 +205,10 @@ class MedianTest extends TestCase
     public function testPower()
     {
         $median = Median::of(
-            Number\Number::of(1),
-            Number\Number::of(7),
+            Real::of(1),
+            Real::of(7),
         );
-        $number = $median->power(Number\Number::of(2));
+        $number = $median->power(Real::of(2));
 
         $this->assertInstanceOf(Power::class, $number);
         $this->assertSame(16, $number->value());
@@ -216,8 +217,8 @@ class MedianTest extends TestCase
     public function testSquareRoot()
     {
         $median = Median::of(
-            Number\Number::of(1),
-            Number\Number::of(7),
+            Real::of(1),
+            Real::of(7),
         );
         $number = $median->squareRoot();
 
@@ -228,8 +229,8 @@ class MedianTest extends TestCase
     public function testExponential()
     {
         $mean = Median::of(
-            Number\Number::of(1),
-            Number\Number::of(7),
+            Real::of(1),
+            Real::of(7),
         );
         $number = $mean->exponential();
 
@@ -240,8 +241,8 @@ class MedianTest extends TestCase
     public function testBinaryLogarithm()
     {
         $number = Median::of(
-            Number\Number::of(1),
-            Number\Number::of(7),
+            Real::of(1),
+            Real::of(7),
         )->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
@@ -251,8 +252,8 @@ class MedianTest extends TestCase
     public function testNaturalLogarithm()
     {
         $number = Median::of(
-            Number\Number::of(1),
-            Number\Number::of(7),
+            Real::of(1),
+            Real::of(7),
         )->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
@@ -262,8 +263,8 @@ class MedianTest extends TestCase
     public function testCommonLogarithm()
     {
         $number = Median::of(
-            Number\Number::of(1),
-            Number\Number::of(7),
+            Real::of(1),
+            Real::of(7),
         )->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
@@ -273,8 +274,8 @@ class MedianTest extends TestCase
     public function testSignum()
     {
         $number = Median::of(
-            Number\Number::of(1),
-            Number\Number::of(7),
+            Real::of(1),
+            Real::of(7),
         )->signum();
 
         $this->assertInstanceOf(Signum::class, $number);
@@ -284,8 +285,8 @@ class MedianTest extends TestCase
     public function testStringCast()
     {
         $median = Median::of(
-            Number\Number::of(1),
-            Number\Number::of(7.1),
+            Real::of(1),
+            Real::of(7.1),
         );
 
         $this->assertSame('(1 + 7.1) ÷ 2', $median->toString());

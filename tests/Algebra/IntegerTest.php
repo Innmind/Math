@@ -23,6 +23,7 @@ use Innmind\Math\{
     Algebra\NaturalLogarithm,
     Algebra\CommonLogarithm,
     Algebra\Signum,
+    Algebra\Real,
     Exception\FactorialMustBePositive
 };
 use PHPUnit\Framework\TestCase;
@@ -48,14 +49,14 @@ class IntegerTest extends TestCase
     public function testEquals()
     {
         $this->assertTrue(Integer::of(42)->equals(Integer::of(42)));
-        $this->assertTrue(Integer::of(42)->equals(Number\Number::of(42.0)));
-        $this->assertFalse(Integer::of(42)->equals(Number\Number::of(42.24)));
+        $this->assertTrue(Integer::of(42)->equals(Real::of(42.0)));
+        $this->assertFalse(Integer::of(42)->equals(Real::of(42.24)));
     }
 
     public function testHigherThan()
     {
         $this->assertFalse(Integer::of(42)->higherThan(Integer::of(42)));
-        $this->assertTrue(Integer::of(42)->higherThan(Number\Number::of(41.24)));
+        $this->assertTrue(Integer::of(42)->higherThan(Real::of(41.24)));
     }
 
     public function testAdd()

@@ -22,7 +22,8 @@ use Innmind\Math\{
     Algebra\BinaryLogarithm,
     Algebra\NaturalLogarithm,
     Algebra\CommonLogarithm,
-    Algebra\Signum
+    Algebra\Signum,
+    Algebra\Real,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -30,7 +31,7 @@ class SineTest extends TestCase
 {
     public function testInterface()
     {
-        $sin = Sine::of(Degree::of(Number\Number::of(42)));
+        $sin = Sine::of(Degree::of(Real::of(42)));
 
         $this->assertInstanceOf(Number::class, $sin);
         $this->assertSame(0.6691306063588582, $sin->value());
@@ -39,26 +40,26 @@ class SineTest extends TestCase
 
     public function testEquals()
     {
-        $sin = Sine::of(Degree::of(Number\Number::of(42)));
+        $sin = Sine::of(Degree::of(Real::of(42)));
 
         $this->assertTrue($sin->equals($sin));
-        $this->assertTrue($sin->equals(Number\Number::of(0.6691306063588582)));
-        $this->assertFalse($sin->equals(Number\Number::of(0.66)));
+        $this->assertTrue($sin->equals(Real::of(0.6691306063588582)));
+        $this->assertFalse($sin->equals(Real::of(0.66)));
     }
 
     public function testHigherThan()
     {
-        $sin = Sine::of(Degree::of(Number\Number::of(42)));
+        $sin = Sine::of(Degree::of(Real::of(42)));
 
         $this->assertFalse($sin->higherThan($sin));
-        $this->assertFalse($sin->higherThan(Number\Number::of(0.6691306063588582)));
-        $this->assertTrue($sin->higherThan(Number\Number::of(0.66)));
+        $this->assertFalse($sin->higherThan(Real::of(0.6691306063588582)));
+        $this->assertTrue($sin->higherThan(Real::of(0.66)));
     }
 
     public function testAdd()
     {
-        $sin = Sine::of(Degree::of(Number\Number::of(42)));
-        $number = $sin->add(Number\Number::of(1));
+        $sin = Sine::of(Degree::of(Real::of(42)));
+        $number = $sin->add(Real::of(1));
 
         $this->assertInstanceOf(Addition::class, $number);
         $this->assertSame(1.6691306063588582, $number->value());
@@ -66,8 +67,8 @@ class SineTest extends TestCase
 
     public function testSubtract()
     {
-        $sin = Sine::of(Degree::of(Number\Number::of(42)));
-        $number = $sin->subtract(Number\Number::of(66));
+        $sin = Sine::of(Degree::of(Real::of(42)));
+        $number = $sin->subtract(Real::of(66));
 
         $this->assertInstanceOf(Subtraction::class, $number);
         $this->assertSame(-65.33086939364114, $number->value());
@@ -75,8 +76,8 @@ class SineTest extends TestCase
 
     public function testDivideBy()
     {
-        $sin = Sine::of(Degree::of(Number\Number::of(42)));
-        $number = $sin->divideBy(Number\Number::of(2));
+        $sin = Sine::of(Degree::of(Real::of(42)));
+        $number = $sin->divideBy(Real::of(2));
 
         $this->assertInstanceOf(Division::class, $number);
         $this->assertSame(0.3345653031794291, $number->value());
@@ -84,8 +85,8 @@ class SineTest extends TestCase
 
     public function testMulitplyBy()
     {
-        $sin = Sine::of(Degree::of(Number\Number::of(42)));
-        $number = $sin->multiplyBy(Number\Number::of(2));
+        $sin = Sine::of(Degree::of(Real::of(42)));
+        $number = $sin->multiplyBy(Real::of(2));
 
         $this->assertInstanceOf(Multiplication::class, $number);
         $this->assertSame(1.3382612127177165, $number->value());
@@ -93,7 +94,7 @@ class SineTest extends TestCase
 
     public function testRound()
     {
-        $number = Sine::of(Degree::of(Number\Number::of(42)));
+        $number = Sine::of(Degree::of(Real::of(42)));
 
         $this->assertEquals(0.7, $number->roundUp(1)->value());
         $this->assertEquals(0.7, $number->roundDown(1)->value());
@@ -103,7 +104,7 @@ class SineTest extends TestCase
 
     public function testFloor()
     {
-        $sin = Sine::of(Degree::of(Number\Number::of(42)));
+        $sin = Sine::of(Degree::of(Real::of(42)));
         $number = $sin->floor();
 
         $this->assertInstanceOf(Floor::class, $number);
@@ -112,7 +113,7 @@ class SineTest extends TestCase
 
     public function testCeil()
     {
-        $sin = Sine::of(Degree::of(Number\Number::of(42)));
+        $sin = Sine::of(Degree::of(Real::of(42)));
         $number = $sin->ceil();
 
         $this->assertInstanceOf(Ceil::class, $number);
@@ -121,8 +122,8 @@ class SineTest extends TestCase
 
     public function testModulo()
     {
-        $sin = Sine::of(Degree::of(Number\Number::of(42)));
-        $number = $sin->modulo(Number\Number::of(3));
+        $sin = Sine::of(Degree::of(Real::of(42)));
+        $number = $sin->modulo(Real::of(3));
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertSame(0.6691306063588582, $number->value());
@@ -130,7 +131,7 @@ class SineTest extends TestCase
 
     public function testAbsolute()
     {
-        $sin = Sine::of(Degree::of(Number\Number::of(42)));
+        $sin = Sine::of(Degree::of(Real::of(42)));
         $number = $sin->absolute();
 
         $this->assertInstanceOf(Absolute::class, $number);
@@ -139,8 +140,8 @@ class SineTest extends TestCase
 
     public function testPower()
     {
-        $sin = Sine::of(Degree::of(Number\Number::of(42)));
-        $number = $sin->power(Number\Number::of(2));
+        $sin = Sine::of(Degree::of(Real::of(42)));
+        $number = $sin->power(Real::of(2));
 
         $this->assertInstanceOf(Power::class, $number);
         $this->assertSame(0.4477357683661733, $number->value());
@@ -148,7 +149,7 @@ class SineTest extends TestCase
 
     public function testSquareRoot()
     {
-        $sin = Sine::of(Degree::of(Number\Number::of(42)));
+        $sin = Sine::of(Degree::of(Real::of(42)));
         $number = $sin->squareRoot();
 
         $this->assertInstanceOf(SquareRoot::class, $number);
@@ -157,7 +158,7 @@ class SineTest extends TestCase
 
     public function testExponential()
     {
-        $sin = Sine::of(Degree::of(Number\Number::of(42)));
+        $sin = Sine::of(Degree::of(Real::of(42)));
         $number = $sin->exponential();
 
         $this->assertInstanceOf(Exponential::class, $number);
@@ -166,7 +167,7 @@ class SineTest extends TestCase
 
     public function testBinaryLogarithm()
     {
-        $number = Sine::of(Degree::of(Number\Number::of(42)))->binaryLogarithm();
+        $number = Sine::of(Degree::of(Real::of(42)))->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
         $this->assertSame(-0.5796402595724052, $number->value());
@@ -174,7 +175,7 @@ class SineTest extends TestCase
 
     public function testNaturalLogarithm()
     {
-        $number = Sine::of(Degree::of(Number\Number::of(42)))->naturalLogarithm();
+        $number = Sine::of(Degree::of(Real::of(42)))->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
         $this->assertSame(-0.4017760116616475, $number->value());
@@ -182,7 +183,7 @@ class SineTest extends TestCase
 
     public function testCommonLogarithm()
     {
-        $number = Sine::of(Degree::of(Number\Number::of(42)))->commonLogarithm();
+        $number = Sine::of(Degree::of(Real::of(42)))->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
         $this->assertSame(-0.17448910482575006, $number->value());
@@ -190,7 +191,7 @@ class SineTest extends TestCase
 
     public function testSignum()
     {
-        $number = Sine::of(Degree::of(Number\Number::of(42)))->signum();
+        $number = Sine::of(Degree::of(Real::of(42)))->signum();
 
         $this->assertInstanceOf(Signum::class, $number);
         $this->assertSame(1, $number->value());

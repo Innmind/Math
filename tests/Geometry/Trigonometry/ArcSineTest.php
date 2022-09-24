@@ -23,7 +23,8 @@ use Innmind\Math\{
     Algebra\BinaryLogarithm,
     Algebra\NaturalLogarithm,
     Algebra\CommonLogarithm,
-    Algebra\Signum
+    Algebra\Signum,
+    Algebra\Real,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -32,7 +33,7 @@ class ArcSineTest extends TestCase
     public function testInterface()
     {
         $asin = ArcSine::of(
-            Sine::of(Degree::of(Number\Number::of(42))),
+            Sine::of(Degree::of(Real::of(42))),
         );
 
         $this->assertInstanceOf(Number::class, $asin);
@@ -44,31 +45,31 @@ class ArcSineTest extends TestCase
     public function testEquals()
     {
         $asin = ArcSine::of(
-            Sine::of(Degree::of(Number\Number::of(42))),
+            Sine::of(Degree::of(Real::of(42))),
         );
 
         $this->assertTrue($asin->equals($asin));
-        $this->assertTrue($asin->equals(Number\Number::of(42.0)));
-        $this->assertFalse($asin->equals(Number\Number::of(0.74)));
+        $this->assertTrue($asin->equals(Real::of(42.0)));
+        $this->assertFalse($asin->equals(Real::of(0.74)));
     }
 
     public function testHigherThan()
     {
         $asin = ArcSine::of(
-            Sine::of(Degree::of(Number\Number::of(42))),
+            Sine::of(Degree::of(Real::of(42))),
         );
 
         $this->assertFalse($asin->higherThan($asin));
-        $this->assertFalse($asin->higherThan(Number\Number::of(42.0)));
-        $this->assertTrue($asin->higherThan(Number\Number::of(0.74)));
+        $this->assertFalse($asin->higherThan(Real::of(42.0)));
+        $this->assertTrue($asin->higherThan(Real::of(0.74)));
     }
 
     public function testAdd()
     {
         $asin = ArcSine::of(
-            Sine::of(Degree::of(Number\Number::of(42))),
+            Sine::of(Degree::of(Real::of(42))),
         );
-        $number = $asin->add(Number\Number::of(1));
+        $number = $asin->add(Real::of(1));
 
         $this->assertInstanceOf(Addition::class, $number);
         $this->assertSame(43.0, $number->value());
@@ -77,9 +78,9 @@ class ArcSineTest extends TestCase
     public function testSubtract()
     {
         $asin = ArcSine::of(
-            Sine::of(Degree::of(Number\Number::of(42))),
+            Sine::of(Degree::of(Real::of(42))),
         );
-        $number = $asin->subtract(Number\Number::of(66));
+        $number = $asin->subtract(Real::of(66));
 
         $this->assertInstanceOf(Subtraction::class, $number);
         $this->assertSame(-24.0, $number->value());
@@ -88,9 +89,9 @@ class ArcSineTest extends TestCase
     public function testDivideBy()
     {
         $asin = ArcSine::of(
-            Sine::of(Degree::of(Number\Number::of(42))),
+            Sine::of(Degree::of(Real::of(42))),
         );
-        $number = $asin->divideBy(Number\Number::of(2));
+        $number = $asin->divideBy(Real::of(2));
 
         $this->assertInstanceOf(Division::class, $number);
         $this->assertSame(21.0, $number->value());
@@ -99,9 +100,9 @@ class ArcSineTest extends TestCase
     public function testMulitplyBy()
     {
         $asin = ArcSine::of(
-            Sine::of(Degree::of(Number\Number::of(42))),
+            Sine::of(Degree::of(Real::of(42))),
         );
-        $number = $asin->multiplyBy(Number\Number::of(2));
+        $number = $asin->multiplyBy(Real::of(2));
 
         $this->assertInstanceOf(Multiplication::class, $number);
         $this->assertSame(84.0, $number->value());
@@ -110,7 +111,7 @@ class ArcSineTest extends TestCase
     public function testRound()
     {
         $number = ArcSine::of(
-            Sine::of(Degree::of(Number\Number::of(42))),
+            Sine::of(Degree::of(Real::of(42))),
         );
 
         $this->assertEquals(42.0, $number->roundUp(1)->value());
@@ -122,7 +123,7 @@ class ArcSineTest extends TestCase
     public function testFloor()
     {
         $asin = ArcSine::of(
-            Sine::of(Degree::of(Number\Number::of(42))),
+            Sine::of(Degree::of(Real::of(42))),
         );
         $number = $asin->floor();
 
@@ -133,7 +134,7 @@ class ArcSineTest extends TestCase
     public function testCeil()
     {
         $asin = ArcSine::of(
-            Sine::of(Degree::of(Number\Number::of(42))),
+            Sine::of(Degree::of(Real::of(42))),
         );
         $number = $asin->ceil();
 
@@ -144,9 +145,9 @@ class ArcSineTest extends TestCase
     public function testModulo()
     {
         $asin = ArcSine::of(
-            Sine::of(Degree::of(Number\Number::of(42))),
+            Sine::of(Degree::of(Real::of(42))),
         );
-        $number = $asin->modulo(Number\Number::of(3));
+        $number = $asin->modulo(Real::of(3));
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertSame(0.0, $number->value());
@@ -155,7 +156,7 @@ class ArcSineTest extends TestCase
     public function testAbsolute()
     {
         $asin = ArcSine::of(
-            Sine::of(Degree::of(Number\Number::of(42))),
+            Sine::of(Degree::of(Real::of(42))),
         );
         $number = $asin->absolute();
 
@@ -166,9 +167,9 @@ class ArcSineTest extends TestCase
     public function testPower()
     {
         $asin = ArcSine::of(
-            Sine::of(Degree::of(Number\Number::of(42))),
+            Sine::of(Degree::of(Real::of(42))),
         );
-        $number = $asin->power(Number\Number::of(2));
+        $number = $asin->power(Real::of(2));
 
         $this->assertInstanceOf(Power::class, $number);
         $this->assertSame(1764.0, $number->value());
@@ -177,7 +178,7 @@ class ArcSineTest extends TestCase
     public function testSquareRoot()
     {
         $asin = ArcSine::of(
-            Sine::of(Degree::of(Number\Number::of(42))),
+            Sine::of(Degree::of(Real::of(42))),
         );
         $number = $asin->squareRoot();
 
@@ -188,7 +189,7 @@ class ArcSineTest extends TestCase
     public function testExponential()
     {
         $asin = ArcSine::of(
-            Sine::of(Degree::of(Number\Number::of(42))),
+            Sine::of(Degree::of(Real::of(42))),
         );
         $number = $asin->exponential();
 
@@ -199,7 +200,7 @@ class ArcSineTest extends TestCase
     public function testBinaryLogarithm()
     {
         $number = ArcSine::of(
-            Sine::of(Degree::of(Number\Number::of(42))),
+            Sine::of(Degree::of(Real::of(42))),
         )->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
@@ -209,7 +210,7 @@ class ArcSineTest extends TestCase
     public function testNaturalLogarithm()
     {
         $number = ArcSine::of(
-            Sine::of(Degree::of(Number\Number::of(42))),
+            Sine::of(Degree::of(Real::of(42))),
         )->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
@@ -219,7 +220,7 @@ class ArcSineTest extends TestCase
     public function testCommonLogarithm()
     {
         $number = ArcSine::of(
-            Sine::of(Degree::of(Number\Number::of(42))),
+            Sine::of(Degree::of(Real::of(42))),
         )->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
@@ -229,7 +230,7 @@ class ArcSineTest extends TestCase
     public function testSignum()
     {
         $number = ArcSine::of(
-            Sine::of(Degree::of(Number\Number::of(42))),
+            Sine::of(Degree::of(Real::of(42))),
         )->signum();
 
         $this->assertInstanceOf(Signum::class, $number);

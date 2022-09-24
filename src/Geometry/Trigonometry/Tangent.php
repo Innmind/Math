@@ -7,6 +7,7 @@ use Innmind\Math\{
     Geometry\Angle\Degree,
     Algebra\Number,
     Algebra\Round,
+    Algebra\Real,
 };
 
 /**
@@ -156,7 +157,7 @@ final class Tangent implements Number
 
     private function tangent(): Number
     {
-        return Number\Number::of(
+        return Real::of(
             \tan(
                 $this->degree->toRadian()->number()->value(),
             ),

@@ -14,6 +14,7 @@ use function Innmind\Math\{
 use Innmind\Math\{
     Regression\Dataset,
     Algebra\Number,
+    Algebra\Real,
     Matrix\ColumnVector,
     Statistics\Mean,
 };
@@ -136,7 +137,7 @@ final class Quantile
     private function buildFirstQuartile(Dataset $dataset): Quartile
     {
         return Quartile::of($this->buildQuartile(
-            Number\Number::of(0.25),
+            Real::of(0.25),
             $dataset->ordinates(),
         ));
     }
@@ -147,7 +148,7 @@ final class Quantile
     private function buildThirdQuartile(Dataset $dataset): Quartile
     {
         return Quartile::of($this->buildQuartile(
-            Number\Number::of(0.75),
+            Real::of(0.75),
             $dataset->ordinates(),
         ));
     }

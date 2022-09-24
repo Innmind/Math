@@ -9,7 +9,7 @@ use Innmind\Math\{
     Matrix\Dimension,
     Matrix\RowVector,
     Matrix\ColumnVector,
-    Algebra\Number\Number,
+    Algebra\Real,
     Algebra\Integer,
     Exception\VectorsMustMeOfTheSameDimension,
     Exception\MatricesMustBeOfTheSameDimension,
@@ -166,7 +166,7 @@ class MatrixTest extends TestCase
     {
         $matrix = Matrix::initialize(
             Dimension::of(Integer::of(3), Integer::of(2)),
-            Number::of(4.2),
+            Real::of(4.2),
         );
 
         $this->assertInstanceOf(Matrix::class, $matrix);

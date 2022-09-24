@@ -151,7 +151,7 @@ final class Factorial implements Operation, Number
             $factorial *= --$i;
         } while ($i > 1);
 
-        return Number\Number::of($factorial);
+        return Real::of($factorial);
     }
 
     public function collapse(): Number

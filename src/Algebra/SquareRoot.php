@@ -30,7 +30,7 @@ final class SquareRoot implements Operation, Number
 
     public function result(): Number
     {
-        return Number\Number::of(
+        return Real::of(
             \sqrt($this->number->value()),
         );
     }

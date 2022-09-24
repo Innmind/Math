@@ -6,7 +6,8 @@ namespace Tests\Innmind\Math\Probabilities;
 use Innmind\Math\{
     Probabilities\BinomialDistribution,
     Algebra\Number,
-    Algebra\Integer
+    Algebra\Integer,
+    Algebra\Real,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -14,7 +15,7 @@ class BinomialDistributionTest extends TestCase
 {
     public function testInvokation()
     {
-        $law = BinomialDistribution::of(Number\Number::of(0.5));
+        $law = BinomialDistribution::of(Real::of(0.5));
 
         $probability = $law(Integer::of(9), Integer::of(2));
 

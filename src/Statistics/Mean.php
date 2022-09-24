@@ -7,6 +7,7 @@ use function Innmind\Math\add;
 use Innmind\Math\Algebra\{
     Number,
     Round,
+    Real,
 };
 use Innmind\Immutable\Sequence;
 
@@ -21,7 +22,7 @@ final class Mean implements Number
     {
         $sequence = Sequence::of($first, ...$values);
         $sum = add($first, ...$values);
-        $this->result = $sum->divideBy(Number\Number::of($sequence->size()));
+        $this->result = $sum->divideBy(Real::of($sequence->size()));
     }
 
     /**

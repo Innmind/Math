@@ -9,7 +9,7 @@ use Innmind\Math\{
     DefinitionSet\Union,
     DefinitionSet\Intersection,
     Algebra\Integer,
-    Algebra\Number\Number,
+    Algebra\Real,
     Algebra\Value,
     Exception\OutOfDefinitionSet,
 };
@@ -36,8 +36,8 @@ class RealNumbersExceptZeroTest extends TestCase
 
         $this->assertTrue($set->contains(Integer::of(1)));
         $this->assertTrue($set->contains(Integer::of(-1)));
-        $this->assertTrue($set->contains(Number::of(0.75)));
-        $this->assertTrue($set->contains(Number::of(-0.75)));
+        $this->assertTrue($set->contains(Real::of(0.75)));
+        $this->assertTrue($set->contains(Real::of(-0.75)));
         $this->assertTrue($set->contains(Value::pi));
         $this->assertFalse($set->contains(Integer::of(0)));
     }
@@ -51,7 +51,7 @@ class RealNumbersExceptZeroTest extends TestCase
         $this->expectException(OutOfDefinitionSet::class);
         $this->expectExceptionMessage('0 ∉ ℝ*');
 
-        $set->accept(Number::of(0));
+        $set->accept(Real::of(0));
     }
 
     public function testUnion()

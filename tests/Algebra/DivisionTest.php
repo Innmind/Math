@@ -22,6 +22,7 @@ use Innmind\Math\{
     Algebra\NaturalLogarithm,
     Algebra\CommonLogarithm,
     Algebra\Signum,
+    Algebra\Real,
     Exception\DivisionByZero,
 };
 use PHPUnit\Framework\TestCase;
@@ -31,8 +32,8 @@ class DivisionTest extends TestCase
     public function testInterface()
     {
         $division = Division::of(
-            $dividend = Number\Number::of(4),
-            $divisor = Number\Number::of(2),
+            $dividend = Real::of(4),
+            $divisor = Real::of(2),
         );
 
         $this->assertInstanceOf(Operation::class, $division);
@@ -43,7 +44,7 @@ class DivisionTest extends TestCase
 
     public function testResult()
     {
-        $division = Division::of(Number\Number::of(4), Number\Number::of(2));
+        $division = Division::of(Real::of(4), Real::of(2));
         $result = $division->result();
 
         $this->assertInstanceOf(Number::class, $result);
@@ -53,31 +54,31 @@ class DivisionTest extends TestCase
 
     public function testValue()
     {
-        $division = Division::of(Number\Number::of(4), Number\Number::of(2));
+        $division = Division::of(Real::of(4), Real::of(2));
 
         $this->assertSame(2, $division->value());
     }
 
     public function testEquals()
     {
-        $division = Division::of(Number\Number::of(4), Number\Number::of(2));
+        $division = Division::of(Real::of(4), Real::of(2));
 
-        $this->assertTrue($division->equals(Number\Number::of(2)));
-        $this->assertFalse($division->equals(Number\Number::of(2.1)));
+        $this->assertTrue($division->equals(Real::of(2)));
+        $this->assertFalse($division->equals(Real::of(2.1)));
     }
 
     public function testHigherThan()
     {
-        $division = Division::of(Number\Number::of(4), Number\Number::of(2));
+        $division = Division::of(Real::of(4), Real::of(2));
 
-        $this->assertFalse($division->higherThan(Number\Number::of(2)));
-        $this->assertTrue($division->higherThan(Number\Number::of(1.9)));
+        $this->assertFalse($division->higherThan(Real::of(2)));
+        $this->assertTrue($division->higherThan(Real::of(1.9)));
     }
 
     public function testAdd()
     {
-        $division = Division::of(Number\Number::of(4), Number\Number::of(2));
-        $number = $division->add(Number\Number::of(66));
+        $division = Division::of(Real::of(4), Real::of(2));
+        $number = $division->add(Real::of(66));
 
         $this->assertInstanceOf(Addition::class, $number);
         $this->assertSame(68, $number->value());
@@ -85,8 +86,8 @@ class DivisionTest extends TestCase
 
     public function testSubtract()
     {
-        $division = Division::of(Number\Number::of(4), Number\Number::of(2));
-        $number = $division->subtract(Number\Number::of(66));
+        $division = Division::of(Real::of(4), Real::of(2));
+        $number = $division->subtract(Real::of(66));
 
         $this->assertInstanceOf(Subtraction::class, $number);
         $this->assertSame(-64, $number->value());
@@ -94,8 +95,8 @@ class DivisionTest extends TestCase
 
     public function testDivideBy()
     {
-        $division = Division::of(Number\Number::of(9), Number\Number::of(3));
-        $number = $division->divideBy(Number\Number::of(3));
+        $division = Division::of(Real::of(9), Real::of(3));
+        $number = $division->divideBy(Real::of(3));
 
         $this->assertInstanceOf(Division::class, $number);
         $this->assertSame(1, $number->value());
@@ -103,8 +104,8 @@ class DivisionTest extends TestCase
 
     public function testMulitplyBy()
     {
-        $division = Division::of(Number\Number::of(4), Number\Number::of(2));
-        $number = $division->multiplyBy(Number\Number::of(2));
+        $division = Division::of(Real::of(4), Real::of(2));
+        $number = $division->multiplyBy(Real::of(2));
 
         $this->assertInstanceOf(Multiplication::class, $number);
         $this->assertSame(4, $number->value());
@@ -112,7 +113,7 @@ class DivisionTest extends TestCase
 
     public function testRound()
     {
-        $number = Division::of(Number\Number::of(6.66), Number\Number::of(3));
+        $number = Division::of(Real::of(6.66), Real::of(3));
 
         $this->assertEquals(Round::up($number, 2), $number->roundUp(2));
         $this->assertEquals(Round::down($number, 2), $number->roundDown(2));
@@ -122,7 +123,7 @@ class DivisionTest extends TestCase
 
     public function testFloor()
     {
-        $division = Division::of(Number\Number::of(6.66), Number\Number::of(3));
+        $division = Division::of(Real::of(6.66), Real::of(3));
         $number = $division->floor();
 
         $this->assertInstanceOf(Floor::class, $number);
@@ -131,7 +132,7 @@ class DivisionTest extends TestCase
 
     public function testCeil()
     {
-        $division = Division::of(Number\Number::of(6.66), Number\Number::of(3));
+        $division = Division::of(Real::of(6.66), Real::of(3));
         $number = $division->ceil();
 
         $this->assertInstanceOf(Ceil::class, $number);
@@ -140,8 +141,8 @@ class DivisionTest extends TestCase
 
     public function testModulo()
     {
-        $division = Division::of(Number\Number::of(9), Number\Number::of(3));
-        $number = $division->modulo(Number\Number::of(2));
+        $division = Division::of(Real::of(9), Real::of(3));
+        $number = $division->modulo(Real::of(2));
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertSame(1.0, $number->value());
@@ -149,7 +150,7 @@ class DivisionTest extends TestCase
 
     public function testAbsolute()
     {
-        $division = Division::of(Number\Number::of(9), Number\Number::of(-3));
+        $division = Division::of(Real::of(9), Real::of(-3));
         $number = $division->absolute();
 
         $this->assertInstanceOf(Absolute::class, $number);
@@ -158,8 +159,8 @@ class DivisionTest extends TestCase
 
     public function testPower()
     {
-        $division = Division::of(Number\Number::of(9), Number\Number::of(3));
-        $number = $division->power(Number\Number::of(2));
+        $division = Division::of(Real::of(9), Real::of(3));
+        $number = $division->power(Real::of(2));
 
         $this->assertInstanceOf(Power::class, $number);
         $this->assertSame(9, $number->value());
@@ -167,7 +168,7 @@ class DivisionTest extends TestCase
 
     public function testSquareRoot()
     {
-        $division = Division::of(Number\Number::of(8), Number\Number::of(2));
+        $division = Division::of(Real::of(8), Real::of(2));
         $number = $division->squareRoot();
 
         $this->assertInstanceOf(SquareRoot::class, $number);
@@ -176,7 +177,7 @@ class DivisionTest extends TestCase
 
     public function testExponential()
     {
-        $number = Division::of(Number\Number::of(8), Number\Number::of(2))->exponential();
+        $number = Division::of(Real::of(8), Real::of(2))->exponential();
 
         $this->assertInstanceOf(Exponential::class, $number);
         $this->assertSame(\exp(4), $number->value());
@@ -184,7 +185,7 @@ class DivisionTest extends TestCase
 
     public function testBinaryLogarithm()
     {
-        $number = Division::of(Number\Number::of(8), Number\Number::of(2))->binaryLogarithm();
+        $number = Division::of(Real::of(8), Real::of(2))->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
         $this->assertSame(\log(4, 2), $number->value());
@@ -192,7 +193,7 @@ class DivisionTest extends TestCase
 
     public function testNaturalLogarithm()
     {
-        $number = Division::of(Number\Number::of(8), Number\Number::of(2))->naturalLogarithm();
+        $number = Division::of(Real::of(8), Real::of(2))->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
         $this->assertSame(\log(4), $number->value());
@@ -200,7 +201,7 @@ class DivisionTest extends TestCase
 
     public function testCommonLogarithm()
     {
-        $number = Division::of(Number\Number::of(8), Number\Number::of(2))->commonLogarithm();
+        $number = Division::of(Real::of(8), Real::of(2))->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
         $this->assertSame(\log10(4), $number->value());
@@ -208,7 +209,7 @@ class DivisionTest extends TestCase
 
     public function testSignum()
     {
-        $number = Division::of(Number\Number::of(8), Number\Number::of(2))->signum();
+        $number = Division::of(Real::of(8), Real::of(2))->signum();
 
         $this->assertInstanceOf(Signum::class, $number);
         $this->assertSame(1, $number->value());
@@ -220,10 +221,10 @@ class DivisionTest extends TestCase
             '(2 + 2) ÷ 2',
             Division::of(
                 Addition::of(
-                    Number\Number::of(2),
-                    Number\Number::of(2),
+                    Real::of(2),
+                    Real::of(2),
                 ),
-                Number\Number::of(2),
+                Real::of(2),
             )->toString(),
         );
     }
@@ -232,6 +233,6 @@ class DivisionTest extends TestCase
     {
         $this->expectException(DivisionByZero::class);
 
-        Division::of(Number\Number::of(4), Number\Number::of(-0.0));
+        Division::of(Real::of(4), Real::of(-0.0));
     }
 }

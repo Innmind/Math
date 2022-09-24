@@ -21,7 +21,8 @@ use Innmind\Math\Algebra\{
     BinaryLogarithm,
     NaturalLogarithm,
     CommonLogarithm,
-    Signum
+    Signum,
+    Real,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -39,20 +40,20 @@ class ETest extends TestCase
 
     public function testEquals()
     {
-        $this->assertTrue(Value::e->equals(Number\Number::of(\M_E)));
-        $this->assertFalse(Value::e->equals(Number\Number::of(2.718)));
+        $this->assertTrue(Value::e->equals(Real::of(\M_E)));
+        $this->assertFalse(Value::e->equals(Real::of(2.718)));
     }
 
     public function testHigherThan()
     {
-        $this->assertTrue(Value::e->higherThan(Number\Number::of(2.718)));
-        $this->assertFalse(Value::e->higherThan(Number\Number::of(\M_E)));
+        $this->assertTrue(Value::e->higherThan(Real::of(2.718)));
+        $this->assertFalse(Value::e->higherThan(Real::of(\M_E)));
     }
 
     public function testAdd()
     {
         $number = Value::e;
-        $number = $number->add(Number\Number::of(66));
+        $number = $number->add(Real::of(66));
 
         $this->assertInstanceOf(Addition::class, $number);
         $this->assertSame(68.71828182845904, $number->value());
@@ -61,7 +62,7 @@ class ETest extends TestCase
     public function testSubtract()
     {
         $number = Value::e;
-        $number = $number->subtract(Number\Number::of(2));
+        $number = $number->subtract(Real::of(2));
 
         $this->assertInstanceOf(Subtraction::class, $number);
         $this->assertSame(0.7182818284590451, $number->value());
@@ -70,7 +71,7 @@ class ETest extends TestCase
     public function testDivideBy()
     {
         $number = Value::e;
-        $number = $number->divideBy(Number\Number::of(2));
+        $number = $number->divideBy(Real::of(2));
 
         $this->assertInstanceOf(Division::class, $number);
         $this->assertSame(\M_E / 2, $number->value());
@@ -79,7 +80,7 @@ class ETest extends TestCase
     public function testMulitplyBy()
     {
         $number = Value::e;
-        $number = $number->multiplyBy(Number\Number::of(2));
+        $number = $number->multiplyBy(Real::of(2));
 
         $this->assertInstanceOf(Multiplication::class, $number);
         $this->assertSame(\M_E * 2, $number->value());
@@ -116,7 +117,7 @@ class ETest extends TestCase
     public function testModulo()
     {
         $number = Value::e;
-        $number = $number->modulo(Number\Number::of(2));
+        $number = $number->modulo(Real::of(2));
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertSame(0.7182818284590451, $number->value());
@@ -134,7 +135,7 @@ class ETest extends TestCase
     public function testPower()
     {
         $number = Value::e;
-        $number = $number->power(Number\Number::of(2));
+        $number = $number->power(Real::of(2));
 
         $this->assertInstanceOf(Power::class, $number);
         $this->assertEqualsWithDelta(\exp(2), $number->value(), 0.00000000000001);

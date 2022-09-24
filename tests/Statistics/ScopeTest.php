@@ -21,7 +21,8 @@ use Innmind\Math\{
     Algebra\BinaryLogarithm,
     Algebra\NaturalLogarithm,
     Algebra\CommonLogarithm,
-    Algebra\Signum
+    Algebra\Signum,
+    Algebra\Real,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -30,16 +31,16 @@ class ScopeTest extends TestCase
     public function testResult()
     {
         $scope = Scope::of(
-            Number\Number::of(1),
-            Number\Number::of(2),
-            Number\Number::of(2),
-            Number\Number::of(2),
-            Number\Number::of(3),
-            Number\Number::of(5),
-            Number\Number::of(5),
-            Number\Number::of(6),
-            Number\Number::of(6),
-            Number\Number::of(7),
+            Real::of(1),
+            Real::of(2),
+            Real::of(2),
+            Real::of(2),
+            Real::of(3),
+            Real::of(5),
+            Real::of(5),
+            Real::of(6),
+            Real::of(6),
+            Real::of(7),
         );
 
         $this->assertInstanceOf(Number::class, $scope->result());
@@ -51,33 +52,33 @@ class ScopeTest extends TestCase
     public function testEquals()
     {
         $scope = Scope::of(
-            Number\Number::of(1),
-            Number\Number::of(7),
+            Real::of(1),
+            Real::of(7),
         );
 
-        $this->assertTrue($scope->equals(Number\Number::of(6)));
-        $this->assertTrue($scope->equals(Number\Number::of(6.0)));
-        $this->assertFalse($scope->equals(Number\Number::of(6.1)));
+        $this->assertTrue($scope->equals(Real::of(6)));
+        $this->assertTrue($scope->equals(Real::of(6.0)));
+        $this->assertFalse($scope->equals(Real::of(6.1)));
     }
 
     public function testHigherThan()
     {
         $scope = Scope::of(
-            Number\Number::of(1),
-            Number\Number::of(7),
+            Real::of(1),
+            Real::of(7),
         );
 
-        $this->assertTrue($scope->higherThan(Number\Number::of(5.9)));
-        $this->assertFalse($scope->higherThan(Number\Number::of(6)));
+        $this->assertTrue($scope->higherThan(Real::of(5.9)));
+        $this->assertFalse($scope->higherThan(Real::of(6)));
     }
 
     public function testAdd()
     {
         $scope = Scope::of(
-            Number\Number::of(1),
-            Number\Number::of(7),
+            Real::of(1),
+            Real::of(7),
         );
-        $number = $scope->add(Number\Number::of(66));
+        $number = $scope->add(Real::of(66));
 
         $this->assertInstanceOf(Addition::class, $number);
         $this->assertSame(72, $number->value());
@@ -86,10 +87,10 @@ class ScopeTest extends TestCase
     public function testSubtract()
     {
         $scope = Scope::of(
-            Number\Number::of(1),
-            Number\Number::of(7),
+            Real::of(1),
+            Real::of(7),
         );
-        $number = $scope->subtract(Number\Number::of(66));
+        $number = $scope->subtract(Real::of(66));
 
         $this->assertInstanceOf(Subtraction::class, $number);
         $this->assertSame(-60, $number->value());
@@ -98,10 +99,10 @@ class ScopeTest extends TestCase
     public function testDivideBy()
     {
         $scope = Scope::of(
-            Number\Number::of(1),
-            Number\Number::of(7),
+            Real::of(1),
+            Real::of(7),
         );
-        $number = $scope->divideBy(Number\Number::of(2));
+        $number = $scope->divideBy(Real::of(2));
 
         $this->assertInstanceOf(Division::class, $number);
         $this->assertSame(3, $number->value());
@@ -110,10 +111,10 @@ class ScopeTest extends TestCase
     public function testMulitplyBy()
     {
         $scope = Scope::of(
-            Number\Number::of(1),
-            Number\Number::of(7),
+            Real::of(1),
+            Real::of(7),
         );
-        $number = $scope->multiplyBy(Number\Number::of(2));
+        $number = $scope->multiplyBy(Real::of(2));
 
         $this->assertInstanceOf(Multiplication::class, $number);
         $this->assertSame(12, $number->value());
@@ -122,8 +123,8 @@ class ScopeTest extends TestCase
     public function testRound()
     {
         $number = Scope::of(
-            Number\Number::of(1),
-            Number\Number::of(7.12),
+            Real::of(1),
+            Real::of(7.12),
         );
 
         $this->assertEquals(6.1, $number->roundUp(1)->value());
@@ -135,8 +136,8 @@ class ScopeTest extends TestCase
     public function testFloor()
     {
         $scope = Scope::of(
-            Number\Number::of(1),
-            Number\Number::of(7.1),
+            Real::of(1),
+            Real::of(7.1),
         );
         $number = $scope->floor();
 
@@ -147,8 +148,8 @@ class ScopeTest extends TestCase
     public function testCeil()
     {
         $scope = Scope::of(
-            Number\Number::of(1),
-            Number\Number::of(7.1),
+            Real::of(1),
+            Real::of(7.1),
         );
         $number = $scope->ceil();
 
@@ -159,10 +160,10 @@ class ScopeTest extends TestCase
     public function testModulo()
     {
         $scope = Scope::of(
-            Number\Number::of(1),
-            Number\Number::of(7),
+            Real::of(1),
+            Real::of(7),
         );
-        $number = $scope->modulo(Number\Number::of(5));
+        $number = $scope->modulo(Real::of(5));
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertSame(1.0, $number->value());
@@ -171,8 +172,8 @@ class ScopeTest extends TestCase
     public function testAbsolute()
     {
         $scope = Scope::of(
-            Number\Number::of(-1),
-            Number\Number::of(-7),
+            Real::of(-1),
+            Real::of(-7),
         );
         $number = $scope->absolute();
 
@@ -183,10 +184,10 @@ class ScopeTest extends TestCase
     public function testPower()
     {
         $scope = Scope::of(
-            Number\Number::of(1),
-            Number\Number::of(7),
+            Real::of(1),
+            Real::of(7),
         );
-        $number = $scope->power(Number\Number::of(2));
+        $number = $scope->power(Real::of(2));
 
         $this->assertInstanceOf(Power::class, $number);
         $this->assertSame(36, $number->value());
@@ -195,8 +196,8 @@ class ScopeTest extends TestCase
     public function testSquareRoot()
     {
         $scope = Scope::of(
-            Number\Number::of(1),
-            Number\Number::of(5),
+            Real::of(1),
+            Real::of(5),
         );
         $number = $scope->squareRoot();
 
@@ -207,8 +208,8 @@ class ScopeTest extends TestCase
     public function testExponential()
     {
         $mean = Scope::of(
-            Number\Number::of(1),
-            Number\Number::of(5),
+            Real::of(1),
+            Real::of(5),
         );
         $number = $mean->exponential();
 
@@ -219,8 +220,8 @@ class ScopeTest extends TestCase
     public function testBinaryLogarithm()
     {
         $number = Scope::of(
-            Number\Number::of(1),
-            Number\Number::of(5),
+            Real::of(1),
+            Real::of(5),
         )->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
@@ -230,8 +231,8 @@ class ScopeTest extends TestCase
     public function testNaturalLogarithm()
     {
         $number = Scope::of(
-            Number\Number::of(1),
-            Number\Number::of(5),
+            Real::of(1),
+            Real::of(5),
         )->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
@@ -241,8 +242,8 @@ class ScopeTest extends TestCase
     public function testCommonLogarithm()
     {
         $number = Scope::of(
-            Number\Number::of(1),
-            Number\Number::of(5),
+            Real::of(1),
+            Real::of(5),
         )->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
@@ -252,8 +253,8 @@ class ScopeTest extends TestCase
     public function testSignum()
     {
         $number = Scope::of(
-            Number\Number::of(1),
-            Number\Number::of(7),
+            Real::of(1),
+            Real::of(7),
         )->signum();
 
         $this->assertInstanceOf(Signum::class, $number);
@@ -263,8 +264,8 @@ class ScopeTest extends TestCase
     public function testStringCast()
     {
         $scope = Scope::of(
-            Number\Number::of(1),
-            Number\Number::of(7.1),
+            Real::of(1),
+            Real::of(7.1),
         );
 
         $this->assertSame('7.1 - 1', $scope->toString());

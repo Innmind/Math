@@ -21,7 +21,8 @@ use Innmind\Math\Algebra\{
     BinaryLogarithm,
     NaturalLogarithm,
     CommonLogarithm,
-    Signum
+    Signum,
+    Real,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -39,20 +40,20 @@ class PiTest extends TestCase
 
     public function testEquals()
     {
-        $this->assertTrue(Value::pi->equals(Number\Number::of(3.141592653589793)));
-        $this->assertFalse(Value::pi->equals(Number\Number::of(3.14)));
+        $this->assertTrue(Value::pi->equals(Real::of(3.141592653589793)));
+        $this->assertFalse(Value::pi->equals(Real::of(3.14)));
     }
 
     public function testHigherThan()
     {
-        $this->assertTrue(Value::pi->higherThan(Number\Number::of(3.14)));
-        $this->assertFalse(Value::pi->higherThan(Number\Number::of(3.15)));
+        $this->assertTrue(Value::pi->higherThan(Real::of(3.14)));
+        $this->assertFalse(Value::pi->higherThan(Real::of(3.15)));
     }
 
     public function testAdd()
     {
         $number = Value::pi;
-        $number = $number->add(Number\Number::of(66));
+        $number = $number->add(Real::of(66));
 
         $this->assertInstanceOf(Addition::class, $number);
         $this->assertSame(69.1415926535898, $number->value());
@@ -61,7 +62,7 @@ class PiTest extends TestCase
     public function testSubtract()
     {
         $number = Value::pi;
-        $number = $number->subtract(Number\Number::of(66));
+        $number = $number->subtract(Real::of(66));
 
         $this->assertInstanceOf(Subtraction::class, $number);
         $this->assertSame(-62.8584073464102, $number->value());
@@ -70,7 +71,7 @@ class PiTest extends TestCase
     public function testDivideBy()
     {
         $number = Value::pi;
-        $number = $number->divideBy(Number\Number::of(2));
+        $number = $number->divideBy(Real::of(2));
 
         $this->assertInstanceOf(Division::class, $number);
         $this->assertSame(\M_PI_2, $number->value());
@@ -79,7 +80,7 @@ class PiTest extends TestCase
     public function testMulitplyBy()
     {
         $number = Value::pi;
-        $number = $number->multiplyBy(Number\Number::of(2));
+        $number = $number->multiplyBy(Real::of(2));
 
         $this->assertInstanceOf(Multiplication::class, $number);
         $this->assertSame(\pi() * 2, $number->value());
@@ -116,7 +117,7 @@ class PiTest extends TestCase
     public function testModulo()
     {
         $number = Value::pi;
-        $number = $number->modulo(Number\Number::of(0.1));
+        $number = $number->modulo(Real::of(0.1));
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertSame(0.041592653589792944, $number->value());
@@ -134,7 +135,7 @@ class PiTest extends TestCase
     public function testPower()
     {
         $number = Value::pi;
-        $number = $number->power(Number\Number::of(2));
+        $number = $number->power(Real::of(2));
 
         $this->assertInstanceOf(Power::class, $number);
         $this->assertSame(

@@ -7,6 +7,7 @@ use Innmind\Math\{
     Geometry\Angle\Degree,
     Algebra\Number,
     Algebra\Round,
+    Algebra\Real,
 };
 
 /**
@@ -156,7 +157,7 @@ final class Sine implements Number
 
     private function sine(): Number
     {
-        return Number\Number::of(
+        return Real::of(
             \sin(
                 $this->degree->toRadian()->number()->value(),
             ),
