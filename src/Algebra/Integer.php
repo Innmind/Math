@@ -8,11 +8,11 @@ namespace Innmind\Math\Algebra;
  */
 final class Integer implements Number
 {
-    private Number $number;
+    private int $value;
 
     private function __construct(int $value)
     {
-        $this->number = Number\Number::int($value);
+        $this->value = $value;
     }
 
     /**
@@ -25,94 +25,92 @@ final class Integer implements Number
 
     public function value(): int
     {
-        /** @var int */
-        return $this->number->value();
+        return $this->value;
     }
 
     public function equals(Number $number): bool
     {
-        return $this->number->equals($number);
+        return $this->value() == $number->value();
     }
 
     public function higherThan(Number $number): bool
     {
-        return $this->number->higherThan($number);
+        return $this->value() > $number->value();
     }
 
     public function add(Number $number, Number ...$numbers): Number
     {
-        return $this->number->add($number, ...$numbers);
+        return Addition::of($this, $number, ...$numbers);
     }
 
     public function subtract(Number $number, Number ...$numbers): Number
     {
-        return $this->number->subtract($number, ...$numbers);
+        return Subtraction::of($this, $number, ...$numbers);
     }
 
     public function divideBy(Number $number): Number
     {
-        return $this->number->divideBy($number);
+        return Division::of($this, $number);
     }
 
     public function multiplyBy(Number $number, Number ...$numbers): Number
     {
-        return $this->number->multiplyBy($number, ...$numbers);
+        return Multiplication::of($this, $number, ...$numbers);
     }
 
     public function roundUp(int $precision = 0): Number
     {
-        return $this->number->roundUp($precision);
+        return Round::up($this, $precision);
     }
 
     public function roundDown(int $precision = 0): Number
     {
-        return $this->number->roundDown($precision);
+        return Round::down($this, $precision);
     }
 
     public function roundEven(int $precision = 0): Number
     {
-        return $this->number->roundEven($precision);
+        return Round::even($this, $precision);
     }
 
     public function roundOdd(int $precision = 0): Number
     {
-        return $this->number->roundOdd($precision);
+        return Round::odd($this, $precision);
     }
 
     public function floor(): Number
     {
-        return $this->number->floor();
+        return Floor::of($this);
     }
 
     public function ceil(): Number
     {
-        return $this->number->ceil();
+        return Ceil::of($this);
     }
 
     public function modulo(Number $modulus): Number
     {
-        return $this->number->modulo($modulus);
+        return Modulo::of($this, $modulus);
     }
 
     public function absolute(): Number
     {
-        return $this->number->absolute();
+        return Absolute::of($this);
     }
 
     public function power(Number $power): Number
     {
-        return $this->number->power($power);
+        return Power::of($this, $power);
     }
 
     public function squareRoot(): Number
     {
-        return $this->number->squareRoot();
+        return SquareRoot::of($this);
     }
 
     public function factorial(): Factorial
     {
-        /** @psalm-suppress PossiblyInvalidArgument */
-        return Factorial::of($this->number->value());
+        return Factorial::of($this->value);
     }
 
     public function exponential(): Number
@@ -142,14 +140,12 @@ final class Integer implements Number
 
     public function increment(): self
     {
-        /** @psalm-suppress PossiblyInvalidArgument */
-        return new self($this->number->value() + 1);
+        return new self($this->value + 1);
     }
 
     public function decrement(): self
     {
-        /** @psalm-suppress PossiblyInvalidArgument */
-        return new self($this->number->value() - 1);
+        return new self($this->value - 1);
     }
 
     public function collapse(): Number
@@ -159,6 +155,6 @@ final class Integer implements Number
 
     public function toString(): string
     {
-        return $this->number->toString();
+        return \var_export($this->value, true);
     }
 }

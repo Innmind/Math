@@ -31,9 +31,9 @@ use Innmind\Math\{
  */
 final class Number implements NumberInterface
 {
-    private int|float $value;
+    private float $value;
 
-    private function __construct(int|float $value)
+    private function __construct(float $value)
     {
         if (\is_nan($value)) {
             throw new NotANumber;
@@ -58,15 +58,7 @@ final class Number implements NumberInterface
         return new self($value);
     }
 
-    /**
-     * @psalm-pure
-     */
-    public static function int(int $value): self
-    {
-        return new self($value);
-    }
-
-    public function value(): int|float
+    public function value(): float
     {
         return $this->value;
     }
