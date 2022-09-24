@@ -8,7 +8,10 @@ use Innmind\Math\{
     Algebra\Number,
     Algebra\Integer,
 };
-use Innmind\Immutable\SideEffect;
+use Innmind\Immutable\{
+    SideEffect,
+    Sequence,
+};
 
 /**
  * @psalm-immutable
@@ -163,6 +166,14 @@ final class RowVector
     public function lead(): Number
     {
         return $this->vector->lead();
+    }
+
+    /**
+     * @return Sequence<Number>
+     */
+    public function toSequence(): Sequence
+    {
+        return $this->vector->toSequence();
     }
 
     /**

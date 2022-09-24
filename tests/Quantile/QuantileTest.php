@@ -44,28 +44,18 @@ class QuantileTest extends TestCase
             $median,
             $quantile->median()->value()->value(),
         );
-        $this->assertInstanceOf(Quartile::class, $quantile->quartile(1));
-        $this->assertInstanceOf(Number::class, $quantile->quartile(1)->value());
+        $this->assertInstanceOf(Quartile::class, $quantile->firstQuartile());
+        $this->assertInstanceOf(Number::class, $quantile->firstQuartile()->value());
         $this->assertSame(
             $first,
-            $quantile->quartile(1)->value()->value(),
+            $quantile->firstQuartile()->value()->value(),
         );
-        $this->assertInstanceOf(Quartile::class, $quantile->quartile(3));
-        $this->assertInstanceOf(Number::class, $quantile->quartile(3)->value());
+        $this->assertInstanceOf(Quartile::class, $quantile->thirdQuartile());
+        $this->assertInstanceOf(Number::class, $quantile->thirdQuartile()->value());
         $this->assertSame(
             $third,
-            $quantile->quartile(3)->value()->value(),
+            $quantile->thirdQuartile()->value()->value(),
         );
-    }
-
-    public function testThrowWhenAccessingUnknownQuartile()
-    {
-        $q = Quantile::of(Dataset::of([1, 2, 3]));
-
-        $this->expectException(\UnhandledMatchError::class);
-        $this->expectExceptionMessage('Unhandled match case 6');
-
-        $q->quartile(6);
     }
 
     public function datasets()

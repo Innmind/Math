@@ -6,15 +6,23 @@ namespace Innmind\Math\Quantile;
 use function Innmind\Math\{
     min as minimum,
     max as maximum,
+    asc,
 };
 use Innmind\Math\{
     Regression\Dataset,
     Algebra\Number,
     Algebra\Real,
     Algebra\Value,
+    Algebra\Integer,
+    Algebra\Addition,
     Matrix\ColumnVector,
     Statistics\Mean,
     Statistics\Median,
+    Exception\LogicException,
+};
+use Innmind\Immutable\{
+    Sequence,
+    Maybe,
 };
 
 /**
@@ -29,18 +37,20 @@ final class Quantile
     private Quartile $firstQuartile;
     private Quartile $thirdQuartile;
 
-    private function __construct(Dataset $dataset)
+    /**
+     * @param Sequence<Number> $values
+     */
+    private function __construct(Sequence $values)
     {
-        $values = $dataset->ordinates()->toList();
-        \sort($values);
-        $dataset = Dataset::of($values);
+        $values = $values->sort(asc(...));
 
-        $this->min = $this->buildMin($dataset);
-        $this->max = $this->buildMax($dataset);
-        $this->mean = $this->buildMean($dataset);
-        $this->median = $this->buildMedian($dataset);
-        $this->firstQuartile = $this->buildFirstQuartile($dataset);
-        $this->thirdQuartile = $this->buildThirdQuartile($dataset);
+        // todo do not pre-compute the values
+        $this->min = $this->buildMin($values);
+        $this->max = $this->buildMax($values);
+        $this->mean = $this->buildMean($values);
+        $this->median = $this->buildMedian($values);
+        $this->firstQuartile = $this->buildFirstQuartile($values);
+        $this->thirdQuartile = $this->buildThirdQuartile($values);
     }
 
     /**
@@ -48,7 +58,7 @@ final class Quantile
      */
     public static function of(DataSet $dataset): self
     {
-        return new self($dataset);
+        return new self($dataset->ordinates()->toSequence());
     }
 
     /**
@@ -56,7 +66,7 @@ final class Quantile
      */
     public function min(): Quartile
     {
-        return $this->quartile(0);
+        return $this->min;
     }
 
     /**
@@ -64,7 +74,7 @@ final class Quantile
      */
     public function max(): Quartile
     {
-        return $this->quartile(4);
+        return $this->max;
     }
 
     /**
@@ -80,105 +90,124 @@ final class Quantile
      */
     public function median(): Quartile
     {
-        return $this->quartile(2);
+        return $this->median;
     }
 
-    /**
-     * Return the quartile at the wished index
-     */
-    public function quartile(int $index): Quartile
+    public function firstQuartile(): Quartile
     {
-        return match ($index) {
-            0 => $this->min,
-            1 => $this->firstQuartile,
-            2 => $this->median,
-            3 => $this->thirdQuartile,
-            4 => $this->max,
-        };
+        return $this->firstQuartile;
+    }
+
+    public function thirdQuartile(): Quartile
+    {
+        return $this->thirdQuartile;
     }
 
     /**
      * Extract the minimum value from the dataset
+     *
+     * @param Sequence<Number> $values
      */
-    private function buildMin(Dataset $dataset): Quartile
+    private function buildMin(Sequence $values): Quartile
     {
-        return Quartile::of(minimum(...$dataset->ordinates()->numbers()));
+        return $values->first()->match(
+            Quartile::of(...),
+            static fn() => throw new LogicException('Empty dataset'),
+        );
     }
 
     /**
      * Extract the maximum value from the dataset
+     *
+     * @param Sequence<Number> $values
      */
-    private function buildMax(Dataset $dataset): Quartile
+    private function buildMax(Sequence $values): Quartile
     {
-        return Quartile::of(maximum(...$dataset->ordinates()->numbers()));
+        return $values->last()->match(
+            Quartile::of(...),
+            static fn() => throw new LogicException('Empty dataset'),
+        );
     }
 
     /**
      * Build the mean value from the dataset
+     *
+     * @param Sequence<Number> $values
      */
-    private function buildMean(Dataset $dataset): Mean
+    private function buildMean(Sequence $values): Mean
     {
-        return Mean::of(...$dataset->ordinates()->numbers());
+        return Mean::of(...$values->toList());
     }
 
     /**
      * Extract the median from the dataset
+     *
+     * @param Sequence<Number> $values
      */
-    private function buildMedian(Dataset $dataset): Quartile
+    private function buildMedian(Sequence $values): Quartile
     {
-        return Quartile::of(Median::of(...$dataset->ordinates()->numbers()));
+        return Quartile::of(Median::of(...$values->toList()));
     }
 
     /**
      * Extract the first quartile
+     *
+     * @param Sequence<Number> $values
      */
-    private function buildFirstQuartile(Dataset $dataset): Quartile
+    private function buildFirstQuartile(Sequence $values): Quartile
     {
         return Quartile::of($this->buildQuartile(
             Real::of(0.25),
-            $dataset->ordinates(),
+            $values,
         ));
     }
 
     /**
      * Extract the third quartile
+     *
+     * @param Sequence<Number> $values
      */
-    private function buildThirdQuartile(Dataset $dataset): Quartile
+    private function buildThirdQuartile(Sequence $values): Quartile
     {
         return Quartile::of($this->buildQuartile(
             Real::of(0.75),
-            $dataset->ordinates(),
+            $values,
         ));
     }
 
     /**
      * Return the value describing the quartile at the given percentage
+     *
+     * @param Sequence<Number> $values
      */
     private function buildQuartile(
         Number $percentage,
-        ColumnVector $dataset,
+        Sequence $values,
     ): Number {
-        $dimension = $dataset->dimension();
-
-        if ($dimension->value() === 2) {
-            return $dataset
-                ->get(0)
-                ->add($dataset->get(1))
-                ->divideBy(Value::two);
-        }
-
-        if ($dimension->value() === 1) {
-            return $dataset->get(0);
-        }
-
-        $index = (int) $dimension
+        $index = (int) Integer::of($values->size())
             ->multiplyBy($percentage)
             ->roundUp()
+            ->collapse()
             ->value();
 
-        return $dataset
-            ->get($index)
-            ->add($dataset->get($index - 1))
-            ->divideBy(Value::two);
+        return $values->match(
+            static fn($first, $rest) => $rest->match(
+                static fn($second, $rest) => match ($rest->empty()) {
+                    true => $first->add($second)->divideBy(Value::two),
+                    false => Maybe::all(
+                        $values->get($index),
+                        $values->get($index - 1),
+                    )
+                        ->map(Addition::of(...))
+                        ->map(static fn($sum) => $sum->divideBy(Value::two))
+                        ->match(
+                            static fn($quartile) => $quartile,
+                            static fn() => throw new LogicException("Operation not working for size {$values->size()}"),
+                        ),
+                },
+                static fn() => $first,
+            ),
+            static fn() => throw new LogicException('Empty dataset'),
+        );
     }
 }

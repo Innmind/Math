@@ -223,6 +223,14 @@ final class Vector
     }
 
     /**
+     * @return Sequence<Number>
+     */
+    public function toSequence(): Sequence
+    {
+        return $this->numbers;
+    }
+
+    /**
      * @return list<Number>
      */
     public function numbers(): array
