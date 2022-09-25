@@ -32,7 +32,7 @@ final class Dataset
     }
 
     /**
-     * @param array<int, int|float|Number>|list<array{0: int|float|Number, 1: int|float|Number}> $values
+     * @param list<array{0: int|float|Number, 1: int|float|Number}> $values
      */
     public static function of(array $values): self
     {
@@ -42,8 +42,7 @@ final class Dataset
         };
         $points = [];
 
-        foreach ($values as $x => $y) {
-            $coordinates = \is_array($y) ? $y : [$x, $y];
+        foreach ($values as $coordinates) {
             $points[] = Point::of(
                 $numerize($coordinates[0]),
                 $numerize($coordinates[1]),
