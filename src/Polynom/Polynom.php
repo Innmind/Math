@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Polynom;
 
+use function Innmind\Math\desc;
 use Innmind\Math\Algebra\{
     Number,
     Integer,
@@ -190,14 +191,8 @@ final class Polynom
     {
         $degrees = $this
             ->degrees
-            ->sort(static function(Degree $a, Degree $b): int {
-                if ($a->degree()->equals($b->degree())) {
-                    return 0;
-                }
-
-                return $b->degree()->higherThan($a->degree()) ? 1 : -1;
-            })
-            ->map(static fn(Degree $degree): string => $degree->toString());
+            ->sort(static fn($a, $b) => desc($a->degree(), $b->degree()))
+            ->map(static fn($degree) => $degree->toString());
         $polynom = Str::of(' + ')->join($degrees);
 
         if (!$this->intercept->equals(Value::zero)) {
