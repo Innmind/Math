@@ -3,9 +3,9 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Regression;
 
-use function Innmind\Math\numerize;
 use Innmind\Math\{
     Algebra\Number,
+    Algebra\Real,
     Algebra\Integer,
     Algebra\Value,
     Polynom\Polynom,
@@ -76,7 +76,9 @@ final class PolynomialRegression
 
     private function buildMatrix(Dataset $dataset, Integer\Positive $degree): Matrix
     {
-        $powers = RowVector::of(...numerize(...\range(0, $degree->value())));
+        $powers = RowVector::ofSequence(
+            Sequence::of(...\range(0, $degree->value()))->map(Real::of(...)),
+        );
 
         /** @var Sequence<RowVector> */
         $rows = $dataset
