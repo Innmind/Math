@@ -44,12 +44,12 @@ final class Real implements Number
 
     public function equals(Number $number): bool
     {
-        return $this->value() == $number->value();
+        return $this->value() == $number->collapse()->value();
     }
 
     public function higherThan(Number $number): bool
     {
-        return $this->value() > $number->value();
+        return $this->value() > $number->collapse()->value();
     }
 
     public function add(

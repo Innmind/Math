@@ -48,12 +48,12 @@ class Integer implements Number
 
     public function equals(Number $number): bool
     {
-        return $this->value() == $number->value();
+        return $this->value() == $number->collapse()->value();
     }
 
     public function higherThan(Number $number): bool
     {
-        return $this->value() > $number->value();
+        return $this->value() > $number->collapse()->value();
     }
 
     public function add(Number $number, Number ...$numbers): Number
