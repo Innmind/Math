@@ -3,13 +3,11 @@ declare(strict_types = 1);
 
 namespace Tests\Innmind\Math\Regression;
 
-use function Innmind\Math\numerize;
 use Innmind\Math\{
     Regression\Dataset,
     Matrix\RowVector,
     Matrix\ColumnVector,
     Matrix\Dimension,
-    Exception\VectorsMustContainsOnlyTwoValues
 };
 use PHPUnit\Framework\TestCase;
 
@@ -17,10 +15,10 @@ class DatasetTest extends TestCase
 {
     public function testInterface()
     {
-        $dataset = Dataset::ofRows(
-            $first = RowVector::of(...numerize(1, 2)),
-            $second = RowVector::of(...numerize(3, 4)),
-        );
+        $dataset = Dataset::of([
+            [1, 2],
+            [3, 4],
+        ]);
 
         $this->assertInstanceOf(Dimension::class, $dataset->dimension());
         $this->assertSame('2 x 2', $dataset->dimension()->toString());
@@ -37,17 +35,6 @@ class DatasetTest extends TestCase
         $this->assertSame(
             [2, 4],
             $dataset->ordinates()->toList(),
-        );
-        $this->assertSame($first, $dataset->row(0));
-        $this->assertSame($second, $dataset->row(1));
-    }
-
-    public function testThrowWhenNotUsingTwoDimensionalDataset()
-    {
-        $this->expectException(VectorsMustContainsOnlyTwoValues::class);
-
-        Dataset::ofRows(
-            RowVector::of(...numerize(1, 2, 3)),
         );
     }
 
