@@ -6,7 +6,7 @@ namespace Innmind\Math\Statistics;
 use Innmind\Math\Algebra\{
     Number,
     Division,
-    Real,
+    Integer,
 };
 use Innmind\Immutable\Sequence;
 
@@ -17,7 +17,7 @@ final class Frequence
 {
     /** @var Sequence<Number> */
     private Sequence $values;
-    private Number $size;
+    private Integer $size;
 
     /**
      * @no-named-arguments
@@ -25,19 +25,17 @@ final class Frequence
     private function __construct(Number ...$values)
     {
         $this->values = Sequence::of(...$values);
-        $this->size = Real::of($this->values->size());
+        $this->size = Integer::of($this->values->size());
     }
 
     public function __invoke(Number $number): Number
     {
         $frequence = $this
             ->values
-            ->filter(static function(Number $value) use ($number): bool {
-                return $value->equals($number);
-            })
+            ->filter(static fn($value) => $value->equals($number))
             ->size();
 
-        return Division::of(Real::of($frequence), $this->size);
+        return Division::of(Integer::of($frequence), $this->size);
     }
 
     /**
@@ -49,7 +47,7 @@ final class Frequence
         return new self(...$values);
     }
 
-    public function size(): Number
+    public function size(): Integer
     {
         return $this->size;
     }

@@ -34,21 +34,21 @@ final class PolynomialRegression
             ->dot($vector)
             ->column(0);
 
-        $this->polynom = Polynom::interceptAt($coefficients->get(0));
-        $degrees = $degree->value();
-
-        for ($i = 1; $i <= $degrees; $i++) {
-            if ($coefficients->get($i)->equals(Value::zero)) {
-                continue;
-            }
-
-            $this->polynom = $this->polynom->withDegree(
-                Integer::positive($i),
-                $coefficients->get($i),
+        /** @var Sequence<positive-int> */
+        $degrees = Sequence::of(...\range(1, $degree->value()));
+        $this->polynom = $degrees
+            ->map(Integer::positive(...))
+            ->zip($coefficients->toSequence()->drop(1))
+            ->filter(static fn($pair) => !$pair[1]->equals(Value::zero))
+            ->reduce(
+                Polynom::interceptAt($coefficients->get(0)),
+                static fn(Polynom $polynom, $pair) => $polynom->withDegree(
+                    $pair[0],
+                    $pair[1],
+                ),
             );
-        }
 
-        $this->deviation = $this->buildRmsd($dataset);
+        $this->deviation = $this->buildRmsd($dataset, $this->polynom);
     }
 
     public function __invoke(Number $x): Number
@@ -80,19 +80,12 @@ final class PolynomialRegression
             Sequence::of(...\range(0, $degree->value()))->map(Real::of(...)),
         );
 
-        /** @var Sequence<RowVector> */
         $rows = $dataset
             ->abscissas()
-            ->reduce(
-                Sequence::of(),
-                static function(Sequence $rows, Number $x) use ($powers): Sequence {
-                    $xToThePowers = $powers->map(static function(Number $power) use ($x): Number {
-                        return $x->power($power);
-                    });
-
-                    return ($rows)($xToThePowers);
-                },
-            );
+            ->toSequence()
+            ->map(static fn($x) => $powers->map(
+                static fn($power) => $x->power($power),
+            ));
 
         return Matrix::fromRows(...$rows->toList());
     }
@@ -102,20 +95,18 @@ final class PolynomialRegression
         return Matrix::fromColumns($dataset->ordinates());
     }
 
-    private function buildRmsd(Dataset $dataset): Number
+    private function buildRmsd(Dataset $dataset, Polynom $interpolate): Number
     {
         $values = $dataset->ordinates();
         $estimated = $dataset
             ->abscissas()
-            ->map(fn(Number $x): Number => $this($x));
+            ->map(static fn($x) => $interpolate($x));
 
         return $values
             ->subtract($estimated)
             ->power(Value::two)
             ->sum()
-            ->divideBy(
-                $values->dimension(),
-            )
+            ->divideBy($values->dimension())
             ->squareRoot();
     }
 }

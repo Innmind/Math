@@ -3,10 +3,8 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Statistics;
 
-use Innmind\Math\Algebra\{
-    Number,
-    Round,
-};
+use function Innmind\Math\asc;
+use Innmind\Math\Algebra\Number;
 use Innmind\Immutable\{
     Sequence,
     Maybe,
@@ -24,14 +22,8 @@ final class Scope implements Number
         Number $second,
         Number ...$values,
     ) {
-        $sequence = Sequence::of($first, $second, ...$values);
-        $sequence = $sequence->sort(static function(Number $a, Number $b): int {
-            if ($a->equals($b)) {
-                return 0;
-            }
+        $sequence = Sequence::of($first, $second, ...$values)->sort(asc(...));
 
-            return $a->higherThan($b) ? 1 : -1;
-        });
         $this->result = Maybe::all($sequence->last(), $sequence->first())
             ->map(static fn(Number $last, Number $first) => $last->subtract($first))
             ->match(

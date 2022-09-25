@@ -6,7 +6,7 @@ namespace Innmind\Math\Statistics;
 use Innmind\Math\Algebra\{
     Number,
     Round,
-    Real,
+    Integer,
     Addition,
 };
 use Innmind\Immutable\Sequence;
@@ -22,7 +22,7 @@ final class Mean implements Number
     {
         $sequence = Sequence::of($first, ...$values);
         $sum = Addition::of($first, ...$values);
-        $this->result = $sum->divideBy(Real::of($sequence->size()));
+        $this->result = $sum->divideBy(Integer::of($sequence->size()));
     }
 
     /**
