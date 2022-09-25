@@ -53,20 +53,6 @@ final class Dataset
         return new self(Sequence::of(...$points));
     }
 
-    /**
-     * @return list<list<int|float>>
-     */
-    public function toList(): array
-    {
-        return $this
-            ->points
-            ->map(static fn($point) => [
-                $point->abscissa()->value(),
-                $point->ordinate()->value(),
-            ])
-            ->toList();
-    }
-
     public function abscissas(): ColumnVector
     {
         return ColumnVector::ofSequence(
