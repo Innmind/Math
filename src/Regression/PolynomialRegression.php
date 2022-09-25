@@ -11,8 +11,8 @@ use Innmind\Math\{
     Polynom\Polynom,
     Matrix,
     Matrix\RowVector,
+    Range,
 };
-use Innmind\Immutable\Sequence;
 
 /**
  * @psalm-immutable
@@ -34,10 +34,7 @@ final class PolynomialRegression
             ->dot($vector)
             ->column(0);
 
-        /** @var Sequence<positive-int> */
-        $degrees = Sequence::of(...\range(1, $degree->value()));
-        $this->polynom = $degrees
-            ->map(Integer::positive(...))
+        $this->polynom = Range::ofPositive(Integer::positive(1), $degree)
             ->zip($coefficients->toSequence()->drop(1))
             ->filter(static fn($pair) => !$pair[1]->equals(Value::zero))
             ->reduce(
@@ -76,9 +73,8 @@ final class PolynomialRegression
 
     private function buildMatrix(Dataset $dataset, Integer\Positive $degree): Matrix
     {
-        $powers = RowVector::ofSequence(
-            Sequence::of(...\range(0, $degree->value()))->map(Real::of(...)),
-        );
+        /** @psalm-suppress InvalidArgument */
+        $powers = RowVector::ofSequence(Range::of(Integer::of(0), $degree));
 
         $rows = $dataset
             ->abscissas()

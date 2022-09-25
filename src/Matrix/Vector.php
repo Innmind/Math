@@ -11,6 +11,7 @@ use Innmind\Math\{
     Algebra\Integer,
     Algebra\Value,
     Monoid\Addition,
+    Range,
 };
 use Innmind\Immutable\{
     Sequence,
@@ -49,7 +50,11 @@ final class Vector
      */
     public static function initialize(Integer\Positive $dimension, Number $value): self
     {
-        return new self(Sequence::of(...\array_fill(0, $dimension->value(), $value)));
+        return new self(
+            Range::of(Integer::of(0), $dimension->decrement())->map(
+                static fn() => $value,
+            ),
+        );
     }
 
     /**
