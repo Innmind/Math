@@ -195,16 +195,15 @@ final class Matrix
 
     public function dot(self $matrix): self
     {
-        return self::of(
+        return new self(
             $this
                 ->rows
                 ->map(
                     static fn($row) => $matrix
                         ->columns()
-                        ->map(static fn($column) => $row->dot($column))
-                        ->toList(),
+                        ->map(static fn($column) => $row->dot($column)),
                 )
-                ->toList(),
+                ->map(RowVector::ofSequence(...)),
         );
     }
 
