@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace Innmind\Math;
 
-use function Innmind\Math\numerize as wrap;
 use Innmind\Math\{
     Matrix\RowVector,
     Matrix\ColumnVector,
@@ -18,6 +17,7 @@ use Innmind\Math\{
     Algebra\Number,
     Algebra\Integer,
     Algebra\Value,
+    Algebra\Real,
 };
 use Innmind\Immutable\Sequence;
 
@@ -61,17 +61,20 @@ final class Matrix
     /**
      * @psalm-pure
      *
-     * @param list<list<int|float|number>> $values
+     * @param list<list<int|float|Number>> $values
      */
     public static function of(array $values): self
     {
-        $rows = [];
+        $numerize = static fn(int|float|Number $number): Number => match ($number instanceof Number) {
+            true => $number,
+            false => Real::of($number),
+        };
 
-        foreach ($values as $numbers) {
-            $rows[] = RowVector::of(...wrap(...$numbers));
-        }
-
-        return new self(Sequence::of(...$rows));
+        return new self(
+            Sequence::of(...$values)
+                ->map(static fn($values) => Sequence::of(...$values)->map($numerize))
+                ->map(RowVector::ofSequence(...)),
+        );
     }
 
     /**
