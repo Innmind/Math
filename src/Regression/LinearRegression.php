@@ -27,7 +27,7 @@ final class LinearRegression
     private function __construct(Dataset $data)
     {
         [$slope, $intercept] = $this->compute($data);
-        $this->polynom = Polynom::of($intercept)->withDegree(
+        $this->polynom = Polynom::interceptAt($intercept)->withDegree(
             Integer::positive(1),
             $slope,
         );

@@ -6,7 +6,6 @@ namespace Tests\Innmind\Math\Polynom;
 use Innmind\Math\{
     Polynom\Tangent,
     Polynom\Polynom,
-    Polynom\Degree,
     Algebra\Integer,
     Algebra\Number
 };
@@ -17,12 +16,9 @@ class TangentTest extends TestCase
     public function testInterface()
     {
         //f -> x^2
-        $polynom = Polynom::of(
-            Integer::of(0),
-            Degree::of(
-                Integer::of(1),
-                Integer::of(2),
-            ),
+        $polynom = Polynom::zero()->withDegree(
+            Integer::of(1),
+            Integer::of(2),
         );
         //t -> f'(2)(x - 2) + f(2)
         $tangent = Tangent::of(

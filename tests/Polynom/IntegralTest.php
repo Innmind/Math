@@ -15,7 +15,7 @@ class IntegralTest extends TestCase
 {
     public function testPolynom()
     {
-        $polynom = Polynom::of(Integer::of(42));
+        $polynom = Polynom::interceptAt(Integer::of(42));
         $integral = Integral::of($polynom);
 
         $this->assertSame($polynom, $integral->polynom());
@@ -23,7 +23,7 @@ class IntegralTest extends TestCase
 
     public function testStringCast()
     {
-        $polynom = Polynom::of()
+        $polynom = Polynom::zero()
             ->withDegree(Integer::of(1), Integer::of(4))
             ->withDegree(Integer::of(2), Integer::of(-1));
         $integral = Integral::of($polynom);
@@ -36,7 +36,7 @@ class IntegralTest extends TestCase
 
     public function testInvokation()
     {
-        $polynom = Polynom::of()
+        $polynom = Polynom::zero()
             ->withDegree(Integer::of(1), Integer::of(4))
             ->withDegree(Integer::of(2), Integer::of(-1));
         $integral = Integral::of($polynom);

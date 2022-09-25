@@ -34,7 +34,7 @@ final class PolynomialRegression
             ->dot($vector)
             ->column(0);
 
-        $this->polynom = Polynom::of($coefficients->get(0));
+        $this->polynom = Polynom::interceptAt($coefficients->get(0));
         $degrees = $degree->value();
 
         for ($i = 1; $i <= $degrees; $i++) {
