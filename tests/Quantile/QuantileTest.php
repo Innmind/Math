@@ -8,8 +8,10 @@ use Innmind\Math\{
     Quantile\Quartile,
     Regression\Dataset,
     Algebra\Number,
+    Algebra\Real,
     Exception\UnknownQuartile,
 };
+use Innmind\Immutable\Sequence;
 use PHPUnit\Framework\TestCase;
 
 class QuantileTest extends TestCase
@@ -19,7 +21,7 @@ class QuantileTest extends TestCase
      */
     public function testQuartiles($dataset, $min, $max, $mean, $median, $first, $third)
     {
-        $quantile = Quantile::of(Dataset::of($dataset));
+        $quantile = Quantile::of(Sequence::of(...$dataset)->map(Real::of(...)));
 
         $this->assertInstanceOf(Quartile::class, $quantile->min());
         $this->assertInstanceOf(Number::class, $quantile->min()->value());

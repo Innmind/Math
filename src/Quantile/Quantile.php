@@ -9,13 +9,11 @@ use function Innmind\Math\{
     asc,
 };
 use Innmind\Math\{
-    Regression\Dataset,
     Algebra\Number,
     Algebra\Real,
     Algebra\Value,
     Algebra\Integer,
     Algebra\Addition,
-    Matrix\ColumnVector,
     Statistics\Mean,
     Statistics\Median,
     Exception\LogicException,
@@ -55,10 +53,12 @@ final class Quantile
 
     /**
      * @psalm-pure
+     *
+     * @param Sequence<Number> $values
      */
-    public static function of(DataSet $dataset): self
+    public static function of(Sequence $values): self
     {
-        return new self($dataset->ordinates()->toSequence());
+        return new self($values);
     }
 
     /**
