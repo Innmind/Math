@@ -83,15 +83,11 @@ final class Matrix
         ColumnVector $first,
         ColumnVector ...$columns,
     ): self {
-        $numbers = Sequence::of($first, ...$columns)->map(
-            static function(ColumnVector $column): array {
-                return $column->numbers();
-            },
-        );
+        $rows = Sequence::of($first, ...$columns)
+            ->map(static fn($column) => $column->asRow())
+            ->toList();
 
-        $self = self::of($numbers->toList());
-
-        return $self->transpose();
+        return (new self(...$rows))->transpose();
     }
 
     /**
@@ -99,20 +95,11 @@ final class Matrix
      */
     public static function initialize(Dimension $dimension, Number $value): self
     {
-        $rows = [];
-        $count = $dimension->rows()->value();
-
-        for ($i = 0; $i < $count; ++$i) {
-            $rows[] = RowVector::of(
-                ...\array_fill(
-                    0,
-                    $dimension->columns()->value(),
-                    $value,
-                ),
-            );
-        }
-
-        return new self(...$rows);
+        return new self(
+            ...Range::of(Integer::of(1), $dimension->rows())
+                ->map(static fn() => RowVector::initialize($dimension->columns(), $value))
+                ->toList(),
+        );
     }
 
     public function dimension(): Dimension
@@ -170,14 +157,13 @@ final class Matrix
             throw new MatricesMustBeOfTheSameDimension;
         }
 
-        $numberOfRows = $this->rows->size();
-        $rows = [];
-
-        for ($i=0; $i < $numberOfRows; $i++) {
-            $rows[] = $this->row($i)->add($matrix->row($i));
-        }
-
-        return new self(...$rows);
+        return new self(
+            ...$this
+                ->rows
+                ->zip($matrix->rows())
+                ->map(static fn($pair) => $pair[0]->add($pair[1]))
+                ->toList(),
+        );
     }
 
     public function subtract(self $matrix): self
@@ -186,25 +172,25 @@ final class Matrix
             throw new MatricesMustBeOfTheSameDimension;
         }
 
-        $numberOfRows = $this->rows->size();
-        $rows = [];
-
-        for ($i=0; $i < $numberOfRows; $i++) {
-            $rows[] = $this->row($i)->subtract($matrix->row($i));
-        }
-
-        return new self(...$rows);
+        return new self(
+            ...$this
+                ->rows
+                ->zip($matrix->rows())
+                ->map(static fn($pair) => $pair[0]->subtract($pair[1]))
+                ->toList(),
+        );
     }
 
     public function multiplyBy(Number $number): self
     {
-        $multiplier = RowVector::initialize($this->row(0)->dimension(), $number);
+        $multiplier = RowVector::initialize($this->dimension->columns(), $number);
 
-        $rows = $this->rows->map(
-            static fn(RowVector $row): RowVector => $row->multiplyBy($multiplier),
+        return new self(
+            ...$this
+                ->rows
+                ->map(static fn($row) => $row->multiplyBy($multiplier))
+                ->toList(),
         );
-
-        return new self(...$rows->toList());
     }
 
     public function transpose(): self
@@ -212,7 +198,7 @@ final class Matrix
         return new self(
             ...$this
                 ->columns
-                ->map(static fn($column) => RowVector::of(...$column->numbers()))
+                ->map(static fn($column) => $column->asRow())
                 ->toList(),
         );
     }
@@ -247,12 +233,13 @@ final class Matrix
         $rows = $this->rows->reduce(
             Sequence::of(),
             static function(Sequence $rows, RowVector $row): Sequence {
-                $numbers = $row->toList();
-                $newRow = \array_fill(0, $row->dimension()->value(), 0);
-                $index = $rows->size();
-                $newRow[$index] = $numbers[$index];
-
-                return ($rows)(RowVector::of(...wrap(...$newRow)));
+                return ($rows)(RowVector::ofSequence(
+                    Range::of(Integer::of(0), $row->dimension()->decrement())
+                        ->map(static fn($i) => match ($i->value()) {
+                            $rows->size() => $row->get($i->value()),
+                            default => Value::zero,
+                        }),
+                ));
             },
         );
 
@@ -269,10 +256,14 @@ final class Matrix
         $rows = $this->rows->reduce(
             Sequence::of(),
             static function(Sequence $rows, RowVector $row): Sequence {
-                $newRow = \array_fill(0, $row->dimension()->value(), 0);
-                $newRow[$rows->size()] = 1;
-
-                return ($rows)(RowVector::of(...wrap(...$newRow)));
+                /** @psalm-suppress InvalidArgument Value is a subtype of Number */
+                return ($rows)(RowVector::ofSequence(
+                    Range::of(Integer::of(0), $row->dimension()->decrement())
+                        ->map(static fn($i) => match ($i->value()) {
+                            $rows->size() => Value::one,
+                            default => Value::zero,
+                        }),
+                ));
             },
         );
 
@@ -285,15 +276,10 @@ final class Matrix
             return false;
         }
 
-        $numberOfRows = $this->rows->size();
-
-        for ($i = 0; $i < $numberOfRows; $i++) {
-            if (!$this->row($i)->equals($matrix->row($i))) {
-                return false;
-            }
-        }
-
-        return true;
+        return $this
+            ->rows
+            ->zip($matrix->rows())
+            ->matches(static fn($pair) => $pair[0]->equals($pair[1]));
     }
 
     public function isSymmetric(): bool
@@ -388,19 +374,14 @@ final class Matrix
      */
     private function buildColumns(): Sequence
     {
-        $size = $this->dimension->columns()->value();
-        /** @var Sequence<ColumnVector> */
-        $columns = Sequence::of();
-
-        for ($i = 0; $i < $size; ++$i) {
-            $values = $this
-                ->rows
-                ->map(static fn($row) => $row->get($i))
-                ->toList();
-            $columns = ($columns)(ColumnVector::of(...$values));
-        }
-
-        return $columns;
+        return Range::of(
+            Integer::of(0),
+            $this->dimension->columns()->decrement(),
+        )
+            ->map(fn($column) => $this->rows->map(
+                static fn($row) => $row->get($column->value()),
+            ))
+            ->map(ColumnVector::ofSequence(...));
     }
 
     private function reduceLowerTriangle(self $matrix): self

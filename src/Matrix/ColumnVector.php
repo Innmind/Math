@@ -180,6 +180,11 @@ final class ColumnVector
         return $this->vector->lead();
     }
 
+    public function asRow(): RowVector
+    {
+        return RowVector::ofSequence($this->toSequence());
+    }
+
     /**
      * @return Sequence<Number>
      */

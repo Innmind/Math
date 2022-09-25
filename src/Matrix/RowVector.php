@@ -176,6 +176,11 @@ final class RowVector
         return $this->vector->lead();
     }
 
+    public function asColumn(): ColumnVector
+    {
+        return ColumnVector::ofSequence($this->toSequence());
+    }
+
     /**
      * @return Sequence<Number>
      */
