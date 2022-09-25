@@ -129,22 +129,6 @@ final class Matrix
             ->toList();
     }
 
-    public function row(int $row): RowVector
-    {
-        return $this->rows->get($row)->match(
-            static fn($row) => $row,
-            static fn() => throw new \LogicException,
-        );
-    }
-
-    public function column(int $column): ColumnVector
-    {
-        return $this->columns->get($column)->match(
-            static fn($column) => $column,
-            static fn() => throw new \LogicException,
-        );
-    }
-
     /**
      * @return Sequence<RowVector>
      */

@@ -31,31 +31,13 @@ class MatrixTest extends TestCase
 
         $this->assertInstanceOf(Dimension::class, $matrix->dimension());
         $this->assertSame('2 x 3', $matrix->dimension()->toString());
-        $this->assertInstanceOf(RowVector::class, $matrix->row(0));
-        $this->assertInstanceOf(RowVector::class, $matrix->row(1));
-        $this->assertSame($rows[0], $matrix->row(0));
-        $this->assertSame($rows[1], $matrix->row(1));
+        $this->assertSame($rows, $matrix->rows()->toList());
         $this->assertSame(
             [
                 [1, 2, 3],
                 [2, 3, 4],
             ],
             $matrix->toList(),
-        );
-        $this->assertInstanceOf(ColumnVector::class, $matrix->column(0));
-        $this->assertInstanceOf(ColumnVector::class, $matrix->column(1));
-        $this->assertInstanceOf(ColumnVector::class, $matrix->column(2));
-        $this->assertSame(
-            [1, 2],
-            $matrix->column(0)->toList(),
-        );
-        $this->assertSame(
-            [2, 3],
-            $matrix->column(1)->toList(),
-        );
-        $this->assertSame(
-            [3, 4],
-            $matrix->column(2)->toList(),
         );
     }
 

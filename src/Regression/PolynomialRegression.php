@@ -12,6 +12,7 @@ use Innmind\Math\{
     Matrix,
     Matrix\RowVector,
     Range,
+    Exception\LogicException,
 };
 use Innmind\Immutable\Sequence;
 
@@ -33,7 +34,12 @@ final class PolynomialRegression
             ->inverse()
             ->dot($matrix->transpose())
             ->dot($vector)
-            ->column(0);
+            ->columns()
+            ->first()
+            ->match(
+                static fn($coefficients) => $coefficients,
+                static fn() => throw new LogicException('Empty matrix'),
+            );
 
         $this->polynom = Range::ofPositive(Integer::positive(1), $degree)
             ->zip($coefficients->toSequence()->drop(1))
