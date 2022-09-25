@@ -6,11 +6,11 @@ namespace Innmind\Math\Algebra;
 /**
  * @psalm-immutable
  */
-final class Integer implements Number
+class Integer implements Number
 {
     private int $value;
 
-    private function __construct(int $value)
+    final private function __construct(int $value)
     {
         $this->value = $value;
     }
@@ -20,7 +20,25 @@ final class Integer implements Number
      */
     public static function of(int $value): self
     {
+        if ($value > 0) {
+            return self::positive($value);
+        }
+
+        if ($value < 0) {
+            return new Integer\Negative($value);
+        }
+
         return new self($value);
+    }
+
+    /**
+     * @psalm-pure
+     *
+     * @param positive-int $value
+     */
+    public static function positive(int $value): Integer\Positive
+    {
+        return new Integer\Positive($value);
     }
 
     public function value(): int
@@ -140,12 +158,12 @@ final class Integer implements Number
 
     public function increment(): self
     {
-        return new self($this->value + 1);
+        return self::of($this->value + 1);
     }
 
     public function decrement(): self
     {
-        return new self($this->value - 1);
+        return self::of($this->value - 1);
     }
 
     public function collapse(): Number
