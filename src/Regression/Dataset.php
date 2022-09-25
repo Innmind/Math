@@ -66,6 +66,14 @@ final class Dataset
         );
     }
 
+    /**
+     * @return Sequence<Point>
+     */
+    public function points(): Sequence
+    {
+        return $this->points;
+    }
+
     public function dimension(): Dimension
     {
         /** @psalm-suppress ArgumentTypeCoercion There is always at least one point */

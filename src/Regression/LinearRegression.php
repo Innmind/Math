@@ -14,6 +14,7 @@ use Innmind\Math\{
     Algebra\Multiplication,
     Algebra\Real,
     Matrix,
+    Monoid,
 };
 
 /**
@@ -33,7 +34,7 @@ final class LinearRegression
             $slope,
         );
         $this->slope = $slope;
-        $this->deviation = $this->buildRmsd($data);
+        $this->deviation = $this->buildRmsd($data, $this->polynom);
     }
 
     /**
@@ -83,31 +84,18 @@ final class LinearRegression
     private function compute(Dataset $data): array
     {
         $dimension = $data->dimension()->rows();
-        $elements = $dimension->value();
-        $x = $data->abscissas()->toList();
-        $y = $data->ordinates()->toList();
 
         $xSum = $data->abscissas()->sum();
         $ySum = $data->ordinates()->sum();
-        $xxSum = Value::zero;
-        $xySum = Value::zero;
-
-        for ($i = 0; $i < $elements; $i++) {
-            $xySum = Addition::of(
-                $xySum,
-                Multiplication::of(
-                    Real::of($x[$i]),
-                    Real::of($y[$i]),
-                ),
-            );
-            $xxSum = Addition::of(
-                $xxSum,
-                Multiplication::of(
-                    Real::of($x[$i]),
-                    Real::of($x[$i]),
-                ),
-            );
-        }
+        $xxSum = $data
+            ->abscissas()
+            ->toSequence()
+            ->map(static fn($x) => $x->multiplyBy($x))
+            ->fold(new Monoid\Addition);
+        $xySum = $data
+            ->points()
+            ->map(static fn($point) => $point->abscissa()->multiplyBy($point->ordinate()))
+            ->fold(new Monoid\Addition);
 
         $slope = Division::of(
             Subtraction::of(
@@ -130,20 +118,18 @@ final class LinearRegression
         return [$slope, $intercept];
     }
 
-    private function buildRmsd(Dataset $dataset): Number
+    private function buildRmsd(Dataset $dataset, Polynom $interpolate): Number
     {
         $values = $dataset->ordinates();
         $estimated = $dataset
             ->abscissas()
-            ->map(fn(Number $x): Number => $this($x));
+            ->map(static fn($x) => $interpolate($x));
 
         return $values
             ->subtract($estimated)
             ->power(Value::two)
             ->sum()
-            ->divideBy(
-                $values->dimension(),
-            )
+            ->divideBy($values->dimension())
             ->squareRoot();
     }
 }
