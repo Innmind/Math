@@ -28,6 +28,8 @@ final class Segment
 
     /**
      * @psalm-pure
+     *
+     * @throws LengthMustBePositive
      */
     public static function of(Number $length): self
     {
