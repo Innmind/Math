@@ -15,12 +15,8 @@ final class Range
      */
     public static function of(Integer $min, Integer $max): Sequence
     {
-        return Sequence::lazy(static function() use ($min, $max) {
-            while ($max->higherThan($min) || $max->equals($min)) {
-                yield $min;
-                $min = $min->increment();
-            }
-        });
+        return Sequence::of(...\range($min->value(), $max->value()))
+            ->map(Integer::of(...));
     }
 
     /**
@@ -30,11 +26,8 @@ final class Range
      */
     public static function ofPositive(Integer\Positive $min, Integer\Positive $max): Sequence
     {
-        return Sequence::lazy(static function() use ($min, $max) {
-            while ($max->higherThan($min) || $max->equals($min)) {
-                yield $min;
-                $min = $min->increment();
-            }
-        });
+        /** @psalm-suppress ArgumentTypeCoercion */
+        return Sequence::of(...\range($min->value(), $max->value()))
+            ->map(Integer::positive(...));
     }
 }
