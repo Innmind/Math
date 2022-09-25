@@ -13,6 +13,7 @@ use Innmind\Math\{
     Matrix\RowVector,
     Range,
 };
+use Innmind\Immutable\Sequence;
 
 /**
  * @psalm-immutable
@@ -76,19 +77,19 @@ final class PolynomialRegression
         /** @psalm-suppress InvalidArgument */
         $powers = RowVector::ofSequence(Range::of(Integer::of(0), $degree));
 
-        $rows = $dataset
-            ->abscissas()
-            ->toSequence()
-            ->map(static fn($x) => $powers->map(
-                static fn($power) => $x->power($power),
-            ));
-
-        return Matrix::fromRows(...$rows->toList());
+        return Matrix::fromRows(
+            $dataset
+                ->abscissas()
+                ->toSequence()
+                ->map(static fn($x) => $powers->map(
+                    static fn($power) => $x->power($power),
+                )),
+        );
     }
 
     private function buildVector(Dataset $dataset): Matrix
     {
-        return Matrix::fromColumns($dataset->ordinates());
+        return Matrix::fromColumns(Sequence::of($dataset->ordinates()));
     }
 
     private function buildRmsd(Dataset $dataset, Polynom $interpolate): Number

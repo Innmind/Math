@@ -77,14 +77,14 @@ final class RowVector
      */
     public function matrix(ColumnVector $column): Matrix
     {
-        $rows = $column
-            ->toSequence()
-            ->map(fn($number) => $this->vector->toSequence()->map(
-                static fn($rowNumber) => $rowNumber->multiplyBy($number)->collapse(),
-            ))
-            ->map(self::ofSequence(...));
-
-        return Matrix::fromRows(...$rows->toList());
+        return Matrix::fromRows(
+            $column
+                ->toSequence()
+                ->map(fn($number) => $this->vector->toSequence()->map(
+                    static fn($rowNumber) => $rowNumber->multiplyBy($number)->collapse(),
+                ))
+                ->map(self::ofSequence(...)),
+        );
     }
 
     public function multiplyBy(self $row): self

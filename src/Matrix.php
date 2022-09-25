@@ -76,24 +76,28 @@ final class Matrix
 
     /**
      * @psalm-pure
+     *
+     * @param Sequence<RowVector> $rows
+     *
+     * @throws LogicException When the sequence is empty
      */
-    public static function fromRows(RowVector $first, RowVector ...$rows): self
+    public static function fromRows(Sequence $rows): self
     {
-        return new self(Sequence::of($first, ...$rows));
+        return new self($rows);
     }
 
     /**
      * @psalm-pure
+     *
+     * @param Sequence<ColumnVector> $columns
+     *
+     * @throws LogicException When the sequence is empty
      */
-    public static function fromColumns(
-        ColumnVector $first,
-        ColumnVector ...$columns,
-    ): self {
-        $rows = Sequence::of($first, ...$columns)->map(
-            static fn($column) => $column->asRow(),
-        );
-
-        return (new self($rows))->transpose();
+    public static function fromColumns(Sequence $columns): self
+    {
+        return self::fromRows(
+            $columns->map(static fn($column) => $column->asRow()),
+        )->transpose();
     }
 
     /**
@@ -335,7 +339,7 @@ final class Matrix
     public function augmentWith(self $matrix): self
     {
         return self::fromColumns(
-            ...$this->columns->append($matrix->columns())->toList(),
+            $this->columns->append($matrix->columns()),
         );
     }
 
@@ -362,12 +366,11 @@ final class Matrix
 
         /** @psalm-suppress ArgumentTypeCoercion */
         return self::fromColumns(
-            ...$matrix
+            $matrix
                 ->columns()
                 ->takeEnd(
                     $this->dimension->columns()->value(),
-                )
-                ->toList(),
+                ),
         );
     }
 

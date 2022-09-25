@@ -27,7 +27,7 @@ class MatrixTest extends TestCase
             RowVector::of(...numerize(1, 2, 3)),
             RowVector::of(...numerize(2, 3, 4)),
         ];
-        $matrix = Matrix::fromRows(...$rows);
+        $matrix = Matrix::fromRows(Sequence::of(...$rows));
 
         $this->assertInstanceOf(Dimension::class, $matrix->dimension());
         $this->assertSame('2 x 3', $matrix->dimension()->toString());
@@ -85,10 +85,10 @@ class MatrixTest extends TestCase
     {
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
-        Matrix::fromRows(
+        Matrix::fromRows(Sequence::of(
             RowVector::of(...numerize(1, 2)),
             RowVector::of(...numerize(1, 2, 3)),
-        );
+        ));
     }
 
     public function testFromArray()
@@ -104,10 +104,10 @@ class MatrixTest extends TestCase
 
     public function testFromColumns()
     {
-        $matrix = Matrix::fromColumns(
+        $matrix = Matrix::fromColumns(Sequence::of(
             ColumnVector::of(...numerize(1, 2, 3)),
             ColumnVector::of(...numerize(4, 5, 6)),
-        );
+        ));
 
         $this->assertInstanceOf(Matrix::class, $matrix);
         $this->assertSame(

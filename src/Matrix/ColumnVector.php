@@ -80,15 +80,15 @@ final class ColumnVector
      */
     public function matrix(RowVector $row): Matrix
     {
-        $rows = $this
-            ->vector
-            ->toSequence()
-            ->map(static fn($number) => $row->toSequence()->map(
-                static fn($rowNumber) => $number->multiplyBy($rowNumber)->collapse(),
-            ))
-            ->map(RowVector::ofSequence(...));
-
-        return Matrix::fromRows(...$rows->toList());
+        return Matrix::fromRows(
+            $this
+                ->vector
+                ->toSequence()
+                ->map(static fn($number) => $row->toSequence()->map(
+                    static fn($rowNumber) => $number->multiplyBy($rowNumber)->collapse(),
+                ))
+                ->map(RowVector::ofSequence(...)),
+        );
     }
 
     public function multiplyBy(self $column): self
