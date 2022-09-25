@@ -30,9 +30,18 @@ class PolynomialRegressionTest extends TestCase
 
         $this->assertInstanceOf(Polynom::class, $polynom);
         $this->assertEqualsWithDelta(0.0, $polynom->intercept()->value(), 0.0001);
-        $this->assertFalse($polynom->hasDegree(1));
-        $this->assertSame(1.0, $polynom->degree(2)->coeff()->value());
-        $this->assertFalse($polynom->hasDegree(3));
+        $this->assertFalse($polynom->degree(1)->match(
+            static fn() => true,
+            static fn() => false,
+        ));
+        $this->assertSame(1.0, $polynom->degree(2)->match(
+            static fn($degree) => $degree->coeff()->value(),
+            static fn() => null,
+        ));
+        $this->assertFalse($polynom->degree(3)->match(
+            static fn() => true,
+            static fn() => false,
+        ));
         $this->assertSame(81.0, $polynom(Integer::of(9))->value());
         $this->assertInstanceOf(
             Number::class,
@@ -61,9 +70,30 @@ class PolynomialRegressionTest extends TestCase
 
         $this->assertInstanceOf(Polynom::class, $polynom);
         $this->assertEqualsWithDelta(0.0, $polynom->intercept()->value(), 0.0001);
-        $this->assertEqualsWithDelta(0.0, $polynom->degree(1)->coeff()->value(), 0.0001);
-        $this->assertEqualsWithDelta(0.0, $polynom->degree(2)->coeff()->value(), 0.0001);
-        $this->assertEqualsWithDelta(1.0, $polynom->degree(3)->coeff()->value(), 0.0001);
+        $this->assertEqualsWithDelta(
+            0.0,
+            $polynom->degree(1)->match(
+                static fn($degree) => $degree->coeff()->value(),
+                static fn() => null,
+            ),
+            0.0001,
+        );
+        $this->assertEqualsWithDelta(
+            0.0,
+            $polynom->degree(2)->match(
+                static fn($degree) => $degree->coeff()->value(),
+                static fn() => null,
+            ),
+            0.0001,
+        );
+        $this->assertEqualsWithDelta(
+            1.0,
+            $polynom->degree(3)->match(
+                static fn($degree) => $degree->coeff()->value(),
+                static fn() => null,
+            ),
+            0.0001,
+        );
         $this->assertEqualsWithDelta(729.0, $polynom(Integer::of(9))->value(), 0.0001);
     }
 
@@ -88,12 +118,24 @@ class PolynomialRegressionTest extends TestCase
         $polynom = $regression->polynom();
 
         $this->assertInstanceOf(Polynom::class, $polynom);
-        //values confirmed by using grapher app on mac
+        // values confirmed by using grapher app on mac
         $this->assertSame(0.50961538460923, $polynom->intercept()->value());
-        $this->assertSame(-3.2636217948742425, $polynom->degree(1)->coeff()->value());
-        $this->assertSame(2.8924460955725375, $polynom->degree(2)->coeff()->value());
-        $this->assertSame(-0.47195512820532226, $polynom->degree(3)->coeff()->value());
-        $this->assertSame(0.021452505827514123, $polynom->degree(4)->coeff()->value());
+        $this->assertSame(-3.2636217948742425, $polynom->degree(1)->match(
+            static fn($degree) => $degree->coeff()->value(),
+            static fn() => null,
+        ));
+        $this->assertSame(2.8924460955725375, $polynom->degree(2)->match(
+            static fn($degree) => $degree->coeff()->value(),
+            static fn() => null,
+        ));
+        $this->assertSame(-0.47195512820532226, $polynom->degree(3)->match(
+            static fn($degree) => $degree->coeff()->value(),
+            static fn() => null,
+        ));
+        $this->assertSame(0.021452505827514123, $polynom->degree(4)->match(
+            static fn($degree) => $degree->coeff()->value(),
+            static fn() => null,
+        ));
         $this->assertInstanceOf(
             Number::class,
             $regression->rootMeanSquareDeviation(),

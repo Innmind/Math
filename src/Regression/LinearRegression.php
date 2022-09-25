@@ -22,6 +22,7 @@ use Innmind\Math\{
 final class LinearRegression
 {
     private Polynom $polynom;
+    private Number $slope;
     private Number $deviation;
 
     private function __construct(Dataset $data)
@@ -31,6 +32,7 @@ final class LinearRegression
             Integer::positive(1),
             $slope,
         );
+        $this->slope = $slope;
         $this->deviation = $this->buildRmsd($data);
     }
 
@@ -63,7 +65,7 @@ final class LinearRegression
      */
     public function slope(): Number
     {
-        return $this->polynom->degree(1)->coeff();
+        return $this->slope;
     }
 
     public function rootMeanSquareDeviation(): Number

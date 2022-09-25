@@ -12,9 +12,9 @@ use Innmind\Math\Algebra\{
     Addition,
 };
 use Innmind\Immutable\{
-    Map,
     Sequence,
     Str,
+    Maybe,
 };
 
 /**
@@ -96,26 +96,12 @@ final class Polynom
      * Return the given degree
      *
      * @param positive-int $degree
-     */
-    public function degree(int $degree): Degree
-    {
-        return $this
-            ->degrees
-            ->find(static fn($known) => $known->degree()->equals(Integer::of($degree)))
-            ->match(
-                static fn($degree) => $degree,
-                static fn() => throw new \LogicException,
-            );
-    }
-
-    /**
-     * Check if the polynom has the given degree
      *
-     * @param positive-int $degree
+     * @return Maybe<Degree>
      */
-    public function hasDegree(int $degree): bool
+    public function degree(int $degree): Maybe
     {
-        return $this->degrees->any(
+        return $this->degrees->find(
             static fn($known) => $known->degree()->equals(Integer::of($degree)),
         );
     }

@@ -25,15 +25,6 @@ class PolynomTest extends TestCase
         );
     }
 
-    public function testThrowIfTryingToAccessUnknownDegree()
-    {
-        $p = Polynom::zero();
-
-        $this->expectException(\LogicException::class);
-
-        $p->degree(2);
-    }
-
     public function testIntercept()
     {
         $p = Polynom::interceptAt($intercept = Integer::of(42));
