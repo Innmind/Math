@@ -61,7 +61,7 @@ final class Matrix
     /**
      * @psalm-pure
      *
-     * @param list<list<int|float|Number>> $values
+     * @param non-empty-list<non-empty-list<int|float|Number>> $values
      */
     public static function of(array $values): self
     {
