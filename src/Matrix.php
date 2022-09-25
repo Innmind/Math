@@ -424,8 +424,8 @@ final class Matrix
         $reference = 0;
 
         do {
-            //for each line remove the lines below by mutuplying them
-            //by the number in j column of the row being manipulated
+            // for each line remove the lines below by multiplying them
+            // by the number in j column of the row being manipulated
             $reduced = $rows->take($reference + 1);
             $toReduce = $rows->drop($reference + 1);
             $rows = $reduced->append(
