@@ -13,6 +13,7 @@ use Innmind\Math\{
     Exception\DivisionByZero,
     Exception\NotANumber,
     Exception\MatrixNotInvertible,
+    Exception\LogicException,
     Matrix\Dimension,
     Algebra\Number,
     Algebra\Integer,
@@ -31,18 +32,23 @@ final class Matrix
     /** @var Sequence<ColumnVector> */
     private Sequence $columns;
 
-    private function __construct(RowVector $first, RowVector ...$rows)
+    /**
+     * @param Sequence<RowVector> $rows
+     */
+    private function __construct(Sequence $rows)
     {
-        $this->rows = Sequence::of($first, ...$rows);
+        [$first, $rest] = $rows->match(
+            static fn($first, $rest) => [$first, $rest],
+            static fn() => throw new LogicException('Empty matrix'),
+        );
+        $_ = $rest->foreach(
+            static fn($row) => match ($row->dimension()->equals($first->dimension())) {
+                true => null, // as expected
+                false => throw new VectorsMustMeOfTheSameDimension,
+            },
+        );
 
-        $_ = $this
-            ->rows
-            ->drop(1)
-            ->foreach(static function(RowVector $row) use ($first): void {
-                if (!$row->dimension()->equals($first->dimension())) {
-                    throw new VectorsMustMeOfTheSameDimension;
-                }
-            });
+        $this->rows = $rows;
 
         /** @psalm-suppress ArgumentTypeCoercion There is always at least one row */
         $this->dimension = Dimension::of(
@@ -65,7 +71,7 @@ final class Matrix
             $rows[] = RowVector::of(...wrap(...$numbers));
         }
 
-        return new self(...$rows);
+        return new self(Sequence::of(...$rows));
     }
 
     /**
@@ -73,7 +79,7 @@ final class Matrix
      */
     public static function fromRows(RowVector $first, RowVector ...$rows): self
     {
-        return new self($first, ...$rows);
+        return new self(Sequence::of($first, ...$rows));
     }
 
     /**
@@ -83,11 +89,11 @@ final class Matrix
         ColumnVector $first,
         ColumnVector ...$columns,
     ): self {
-        $rows = Sequence::of($first, ...$columns)
-            ->map(static fn($column) => $column->asRow())
-            ->toList();
+        $rows = Sequence::of($first, ...$columns)->map(
+            static fn($column) => $column->asRow(),
+        );
 
-        return (new self(...$rows))->transpose();
+        return (new self($rows))->transpose();
     }
 
     /**
@@ -96,9 +102,9 @@ final class Matrix
     public static function initialize(Dimension $dimension, Number $value): self
     {
         return new self(
-            ...Range::of(Integer::of(1), $dimension->rows())
-                ->map(static fn() => RowVector::initialize($dimension->columns(), $value))
-                ->toList(),
+            Range::of(Integer::of(1), $dimension->rows())->map(
+                static fn() => RowVector::initialize($dimension->columns(), $value),
+            ),
         );
     }
 
@@ -158,11 +164,10 @@ final class Matrix
         }
 
         return new self(
-            ...$this
+            $this
                 ->rows
                 ->zip($matrix->rows())
-                ->map(static fn($pair) => $pair[0]->add($pair[1]))
-                ->toList(),
+                ->map(static fn($pair) => $pair[0]->add($pair[1])),
         );
     }
 
@@ -173,11 +178,10 @@ final class Matrix
         }
 
         return new self(
-            ...$this
+            $this
                 ->rows
                 ->zip($matrix->rows())
-                ->map(static fn($pair) => $pair[0]->subtract($pair[1]))
-                ->toList(),
+                ->map(static fn($pair) => $pair[0]->subtract($pair[1])),
         );
     }
 
@@ -186,20 +190,18 @@ final class Matrix
         $multiplier = RowVector::initialize($this->dimension->columns(), $number);
 
         return new self(
-            ...$this
+            $this
                 ->rows
-                ->map(static fn($row) => $row->multiplyBy($multiplier))
-                ->toList(),
+                ->map(static fn($row) => $row->multiplyBy($multiplier)),
         );
     }
 
     public function transpose(): self
     {
         return new self(
-            ...$this
+            $this
                 ->columns
-                ->map(static fn($column) => $column->asRow())
-                ->toList(),
+                ->map(static fn($column) => $column->asRow()),
         );
     }
 
@@ -243,7 +245,7 @@ final class Matrix
             },
         );
 
-        return new self(...$rows->toList());
+        return new self($rows);
     }
 
     public function identity(): self
@@ -267,7 +269,7 @@ final class Matrix
             },
         );
 
-        return new self(...$rows->toList());
+        return new self($rows);
     }
 
     public function equals(self $matrix): bool
@@ -420,7 +422,7 @@ final class Matrix
             ++$index;
         } while ($index < $this->dimension()->rows()->value());
 
-        return new self(...$rows->toList());
+        return new self($rows);
     }
 
     private function reduceUpperTriangle(self $matrix): self
@@ -455,6 +457,6 @@ final class Matrix
             ++$reference;
         } while ($index >= 0);
 
-        return new self(...$rows->reverse()->toList());
+        return new self($rows->reverse());
     }
 }
