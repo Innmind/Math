@@ -10,4 +10,9 @@ use Innmind\Math\Algebra\Integer;
  */
 final class Negative extends Integer
 {
+    public function decrement(): self
+    {
+        /** @var self */
+        return self::of($this->value() - 1);
+    }
 }

@@ -44,8 +44,9 @@ final class Matrix
                 }
             });
 
+        /** @psalm-suppress ArgumentTypeCoercion There is always at least one row */
         $this->dimension = Dimension::of(
-            Integer::of($this->rows->size()),
+            Integer::positive($this->rows->size()),
             $first->dimension(),
         );
         $this->columns = $this->buildColumns();

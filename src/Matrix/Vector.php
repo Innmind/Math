@@ -24,7 +24,7 @@ final class Vector
 {
     /** @var Sequence<Number> */
     private Sequence $numbers;
-    private Integer $dimension;
+    private Integer\Positive $dimension;
 
     /**
      * @param Sequence<Number> $numbers
@@ -32,7 +32,8 @@ final class Vector
     private function __construct(Sequence $numbers)
     {
         $this->numbers = $numbers;
-        $this->dimension = Integer::of($this->numbers->size());
+        /** @psalm-suppress ArgumentTypeCoercion There is always at least one number in the sequence */
+        $this->dimension = Integer::positive($this->numbers->size());
     }
 
     /**
@@ -46,7 +47,7 @@ final class Vector
     /**
      * @psalm-pure
      */
-    public static function initialize(Integer $dimension, Number $value): self
+    public static function initialize(Integer\Positive $dimension, Number $value): self
     {
         return new self(Sequence::of(...\array_fill(0, $dimension->value(), $value)));
     }
@@ -78,7 +79,7 @@ final class Vector
             ->toList();
     }
 
-    public function dimension(): Integer
+    public function dimension(): Integer\Positive
     {
         return $this->dimension;
     }

@@ -37,7 +37,7 @@ final class ColumnVector
     /**
      * @psalm-pure
      */
-    public static function initialize(Integer $dimension, Number $value): self
+    public static function initialize(Integer\Positive $dimension, Number $value): self
     {
         return new self(Vector::initialize($dimension, $value));
     }
@@ -62,7 +62,7 @@ final class ColumnVector
         return $this->vector->toList();
     }
 
-    public function dimension(): Integer
+    public function dimension(): Integer\Positive
     {
         return $this->vector->dimension();
     }

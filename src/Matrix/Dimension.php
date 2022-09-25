@@ -3,43 +3,36 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Matrix;
 
-use Innmind\Math\{
-    Algebra\Integer,
-    Exception\DimensionMustBePositive,
-};
+use Innmind\Math\Algebra\Integer;
 
 /**
  * @psalm-immutable
  */
 final class Dimension
 {
-    private Integer $rows;
-    private Integer $columns;
+    private Integer\Positive $rows;
+    private Integer\Positive $columns;
 
-    private function __construct(Integer $rows, Integer $columns)
+    private function __construct(Integer\Positive $rows, Integer\Positive $columns)
     {
         $this->rows = $rows;
         $this->columns = $columns;
-
-        if ($rows->value() < 0 || $columns->value() < 0) {
-            throw new DimensionMustBePositive($this->toString());
-        }
     }
 
     /**
      * @psalm-pure
      */
-    public static function of(Integer $rows, Integer $columns): self
+    public static function of(Integer\Positive $rows, Integer\Positive $columns): self
     {
         return new self($rows, $columns);
     }
 
-    public function rows(): Integer
+    public function rows(): Integer\Positive
     {
         return $this->rows;
     }
 
-    public function columns(): Integer
+    public function columns(): Integer\Positive
     {
         return $this->columns;
     }

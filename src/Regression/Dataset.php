@@ -68,9 +68,10 @@ final class Dataset
 
     public function dimension(): Dimension
     {
+        /** @psalm-suppress ArgumentTypeCoercion There is always at least one point */
         return Dimension::of(
-            Integer::of($this->points->size()),
-            Integer::of(2),
+            Integer::positive($this->points->size()),
+            Integer::positive(2),
         );
     }
 }

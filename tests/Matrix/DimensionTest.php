@@ -6,7 +6,6 @@ namespace Tests\Innmind\Math\Matrix;
 use Innmind\Math\{
     Matrix\Dimension,
     Algebra\Integer,
-    Exception\DimensionMustBePositive
 };
 use PHPUnit\Framework\TestCase;
 
@@ -21,20 +20,6 @@ class DimensionTest extends TestCase
         $this->assertSame(2, $dimension->rows()->value());
         $this->assertSame(3, $dimension->columns()->value());
         $this->assertSame('2 x 3', $dimension->toString());
-    }
-
-    public function testThrowWhenNegativeRows()
-    {
-        $this->expectException(DimensionMustBePositive::class);
-
-        Dimension::of(Integer::of(-1), Integer::of(1));
-    }
-
-    public function testThrowWhenNegativeColumns()
-    {
-        $this->expectException(DimensionMustBePositive::class);
-
-        Dimension::of(Integer::of(1), Integer::of(-1));
     }
 
     public function testEquals()

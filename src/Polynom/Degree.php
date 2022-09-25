@@ -15,10 +15,10 @@ use Innmind\Math\{
  */
 final class Degree
 {
-    private Integer $degree;
+    private Integer\Positive $degree;
     private Number $coeff;
 
-    private function __construct(Integer $degree, Number $coeff)
+    private function __construct(Integer\Positive $degree, Number $coeff)
     {
         $this->degree = $degree;
         $this->coeff = $coeff;
@@ -35,12 +35,12 @@ final class Degree
     /**
      * @psalm-pure
      */
-    public static function of(Integer $degree, Number $coeff): self
+    public static function of(Integer\Positive $degree, Number $coeff): self
     {
         return new self($degree, $coeff);
     }
 
-    public function degree(): Integer
+    public function degree(): Integer\Positive
     {
         return $this->degree;
     }
@@ -60,6 +60,7 @@ final class Degree
 
     public function derivative(): self
     {
+        /** @psalm-suppress ArgumentTypeCoercion It must throw if we decrement below 1 as it means there is a bug somewhere */
         return new self(
             $this->degree->decrement(),
             $this->coeff->multiplyBy($this->degree),

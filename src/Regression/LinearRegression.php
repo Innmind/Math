@@ -28,7 +28,7 @@ final class LinearRegression
     {
         [$slope, $intercept] = $this->compute($data);
         $this->polynom = Polynom::of($intercept)->withDegree(
-            Integer::of(1),
+            Integer::positive(1),
             $slope,
         );
         $this->deviation = $this->buildRmsd($data);

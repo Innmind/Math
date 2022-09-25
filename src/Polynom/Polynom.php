@@ -64,7 +64,7 @@ final class Polynom
     /**
      * Create a new polynom with this added degree
      */
-    public function withDegree(Integer $degree, Number $coeff): self
+    public function withDegree(Integer\Positive $degree, Number $coeff): self
     {
         $degrees = ($this->degrees)(
             $degree->value(),
@@ -137,7 +137,7 @@ final class Polynom
 
         if (!$this->intercept->equals(Value::zero)) {
             $degrees = ($degrees)(
-                Degree::of(Integer::of(1), $this->intercept)
+                Degree::of(Integer::positive(1), $this->intercept)
             );
         }
 
