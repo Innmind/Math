@@ -5,6 +5,7 @@ namespace Innmind\Math\Matrix;
 
 use Innmind\Math\{
     Exception\VectorsMustMeOfTheSameDimension,
+    Exception\LogicException,
     Matrix,
     Algebra\Number,
     Algebra\Integer,
@@ -25,9 +26,12 @@ final class Vector
     private Sequence $numbers;
     private Integer $dimension;
 
-    private function __construct(Number $number, Number ...$numbers)
+    /**
+     * @param Sequence<Number> $numbers
+     */
+    private function __construct(Sequence $numbers)
     {
-        $this->numbers = Sequence::of($number, ...$numbers);
+        $this->numbers = $numbers;
         $this->dimension = Integer::of($this->numbers->size());
     }
 
@@ -36,12 +40,31 @@ final class Vector
      */
     public static function of(Number $number, Number ...$numbers): self
     {
-        return new self($number, ...$numbers);
+        return new self(Sequence::of($number, ...$numbers));
     }
 
+    /**
+     * @psalm-pure
+     */
     public static function initialize(Integer $dimension, Number $value): self
     {
-        return new self(...\array_fill(0, $dimension->value(), $value));
+        return new self(Sequence::of(...\array_fill(0, $dimension->value(), $value)));
+    }
+
+    /**
+     * @psalm-pure
+     *
+     * @param Sequence<Number> $numbers
+     *
+     * @throws LogicException When the sequence is empty
+     */
+    public static function ofSequence(Sequence $numbers): self
+    {
+        if ($numbers->empty()) {
+            throw new LogicException('Empty vector');
+        }
+
+        return new self($numbers);
     }
 
     /**
@@ -69,15 +92,11 @@ final class Vector
             throw new VectorsMustMeOfTheSameDimension;
         }
 
-        $value = Value::zero;
-
-        for ($i = 0; $i < $this->dimension->value(); $i++) {
-            $value = $value->add(
-                $this->get($i)->multiplyBy($vector->get($i))->collapse(),
-            );
-        }
-
-        return $value;
+        return $this
+            ->numbers
+            ->zip($vector->numbers)
+            ->map(static fn($pair) => $pair[0]->multiplyBy($pair[1])->collapse())
+            ->fold(new Addition);
     }
 
     public function multiplyBy(self $vector): self
@@ -86,13 +105,12 @@ final class Vector
             throw new VectorsMustMeOfTheSameDimension;
         }
 
-        $numbers = [];
-
-        for ($i = 0; $i < $this->dimension->value(); $i++) {
-            $numbers[] = $this->get($i)->multiplyBy($vector->get($i))->collapse();
-        }
-
-        return new self(...$numbers);
+        return new self(
+            $this
+                ->numbers
+                ->zip($vector->numbers)
+                ->map(static fn($pair) => $pair[0]->multiplyBy($pair[1])->collapse()),
+        );
     }
 
     public function divideBy(self $vector): self
@@ -101,13 +119,12 @@ final class Vector
             throw new VectorsMustMeOfTheSameDimension;
         }
 
-        $numbers = [];
-
-        for ($i = 0; $i < $this->dimension->value(); $i++) {
-            $numbers[] = $this->get($i)->divideBy($vector->get($i));
-        }
-
-        return new self(...$numbers);
+        return new self(
+            $this
+                ->numbers
+                ->zip($vector->numbers)
+                ->map(static fn($pair) => $pair[0]->divideBy($pair[1])),
+        );
     }
 
     public function subtract(self $vector): self
@@ -116,13 +133,12 @@ final class Vector
             throw new VectorsMustMeOfTheSameDimension;
         }
 
-        $numbers = [];
-
-        for ($i = 0; $i < $this->dimension->value(); $i++) {
-            $numbers[] = $this->get($i)->subtract($vector->get($i));
-        }
-
-        return new self(...$numbers);
+        return new self(
+            $this
+                ->numbers
+                ->zip($vector->numbers)
+                ->map(static fn($pair) => $pair[0]->subtract($pair[1])),
+        );
     }
 
     public function add(self $vector): self
@@ -131,22 +147,19 @@ final class Vector
             throw new VectorsMustMeOfTheSameDimension;
         }
 
-        $numbers = [];
-
-        for ($i = 0; $i < $this->dimension->value(); $i++) {
-            $numbers[] = $this->get($i)->add($vector->get($i));
-        }
-
-        return new self(...$numbers);
+        return new self(
+            $this
+                ->numbers
+                ->zip($vector->numbers)
+                ->map(static fn($pair) => $pair[0]->add($pair[1])),
+        );
     }
 
     public function power(Number $power): self
     {
-        $numbers = $this->numbers->map(static function(Number $number) use ($power): Number {
-            return $number->power($power);
-        });
-
-        return new self(...$numbers->toList());
+        return new self(
+            $this->numbers->map(static fn($number) => $number->power($power)),
+        );
     }
 
     public function sum(): Number
@@ -168,7 +181,7 @@ final class Vector
     public function map(callable $function): self
     {
         return new self(
-            ...$this->numbers->map($function)->toList(),
+            $this->numbers->map($function),
         );
     }
 
@@ -199,13 +212,10 @@ final class Vector
             return false;
         }
 
-        for ($i = 0; $i < $this->dimension->value(); $i++) {
-            if (!$this->get($i)->equals($vector->get($i))) {
-                return false;
-            }
-        }
-
-        return true;
+        return $this
+            ->numbers
+            ->zip($vector->numbers)
+            ->matches(static fn($pair) => $pair[0]->equals($pair[1]));
     }
 
     /**

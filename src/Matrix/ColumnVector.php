@@ -7,6 +7,7 @@ use Innmind\Math\{
     Matrix,
     Algebra\Number,
     Algebra\Integer,
+    Exception\LogicException,
 };
 use Innmind\Immutable\{
     SideEffect,
@@ -20,9 +21,9 @@ final class ColumnVector
 {
     private Vector $vector;
 
-    private function __construct(Number $number, Number ...$numbers)
+    private function __construct(Vector $vector)
     {
-        $this->vector = Vector::of($number, ...$numbers);
+        $this->vector = $vector;
     }
 
     /**
@@ -30,12 +31,27 @@ final class ColumnVector
      */
     public static function of(Number $number, Number ...$numbers): self
     {
-        return new self($number, ...$numbers);
+        return new self(Vector::of($number, ...$numbers));
     }
 
+    /**
+     * @psalm-pure
+     */
     public static function initialize(Integer $dimension, Number $value): self
     {
-        return new self(...\array_fill(0, $dimension->value(), $value));
+        return new self(Vector::initialize($dimension, $value));
+    }
+
+    /**
+     * @psalm-pure
+     *
+     * @param Sequence<Number> $numbers
+     *
+     * @throws LogicException When the sequence is empty
+     */
+    public static function ofSequence(Sequence $numbers): self
+    {
+        return new self(Vector::ofSequence($numbers));
     }
 
     /**
@@ -56,7 +72,7 @@ final class ColumnVector
      */
     public function dot(RowVector $row): Number
     {
-        return $this->vector->dot(Vector::of(...$row->numbers()));
+        return $this->vector->dot(Vector::ofSequence($row->toSequence()));
     }
 
     /**
@@ -64,53 +80,49 @@ final class ColumnVector
      */
     public function matrix(RowVector $row): Matrix
     {
-        $rows = [];
+        $rows = $this
+            ->vector
+            ->toSequence()
+            ->map(static fn($number) => $row->toSequence()->map(
+                static fn($rowNumber) => $number->multiplyBy($rowNumber)->collapse(),
+            ))
+            ->map(RowVector::ofSequence(...));
 
-        foreach ($this->vector->numbers() as $number) {
-            $values = [];
-
-            foreach ($row->numbers() as $rowNumber) {
-                $values[] = $number->multiplyBy($rowNumber)->collapse();
-            }
-
-            $rows[] = RowVector::of(...$values);
-        }
-
-        return Matrix::fromRows(...$rows);
+        return Matrix::fromRows(...$rows->toList());
     }
 
     public function multiplyBy(self $column): self
     {
         return new self(
-            ...$this->vector->multiplyBy($column->vector)->numbers(),
+            $this->vector->multiplyBy($column->vector),
         );
     }
 
     public function divideBy(self $column): self
     {
         return new self(
-            ...$this->vector->divideBy($column->vector)->numbers(),
+            $this->vector->divideBy($column->vector),
         );
     }
 
     public function subtract(self $column): self
     {
         return new self(
-            ...$this->vector->subtract($column->vector)->numbers(),
+            $this->vector->subtract($column->vector),
         );
     }
 
     public function add(self $column): self
     {
         return new self(
-            ...$this->vector->add($column->vector)->numbers(),
+            $this->vector->add($column->vector),
         );
     }
 
     public function power(Number $power): self
     {
         return new self(
-            ...$this->vector->power($power)->numbers(),
+            $this->vector->power($power),
         );
     }
 
@@ -133,7 +145,7 @@ final class ColumnVector
     public function map(callable $function): self
     {
         return new self(
-            ...$this->vector->map($function)->numbers(),
+            $this->vector->map($function),
         );
     }
 
