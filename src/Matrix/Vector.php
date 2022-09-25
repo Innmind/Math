@@ -51,9 +51,7 @@ final class Vector
     public static function initialize(Integer\Positive $dimension, Number $value): self
     {
         return new self(
-            Range::of(Integer::of(0), $dimension->decrement())->map(
-                static fn() => $value,
-            ),
+            Range::until($dimension)->map(static fn() => $value),
         );
     }
 

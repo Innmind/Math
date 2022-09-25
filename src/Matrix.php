@@ -223,11 +223,12 @@ final class Matrix
             Sequence::of(),
             static function(Sequence $rows, RowVector $row): Sequence {
                 return ($rows)(RowVector::ofSequence(
-                    Range::of(Integer::of(0), $row->dimension()->decrement())
-                        ->map(static fn($i) => match ($i->value()) {
+                    Range::until($row->dimension())->map(
+                        static fn($i) => match ($i->value()) {
                             $rows->size() => $row->get($i->value()),
                             default => Value::zero,
-                        }),
+                        },
+                    ),
                 ));
             },
         );
@@ -247,11 +248,12 @@ final class Matrix
             static function(Sequence $rows, RowVector $row): Sequence {
                 /** @psalm-suppress InvalidArgument Value is a subtype of Number */
                 return ($rows)(RowVector::ofSequence(
-                    Range::of(Integer::of(0), $row->dimension()->decrement())
-                        ->map(static fn($i) => match ($i->value()) {
+                    Range::until($row->dimension())->map(
+                        static fn($i) => match ($i->value()) {
                             $rows->size() => Value::one,
                             default => Value::zero,
-                        }),
+                        },
+                    ),
                 ));
             },
         );
@@ -362,10 +364,7 @@ final class Matrix
      */
     private function buildColumns(): Sequence
     {
-        return Range::of(
-            Integer::of(0),
-            $this->dimension->columns()->decrement(),
-        )
+        return Range::until($this->dimension->columns())
             ->map(fn($column) => $this->rows->map(
                 static fn($row) => $row->get($column->value()),
             ))
