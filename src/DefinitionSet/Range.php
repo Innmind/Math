@@ -30,11 +30,17 @@ final class Range implements Set
         $this->upperInclusivity = $upperInclusivity;
     }
 
+    /**
+     * @psalm-pure
+     */
     public static function inclusive(Number $lower, Number $upper): self
     {
         return new self(true, $lower, $upper, true);
     }
 
+    /**
+     * @psalm-pure
+     */
     public static function exclusive(Number $lower, Number $upper): self
     {
         return new self(false, $lower, $upper, false);

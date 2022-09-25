@@ -147,6 +147,9 @@ final class BinaryLogarithm implements Operation, Number
         return $this->compute($this->number);
     }
 
+    /**
+     * @psalm-pure
+     */
     public static function definitionSet(): Set
     {
         return Range::exclusive(

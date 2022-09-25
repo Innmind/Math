@@ -105,6 +105,8 @@ final class Matrix
 
     /**
      * Initialize a matrix to the wished dimension filled with the specified value
+     *
+     * @psalm-pure
      */
     public static function initialize(Dimension $dimension, Number $value): self
     {
