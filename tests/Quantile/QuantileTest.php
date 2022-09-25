@@ -9,7 +9,6 @@ use Innmind\Math\{
     Regression\Dataset,
     Algebra\Number,
     Algebra\Real,
-    Exception\UnknownQuartile,
 };
 use Innmind\Immutable\Sequence;
 use PHPUnit\Framework\TestCase;
