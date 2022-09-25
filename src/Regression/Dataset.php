@@ -32,7 +32,7 @@ final class Dataset
     }
 
     /**
-     * @param list<array{0: int|float|Number, 1: int|float|Number}> $values
+     * @param non-empty-list<array{0: int|float|Number, 1: int|float|Number}> $values
      */
     public static function of(array $values): self
     {
