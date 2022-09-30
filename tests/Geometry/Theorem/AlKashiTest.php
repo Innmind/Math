@@ -32,9 +32,10 @@ class AlKashiTest extends TestCase
             '√(((5^2) + (7^2)) - (((2 x 5) x 7) x cos(49°)))',
             $c->length()->toString(),
         );
-        $this->assertSame(
-            5.298666621959197,
+        $this->assertEqualsWithDelta(
+            5.29866662195919,
             $c->length()->value(),
+            0.00000000000001,
         );
     }
 

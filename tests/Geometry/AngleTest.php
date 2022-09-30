@@ -37,9 +37,10 @@ class AngleTest extends TestCase
         $segment = $angle->sum();
 
         $this->assertInstanceOf(Segment::class, $segment);
-        $this->assertSame(
-            5.298666621959197,
+        $this->assertEqualsWithDelta(
+            5.29866662195919,
             $segment->length()->value(),
+            0.00000000000001,
         );
     }
 
@@ -53,9 +54,10 @@ class AngleTest extends TestCase
         $number = $angle->scalarProduct();
 
         $this->assertInstanceOf(Number::class, $number);
-        $this->assertSame(
+        $this->assertEqualsWithDelta(
             22.96206601466776,
             $number->value(),
+            0.00000000000001,
         );
     }
 }
