@@ -4,7 +4,10 @@ declare(strict_types = 1);
 namespace Innmind\Math\Statistics;
 
 use function Innmind\Math\asc;
-use Innmind\Math\Algebra\Number;
+use Innmind\Math\{
+    Algebra\Number,
+    Exception\LogicException,
+};
 use Innmind\Immutable\Sequence;
 
 /**
@@ -170,7 +173,7 @@ final class Median implements Number
             )
             ->match(
                 static fn($result) => $result,
-                static fn() => throw new \LogicException,
+                static fn() => throw new LogicException,
             );
     }
 
@@ -186,11 +189,11 @@ final class Median implements Number
         return Mean::of(
             $values->get($index - 1)->match(
                 static fn($number) => $number,
-                static fn() => throw new \LogicException,
+                static fn() => throw new LogicException,
             ),
             $values->get($index)->match(
                 static fn($number) => $number,
-                static fn() => throw new \LogicException,
+                static fn() => throw new LogicException,
             ),
         );
     }

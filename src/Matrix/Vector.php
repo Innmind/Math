@@ -206,7 +206,7 @@ final class Vector
     {
         return $this->numbers->get($position)->match(
             static fn($number) => $number,
-            static fn() => throw new \LogicException,
+            static fn() => throw new LogicException,
         );
     }
 

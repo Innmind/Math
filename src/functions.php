@@ -6,6 +6,7 @@ namespace Innmind\Math;
 use Innmind\Math\{
     Algebra\Number,
     Algebra\Real,
+    Exception\LogicException,
 };
 use Innmind\Immutable\Sequence;
 
@@ -48,7 +49,7 @@ function max(Number $first, Number ...$numbers): Number
         ->first()
         ->match(
             static fn($max) => $max,
-            static fn() => throw new \LogicException('Unreachable'),
+            static fn() => throw new LogicException('Unreachable'),
         );
 }
 
@@ -63,6 +64,6 @@ function min(Number $first, Number ...$numbers): Number
         ->first()
         ->match(
             static fn($min) => $min,
-            static fn() => throw new \LogicException('Unreachable'),
+            static fn() => throw new LogicException('Unreachable'),
         );
 }

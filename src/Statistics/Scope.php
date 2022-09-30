@@ -4,7 +4,10 @@ declare(strict_types = 1);
 namespace Innmind\Math\Statistics;
 
 use function Innmind\Math\asc;
-use Innmind\Math\Algebra\Number;
+use Innmind\Math\{
+    Algebra\Number,
+    Exception\LogicException,
+};
 use Innmind\Immutable\{
     Sequence,
     Maybe,
@@ -28,7 +31,7 @@ final class Scope implements Number
             ->map(static fn(Number $last, Number $first) => $last->subtract($first))
             ->match(
                 static fn($result) => $result,
-                static fn() => throw new \LogicException('Unreachable'),
+                static fn() => throw new LogicException('Unreachable'),
             );
     }
 

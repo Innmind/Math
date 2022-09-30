@@ -385,7 +385,7 @@ final class Matrix
                     $toEchelon = $rows->drop($index + 1);
                     $reference = $echeloned->last()->match(
                         static fn($reference) => $reference,
-                        static fn() => throw new \LogicException,
+                        static fn() => throw new LogicException,
                     );
 
                     return $echeloned
@@ -448,7 +448,7 @@ final class Matrix
                                 ->map(static fn($last) => $row->subtract($last))
                                 ->match(
                                     static fn($reduced) => $reduced,
-                                    static fn() => throw new \LogicException,
+                                    static fn() => throw new LogicException,
                                 ),
                         ),
                     );
