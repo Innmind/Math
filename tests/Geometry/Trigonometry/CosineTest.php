@@ -170,7 +170,7 @@ class CosineTest extends TestCase
         $number = Cosine::of(Degree::of(Real::of(42)))->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
-        $this->assertSame(-0.4282847015696636, $number->value());
+        $this->assertSame(-0.42828470156966353, $number->value());
     }
 
     public function testNaturalLogarithm()

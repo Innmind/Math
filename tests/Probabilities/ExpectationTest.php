@@ -23,9 +23,10 @@ class ExpectationTest extends TestCase
         );
 
         $this->assertInstanceOf(Number::class, $expectation());
-        $this->assertSame(
+        $this->assertEqualsWithDelta(
             1/6,
             $expectation()->value(),
+            0.00001,
         );
     }
 }

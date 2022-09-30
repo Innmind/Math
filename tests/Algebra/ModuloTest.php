@@ -132,7 +132,11 @@ class ModuloTest extends TestCase
         $number = $modulo->divideBy(Real::of(2));
 
         $this->assertInstanceOf(Division::class, $number);
-        $this->assertSame(0.12, $number->value());
+        $this->assertEqualsWithDelta(
+            0.12,
+            $number->value(),
+            0.001,
+        );
     }
 
     public function testMulitplyBy()
@@ -193,7 +197,11 @@ class ModuloTest extends TestCase
         $number = $modulo->modulo(Real::of(0.1));
 
         $this->assertInstanceOf(Modulo::class, $number);
-        $this->assertSame(0.04, $number->value());
+        $this->assertEqualsWithDelta(
+            0.04,
+            $number->value(),
+            0.001,
+        );
     }
 
     public function testAbsolute()

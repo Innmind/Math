@@ -123,8 +123,16 @@ class VectorTest extends TestCase
         $this->assertNotSame($vector3, $vector2);
         $this->assertSame(0.5, $vector3->get(0)->value());
         $this->assertSame(-0.5, $vector3->get(1)->value());
-        $this->assertSame(0.2, $vector3->get(2)->value());
-        $this->assertSame(-0.2, $vector3->get(3)->value());
+        $this->assertEqualsWithDelta(
+            0.2,
+            $vector3->get(2)->value(),
+            0.01,
+        );
+        $this->assertEqualsWithDelta(
+            -0.2,
+            $vector3->get(3)->value(),
+            0.01,
+        );
     }
 
     public function testThrowWhenSubtractingVectorsOfDifferentDimensions()
