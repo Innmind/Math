@@ -186,7 +186,11 @@ class TangentTest extends TestCase
         $number = Tangent::of(Degree::of(Real::of(42)))->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
-        $this->assertSame(-0.045562562969284785, $number->value());
+        $this->assertEqualsWithDelta(
+            -0.04556256296928478,
+            $number->value(),
+            0.00000000000000001,
+        );
     }
 
     public function testSignum()
