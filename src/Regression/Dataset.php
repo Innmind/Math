@@ -42,16 +42,14 @@ final class Dataset
             true => $number,
             false => Real::of($number),
         };
-        $points = [];
 
-        foreach ($values as $coordinates) {
-            $points[] = Point::of(
+        return new self(Sequence::of(...\array_map(
+            static fn($coordinates) => Point::of(
                 $numerize($coordinates[0]),
                 $numerize($coordinates[1]),
-            );
-        }
-
-        return new self(Sequence::of(...$points));
+            ),
+            $values,
+        )));
     }
 
     public function abscissas(): ColumnVector

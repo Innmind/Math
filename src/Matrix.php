@@ -294,36 +294,25 @@ final class Matrix
     {
         $leadingZeros = $this->rows->map(
             static function(RowVector $row): int {
-                $numbers = $row->numbers();
-                $dimension = $row->dimension()->value();
-                $count = 0;
+                $isLeadingZero = true;
 
-                for ($i = 1; $i < $dimension; $i++) {
-                    if (!$numbers[$i]->equals(Value::zero)) {
-                        return $count;
-                    }
+                return $row
+                    ->toSequence()
+                    ->map(static function($number) use (&$isLeadingZero): bool {
+                        if ($isLeadingZero && !$number->equals(Value::zero)) {
+                            $isLeadingZero = false;
+                        }
 
-                    ++$count;
-                }
-
-                return $count;
+                        /** @var bool */
+                        return $isLeadingZero;
+                    })
+                    ->filter(static fn($isLeadingZero) => $isLeadingZero)
+                    ->size();
             },
         );
 
-        $numberOfRows = $this->rows->size();
-        $previous = $leadingZeros->first();
-
-        for ($i = 1; $i < $numberOfRows; $i++) {
-            $count = $leadingZeros->get($i);
-
-            if ($count <= $previous) {
-                return false;
-            }
-
-            $previous = $count;
-        }
-
-        return true;
+        return $leadingZeros->equals($leadingZeros->sort(static fn($a, $b) => $a <=> $b)) &&
+            $leadingZeros->equals($leadingZeros->distinct());
     }
 
     public function augmentWith(self $matrix): self
@@ -378,75 +367,96 @@ final class Matrix
 
     private function reduceLowerTriangle(self $matrix): self
     {
-        $rows = $matrix->rows();
-        $index = 0;
+        $rows = $matrix
+            ->rows()
+            ->indices()
+            ->reduce(
+                $matrix->rows(),
+                static function(Sequence $rows, int $index): Sequence {
+                    // reduce the matrix to an echelon form with leading ones
+                    /**
+                     * @psalm-suppress ArgumentTypeCoercion
+                     * @var Sequence<RowVector>
+                     */
+                    $echeloned = $rows->take($index + 1);
+                    /**
+                     * @psalm-suppress ArgumentTypeCoercion
+                     * @var Sequence<RowVector>
+                     */
+                    $toEchelon = $rows->drop($index + 1);
+                    $reference = $echeloned->last()->match(
+                        static fn($reference) => $reference,
+                        static fn() => throw new \LogicException,
+                    );
 
-        do {
-            //reduce the matrix to an echelon form with leading ones
-            $echeloned = $rows->take($index + 1);
-            $toEchelon = $rows->drop($index + 1);
-            $reference = $echeloned->last()->match(
-                static fn($reference) => $reference,
-                static fn() => throw new \LogicException,
-            );
-            $rows = $echeloned
-                ->append(
-                    $toEchelon->map(static fn($row) => $row->subtract(
-                        $reference->multiplyBy(
+                    return $echeloned
+                        ->append(
+                            $toEchelon->map(static fn($row) => $row->subtract(
+                                $reference->multiplyBy(
+                                    RowVector::initialize(
+                                        $row->dimension(),
+                                        $row // multiplier
+                                            ->get($index)
+                                            ->divideBy($reference->get($index)),
+                                    ),
+                                ),
+                            )),
+                        )
+                        ->map(static fn($row) => $row->multiplyBy(
                             RowVector::initialize(
                                 $row->dimension(),
-                                $row // multiplier
-                                    ->get($index)
-                                    ->divideBy($reference->get($index)),
+                                Value::one->divideBy($row->lead()),
                             ),
-                        ),
-                    )),
-                )
-                ->map(static fn($row) => $row->multiplyBy(
-                    RowVector::initialize(
-                        $row->dimension(),
-                        Value::one->divideBy($row->lead()),
-                    ),
-                ));
-
-            ++$index;
-        } while ($index < $this->dimension()->rows()->value());
+                        ));
+                },
+            );
 
         return new self($rows);
     }
 
     private function reduceUpperTriangle(self $matrix): self
     {
-        $rows = $matrix
-            ->rows()
-            ->reverse();
-        $index = $rows->size() - 1;
-        $reference = 0;
+        $indices = $matrix->rows()->indices();
 
-        do {
-            // for each line remove the lines below by multiplying them
-            // by the number in j column of the row being manipulated
-            $reduced = $rows->take($reference + 1);
-            $toReduce = $rows->drop($reference + 1);
-            $rows = $reduced->append(
-                $toReduce->map(
-                    static fn($row) => $reduced
-                        ->last()
-                        ->map(static fn($last) => $last->multiplyBy(RowVector::initialize(
-                            $row->dimension(),
-                            $row->get($index),
-                        )))
-                        ->map(static fn($last) => $row->subtract($last))
-                        ->match(
-                            static fn($reduced) => $reduced,
-                            static fn() => throw new \LogicException,
+        $rows = $indices
+            ->zip($indices->reverse())
+            ->reduce(
+                $matrix->rows()->reverse(),
+                static function(Sequence $rows, array $pair): Sequence {
+                    [$reference, $index] = $pair;
+
+                    // for each line remove the lines below by multiplying them
+                    // by the number in j column of the row being manipulated
+                    /**
+                     * @psalm-suppress ArgumentTypeCoercion
+                     * @var Sequence<RowVector>
+                     */
+                    $reduced = $rows->take($reference + 1);
+                    /**
+                     * @psalm-suppress ArgumentTypeCoercion
+                     * @var Sequence<RowVector>
+                     */
+                    $toReduce = $rows->drop($reference + 1);
+
+                    return $reduced->append(
+                        $toReduce->map(
+                            static fn($row) => $reduced
+                                ->last()
+                                ->map(static fn($last) => $last->multiplyBy(RowVector::initialize(
+                                    $row->dimension(),
+                                    $row->get($index),
+                                )))
+                                ->map(static fn($last) => $row->subtract($last))
+                                ->match(
+                                    static fn($reduced) => $reduced,
+                                    static fn() => throw new \LogicException,
+                                ),
                         ),
-                ),
-            );
-            --$index;
-            ++$reference;
-        } while ($index >= 0);
+                    );
+                },
+            )
+            ->reverse();
 
-        return new self($rows->reverse());
+        return new self($rows);
     }
 }
