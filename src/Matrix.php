@@ -343,7 +343,6 @@ final class Matrix
             throw new MatrixNotInvertible;
         }
 
-        /** @psalm-suppress ArgumentTypeCoercion */
         return self::fromColumns(
             $matrix
                 ->columns()
