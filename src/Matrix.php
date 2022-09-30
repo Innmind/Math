@@ -123,26 +123,6 @@ final class Matrix
     }
 
     /**
-     * @return list<list<int|float>>
-     */
-    public function toList(): array
-    {
-        /** @var list<list<int|float>> */
-        return $this
-            ->rows
-            ->map(static fn($row) => $row->toList())
-            ->toList();
-    }
-
-    /**
-     * @return Sequence<RowVector>
-     */
-    public function rows(): Sequence
-    {
-        return $this->rows;
-    }
-
-    /**
      * @return Sequence<ColumnVector>
      */
     public function columns(): Sequence
@@ -159,7 +139,7 @@ final class Matrix
         return new self(
             $this
                 ->rows
-                ->zip($matrix->rows())
+                ->zip($matrix->rows)
                 ->map(static fn($pair) => $pair[0]->add($pair[1])),
         );
     }
@@ -173,7 +153,7 @@ final class Matrix
         return new self(
             $this
                 ->rows
-                ->zip($matrix->rows())
+                ->zip($matrix->rows)
                 ->map(static fn($pair) => $pair[0]->subtract($pair[1])),
         );
     }
@@ -274,7 +254,7 @@ final class Matrix
 
         return $this
             ->rows
-            ->zip($matrix->rows())
+            ->zip($matrix->rows)
             ->matches(static fn($pair) => $pair[0]->equals($pair[1]));
     }
 
@@ -367,10 +347,10 @@ final class Matrix
     private function reduceLowerTriangle(self $matrix): self
     {
         $rows = $matrix
-            ->rows()
+            ->rows
             ->indices()
             ->reduce(
-                $matrix->rows(),
+                $matrix->rows,
                 static function(Sequence $rows, int $index): Sequence {
                     // reduce the matrix to an echelon form with leading ones
                     /**
@@ -415,12 +395,12 @@ final class Matrix
 
     private function reduceUpperTriangle(self $matrix): self
     {
-        $indices = $matrix->rows()->indices();
+        $indices = $matrix->rows->indices();
 
         $rows = $indices
             ->zip($indices->reverse())
             ->reduce(
-                $matrix->rows()->reverse(),
+                $matrix->rows->reverse(),
                 static function(Sequence $rows, array $pair): Sequence {
                     [$reference, $index] = $pair;
 

@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace Tests\Innmind\Math\Regression;
 
+use function Innmind\Math\numerize;
 use Innmind\Math\{
     Regression\Dataset,
     Matrix\RowVector,
@@ -24,13 +25,13 @@ class DatasetTest extends TestCase
         $this->assertSame('2 x 2', $dataset->dimension()->toString());
         $this->assertInstanceOf(ColumnVector::class, $dataset->abscissas());
         $this->assertInstanceOf(ColumnVector::class, $dataset->ordinates());
-        $this->assertSame(
-            [1, 3],
-            $dataset->abscissas()->toList(),
+        $this->assertEquals(
+            numerize(1, 3),
+            $dataset->abscissas()->toSequence()->toList(),
         );
-        $this->assertSame(
-            [2, 4],
-            $dataset->ordinates()->toList(),
+        $this->assertEquals(
+            numerize(2, 4),
+            $dataset->ordinates()->toSequence()->toList(),
         );
     }
 }

@@ -71,17 +71,6 @@ final class Vector
         return new self($numbers);
     }
 
-    /**
-     * @return list<int|float>
-     */
-    public function toList(): array
-    {
-        return $this
-            ->numbers
-            ->map(static fn(Number $number) => $number->value())
-            ->toList();
-    }
-
     public function dimension(): Integer\Positive
     {
         return $this->dimension;
@@ -242,13 +231,5 @@ final class Vector
     public function toSequence(): Sequence
     {
         return $this->numbers;
-    }
-
-    /**
-     * @return list<Number>
-     */
-    public function numbers(): array
-    {
-        return $this->numbers->toList();
     }
 }

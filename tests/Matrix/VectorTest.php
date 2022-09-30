@@ -19,7 +19,6 @@ class VectorTest extends TestCase
     {
         $vector = Vector::of(...numerize(1, 2, 3));
 
-        $this->assertCount(3, $vector->toList());
         $this->assertSame(3, $vector->dimension()->value());
         $this->assertInstanceOf(Number::class, $vector->get(0));
         $this->assertInstanceOf(Number::class, $vector->get(1));
@@ -27,8 +26,13 @@ class VectorTest extends TestCase
         $this->assertSame(1, $vector->get(0)->value());
         $this->assertSame(2, $vector->get(1)->value());
         $this->assertSame(3, $vector->get(2)->value());
-        $this->assertSame([1, 2, 3], $vector->toList());
-        $this->assertEquals(numerize(1, 2, 3), $vector->numbers());
+        $this->assertSame(
+            [1, 2, 3],
+            $vector
+                ->toSequence()
+                ->map(static fn($number) => $number->collapse()->value())
+                ->toList(),
+        );
     }
 
     public function testDot()
@@ -211,8 +215,20 @@ class VectorTest extends TestCase
 
         $this->assertInstanceOf(Vector::class, $vector2);
         $this->assertNotSame($vector2, $vector);
-        $this->assertSame([1, 2, 3, -4], $vector->toList());
-        $this->assertSame([1, 4, 9, 16], $vector2->toList());
+        $this->assertSame(
+            [1, 2, 3, -4],
+            $vector
+                ->toSequence()
+                ->map(static fn($number) => $number->collapse()->value())
+                ->toList(),
+        );
+        $this->assertSame(
+            [1, 4, 9, 16],
+            $vector2
+                ->toSequence()
+                ->map(static fn($number) => $number->collapse()->value())
+                ->toList(),
+        );
     }
 
     public function testReduce()

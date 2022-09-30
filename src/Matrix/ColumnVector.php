@@ -54,14 +54,6 @@ final class ColumnVector
         return new self(Vector::ofSequence($numbers));
     }
 
-    /**
-     * @return list<int|float>
-     */
-    public function toList(): array
-    {
-        return $this->vector->toList();
-    }
-
     public function dimension(): Integer\Positive
     {
         return $this->vector->dimension();
@@ -191,13 +183,5 @@ final class ColumnVector
     public function toSequence(): Sequence
     {
         return $this->vector->toSequence();
-    }
-
-    /**
-     * @return list<Number>
-     */
-    public function numbers(): array
-    {
-        return $this->vector->numbers();
     }
 }
