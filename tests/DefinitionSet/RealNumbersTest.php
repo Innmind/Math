@@ -9,8 +9,8 @@ use Innmind\Math\{
     DefinitionSet\Union,
     DefinitionSet\Intersection,
     Algebra\Integer,
-    Algebra\Number\Number,
-    Algebra\Number\Pi
+    Algebra\Real,
+    Algebra\Value,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -20,7 +20,7 @@ class RealNumbersTest extends TestCase
     {
         $this->assertInstanceOf(
             Set::class,
-            new RealNumbers
+            new RealNumbers,
         );
     }
 
@@ -33,24 +33,24 @@ class RealNumbersTest extends TestCase
     {
         $set = new RealNumbers;
 
-        $this->assertTrue($set->contains(new Integer(1)));
-        $this->assertTrue($set->contains(new Integer(0)));
-        $this->assertTrue($set->contains(new Integer(-1)));
-        $this->assertTrue($set->contains(new Number(0.75)));
-        $this->assertTrue($set->contains(new Number(-0.75)));
-        $this->assertTrue($set->contains(new Pi));
+        $this->assertTrue($set->contains(Integer::of(1)));
+        $this->assertTrue($set->contains(Integer::of(0)));
+        $this->assertTrue($set->contains(Integer::of(-1)));
+        $this->assertTrue($set->contains(Real::of(0.75)));
+        $this->assertTrue($set->contains(Real::of(-0.75)));
+        $this->assertTrue($set->contains(Value::pi));
     }
 
     public function testAccept()
     {
         $set = new RealNumbers;
 
-        $this->assertNull($set->accept(new Integer(1)));
-        $this->assertNull($set->accept(new Integer(0)));
-        $this->assertNull($set->accept(new Integer(-1)));
-        $this->assertNull($set->accept(new Number(0.75)));
-        $this->assertNull($set->accept(new Number(-0.75)));
-        $this->assertNull($set->accept(new Pi));
+        $this->assertNull($set->accept(Integer::of(1)));
+        $this->assertNull($set->accept(Integer::of(0)));
+        $this->assertNull($set->accept(Integer::of(-1)));
+        $this->assertNull($set->accept(Real::of(0.75)));
+        $this->assertNull($set->accept(Real::of(-0.75)));
+        $this->assertNull($set->accept(Value::pi));
     }
 
     public function testUnion()

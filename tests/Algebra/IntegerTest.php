@@ -23,6 +23,7 @@ use Innmind\Math\{
     Algebra\NaturalLogarithm,
     Algebra\CommonLogarithm,
     Algebra\Signum,
+    Algebra\Real,
     Exception\FactorialMustBePositive
 };
 use PHPUnit\Framework\TestCase;
@@ -33,13 +34,13 @@ class IntegerTest extends TestCase
     {
         $this->assertInstanceOf(
             Number::class,
-            new Integer(42)
+            Integer::of(42),
         );
     }
 
     public function testInt()
     {
-        $number = new Integer(42);
+        $number = Integer::of(42);
 
         $this->assertSame(42, $number->value());
         $this->assertSame('42', $number->toString());
@@ -47,21 +48,21 @@ class IntegerTest extends TestCase
 
     public function testEquals()
     {
-        $this->assertTrue((new Integer(42))->equals(new Integer(42)));
-        $this->assertTrue((new Integer(42))->equals(new Number\Number(42.0)));
-        $this->assertFalse((new Integer(42))->equals(new Number\Number(42.24)));
+        $this->assertTrue(Integer::of(42)->equals(Integer::of(42)));
+        $this->assertTrue(Integer::of(42)->equals(Real::of(42.0)));
+        $this->assertFalse(Integer::of(42)->equals(Real::of(42.24)));
     }
 
     public function testHigherThan()
     {
-        $this->assertFalse((new Integer(42))->higherThan(new Integer(42)));
-        $this->assertTrue((new Integer(42))->higherThan(new Number\Number(41.24)));
+        $this->assertFalse(Integer::of(42)->higherThan(Integer::of(42)));
+        $this->assertTrue(Integer::of(42)->higherThan(Real::of(41.24)));
     }
 
     public function testAdd()
     {
-        $number = new Integer(42);
-        $number = $number->add(new Integer(66));
+        $number = Integer::of(42);
+        $number = $number->add(Integer::of(66));
 
         $this->assertInstanceOf(Addition::class, $number);
         $this->assertSame(108, $number->value());
@@ -69,8 +70,8 @@ class IntegerTest extends TestCase
 
     public function testSubtract()
     {
-        $number = new Integer(42);
-        $number = $number->subtract(new Integer(66));
+        $number = Integer::of(42);
+        $number = $number->subtract(Integer::of(66));
 
         $this->assertInstanceOf(Subtraction::class, $number);
         $this->assertSame(-24, $number->value());
@@ -78,8 +79,8 @@ class IntegerTest extends TestCase
 
     public function testDivideBy()
     {
-        $number = new Integer(42);
-        $number = $number->divideBy(new Integer(2));
+        $number = Integer::of(42);
+        $number = $number->divideBy(Integer::of(2));
 
         $this->assertInstanceOf(Division::class, $number);
         $this->assertSame(21, $number->value());
@@ -87,8 +88,8 @@ class IntegerTest extends TestCase
 
     public function testMulitplyBy()
     {
-        $number = new Integer(42);
-        $number = $number->multiplyBy(new Integer(2));
+        $number = Integer::of(42);
+        $number = $number->multiplyBy(Integer::of(2));
 
         $this->assertInstanceOf(Multiplication::class, $number);
         $this->assertSame(84, $number->value());
@@ -96,7 +97,7 @@ class IntegerTest extends TestCase
 
     public function testRound()
     {
-        $number = new Integer(42);
+        $number = Integer::of(42);
 
         $this->assertEquals(42.0, $number->roundUp(1)->value());
         $this->assertEquals(42.0, $number->roundDown(1)->value());
@@ -106,7 +107,7 @@ class IntegerTest extends TestCase
 
     public function testFloor()
     {
-        $number = new Integer(42);
+        $number = Integer::of(42);
         $number = $number->floor();
 
         $this->assertInstanceOf(Floor::class, $number);
@@ -115,7 +116,7 @@ class IntegerTest extends TestCase
 
     public function testCeil()
     {
-        $number = new Integer(42);
+        $number = Integer::of(42);
         $number = $number->ceil();
 
         $this->assertInstanceOf(Ceil::class, $number);
@@ -124,8 +125,8 @@ class IntegerTest extends TestCase
 
     public function testModulo()
     {
-        $number = new Integer(3);
-        $number = $number->modulo(new Integer(2));
+        $number = Integer::of(3);
+        $number = $number->modulo(Integer::of(2));
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertSame(1.0, $number->value());
@@ -133,7 +134,7 @@ class IntegerTest extends TestCase
 
     public function testAbsolute()
     {
-        $number = new Integer(-9);
+        $number = Integer::of(-9);
         $number = $number->absolute();
 
         $this->assertInstanceOf(Absolute::class, $number);
@@ -142,8 +143,8 @@ class IntegerTest extends TestCase
 
     public function testPower()
     {
-        $number = new Integer(-9);
-        $number = $number->power(new Integer(2));
+        $number = Integer::of(-9);
+        $number = $number->power(Integer::of(2));
 
         $this->assertInstanceOf(Power::class, $number);
         $this->assertSame(81, $number->value());
@@ -151,7 +152,7 @@ class IntegerTest extends TestCase
 
     public function testSquareRoot()
     {
-        $number = new Integer(4);
+        $number = Integer::of(4);
         $number = $number->squareRoot();
 
         $this->assertInstanceOf(SquareRoot::class, $number);
@@ -160,7 +161,7 @@ class IntegerTest extends TestCase
 
     public function testFactorial()
     {
-        $number = new Integer(3);
+        $number = Integer::of(3);
 
         $this->assertInstanceOf(Factorial::class, $number->factorial());
         $this->assertSame('3!', $number->factorial()->toString());
@@ -168,7 +169,7 @@ class IntegerTest extends TestCase
 
     public function testExponential()
     {
-        $number = (new Integer(4))->exponential();
+        $number = (Integer::of(4))->exponential();
 
         $this->assertInstanceOf(Exponential::class, $number);
         $this->assertSame(\exp(4), $number->value());
@@ -176,7 +177,7 @@ class IntegerTest extends TestCase
 
     public function testBinaryLogarithm()
     {
-        $number = (new Integer(4))->binaryLogarithm();
+        $number = Integer::of(4)->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
         $this->assertSame(\log(4, 2), $number->value());
@@ -184,7 +185,7 @@ class IntegerTest extends TestCase
 
     public function testNaturalLogarithm()
     {
-        $number = (new Integer(4))->naturalLogarithm();
+        $number = Integer::of(4)->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
         $this->assertSame(\log(4), $number->value());
@@ -192,7 +193,7 @@ class IntegerTest extends TestCase
 
     public function testCommonLogarithm()
     {
-        $number = (new Integer(4))->commonLogarithm();
+        $number = Integer::of(4)->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
         $this->assertSame(\log10(4), $number->value());
@@ -200,7 +201,7 @@ class IntegerTest extends TestCase
 
     public function testSignum()
     {
-        $number = (new Integer(4))->signum();
+        $number = Integer::of(4)->signum();
 
         $this->assertInstanceOf(Signum::class, $number);
         $this->assertSame(1, $number->value());
@@ -210,12 +211,12 @@ class IntegerTest extends TestCase
     {
         $this->expectException(FactorialMustBePositive::class);
 
-        (new Integer(-1))->factorial();
+        Integer::of(-1)->factorial();
     }
 
     public function testIncrement()
     {
-        $number = new Integer(0);
+        $number = Integer::of(0);
         $increment = $number->increment();
 
         $this->assertInstanceOf(Integer::class, $increment);
@@ -226,7 +227,7 @@ class IntegerTest extends TestCase
 
     public function testDecrement()
     {
-        $number = new Integer(0);
+        $number = Integer::of(0);
         $decrement = $number->decrement();
 
         $this->assertInstanceOf(Integer::class, $decrement);

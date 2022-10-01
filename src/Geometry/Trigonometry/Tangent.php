@@ -7,6 +7,7 @@ use Innmind\Math\{
     Geometry\Angle\Degree,
     Algebra\Number,
     Algebra\Round,
+    Algebra\Real,
 };
 
 /**
@@ -15,18 +16,26 @@ use Innmind\Math\{
  * tan(angle) = oppositeSide / adjacentSide
  *
  * Where angle is the one between the adjacent side and the hypothenuse
+ * @psalm-immutable
  */
 final class Tangent implements Number
 {
     private Degree $degree;
-    private ?Number $tangent = null;
 
-    public function __construct(Degree $degree)
+    private function __construct(Degree $degree)
     {
         $this->degree = $degree;
     }
 
-    public function value()
+    /**
+     * @psalm-pure
+     */
+    public static function of(Degree $degree): self
+    {
+        return new self($degree);
+    }
+
+    public function value(): int|float
     {
         return $this->tangent()->value();
     }
@@ -136,6 +145,11 @@ final class Tangent implements Number
         return $this->tangent()->signum();
     }
 
+    public function collapse(): Number
+    {
+        return $this;
+    }
+
     public function toString(): string
     {
         return \sprintf('tan(%s)', $this->degree->toString());
@@ -143,7 +157,7 @@ final class Tangent implements Number
 
     private function tangent(): Number
     {
-        return $this->tangent ?? $this->tangent = new Number\Number(
+        return Real::of(
             \tan(
                 $this->degree->toRadian()->number()->value(),
             ),

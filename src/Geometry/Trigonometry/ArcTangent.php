@@ -8,19 +8,28 @@ use Innmind\Math\{
     Geometry\Angle\Radian,
     Algebra\Number,
     Algebra\Round,
+    Algebra\Real,
 };
 
 /**
  * Inverse of tangent, such as a===Tangent(ArcTangent(a))
+ * @psalm-immutable
  */
 final class ArcTangent implements Number
 {
     private Number $number;
-    private ?Degree $arcTangent = null;
 
-    public function __construct(Number $number)
+    private function __construct(Number $number)
     {
         $this->number = $number;
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(Number $number): self
+    {
+        return new self($number);
     }
 
     public function toDegree(): Degree
@@ -28,7 +37,7 @@ final class ArcTangent implements Number
         return $this->arcTangent();
     }
 
-    public function value()
+    public function value(): int|float
     {
         return $this->arcTangent()->number()->value();
     }
@@ -45,14 +54,14 @@ final class ArcTangent implements Number
 
     public function add(
         Number $number,
-        Number ...$numbers
+        Number ...$numbers,
     ): Number {
         return $this->arcTangent()->number()->add($number, ...$numbers);
     }
 
     public function subtract(
         Number $number,
-        Number ...$numbers
+        Number ...$numbers,
     ): Number {
         return $this->arcTangent()->number()->subtract($number, ...$numbers);
     }
@@ -64,7 +73,7 @@ final class ArcTangent implements Number
 
     public function multiplyBy(
         Number $number,
-        Number ...$numbers
+        Number ...$numbers,
     ): Number {
         return $this->arcTangent()->number()->multiplyBy($number, ...$numbers);
     }
@@ -144,6 +153,11 @@ final class ArcTangent implements Number
         return $this->arcTangent()->number()->signum();
     }
 
+    public function collapse(): Number
+    {
+        return new self($this->number->collapse());
+    }
+
     public function toString(): string
     {
         return \sprintf('tan⁻¹(%s)', $this->number->toString());
@@ -151,16 +165,12 @@ final class ArcTangent implements Number
 
     private function arcTangent(): Degree
     {
-        if ($this->arcTangent) {
-            return $this->arcTangent;
-        }
-
-        $radians = new Number\Number(
+        $radians = Real::of(
             \atan(
                 $this->number->value(),
             ),
         );
 
-        return $this->arcTangent = (new Radian($radians))->toDegree();
+        return Radian::of($radians)->toDegree();
     }
 }

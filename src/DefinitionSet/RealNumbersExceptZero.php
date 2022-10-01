@@ -5,15 +5,18 @@ namespace Innmind\Math\DefinitionSet;
 
 use Innmind\Math\{
     Algebra\Number,
-    Algebra\Integer,
+    Algebra\Value,
     Exception\OutOfDefinitionSet,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class RealNumbersExceptZero implements Set
 {
     public function contains(Number $number): bool
     {
-        return !$number->equals(new Integer(0));
+        return !$number->equals(Value::zero);
     }
 
     public function accept(Number $number): void
@@ -25,12 +28,12 @@ final class RealNumbersExceptZero implements Set
 
     public function union(Set $set): Set
     {
-        return new Union($this, $set);
+        return Union::of($this, $set);
     }
 
     public function intersect(Set $set): Set
     {
-        return new Intersection($this, $set);
+        return Intersection::of($this, $set);
     }
 
     public function toString(): string

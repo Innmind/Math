@@ -6,26 +6,31 @@ namespace Innmind\Math\Statistics;
 use Innmind\Math\Algebra\{
     Number,
     Round,
+    Integer,
+    Addition,
 };
 use Innmind\Immutable\Sequence;
 
+/**
+ * @psalm-immutable
+ */
 final class Mean implements Number
 {
     private Number $result;
 
-    public function __construct(Number $first, Number ...$values)
+    private function __construct(Number $first, Number ...$values)
     {
-        /** @var Sequence<Number> */
-        $sequence = Sequence::of(Number::class, $first, ...$values);
-        $sum = $sequence
-            ->drop(1)
-            ->reduce(
-                $sequence->first(),
-                static function(Number $carry, Number $number): Number {
-                    return $carry->add($number);
-                },
-            );
-        $this->result = $sum->divideBy(new Number\Number($sequence->size()));
+        $sequence = Sequence::of($first, ...$values);
+        $sum = Addition::of($first, ...$values);
+        $this->result = $sum->divideBy(Integer::of($sequence->size()));
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(Number $first, Number ...$values): self
+    {
+        return new self($first, ...$values);
     }
 
     public function result(): Number
@@ -33,7 +38,7 @@ final class Mean implements Number
         return $this->result;
     }
 
-    public function value()
+    public function value(): int|float
     {
         return $this->result->value();
     }
@@ -141,6 +146,11 @@ final class Mean implements Number
     public function signum(): Number
     {
         return $this->result->signum();
+    }
+
+    public function collapse(): Number
+    {
+        return $this->result->collapse();
     }
 
     public function toString(): string

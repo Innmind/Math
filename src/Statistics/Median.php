@@ -3,47 +3,36 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Statistics;
 
-use Innmind\Math\Algebra\{
-    Number,
-    Round,
+use function Innmind\Math\asc;
+use Innmind\Math\{
+    Algebra\Number,
+    Exception\LogicException,
 };
 use Innmind\Immutable\Sequence;
 
+/**
+ * @psalm-immutable
+ */
 final class Median implements Number
 {
     private Number $result;
 
-    public function __construct(Number $first, Number ...$values)
+    private function __construct(Number $first, Number ...$values)
     {
-        /** @var Sequence<Number> */
-        $sequence = Sequence::of(Number::class, $first, ...$values);
-        $sequence = $sequence->sort(static function(Number $a, Number $b): int {
-            if ($a->equals($b)) {
-                return 0;
-            }
+        $sequence = Sequence::of($first, ...$values)->sort(asc(...));
 
-            return $a->higherThan($b) ? 1 : -1;
-        });
+        $this->result = match ($sequence->size() % 2) {
+            1 => $this->odd($sequence),
+            0 => $this->even($sequence),
+        };
+    }
 
-        switch ($sequence->size() % 2) {
-            case 1:
-                //mathematically the index to choose is (size+1/2) but here we
-                //do (size-1)/2 as the sequence indexes start at 0
-                $this->result = $sequence->get(
-                    (int) (($sequence->size() - 1) / 2),
-                );
-                break;
-
-            default:
-                //mathematically the value is mean(size/2, size/2+1) but here we
-                //do mean(size/2-1, size/2) as the sequence indexes start at 0
-                $index = (int) ($sequence->size() / 2);
-                $this->result = new Mean(
-                    $sequence->get($index - 1),
-                    $sequence->get($index),
-                );
-                break;
-        }
+    /**
+     * @psalm-pure
+     */
+    public static function of(Number $first, Number ...$values): self
+    {
+        return new self($first, ...$values);
     }
 
     public function result(): Number
@@ -51,7 +40,7 @@ final class Median implements Number
         return $this->result;
     }
 
-    public function value()
+    public function value(): int|float
     {
         return $this->result->value();
     }
@@ -161,8 +150,51 @@ final class Median implements Number
         return $this->result->signum();
     }
 
+    public function collapse(): Number
+    {
+        return $this;
+    }
+
     public function toString(): string
     {
         return $this->result->toString();
+    }
+
+    /**
+     * @param Sequence<Number> $values
+     */
+    private function odd(Sequence $values): Number
+    {
+        // mathematically the index to choose is (size+1/2) but here we
+        // do (size-1)/2 as the sequence indexes start at 0
+        return $values
+            ->get(
+                (int) (($values->size() - 1) / 2),
+            )
+            ->match(
+                static fn($result) => $result,
+                static fn() => throw new LogicException,
+            );
+    }
+
+    /**
+     * @param Sequence<Number> $values
+     */
+    private function even(Sequence $values): Number
+    {
+        // mathematically the value is mean(size/2, size/2+1) but here we
+        // do mean(size/2-1, size/2) as the sequence indexes start at 0
+        $index = (int) ($values->size() / 2);
+
+        return Mean::of(
+            $values->get($index - 1)->match(
+                static fn($number) => $number,
+                static fn() => throw new LogicException,
+            ),
+            $values->get($index)->match(
+                static fn($number) => $number,
+                static fn() => throw new LogicException,
+            ),
+        );
     }
 }

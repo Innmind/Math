@@ -6,7 +6,6 @@ namespace Tests\Innmind\Math\Matrix;
 use Innmind\Math\{
     Matrix\Dimension,
     Algebra\Integer,
-    Exception\DimensionMustBePositive
 };
 use PHPUnit\Framework\TestCase;
 
@@ -14,7 +13,7 @@ class DimensionTest extends TestCase
 {
     public function testInterface()
     {
-        $dimension = new Dimension(new Integer(2), new Integer(3));
+        $dimension = Dimension::of(Integer::of(2), Integer::of(3));
 
         $this->assertInstanceOf(Integer::class, $dimension->rows());
         $this->assertInstanceOf(Integer::class, $dimension->columns());
@@ -23,36 +22,22 @@ class DimensionTest extends TestCase
         $this->assertSame('2 x 3', $dimension->toString());
     }
 
-    public function testThrowWhenNegativeRows()
-    {
-        $this->expectException(DimensionMustBePositive::class);
-
-        new Dimension(new Integer(-1), new Integer(1));
-    }
-
-    public function testThrowWhenNegativeColumns()
-    {
-        $this->expectException(DimensionMustBePositive::class);
-
-        new Dimension(new Integer(1), new Integer(-1));
-    }
-
     public function testEquals()
     {
-        $dimension = new Dimension(new Integer(2), new Integer(3));
+        $dimension = Dimension::of(Integer::of(2), Integer::of(3));
 
         $this->assertTrue($dimension->equals($dimension));
         $this->assertTrue($dimension->equals(
-            new Dimension(new Integer(2), new Integer(3))
+            Dimension::of(Integer::of(2), Integer::of(3)),
         ));
         $this->assertFalse($dimension->equals(
-            new Dimension(new Integer(1), new Integer(3))
+            Dimension::of(Integer::of(1), Integer::of(3)),
         ));
         $this->assertFalse($dimension->equals(
-            new Dimension(new Integer(2), new Integer(2))
+            Dimension::of(Integer::of(2), Integer::of(2)),
         ));
         $this->assertFalse($dimension->equals(
-            new Dimension(new Integer(1), new Integer(2))
+            Dimension::of(Integer::of(1), Integer::of(2)),
         ));
     }
 }

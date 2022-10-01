@@ -23,7 +23,8 @@ use Innmind\Math\{
     Algebra\BinaryLogarithm,
     Algebra\NaturalLogarithm,
     Algebra\CommonLogarithm,
-    Algebra\Signum
+    Algebra\Signum,
+    Algebra\Real,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -31,8 +32,8 @@ class ArcTangentTest extends TestCase
 {
     public function testInterface()
     {
-        $atan = new ArcTangent(
-            new Tangent(new Degree(new Number\Number(42)))
+        $atan = ArcTangent::of(
+            Tangent::of(Degree::of(Real::of(42))),
         );
 
         $this->assertInstanceOf(Number::class, $atan);
@@ -43,32 +44,32 @@ class ArcTangentTest extends TestCase
 
     public function testEquals()
     {
-        $atan = new ArcTangent(
-            new Tangent(new Degree(new Number\Number(42)))
+        $atan = ArcTangent::of(
+            Tangent::of(Degree::of(Real::of(42))),
         );
 
         $this->assertTrue($atan->equals($atan));
-        $this->assertTrue($atan->equals(new Number\Number(42.0)));
-        $this->assertFalse($atan->equals(new Number\Number(0.74)));
+        $this->assertTrue($atan->equals(Real::of(42.0)));
+        $this->assertFalse($atan->equals(Real::of(0.74)));
     }
 
     public function testHigherThan()
     {
-        $atan = new ArcTangent(
-            new Tangent(new Degree(new Number\Number(42)))
+        $atan = ArcTangent::of(
+            Tangent::of(Degree::of(Real::of(42))),
         );
 
         $this->assertFalse($atan->higherThan($atan));
-        $this->assertFalse($atan->higherThan(new Number\Number(42.0)));
-        $this->assertTrue($atan->higherThan(new Number\Number(0.74)));
+        $this->assertFalse($atan->higherThan(Real::of(42.0)));
+        $this->assertTrue($atan->higherThan(Real::of(0.74)));
     }
 
     public function testAdd()
     {
-        $atan = new ArcTangent(
-            new Tangent(new Degree(new Number\Number(42)))
+        $atan = ArcTangent::of(
+            Tangent::of(Degree::of(Real::of(42))),
         );
-        $number = $atan->add(new Number\Number(1));
+        $number = $atan->add(Real::of(1));
 
         $this->assertInstanceOf(Addition::class, $number);
         $this->assertSame(43.0, $number->value());
@@ -76,10 +77,10 @@ class ArcTangentTest extends TestCase
 
     public function testSubtract()
     {
-        $atan = new ArcTangent(
-            new Tangent(new Degree(new Number\Number(42)))
+        $atan = ArcTangent::of(
+            Tangent::of(Degree::of(Real::of(42))),
         );
-        $number = $atan->subtract(new Number\Number(66));
+        $number = $atan->subtract(Real::of(66));
 
         $this->assertInstanceOf(Subtraction::class, $number);
         $this->assertSame(-24.0, $number->value());
@@ -87,10 +88,10 @@ class ArcTangentTest extends TestCase
 
     public function testDivideBy()
     {
-        $atan = new ArcTangent(
-            new Tangent(new Degree(new Number\Number(42)))
+        $atan = ArcTangent::of(
+            Tangent::of(Degree::of(Real::of(42))),
         );
-        $number = $atan->divideBy(new Number\Number(2));
+        $number = $atan->divideBy(Real::of(2));
 
         $this->assertInstanceOf(Division::class, $number);
         $this->assertSame(21.0, $number->value());
@@ -98,10 +99,10 @@ class ArcTangentTest extends TestCase
 
     public function testMulitplyBy()
     {
-        $atan = new ArcTangent(
-            new Tangent(new Degree(new Number\Number(42)))
+        $atan = ArcTangent::of(
+            Tangent::of(Degree::of(Real::of(42))),
         );
-        $number = $atan->multiplyBy(new Number\Number(2));
+        $number = $atan->multiplyBy(Real::of(2));
 
         $this->assertInstanceOf(Multiplication::class, $number);
         $this->assertSame(84.0, $number->value());
@@ -109,8 +110,8 @@ class ArcTangentTest extends TestCase
 
     public function testRound()
     {
-        $number = new ArcTangent(
-            new Tangent(new Degree(new Number\Number(42)))
+        $number = ArcTangent::of(
+            Tangent::of(Degree::of(Real::of(42))),
         );
 
         $this->assertEquals(42.0, $number->roundUp(1)->value());
@@ -121,8 +122,8 @@ class ArcTangentTest extends TestCase
 
     public function testFloor()
     {
-        $atan = new ArcTangent(
-            new Tangent(new Degree(new Number\Number(42)))
+        $atan = ArcTangent::of(
+            Tangent::of(Degree::of(Real::of(42))),
         );
         $number = $atan->floor();
 
@@ -132,8 +133,8 @@ class ArcTangentTest extends TestCase
 
     public function testCeil()
     {
-        $atan = new ArcTangent(
-            new Tangent(new Degree(new Number\Number(42)))
+        $atan = ArcTangent::of(
+            Tangent::of(Degree::of(Real::of(42))),
         );
         $number = $atan->ceil();
 
@@ -143,10 +144,10 @@ class ArcTangentTest extends TestCase
 
     public function testModulo()
     {
-        $atan = new ArcTangent(
-            new Tangent(new Degree(new Number\Number(42)))
+        $atan = ArcTangent::of(
+            Tangent::of(Degree::of(Real::of(42))),
         );
-        $number = $atan->modulo(new Number\Number(3));
+        $number = $atan->modulo(Real::of(3));
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertSame(0.0, $number->value());
@@ -154,8 +155,8 @@ class ArcTangentTest extends TestCase
 
     public function testAbsolute()
     {
-        $atan = new ArcTangent(
-            new Tangent(new Degree(new Number\Number(42)))
+        $atan = ArcTangent::of(
+            Tangent::of(Degree::of(Real::of(42))),
         );
         $number = $atan->absolute();
 
@@ -165,10 +166,10 @@ class ArcTangentTest extends TestCase
 
     public function testPower()
     {
-        $atan = new ArcTangent(
-            new Tangent(new Degree(new Number\Number(42)))
+        $atan = ArcTangent::of(
+            Tangent::of(Degree::of(Real::of(42))),
         );
-        $number = $atan->power(new Number\Number(2));
+        $number = $atan->power(Real::of(2));
 
         $this->assertInstanceOf(Power::class, $number);
         $this->assertSame(1764.0, $number->value());
@@ -176,8 +177,8 @@ class ArcTangentTest extends TestCase
 
     public function testSquareRoot()
     {
-        $atan = new ArcTangent(
-            new Tangent(new Degree(new Number\Number(42)))
+        $atan = ArcTangent::of(
+            Tangent::of(Degree::of(Real::of(42))),
         );
         $number = $atan->squareRoot();
 
@@ -187,8 +188,8 @@ class ArcTangentTest extends TestCase
 
     public function testExponential()
     {
-        $atan = new ArcTangent(
-            new Tangent(new Degree(new Number\Number(42)))
+        $atan = ArcTangent::of(
+            Tangent::of(Degree::of(Real::of(42))),
         );
         $number = $atan->exponential();
 
@@ -198,9 +199,9 @@ class ArcTangentTest extends TestCase
 
     public function testBinaryLogarithm()
     {
-        $number = (new ArcTangent(
-            new Tangent(new Degree(new Number\Number(42)))
-        ))->binaryLogarithm();
+        $number = ArcTangent::of(
+            Tangent::of(Degree::of(Real::of(42))),
+        )->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
         $this->assertSame(5.392317422778761, $number->value());
@@ -208,9 +209,9 @@ class ArcTangentTest extends TestCase
 
     public function testNaturalLogarithm()
     {
-        $number = (new ArcTangent(
-            new Tangent(new Degree(new Number\Number(42)))
-        ))->naturalLogarithm();
+        $number = ArcTangent::of(
+            Tangent::of(Degree::of(Real::of(42))),
+        )->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
         $this->assertSame(3.7376696182833684, $number->value());
@@ -218,9 +219,9 @@ class ArcTangentTest extends TestCase
 
     public function testCommonLogarithm()
     {
-        $number = (new ArcTangent(
-            new Tangent(new Degree(new Number\Number(42)))
-        ))->commonLogarithm();
+        $number = ArcTangent::of(
+            Tangent::of(Degree::of(Real::of(42))),
+        )->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
         $this->assertSame(1.6232492903979006, $number->value());
@@ -228,9 +229,9 @@ class ArcTangentTest extends TestCase
 
     public function testSignum()
     {
-        $number = (new ArcTangent(
-            new Tangent(new Degree(new Number\Number(42)))
-        ))->signum();
+        $number = ArcTangent::of(
+            Tangent::of(Degree::of(Real::of(42))),
+        )->signum();
 
         $this->assertInstanceOf(Signum::class, $number);
         $this->assertSame(1, $number->value());

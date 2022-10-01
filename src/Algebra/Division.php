@@ -5,20 +5,30 @@ namespace Innmind\Math\Algebra;
 
 use Innmind\Math\Exception\DivisionByZero;
 
+/**
+ * @psalm-immutable
+ */
 final class Division implements Operation, Number
 {
     private Number $dividend;
     private Number $divisor;
-    private ?Number $result = null;
 
-    public function __construct(Number $dividend, Number $divisor)
+    private function __construct(Number $dividend, Number $divisor)
     {
-        if ($divisor->equals(new Integer(0))) {
+        if ($divisor->collapse()->equals(Value::zero)) {
             throw new DivisionByZero;
         }
 
         $this->dividend = $dividend;
         $this->divisor = $divisor;
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(Number $dividend, Number $divisor): self
+    {
+        return new self($dividend, $divisor);
     }
 
     public function dividend(): Number
@@ -31,7 +41,7 @@ final class Division implements Operation, Number
         return $this->divisor;
     }
 
-    public function value()
+    public function value(): int|float
     {
         return $this->result()->value();
     }
@@ -48,22 +58,22 @@ final class Division implements Operation, Number
 
     public function add(Number $number, Number ...$numbers): Number
     {
-        return new Addition($this, $number, ...$numbers);
+        return Addition::of($this, $number, ...$numbers);
     }
 
     public function subtract(Number $number, Number ...$numbers): Number
     {
-        return new Subtraction($this, $number, ...$numbers);
+        return Subtraction::of($this, $number, ...$numbers);
     }
 
-    public function divideBy(Number $number): Number
+    public function divideBy(Number $number): self
     {
         return new self($this, $number);
     }
 
     public function multiplyBy(Number $number, Number ...$numbers): Number
     {
-        return new Multiplication($this, $number, ...$numbers);
+        return Multiplication::of($this, $number, ...$numbers);
     }
 
     public function roundUp(int $precision = 0): Number
@@ -88,57 +98,57 @@ final class Division implements Operation, Number
 
     public function floor(): Number
     {
-        return new Floor($this);
+        return Floor::of($this);
     }
 
     public function ceil(): Number
     {
-        return new Ceil($this);
+        return Ceil::of($this);
     }
 
     public function modulo(Number $modulus): Number
     {
-        return new Modulo($this, $modulus);
+        return Modulo::of($this, $modulus);
     }
 
     public function absolute(): Number
     {
-        return new Absolute($this);
+        return Absolute::of($this);
     }
 
     public function power(Number $power): Number
     {
-        return new Power($this, $power);
+        return Power::of($this, $power);
     }
 
     public function squareRoot(): Number
     {
-        return new SquareRoot($this);
+        return SquareRoot::of($this);
     }
 
     public function exponential(): Number
     {
-        return new Exponential($this);
+        return Exponential::of($this);
     }
 
     public function binaryLogarithm(): Number
     {
-        return new BinaryLogarithm($this);
+        return BinaryLogarithm::of($this);
     }
 
     public function naturalLogarithm(): Number
     {
-        return new NaturalLogarithm($this);
+        return NaturalLogarithm::of($this);
     }
 
     public function commonLogarithm(): Number
     {
-        return new CommonLogarithm($this);
+        return CommonLogarithm::of($this);
     }
 
     public function signum(): Number
     {
-        return new Signum($this);
+        return Signum::of($this);
     }
 
     public function quotient(): Number
@@ -148,8 +158,17 @@ final class Division implements Operation, Number
 
     public function result(): Number
     {
-        return $this->result ??= Number\Number::wrap(
-            $this->dividend->value() / $this->divisor->value(),
+        return $this->compute(
+            $this->dividend,
+            $this->divisor,
+        );
+    }
+
+    public function collapse(): Number
+    {
+        return $this->compute(
+            $this->dividend->collapse(),
+            $this->divisor->collapse(),
         );
     }
 
@@ -164,6 +183,13 @@ final class Division implements Operation, Number
             '%s ÷ %s',
             $dividend,
             $divisor,
+        );
+    }
+
+    private function compute(Number $dividend, Number $divisor): Number
+    {
+        return Real::of(
+            $dividend->value() / $divisor->value(),
         );
     }
 }

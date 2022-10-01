@@ -21,7 +21,8 @@ use Innmind\Math\Algebra\{
     BinaryLogarithm,
     NaturalLogarithm,
     CommonLogarithm,
-    Signum
+    Signum,
+    Real,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -29,9 +30,9 @@ class MultiplicationTest extends TestCase
 {
     public function testInterface()
     {
-        $multiplication = new Multiplication(
-            new Number\Number(4),
-            new Number\Number(42)
+        $multiplication = Multiplication::of(
+            Real::of(4),
+            Real::of(42),
         );
 
         $this->assertInstanceOf(Operation::class, $multiplication);
@@ -41,23 +42,22 @@ class MultiplicationTest extends TestCase
 
     public function testResult()
     {
-        $multiplication = new Multiplication(
-            new Number\Number(42),
-            new Number\Number(24)
+        $multiplication = Multiplication::of(
+            Real::of(42),
+            Real::of(24),
         );
         $result = $multiplication->result();
 
         $this->assertInstanceOf(Number::class, $result);
         $this->assertSame(1008, $result->value());
         $this->assertTrue($result->equals($multiplication->product()));
-        $this->assertSame($result, $multiplication->result());
     }
 
     public function testValue()
     {
-        $multiplication = new Multiplication(
-            new Number\Number(4),
-            new Number\Number(2)
+        $multiplication = Multiplication::of(
+            Real::of(4),
+            Real::of(2),
         );
 
         $this->assertSame(8, $multiplication->value());
@@ -65,33 +65,33 @@ class MultiplicationTest extends TestCase
 
     public function testEquals()
     {
-        $multiplication = new Multiplication(
-            new Number\Number(4),
-            new Number\Number(2)
+        $multiplication = Multiplication::of(
+            Real::of(4),
+            Real::of(2),
         );
 
-        $this->assertTrue($multiplication->equals(new Number\Number(8)));
-        $this->assertFalse($multiplication->equals(new Number\Number(8.1)));
+        $this->assertTrue($multiplication->equals(Real::of(8)));
+        $this->assertFalse($multiplication->equals(Real::of(8.1)));
     }
 
     public function testHigherThan()
     {
-        $multiplication = new Multiplication(
-            new Number\Number(4),
-            new Number\Number(2)
+        $multiplication = Multiplication::of(
+            Real::of(4),
+            Real::of(2),
         );
 
-        $this->assertFalse($multiplication->higherThan(new Number\Number(8)));
-        $this->assertTrue($multiplication->higherThan(new Number\Number(7.9)));
+        $this->assertFalse($multiplication->higherThan(Real::of(8)));
+        $this->assertTrue($multiplication->higherThan(Real::of(7.9)));
     }
 
     public function testAdd()
     {
-        $multiplication = new Multiplication(
-            new Number\Number(4),
-            new Number\Number(2)
+        $multiplication = Multiplication::of(
+            Real::of(4),
+            Real::of(2),
         );
-        $number = $multiplication->add(new Number\Number(66));
+        $number = $multiplication->add(Real::of(66));
 
         $this->assertInstanceOf(Addition::class, $number);
         $this->assertSame(74, $number->value());
@@ -99,11 +99,11 @@ class MultiplicationTest extends TestCase
 
     public function testSubtract()
     {
-        $multiplication = new Multiplication(
-            new Number\Number(4),
-            new Number\Number(2)
+        $multiplication = Multiplication::of(
+            Real::of(4),
+            Real::of(2),
         );
-        $number = $multiplication->subtract(new Number\Number(66));
+        $number = $multiplication->subtract(Real::of(66));
 
         $this->assertInstanceOf(Subtraction::class, $number);
         $this->assertSame(-58, $number->value());
@@ -111,11 +111,11 @@ class MultiplicationTest extends TestCase
 
     public function testDivideBy()
     {
-        $multiplication = new Multiplication(
-            new Number\Number(4.5),
-            new Number\Number(2)
+        $multiplication = Multiplication::of(
+            Real::of(4.5),
+            Real::of(2),
         );
-        $number = $multiplication->divideBy(new Number\Number(3));
+        $number = $multiplication->divideBy(Real::of(3));
 
         $this->assertInstanceOf(Division::class, $number);
         $this->assertSame(3.0, $number->value());
@@ -123,11 +123,11 @@ class MultiplicationTest extends TestCase
 
     public function testMulitplyBy()
     {
-        $multiplication = new Addition(
-            new Number\Number(24),
-            new Number\Number(42)
+        $multiplication = Addition::of(
+            Real::of(24),
+            Real::of(42),
         );
-        $number = $multiplication->multiplyBy(new Number\Number(2));
+        $number = $multiplication->multiplyBy(Real::of(2));
 
         $this->assertInstanceOf(Multiplication::class, $number);
         $this->assertSame(132, $number->value());
@@ -135,9 +135,9 @@ class MultiplicationTest extends TestCase
 
     public function testRound()
     {
-        $number = new Multiplication(
-            new Number\Number(2.22),
-            new Number\Number(3)
+        $number = Multiplication::of(
+            Real::of(2.22),
+            Real::of(3),
         );
 
         $this->assertEquals(Round::up($number, 2), $number->roundUp(2));
@@ -148,9 +148,9 @@ class MultiplicationTest extends TestCase
 
     public function testFloor()
     {
-        $multiplication = new Multiplication(
-            new Number\Number(2.22),
-            new Number\Number(3)
+        $multiplication = Multiplication::of(
+            Real::of(2.22),
+            Real::of(3),
         );
         $number = $multiplication->floor();
 
@@ -160,9 +160,9 @@ class MultiplicationTest extends TestCase
 
     public function testCeil()
     {
-        $multiplication = new Multiplication(
-            new Number\Number(2.22),
-            new Number\Number(3)
+        $multiplication = Multiplication::of(
+            Real::of(2.22),
+            Real::of(3),
         );
         $number = $multiplication->ceil();
 
@@ -172,11 +172,11 @@ class MultiplicationTest extends TestCase
 
     public function testModulo()
     {
-        $multiplication = new Multiplication(
-            new Number\Number(3),
-            new Number\Number(3)
+        $multiplication = Multiplication::of(
+            Real::of(3),
+            Real::of(3),
         );
-        $number = $multiplication->modulo(new Number\Number(2));
+        $number = $multiplication->modulo(Real::of(2));
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertSame(1.0, $number->value());
@@ -184,9 +184,9 @@ class MultiplicationTest extends TestCase
 
     public function testAbsolute()
     {
-        $multiplication = new Multiplication(
-            new Number\Number(-3),
-            new Number\Number(3)
+        $multiplication = Multiplication::of(
+            Real::of(-3),
+            Real::of(3),
         );
         $number = $multiplication->absolute();
 
@@ -196,11 +196,11 @@ class MultiplicationTest extends TestCase
 
     public function testPower()
     {
-        $multiplication = new Multiplication(
-            new Number\Number(-3),
-            new Number\Number(3)
+        $multiplication = Multiplication::of(
+            Real::of(-3),
+            Real::of(3),
         );
-        $number = $multiplication->power(new Number\Number(2));
+        $number = $multiplication->power(Real::of(2));
 
         $this->assertInstanceOf(Power::class, $number);
         $this->assertSame(81, $number->value());
@@ -208,9 +208,9 @@ class MultiplicationTest extends TestCase
 
     public function testSquareRoot()
     {
-        $multiplication = new Multiplication(
-            new Number\Number(2),
-            new Number\Number(2)
+        $multiplication = Multiplication::of(
+            Real::of(2),
+            Real::of(2),
         );
         $number = $multiplication->squareRoot();
 
@@ -220,10 +220,10 @@ class MultiplicationTest extends TestCase
 
     public function testExponential()
     {
-        $number = (new Multiplication(
-            new Number\Number(2),
-            new Number\Number(2)
-        ))->exponential();
+        $number = Multiplication::of(
+            Real::of(2),
+            Real::of(2),
+        )->exponential();
 
         $this->assertInstanceOf(Exponential::class, $number);
         $this->assertSame(\exp(4), $number->value());
@@ -231,10 +231,10 @@ class MultiplicationTest extends TestCase
 
     public function testBinaryLogarithm()
     {
-        $number = (new Multiplication(
-            new Number\Number(2),
-            new Number\Number(2)
-        ))->binaryLogarithm();
+        $number = Multiplication::of(
+            Real::of(2),
+            Real::of(2),
+        )->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
         $this->assertSame(\log(4, 2), $number->value());
@@ -242,10 +242,10 @@ class MultiplicationTest extends TestCase
 
     public function testNaturalLogarithm()
     {
-        $number = (new Multiplication(
-            new Number\Number(2),
-            new Number\Number(2)
-        ))->naturalLogarithm();
+        $number = Multiplication::of(
+            Real::of(2),
+            Real::of(2),
+        )->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
         $this->assertSame(\log(4), $number->value());
@@ -253,10 +253,10 @@ class MultiplicationTest extends TestCase
 
     public function testCommonLogarithm()
     {
-        $number = (new Multiplication(
-            new Number\Number(2),
-            new Number\Number(2)
-        ))->commonLogarithm();
+        $number = Multiplication::of(
+            Real::of(2),
+            Real::of(2),
+        )->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
         $this->assertSame(\log10(4), $number->value());
@@ -264,10 +264,10 @@ class MultiplicationTest extends TestCase
 
     public function testSignum()
     {
-        $number = (new Multiplication(
-            new Number\Number(2),
-            new Number\Number(2)
-        ))->signum();
+        $number = Multiplication::of(
+            Real::of(2),
+            Real::of(2),
+        )->signum();
 
         $this->assertInstanceOf(Signum::class, $number);
         $this->assertSame(1, $number->value());
@@ -275,13 +275,13 @@ class MultiplicationTest extends TestCase
 
     public function testStringCast()
     {
-        $multiplication = new Multiplication(
-            new Addition(
-                new Number\Number(12),
-                new Number\Number(12)
+        $multiplication = Multiplication::of(
+            Addition::of(
+                Real::of(12),
+                Real::of(12),
             ),
-            new Number\Number(42),
-            new Number\Number(66)
+            Real::of(42),
+            Real::of(66),
         );
 
         $this->assertSame('(12 + 12) x 42 x 66', $multiplication->toString());
@@ -291,15 +291,15 @@ class MultiplicationTest extends TestCase
     {
         //a(b+c) === ab + ac
         $this->assertTrue(
-            ($a = new Number\Number(2))
+            ($a = Real::of(2))
                 ->multiplyBy(
-                    ($b = new Number\Number(3))->add($c = new Number\Number(4))
+                    ($b = Real::of(3))->add($c = Real::of(4)),
                 )
                 ->equals(
                     $a
                         ->multiplyBy($b)
-                        ->add($a->multiplyBy($c))
-                )
+                        ->add($a->multiplyBy($c)),
+                ),
         );
     }
 
@@ -307,18 +307,18 @@ class MultiplicationTest extends TestCase
     {
         //(a+b)(c+d) === ac + ad + bc + bd
         $this->assertTrue(
-            ($a = new Number\Number(2))
-                ->add($b = new Number\Number(3))
+            ($a = Real::of(2))
+                ->add($b = Real::of(3))
                 ->multiplyBy(
-                    ($c = new Number\Number(4))->add($d = new Number\Number(5))
+                    ($c = Real::of(4))->add($d = Real::of(5)),
                 )
                 ->equals(
                     $a
                         ->multiplyBy($c)
                         ->add($a->multiplyBy($d))
                         ->add($b->multiplyBy($c))
-                        ->add($b->multiplyBy($d))
-                )
+                        ->add($b->multiplyBy($d)),
+                ),
         );
     }
 
@@ -326,48 +326,69 @@ class MultiplicationTest extends TestCase
     {
         //(a+b)^2 = a^2 + 2ab + b^2
         $this->assertTrue(
-            ($a = new Number\Number(2))
-                ->add($b = new Number\Number(3))
-                ->power(new Number\Number(2))
+            ($a = Real::of(2))
+                ->add($b = Real::of(3))
+                ->power(Real::of(2))
                 ->equals(
                     $a
-                        ->power(new Number\Number(2))
+                        ->power(Real::of(2))
                         ->add(
-                            (new Number\Number(2))
+                            (Real::of(2))
                                 ->multiplyBy($a)
-                                ->multiplyBy($b)
+                                ->multiplyBy($b),
                         )
-                        ->add($b->power(new Number\Number(2)))
-                )
+                        ->add($b->power(Real::of(2))),
+                ),
         );
 
         //(a-b)^2 = a^2 - 2ab + b^2
         $this->assertTrue(
-            ($a = new Number\Number(2))
-                ->subtract($b = new Number\Number(3))
-                ->power(new Number\Number(2))
+            ($a = Real::of(2))
+                ->subtract($b = Real::of(3))
+                ->power(Real::of(2))
                 ->equals(
                     $a
-                        ->power(new Number\Number(2))
+                        ->power(Real::of(2))
                         ->subtract(
-                            (new Number\Number(2))
+                            (Real::of(2))
                                 ->multiplyBy($a)
-                                ->multiplyBy($b)
+                                ->multiplyBy($b),
                         )
-                        ->add($b->power(new Number\Number(2)))
-                )
+                        ->add($b->power(Real::of(2))),
+                ),
         );
 
         //(a+b)(a-b) = a^2 - b^2
         $this->assertTrue(
-            ($a = new Number\Number(2))
-                ->add($b = new Number\Number(3))
+            ($a = Real::of(2))
+                ->add($b = Real::of(3))
                 ->multiplyBy($a->subtract($b))
                 ->equals(
                     $a
-                        ->power(new Number\Number(2))
-                        ->subtract($b->power(new Number\Number(2)))
+                        ->power(Real::of(2))
+                        ->subtract($b->power(Real::of(2))),
+                ),
+        );
+    }
+
+    public function testCollapse()
+    {
+        $this->assertSame(
+            3,
+            Real::of(3)
+                ->divideBy(Real::of(2))
+                ->multiplyBy(Real::of(2))
+                ->collapse()
+                ->value(),
+        );
+        $this->assertSame(
+            3,
+            Real::of(2)
+                ->multiplyBy(
+                    Real::of(3)->divideBy(Real::of(2)),
                 )
+                ->collapse()
+                ->value(),
         );
     }
 }

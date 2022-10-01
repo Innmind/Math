@@ -6,35 +6,48 @@ namespace Innmind\Math\Statistics;
 use Innmind\Math\Algebra\{
     Number,
     Division,
+    Integer,
 };
 use Innmind\Immutable\Sequence;
 
+/**
+ * @psalm-immutable
+ */
 final class Frequence
 {
     /** @var Sequence<Number> */
     private Sequence $values;
-    private Number $size;
+    private Integer $size;
 
-    public function __construct(Number ...$values)
+    /**
+     * @no-named-arguments
+     */
+    private function __construct(Number ...$values)
     {
-        /** @var Sequence<Number> */
-        $this->values = Sequence::of(Number::class, ...$values);
-        $this->size = new Number\Number($this->values->size());
+        $this->values = Sequence::of(...$values);
+        $this->size = Integer::of($this->values->size());
     }
 
     public function __invoke(Number $number): Number
     {
         $frequence = $this
             ->values
-            ->filter(static function(Number $value) use ($number): bool {
-                return $value->equals($number);
-            })
+            ->filter(static fn($value) => $value->equals($number))
             ->size();
 
-        return new Division(new Number\Number($frequence), $this->size);
+        return Division::of(Integer::of($frequence), $this->size);
     }
 
-    public function size(): Number
+    /**
+     * @psalm-pure
+     * @no-named-arguments
+     */
+    public static function of(Number ...$values): self
+    {
+        return new self(...$values);
+    }
+
+    public function size(): Integer
     {
         return $this->size;
     }

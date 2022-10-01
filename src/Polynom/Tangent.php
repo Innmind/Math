@@ -3,12 +3,14 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Polynom;
 
-use function Innmind\Math\{
-    add,
-    multiply,
+use Innmind\Math\Algebra\{
+    Number,
+    Real,
 };
-use Innmind\Math\Algebra\Number;
 
+/**
+ * @psalm-immutable
+ */
 final class Tangent
 {
     private Polynom $polynom;
@@ -16,10 +18,10 @@ final class Tangent
     private Number $abscissa;
     private Number $intercept;
 
-    public function __construct(
+    private function __construct(
         Polynom $polynom,
         Number $abscissa,
-        Number $limit = null
+        Number $limit = null,
     ) {
         $this->polynom = $polynom;
         $this->derivative = $polynom->derived($abscissa, $limit);
@@ -29,13 +31,21 @@ final class Tangent
 
     public function __invoke(Number $x): Number
     {
-        return add(
-            multiply(
-                $this->derivative,
-                $x->subtract($this->abscissa),
-            ),
-            $this->intercept,
-        );
+        return $this
+            ->derivative
+            ->multiplyBy($x->subtract($this->abscissa))
+            ->add($this->intercept);
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(
+        Polynom $polynom,
+        Number $abscissa,
+        Number $limit = null,
+    ): self {
+        return new self($polynom, $abscissa, $limit);
     }
 
     public function polynom(): Polynom
@@ -48,8 +58,11 @@ final class Tangent
         return $this->abscissa;
     }
 
+    /**
+     * @psalm-pure
+     */
     public static function limit(): Number
     {
-        return new Number\Number(0.000000000001);
+        return Real::of(0.000000000001);
     }
 }

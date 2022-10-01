@@ -3,32 +3,38 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Regression;
 
-use function Innmind\Math\{
-    add,
-    multiply,
-    divide,
-    subtract,
-};
 use Innmind\Math\{
     Polynom\Polynom,
     Algebra\Number,
     Algebra\Integer,
+    Algebra\Value,
+    Algebra\Division,
+    Algebra\Subtraction,
+    Algebra\Addition,
+    Algebra\Multiplication,
+    Algebra\Real,
     Matrix,
+    Monoid,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class LinearRegression
 {
     private Polynom $polynom;
+    private Number $slope;
     private Number $deviation;
 
-    public function __construct(Dataset $data)
+    private function __construct(Dataset $data)
     {
         [$slope, $intercept] = $this->compute($data);
-        $this->polynom = (new Polynom($intercept))->withDegree(
-            new Integer(1),
+        $this->polynom = Polynom::interceptAt($intercept)->withDegree(
+            Integer::positive(1),
             $slope,
         );
-        $this->deviation = $this->buildRmsd($data);
+        $this->slope = $slope;
+        $this->deviation = $this->buildRmsd($data, $this->polynom);
     }
 
     /**
@@ -37,6 +43,14 @@ final class LinearRegression
     public function __invoke(Number $x): Number
     {
         return ($this->polynom)($x);
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(Dataset $data): self
+    {
+        return new self($data);
     }
 
     /**
@@ -52,7 +66,7 @@ final class LinearRegression
      */
     public function slope(): Number
     {
-        return $this->polynom->degree(1)->coeff();
+        return $this->slope;
     }
 
     public function rootMeanSquareDeviation(): Number
@@ -70,32 +84,31 @@ final class LinearRegression
     private function compute(Dataset $data): array
     {
         $dimension = $data->dimension()->rows();
-        $elements = $dimension->value();
-        $x = $data->abscissas()->toArray();
-        $y = $data->ordinates()->toArray();
 
         $xSum = $data->abscissas()->sum();
         $ySum = $data->ordinates()->sum();
-        $xxSum = new Integer(0);
-        $xySum = new Integer(0);
+        $xxSum = $data
+            ->abscissas()
+            ->toSequence()
+            ->map(static fn($x) => $x->multiplyBy($x))
+            ->fold(new Monoid\Addition);
+        $xySum = $data
+            ->points()
+            ->map(static fn($point) => $point->abscissa()->multiplyBy($point->ordinate()))
+            ->fold(new Monoid\Addition);
 
-        for ($i = 0; $i < $elements; $i++) {
-            $xySum = add($xySum, multiply($x[$i], $y[$i]));
-            $xxSum = add($xxSum, multiply($x[$i], $x[$i]));
-        }
-
-        $slope = divide(
-            subtract(
+        $slope = Division::of(
+            Subtraction::of(
                 $dimension->multiplyBy($xySum),
                 $xSum->multiplyBy($ySum),
             ),
-            subtract(
+            Subtraction::of(
                 $dimension->multiplyBy($xxSum),
-                $xSum->power(new Integer(2)),
+                $xSum->power(Value::two),
             ),
         );
-        $intercept = divide(
-            subtract(
+        $intercept = Division::of(
+            Subtraction::of(
                 $ySum,
                 $slope->multiplyBy($xSum),
             ),
@@ -105,20 +118,18 @@ final class LinearRegression
         return [$slope, $intercept];
     }
 
-    private function buildRmsd(Dataset $dataset): Number
+    private function buildRmsd(Dataset $dataset, Polynom $interpolate): Number
     {
         $values = $dataset->ordinates();
         $estimated = $dataset
             ->abscissas()
-            ->map(fn(Number $x): Number => $this($x));
+            ->map(static fn($x) => $interpolate($x));
 
         return $values
             ->subtract($estimated)
-            ->power(new Integer(2))
+            ->power(Value::two)
             ->sum()
-            ->divideBy(
-                $values->dimension(),
-            )
+            ->divideBy($values->dimension())
             ->squareRoot();
     }
 }

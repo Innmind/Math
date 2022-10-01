@@ -9,7 +9,7 @@ use Innmind\Math\{
     DefinitionSet\Union,
     DefinitionSet\Intersection,
     Algebra\Integer,
-    Algebra\Number\Number,
+    Algebra\Real,
     Exception\OutOfDefinitionSet,
 };
 use PHPUnit\Framework\TestCase;
@@ -20,7 +20,7 @@ class IntegersExceptZeroTest extends TestCase
     {
         $this->assertInstanceOf(
             Set::class,
-            new IntegersExceptZero
+            new IntegersExceptZero,
         );
     }
 
@@ -33,20 +33,20 @@ class IntegersExceptZeroTest extends TestCase
     {
         $set = new IntegersExceptZero;
 
-        $this->assertTrue($set->contains(new Integer(1)));
-        $this->assertTrue($set->contains(new Integer(-1)));
-        $this->assertFalse($set->contains(new Integer(0)));
-        $this->assertFalse($set->contains(new Number(0.75)));
+        $this->assertTrue($set->contains(Integer::of(1)));
+        $this->assertTrue($set->contains(Integer::of(-1)));
+        $this->assertFalse($set->contains(Integer::of(0)));
+        $this->assertFalse($set->contains(Real::of(0.75)));
     }
 
     public function testAccept()
     {
-        $this->assertNull((new IntegersExceptZero)->accept(new Integer(1)));
+        $this->assertNull((new IntegersExceptZero)->accept(Integer::of(1)));
 
         $this->expectException(OutOfDefinitionSet::class);
         $this->expectExceptionMessage('0 ∉ ℤ*');
 
-        (new IntegersExceptZero)->accept(new Integer(0));
+        (new IntegersExceptZero)->accept(Integer::of(0));
     }
 
     public function testUnion()

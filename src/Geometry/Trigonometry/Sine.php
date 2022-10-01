@@ -7,6 +7,7 @@ use Innmind\Math\{
     Geometry\Angle\Degree,
     Algebra\Number,
     Algebra\Round,
+    Algebra\Real,
 };
 
 /**
@@ -15,18 +16,26 @@ use Innmind\Math\{
  * sin(angle) = oppositeSide / hypothenuse
  *
  * Where angle is the one between the adjacent side and the hypothenuse
+ * @psalm-immutable
  */
 final class Sine implements Number
 {
     private Degree $degree;
-    private ?Number $sine = null;
 
-    public function __construct(Degree $degree)
+    private function __construct(Degree $degree)
     {
         $this->degree = $degree;
     }
 
-    public function value()
+    /**
+     * @psalm-pure
+     */
+    public static function of(Degree $degree): self
+    {
+        return new self($degree);
+    }
+
+    public function value(): int|float
     {
         return $this->sine()->value();
     }
@@ -136,6 +145,11 @@ final class Sine implements Number
         return $this->sine()->signum();
     }
 
+    public function collapse(): Number
+    {
+        return $this;
+    }
+
     public function toString(): string
     {
         return \sprintf('sin(%s)', $this->degree->toString());
@@ -143,7 +157,7 @@ final class Sine implements Number
 
     private function sine(): Number
     {
-        return $this->sine ??= new Number\Number(
+        return Real::of(
             \sin(
                 $this->degree->toRadian()->number()->value(),
             ),

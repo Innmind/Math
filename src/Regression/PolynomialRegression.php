@@ -3,55 +3,69 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Regression;
 
-use function Innmind\Math\numerize;
 use Innmind\Math\{
     Algebra\Number,
+    Algebra\Real,
     Algebra\Integer,
+    Algebra\Value,
     Polynom\Polynom,
     Matrix,
     Matrix\RowVector,
+    Range,
+    Exception\LogicException,
 };
 use Innmind\Immutable\Sequence;
-use function Innmind\Immutable\unwrap;
 
+/**
+ * @psalm-immutable
+ */
 final class PolynomialRegression
 {
     private Polynom $polynom;
     private Number $deviation;
 
-    public function __construct(Dataset $dataset, Integer $degree)
+    private function __construct(Dataset $dataset, Integer\Positive $degree)
     {
         $matrix = $this->buildMatrix($dataset, $degree);
-        $vector = $this->buildVector($dataset, $degree);
+        $vector = $this->buildVector($dataset);
         $coefficients = $matrix
             ->transpose()
             ->dot($matrix)
             ->inverse()
             ->dot($matrix->transpose())
             ->dot($vector)
-            ->column(0);
-
-        $this->polynom = new Polynom($coefficients->get(0));
-        $zero = new Integer(0);
-        $degrees = $degree->value();
-
-        for ($i = 1; $i <= $degrees; $i++) {
-            if ($coefficients->get($i)->equals($zero)) {
-                continue;
-            }
-
-            $this->polynom = $this->polynom->withDegree(
-                new Integer($i),
-                $coefficients->get($i),
+            ->columns()
+            ->first()
+            ->match(
+                static fn($coefficients) => $coefficients,
+                static fn() => throw new LogicException('Empty matrix'),
             );
-        }
 
-        $this->deviation = $this->buildRmsd($dataset);
+        $this->polynom = Range::ofPositive(Integer::positive(1), $degree)
+            ->zip($coefficients->toSequence()->drop(1))
+            ->filter(static fn($pair) => !$pair[1]->equals(Value::zero))
+            ->reduce(
+                Polynom::interceptAt($coefficients->get(0)),
+                static fn(Polynom $polynom, $pair) => $polynom->withDegree(
+                    $pair[0],
+                    $pair[1],
+                ),
+            );
+
+        $this->deviation = $this->buildRmsd($dataset, $this->polynom);
     }
 
     public function __invoke(Number $x): Number
     {
         return ($this->polynom)($x);
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(Dataset $data, Integer\Positive $degree): self
+    {
+        return new self($data, $degree);
     }
 
     public function polynom(): Polynom
@@ -64,46 +78,38 @@ final class PolynomialRegression
         return $this->deviation;
     }
 
-    private function buildMatrix(Dataset $dataset, Integer $degree): Matrix
+    private function buildMatrix(Dataset $dataset, Integer\Positive $degree): Matrix
     {
-        $powers = new RowVector(...numerize(...\range(0, $degree->value())));
+        /** @psalm-suppress InvalidArgument */
+        $powers = RowVector::ofSequence(Range::of(Integer::of(0), $degree));
 
-        /** @var Sequence<RowVector> */
-        $rows = $dataset
-            ->abscissas()
-            ->reduce(
-                Sequence::of(RowVector::class),
-                static function(Sequence $rows, Number $x) use ($powers): Sequence {
-                    $xToThePowers = $powers->map(static function(Number $power) use ($x): Number {
-                        return $x->power($power);
-                    });
-
-                    return ($rows)($xToThePowers);
-                }
-            );
-
-        return new Matrix(...unwrap($rows));
+        return Matrix::fromRows(
+            $dataset
+                ->abscissas()
+                ->toSequence()
+                ->map(static fn($x) => $powers->map(
+                    static fn($power) => $x->power($power),
+                )),
+        );
     }
 
-    private function buildVector(Dataset $dataset, Integer $degree): Matrix
+    private function buildVector(Dataset $dataset): Matrix
     {
-        return Matrix::fromColumns($dataset->ordinates());
+        return Matrix::fromColumns(Sequence::of($dataset->ordinates()));
     }
 
-    private function buildRmsd(Dataset $dataset): Number
+    private function buildRmsd(Dataset $dataset, Polynom $interpolate): Number
     {
         $values = $dataset->ordinates();
         $estimated = $dataset
             ->abscissas()
-            ->map(fn(Number $x): Number => $this($x));
+            ->map(static fn($x) => $interpolate($x));
 
         return $values
             ->subtract($estimated)
-            ->power(new Integer(2))
+            ->power(Value::two)
             ->sum()
-            ->divideBy(
-                $values->dimension(),
-            )
+            ->divideBy($values->dimension())
             ->squareRoot();
     }
 }

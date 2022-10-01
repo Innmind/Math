@@ -8,21 +8,21 @@ use Innmind\Math\{
     Exception\OutOfDefinitionSet,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class Range implements Set
 {
-    public const INCLUSIVE = true;
-    public const EXCLUSIVE = false;
-
     private bool $lowerInclusivity;
     private bool $upperInclusivity;
     private Number $lower;
     private Number $upper;
 
-    public function __construct(
+    private function __construct(
         bool $lowerInclusivity,
         Number $lower,
         Number $upper,
-        bool $upperInclusivity
+        bool $upperInclusivity,
     ) {
         $this->lowerInclusivity = $lowerInclusivity;
         $this->lower = $lower;
@@ -30,14 +30,30 @@ final class Range implements Set
         $this->upperInclusivity = $upperInclusivity;
     }
 
+    /**
+     * @psalm-pure
+     */
     public static function inclusive(Number $lower, Number $upper): self
     {
-        return new self(self::INCLUSIVE, $lower, $upper, self::INCLUSIVE);
+        return new self(true, $lower, $upper, true);
     }
 
+    /**
+     * @psalm-pure
+     */
     public static function exclusive(Number $lower, Number $upper): self
     {
-        return new self(self::EXCLUSIVE, $lower, $upper, self::EXCLUSIVE);
+        return new self(false, $lower, $upper, false);
+    }
+
+    public function excludeLowerBound(): self
+    {
+        return new self(false, $this->lower, $this->upper, $this->upperInclusivity);
+    }
+
+    public function excludeUpperBound(): self
+    {
+        return new self($this->lowerInclusivity, $this->lower, $this->upper, false);
     }
 
     public function contains(Number $number): bool
@@ -51,14 +67,14 @@ final class Range implements Set
         }
 
         if (
-            $this->lowerInclusivity === self::EXCLUSIVE &&
+            !$this->lowerInclusivity &&
             $this->lower->equals($number)
         ) {
             return false;
         }
 
         if (
-            $this->upperInclusivity === self::EXCLUSIVE &&
+            !$this->upperInclusivity &&
             $this->upper->equals($number)
         ) {
             return false;
@@ -76,22 +92,22 @@ final class Range implements Set
 
     public function union(Set $set): Set
     {
-        return new Union($this, $set);
+        return Union::of($this, $set);
     }
 
     public function intersect(Set $set): Set
     {
-        return new Intersection($this, $set);
+        return Intersection::of($this, $set);
     }
 
     public function toString(): string
     {
         return \sprintf(
             '%s%s;%s%s',
-            $this->lowerInclusivity === self::INCLUSIVE ? '[' : ']',
+            $this->lowerInclusivity ? '[' : ']',
             $this->lower->toString(),
             $this->upper->toString(),
-            $this->upperInclusivity === self::INCLUSIVE ? ']' : '[',
+            $this->upperInclusivity ? ']' : '[',
         );
     }
 }

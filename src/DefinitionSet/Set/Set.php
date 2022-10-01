@@ -10,21 +10,36 @@ use Innmind\Math\{
     Algebra\Number,
     Exception\OutOfDefinitionSet,
 };
-use Innmind\Immutable\Sequence;
-use function Innmind\Immutable\join;
+use Innmind\Immutable\{
+    Sequence,
+    Str,
+};
 
+/**
+ * @psalm-immutable
+ */
 final class Set implements SetInterface
 {
     /** @var Sequence<int|float> */
     private Sequence $values;
 
-    public function __construct(Number ...$values)
+    /**
+     * @no-named-arguments
+     */
+    private function __construct(Number ...$values)
     {
-        /** @psalm-suppress MixedArgumentTypeCoercion No need to revalidate the type */
-        $this->values = Sequence::mixed(...$values)->mapTo(
-            'int|float',
+        $this->values = Sequence::of(...$values)->map(
             static fn(Number $v) => $v->value(),
         );
+    }
+
+    /**
+     * @psalm-pure
+     * @no-named-arguments
+     */
+    public static function of(Number ...$values): self
+    {
+        return new self(...$values);
     }
 
     public function contains(Number $number): bool
@@ -41,12 +56,12 @@ final class Set implements SetInterface
 
     public function union(SetInterface $set): SetInterface
     {
-        return new Union($this, $set);
+        return Union::of($this, $set);
     }
 
     public function intersect(SetInterface $set): SetInterface
     {
-        return new Intersection($this, $set);
+        return Intersection::of($this, $set);
     }
 
     public function toString(): string
@@ -56,12 +71,12 @@ final class Set implements SetInterface
         }
 
         /** @var Sequence<string> */
-        $values = $this->values->mapTo(
-            'string',
+        $values = $this->values->map(
             static fn($number): string => (string) $number,
         );
 
-        return join(';', $values)
+        return Str::of(';')
+            ->join($values)
             ->prepend('{')
             ->append('}')
             ->toString();

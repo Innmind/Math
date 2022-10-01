@@ -3,69 +3,83 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Regression;
 
-use function Innmind\Math\numerize;
 use Innmind\Math\{
+    Regression\Dataset\Point,
     Matrix,
     Matrix\Dimension,
     Matrix\RowVector,
     Matrix\ColumnVector,
     Algebra\Number,
-    Exception\VectorsMustContainsOnlyTwoValues,
+    Algebra\Real,
+    Algebra\Integer,
 };
+use Innmind\Immutable\Sequence;
 
+/**
+ * @psalm-immutable
+ */
 final class Dataset
 {
-    private Matrix $matrix;
+    /** @var Sequence<Point> */
+    private Sequence $points;
 
-    public function __construct(RowVector ...$rows)
+    /**
+     * @param Sequence<Point> $points
+     */
+    private function __construct(Sequence $points)
     {
-        $this->matrix = new Matrix(...$rows);
-
-        if ($this->matrix->dimension()->columns()->value() !== 2) {
-            throw new VectorsMustContainsOnlyTwoValues;
-        }
+        $this->points = $points;
     }
 
     /**
-     * @param array<int, int|float|Number>|list<array{0: int|float|Number, 1: int|float|Number}> $values
+     * @psalm-pure
+     *
+     * @param non-empty-list<array{0: int|float|Number, 1: int|float|Number}> $values
      */
     public static function of(array $values): self
     {
-        $rows = [];
+        $numerize = static fn(int|float|Number $number): Number => match ($number instanceof Number) {
+            true => $number,
+            false => Real::of($number),
+        };
 
-        foreach ($values as $x => $y) {
-            $coordinates = \is_array($y) ? $y : [$x, $y];
-            $rows[] = new RowVector(...numerize(...$coordinates));
-        }
-
-        return new self(...$rows);
-    }
-
-    /**
-     * @return list<list<int|float>>
-     */
-    public function toArray(): array
-    {
-        return $this->matrix->toArray();
+        return new self(Sequence::of(...\array_map(
+            static fn($coordinates) => Point::of(
+                $numerize($coordinates[0]),
+                $numerize($coordinates[1]),
+            ),
+            $values,
+        )));
     }
 
     public function abscissas(): ColumnVector
     {
-        return $this->matrix->column(0);
+        return ColumnVector::ofSequence(
+            $this->points->map(static fn($point) => $point->abscissa()),
+        );
     }
 
     public function ordinates(): ColumnVector
     {
-        return $this->matrix->column(1);
+        return ColumnVector::ofSequence(
+            $this->points->map(static fn($point) => $point->ordinate()),
+        );
+    }
+
+    /**
+     * @return Sequence<Point>
+     */
+    public function points(): Sequence
+    {
+        return $this->points;
     }
 
     public function dimension(): Dimension
     {
-        return $this->matrix->dimension();
-    }
-
-    public function row(int $position): RowVector
-    {
-        return $this->matrix->row($position);
+        /** @psalm-suppress ArgumentTypeCoercion There is always at least one point */
+        return Dimension::of(
+            Integer::positive($this->points->size()),
+            Integer::positive(2),
+        );
     }
 }

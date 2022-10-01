@@ -3,23 +3,22 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Polynom;
 
-use function Innmind\Math\{
-    add,
-    divide,
-    subtract,
-};
 use Innmind\Math\{
     Algebra\Number,
     Algebra\Integer,
     Algebra\Operation,
+    Algebra\Value,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class Degree
 {
-    private Integer $degree;
+    private Integer\Positive $degree;
     private Number $coeff;
 
-    public function __construct(Integer $degree, Number $coeff)
+    private function __construct(Integer\Positive $degree, Number $coeff)
     {
         $this->degree = $degree;
         $this->coeff = $coeff;
@@ -33,7 +32,15 @@ final class Degree
         return $this->coeff->multiplyBy($x->power($this->degree));
     }
 
-    public function degree(): Integer
+    /**
+     * @psalm-pure
+     */
+    public static function of(Integer\Positive $degree, Number $coeff): self
+    {
+        return new self($degree, $coeff);
+    }
+
+    public function degree(): Integer\Positive
     {
         return $this->degree;
     }
@@ -45,21 +52,17 @@ final class Degree
 
     public function primitive(): self
     {
-        /** @psalm-suppress ArgumentTypeCoercion */
         return new self(
-            add($this->degree, 1)->result(),
-            divide(
-                $this->coeff,
-                add($this->degree, 1),
-            ),
+            $this->degree->increment(),
+            $this->coeff->divideBy($this->degree->add(Value::one)),
         );
     }
 
     public function derivative(): self
     {
-        /** @psalm-suppress ArgumentTypeCoercion */
+        /** @psalm-suppress ArgumentTypeCoercion It must throw if we decrement below 1 as it means there is a bug somewhere */
         return new self(
-            subtract($this->degree, 1)->result(),
+            $this->degree->decrement(),
             $this->coeff->multiplyBy($this->degree),
         );
     }
@@ -69,7 +72,7 @@ final class Degree
         $coeff = $this->coeff instanceof Operation ?
             '('.$this->coeff->toString().')' : $this->coeff->toString();
 
-        if ($this->degree->equals(new Integer(1))) {
+        if ($this->degree->equals(Value::one)) {
             return $coeff.'x';
         }
 

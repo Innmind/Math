@@ -6,21 +6,34 @@ namespace Innmind\Math\Geometry;
 use Innmind\Math\{
     Geometry\Angle\Degree,
     Algebra\Number,
-    Algebra\Integer,
+    Algebra\Value,
     Exception\LengthMustBePositive,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class Segment
 {
     private Number $length;
 
-    public function __construct(Number $length)
+    private function __construct(Number $length)
     {
-        if (!$length->higherThan(new Integer(0))) {
+        if (!$length->higherThan(Value::zero)) {
             throw new LengthMustBePositive($length->toString());
         }
 
         $this->length = $length;
+    }
+
+    /**
+     * @psalm-pure
+     *
+     * @throws LengthMustBePositive
+     */
+    public static function of(Number $length): self
+    {
+        return new self($length);
     }
 
     public function length(): Number
@@ -30,7 +43,7 @@ final class Segment
 
     public function join(self $segment, Degree $angle): Angle
     {
-        return new Angle($this, $angle, $segment);
+        return Angle::of($this, $angle, $segment);
     }
 
     public function toString(): string
