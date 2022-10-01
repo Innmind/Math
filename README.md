@@ -6,6 +6,8 @@
 
 Expose some math concepts as objects.
 
+**Note**: all classes are immutable.
+
 ## Algebra
 
 ```php
