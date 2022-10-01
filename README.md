@@ -14,7 +14,7 @@ use Innmind\Math\Algebra\{
     Integer,
 };
 
-$perimeter = Value::two->multiplyBy(Value::pi, $r = Integer::of(42)); //v alue still not calculated
+$perimeter = Value::two->multiplyBy(Value::pi, $r = Integer::of(42)); // value still not calculated
 echo $perimeter->toString(); // 2 x π x 42 (value still not calculated)
 echo $perimeter->value(); // 263.89378290154
 ```
