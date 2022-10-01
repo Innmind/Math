@@ -8,19 +8,28 @@ use Innmind\Math\{
     Geometry\Angle\Radian,
     Algebra\Number,
     Algebra\Round,
+    Algebra\Real,
 };
 
 /**
  * Inverse of sine, such as a===Sine(ArcSine(a))
+ * @psalm-immutable
  */
 final class ArcSine implements Number
 {
     private Number $number;
-    private ?Degree $arcSine = null;
 
-    public function __construct(Number $number)
+    private function __construct(Number $number)
     {
         $this->number = $number;
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(Number $number): self
+    {
+        return new self($number);
     }
 
     public function toDegree(): Degree
@@ -28,7 +37,7 @@ final class ArcSine implements Number
         return $this->arcSine();
     }
 
-    public function value()
+    public function value(): int|float
     {
         return $this->arcSine()->number()->value();
     }
@@ -138,6 +147,11 @@ final class ArcSine implements Number
         return $this->arcSine()->number()->signum();
     }
 
+    public function collapse(): Number
+    {
+        return new self($this->number->collapse());
+    }
+
     public function toString(): string
     {
         return \sprintf('sin⁻¹(%s)', $this->number->toString());
@@ -145,16 +159,12 @@ final class ArcSine implements Number
 
     private function arcSine(): Degree
     {
-        if ($this->arcSine) {
-            return $this->arcSine;
-        }
-
-        $radians = new Number\Number(
+        $radians = Real::of(
             \asin(
                 $this->number->value(),
             ),
         );
 
-        return $this->arcSine = (new Radian($radians))->toDegree();
+        return Radian::of($radians)->toDegree();
     }
 }

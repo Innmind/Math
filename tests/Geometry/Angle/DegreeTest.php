@@ -6,7 +6,7 @@ namespace Tests\Innmind\Math\Geometry\Angle;
 use Innmind\Math\{
     Geometry\Angle\Degree,
     Geometry\Angle\Radian,
-    Algebra\Number\Number
+    Algebra\Real,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -17,36 +17,36 @@ class DegreeTest extends TestCase
      */
     public function testStringCast($degree, $expected)
     {
-        $this->assertSame($expected, (new Degree(new Number($degree)))->toString());
+        $this->assertSame($expected, (Degree::of(Real::of($degree)))->toString());
     }
 
     public function testIsRight()
     {
-        $this->assertTrue((new Degree(new Number(90)))->isRight());
-        $this->assertFalse((new Degree(new Number(91)))->isRight());
+        $this->assertTrue((Degree::of(Real::of(90)))->isRight());
+        $this->assertFalse((Degree::of(Real::of(91)))->isRight());
     }
 
     public function testIsObtuse()
     {
-        $this->assertTrue((new Degree(new Number(91)))->isObtuse());
-        $this->assertFalse((new Degree(new Number(89)))->isObtuse());
+        $this->assertTrue((Degree::of(Real::of(91)))->isObtuse());
+        $this->assertFalse((Degree::of(Real::of(89)))->isObtuse());
     }
 
     public function testIsAcuse()
     {
-        $this->assertTrue((new Degree(new Number(89)))->isAcuse());
-        $this->assertFalse((new Degree(new Number(90)))->isAcuse());
+        $this->assertTrue((Degree::of(Real::of(89)))->isAcuse());
+        $this->assertFalse((Degree::of(Real::of(90)))->isAcuse());
     }
 
     public function testIsFlat()
     {
-        $this->assertTrue((new Degree(new Number(180)))->isFlat());
-        $this->assertFalse((new Degree(new Number(181)))->isFlat());
+        $this->assertTrue((Degree::of(Real::of(180)))->isFlat());
+        $this->assertFalse((Degree::of(Real::of(181)))->isFlat());
     }
 
     public function testOpposite()
     {
-        $degree = new Degree(new Number(270));
+        $degree = Degree::of(Real::of(270));
         $opposite = $degree->opposite();
 
         $this->assertNotSame($opposite, $degree);
@@ -60,7 +60,7 @@ class DegreeTest extends TestCase
      */
     public function testToRadian($degree, $string, $expected)
     {
-        $degree = new Degree(new Number($degree));
+        $degree = Degree::of(Real::of($degree));
         $radian = $degree->toRadian();
 
         $this->assertInstanceOf(Radian::class, $radian);

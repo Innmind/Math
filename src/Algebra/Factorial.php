@@ -5,12 +5,14 @@ namespace Innmind\Math\Algebra;
 
 use Innmind\Math\Exception\FactorialMustBePositive;
 
+/**
+ * @psalm-immutable
+ */
 final class Factorial implements Operation, Number
 {
     private int $value;
-    private ?Number $number = null;
 
-    public function __construct(int $value)
+    private function __construct(int $value)
     {
         if ($value < 0) {
             throw new FactorialMustBePositive((string) $value);
@@ -19,7 +21,15 @@ final class Factorial implements Operation, Number
         $this->value = $value;
     }
 
-    public function value()
+    /**
+     * @psalm-pure
+     */
+    public static function of(int $value): self
+    {
+        return new self($value);
+    }
+
+    public function value(): int|float
     {
         return $this->result()->value();
     }
@@ -106,37 +116,33 @@ final class Factorial implements Operation, Number
 
     public function exponential(): Number
     {
-        return new Exponential($this);
+        return Exponential::of($this);
     }
 
     public function binaryLogarithm(): Number
     {
-        return new BinaryLogarithm($this);
+        return BinaryLogarithm::of($this);
     }
 
     public function naturalLogarithm(): Number
     {
-        return new NaturalLogarithm($this);
+        return NaturalLogarithm::of($this);
     }
 
     public function commonLogarithm(): Number
     {
-        return new CommonLogarithm($this);
+        return CommonLogarithm::of($this);
     }
 
     public function signum(): Number
     {
-        return new Signum($this);
+        return Signum::of($this);
     }
 
     public function result(): Number
     {
-        if ($this->number) {
-            return $this->number;
-        }
-
         if ($this->value < 2) {
-            return $this->number = new Integer(1);
+            return Value::one;
         }
 
         $factorial = $i = $this->value;
@@ -145,7 +151,12 @@ final class Factorial implements Operation, Number
             $factorial *= --$i;
         } while ($i > 1);
 
-        return $this->number = Number\Number::wrap($factorial);
+        return Real::of($factorial);
+    }
+
+    public function collapse(): Number
+    {
+        return $this->result();
     }
 
     public function toString(): string

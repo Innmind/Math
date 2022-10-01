@@ -16,35 +16,35 @@ class SegmentTest extends TestCase
 {
     public function testLength()
     {
-        $segment = new Segment($length = new Integer(2));
+        $segment = Segment::of($length = Integer::of(2));
 
         $this->assertSame($length, $segment->length());
     }
 
     public function testStringCast()
     {
-        $this->assertSame('2', (new Segment(new Integer(2)))->toString());
+        $this->assertSame('2', Segment::of(Integer::of(2))->toString());
     }
 
     public function testThrowWhenNullSegment()
     {
         $this->expectException(LengthMustBePositive::class);
 
-        new Segment(new Integer(0));
+        Segment::of(Integer::of(0));
     }
 
     public function testThrowWhenNegativeLength()
     {
         $this->expectException(LengthMustBePositive::class);
 
-        new Segment(new Integer(-1));
+        Segment::of(Integer::of(-1));
     }
 
     public function testJoin()
     {
-        $first = new Segment(new Integer(1));
-        $second = new Segment(new Integer(1));
-        $degree = new Degree(new Integer(42));
+        $first = Segment::of(Integer::of(1));
+        $second = Segment::of(Integer::of(1));
+        $degree = Degree::of(Integer::of(42));
 
         $angle = $first->join($second, $degree);
 

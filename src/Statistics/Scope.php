@@ -3,31 +3,47 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Statistics;
 
-use Innmind\Math\Algebra\{
-    Number,
-    Round,
+use function Innmind\Math\asc;
+use Innmind\Math\{
+    Algebra\Number,
+    Exception\LogicException,
 };
-use Innmind\Immutable\Sequence;
+use Innmind\Immutable\{
+    Sequence,
+    Maybe,
+};
 
+/**
+ * @psalm-immutable
+ */
 final class Scope implements Number
 {
     private Number $result;
 
-    public function __construct(
+    private function __construct(
         Number $first,
         Number $second,
-        Number ...$values
+        Number ...$values,
     ) {
-        /** @var Sequence<Number> */
-        $sequence = Sequence::of(Number::class, $first, $second, ...$values);
-        $sequence = $sequence->sort(static function(Number $a, Number $b): int {
-            if ($a->equals($b)) {
-                return 0;
-            }
+        $sequence = Sequence::of($first, $second, ...$values)->sort(asc(...));
 
-            return $a->higherThan($b) ? 1 : -1;
-        });
-        $this->result = $sequence->last()->subtract($sequence->first());
+        $this->result = Maybe::all($sequence->last(), $sequence->first())
+            ->map(static fn(Number $last, Number $first) => $last->subtract($first))
+            ->match(
+                static fn($result) => $result,
+                static fn() => throw new LogicException('Unreachable'),
+            );
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(
+        Number $first,
+        Number $second,
+        Number ...$values,
+    ): self {
+        return new self($first, $second, ...$values);
     }
 
     public function result(): Number
@@ -35,7 +51,7 @@ final class Scope implements Number
         return $this->result;
     }
 
-    public function value()
+    public function value(): int|float
     {
         return $this->result->value();
     }
@@ -143,6 +159,11 @@ final class Scope implements Number
     public function signum(): Number
     {
         return $this->result->signum();
+    }
+
+    public function collapse(): Number
+    {
+        return $this->result->collapse();
     }
 
     public function toString(): string

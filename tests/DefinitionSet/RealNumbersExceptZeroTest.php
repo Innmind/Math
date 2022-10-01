@@ -9,8 +9,8 @@ use Innmind\Math\{
     DefinitionSet\Union,
     DefinitionSet\Intersection,
     Algebra\Integer,
-    Algebra\Number\Number,
-    Algebra\Number\Pi,
+    Algebra\Real,
+    Algebra\Value,
     Exception\OutOfDefinitionSet,
 };
 use PHPUnit\Framework\TestCase;
@@ -21,7 +21,7 @@ class RealNumbersExceptZeroTest extends TestCase
     {
         $this->assertInstanceOf(
             Set::class,
-            new RealNumbersExceptZero
+            new RealNumbersExceptZero,
         );
     }
 
@@ -34,24 +34,24 @@ class RealNumbersExceptZeroTest extends TestCase
     {
         $set = new RealNumbersExceptZero;
 
-        $this->assertTrue($set->contains(new Integer(1)));
-        $this->assertTrue($set->contains(new Integer(-1)));
-        $this->assertTrue($set->contains(new Number(0.75)));
-        $this->assertTrue($set->contains(new Number(-0.75)));
-        $this->assertTrue($set->contains(new Pi));
-        $this->assertFalse($set->contains(new Integer(0)));
+        $this->assertTrue($set->contains(Integer::of(1)));
+        $this->assertTrue($set->contains(Integer::of(-1)));
+        $this->assertTrue($set->contains(Real::of(0.75)));
+        $this->assertTrue($set->contains(Real::of(-0.75)));
+        $this->assertTrue($set->contains(Value::pi));
+        $this->assertFalse($set->contains(Integer::of(0)));
     }
 
     public function testAccept()
     {
         $set = new RealNumbersExceptZero;
 
-        $this->assertNull($set->accept(new Integer(1)));
+        $this->assertNull($set->accept(Integer::of(1)));
 
         $this->expectException(OutOfDefinitionSet::class);
         $this->expectExceptionMessage('0 ∉ ℝ*');
 
-        $set->accept(new Number(0));
+        $set->accept(Real::of(0));
     }
 
     public function testUnion()

@@ -3,28 +3,38 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Geometry\Angle;
 
-use function Innmind\Math\multiply;
 use Innmind\Math\Algebra\{
     Number,
-    Number\Pi,
+    Value,
+    Real,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class Radian
 {
     private Number $number;
-    private ?Degree $degree = null;
 
-    public function __construct(Number $number)
+    private function __construct(Number $number)
     {
         $this->number = $number->modulo(
-            multiply(2, new Pi),
+            Value::pi->multiplyBy(Value::two),
         );
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(Number $number): self
+    {
+        return new self($number);
     }
 
     public function toDegree(): Degree
     {
-        return $this->degree ??= new Degree(
-            new Number\Number(
+        return Degree::of(
+            Real::of(
                 \rad2deg($this->number->value()),
             ),
         );

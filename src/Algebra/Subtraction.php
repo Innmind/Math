@@ -3,25 +3,41 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Algebra;
 
-use Innmind\Immutable\Sequence;
-use function Innmind\Immutable\join;
+use Innmind\Immutable\{
+    Sequence,
+    Str,
+};
 
+/**
+ * @psalm-immutable
+ */
 final class Subtraction implements Operation, Number
 {
+    private Number $first;
     /** @var Sequence<Number> */
     private Sequence $values;
-    private ?Number $result = null;
 
-    public function __construct(
+    private function __construct(
         Number $first,
         Number $second,
-        Number ...$values
+        Number ...$values,
     ) {
-        /** @var Sequence<Number> */
-        $this->values = Sequence::of(Number::class, $first, $second, ...$values);
+        $this->first = $first;
+        $this->values = Sequence::of($first, $second, ...$values);
     }
 
-    public function value()
+    /**
+     * @psalm-pure
+     */
+    public static function of(
+        Number $first,
+        Number $second,
+        Number ...$values,
+    ): self {
+        return new self($first, $second, ...$values);
+    }
+
+    public function value(): int|float
     {
         return $this->result()->value();
     }
@@ -38,22 +54,22 @@ final class Subtraction implements Operation, Number
 
     public function add(Number $number, Number ...$numbers): Number
     {
-        return new Addition($this, $number, ...$numbers);
+        return Addition::of($this, $number, ...$numbers);
     }
 
-    public function subtract(Number $number, Number ...$numbers): Number
+    public function subtract(Number $number, Number ...$numbers): self
     {
         return new self($this, $number, ...$numbers);
     }
 
     public function divideBy(Number $number): Number
     {
-        return new Division($this, $number);
+        return Division::of($this, $number);
     }
 
     public function multiplyBy(Number $number, Number ...$numbers): Number
     {
-        return new Multiplication($this, $number, ...$numbers);
+        return Multiplication::of($this, $number, ...$numbers);
     }
 
     public function roundUp(int $precision = 0): Number
@@ -78,57 +94,57 @@ final class Subtraction implements Operation, Number
 
     public function floor(): Number
     {
-        return new Floor($this);
+        return Floor::of($this);
     }
 
     public function ceil(): Number
     {
-        return new Ceil($this);
+        return Ceil::of($this);
     }
 
     public function modulo(Number $modulus): Number
     {
-        return new Modulo($this, $modulus);
+        return Modulo::of($this, $modulus);
     }
 
     public function absolute(): Number
     {
-        return new Absolute($this);
+        return Absolute::of($this);
     }
 
     public function power(Number $power): Number
     {
-        return new Power($this, $power);
+        return Power::of($this, $power);
     }
 
     public function squareRoot(): Number
     {
-        return new SquareRoot($this);
+        return SquareRoot::of($this);
     }
 
     public function exponential(): Number
     {
-        return new Exponential($this);
+        return Exponential::of($this);
     }
 
     public function binaryLogarithm(): Number
     {
-        return new BinaryLogarithm($this);
+        return BinaryLogarithm::of($this);
     }
 
     public function naturalLogarithm(): Number
     {
-        return new NaturalLogarithm($this);
+        return NaturalLogarithm::of($this);
     }
 
     public function commonLogarithm(): Number
     {
-        return new CommonLogarithm($this);
+        return CommonLogarithm::of($this);
     }
 
     public function signum(): Number
     {
-        return new Signum($this);
+        return Signum::of($this);
     }
 
     public function difference(): Number
@@ -138,36 +154,20 @@ final class Subtraction implements Operation, Number
 
     public function result(): Number
     {
-        if ($this->result) {
-            return $this->result;
-        }
+        return $this->compute($this->first, $this->values);
+    }
 
-        /**
-         * @psalm-suppress MixedOperand
-         * @psalm-suppress MissingClosureParamType
-         * @psalm-suppress MissingClosureReturnType
-         * @var callable(int|float, Number): (int|float)
-         */
-        $reduce = static function($carry, Number $number) {
-            return $carry - $number->value();
-        };
-
-        /** @var int|float */
-        $value = $this
-            ->values
-            ->drop(1)
-            ->reduce(
-                $this->values->first()->value(),
-                $reduce,
-            );
-
-        return $this->result = Number\Number::wrap($value);
+    public function collapse(): Number
+    {
+        return $this->compute(
+            $this->first->collapse(),
+            $this->values->map(static fn($value) => $value->collapse()),
+        );
     }
 
     public function toString(): string
     {
-        $values = $this->values->mapTo(
-            'string',
+        $values = $this->values->map(
             static function(Number $number) {
                 if ($number instanceof Operation) {
                     return '('.$number->toString().')';
@@ -177,6 +177,21 @@ final class Subtraction implements Operation, Number
             },
         );
 
-        return join(' - ', $values)->toString();
+        return Str::of(' - ')->join($values)->toString();
+    }
+
+    /**
+     * @param Sequence<Number> $values
+     */
+    private function compute(Number $first, Sequence $values): Number
+    {
+        $value = $values
+            ->drop(1)
+            ->reduce(
+                $first->value(),
+                static fn(int|float $carry, $number): int|float => $carry - $number->value(),
+            );
+
+        return Real::of($value);
     }
 }

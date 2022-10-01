@@ -8,17 +8,28 @@ use Innmind\Math\{
     Algebra\Number,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class StandardDeviation
 {
     private Number $deviation;
 
-    public function __construct(Dataset $dataset)
+    private function __construct(Dataset $dataset)
     {
-        $this->deviation = (new Variance($dataset))()->squareRoot();
+        $this->deviation = Variance::of($dataset)()->squareRoot();
     }
 
     public function __invoke(): Number
     {
         return $this->deviation;
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(Dataset $dataset): self
+    {
+        return new self($dataset);
     }
 }

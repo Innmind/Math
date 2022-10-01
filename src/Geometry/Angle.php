@@ -3,30 +3,41 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Geometry;
 
-use function Innmind\Math\{
-    cosine,
-    multiply,
-};
 use Innmind\Math\{
     Geometry\Angle\Degree,
     Geometry\Theorem\AlKashi,
+    Geometry\Trigonometry\Cosine,
     Algebra\Number,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class Angle
 {
     private Segment $firstSegment;
     private Segment $secondSegment;
     private Degree $degree;
 
-    public function __construct(
+    private function __construct(
         Segment $firstSegment,
         Degree $degree,
-        Segment $secondSegment
+        Segment $secondSegment,
     ) {
         $this->firstSegment = $firstSegment;
         $this->secondSegment = $secondSegment;
         $this->degree = $degree;
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(
+        Segment $firstSegment,
+        Degree $degree,
+        Segment $secondSegment,
+    ): self {
+        return new self($firstSegment, $degree, $secondSegment);
     }
 
     public function firstSegment(): Segment
@@ -59,10 +70,10 @@ final class Angle
 
     public function scalarProduct(): Number
     {
-        return multiply(
-            $this->firstSegment->length(),
-            $this->secondSegment->length(),
-            cosine($this->degree),
-        );
+        return $this
+            ->firstSegment
+            ->length()
+            ->multiplyBy($this->secondSegment->length())
+            ->multiplyBy(Cosine::of($this->degree));
     }
 }

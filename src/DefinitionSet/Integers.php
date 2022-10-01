@@ -6,9 +6,13 @@ namespace Innmind\Math\DefinitionSet;
 use Innmind\Math\{
     Algebra\Number,
     Algebra\Integer,
+    Algebra\Value,
     Exception\OutOfDefinitionSet,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class Integers implements Set
 {
     public function contains(Number $number): bool
@@ -18,8 +22,8 @@ final class Integers implements Set
         }
 
         return $number
-            ->modulo(new Integer(1))
-            ->equals(new Integer(0));
+            ->modulo(Value::one)
+            ->equals(Value::zero);
     }
 
     public function accept(Number $number): void
@@ -31,12 +35,12 @@ final class Integers implements Set
 
     public function union(Set $set): Set
     {
-        return new Union($this, $set);
+        return Union::of($this, $set);
     }
 
     public function intersect(Set $set): Set
     {
-        return new Intersection($this, $set);
+        return Intersection::of($this, $set);
     }
 
     public function toString(): string

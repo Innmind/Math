@@ -8,8 +8,9 @@ use Innmind\Math\{
     Quantile\Quartile,
     Regression\Dataset,
     Algebra\Number,
-    Exception\UnknownQuartile,
+    Algebra\Real,
 };
+use Innmind\Immutable\Sequence;
 use PHPUnit\Framework\TestCase;
 
 class QuantileTest extends TestCase
@@ -19,52 +20,43 @@ class QuantileTest extends TestCase
      */
     public function testQuartiles($dataset, $min, $max, $mean, $median, $first, $third)
     {
-        $quantile = new Quantile(Dataset::of($dataset));
+        $quantile = Quantile::of(Sequence::of(...$dataset)->map(Real::of(...)));
 
         $this->assertInstanceOf(Quartile::class, $quantile->min());
         $this->assertInstanceOf(Number::class, $quantile->min()->value());
         $this->assertSame(
             $min,
-            $quantile->min()->value()->value()
+            $quantile->min()->value()->value(),
         );
         $this->assertInstanceOf(Quartile::class, $quantile->max());
         $this->assertInstanceOf(Number::class, $quantile->max()->value());
         $this->assertSame(
             $max,
-            $quantile->max()->value()->value()
+            $quantile->max()->value()->value(),
         );
         $this->assertInstanceOf(Number::class, $quantile->mean());
         $this->assertSame(
             $mean,
-            $quantile->mean()->value()
+            $quantile->mean()->value(),
         );
         $this->assertInstanceOf(Quartile::class, $quantile->median());
         $this->assertInstanceOf(Number::class, $quantile->median()->value());
         $this->assertSame(
             $median,
-            $quantile->median()->value()->value()
+            $quantile->median()->value()->value(),
         );
-        $this->assertInstanceOf(Quartile::class, $quantile->quartile(1));
-        $this->assertInstanceOf(Number::class, $quantile->quartile(1)->value());
+        $this->assertInstanceOf(Quartile::class, $quantile->firstQuartile());
+        $this->assertInstanceOf(Number::class, $quantile->firstQuartile()->value());
         $this->assertSame(
             $first,
-            $quantile->quartile(1)->value()->value()
+            $quantile->firstQuartile()->value()->value(),
         );
-        $this->assertInstanceOf(Quartile::class, $quantile->quartile(3));
-        $this->assertInstanceOf(Number::class, $quantile->quartile(3)->value());
+        $this->assertInstanceOf(Quartile::class, $quantile->thirdQuartile());
+        $this->assertInstanceOf(Number::class, $quantile->thirdQuartile()->value());
         $this->assertSame(
             $third,
-            $quantile->quartile(3)->value()->value()
+            $quantile->thirdQuartile()->value()->value(),
         );
-    }
-
-    public function testThrowWhenAccessingUnknownQuartile()
-    {
-        $q = new Quantile(Dataset::of([1, 2, 3]));
-
-        $this->expectException(UnknownQuartile::class);
-
-        $q->quartile(6);
     }
 
     public function datasets()

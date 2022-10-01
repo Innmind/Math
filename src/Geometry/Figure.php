@@ -5,6 +5,9 @@ namespace Innmind\Math\Geometry;
 
 use Innmind\Math\Algebra\Number;
 
+/**
+ * @psalm-immutable
+ */
 interface Figure
 {
     public function perimeter(): Number;

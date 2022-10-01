@@ -21,7 +21,8 @@ use Innmind\Math\{
     Algebra\BinaryLogarithm,
     Algebra\NaturalLogarithm,
     Algebra\CommonLogarithm,
-    Algebra\Signum
+    Algebra\Signum,
+    Algebra\Real,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -29,17 +30,17 @@ class MeanTest extends TestCase
 {
     public function testResult()
     {
-        $mean = new Mean(
-            new Number\Number(1),
-            new Number\Number(2),
-            new Number\Number(2),
-            new Number\Number(2),
-            new Number\Number(3),
-            new Number\Number(5),
-            new Number\Number(5),
-            new Number\Number(6),
-            new Number\Number(6),
-            new Number\Number(7)
+        $mean = Mean::of(
+            Real::of(1),
+            Real::of(2),
+            Real::of(2),
+            Real::of(2),
+            Real::of(3),
+            Real::of(5),
+            Real::of(5),
+            Real::of(6),
+            Real::of(6),
+            Real::of(7),
         );
 
         $this->assertInstanceOf(Number::class, $mean->result());
@@ -49,34 +50,34 @@ class MeanTest extends TestCase
 
     public function testEquals()
     {
-        $mean = new Mean(
-            new Number\Number(1),
-            new Number\Number(7)
+        $mean = Mean::of(
+            Real::of(1),
+            Real::of(7),
         );
 
-        $this->assertTrue($mean->equals(new Number\Number(4)));
-        $this->assertTrue($mean->equals(new Number\Number(4.0)));
-        $this->assertFalse($mean->equals(new Number\Number(4.1)));
+        $this->assertTrue($mean->equals(Real::of(4)));
+        $this->assertTrue($mean->equals(Real::of(4.0)));
+        $this->assertFalse($mean->equals(Real::of(4.1)));
     }
 
     public function testHigherThan()
     {
-        $mean = new Mean(
-            new Number\Number(1),
-            new Number\Number(7)
+        $mean = Mean::of(
+            Real::of(1),
+            Real::of(7),
         );
 
-        $this->assertTrue($mean->higherThan(new Number\Number(3.9)));
-        $this->assertFalse($mean->higherThan(new Number\Number(4)));
+        $this->assertTrue($mean->higherThan(Real::of(3.9)));
+        $this->assertFalse($mean->higherThan(Real::of(4)));
     }
 
     public function testAdd()
     {
-        $mean = new Mean(
-            new Number\Number(1),
-            new Number\Number(7)
+        $mean = Mean::of(
+            Real::of(1),
+            Real::of(7),
         );
-        $number = $mean->add(new Number\Number(66));
+        $number = $mean->add(Real::of(66));
 
         $this->assertInstanceOf(Addition::class, $number);
         $this->assertSame(70, $number->value());
@@ -84,11 +85,11 @@ class MeanTest extends TestCase
 
     public function testSubtract()
     {
-        $mean = new Mean(
-            new Number\Number(1),
-            new Number\Number(7)
+        $mean = Mean::of(
+            Real::of(1),
+            Real::of(7),
         );
-        $number = $mean->subtract(new Number\Number(66));
+        $number = $mean->subtract(Real::of(66));
 
         $this->assertInstanceOf(Subtraction::class, $number);
         $this->assertSame(-62, $number->value());
@@ -96,11 +97,11 @@ class MeanTest extends TestCase
 
     public function testDivideBy()
     {
-        $mean = new Mean(
-            new Number\Number(1),
-            new Number\Number(7)
+        $mean = Mean::of(
+            Real::of(1),
+            Real::of(7),
         );
-        $number = $mean->divideBy(new Number\Number(2));
+        $number = $mean->divideBy(Real::of(2));
 
         $this->assertInstanceOf(Division::class, $number);
         $this->assertSame(2, $number->value());
@@ -108,11 +109,11 @@ class MeanTest extends TestCase
 
     public function testMulitplyBy()
     {
-        $mean = new Mean(
-            new Number\Number(1),
-            new Number\Number(7)
+        $mean = Mean::of(
+            Real::of(1),
+            Real::of(7),
         );
-        $number = $mean->multiplyBy(new Number\Number(2));
+        $number = $mean->multiplyBy(Real::of(2));
 
         $this->assertInstanceOf(Multiplication::class, $number);
         $this->assertSame(8, $number->value());
@@ -120,9 +121,9 @@ class MeanTest extends TestCase
 
     public function testRound()
     {
-        $number = new Mean(
-            new Number\Number(1),
-            new Number\Number(7.12)
+        $number = Mean::of(
+            Real::of(1),
+            Real::of(7.12),
         );
 
         $this->assertEquals(4.1, $number->roundUp(1)->value());
@@ -133,9 +134,9 @@ class MeanTest extends TestCase
 
     public function testFloor()
     {
-        $mean = new Mean(
-            new Number\Number(1),
-            new Number\Number(7.1)
+        $mean = Mean::of(
+            Real::of(1),
+            Real::of(7.1),
         );
         $number = $mean->floor();
 
@@ -145,9 +146,9 @@ class MeanTest extends TestCase
 
     public function testCeil()
     {
-        $mean = new Mean(
-            new Number\Number(1),
-            new Number\Number(7.1)
+        $mean = Mean::of(
+            Real::of(1),
+            Real::of(7.1),
         );
         $number = $mean->ceil();
 
@@ -157,11 +158,11 @@ class MeanTest extends TestCase
 
     public function testModulo()
     {
-        $mean = new Mean(
-            new Number\Number(1),
-            new Number\Number(7)
+        $mean = Mean::of(
+            Real::of(1),
+            Real::of(7),
         );
-        $number = $mean->modulo(new Number\Number(3));
+        $number = $mean->modulo(Real::of(3));
 
         $this->assertInstanceOf(Modulo::class, $number);
         $this->assertSame(1.0, $number->value());
@@ -169,9 +170,9 @@ class MeanTest extends TestCase
 
     public function testAbsolute()
     {
-        $mean = new Mean(
-            new Number\Number(-1),
-            new Number\Number(-7)
+        $mean = Mean::of(
+            Real::of(-1),
+            Real::of(-7),
         );
         $number = $mean->absolute();
 
@@ -181,11 +182,11 @@ class MeanTest extends TestCase
 
     public function testPower()
     {
-        $mean = new Mean(
-            new Number\Number(1),
-            new Number\Number(7)
+        $mean = Mean::of(
+            Real::of(1),
+            Real::of(7),
         );
-        $number = $mean->power(new Number\Number(2));
+        $number = $mean->power(Real::of(2));
 
         $this->assertInstanceOf(Power::class, $number);
         $this->assertSame(16, $number->value());
@@ -193,9 +194,9 @@ class MeanTest extends TestCase
 
     public function testSquareRoot()
     {
-        $mean = new Mean(
-            new Number\Number(1),
-            new Number\Number(7)
+        $mean = Mean::of(
+            Real::of(1),
+            Real::of(7),
         );
         $number = $mean->squareRoot();
 
@@ -205,9 +206,9 @@ class MeanTest extends TestCase
 
     public function testExponential()
     {
-        $mean = new Mean(
-            new Number\Number(1),
-            new Number\Number(7)
+        $mean = Mean::of(
+            Real::of(1),
+            Real::of(7),
         );
         $number = $mean->exponential();
 
@@ -217,10 +218,10 @@ class MeanTest extends TestCase
 
     public function testBinaryLogarithm()
     {
-        $number = (new Mean(
-            new Number\Number(1),
-            new Number\Number(7)
-        ))->binaryLogarithm();
+        $number = Mean::of(
+            Real::of(1),
+            Real::of(7),
+        )->binaryLogarithm();
 
         $this->assertInstanceOf(BinaryLogarithm::class, $number);
         $this->assertSame(\log(4, 2), $number->value());
@@ -228,10 +229,10 @@ class MeanTest extends TestCase
 
     public function testNaturalLogarithm()
     {
-        $number = (new Mean(
-            new Number\Number(1),
-            new Number\Number(7)
-        ))->naturalLogarithm();
+        $number = Mean::of(
+            Real::of(1),
+            Real::of(7),
+        )->naturalLogarithm();
 
         $this->assertInstanceOf(NaturalLogarithm::class, $number);
         $this->assertSame(\log(4), $number->value());
@@ -239,10 +240,10 @@ class MeanTest extends TestCase
 
     public function testCommonLogarithm()
     {
-        $number = (new Mean(
-            new Number\Number(1),
-            new Number\Number(7)
-        ))->commonLogarithm();
+        $number = Mean::of(
+            Real::of(1),
+            Real::of(7),
+        )->commonLogarithm();
 
         $this->assertInstanceOf(CommonLogarithm::class, $number);
         $this->assertSame(\log10(4), $number->value());
@@ -250,10 +251,10 @@ class MeanTest extends TestCase
 
     public function testSignum()
     {
-        $number = (new Mean(
-            new Number\Number(1),
-            new Number\Number(7)
-        ))->signum();
+        $number = Mean::of(
+            Real::of(1),
+            Real::of(7),
+        )->signum();
 
         $this->assertInstanceOf(Signum::class, $number);
         $this->assertSame(1, $number->value());
@@ -261,9 +262,9 @@ class MeanTest extends TestCase
 
     public function testStringCast()
     {
-        $mean = new Mean(
-            new Number\Number(1),
-            new Number\Number(7.1)
+        $mean = Mean::of(
+            Real::of(1),
+            Real::of(7.1),
         );
 
         $this->assertSame('(1 + 7.1) ÷ 2', $mean->toString());

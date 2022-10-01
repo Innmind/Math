@@ -8,19 +8,28 @@ use Innmind\Math\{
     Geometry\Angle\Radian,
     Algebra\Number,
     Algebra\Round,
+    Algebra\Real,
 };
 
 /**
  * Inverse of cosine, such as a===Cosine(ArcCosine(a))
+ * @psalm-immutable
  */
 final class ArcCosine implements Number
 {
     private Number $number;
-    private ?Degree $arcCosine = null;
 
-    public function __construct(Number $number)
+    private function __construct(Number $number)
     {
         $this->number = $number;
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public static function of(Number $number): self
+    {
+        return new self($number);
     }
 
     public function toDegree(): Degree
@@ -28,7 +37,7 @@ final class ArcCosine implements Number
         return $this->arcCosine();
     }
 
-    public function value()
+    public function value(): int|float
     {
         return $this->arcCosine()->number()->value();
     }
@@ -138,6 +147,11 @@ final class ArcCosine implements Number
         return $this->arcCosine()->number()->signum();
     }
 
+    public function collapse(): Number
+    {
+        return new self($this->number->collapse());
+    }
+
     public function toString(): string
     {
         return \sprintf('cos⁻¹(%s)', $this->number->toString());
@@ -145,16 +159,12 @@ final class ArcCosine implements Number
 
     private function arcCosine(): Degree
     {
-        if ($this->arcCosine) {
-            return $this->arcCosine;
-        }
-
-        $radians = new Number\Number(
+        $radians = Real::of(
             \acos(
                 $this->number->value(),
             ),
         );
 
-        return $this->arcCosine = (new Radian($radians))->toDegree();
+        return Radian::of($radians)->toDegree();
     }
 }

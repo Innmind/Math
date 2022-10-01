@@ -5,13 +5,14 @@ namespace Innmind\Math\Algebra;
 
 use Innmind\Math\Exception\PrecisionMustBePositive;
 
+/**
+ * @psalm-immutable
+ */
 final class Round implements Number
 {
     private Number $number;
     private int $precision;
     private int $mode;
-    /** @var int|float|null */
-    private $value;
 
     private function __construct(Number $number, int $precision, int $mode)
     {
@@ -24,33 +25,41 @@ final class Round implements Number
         $this->mode = $mode;
     }
 
+    /**
+     * @psalm-pure
+     */
     public static function up(Number $number, int $precision = 0): self
     {
         return new self($number, $precision, \PHP_ROUND_HALF_UP);
     }
 
+    /**
+     * @psalm-pure
+     */
     public static function down(Number $number, int $precision = 0): self
     {
         return new self($number, $precision, \PHP_ROUND_HALF_DOWN);
     }
 
+    /**
+     * @psalm-pure
+     */
     public static function even(Number $number, int $precision = 0): self
     {
         return new self($number, $precision, \PHP_ROUND_HALF_EVEN);
     }
 
+    /**
+     * @psalm-pure
+     */
     public static function odd(Number $number, int $precision = 0): self
     {
         return new self($number, $precision, \PHP_ROUND_HALF_ODD);
     }
 
-    public function value()
+    public function value(): int|float
     {
-        return $this->value ??= \round(
-            $this->number->value(),
-            $this->precision,
-            $this->mode,
-        );
+        return $this->compute($this->number);
     }
 
     public function equals(Number $number): bool
@@ -65,22 +74,22 @@ final class Round implements Number
 
     public function add(Number $number, Number ...$numbers): Number
     {
-        return new Addition($this, $number, ...$numbers);
+        return Addition::of($this, $number, ...$numbers);
     }
 
     public function subtract(Number $number, Number ...$numbers): Number
     {
-        return new Subtraction($this, $number, ...$numbers);
+        return Subtraction::of($this, $number, ...$numbers);
     }
 
     public function divideBy(Number $number): Number
     {
-        return new Division($this, $number);
+        return Division::of($this, $number);
     }
 
     public function multiplyBy(Number $number, Number ...$numbers): Number
     {
-        return new Multiplication($this, $number, ...$numbers);
+        return Multiplication::of($this, $number, ...$numbers);
     }
 
     public function roundUp(int $precision = 0): Number
@@ -105,61 +114,75 @@ final class Round implements Number
 
     public function floor(): Number
     {
-        return new Floor($this);
+        return Floor::of($this);
     }
 
     public function ceil(): Number
     {
-        return new Ceil($this);
+        return Ceil::of($this);
     }
 
     public function modulo(Number $modulus): Number
     {
-        return new Modulo($this, $modulus);
+        return Modulo::of($this, $modulus);
     }
 
     public function absolute(): Number
     {
-        return new Absolute($this);
+        return Absolute::of($this);
     }
 
     public function power(Number $power): Number
     {
-        return new Power($this, $power);
+        return Power::of($this, $power);
     }
 
     public function squareRoot(): Number
     {
-        return new SquareRoot($this);
+        return SquareRoot::of($this);
     }
 
     public function exponential(): Number
     {
-        return new Exponential($this);
+        return Exponential::of($this);
     }
 
     public function binaryLogarithm(): Number
     {
-        return new BinaryLogarithm($this);
+        return BinaryLogarithm::of($this);
     }
 
     public function naturalLogarithm(): Number
     {
-        return new NaturalLogarithm($this);
+        return NaturalLogarithm::of($this);
     }
 
     public function commonLogarithm(): Number
     {
-        return new CommonLogarithm($this);
+        return CommonLogarithm::of($this);
     }
 
     public function signum(): Number
     {
-        return new Signum($this);
+        return Signum::of($this);
+    }
+
+    public function collapse(): Number
+    {
+        return Real::of($this->compute($this->number->collapse()));
     }
 
     public function toString(): string
     {
         return \var_export($this->value(), true);
+    }
+
+    private function compute(Number $number): int|float
+    {
+        return \round(
+            $number->value(),
+            $this->precision,
+            $this->mode,
+        );
     }
 }

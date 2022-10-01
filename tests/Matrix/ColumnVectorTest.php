@@ -10,6 +10,7 @@ use Innmind\Math\{
     Matrix,
     Algebra\Number,
     Algebra\Integer,
+    Algebra\Real,
     Exception\VectorsMustMeOfTheSameDimension
 };
 use PHPUnit\Framework\TestCase;
@@ -18,7 +19,7 @@ class ColumnVectorTest extends TestCase
 {
     public function testInterface()
     {
-        $vector = new ColumnVector(...numerize(1, 2, 3));
+        $vector = ColumnVector::of(...numerize(1, 2, 3));
 
         $this->assertSame(3, $vector->dimension()->value());
         $this->assertInstanceOf(Number::class, $vector->get(0));
@@ -27,14 +28,19 @@ class ColumnVectorTest extends TestCase
         $this->assertSame(1, $vector->get(0)->value());
         $this->assertSame(2, $vector->get(1)->value());
         $this->assertSame(3, $vector->get(2)->value());
-        $this->assertSame([1, 2, 3], $vector->toArray());
-        $this->assertEquals(numerize(1, 2, 3), $vector->numbers());
+        $this->assertSame(
+            [1, 2, 3],
+            $vector
+                ->toSequence()
+                ->map(static fn($number) => $number->collapse()->value())
+                ->toList(),
+        );
     }
 
     public function testDot()
     {
-        $number = (new ColumnVector(...numerize(-1, 2)))->dot(
-            new RowVector(...numerize(4, 1))
+        $number = ColumnVector::of(...numerize(-1, 2))->dot(
+            RowVector::of(...numerize(4, 1)),
         );
 
         $this->assertInstanceOf(Number::class, $number);
@@ -45,82 +51,111 @@ class ColumnVectorTest extends TestCase
     {
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
-        (new ColumnVector(...numerize(-1, 2)))->dot(
-            new RowVector(...numerize(4, 1, 0))
+        ColumnVector::of(...numerize(-1, 2))->dot(
+            RowVector::of(...numerize(4, 1, 0)),
         );
     }
 
     public function testMatrix()
     {
-        $matrix = (new ColumnVector(...numerize(-1, 2)))->matrix(
-            new RowVector(...numerize(4, 1, 2))
+        $matrix = ColumnVector::of(...numerize(-1, 2))->matrix(
+            RowVector::of(...numerize(4, 1, 2)),
         );
 
         $this->assertInstanceOf(Matrix::class, $matrix);
         $this->assertSame('2 x 3', $matrix->dimension()->toString());
-        $this->assertSame(
+        $this->assertTrue($matrix->equals(Matrix::of(
             [
                 [-4, -1, -2],
                 [8, 2, 4],
             ],
-            $matrix->toArray()
-        );
+        )));
     }
 
     public function testMultiplyBy()
     {
-        $column = new ColumnVector(...numerize(25, 5, 1));
+        $column = ColumnVector::of(...numerize(25, 5, 1));
         $column2 = $column->multiplyBy(
-            ColumnVector::initialize(new Integer(3), new Number\Number(2.56))
+            ColumnVector::initialize(Integer::of(3), Real::of(2.56)),
         );
 
         $this->assertInstanceOf(ColumnVector::class, $column2);
-        $this->assertSame([25, 5, 1], $column->toArray());
-        $this->assertSame([64.0, 12.8, 2.56], $column2->toArray());
+        $this->assertSame(
+            [25, 5, 1],
+            $column
+                ->toSequence()
+                ->map(static fn($number) => $number->collapse()->value())
+                ->toList(),
+        );
+        $this->assertSame(
+            [64.0, 12.8, 2.56],
+            $column2
+                ->toSequence()
+                ->map(static fn($number) => $number->collapse()->value())
+                ->toList(),
+        );
     }
 
     public function testThrowWhenMultiplyingVectorsOfDifferentDimensions()
     {
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
-        ColumnVector::initialize(new Integer(1), new Number\Number(1))->multiplyBy(
-            ColumnVector::initialize(new Integer(2), new Number\Number(1))
+        ColumnVector::initialize(Integer::of(1), Real::of(1))->multiplyBy(
+            ColumnVector::initialize(Integer::of(2), Real::of(1)),
         );
     }
 
     public function testDivideBy()
     {
-        $column = new ColumnVector(...numerize(25, 5, 1));
+        $column = ColumnVector::of(...numerize(25, 5, 1));
         $column2 = $column->divideBy(
-            ColumnVector::initialize(new Integer(3), new Number\Number(5))
+            ColumnVector::initialize(Integer::of(3), Real::of(5)),
         );
 
         $this->assertInstanceOf(ColumnVector::class, $column2);
-        $this->assertSame([25, 5, 1], $column->toArray());
-        $this->assertSame([5, 1, 0.2], $column2->toArray());
+        $this->assertSame(
+            [25, 5, 1],
+            $column
+                ->toSequence()
+                ->map(static fn($number) => $number->collapse()->value())
+                ->toList(),
+        );
+        $this->assertSame(
+            [5, 1, 0.2],
+            $column2
+                ->toSequence()
+                ->map(static fn($number) => $number->collapse()->value())
+                ->toList(),
+        );
     }
 
     public function testThrowWhenDividingVectorsOfDifferentDimensions()
     {
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
-        ColumnVector::initialize(new Integer(1), new Number\Number(1))->divideBy(
-            ColumnVector::initialize(new Integer(2), new Number\Number(1))
+        ColumnVector::initialize(Integer::of(1), Real::of(1))->divideBy(
+            ColumnVector::initialize(Integer::of(2), Real::of(1)),
         );
     }
 
     public function testInitialize()
     {
-        $vector = ColumnVector::initialize(new Integer(4), new Number\Number(1.2));
+        $vector = ColumnVector::initialize(Integer::of(4), Real::of(1.2));
 
         $this->assertInstanceOf(ColumnVector::class, $vector);
-        $this->assertSame([1.2, 1.2, 1.2, 1.2], $vector->toArray());
+        $this->assertSame(
+            [1.2, 1.2, 1.2, 1.2],
+            $vector
+                ->toSequence()
+                ->map(static fn($number) => $number->collapse()->value())
+                ->toList(),
+        );
     }
 
     public function testSubtract()
     {
-        $vector1 = new ColumnVector(...numerize(1, 2, 3, 4));
-        $vector2 = new ColumnVector(...numerize(0.5, 2.5, 2.8, 4.2));
+        $vector1 = ColumnVector::of(...numerize(1, 2, 3, 4));
+        $vector2 = ColumnVector::of(...numerize(0.5, 2.5, 2.8, 4.2));
 
         $vector3 = $vector1->subtract($vector2);
 
@@ -128,8 +163,11 @@ class ColumnVectorTest extends TestCase
         $this->assertNotSame($vector3, $vector1);
         $this->assertNotSame($vector3, $vector2);
         $this->assertEquals(
-            [0.5, -0.5, 0.2, -0.2],
-            $vector3->toArray()
+            [0.5, -0.5, 0.20000000000000018, -0.20000000000000018],
+            $vector3
+                ->toSequence()
+                ->map(static fn($number) => $number->collapse()->value())
+                ->toList(),
         );
     }
 
@@ -137,15 +175,15 @@ class ColumnVectorTest extends TestCase
     {
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
-        ColumnVector::initialize(new Integer(1), new Number\Number(1))->subtract(
-            ColumnVector::initialize(new Integer(2), new Number\Number(1))
+        ColumnVector::initialize(Integer::of(1), Real::of(1))->subtract(
+            ColumnVector::initialize(Integer::of(2), Real::of(1)),
         );
     }
 
     public function testAdd()
     {
-        $vector1 = new ColumnVector(...numerize(1, 2, 3, 4));
-        $vector2 = new ColumnVector(...numerize(0.5, 2.5, 2.8, 4.2));
+        $vector1 = ColumnVector::of(...numerize(1, 2, 3, 4));
+        $vector2 = ColumnVector::of(...numerize(0.5, 2.5, 2.8, 4.2));
 
         $vector3 = $vector1->add($vector2);
 
@@ -154,7 +192,10 @@ class ColumnVectorTest extends TestCase
         $this->assertNotSame($vector3, $vector2);
         $this->assertEquals(
             [1.5, 4.5, 5.8, 8.2],
-            $vector3->toArray()
+            $vector3
+                ->toSequence()
+                ->map(static fn($number) => $number->collapse()->value())
+                ->toList(),
         );
     }
 
@@ -162,28 +203,31 @@ class ColumnVectorTest extends TestCase
     {
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
-        ColumnVector::initialize(new Integer(1), new Number\Number(1))->add(
-            ColumnVector::initialize(new Integer(2), new Number\Number(1))
+        ColumnVector::initialize(Integer::of(1), Real::of(1))->add(
+            ColumnVector::initialize(Integer::of(2), Real::of(1)),
         );
     }
 
     public function testPower()
     {
-        $vector1 = new ColumnVector(...numerize(1, 2, 3, -4));
+        $vector1 = ColumnVector::of(...numerize(1, 2, 3, -4));
 
-        $vector2 = $vector1->power(new Number\Number(3));
+        $vector2 = $vector1->power(Real::of(3));
 
         $this->assertInstanceOf(ColumnVector::class, $vector2);
         $this->assertNotSame($vector2, $vector1);
         $this->assertEquals(
             [1.0, 8.0, 27.0, -64.0],
-            $vector2->toArray()
+            $vector2
+                ->toSequence()
+                ->map(static fn($number) => $number->collapse()->value())
+                ->toList(),
         );
     }
 
     public function testSum()
     {
-        $vector = new ColumnVector(...numerize(1, 2, 3, -4));
+        $vector = ColumnVector::of(...numerize(1, 2, 3, -4));
 
         $this->assertInstanceOf(Number::class, $vector->sum());
         $this->assertSame(2, $vector->sum()->value());
@@ -191,7 +235,7 @@ class ColumnVectorTest extends TestCase
 
     public function testForeach()
     {
-        $vector = new ColumnVector(...numerize(1, 2, 3, -4));
+        $vector = ColumnVector::of(...numerize(1, 2, 3, -4));
         $count = 0;
         $vector->foreach(static function() use (&$count) {
             ++$count;
@@ -202,20 +246,32 @@ class ColumnVectorTest extends TestCase
 
     public function testMap()
     {
-        $vector = new ColumnVector(...numerize(1, 2, 3, -4));
+        $vector = ColumnVector::of(...numerize(1, 2, 3, -4));
         $vector2 = $vector->map(static function($number) {
             return $number->multiplyBy($number);
         });
 
         $this->assertInstanceOf(ColumnVector::class, $vector2);
         $this->assertNotSame($vector2, $vector);
-        $this->assertSame([1, 2, 3, -4], $vector->toArray());
-        $this->assertSame([1, 4, 9, 16], $vector2->toArray());
+        $this->assertEquals(
+            [1, 2, 3, -4],
+            $vector
+                ->toSequence()
+                ->map(static fn($number) => $number->collapse()->value())
+                ->toList(),
+        );
+        $this->assertEquals(
+            [1, 4, 9, 16],
+            $vector2
+                ->toSequence()
+                ->map(static fn($number) => $number->collapse()->value())
+                ->toList(),
+        );
     }
 
     public function testReduce()
     {
-        $vector = new ColumnVector(...numerize(1, 2, 3, -4));
+        $vector = ColumnVector::of(...numerize(1, 2, 3, -4));
 
         $this->assertSame(
             2,
@@ -223,19 +279,19 @@ class ColumnVectorTest extends TestCase
                 0,
                 static function(int $carry, $number): int {
                     return $carry + $number->value();
-                }
-            )
+                },
+            ),
         );
     }
 
     public function testEquals()
     {
-        $vector = new ColumnVector(...numerize(1, 2, 3));
+        $vector = ColumnVector::of(...numerize(1, 2, 3));
 
         $this->assertTrue($vector->equals($vector));
-        $this->assertTrue($vector->equals(new ColumnVector(...numerize(1, 2, 3))));
-        $this->assertFalse($vector->equals(new ColumnVector(...numerize(3, 2, 1))));
-        $this->assertFalse($vector->equals(new ColumnVector(...numerize(1, 2))));
+        $this->assertTrue($vector->equals(ColumnVector::of(...numerize(1, 2, 3))));
+        $this->assertFalse($vector->equals(ColumnVector::of(...numerize(3, 2, 1))));
+        $this->assertFalse($vector->equals(ColumnVector::of(...numerize(1, 2))));
     }
 
     /**
@@ -243,7 +299,7 @@ class ColumnVectorTest extends TestCase
      */
     public function testLead($numbers, $expected)
     {
-        $vector = new ColumnVector(...numerize(...$numbers));
+        $vector = ColumnVector::of(...numerize(...$numbers));
 
         $this->assertInstanceOf(Number::class, $vector->lead());
         $this->assertSame($expected, $vector->lead()->value());

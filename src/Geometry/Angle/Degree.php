@@ -6,26 +6,37 @@ namespace Innmind\Math\Geometry\Angle;
 use Innmind\Math\Algebra\{
     Number,
     Integer,
+    Real,
 };
 
+/**
+ * @psalm-immutable
+ */
 final class Degree
 {
     private Number $number;
-    private ?Radian $radian = null;
 
-    public function __construct(Number $number)
+    private function __construct(Number $number)
     {
-        $modulus = new Number\Number(360);
+        $modulus = Integer::of(360);
         $this->number = $number
             ->modulo($modulus)
             ->add($modulus)
             ->modulo($modulus);
     }
 
+    /**
+     * @psalm-pure
+     */
+    public static function of(Number $number): self
+    {
+        return new self($number);
+    }
+
     public function toRadian(): Radian
     {
-        return $this->radian ??= new Radian(
-            new Number\Number(
+        return Radian::of(
+            Real::of(
                 \deg2rad($this->number->value()),
             ),
         );
@@ -33,27 +44,27 @@ final class Degree
 
     public function isRight(): bool
     {
-        return $this->number->equals(new Integer(90));
+        return $this->number->equals(Integer::of(90));
     }
 
     public function isObtuse(): bool
     {
-        return $this->number->higherThan(new Integer(90));
+        return $this->number->higherThan(Integer::of(90));
     }
 
     public function isAcuse(): bool
     {
-        return (new Integer(90))->higherThan($this->number);
+        return Integer::of(90)->higherThan($this->number);
     }
 
     public function isFlat(): bool
     {
-        return $this->number->equals(new Integer(180));
+        return $this->number->equals(Integer::of(180));
     }
 
     public function opposite(): self
     {
-        return new self($this->number->add(new Integer(180)));
+        return new self($this->number->add(Integer::of(180)));
     }
 
     public function number(): Number
