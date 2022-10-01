@@ -34,15 +34,15 @@ use Innmind\Math\{
 
 $set = Range::exlusive(Value::zero, Value::infinite);
 echo $set->toString(); // ]0;+∞[
-$set->contains(new Integer(42)); // true
-$set->contains(new Integer(-42)); // false
+$set->contains(Integer::of(42)); // true
+$set->contains(Integer::of(-42)); // false
 
 $set = $set->union(
     Range::exclusive(Value::negativeInfinite, Value::zero),
 );
 echo $set; // ]-∞;0[∪]0;+∞[
-$set->contains(new Integer(-42)); // true
-$set->contains(new Integer(0)); // false
+$set->contains(Integer::of(-42)); // true
+$set->contains(Integer::of(0)); // false
 ```
 
 ## Polynom
@@ -50,10 +50,10 @@ $set->contains(new Integer(0)); // false
 ```php
 use Innmind\Math\Polynom\Polynom;
 
-$p = Polynom::interceptAt($intercept = new Integer(1))
-    ->withDegree(new Integer(1), new Number(0.5))
-    ->withDegree(new Integer(2), new Number(0.1));
-$p(new Integer(4))->value(); // 4.6
+$p = Polynom::interceptAt($intercept = Integer::of(1))
+    ->withDegree(Integer::of(1), new Number(0.5))
+    ->withDegree(Integer::of(2), new Number(0.1));
+$p(Integer::of(4))->value(); // 4.6
 echo $p->toString(); // 0.1x^2 + 0.5x + 1
 ```
 
@@ -63,7 +63,7 @@ You also can call the `derived` number for any point `x` (as well as the `tangen
 use Innmind\Math\Polynom\Integral;
 
 $integral = Integral::of($somePolynom);
-$area = $integral(new Integer(0), new Integral(42)); // find the area beneath the curve between point 0 and 42
+$area = $integral(Integer::of(0), new Integral(42)); // find the area beneath the curve between point 0 and 42
 echo $integral->toString(); // ∫(-1x^2 + 4x)dx = [(-1 ÷ (2 + 1))x^3 + (4 ÷ (1 + 1))x^2] (if the polynom is -1x^2 + 4x)
 ```
 
@@ -89,7 +89,7 @@ $regression = PolynomialRegression::of(
     ]),
 );
 // so in essence it found x^2
-$regression(new Integer(9))->value(); // 81.0
+$regression(Integer::of(9))->value(); // 81.0
 ```
 
 ### Linear regression
@@ -109,7 +109,7 @@ $r = LinearRegression::of(Dataset::of([
 ]));
 $r->intercept()->value(); // 0.0
 $r->slope()->value(); // 0.5
-$r(new Integer(4))->value(); // 2.0
+$r(Integer::of(4))->value(); // 2.0
 ```
 
 ## Probabilities
