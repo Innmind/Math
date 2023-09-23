@@ -5,3 +5,7 @@
 ### Added
 
 - Support for `innmind/immutable:~5.0`
+
+### Removed
+
+- Support for PHP `8.1`
