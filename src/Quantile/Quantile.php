@@ -67,6 +67,7 @@ final class Quantile
 
     public function mean(): Number
     {
+        /** @psalm-suppress InvalidArgument At least one value present */
         return Mean::of(...$this->values->toList());
     }
 
@@ -75,6 +76,7 @@ final class Quantile
      */
     public function median(): Quartile
     {
+        /** @psalm-suppress InvalidArgument At least one value present */
         return Quartile::of(Median::of(...$this->values->toList()));
     }
 
@@ -93,6 +95,7 @@ final class Quantile
      */
     private function buildQuartile(Number $percentage): Number
     {
+        /** @var positive-int */
         $index = (int) Integer::of($this->values->size())
             ->multiplyBy($percentage)
             ->roundUp()

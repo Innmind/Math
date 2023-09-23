@@ -12,8 +12,12 @@ final class Round implements Number
 {
     private Number $number;
     private int $precision;
+    /** @var 0|positive-int */
     private int $mode;
 
+    /**
+     * @param 0|positive-int $mode
+     */
     private function __construct(Number $number, int $precision, int $mode)
     {
         if ($precision < 0) {
