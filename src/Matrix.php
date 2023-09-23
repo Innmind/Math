@@ -50,7 +50,7 @@ final class Matrix
 
         $this->rows = $rows;
 
-        /** @psalm-suppress ArgumentTypeCoercion There is always at least one row */
+        /** @psalm-suppress InvalidArgument There is always at least one row */
         $this->dimension = Dimension::of(
             Integer::positive($this->rows->size()),
             $first->dimension(),
@@ -65,9 +65,9 @@ final class Matrix
      */
     public static function of(array $values): self
     {
-        $numerize = static fn(int|float|Number $number): Number => match ($number instanceof Number) {
-            true => $number,
-            false => Real::of($number),
+        $numerize = static fn(int|float|Number $number): Number => match (true) {
+            $number instanceof Number => $number,
+            default => Real::of($number),
         };
 
         return new self(
@@ -337,6 +337,7 @@ final class Matrix
      */
     private function buildColumns(): Sequence
     {
+        /** @psalm-suppress ArgumentTypeCoercion */
         return Range::until($this->dimension->columns())
             ->map(fn($column) => $this->rows->map(
                 static fn($row) => $row->get($column->value()),

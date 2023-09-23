@@ -154,6 +154,9 @@ final class ColumnVector
         return $this->vector->reduce($carry, $reducer);
     }
 
+    /**
+     * @param 0|positive-int $position
+     */
     public function get(int $position): Number
     {
         return $this->vector->get($position);

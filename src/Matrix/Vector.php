@@ -33,7 +33,7 @@ final class Vector
     private function __construct(Sequence $numbers)
     {
         $this->numbers = $numbers;
-        /** @psalm-suppress ArgumentTypeCoercion There is always at least one number in the sequence */
+        /** @psalm-suppress InvalidArgument There is always at least one number in the sequence */
         $this->dimension = Integer::positive($this->numbers->size());
     }
 
@@ -191,6 +191,9 @@ final class Vector
         return $this->numbers->reduce($carry, $reducer);
     }
 
+    /**
+     * @param 0|positive-int $position
+     */
     public function get(int $position): Number
     {
         return $this->numbers->get($position)->match(

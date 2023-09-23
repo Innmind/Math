@@ -38,9 +38,9 @@ final class Dataset
      */
     public static function of(array $values): self
     {
-        $numerize = static fn(int|float|Number $number): Number => match ($number instanceof Number) {
-            true => $number,
-            false => Real::of($number),
+        $numerize = static fn(int|float|Number $number): Number => match (true) {
+            $number instanceof Number => $number,
+            default => Real::of($number),
         };
 
         return new self(Sequence::of(...\array_map(
@@ -76,7 +76,7 @@ final class Dataset
 
     public function dimension(): Dimension
     {
-        /** @psalm-suppress ArgumentTypeCoercion There is always at least one point */
+        /** @psalm-suppress InvalidArgument There is always at least one point */
         return Dimension::of(
             Integer::positive($this->points->size()),
             Integer::positive(2),

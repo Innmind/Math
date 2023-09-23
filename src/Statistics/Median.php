@@ -167,10 +167,11 @@ final class Median implements Number
     {
         // mathematically the index to choose is (size+1/2) but here we
         // do (size-1)/2 as the sequence indexes start at 0
+        /** @var 0|positive-int */
+        $index = (int) (($values->size() - 1) / 2);
+
         return $values
-            ->get(
-                (int) (($values->size() - 1) / 2),
-            )
+            ->get($index)
             ->match(
                 static fn($result) => $result,
                 static fn() => throw new LogicException,
@@ -184,6 +185,7 @@ final class Median implements Number
     {
         // mathematically the value is mean(size/2, size/2+1) but here we
         // do mean(size/2-1, size/2) as the sequence indexes start at 0
+        /** @var positive-int */
         $index = (int) ($values->size() / 2);
 
         return Mean::of(
