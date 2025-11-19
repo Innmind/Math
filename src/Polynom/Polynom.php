@@ -111,7 +111,7 @@ final class Polynom
      *
      * @param Number|null $limit Value that tend to 0 (default to 0.000000000001)
      */
-    public function derived(Number $x, Number $limit = null): Number
+    public function derived(Number $x, ?Number $limit = null): Number
     {
         $limit = $limit ?? Tangent::limit();
 
@@ -123,7 +123,7 @@ final class Polynom
     /**
      * Return the affine function (tangent) in the position x
      */
-    public function tangent(Number $x, Number $limit = null): Tangent
+    public function tangent(Number $x, ?Number $limit = null): Tangent
     {
         return Tangent::of($this, $x, $limit);
     }
