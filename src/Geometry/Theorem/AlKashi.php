@@ -5,7 +5,6 @@ namespace Innmind\Math\Geometry\Theorem;
 
 use function Innmind\Math\max as maximum;
 use Innmind\Math\{
-    Algebra\Number,
     Algebra\Value,
     Geometry\Angle\Degree,
     Geometry\Segment,

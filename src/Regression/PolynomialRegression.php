@@ -5,7 +5,6 @@ namespace Innmind\Math\Regression;
 
 use Innmind\Math\{
     Algebra\Number,
-    Algebra\Real,
     Algebra\Integer,
     Algebra\Value,
     Polynom\Polynom,

@@ -6,7 +6,6 @@ namespace Tests\Innmind\Math\Quantile;
 use Innmind\Math\{
     Quantile\Quantile,
     Quantile\Quartile,
-    Regression\Dataset,
     Algebra\Number,
     Algebra\Real,
 };

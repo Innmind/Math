@@ -6,7 +6,6 @@ namespace Tests\Innmind\Math\Regression;
 use function Innmind\Math\numerize;
 use Innmind\Math\{
     Regression\Dataset,
-    Matrix\RowVector,
     Matrix\ColumnVector,
     Matrix\Dimension,
 };

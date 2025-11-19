@@ -7,7 +7,6 @@ use Innmind\Math\{
     Geometry\Angle\Degree,
     Geometry\Angle\Radian,
     Algebra\Number,
-    Algebra\Round,
     Algebra\Real,
 };
 

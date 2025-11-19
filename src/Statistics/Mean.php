@@ -5,7 +5,6 @@ namespace Innmind\Math\Statistics;
 
 use Innmind\Math\Algebra\{
     Number,
-    Round,
     Integer,
     Addition,
 };

@@ -3,11 +3,7 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Quantile;
 
-use function Innmind\Math\{
-    min as minimum,
-    max as maximum,
-    asc,
-};
+use function Innmind\Math\asc;
 use Innmind\Math\{
     Algebra\Number,
     Algebra\Real,

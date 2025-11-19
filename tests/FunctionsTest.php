@@ -7,11 +7,7 @@ use function Innmind\Math\{
     max as maximum,
     min as minimum,
 };
-use Innmind\Math\{
-    Algebra\Number,
-    Algebra\Integer,
-    Algebra\Real,
-};
+use Innmind\Math\Algebra\Real;
 use PHPUnit\Framework\TestCase;
 
 class FunctionsTest extends TestCase

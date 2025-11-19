@@ -8,7 +8,6 @@ use Innmind\Math\{
     Regression\Dataset,
     Algebra\Number,
     Algebra\Integer,
-    Probabilities\StandardDeviation
 };
 use PHPUnit\Framework\TestCase;
 

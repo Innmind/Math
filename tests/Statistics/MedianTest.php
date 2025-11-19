@@ -10,7 +10,6 @@ use Innmind\Math\{
     Algebra\Subtraction,
     Algebra\Multiplication,
     Algebra\Division,
-    Algebra\Round,
     Algebra\Floor,
     Algebra\Ceil,
     Algebra\Modulo,

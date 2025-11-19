@@ -10,10 +10,6 @@ use Innmind\Math\{
     Algebra\Value,
     Algebra\Division,
     Algebra\Subtraction,
-    Algebra\Addition,
-    Algebra\Multiplication,
-    Algebra\Real,
-    Matrix,
     Monoid,
 };
 

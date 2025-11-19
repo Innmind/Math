@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace Innmind\Math\Algebra;
 
 use Innmind\Math\{
-    Algebra\Number\Infinite,
     DefinitionSet\Set,
     DefinitionSet\Range,
 };

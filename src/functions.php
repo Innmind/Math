@@ -5,7 +5,6 @@ namespace Innmind\Math;
 
 use Innmind\Math\{
     Algebra\Number,
-    Algebra\Real,
     Exception\LogicException,
 };
 use Innmind\Immutable\Sequence;

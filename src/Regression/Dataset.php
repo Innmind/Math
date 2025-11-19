@@ -5,9 +5,7 @@ namespace Innmind\Math\Regression;
 
 use Innmind\Math\{
     Regression\Dataset\Point,
-    Matrix,
     Matrix\Dimension,
-    Matrix\RowVector,
     Matrix\ColumnVector,
     Algebra\Number,
     Algebra\Real,

@@ -6,7 +6,6 @@ namespace Innmind\Math\Matrix;
 use Innmind\Math\{
     Exception\VectorsMustMeOfTheSameDimension,
     Exception\LogicException,
-    Matrix,
     Algebra\Number,
     Algebra\Integer,
     Algebra\Value,
