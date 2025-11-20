@@ -53,15 +53,15 @@ final class Sine implements Number
     }
 
     #[\Override]
-    public function add(Number $number, Number ...$numbers): Number
+    public function add(Number $number): Number
     {
-        return $this->sine()->add($number, ...$numbers);
+        return $this->sine()->add($number);
     }
 
     #[\Override]
-    public function subtract(Number $number, Number ...$numbers): Number
+    public function subtract(Number $number): Number
     {
-        return $this->sine()->subtract($number, ...$numbers);
+        return $this->sine()->subtract($number);
     }
 
     #[\Override]
@@ -71,9 +71,9 @@ final class Sine implements Number
     }
 
     #[\Override]
-    public function multiplyBy(Number $number, Number ...$numbers): Number
+    public function multiplyBy(Number $number): Number
     {
-        return $this->sine()->multiplyBy($number, ...$numbers);
+        return $this->sine()->multiplyBy($number);
     }
 
     #[\Override]

@@ -56,19 +56,15 @@ final class Real implements Number
     }
 
     #[\Override]
-    public function add(
-        Number $number,
-        Number ...$numbers,
-    ): Number {
-        return Addition::of($this, $number, ...$numbers);
+    public function add(Number $number): Number
+    {
+        return Addition::of($this, $number);
     }
 
     #[\Override]
-    public function subtract(
-        Number $number,
-        Number ...$numbers,
-    ): Number {
-        return Subtraction::of($this, $number, ...$numbers);
+    public function subtract(Number $number): Number
+    {
+        return Subtraction::of($this, $number);
     }
 
     #[\Override]
@@ -78,11 +74,9 @@ final class Real implements Number
     }
 
     #[\Override]
-    public function multiplyBy(
-        Number $number,
-        Number ...$numbers,
-    ): Number {
-        return Multiplication::of($this, $number, ...$numbers);
+    public function multiplyBy(Number $number): Number
+    {
+        return Multiplication::of($this, $number);
     }
 
     #[\Override]

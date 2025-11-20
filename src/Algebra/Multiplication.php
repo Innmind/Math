@@ -13,30 +13,22 @@ use Innmind\Immutable\{
  */
 final class Multiplication implements Number
 {
-    private Number $first;
-    private Number $second;
-    /** @var Sequence<Number> */
-    private Sequence $values;
-
+    /**
+     * @param Sequence<Number> $values
+     */
     private function __construct(
-        Number $first,
-        Number $second,
-        Number ...$values,
+        private Number $first,
+        private Number $second,
+        private Sequence $values,
     ) {
-        $this->first = $first;
-        $this->second = $second;
-        $this->values = Sequence::of($first, $second, ...$values);
     }
 
     /**
      * @psalm-pure
      */
-    public static function of(
-        Number $first,
-        Number $second,
-        Number ...$values,
-    ): self {
-        return new self($first, $second, ...$values);
+    public static function of(Number $first, Number $second): self
+    {
+        return new self($first, $second, Sequence::of($first, $second));
     }
 
     #[\Override]
@@ -58,15 +50,15 @@ final class Multiplication implements Number
     }
 
     #[\Override]
-    public function add(Number $number, Number ...$numbers): Number
+    public function add(Number $number): Number
     {
-        return Addition::of($this, $number, ...$numbers);
+        return Addition::of($this, $number);
     }
 
     #[\Override]
-    public function subtract(Number $number, Number ...$numbers): Number
+    public function subtract(Number $number): Number
     {
-        return Subtraction::of($this, $number, ...$numbers);
+        return Subtraction::of($this, $number);
     }
 
     #[\Override]
@@ -76,9 +68,13 @@ final class Multiplication implements Number
     }
 
     #[\Override]
-    public function multiplyBy(Number $number, Number ...$numbers): self
+    public function multiplyBy(Number $number): self
     {
-        return new self($this, $number, ...$numbers);
+        return new self(
+            $this->first,
+            $this->second,
+            ($this->values)($number),
+        );
     }
 
     #[\Override]
@@ -228,6 +224,6 @@ final class Multiplication implements Number
             }
         }
 
-        return (new self($a->collapse(), $b->collapse()))->product();
+        return self::of($a->collapse(), $b->collapse())->product();
     }
 }

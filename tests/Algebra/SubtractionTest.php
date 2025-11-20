@@ -272,14 +272,10 @@ class SubtractionTest extends TestCase
 
     public function testStringCast()
     {
-        $subtraction = Subtraction::of(
-            Addition::of(
-                Real::of(12),
-                Real::of(12),
-            ),
-            Real::of(42),
-            Real::of(66),
-        );
+        $subtraction = Real::of(12)
+            ->add(Real::of(12))
+            ->subtract(Real::of(42))
+            ->subtract(Real::of(66));
 
         $this->assertSame('(12 + 12) - 42 - 66', $subtraction->toString());
     }

@@ -59,15 +59,15 @@ final class Median implements Number
     }
 
     #[\Override]
-    public function add(Number $number, Number ...$numbers): Number
+    public function add(Number $number): Number
     {
-        return $this->result->add($number, ...$numbers);
+        return $this->result->add($number);
     }
 
     #[\Override]
-    public function subtract(Number $number, Number ...$numbers): Number
+    public function subtract(Number $number): Number
     {
-        return $this->result->subtract($number, ...$numbers);
+        return $this->result->subtract($number);
     }
 
     #[\Override]
@@ -77,9 +77,9 @@ final class Median implements Number
     }
 
     #[\Override]
-    public function multiplyBy(Number $number, Number ...$numbers): Number
+    public function multiplyBy(Number $number): Number
     {
-        return $this->result->multiplyBy($number, ...$numbers);
+        return $this->result->multiplyBy($number);
     }
 
     #[\Override]

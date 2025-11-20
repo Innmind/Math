@@ -55,19 +55,15 @@ final class ArcTangent implements Number
     }
 
     #[\Override]
-    public function add(
-        Number $number,
-        Number ...$numbers,
-    ): Number {
-        return $this->arcTangent()->number()->add($number, ...$numbers);
+    public function add(Number $number): Number
+    {
+        return $this->arcTangent()->number()->add($number);
     }
 
     #[\Override]
-    public function subtract(
-        Number $number,
-        Number ...$numbers,
-    ): Number {
-        return $this->arcTangent()->number()->subtract($number, ...$numbers);
+    public function subtract(Number $number): Number
+    {
+        return $this->arcTangent()->number()->subtract($number);
     }
 
     #[\Override]
@@ -77,11 +73,9 @@ final class ArcTangent implements Number
     }
 
     #[\Override]
-    public function multiplyBy(
-        Number $number,
-        Number ...$numbers,
-    ): Number {
-        return $this->arcTangent()->number()->multiplyBy($number, ...$numbers);
+    public function multiplyBy(Number $number): Number
+    {
+        return $this->arcTangent()->number()->multiplyBy($number);
     }
 
     #[\Override]

@@ -53,15 +53,15 @@ final class Tangent implements Number
     }
 
     #[\Override]
-    public function add(Number $number, Number ...$numbers): Number
+    public function add(Number $number): Number
     {
-        return $this->tangent()->add($number, ...$numbers);
+        return $this->tangent()->add($number);
     }
 
     #[\Override]
-    public function subtract(Number $number, Number ...$numbers): Number
+    public function subtract(Number $number): Number
     {
-        return $this->tangent()->subtract($number, ...$numbers);
+        return $this->tangent()->subtract($number);
     }
 
     #[\Override]
@@ -71,9 +71,9 @@ final class Tangent implements Number
     }
 
     #[\Override]
-    public function multiplyBy(Number $number, Number ...$numbers): Number
+    public function multiplyBy(Number $number): Number
     {
-        return $this->tangent()->multiplyBy($number, ...$numbers);
+        return $this->tangent()->multiplyBy($number);
     }
 
     #[\Override]

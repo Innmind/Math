@@ -24,9 +24,9 @@ final class Addition implements Number
     /**
      * @psalm-pure
      */
-    public static function of(Number $first, Number ...$values): self
+    public static function of(Number $first, Number $value): self
     {
-        return new self(Sequence::of($first, ...$values));
+        return new self(Sequence::of($first, $value));
     }
 
     #[\Override]
@@ -48,15 +48,15 @@ final class Addition implements Number
     }
 
     #[\Override]
-    public function add(Number $number, Number ...$numbers): self
+    public function add(Number $number): self
     {
-        return new self($this->values->append(Sequence::of($number, ...$numbers)));
+        return new self(($this->values)($number));
     }
 
     #[\Override]
-    public function subtract(Number $number, Number ...$numbers): Number
+    public function subtract(Number $number): Number
     {
-        return Subtraction::of($this, $number, ...$numbers);
+        return Subtraction::of($this, $number);
     }
 
     #[\Override]
@@ -66,9 +66,9 @@ final class Addition implements Number
     }
 
     #[\Override]
-    public function multiplyBy(Number $number, Number ...$numbers): Number
+    public function multiplyBy(Number $number): Number
     {
-        return Multiplication::of($this, $number, ...$numbers);
+        return Multiplication::of($this, $number);
     }
 
     #[\Override]

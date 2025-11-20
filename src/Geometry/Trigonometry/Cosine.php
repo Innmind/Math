@@ -53,15 +53,15 @@ final class Cosine implements Number
     }
 
     #[\Override]
-    public function add(Number $number, Number ...$numbers): Number
+    public function add(Number $number): Number
     {
-        return $this->cosine()->add($number, ...$numbers);
+        return $this->cosine()->add($number);
     }
 
     #[\Override]
-    public function subtract(Number $number, Number ...$numbers): Number
+    public function subtract(Number $number): Number
     {
-        return $this->cosine()->subtract($number, ...$numbers);
+        return $this->cosine()->subtract($number);
     }
 
     #[\Override]
@@ -71,9 +71,9 @@ final class Cosine implements Number
     }
 
     #[\Override]
-    public function multiplyBy(Number $number, Number ...$numbers): Number
+    public function multiplyBy(Number $number): Number
     {
-        return $this->cosine()->multiplyBy($number, ...$numbers);
+        return $this->cosine()->multiplyBy($number);
     }
 
     #[\Override]

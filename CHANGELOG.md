@@ -16,6 +16,7 @@
 ### Removed
 
 - `Innmind\Math\Algebra\Operation`
+- The possibility to specify multiple values to `Innmind\Math\Algebra\Number::add()`, `::multiplyBy()` and `::subtract()`
 
 ## 6.1.0 - 2023-09-23
 

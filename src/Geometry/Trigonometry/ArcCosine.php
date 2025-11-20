@@ -55,15 +55,15 @@ final class ArcCosine implements Number
     }
 
     #[\Override]
-    public function add(Number $number, Number ...$numbers): Number
+    public function add(Number $number): Number
     {
-        return $this->arcCosine()->number()->add($number, ...$numbers);
+        return $this->arcCosine()->number()->add($number);
     }
 
     #[\Override]
-    public function subtract(Number $number, Number ...$numbers): Number
+    public function subtract(Number $number): Number
     {
-        return $this->arcCosine()->number()->subtract($number, ...$numbers);
+        return $this->arcCosine()->number()->subtract($number);
     }
 
     #[\Override]
@@ -73,9 +73,9 @@ final class ArcCosine implements Number
     }
 
     #[\Override]
-    public function multiplyBy(Number $number, Number ...$numbers): Number
+    public function multiplyBy(Number $number): Number
     {
-        return $this->arcCosine()->number()->multiplyBy($number, ...$numbers);
+        return $this->arcCosine()->number()->multiplyBy($number);
     }
 
     #[\Override]

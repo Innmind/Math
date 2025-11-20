@@ -55,15 +55,15 @@ final class ArcSine implements Number
     }
 
     #[\Override]
-    public function add(Number $number, Number ...$numbers): Number
+    public function add(Number $number): Number
     {
-        return $this->arcSine()->number()->add($number, ...$numbers);
+        return $this->arcSine()->number()->add($number);
     }
 
     #[\Override]
-    public function subtract(Number $number, Number ...$numbers): Number
+    public function subtract(Number $number): Number
     {
-        return $this->arcSine()->number()->subtract($number, ...$numbers);
+        return $this->arcSine()->number()->subtract($number);
     }
 
     #[\Override]
@@ -73,9 +73,9 @@ final class ArcSine implements Number
     }
 
     #[\Override]
-    public function multiplyBy(Number $number, Number ...$numbers): Number
+    public function multiplyBy(Number $number): Number
     {
-        return $this->arcSine()->number()->multiplyBy($number, ...$numbers);
+        return $this->arcSine()->number()->multiplyBy($number);
     }
 
     #[\Override]

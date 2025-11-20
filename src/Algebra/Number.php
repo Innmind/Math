@@ -11,10 +11,10 @@ interface Number
     public function value(): int|float;
     public function equals(self $number): bool;
     public function higherThan(self $number): bool;
-    public function add(self $number, self ...$numbers): self;
-    public function subtract(self $number, self ...$numbers): self;
+    public function add(self $number): self;
+    public function subtract(self $number): self;
     public function divideBy(self $number): self;
-    public function multiplyBy(self $number, self ...$numbers): self;
+    public function multiplyBy(self $number): self;
     public function roundUp(int $precision = 0): self;
     public function roundDown(int $precision = 0): self;
     public function roundEven(int $precision = 0): self;

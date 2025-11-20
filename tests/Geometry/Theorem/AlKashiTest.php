@@ -29,7 +29,7 @@ class AlKashiTest extends TestCase
 
         $this->assertInstanceOf(Segment::class, $c);
         $this->assertSame(
-            '√(((5^2) + (7^2)) - (((2 x 5) x 7) x cos(49°)))',
+            '√(((5^2) + (7^2)) - (2 x 5 x 7 x cos(49°)))',
             $c->length()->toString(),
         );
         $this->assertEqualsWithDelta(

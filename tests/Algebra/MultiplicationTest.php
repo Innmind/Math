@@ -272,14 +272,10 @@ class MultiplicationTest extends TestCase
 
     public function testStringCast()
     {
-        $multiplication = Multiplication::of(
-            Addition::of(
-                Real::of(12),
-                Real::of(12),
-            ),
-            Real::of(42),
-            Real::of(66),
-        );
+        $multiplication = Real::of(12)
+            ->add(Real::of(12))
+            ->multiplyBy(Real::of(42))
+            ->multiplyBy(Real::of(66));
 
         $this->assertSame('(12 + 12) x 42 x 66', $multiplication->toString());
     }

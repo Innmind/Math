@@ -13,28 +13,21 @@ use Innmind\Immutable\{
  */
 final class Subtraction implements Number
 {
-    private Number $first;
-    /** @var Sequence<Number> */
-    private Sequence $values;
-
+    /**
+     * @param Sequence<Number> $values
+     */
     private function __construct(
-        Number $first,
-        Number $second,
-        Number ...$values,
+        private Number $first,
+        private Sequence $values,
     ) {
-        $this->first = $first;
-        $this->values = Sequence::of($first, $second, ...$values);
     }
 
     /**
      * @psalm-pure
      */
-    public static function of(
-        Number $first,
-        Number $second,
-        Number ...$values,
-    ): self {
-        return new self($first, $second, ...$values);
+    public static function of(Number $first, Number $second): self
+    {
+        return new self($first, Sequence::of($first, $second));
     }
 
     #[\Override]
@@ -56,15 +49,18 @@ final class Subtraction implements Number
     }
 
     #[\Override]
-    public function add(Number $number, Number ...$numbers): Number
+    public function add(Number $number): Number
     {
-        return Addition::of($this, $number, ...$numbers);
+        return Addition::of($this, $number);
     }
 
     #[\Override]
-    public function subtract(Number $number, Number ...$numbers): self
+    public function subtract(Number $number): self
     {
-        return new self($this, $number, ...$numbers);
+        return new self(
+            $this->first,
+            ($this->values)($number),
+        );
     }
 
     #[\Override]
@@ -74,9 +70,9 @@ final class Subtraction implements Number
     }
 
     #[\Override]
-    public function multiplyBy(Number $number, Number ...$numbers): Number
+    public function multiplyBy(Number $number): Number
     {
-        return Multiplication::of($this, $number, ...$numbers);
+        return Multiplication::of($this, $number);
     }
 
     #[\Override]
