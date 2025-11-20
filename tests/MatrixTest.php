@@ -48,7 +48,7 @@ class MatrixTest extends TestCase
         ]);
 
         $this->assertInstanceOf(Sequence::class, $matrix->columns());
-        $this->assertCount(3, $matrix->columns());
+        $this->assertSame(3, $matrix->columns()->size());
     }
 
     public function testThrowWhenBuildingMatrixWithIncoherentRows()
