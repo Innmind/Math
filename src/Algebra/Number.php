@@ -15,9 +15,25 @@ interface Number
     public function subtract(self $number): self;
     public function divideBy(self $number): self;
     public function multiplyBy(self $number): self;
+
+    /**
+     * @param int<0, max> $precision
+     */
     public function roundUp(int $precision = 0): self;
+
+    /**
+     * @param int<0, max> $precision
+     */
     public function roundDown(int $precision = 0): self;
+
+    /**
+     * @param int<0, max> $precision
+     */
     public function roundEven(int $precision = 0): self;
+
+    /**
+     * @param int<0, max> $precision
+     */
     public function roundOdd(int $precision = 0): self;
     public function floor(): self;
     public function ceil(): self;

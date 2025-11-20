@@ -3,8 +3,6 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Algebra;
 
-use Innmind\Math\Exception\PrecisionMustBePositive;
-
 /**
  * @psalm-immutable
  */
@@ -16,14 +14,11 @@ final class Round implements Number
     private int $mode;
 
     /**
+     * @param int<0, max> $precision
      * @param 0|positive-int $mode
      */
     private function __construct(Number $number, int $precision, int $mode)
     {
-        if ($precision < 0) {
-            throw new PrecisionMustBePositive((string) $precision);
-        }
-
         $this->number = $number;
         $this->precision = $precision;
         $this->mode = $mode;
@@ -31,6 +26,8 @@ final class Round implements Number
 
     /**
      * @psalm-pure
+     *
+     * @param int<0, max> $precision
      */
     public static function up(Number $number, int $precision = 0): self
     {
@@ -39,6 +36,8 @@ final class Round implements Number
 
     /**
      * @psalm-pure
+     *
+     * @param int<0, max> $precision
      */
     public static function down(Number $number, int $precision = 0): self
     {
@@ -47,6 +46,8 @@ final class Round implements Number
 
     /**
      * @psalm-pure
+     *
+     * @param int<0, max> $precision
      */
     public static function even(Number $number, int $precision = 0): self
     {
@@ -55,6 +56,8 @@ final class Round implements Number
 
     /**
      * @psalm-pure
+     *
+     * @param int<0, max> $precision
      */
     public static function odd(Number $number, int $precision = 0): self
     {
