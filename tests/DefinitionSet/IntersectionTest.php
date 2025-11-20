@@ -4,10 +4,7 @@ declare(strict_types = 1);
 namespace Tests\Innmind\Math\DefinitionSet;
 
 use Innmind\Math\{
-    DefinitionSet\Intersection,
-    DefinitionSet\Union,
-    DefinitionSet\Set as SetInterface,
-    DefinitionSet\Set\Set,
+    DefinitionSet\Set,
     Algebra\Integer,
     Algebra\Real,
     Exception\OutOfDefinitionSet,
@@ -16,51 +13,33 @@ use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class IntersectionTest extends TestCase
 {
-    public function testInterface()
-    {
-        $this->assertInstanceOf(
-            SetInterface::class,
-            Intersection::of(
-                Set::of(),
-                Set::of(),
-            ),
-        );
-    }
-
-    public function testStringCast()
-    {
-        $this->assertSame('∅∩∅', (Intersection::of(Set::of(), Set::of()))->toString());
-    }
-
     public function testContains()
     {
-        $union = Intersection::of(
-            Set::of(
-                Integer::of(1),
-                Integer::of(2),
-            ),
+        $intersection = Set::of(
+            Integer::of(1),
+            Integer::of(2),
+        )->intersect(
             Set::of(
                 Integer::of(4),
                 Integer::of(5),
             ),
         );
 
-        $this->assertFalse($union->contains(Real::of(1)));
-        $this->assertFalse($union->contains(Real::of(2)));
-        $this->assertFalse($union->contains(Real::of(4)));
-        $this->assertFalse($union->contains(Real::of(5)));
-        $this->assertFalse($union->contains(Real::of(6)));
-        $this->assertFalse($union->contains(Real::of(3)));
-        $this->assertFalse($union->contains(Real::of(0)));
+        $this->assertFalse($intersection->contains(Real::of(1)));
+        $this->assertFalse($intersection->contains(Real::of(2)));
+        $this->assertFalse($intersection->contains(Real::of(4)));
+        $this->assertFalse($intersection->contains(Real::of(5)));
+        $this->assertFalse($intersection->contains(Real::of(6)));
+        $this->assertFalse($intersection->contains(Real::of(3)));
+        $this->assertFalse($intersection->contains(Real::of(0)));
     }
 
     public function testAccept()
     {
-        $set = Intersection::of(
-            Set::of(
-                Integer::of(1),
-                Integer::of(2),
-            ),
+        $set = Set::of(
+            Integer::of(1),
+            Integer::of(2),
+        )->intersect(
             Set::of(
                 Integer::of(2),
                 Integer::of(5),
@@ -77,17 +56,15 @@ class IntersectionTest extends TestCase
 
     public function testUnion()
     {
-        $union = Intersection::of(Set::of(), Set::of())->union(Set::of());
+        $union = Set::of()->intersect(Set::of())->union(Set::of());
 
-        $this->assertInstanceOf(Union::class, $union);
         $this->assertSame('∅∩∅∪∅', $union->toString());
     }
 
     public function testIntersect()
     {
-        $intersection = Intersection::of(Set::of(), Set::of())->intersect(Set::of());
+        $intersection = Set::of()->intersect(Set::of())->intersect(Set::of());
 
-        $this->assertInstanceOf(Intersection::class, $intersection);
         $this->assertSame('∅∩∅∩∅', $intersection->toString());
     }
 }

@@ -4,10 +4,7 @@ declare(strict_types = 1);
 namespace Tests\Innmind\Math\DefinitionSet;
 
 use Innmind\Math\{
-    DefinitionSet\Union,
-    DefinitionSet\Set as SetInterface,
-    DefinitionSet\Set\Set,
-    DefinitionSet\Intersection,
+    DefinitionSet\Set,
     Algebra\Integer,
     Algebra\Real,
     Exception\OutOfDefinitionSet,
@@ -16,29 +13,17 @@ use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class UnionTest extends TestCase
 {
-    public function testInterface()
-    {
-        $this->assertInstanceOf(
-            SetInterface::class,
-            Union::of(
-                Set::of(),
-                Set::of(),
-            ),
-        );
-    }
-
     public function testStringCast()
     {
-        $this->assertSame('∅∪∅', (Union::of(Set::of(), Set::of()))->toString());
+        $this->assertSame('∅∪∅', Set::of()->union(Set::of())->toString());
     }
 
     public function testContains()
     {
-        $union = Union::of(
-            Set::of(
-                Integer::of(1),
-                Integer::of(2),
-            ),
+        $union = Set::of(
+            Integer::of(1),
+            Integer::of(2),
+        )->union(
             Set::of(
                 Integer::of(4),
                 Integer::of(5),
@@ -56,11 +41,10 @@ class UnionTest extends TestCase
 
     public function testAccept()
     {
-        $set = Union::of(
-            Set::of(
-                Integer::of(1),
-                Integer::of(2),
-            ),
+        $set = Set::of(
+            Integer::of(1),
+            Integer::of(2),
+        )->union(
             Set::of(
                 Integer::of(4),
                 Integer::of(5),
@@ -77,17 +61,15 @@ class UnionTest extends TestCase
 
     public function testUnion()
     {
-        $union = Union::of(Set::of(), Set::of())->union(Set::of());
+        $union = Set::of()->union(Set::of())->union(Set::of());
 
-        $this->assertInstanceOf(Union::class, $union);
         $this->assertSame('∅∪∅∪∅', $union->toString());
     }
 
     public function testIntersect()
     {
-        $intersection = Union::of(Set::of(), Set::of())->intersect(Set::of());
+        $intersection = Set::of()->union(Set::of())->intersect(Set::of());
 
-        $this->assertInstanceOf(Intersection::class, $intersection);
         $this->assertSame('∅∪∅∩∅', $intersection->toString());
     }
 }

@@ -3,10 +3,7 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Algebra;
 
-use Innmind\Math\{
-    DefinitionSet\Set,
-    DefinitionSet\Range,
-};
+use Innmind\Math\DefinitionSet\Set;
 
 /**
  * Base 2 logarithm
@@ -174,7 +171,7 @@ final class BinaryLogarithm implements Operation, Number
      */
     public static function definitionSet(): Set
     {
-        return Range::exclusive(
+        return Set::exclusiveRange(
             Value::zero,
             Value::infinite,
         );

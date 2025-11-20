@@ -4,10 +4,7 @@ declare(strict_types = 1);
 namespace Tests\Innmind\Math\DefinitionSet;
 
 use Innmind\Math\{
-    DefinitionSet\NaturalNumbersExceptZero,
     DefinitionSet\Set,
-    DefinitionSet\Union,
-    DefinitionSet\Intersection,
     Algebra\Integer,
     Algebra\Real,
     Exception\OutOfDefinitionSet,
@@ -16,22 +13,14 @@ use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class NaturalNumbersExceptZeroTest extends TestCase
 {
-    public function testInterface()
-    {
-        $this->assertInstanceOf(
-            Set::class,
-            new NaturalNumbersExceptZero,
-        );
-    }
-
     public function testStringCast()
     {
-        $this->assertSame('ℕ*', (new NaturalNumbersExceptZero)->toString());
+        $this->assertSame('ℕ*', Set::naturalNumbersExceptZero()->toString());
     }
 
     public function testContains()
     {
-        $set = new NaturalNumbersExceptZero;
+        $set = Set::naturalNumbersExceptZero();
 
         $this->assertTrue($set->contains(Integer::of(1)));
         $this->assertTrue($set->contains(Integer::of(2)));
@@ -43,7 +32,7 @@ class NaturalNumbersExceptZeroTest extends TestCase
 
     public function testAccept()
     {
-        $set = new NaturalNumbersExceptZero;
+        $set = Set::naturalNumbersExceptZero();
 
         $this->assertNull($set->accept(Integer::of(1)));
 
@@ -55,17 +44,15 @@ class NaturalNumbersExceptZeroTest extends TestCase
 
     public function testUnion()
     {
-        $union = (new NaturalNumbersExceptZero)->union(new NaturalNumbersExceptZero);
+        $union = Set::naturalNumbersExceptZero()->union(Set::naturalNumbersExceptZero());
 
-        $this->assertInstanceOf(Union::class, $union);
         $this->assertSame('ℕ*∪ℕ*', $union->toString());
     }
 
     public function testIntersect()
     {
-        $intersection = (new NaturalNumbersExceptZero)->intersect(new NaturalNumbersExceptZero);
+        $intersection = Set::naturalNumbersExceptZero()->intersect(Set::naturalNumbersExceptZero());
 
-        $this->assertInstanceOf(Intersection::class, $intersection);
         $this->assertSame('ℕ*∩ℕ*', $intersection->toString());
     }
 }

@@ -10,13 +10,14 @@ use Innmind\Math\{
 
 /**
  * @psalm-immutable
+ * @internal
  */
-final class Union implements Set
+final class Union implements Implementation
 {
-    private Set $left;
-    private Set $right;
+    private Implementation $left;
+    private Implementation $right;
 
-    private function __construct(Set $left, Set $right)
+    private function __construct(Implementation $left, Implementation $right)
     {
         $this->left = $left;
         $this->right = $right;
@@ -25,7 +26,7 @@ final class Union implements Set
     /**
      * @psalm-pure
      */
-    public static function of(Set $left, Set $right): self
+    public static function of(Implementation $left, Implementation $right): self
     {
         return new self($left, $right);
     }
@@ -46,13 +47,13 @@ final class Union implements Set
     }
 
     #[\Override]
-    public function union(Set $set): Set
+    public function union(Implementation $set): Implementation
     {
         return new self($this, $set);
     }
 
     #[\Override]
-    public function intersect(Set $set): Set
+    public function intersect(Implementation $set): Implementation
     {
         return Intersection::of($this, $set);
     }

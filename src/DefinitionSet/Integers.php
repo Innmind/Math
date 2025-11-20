@@ -12,8 +12,9 @@ use Innmind\Math\{
 
 /**
  * @psalm-immutable
+ * @internal
  */
-final class Integers implements Set
+final class Integers implements Implementation
 {
     #[\Override]
     public function contains(Number $number): bool
@@ -36,13 +37,13 @@ final class Integers implements Set
     }
 
     #[\Override]
-    public function union(Set $set): Set
+    public function union(Implementation $set): Implementation
     {
         return Union::of($this, $set);
     }
 
     #[\Override]
-    public function intersect(Set $set): Set
+    public function intersect(Implementation $set): Implementation
     {
         return Intersection::of($this, $set);
     }

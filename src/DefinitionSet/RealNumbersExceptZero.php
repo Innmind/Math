@@ -11,8 +11,9 @@ use Innmind\Math\{
 
 /**
  * @psalm-immutable
+ * @internal
  */
-final class RealNumbersExceptZero implements Set
+final class RealNumbersExceptZero implements Implementation
 {
     #[\Override]
     public function contains(Number $number): bool
@@ -29,13 +30,13 @@ final class RealNumbersExceptZero implements Set
     }
 
     #[\Override]
-    public function union(Set $set): Set
+    public function union(Implementation $set): Implementation
     {
         return Union::of($this, $set);
     }
 
     #[\Override]
-    public function intersect(Set $set): Set
+    public function intersect(Implementation $set): Implementation
     {
         return Intersection::of($this, $set);
     }

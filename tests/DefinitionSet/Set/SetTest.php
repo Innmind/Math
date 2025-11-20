@@ -4,10 +4,7 @@ declare(strict_types = 1);
 namespace Tests\Innmind\Math\DefinitionSet\Set;
 
 use Innmind\Math\{
-    DefinitionSet\Set\Set,
-    DefinitionSet\Set as SetInterface,
-    DefinitionSet\Union,
-    DefinitionSet\Intersection,
+    DefinitionSet\Set,
     Algebra\Integer,
     Algebra\Real,
     Exception\OutOfDefinitionSet,
@@ -16,14 +13,6 @@ use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class SetTest extends TestCase
 {
-    public function testInterface()
-    {
-        $this->assertInstanceOf(
-            SetInterface::class,
-            Set::of(),
-        );
-    }
-
     public function testStringCast()
     {
         $this->assertSame('∅', Set::of()->toString());
@@ -62,7 +51,6 @@ class SetTest extends TestCase
     {
         $union = Set::of()->union(Set::of());
 
-        $this->assertInstanceOf(Union::class, $union);
         $this->assertSame('∅∪∅', $union->toString());
     }
 
@@ -70,7 +58,6 @@ class SetTest extends TestCase
     {
         $intersection = Set::of()->intersect(Set::of());
 
-        $this->assertInstanceOf(Intersection::class, $intersection);
         $this->assertSame('∅∩∅', $intersection->toString());
     }
 }

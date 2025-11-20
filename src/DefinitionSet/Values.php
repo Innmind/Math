@@ -1,12 +1,9 @@
 <?php
 declare(strict_types = 1);
 
-namespace Innmind\Math\DefinitionSet\Set;
+namespace Innmind\Math\DefinitionSet;
 
 use Innmind\Math\{
-    DefinitionSet\Set as SetInterface,
-    DefinitionSet\Union,
-    DefinitionSet\Intersection,
     Algebra\Number,
     Exception\OutOfDefinitionSet,
 };
@@ -17,8 +14,9 @@ use Innmind\Immutable\{
 
 /**
  * @psalm-immutable
+ * @internal
  */
-final class Set implements SetInterface
+final class Values implements Implementation
 {
     /** @var Sequence<int|float> */
     private Sequence $values;
@@ -57,13 +55,13 @@ final class Set implements SetInterface
     }
 
     #[\Override]
-    public function union(SetInterface $set): SetInterface
+    public function union(Implementation $set): Implementation
     {
         return Union::of($this, $set);
     }
 
     #[\Override]
-    public function intersect(SetInterface $set): SetInterface
+    public function intersect(Implementation $set): Implementation
     {
         return Intersection::of($this, $set);
     }
