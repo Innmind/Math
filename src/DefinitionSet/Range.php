@@ -47,16 +47,6 @@ final class Range implements Implementation
         return new self(false, $lower, $upper, false);
     }
 
-    public function excludeLowerBound(): self
-    {
-        return new self(false, $this->lower, $this->upper, $this->upperInclusivity);
-    }
-
-    public function excludeUpperBound(): self
-    {
-        return new self($this->lowerInclusivity, $this->lower, $this->upper, false);
-    }
-
     #[\Override]
     public function contains(Number $number): bool
     {
