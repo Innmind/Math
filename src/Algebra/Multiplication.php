@@ -42,19 +42,19 @@ final class Multiplication implements Number
     #[\Override]
     public function value(): int|float
     {
-        return $this->result()->value();
+        return $this->product()->value();
     }
 
     #[\Override]
     public function equals(Number $number): bool
     {
-        return $this->result()->equals($number);
+        return $this->product()->equals($number);
     }
 
     #[\Override]
     public function higherThan(Number $number): bool
     {
-        return $this->result()->higherThan($number);
+        return $this->product()->higherThan($number);
     }
 
     #[\Override]
@@ -173,11 +173,6 @@ final class Multiplication implements Number
 
     public function product(): Number
     {
-        return $this->result();
-    }
-
-    public function result(): Number
-    {
         $value = $this->values->reduce(
             1,
             static fn(int|float $carry, $number): int|float => $carry * $number->value(),
@@ -233,6 +228,6 @@ final class Multiplication implements Number
             }
         }
 
-        return (new self($a->collapse(), $b->collapse()))->result();
+        return (new self($a->collapse(), $b->collapse()))->product();
     }
 }

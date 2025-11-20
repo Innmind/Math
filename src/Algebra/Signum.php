@@ -23,11 +23,6 @@ final class Signum implements Number
         return new self($number);
     }
 
-    public function result(): Number
-    {
-        return $this->compute($this->number);
-    }
-
     #[\Override]
     public function value(): int|float
     {
@@ -176,6 +171,11 @@ final class Signum implements Number
     public function format(): string
     {
         return $this->toString();
+    }
+
+    private function result(): Number
+    {
+        return $this->compute($this->number);
     }
 
     private function compute(Number $number): Integer

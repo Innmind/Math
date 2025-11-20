@@ -46,10 +46,8 @@ class BinaryLogarithmTest extends TestCase
     public function testResult()
     {
         $lb = BinaryLogarithm::of(Real::of(1));
-        $result = $lb->result();
 
-        $this->assertInstanceOf(Number::class, $result);
-        $this->assertSame(0.0, $result->value());
+        $this->assertSame(0.0, $lb->value());
     }
 
     public function testValue()

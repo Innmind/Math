@@ -46,11 +46,10 @@ class AdditionTest extends TestCase
             Real::of(42),
             Real::of(66),
         );
-        $result = $addition->result();
+        $result = $addition->sum();
 
         $this->assertInstanceOf(Number::class, $result);
         $this->assertSame(132, $result->value());
-        $this->assertTrue($result->equals($addition->sum()));
     }
 
     public function testValue()

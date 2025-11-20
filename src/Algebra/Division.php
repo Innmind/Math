@@ -44,19 +44,19 @@ final class Division implements Number
     #[\Override]
     public function value(): int|float
     {
-        return $this->result()->value();
+        return $this->quotient()->value();
     }
 
     #[\Override]
     public function equals(Number $number): bool
     {
-        return $this->result()->equals($number);
+        return $this->quotient()->equals($number);
     }
 
     #[\Override]
     public function higherThan(Number $number): bool
     {
-        return $this->result()->higherThan($number);
+        return $this->quotient()->higherThan($number);
     }
 
     #[\Override]
@@ -174,11 +174,6 @@ final class Division implements Number
     }
 
     public function quotient(): Number
-    {
-        return $this->result();
-    }
-
-    public function result(): Number
     {
         return $this->compute(
             $this->dividend,

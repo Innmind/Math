@@ -25,13 +25,6 @@ final class Power implements Number
         return new self($number, $power);
     }
 
-    public function result(): Number
-    {
-        return Real::of(
-            $this->number->value() ** $this->power->value(),
-        );
-    }
-
     #[\Override]
     public function value(): int|float
     {
@@ -197,5 +190,12 @@ final class Power implements Number
     public function format(): string
     {
         return '('.$this->toString().')';
+    }
+
+    private function result(): Number
+    {
+        return Real::of(
+            $this->number->value() ** $this->power->value(),
+        );
     }
 }

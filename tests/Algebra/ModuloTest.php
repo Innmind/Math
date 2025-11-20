@@ -44,10 +44,8 @@ class ModuloTest extends TestCase
             Real::of(42.24),
             Real::of(2.1),
         );
-        $result = $modulo->result();
 
-        $this->assertInstanceOf(Number::class, $result);
-        $this->assertEqualsWithDelta(0.24, $result->value(), 0.0001);
+        $this->assertEqualsWithDelta(0.24, $modulo->value(), 0.0001);
     }
 
     public function testStringCast()

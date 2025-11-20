@@ -45,10 +45,8 @@ class PowerTest extends TestCase
             Real::of(42.24),
             Real::of(2.1),
         );
-        $result = $power->result();
 
-        $this->assertInstanceOf(Number::class, $result);
-        $this->assertSame(2594.300085723648, $result->value());
+        $this->assertSame(2594.300085723648, $power->value());
     }
 
     public function testStringCast()

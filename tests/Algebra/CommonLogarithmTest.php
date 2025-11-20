@@ -46,10 +46,8 @@ class CommonLogarithmTest extends TestCase
     public function testResult()
     {
         $lg = CommonLogarithm::of(Real::of(1));
-        $result = $lg->result();
 
-        $this->assertInstanceOf(Number::class, $result);
-        $this->assertSame(0.0, $result->value());
+        $this->assertSame(0.0, $lg->value());
     }
 
     public function testValue()

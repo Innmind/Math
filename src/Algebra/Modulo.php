@@ -25,11 +25,6 @@ final class Modulo implements Number
         return new self($number, $modulus);
     }
 
-    public function result(): Number
-    {
-        return $this->compute($this->number, $this->modulus);
-    }
-
     #[\Override]
     public function value(): int|float
     {
@@ -184,6 +179,11 @@ final class Modulo implements Number
     public function format(): string
     {
         return '('.$this->toString().')';
+    }
+
+    private function result(): Number
+    {
+        return $this->compute($this->number, $this->modulus);
     }
 
     private function compute(Number $number, Number $modulus): Number

@@ -46,10 +46,8 @@ class NaturalLogarithmTest extends TestCase
     public function testResult()
     {
         $ln = NaturalLogarithm::of(Real::of(1));
-        $result = $ln->result();
 
-        $this->assertInstanceOf(Number::class, $result);
-        $this->assertSame(0.0, $result->value());
+        $this->assertSame(0.0, $ln->value());
     }
 
     public function testValue()

@@ -44,11 +44,10 @@ class SubtractionTest extends TestCase
             Real::of(42),
             Real::of(24),
         );
-        $result = $subtraction->result();
+        $result = $subtraction->difference();
 
         $this->assertInstanceOf(Number::class, $result);
         $this->assertSame(18, $result->value());
-        $this->assertTrue($result->equals($subtraction->difference()));
     }
 
     public function testValue()

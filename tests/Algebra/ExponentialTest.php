@@ -42,10 +42,8 @@ class ExponentialTest extends TestCase
         $power = Exponential::of(
             Real::of(2.1),
         );
-        $result = $power->result();
 
-        $this->assertInstanceOf(Number::class, $result);
-        $this->assertSame(8.166169912567652, $result->value());
+        $this->assertSame(8.166169912567652, $power->value());
     }
 
     public function testStringCast()

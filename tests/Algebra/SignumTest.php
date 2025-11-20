@@ -42,13 +42,11 @@ class SignumTest extends TestCase
         $sgn = Signum::of(
             Real::of(42),
         );
-        $result = $sgn->result();
 
-        $this->assertInstanceOf(Number::class, $result);
-        $this->assertSame(1, $result->value());
+        $this->assertSame(1, $sgn->value());
 
-        $this->assertSame(-1, (Signum::of(Real::of(-42)))->value());
-        $this->assertSame(0, (Signum::of(Real::of(0)))->value());
+        $this->assertSame(-1, Signum::of(Real::of(-42))->value());
+        $this->assertSame(0, Signum::of(Real::of(0))->value());
     }
 
     public function testStringCast()

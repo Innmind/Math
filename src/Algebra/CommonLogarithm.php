@@ -160,11 +160,6 @@ final class CommonLogarithm implements Number
         return Signum::of($this);
     }
 
-    public function result(): Number
-    {
-        return $this->compute($this->number);
-    }
-
     /**
      * @psalm-pure
      */
@@ -192,6 +187,11 @@ final class CommonLogarithm implements Number
     public function format(): string
     {
         return $this->toString();
+    }
+
+    private function result(): Number
+    {
+        return $this->compute($this->number);
     }
 
     private function compute(Number $number): Number

@@ -43,11 +43,10 @@ class DivisionTest extends TestCase
     public function testResult()
     {
         $division = Division::of(Real::of(4), Real::of(2));
-        $result = $division->result();
+        $result = $division->quotient();
 
         $this->assertInstanceOf(Number::class, $result);
         $this->assertSame(2, $result->value());
-        $this->assertTrue($result->equals($division->quotient()));
     }
 
     public function testValue()

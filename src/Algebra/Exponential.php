@@ -23,11 +23,6 @@ final class Exponential implements Number
         return new self($power);
     }
 
-    public function result(): Number
-    {
-        return $this->compute($this->power);
-    }
-
     #[\Override]
     public function value(): int|float
     {
@@ -178,6 +173,11 @@ final class Exponential implements Number
     public function format(): string
     {
         return '('.$this->toString().')';
+    }
+
+    private function result(): Number
+    {
+        return $this->compute($this->power);
     }
 
     private function compute(Number $power): Number

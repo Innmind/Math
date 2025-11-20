@@ -44,11 +44,10 @@ class MultiplicationTest extends TestCase
             Real::of(42),
             Real::of(24),
         );
-        $result = $multiplication->result();
+        $result = $multiplication->product();
 
         $this->assertInstanceOf(Number::class, $result);
         $this->assertSame(1008, $result->value());
-        $this->assertTrue($result->equals($multiplication->product()));
     }
 
     public function testValue()

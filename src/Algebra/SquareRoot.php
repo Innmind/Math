@@ -29,13 +29,6 @@ final class SquareRoot implements Number
         return $this->result()->value();
     }
 
-    public function result(): Number
-    {
-        return Real::of(
-            \sqrt($this->number->value()),
-        );
-    }
-
     #[\Override]
     public function equals(Number $number): bool
     {
@@ -189,5 +182,12 @@ final class SquareRoot implements Number
     public function format(): string
     {
         return '('.$this->toString().')';
+    }
+
+    private function result(): Number
+    {
+        return Real::of(
+            \sqrt($this->number->value()),
+        );
     }
 }

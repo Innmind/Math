@@ -212,8 +212,7 @@ class FactorialTest extends TestCase
     {
         $number = Factorial::of($integer);
 
-        $this->assertInstanceOf(Number::class, $number->result());
-        $this->assertSame($expected, $number->result()->value());
+        $this->assertSame($expected, $number->value());
     }
 
     public static function factorials(): array

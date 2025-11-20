@@ -29,11 +29,6 @@ final class Absolute implements Number
         return $this->result()->value();
     }
 
-    public function result(): Number
-    {
-        return $this->compute($this->number);
-    }
-
     #[\Override]
     public function equals(Number $number): bool
     {
@@ -176,6 +171,11 @@ final class Absolute implements Number
     public function format(): string
     {
         return '('.$this->toString().')';
+    }
+
+    private function result(): Number
+    {
+        return $this->compute($this->number);
     }
 
     private function compute(Number $number): Number

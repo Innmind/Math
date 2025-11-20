@@ -40,19 +40,19 @@ final class Subtraction implements Number
     #[\Override]
     public function value(): int|float
     {
-        return $this->result()->value();
+        return $this->difference()->value();
     }
 
     #[\Override]
     public function equals(Number $number): bool
     {
-        return $this->result()->equals($number);
+        return $this->difference()->equals($number);
     }
 
     #[\Override]
     public function higherThan(Number $number): bool
     {
-        return $this->result()->higherThan($number);
+        return $this->difference()->higherThan($number);
     }
 
     #[\Override]
@@ -170,11 +170,6 @@ final class Subtraction implements Number
     }
 
     public function difference(): Number
-    {
-        return $this->result();
-    }
-
-    public function result(): Number
     {
         return $this->compute($this->first, $this->values);
     }

@@ -32,43 +32,43 @@ final class Factorial implements Number
     #[\Override]
     public function value(): int|float
     {
-        return $this->result()->value();
+        return $this->collapse()->value();
     }
 
     #[\Override]
     public function equals(Number $number): bool
     {
-        return $this->result()->equals($number);
+        return $this->collapse()->equals($number);
     }
 
     #[\Override]
     public function higherThan(Number $number): bool
     {
-        return $this->result()->higherThan($number);
+        return $this->collapse()->higherThan($number);
     }
 
     #[\Override]
     public function add(Number $number, Number ...$numbers): Number
     {
-        return $this->result()->add($number, ...$numbers);
+        return $this->collapse()->add($number, ...$numbers);
     }
 
     #[\Override]
     public function subtract(Number $number, Number ...$numbers): Number
     {
-        return $this->result()->subtract($number, ...$numbers);
+        return $this->collapse()->subtract($number, ...$numbers);
     }
 
     #[\Override]
     public function divideBy(Number $number): Number
     {
-        return $this->result()->divideBy($number);
+        return $this->collapse()->divideBy($number);
     }
 
     #[\Override]
     public function multiplyBy(Number $number, Number ...$numbers): Number
     {
-        return $this->result()->multiplyBy($number, ...$numbers);
+        return $this->collapse()->multiplyBy($number, ...$numbers);
     }
 
     #[\Override]
@@ -98,37 +98,37 @@ final class Factorial implements Number
     #[\Override]
     public function floor(): Number
     {
-        return $this->result()->floor();
+        return $this->collapse()->floor();
     }
 
     #[\Override]
     public function ceil(): Number
     {
-        return $this->result()->ceil();
+        return $this->collapse()->ceil();
     }
 
     #[\Override]
     public function modulo(Number $modulus): Number
     {
-        return $this->result()->modulo($modulus);
+        return $this->collapse()->modulo($modulus);
     }
 
     #[\Override]
     public function absolute(): Number
     {
-        return $this->result()->absolute();
+        return $this->collapse()->absolute();
     }
 
     #[\Override]
     public function power(Number $power): Number
     {
-        return $this->result()->power($power);
+        return $this->collapse()->power($power);
     }
 
     #[\Override]
     public function squareRoot(): Number
     {
-        return $this->result()->squareRoot();
+        return $this->collapse()->squareRoot();
     }
 
     #[\Override]
@@ -161,7 +161,8 @@ final class Factorial implements Number
         return Signum::of($this);
     }
 
-    public function result(): Number
+    #[\Override]
+    public function collapse(): Number
     {
         if ($this->value < 2) {
             return Value::one;
@@ -174,12 +175,6 @@ final class Factorial implements Number
         } while ($i > 1);
 
         return Real::of($factorial);
-    }
-
-    #[\Override]
-    public function collapse(): Number
-    {
-        return $this->result();
     }
 
     #[\Override]
