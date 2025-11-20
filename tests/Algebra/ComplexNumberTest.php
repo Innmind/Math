@@ -172,7 +172,7 @@ class ComplexNumberTest extends TestCase
         $this->assertSame(2.0, $squareRoot->real()->value());
         $this->assertSame(1.0, $squareRoot->imaginary()->value());
         $this->assertSame(
-            '((√((3 + (√((3^2) + (4^2)))) ÷ 2)) + ((sgn(4)) x (√(((-1 x 3) + (√((3^2) + (4^2)))) ÷ 2)))i)',
+            '((√((3 + (√((3^2) + (4^2)))) ÷ 2)) + (sgn(4) x (√(((-1 x 3) + (√((3^2) + (4^2)))) ÷ 2)))i)',
             $squareRoot->toString(),
         );
     }

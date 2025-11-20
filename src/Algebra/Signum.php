@@ -176,7 +176,7 @@ final class Signum implements Operation, Number
     #[\Override]
     public function format(): string
     {
-        return '('.$this->toString().')';
+        return $this->toString();
     }
 
     private function compute(Number $number): Integer
