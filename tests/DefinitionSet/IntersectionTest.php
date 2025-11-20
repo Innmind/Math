@@ -21,8 +21,8 @@ class IntersectionTest extends TestCase
         $this->assertInstanceOf(
             SetInterface::class,
             Intersection::of(
-                $this->createMock(SetInterface::class),
-                $this->createMock(SetInterface::class),
+                Set::of(),
+                Set::of(),
             ),
         );
     }

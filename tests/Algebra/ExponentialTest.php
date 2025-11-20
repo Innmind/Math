@@ -23,6 +23,7 @@ use Innmind\Math\Algebra\{
     CommonLogarithm,
     Signum,
     Real,
+    Value,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -31,7 +32,7 @@ class ExponentialTest extends TestCase
     public function testInterface()
     {
         $power = Exponential::of(
-            $this->createMock(Number::class),
+            Value::zero,
         );
 
         $this->assertInstanceOf(Number::class, $power);

@@ -23,6 +23,7 @@ use Innmind\Math\Algebra\{
     CommonLogarithm,
     Signum,
     Real,
+    Value,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -31,8 +32,8 @@ class ModuloTest extends TestCase
     public function testInterface()
     {
         $modulo = Modulo::of(
-            $this->createMock(Number::class),
-            $this->createMock(Number::class),
+            Value::one,
+            Value::one,
         );
 
         $this->assertInstanceOf(Number::class, $modulo);

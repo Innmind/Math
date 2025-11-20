@@ -24,6 +24,7 @@ use Innmind\Math\Algebra\{
     Signum,
     Integer,
     Real,
+    Value,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -32,8 +33,8 @@ class PowerTest extends TestCase
     public function testInterface()
     {
         $power = Power::of(
-            $this->createMock(Number::class),
-            $this->createMock(Number::class),
+            Value::one,
+            Value::one,
         );
 
         $this->assertInstanceOf(Number::class, $power);

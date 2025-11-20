@@ -23,6 +23,7 @@ use Innmind\Math\Algebra\{
     NaturalLogarithm,
     CommonLogarithm,
     Real,
+    Value,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -31,7 +32,7 @@ class SignumTest extends TestCase
     public function testInterface()
     {
         $sgn = Signum::of(
-            $this->createMock(Number::class),
+            Value::one,
         );
 
         $this->assertInstanceOf(Number::class, $sgn);

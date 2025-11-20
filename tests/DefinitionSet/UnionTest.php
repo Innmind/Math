@@ -21,8 +21,8 @@ class UnionTest extends TestCase
         $this->assertInstanceOf(
             SetInterface::class,
             Union::of(
-                $this->createMock(SetInterface::class),
-                $this->createMock(SetInterface::class),
+                Set::of(),
+                Set::of(),
             ),
         );
     }
