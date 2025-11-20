@@ -273,22 +273,10 @@ final class Matrix
     public function isInRowEchelonForm(): bool
     {
         $leadingZeros = $this->rows->map(
-            static function(RowVector $row): int {
-                $isLeadingZero = true;
-
-                return $row
-                    ->toSequence()
-                    ->map(static function($number) use (&$isLeadingZero): bool {
-                        if ($isLeadingZero && !$number->equals(Value::zero)) {
-                            $isLeadingZero = false;
-                        }
-
-                        /** @var bool */
-                        return $isLeadingZero;
-                    })
-                    ->filter(static fn($isLeadingZero) => $isLeadingZero)
-                    ->size();
-            },
+            static fn(RowVector $row) => $row
+                ->toSequence()
+                ->takeWhile(static fn($number) => $number->equals(Value::zero))
+                ->size(),
         );
 
         return $leadingZeros->equals($leadingZeros->sort(static fn($a, $b) => $a <=> $b)) &&
