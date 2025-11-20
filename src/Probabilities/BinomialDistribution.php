@@ -21,11 +21,11 @@ final class BinomialDistribution
         $this->probability = $probability;
     }
 
-    public function __invoke(Integer $trials, Integer $success): Number
+    public function __invoke(int $trials, int $success): Number
     {
-        /** @var Integer */
-        $errors = $trials->subtract($success)->collapse();
-        $coefficient = $trials
+        $errors = Integer::of($trials - $success);
+        $success = Integer::of($success);
+        $coefficient = Integer::of($trials)
             ->factorial()
             ->divideBy(
                 $success->factorial()->multiplyBy(
