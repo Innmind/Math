@@ -6,7 +6,6 @@ namespace Tests\Innmind\Math\Algebra;
 use Innmind\Math\Algebra\{
     Exponential,
     Power,
-    Operation,
     Number,
     Addition,
     Subtraction,
@@ -36,7 +35,6 @@ class ExponentialTest extends TestCase
         );
 
         $this->assertInstanceOf(Number::class, $power);
-        $this->assertInstanceOf(Operation::class, $power);
     }
 
     public function testResult()

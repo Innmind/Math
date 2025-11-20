@@ -6,7 +6,7 @@ namespace Innmind\Math\Algebra;
 /**
  * @psalm-immutable
  */
-final class Absolute implements Operation, Number
+final class Absolute implements Number
 {
     private Number $number;
 
@@ -29,7 +29,6 @@ final class Absolute implements Operation, Number
         return $this->result()->value();
     }
 
-    #[\Override]
     public function result(): Number
     {
         return $this->compute($this->number);

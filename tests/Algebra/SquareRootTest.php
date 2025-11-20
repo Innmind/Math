@@ -7,7 +7,6 @@ use Innmind\Math\Algebra\{
     SquareRoot,
     Ceil,
     Floor,
-    Operation,
     Number,
     Addition,
     Subtraction,
@@ -34,7 +33,6 @@ class SquareRootTest extends TestCase
         $sqrt = SquareRoot::of(Real::of(42.42));
 
         $this->assertInstanceOf(Number::class, $sqrt);
-        $this->assertInstanceOf(Operation::class, $sqrt);
     }
 
     public function testResult()

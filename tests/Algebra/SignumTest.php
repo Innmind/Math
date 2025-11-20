@@ -6,7 +6,6 @@ namespace Tests\Innmind\Math\Algebra;
 use Innmind\Math\Algebra\{
     Signum,
     Power,
-    Operation,
     Number,
     Addition,
     Subtraction,
@@ -36,7 +35,6 @@ class SignumTest extends TestCase
         );
 
         $this->assertInstanceOf(Number::class, $sgn);
-        $this->assertInstanceOf(Operation::class, $sgn);
     }
 
     public function testResult()

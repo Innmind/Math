@@ -5,7 +5,6 @@ namespace Tests\Innmind\Math\Algebra;
 
 use Innmind\Math\Algebra\{
     Modulo,
-    Operation,
     Number,
     Addition,
     Subtraction,
@@ -37,7 +36,6 @@ class ModuloTest extends TestCase
         );
 
         $this->assertInstanceOf(Number::class, $modulo);
-        $this->assertInstanceOf(Operation::class, $modulo);
     }
 
     public function testResult()

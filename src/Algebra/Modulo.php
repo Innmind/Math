@@ -6,7 +6,7 @@ namespace Innmind\Math\Algebra;
 /**
  * @psalm-immutable
  */
-final class Modulo implements Operation, Number
+final class Modulo implements Number
 {
     private Number $number;
     private Number $modulus;
@@ -25,7 +25,6 @@ final class Modulo implements Operation, Number
         return new self($number, $modulus);
     }
 
-    #[\Override]
     public function result(): Number
     {
         return $this->compute($this->number, $this->modulus);

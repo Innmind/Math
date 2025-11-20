@@ -6,7 +6,7 @@ namespace Innmind\Math\Algebra;
 /**
  * @psalm-immutable
  */
-final class Signum implements Operation, Number
+final class Signum implements Number
 {
     private Number $number;
 
@@ -23,7 +23,6 @@ final class Signum implements Operation, Number
         return new self($number);
     }
 
-    #[\Override]
     public function result(): Number
     {
         return $this->compute($this->number);

@@ -6,7 +6,6 @@ namespace Tests\Innmind\Math\Algebra;
 use Innmind\Math\{
     Algebra\Division,
     Algebra\Number,
-    Algebra\Operation,
     Algebra\Addition,
     Algebra\Subtraction,
     Algebra\Multiplication,
@@ -36,7 +35,6 @@ class DivisionTest extends TestCase
             $divisor = Real::of(2),
         );
 
-        $this->assertInstanceOf(Operation::class, $division);
         $this->assertInstanceOf(Number::class, $division);
         $this->assertSame($dividend, $division->dividend());
         $this->assertSame($divisor, $division->divisor());

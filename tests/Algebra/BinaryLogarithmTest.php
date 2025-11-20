@@ -8,7 +8,6 @@ use Innmind\Math\{
     Algebra\SquareRoot,
     Algebra\Ceil,
     Algebra\Floor,
-    Algebra\Operation,
     Algebra\Number,
     Algebra\Addition,
     Algebra\Subtraction,
@@ -35,7 +34,6 @@ class BinaryLogarithmTest extends TestCase
         $lb = BinaryLogarithm::of(Real::of(42.42));
 
         $this->assertInstanceOf(Number::class, $lb);
-        $this->assertInstanceOf(Operation::class, $lb);
     }
 
     public function testThrowWhenNotAllowedValue()

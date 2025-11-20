@@ -6,7 +6,7 @@ namespace Innmind\Math\Algebra;
 /**
  * @psalm-immutable
  */
-final class Exponential implements Operation, Number
+final class Exponential implements Number
 {
     private Number $power;
 
@@ -23,7 +23,6 @@ final class Exponential implements Operation, Number
         return new self($power);
     }
 
-    #[\Override]
     public function result(): Number
     {
         return $this->compute($this->power);

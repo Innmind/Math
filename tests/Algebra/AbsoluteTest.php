@@ -7,7 +7,6 @@ use Innmind\Math\Algebra\{
     Absolute,
     Ceil,
     Floor,
-    Operation,
     Number,
     Addition,
     Subtraction,
@@ -34,7 +33,6 @@ class AbsoluteTest extends TestCase
         $absolute = Absolute::of(Real::of(42.42));
 
         $this->assertInstanceOf(Number::class, $absolute);
-        $this->assertInstanceOf(Operation::class, $absolute);
     }
 
     #[DataProvider('values')]

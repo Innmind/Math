@@ -5,7 +5,6 @@ namespace Tests\Innmind\Math\Algebra;
 
 use Innmind\Math\Algebra\{
     Addition,
-    Operation,
     Number,
     Subtraction,
     Division,
@@ -36,7 +35,6 @@ class AdditionTest extends TestCase
             Real::of(66),
         );
 
-        $this->assertInstanceOf(Operation::class, $addition);
         $this->assertInstanceOf(Number::class, $addition);
         $this->assertSame('24 + 42 + 66', $addition->toString());
     }

@@ -12,6 +12,10 @@
 
 - PHP `8.4` deprecations
 
+### Removed
+
+- `Innmind\Math\Algebra\Operation`
+
 ## 6.1.0 - 2023-09-23
 
 ### Added

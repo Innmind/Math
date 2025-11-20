@@ -6,7 +6,7 @@ namespace Innmind\Math\Algebra;
 /**
  * @psalm-immutable
  */
-final class Power implements Operation, Number
+final class Power implements Number
 {
     private Number $number;
     private Number $power;
@@ -25,7 +25,6 @@ final class Power implements Operation, Number
         return new self($number, $power);
     }
 
-    #[\Override]
     public function result(): Number
     {
         return Real::of(

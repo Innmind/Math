@@ -11,7 +11,7 @@ use Innmind\Immutable\{
 /**
  * @psalm-immutable
  */
-final class Addition implements Operation, Number
+final class Addition implements Number
 {
     /** @var Sequence<Number> */
     private Sequence $values;
@@ -168,7 +168,6 @@ final class Addition implements Operation, Number
         return $this->result();
     }
 
-    #[\Override]
     public function result(): Number
     {
         return $this->compute($this->values);

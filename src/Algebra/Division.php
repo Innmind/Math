@@ -8,7 +8,7 @@ use Innmind\Math\Exception\DivisionByZero;
 /**
  * @psalm-immutable
  */
-final class Division implements Operation, Number
+final class Division implements Number
 {
     private Number $dividend;
     private Number $divisor;
@@ -178,7 +178,6 @@ final class Division implements Operation, Number
         return $this->result();
     }
 
-    #[\Override]
     public function result(): Number
     {
         return $this->compute(

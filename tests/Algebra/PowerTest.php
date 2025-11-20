@@ -5,7 +5,6 @@ namespace Tests\Innmind\Math\Algebra;
 
 use Innmind\Math\Algebra\{
     Power,
-    Operation,
     Number,
     Addition,
     Subtraction,
@@ -38,7 +37,6 @@ class PowerTest extends TestCase
         );
 
         $this->assertInstanceOf(Number::class, $power);
-        $this->assertInstanceOf(Operation::class, $power);
     }
 
     public function testResult()

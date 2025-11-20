@@ -9,7 +9,7 @@ use Innmind\Math\DefinitionSet\Set;
  * Base 10 logarithm
  * @psalm-immutable
  */
-final class CommonLogarithm implements Operation, Number
+final class CommonLogarithm implements Number
 {
     private Number $number;
 
@@ -160,7 +160,6 @@ final class CommonLogarithm implements Operation, Number
         return Signum::of($this);
     }
 
-    #[\Override]
     public function result(): Number
     {
         return $this->compute($this->number);

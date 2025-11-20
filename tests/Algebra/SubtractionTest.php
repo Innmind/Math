@@ -6,7 +6,6 @@ namespace Tests\Innmind\Math\Algebra;
 use Innmind\Math\Algebra\{
     Subtraction,
     Number,
-    Operation,
     Addition,
     Multiplication,
     Division,
@@ -35,7 +34,6 @@ class SubtractionTest extends TestCase
             Real::of(2),
         );
 
-        $this->assertInstanceOf(Operation::class, $subtraction);
         $this->assertInstanceOf(Number::class, $subtraction);
         $this->assertSame('4 - 2', $subtraction->toString());
     }

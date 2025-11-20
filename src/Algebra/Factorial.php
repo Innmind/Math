@@ -8,7 +8,7 @@ use Innmind\Math\Exception\FactorialMustBePositive;
 /**
  * @psalm-immutable
  */
-final class Factorial implements Operation, Number
+final class Factorial implements Number
 {
     private int $value;
 
@@ -161,7 +161,6 @@ final class Factorial implements Operation, Number
         return Signum::of($this);
     }
 
-    #[\Override]
     public function result(): Number
     {
         if ($this->value < 2) {

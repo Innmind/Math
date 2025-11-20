@@ -11,7 +11,7 @@ use Innmind\Immutable\{
 /**
  * @psalm-immutable
  */
-final class Multiplication implements Operation, Number
+final class Multiplication implements Number
 {
     private Number $first;
     private Number $second;
@@ -176,7 +176,6 @@ final class Multiplication implements Operation, Number
         return $this->result();
     }
 
-    #[\Override]
     public function result(): Number
     {
         $value = $this->values->reduce(

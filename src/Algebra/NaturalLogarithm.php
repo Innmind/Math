@@ -9,7 +9,7 @@ use Innmind\Math\DefinitionSet\Set;
  * base e logarithm
  * @psalm-immutable
  */
-final class NaturalLogarithm implements Operation, Number
+final class NaturalLogarithm implements Number
 {
     private Number $number;
 
@@ -160,7 +160,6 @@ final class NaturalLogarithm implements Operation, Number
         return Signum::of($this);
     }
 
-    #[\Override]
     public function result(): Number
     {
         return $this->compute($this->number);

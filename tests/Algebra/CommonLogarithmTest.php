@@ -8,7 +8,6 @@ use Innmind\Math\{
     Algebra\SquareRoot,
     Algebra\Ceil,
     Algebra\Floor,
-    Algebra\Operation,
     Algebra\Number,
     Algebra\Addition,
     Algebra\Subtraction,
@@ -35,7 +34,6 @@ class CommonLogarithmTest extends TestCase
         $lg = CommonLogarithm::of(Real::of(42.42));
 
         $this->assertInstanceOf(Number::class, $lg);
-        $this->assertInstanceOf(Operation::class, $lg);
     }
 
     public function testThrowWhenNotAllowedValue()

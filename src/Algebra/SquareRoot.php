@@ -6,7 +6,7 @@ namespace Innmind\Math\Algebra;
 /**
  * @psalm-immutable
  */
-final class SquareRoot implements Operation, Number
+final class SquareRoot implements Number
 {
     private Number $number;
 
@@ -29,7 +29,6 @@ final class SquareRoot implements Operation, Number
         return $this->result()->value();
     }
 
-    #[\Override]
     public function result(): Number
     {
         return Real::of(
