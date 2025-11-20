@@ -180,6 +180,12 @@ final class ArcSine implements Number
         return \sprintf('sin⁻¹(%s)', $this->number->toString());
     }
 
+    #[\Override]
+    public function format(): string
+    {
+        return $this->toString();
+    }
+
     private function arcSine(): Degree
     {
         $radians = Real::of(

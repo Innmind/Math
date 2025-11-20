@@ -175,12 +175,16 @@ final class Modulo implements Operation, Number
     #[\Override]
     public function toString(): string
     {
-        $number = $this->number instanceof Operation ?
-            '('.$this->number->toString().')' : $this->number->toString();
-        $modulus = $this->modulus instanceof Operation ?
-            '('.$this->modulus->toString().')' : $this->modulus->toString();
+        $number = $this->number->format();
+        $modulus = $this->modulus->format();
 
         return $number.' % '.$modulus;
+    }
+
+    #[\Override]
+    public function format(): string
+    {
+        return '('.$this->toString().')';
     }
 
     private function compute(Number $number, Number $modulus): Number

@@ -186,6 +186,12 @@ final class ArcTangent implements Number
         return \sprintf('tan⁻¹(%s)', $this->number->toString());
     }
 
+    #[\Override]
+    public function format(): string
+    {
+        return $this->toString();
+    }
+
     private function arcTangent(): Degree
     {
         $radians = Real::of(

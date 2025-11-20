@@ -188,4 +188,10 @@ enum Value implements Number
             self::negativeInfinite => '-∞',
         };
     }
+
+    #[\Override]
+    public function format(): string
+    {
+        return $this->toString();
+    }
 }

@@ -173,6 +173,12 @@ final class Signum implements Operation, Number
         return \sprintf('sgn(%s)', $this->number->toString());
     }
 
+    #[\Override]
+    public function format(): string
+    {
+        return '('.$this->toString().')';
+    }
+
     private function compute(Number $number): Integer
     {
         return Integer::of(

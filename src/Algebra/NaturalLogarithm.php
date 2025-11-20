@@ -189,6 +189,12 @@ final class NaturalLogarithm implements Operation, Number
         return \sprintf('ln(%s)', $this->number->toString());
     }
 
+    #[\Override]
+    public function format(): string
+    {
+        return '('.$this->toString().')';
+    }
+
     private function compute(Number $number): Number
     {
         return Real::of(

@@ -188,4 +188,10 @@ final class Factorial implements Operation, Number
     {
         return $this->value.'!';
     }
+
+    #[\Override]
+    public function format(): string
+    {
+        return '('.$this->toString().')';
+    }
 }

@@ -6,7 +6,6 @@ namespace Innmind\Math\Polynom;
 use Innmind\Math\{
     Algebra\Number,
     Algebra\Integer,
-    Algebra\Operation,
     Algebra\Value,
 };
 
@@ -69,8 +68,7 @@ final class Degree
 
     public function toString(): string
     {
-        $coeff = $this->coeff instanceof Operation ?
-            '('.$this->coeff->toString().')' : $this->coeff->toString();
+        $coeff = $this->coeff->format();
 
         if ($this->degree->equals(Value::one)) {
             return $coeff.'x';

@@ -178,6 +178,12 @@ final class Tangent implements Number
         return \sprintf('tan(%s)', $this->degree->toString());
     }
 
+    #[\Override]
+    public function format(): string
+    {
+        return $this->toString();
+    }
+
     private function tangent(): Number
     {
         return Real::of(

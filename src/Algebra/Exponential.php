@@ -170,10 +170,15 @@ final class Exponential implements Operation, Number
     #[\Override]
     public function toString(): string
     {
-        $power = $this->power instanceof Operation ?
-            '('.$this->power->toString().')' : $this->power->toString();
+        $power = $this->power->format();
 
         return 'e^'.$power;
+    }
+
+    #[\Override]
+    public function format(): string
+    {
+        return '('.$this->toString().')';
     }
 
     private function compute(Number $power): Number

@@ -178,6 +178,12 @@ final class Cosine implements Number
         return \sprintf('cos(%s)', $this->degree->toString());
     }
 
+    #[\Override]
+    public function format(): string
+    {
+        return $this->toString();
+    }
+
     private function cosine(): Number
     {
         return Real::of(

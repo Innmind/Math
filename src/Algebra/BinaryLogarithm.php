@@ -189,6 +189,12 @@ final class BinaryLogarithm implements Operation, Number
         return \sprintf('lb(%s)', $this->number->toString());
     }
 
+    #[\Override]
+    public function format(): string
+    {
+        return '('.$this->toString().')';
+    }
+
     private function compute(Number $number): Number
     {
         return Real::of(

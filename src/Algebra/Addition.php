@@ -186,16 +186,16 @@ final class Addition implements Operation, Number
     public function toString(): string
     {
         $values = $this->values->map(
-            static function(Number $number): string {
-                if ($number instanceof Operation) {
-                    return '('.$number->toString().')';
-                }
-
-                return $number->toString();
-            },
+            static fn($number) => $number->format(),
         );
 
         return Str::of(' + ')->join($values)->toString();
+    }
+
+    #[\Override]
+    public function format(): string
+    {
+        return '('.$this->toString().')';
     }
 
     /**

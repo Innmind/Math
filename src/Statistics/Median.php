@@ -184,6 +184,12 @@ final class Median implements Number
         return $this->result->toString();
     }
 
+    #[\Override]
+    public function format(): string
+    {
+        return $this->result->format();
+    }
+
     /**
      * @param Sequence<Number> $values
      */

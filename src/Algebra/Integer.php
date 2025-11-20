@@ -199,4 +199,10 @@ class Integer implements Number
     {
         return \var_export($this->value, true);
     }
+
+    #[\Override]
+    public function format(): string
+    {
+        return $this->toString();
+    }
 }

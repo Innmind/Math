@@ -178,6 +178,12 @@ final class Sine implements Number
         return \sprintf('sin(%s)', $this->degree->toString());
     }
 
+    #[\Override]
+    public function format(): string
+    {
+        return $this->toString();
+    }
+
     private function sine(): Number
     {
         return Real::of(

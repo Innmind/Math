@@ -199,16 +199,20 @@ final class Division implements Operation, Number
     #[\Override]
     public function toString(): string
     {
-        $dividend = $this->dividend instanceof Operation ?
-            '('.$this->dividend->toString().')' : $this->dividend->toString();
-        $divisor = $this->divisor instanceof Operation ?
-            '('.$this->divisor->toString().')' : $this->divisor->toString();
+        $dividend = $this->dividend->format();
+        $divisor = $this->divisor->format();
 
         return \sprintf(
             '%s ÷ %s',
             $dividend,
             $divisor,
         );
+    }
+
+    #[\Override]
+    public function format(): string
+    {
+        return '('.$this->toString().')';
     }
 
     private function compute(Number $dividend, Number $divisor): Number

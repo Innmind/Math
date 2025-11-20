@@ -180,4 +180,10 @@ final class Mean implements Number
     {
         return $this->result->toString();
     }
+
+    #[\Override]
+    public function format(): string
+    {
+        return $this->result->format();
+    }
 }

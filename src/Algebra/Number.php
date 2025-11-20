@@ -31,6 +31,7 @@ interface Number
     public function commonLogarithm(): self;
     public function signum(): self;
     public function toString(): string;
+    public function format(): string;
 
     /**
      * Compute the underlying number like the value() method but it will try to

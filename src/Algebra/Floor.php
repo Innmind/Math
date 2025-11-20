@@ -167,6 +167,12 @@ final class Floor implements Number
         return \var_export($this->value(), true);
     }
 
+    #[\Override]
+    public function format(): string
+    {
+        return $this->toString();
+    }
+
     private function compute(Number $number): int|float
     {
         return \floor($number->value());

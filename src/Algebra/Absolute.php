@@ -173,6 +173,12 @@ final class Absolute implements Operation, Number
         return '|'.$this->number->toString().'|';
     }
 
+    #[\Override]
+    public function format(): string
+    {
+        return '('.$this->toString().')';
+    }
+
     private function compute(Number $number): Number
     {
         return Real::of(

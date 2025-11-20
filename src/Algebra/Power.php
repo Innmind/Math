@@ -188,11 +188,15 @@ final class Power implements Operation, Number
     #[\Override]
     public function toString(): string
     {
-        $number = $this->number instanceof Operation ?
-            '('.$this->number->toString().')' : $this->number->toString();
-        $power = $this->power instanceof Operation ?
-            '('.$this->power->toString().')' : $this->power->toString();
+        $number = $this->number->format();
+        $power = $this->power->format();
 
         return $number.'^'.$power;
+    }
+
+    #[\Override]
+    public function format(): string
+    {
+        return '('.$this->toString().')';
     }
 }

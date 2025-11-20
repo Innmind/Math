@@ -153,10 +153,8 @@ final class ComplexNumber
 
     public function toString(): string
     {
-        $real = $this->real instanceof Operation ?
-            '('.$this->real->toString().')' : $this->real->toString();
-        $imaginary = $this->imaginary instanceof Operation ?
-            '('.$this->imaginary->toString().')' : $this->imaginary->toString();
+        $real = $this->real->format();
+        $imaginary = $this->imaginary->format();
 
         return \sprintf('(%s + %si)', $real, $imaginary);
     }

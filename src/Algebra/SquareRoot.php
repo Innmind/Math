@@ -181,9 +181,14 @@ final class SquareRoot implements Operation, Number
     #[\Override]
     public function toString(): string
     {
-        $number = $this->number instanceof Operation ?
-            '('.$this->number->toString().')' : $this->number->toString();
+        $number = $this->number->format();
 
         return '√'.$number;
+    }
+
+    #[\Override]
+    public function format(): string
+    {
+        return '('.$this->toString().')';
     }
 }

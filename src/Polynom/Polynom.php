@@ -7,7 +7,6 @@ use function Innmind\Math\desc;
 use Innmind\Math\Algebra\{
     Number,
     Integer,
-    Operation,
     Value,
     Addition,
 };
@@ -182,8 +181,7 @@ final class Polynom
         $polynom = Str::of(' + ')->join($degrees);
 
         if (!$this->intercept->equals(Value::zero)) {
-            $intercept = $this->intercept instanceof Operation ?
-                '('.$this->intercept->toString().')' : $this->intercept->toString();
+            $intercept = $this->intercept->format();
 
             $polynom = $polynom
                 ->append(' + ')

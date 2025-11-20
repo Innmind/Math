@@ -180,6 +180,12 @@ final class ArcCosine implements Number
         return \sprintf('cos⁻¹(%s)', $this->number->toString());
     }
 
+    #[\Override]
+    public function format(): string
+    {
+        return $this->toString();
+    }
+
     private function arcCosine(): Degree
     {
         $radians = Real::of(
