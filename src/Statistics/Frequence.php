@@ -5,7 +5,6 @@ namespace Innmind\Math\Statistics;
 
 use Innmind\Math\Algebra\{
     Number,
-    Division,
     Integer,
 };
 use Innmind\Immutable\Sequence;
@@ -35,7 +34,7 @@ final class Frequence
             ->filter(static fn($value) => $value->equals($number))
             ->size();
 
-        return Division::of(Integer::of($frequence), $this->size);
+        return Integer::of($frequence)->divideBy($this->size);
     }
 
     /**

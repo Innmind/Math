@@ -13,14 +13,12 @@ use Innmind\Immutable\{
  */
 final class Addition implements Number
 {
-    /** @var Sequence<Number> */
-    private Sequence $values;
-
+    /**
+     * @param Sequence<Number> $values
+     */
     private function __construct(
-        Number $first,
-        Number ...$values,
+        private Sequence $values,
     ) {
-        $this->values = Sequence::of($first, ...$values);
     }
 
     /**
@@ -28,7 +26,7 @@ final class Addition implements Number
      */
     public static function of(Number $first, Number ...$values): self
     {
-        return new self($first, ...$values);
+        return new self(Sequence::of($first, ...$values));
     }
 
     #[\Override]
@@ -52,7 +50,7 @@ final class Addition implements Number
     #[\Override]
     public function add(Number $number, Number ...$numbers): self
     {
-        return new self($this, $number, ...$numbers);
+        return new self($this->values->append(Sequence::of($number, ...$numbers)));
     }
 
     #[\Override]

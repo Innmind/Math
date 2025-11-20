@@ -4,11 +4,11 @@ declare(strict_types = 1);
 namespace Innmind\Math\Polynom;
 
 use function Innmind\Math\desc;
-use Innmind\Math\Algebra\{
-    Number,
-    Integer,
-    Value,
-    Addition,
+use Innmind\Math\{
+    Algebra\Number,
+    Algebra\Integer,
+    Algebra\Value,
+    Monoid\Addition,
 };
 use Innmind\Immutable\{
     Sequence,
@@ -39,12 +39,11 @@ final class Polynom
      */
     public function __invoke(Number $x): Number
     {
-        $values = $this
+        return $this
             ->degrees
             ->map(static fn($degree) => $degree($x))
-            ->toList();
-
-        return Addition::of($this->intercept, ...$values);
+            ->prepend(Sequence::of($this->intercept))
+            ->fold(Addition::monoid);
     }
 
     /**

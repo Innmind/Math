@@ -9,7 +9,6 @@ use Innmind\Math\{
     Geometry\Segment,
     Algebra\Number,
     Algebra\Value,
-    Algebra\Addition,
 };
 
 /**
@@ -60,7 +59,10 @@ final class Triangle implements Figure
     #[\Override]
     public function perimeter(): Number
     {
-        return Addition::of($this->a, $this->b, $this->c);
+        return $this
+            ->a
+            ->add($this->b)
+            ->add($this->c);
     }
 
     #[\Override]

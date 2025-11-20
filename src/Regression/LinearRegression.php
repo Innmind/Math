@@ -8,9 +8,7 @@ use Innmind\Math\{
     Algebra\Number,
     Algebra\Integer,
     Algebra\Value,
-    Algebra\Division,
-    Algebra\Subtraction,
-    Monoid,
+    Monoid\Addition,
 };
 
 /**
@@ -87,29 +85,23 @@ final class LinearRegression
             ->abscissas()
             ->toSequence()
             ->map(static fn($x) => $x->multiplyBy($x))
-            ->fold(Monoid\Addition::monoid);
+            ->fold(Addition::monoid);
         $xySum = $data
             ->points()
             ->map(static fn($point) => $point->abscissa()->multiplyBy($point->ordinate()))
-            ->fold(Monoid\Addition::monoid);
+            ->fold(Addition::monoid);
 
-        $slope = Division::of(
-            Subtraction::of(
-                $dimension->multiplyBy($xySum),
-                $xSum->multiplyBy($ySum),
-            ),
-            Subtraction::of(
-                $dimension->multiplyBy($xxSum),
-                $xSum->power(Value::two),
-            ),
-        );
-        $intercept = Division::of(
-            Subtraction::of(
-                $ySum,
-                $slope->multiplyBy($xSum),
-            ),
-            $dimension,
-        );
+        $slope = $dimension
+            ->multiplyBy($xySum)
+            ->subtract($xSum->multiplyBy($ySum))
+            ->divideBy(
+                $dimension
+                    ->multiplyBy($xxSum)
+                    ->subtract($xSum->power(Value::two)),
+            );
+        $intercept = $ySum
+            ->subtract($slope->multiplyBy($xSum))
+            ->divideBy($dimension);
 
         return [$slope, $intercept];
     }

@@ -3,12 +3,10 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Statistics;
 
-use Innmind\Math\Algebra\{
-    Number,
-    Integer,
-    Addition,
+use Innmind\Math\{
+    Algebra\Number,
+    Algebra\Integer,
 };
-use Innmind\Immutable\Sequence;
 
 /**
  * @psalm-immutable
@@ -19,9 +17,14 @@ final class Mean implements Number
 
     private function __construct(Number $first, Number ...$values)
     {
-        $sequence = Sequence::of($first, ...$values);
-        $sum = Addition::of($first, ...$values);
-        $this->result = $sum->divideBy(Integer::of($sequence->size()));
+        $sum = \array_reduce(
+            $values,
+            static fn(Number $a, Number $b) => $a->add($b),
+            $first,
+        );
+        $this->result = $sum->divideBy(Integer::of(
+            \count($values) + 1,
+        ));
     }
 
     /**
