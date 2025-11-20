@@ -88,7 +88,7 @@ final class Vector
             ->numbers
             ->zip($vector->numbers)
             ->map(static fn($pair) => $pair[0]->multiplyBy($pair[1])->collapse())
-            ->fold(new Addition);
+            ->fold(Addition::monoid);
     }
 
     public function multiplyBy(self $vector): self
@@ -156,7 +156,7 @@ final class Vector
 
     public function sum(): Number
     {
-        return $this->numbers->fold(new Addition);
+        return $this->numbers->fold(Addition::monoid);
     }
 
     /**

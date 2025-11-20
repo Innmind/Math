@@ -13,8 +13,10 @@ use Innmind\Immutable\Monoid;
  * @psalm-immutable
  * @implements Monoid<Number>
  */
-final class Multiplication implements Monoid
+enum Multiplication implements Monoid
 {
+    case monoid;
+
     #[\Override]
     public function identity(): Number
     {

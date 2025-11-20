@@ -87,11 +87,11 @@ final class LinearRegression
             ->abscissas()
             ->toSequence()
             ->map(static fn($x) => $x->multiplyBy($x))
-            ->fold(new Monoid\Addition);
+            ->fold(Monoid\Addition::monoid);
         $xySum = $data
             ->points()
             ->map(static fn($point) => $point->abscissa()->multiplyBy($point->ordinate()))
-            ->fold(new Monoid\Addition);
+            ->fold(Monoid\Addition::monoid);
 
         $slope = Division::of(
             Subtraction::of(
