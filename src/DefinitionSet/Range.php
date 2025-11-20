@@ -56,6 +56,7 @@ final class Range implements Set
         return new self($this->lowerInclusivity, $this->lower, $this->upper, false);
     }
 
+    #[\Override]
     public function contains(Number $number): bool
     {
         if ($this->lower->higherThan($number)) {
@@ -83,6 +84,7 @@ final class Range implements Set
         return true;
     }
 
+    #[\Override]
     public function accept(Number $number): void
     {
         if (!$this->contains($number)) {
@@ -90,16 +92,19 @@ final class Range implements Set
         }
     }
 
+    #[\Override]
     public function union(Set $set): Set
     {
         return Union::of($this, $set);
     }
 
+    #[\Override]
     public function intersect(Set $set): Set
     {
         return Intersection::of($this, $set);
     }
 
+    #[\Override]
     public function toString(): string
     {
         return \sprintf(

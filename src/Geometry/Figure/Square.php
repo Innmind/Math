@@ -30,11 +30,13 @@ final class Square implements Figure
         return new self($side);
     }
 
+    #[\Override]
     public function perimeter(): Number
     {
         return $this->side->length()->multiplyBy(Integer::of(4));
     }
 
+    #[\Override]
     public function area(): Number
     {
         return $this->side->length()->multiplyBy($this->side->length());

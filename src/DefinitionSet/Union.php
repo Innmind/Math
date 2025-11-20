@@ -30,12 +30,14 @@ final class Union implements Set
         return new self($left, $right);
     }
 
+    #[\Override]
     public function contains(Number $number): bool
     {
         return $this->left->contains($number) ||
             $this->right->contains($number);
     }
 
+    #[\Override]
     public function accept(Number $number): void
     {
         if (!$this->contains($number)) {
@@ -43,16 +45,19 @@ final class Union implements Set
         }
     }
 
+    #[\Override]
     public function union(Set $set): Set
     {
         return new self($this, $set);
     }
 
+    #[\Override]
     public function intersect(Set $set): Set
     {
         return Intersection::of($this, $set);
     }
 
+    #[\Override]
     public function toString(): string
     {
         return $this->left->toString().'∪'.$this->right->toString();

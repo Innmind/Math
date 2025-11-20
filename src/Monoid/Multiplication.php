@@ -15,11 +15,13 @@ use Innmind\Immutable\Monoid;
  */
 final class Multiplication implements Monoid
 {
+    #[\Override]
     public function identity(): Number
     {
         return Value::one;
     }
 
+    #[\Override]
     public function combine(mixed $a, mixed $b): Number
     {
         return $a->multiplyBy($b);

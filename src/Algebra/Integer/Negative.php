@@ -10,6 +10,7 @@ use Innmind\Math\Algebra\Integer;
  */
 final class Negative extends Integer
 {
+    #[\Override]
     public function decrement(): self
     {
         /** @var self */

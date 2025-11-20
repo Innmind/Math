@@ -32,6 +32,7 @@ final class Rectangle implements Figure
         return new self($length, $width);
     }
 
+    #[\Override]
     public function perimeter(): Number
     {
         return $this
@@ -41,6 +42,7 @@ final class Rectangle implements Figure
             ->add($this->width->length()->multiplyBy(Value::two));
     }
 
+    #[\Override]
     public function area(): Number
     {
         return $this->length->length()->multiplyBy(

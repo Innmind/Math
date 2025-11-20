@@ -34,6 +34,7 @@ final class Circle implements Figure
         return new self($radius);
     }
 
+    #[\Override]
     public function perimeter(): Number
     {
         return Value::pi
@@ -41,6 +42,7 @@ final class Circle implements Figure
             ->multiplyBy($this->radius->length());
     }
 
+    #[\Override]
     public function area(): Number
     {
         return Value::pi

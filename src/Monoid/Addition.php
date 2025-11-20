@@ -15,11 +15,13 @@ use Innmind\Immutable\Monoid;
  */
 final class Addition implements Monoid
 {
+    #[\Override]
     public function identity(): Number
     {
         return Value::zero;
     }
 
+    #[\Override]
     public function combine(mixed $a, mixed $b): Number
     {
         return $a->add($b);

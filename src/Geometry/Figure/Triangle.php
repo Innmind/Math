@@ -57,11 +57,13 @@ final class Triangle implements Figure
         return new self($a, $b, $c);
     }
 
+    #[\Override]
     public function perimeter(): Number
     {
         return Addition::of($this->a, $this->b, $this->c);
     }
 
+    #[\Override]
     public function area(): Number
     {
         // Heron's formula

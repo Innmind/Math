@@ -15,6 +15,7 @@ use Innmind\Math\{
  */
 final class Integers implements Set
 {
+    #[\Override]
     public function contains(Number $number): bool
     {
         if ($number instanceof Integer) {
@@ -26,6 +27,7 @@ final class Integers implements Set
             ->equals(Value::zero);
     }
 
+    #[\Override]
     public function accept(Number $number): void
     {
         if (!$this->contains($number)) {
@@ -33,16 +35,19 @@ final class Integers implements Set
         }
     }
 
+    #[\Override]
     public function union(Set $set): Set
     {
         return Union::of($this, $set);
     }
 
+    #[\Override]
     public function intersect(Set $set): Set
     {
         return Intersection::of($this, $set);
     }
 
+    #[\Override]
     public function toString(): string
     {
         return 'ℤ';

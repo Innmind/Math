@@ -14,11 +14,13 @@ use Innmind\Math\{
  */
 final class RealNumbersExceptZero implements Set
 {
+    #[\Override]
     public function contains(Number $number): bool
     {
         return !$number->equals(Value::zero);
     }
 
+    #[\Override]
     public function accept(Number $number): void
     {
         if (!$this->contains($number)) {
@@ -26,16 +28,19 @@ final class RealNumbersExceptZero implements Set
         }
     }
 
+    #[\Override]
     public function union(Set $set): Set
     {
         return Union::of($this, $set);
     }
 
+    #[\Override]
     public function intersect(Set $set): Set
     {
         return Intersection::of($this, $set);
     }
 
+    #[\Override]
     public function toString(): string
     {
         return 'ℝ*';

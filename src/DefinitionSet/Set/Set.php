@@ -42,11 +42,13 @@ final class Set implements SetInterface
         return new self(...$values);
     }
 
+    #[\Override]
     public function contains(Number $number): bool
     {
         return $this->values->contains($number->value());
     }
 
+    #[\Override]
     public function accept(Number $number): void
     {
         if (!$this->contains($number)) {
@@ -54,16 +56,19 @@ final class Set implements SetInterface
         }
     }
 
+    #[\Override]
     public function union(SetInterface $set): SetInterface
     {
         return Union::of($this, $set);
     }
 
+    #[\Override]
     public function intersect(SetInterface $set): SetInterface
     {
         return Intersection::of($this, $set);
     }
 
+    #[\Override]
     public function toString(): string
     {
         if ($this->values->size() === 0) {

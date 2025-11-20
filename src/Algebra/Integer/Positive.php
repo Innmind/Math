@@ -13,12 +13,14 @@ final class Positive extends Integer
     /**
      * @return positive-int
      */
+    #[\Override]
     public function value(): int
     {
         /** @var positive-int */
         return parent::value();
     }
 
+    #[\Override]
     public function increment(): self
     {
         return self::positive($this->value() + 1);
