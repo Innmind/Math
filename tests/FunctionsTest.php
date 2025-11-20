@@ -8,7 +8,7 @@ use function Innmind\Math\{
     min as minimum,
 };
 use Innmind\Math\Algebra\Real;
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class FunctionsTest extends TestCase
 {

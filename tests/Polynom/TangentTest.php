@@ -9,7 +9,7 @@ use Innmind\Math\{
     Algebra\Integer,
     Algebra\Number
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class TangentTest extends TestCase
 {

@@ -8,7 +8,7 @@ use Innmind\Math\{
     Algebra\Real,
     Algebra\Integer,
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class DegreeTest extends TestCase
 {

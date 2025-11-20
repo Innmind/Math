@@ -25,7 +25,7 @@ use Innmind\Math\{
     Algebra\Real,
     Exception\FactorialMustBePositive
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class IntegerTest extends TestCase
 {

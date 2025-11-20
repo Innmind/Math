@@ -13,7 +13,8 @@ use Innmind\Math\{
     Algebra\Real,
     Exception\VectorsMustMeOfTheSameDimension
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ColumnVectorTest extends TestCase
 {
@@ -294,9 +295,7 @@ class ColumnVectorTest extends TestCase
         $this->assertFalse($vector->equals(ColumnVector::of(...numerize(1, 2))));
     }
 
-    /**
-     * @dataProvider leads
-     */
+    #[DataProvider('leads')]
     public function testLead($numbers, $expected)
     {
         $vector = ColumnVector::of(...numerize(...$numbers));
@@ -305,7 +304,7 @@ class ColumnVectorTest extends TestCase
         $this->assertSame($expected, $vector->lead()->value());
     }
 
-    public function leads(): array
+    public static function leads(): array
     {
         return [
             [

@@ -23,7 +23,7 @@ use Innmind\Math\{
     Algebra\Signum,
     Algebra\Real,
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class MeanTest extends TestCase
 {

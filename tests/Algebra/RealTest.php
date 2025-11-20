@@ -26,7 +26,7 @@ use Innmind\Math\{
     Algebra\Signum,
     Exception\NotANumber,
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class RealTest extends TestCase
 {

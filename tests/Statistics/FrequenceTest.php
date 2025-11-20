@@ -9,7 +9,7 @@ use Innmind\Math\{
     Algebra\Integer,
     Algebra\Division
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class FrequenceTest extends TestCase
 {

@@ -23,7 +23,8 @@ use Innmind\Math\Algebra\{
     Signum,
     Real,
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class FloorTest extends TestCase
 {
@@ -34,9 +35,7 @@ class FloorTest extends TestCase
         $this->assertInstanceOf(Number::class, $floor);
     }
 
-    /**
-     * @dataProvider values
-     */
+    #[DataProvider('values')]
     public function testValue($number, $expected)
     {
         $floor = Floor::of(Real::of($number));
@@ -209,7 +208,7 @@ class FloorTest extends TestCase
         $this->assertSame(1, $number->value());
     }
 
-    public function values(): array
+    public static function values(): array
     {
         return [
             [42.4, 42.0],

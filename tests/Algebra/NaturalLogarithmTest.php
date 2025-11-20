@@ -26,7 +26,7 @@ use Innmind\Math\{
     DefinitionSet\Set,
     Exception\OutOfDefinitionSet
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class NaturalLogarithmTest extends TestCase
 {

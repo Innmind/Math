@@ -13,7 +13,7 @@ use Innmind\Math\{
     Algebra\Value,
     Exception\OutOfDefinitionSet,
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class RealNumbersExceptZeroTest extends TestCase
 {

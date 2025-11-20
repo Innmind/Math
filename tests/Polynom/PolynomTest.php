@@ -10,7 +10,7 @@ use Innmind\Math\{
     Algebra\Number,
     Algebra\Integer
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class PolynomTest extends TestCase
 {

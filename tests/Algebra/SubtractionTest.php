@@ -24,7 +24,7 @@ use Innmind\Math\Algebra\{
     Signum,
     Real,
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class SubtractionTest extends TestCase
 {

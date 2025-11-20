@@ -25,7 +25,7 @@ use Innmind\Math\Algebra\{
     Real,
     Value,
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class ExponentialTest extends TestCase
 {

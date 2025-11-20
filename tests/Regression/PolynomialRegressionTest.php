@@ -10,7 +10,7 @@ use Innmind\Math\{
     Algebra\Number,
     Polynom\Polynom
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class PolynomialRegressionTest extends TestCase
 {
@@ -144,5 +144,14 @@ class PolynomialRegressionTest extends TestCase
             1.0876840197440238,
             $regression->rootMeanSquareDeviation()->value(),
         );
+    }
+
+    private function assertEqualsWithDelta(
+        int|float $expected,
+        int|float $value,
+        int|float $delta,
+    ): void {
+        $this->assertGreaterThanOrEqual($expected-$delta, $value);
+        $this->assertLessThanOrEqual($expected+$delta, $value);
     }
 }

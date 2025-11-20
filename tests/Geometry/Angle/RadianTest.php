@@ -8,13 +8,12 @@ use Innmind\Math\{
     Geometry\Angle\Degree,
     Algebra\Real,
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class RadianTest extends TestCase
 {
-    /**
-     * @dataProvider radians
-     */
+    #[DataProvider('radians')]
     public function testStringCast($radian, $expected)
     {
         $this->assertSame($expected, (Radian::of(Real::of($radian)))->toString());
@@ -54,9 +53,7 @@ class RadianTest extends TestCase
         $this->assertSame((5 * \pi()) / 4, $opposite->number()->value());
     }
 
-    /**
-     * @dataProvider radians
-     */
+    #[DataProvider('radians')]
     public function testToDegree($radian, $string, $expected)
     {
         $radian = Radian::of(Real::of($radian));
@@ -66,7 +63,7 @@ class RadianTest extends TestCase
         $this->assertSame($expected, $degree->toString());
     }
 
-    public function radians(): array
+    public static function radians(): array
     {
         return [
             [0, '0 rad', '0°'],

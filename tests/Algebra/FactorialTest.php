@@ -26,7 +26,8 @@ use Innmind\Math\{
     Algebra\Real,
     Exception\FactorialMustBePositive
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class FactorialTest extends TestCase
 {
@@ -206,9 +207,7 @@ class FactorialTest extends TestCase
         $this->assertSame(1, $number->value());
     }
 
-    /**
-     * @dataProvider factorials
-     */
+    #[DataProvider('factorials')]
     public function testResult($integer, $expected)
     {
         $number = Factorial::of($integer);
@@ -217,7 +216,7 @@ class FactorialTest extends TestCase
         $this->assertSame($expected, $number->result()->value());
     }
 
-    public function factorials(): array
+    public static function factorials(): array
     {
         return [
             [0, 1],

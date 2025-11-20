@@ -12,7 +12,7 @@ use Innmind\Math\{
     Algebra\Real,
     Exception\OutOfDefinitionSet,
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class UnionTest extends TestCase
 {

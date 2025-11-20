@@ -9,7 +9,7 @@ use Innmind\Math\{
     Algebra\Number,
     Algebra\Integer,
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class LinearRegressionTest extends TestCase
 {
@@ -66,5 +66,14 @@ class LinearRegressionTest extends TestCase
             1.8079684731764545,
             $regression->rootMeanSquareDeviation()->value(),
         );
+    }
+
+    private function assertEqualsWithDelta(
+        int|float $expected,
+        int|float $value,
+        int|float $delta,
+    ): void {
+        $this->assertGreaterThanOrEqual($expected-$delta, $value);
+        $this->assertLessThanOrEqual($expected+$delta, $value);
     }
 }

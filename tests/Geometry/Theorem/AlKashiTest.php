@@ -10,7 +10,7 @@ use Innmind\Math\{
     Algebra\Integer,
     Exception\SegmentsCannotBeJoined
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class AlKashiTest extends TestCase
 {
@@ -60,5 +60,14 @@ class AlKashiTest extends TestCase
             Segment::of(Integer::of(42)),
             Segment::of(Integer::of(20)),
         );
+    }
+
+    private function assertEqualsWithDelta(
+        int|float $expected,
+        int|float $value,
+        int|float $delta,
+    ): void {
+        $this->assertGreaterThanOrEqual($expected-$delta, $value);
+        $this->assertLessThanOrEqual($expected+$delta, $value);
     }
 }

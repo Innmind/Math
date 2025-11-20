@@ -8,7 +8,7 @@ use Innmind\Math\{
     Geometry\Segment,
     Algebra\Real,
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class PythagoraTest extends TestCase
 {

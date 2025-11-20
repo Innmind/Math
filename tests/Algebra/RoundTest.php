@@ -24,7 +24,8 @@ use Innmind\Math\{
     Algebra\Real,
     Exception\PrecisionMustBePositive
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class RoundTest extends TestCase
 {
@@ -42,9 +43,7 @@ class RoundTest extends TestCase
         Round::up(Real::of(42), -1);
     }
 
-    /**
-     * @dataProvider values
-     */
+    #[DataProvider('values')]
     public function testValue($number, $expected, $precision, $mode)
     {
         $round = Round::$mode(Real::of($number), $precision);
@@ -219,7 +218,7 @@ class RoundTest extends TestCase
         $this->assertSame(1, $number->value());
     }
 
-    public function values(): array
+    public static function values(): array
     {
         return [
             [42.5, 43.0, 0, 'up'],

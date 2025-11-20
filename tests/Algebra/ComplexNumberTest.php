@@ -9,7 +9,7 @@ use Innmind\Math\Algebra\{
     Number,
     Value,
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class ComplexNumberTest extends TestCase
 {

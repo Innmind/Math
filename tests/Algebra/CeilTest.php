@@ -23,7 +23,8 @@ use Innmind\Math\Algebra\{
     Signum,
     Real,
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class CeilTest extends TestCase
 {
@@ -34,9 +35,7 @@ class CeilTest extends TestCase
         $this->assertInstanceOf(Number::class, $ceil);
     }
 
-    /**
-     * @dataProvider values
-     */
+    #[DataProvider('values')]
     public function testValue($number, $expected)
     {
         $ceil = Ceil::of(Real::of($number));
@@ -209,7 +208,7 @@ class CeilTest extends TestCase
         $this->assertSame(1, $number->value());
     }
 
-    public function values(): array
+    public static function values(): array
     {
         return [
             [42.4, 43.0],
@@ -217,5 +216,14 @@ class CeilTest extends TestCase
             [42.6, 43.0],
             [42.51, 43.0],
         ];
+    }
+
+    private function assertEqualsWithDelta(
+        int|float $expected,
+        int|float $value,
+        int|float $delta,
+    ): void {
+        $this->assertGreaterThanOrEqual($expected-$delta, $value);
+        $this->assertLessThanOrEqual($expected+$delta, $value);
     }
 }

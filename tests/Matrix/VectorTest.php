@@ -11,7 +11,8 @@ use Innmind\Math\{
     Algebra\Real,
     Exception\VectorsMustMeOfTheSameDimension
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class VectorTest extends TestCase
 {
@@ -257,9 +258,7 @@ class VectorTest extends TestCase
         $this->assertFalse($vector->equals(Vector::of(...numerize(1, 2))));
     }
 
-    /**
-     * @dataProvider leads
-     */
+    #[DataProvider('leads')]
     public function testLead($numbers, $expected)
     {
         $vector = Vector::of(...numerize(...$numbers));
@@ -268,7 +267,7 @@ class VectorTest extends TestCase
         $this->assertSame($expected, $vector->lead()->value());
     }
 
-    public function leads(): array
+    public static function leads(): array
     {
         return [
             [
@@ -288,5 +287,14 @@ class VectorTest extends TestCase
                 0,
             ],
         ];
+    }
+
+    private function assertEqualsWithDelta(
+        int|float $expected,
+        int|float $value,
+        int|float $delta,
+    ): void {
+        $this->assertGreaterThanOrEqual($expected-$delta, $value);
+        $this->assertLessThanOrEqual($expected+$delta, $value);
     }
 }

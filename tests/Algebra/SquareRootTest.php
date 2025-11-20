@@ -25,7 +25,7 @@ use Innmind\Math\Algebra\{
     Integer,
     Real,
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class SquareRootTest extends TestCase
 {

@@ -24,7 +24,8 @@ use Innmind\Math\Algebra\{
     Signum,
     Real,
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class AbsoluteTest extends TestCase
 {
@@ -36,9 +37,7 @@ class AbsoluteTest extends TestCase
         $this->assertInstanceOf(Operation::class, $absolute);
     }
 
-    /**
-     * @dataProvider values
-     */
+    #[DataProvider('values')]
     public function testValue($number, $expected)
     {
         $absolute = Absolute::of(Real::of($number));
@@ -210,11 +209,20 @@ class AbsoluteTest extends TestCase
         $this->assertSame(1, $number->value());
     }
 
-    public function values(): array
+    public static function values(): array
     {
         return [
             [-1, 1],
             [1, 1],
         ];
+    }
+
+    private function assertEqualsWithDelta(
+        int|float $expected,
+        int|float $value,
+        int|float $delta,
+    ): void {
+        $this->assertGreaterThanOrEqual($expected-$delta, $value);
+        $this->assertLessThanOrEqual($expected+$delta, $value);
     }
 }

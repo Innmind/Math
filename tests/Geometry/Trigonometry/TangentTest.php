@@ -24,7 +24,7 @@ use Innmind\Math\{
     Algebra\Signum,
     Algebra\Real,
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class TangentTest extends TestCase
 {
@@ -198,5 +198,14 @@ class TangentTest extends TestCase
 
         $this->assertInstanceOf(Signum::class, $number);
         $this->assertSame(1, $number->value());
+    }
+
+    private function assertEqualsWithDelta(
+        int|float $expected,
+        int|float $value,
+        int|float $delta,
+    ): void {
+        $this->assertGreaterThanOrEqual($expected-$delta, $value);
+        $this->assertLessThanOrEqual($expected+$delta, $value);
     }
 }

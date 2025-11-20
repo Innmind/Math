@@ -7,7 +7,7 @@ use Innmind\Math\{
     Matrix\Dimension,
     Algebra\Integer,
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class DimensionTest extends TestCase
 {

@@ -17,7 +17,8 @@ use Innmind\Math\{
     Exception\MatrixNotInvertible
 };
 use Innmind\Immutable\Sequence;
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class MatrixTest extends TestCase
 {
@@ -407,9 +408,7 @@ class MatrixTest extends TestCase
         )));
     }
 
-    /**
-     * @dataProvider inverses
-     */
+    #[DataProvider('inverses')]
     public function testInverse($initial, $expected)
     {
         $matrix = Matrix::of($initial);
@@ -459,7 +458,7 @@ class MatrixTest extends TestCase
         ])->inverse();
     }
 
-    public function inverses(): array
+    public static function inverses(): array
     {
         return [
             [

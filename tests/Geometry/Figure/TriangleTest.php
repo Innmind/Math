@@ -11,7 +11,7 @@ use Innmind\Math\{
     Algebra\Integer,
     Algebra\Real,
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class TriangleTest extends TestCase
 {

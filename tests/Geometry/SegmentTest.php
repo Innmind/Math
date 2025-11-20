@@ -10,7 +10,7 @@ use Innmind\Math\{
     Algebra\Integer,
     Exception\LengthMustBePositive
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class SegmentTest extends TestCase
 {

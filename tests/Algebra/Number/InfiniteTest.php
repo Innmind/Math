@@ -22,7 +22,7 @@ use Innmind\Math\{
     Exception\NotANumber,
     Exception\OutOfDefinitionSet
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class InfiniteTest extends TestCase
 {
