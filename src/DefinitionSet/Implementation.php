@@ -23,7 +23,5 @@ interface Implementation
      * @throws OutOfDefinitionSet
      */
     public function accept(Number $number): void;
-    public function union(self $set): self;
-    public function intersect(self $set): self;
     public function toString(): string;
 }

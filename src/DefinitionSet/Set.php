@@ -109,12 +109,18 @@ final class Set
 
     public function union(self $set): self
     {
-        return new self($this->implementation->union($set->implementation));
+        return new self(Union::of(
+            $this->implementation,
+            $set->implementation,
+        ));
     }
 
     public function intersect(self $set): self
     {
-        return new self($this->implementation->intersect($set->implementation));
+        return new self(Intersection::of(
+            $this->implementation,
+            $set->implementation,
+        ));
     }
 
     public function toString(): string

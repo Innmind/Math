@@ -30,18 +30,6 @@ final class RealNumbersExceptZero implements Implementation
     }
 
     #[\Override]
-    public function union(Implementation $set): Implementation
-    {
-        return Union::of($this, $set);
-    }
-
-    #[\Override]
-    public function intersect(Implementation $set): Implementation
-    {
-        return Intersection::of($this, $set);
-    }
-
-    #[\Override]
     public function toString(): string
     {
         return 'ℝ*';

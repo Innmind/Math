@@ -47,18 +47,6 @@ final class Intersection implements Implementation
     }
 
     #[\Override]
-    public function union(Implementation $set): Implementation
-    {
-        return Union::of($this, $set);
-    }
-
-    #[\Override]
-    public function intersect(Implementation $set): Implementation
-    {
-        return new self($this, $set);
-    }
-
-    #[\Override]
     public function toString(): string
     {
         return $this->left->toString().'∩'.$this->right->toString();
