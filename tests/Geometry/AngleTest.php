@@ -8,7 +8,6 @@ use Innmind\Math\{
     Geometry\Angle\Degree,
     Geometry\Segment,
     Algebra\Number,
-    Algebra\Integer
 };
 use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
@@ -17,9 +16,9 @@ class AngleTest extends TestCase
     public function testInterface()
     {
         $angle = Angle::of(
-            $first = Segment::of(Integer::of(1)),
-            $degree = Degree::of(Integer::of(42)),
-            $second = Segment::of(Integer::of(1)),
+            $first = Segment::of(Number::of(1)),
+            $degree = Degree::of(Number::of(42)),
+            $second = Segment::of(Number::of(1)),
         );
 
         $this->assertSame($first, $angle->firstSegment());
@@ -30,9 +29,9 @@ class AngleTest extends TestCase
     public function testSum()
     {
         $angle = Angle::of(
-            Segment::of(Integer::of(5)),
-            Degree::of(Integer::of(49)),
-            Segment::of(Integer::of(7)),
+            Segment::of(Number::of(5)),
+            Degree::of(Number::of(49)),
+            Segment::of(Number::of(7)),
         );
         $segment = $angle->sum();
 
@@ -47,9 +46,9 @@ class AngleTest extends TestCase
     public function testScalarProduct()
     {
         $angle = Angle::of(
-            Segment::of(Integer::of(5)),
-            Degree::of(Integer::of(49)),
-            Segment::of(Integer::of(7)),
+            Segment::of(Number::of(5)),
+            Degree::of(Number::of(49)),
+            Segment::of(Number::of(7)),
         );
         $number = $angle->scalarProduct();
 

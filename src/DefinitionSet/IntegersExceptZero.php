@@ -5,8 +5,6 @@ namespace Innmind\Math\DefinitionSet;
 
 use Innmind\Math\{
     Algebra\Number,
-    Algebra\Integer,
-    Algebra\Value,
     Exception\OutOfDefinitionSet,
 };
 
@@ -19,17 +17,13 @@ final class IntegersExceptZero implements Implementation
     #[\Override]
     public function contains(Number $number): bool
     {
-        if ($number->equals(Value::zero)) {
+        if ($number->equals(Number::zero())) {
             return false;
         }
 
-        if ($number instanceof Integer) {
-            return true;
-        }
-
         return $number
-            ->modulo(Value::one)
-            ->equals(Value::zero);
+            ->modulo(Number::one())
+            ->equals(Number::zero());
     }
 
     #[\Override]

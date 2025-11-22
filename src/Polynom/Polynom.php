@@ -3,11 +3,8 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Polynom;
 
-use function Innmind\Math\desc;
 use Innmind\Math\{
     Algebra\Number,
-    Algebra\Integer,
-    Algebra\Value,
     Monoid\Addition,
 };
 use Innmind\Immutable\{
@@ -54,7 +51,7 @@ final class Polynom
         /** @var Sequence<Degree> */
         $degrees = Sequence::of();
 
-        return new self(Value::zero, $degrees);
+        return new self(Number::zero(), $degrees);
     }
 
     /**
@@ -70,14 +67,16 @@ final class Polynom
 
     /**
      * Create a new polynom with this added degree
+     *
+     * @param int<1, max> $degree
      */
-    public function withDegree(Integer\Positive $degree, Number $coeff): self
+    public function withDegree(int $degree, Number $coeff): self
     {
         return new self(
             $this->intercept,
             $this
                 ->degrees
-                ->filter(static fn($known) => !$known->degree()->equals($degree))
+                ->exclude(static fn($known) => $known->degree() === $degree)
                 ->add(Degree::of($degree, $coeff)),
         );
     }
@@ -93,14 +92,14 @@ final class Polynom
     /**
      * Return the given degree
      *
-     * @param positive-int $degree
+     * @param int<1, max> $degree
      *
      * @return Maybe<Degree>
      */
     public function degree(int $degree): Maybe
     {
         return $this->degrees->find(
-            static fn($known) => $known->degree()->equals(Integer::of($degree)),
+            static fn($known) => $known->degree() === $degree,
         );
     }
 
@@ -129,15 +128,15 @@ final class Polynom
     public function primitive(): self
     {
         $primitive = new self(
-            Value::zero,
+            Number::zero(),
             $this
                 ->degrees
                 ->map(static fn($degree) => $degree->primitive()),
         );
 
-        if (!$this->intercept->equals(Value::zero)) {
+        if (!$this->intercept->equals(Number::zero())) {
             $primitive = $primitive->withDegree(
-                Integer::positive(1),
+                1,
                 $this->intercept,
             );
         }
@@ -149,15 +148,15 @@ final class Polynom
     {
         [$intercept, $degrees] = $this
             ->degrees
-            ->find(static fn($degree) => $degree->degree()->equals(Value::one))
+            ->find(static fn($degree) => $degree->degree() === 1)
             ->match(
                 fn($degree) => [
                     $degree->coeff(),
-                    $this->degrees->filter(
-                        static fn($degree) => !$degree->degree()->equals(Value::one),
+                    $this->degrees->exclude(
+                        static fn($degree) => $degree->degree() === 1,
                     ),
                 ],
-                fn() => [Value::zero, $this->degrees],
+                fn() => [Number::zero(), $this->degrees],
             );
 
         return new self(
@@ -175,11 +174,11 @@ final class Polynom
     {
         $degrees = $this
             ->degrees
-            ->sort(static fn($a, $b) => desc($a->degree(), $b->degree()))
+            ->sort(static fn($a, $b) => ($a->degree() <=> $b->degree()) * -1)
             ->map(static fn($degree) => $degree->toString());
         $polynom = Str::of(' + ')->join($degrees);
 
-        if (!$this->intercept->equals(Value::zero)) {
+        if (!$this->intercept->equals(Number::zero())) {
             $intercept = $this->intercept->format();
 
             $polynom = $polynom

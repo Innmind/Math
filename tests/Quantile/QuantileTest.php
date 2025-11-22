@@ -7,7 +7,6 @@ use Innmind\Math\{
     Quantile\Quantile,
     Quantile\Quartile,
     Algebra\Number,
-    Algebra\Real,
 };
 use Innmind\Immutable\Sequence;
 use Innmind\BlackBox\PHPUnit\Framework\TestCase;
@@ -18,7 +17,7 @@ class QuantileTest extends TestCase
     #[DataProvider('datasets')]
     public function testQuartiles($dataset, $min, $max, $mean, $median, $first, $third)
     {
-        $quantile = Quantile::of(Sequence::of(...$dataset)->map(Real::of(...)));
+        $quantile = Quantile::of(Sequence::of(...$dataset)->map(Number::of(...)));
 
         $this->assertInstanceOf(Quartile::class, $quantile->min());
         $this->assertInstanceOf(Number::class, $quantile->min()->value());

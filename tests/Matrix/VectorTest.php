@@ -7,8 +7,6 @@ use function Innmind\Math\numerize;
 use Innmind\Math\{
     Matrix\Vector,
     Algebra\Number,
-    Algebra\Integer,
-    Algebra\Real,
     Exception\VectorsMustMeOfTheSameDimension
 };
 use Innmind\BlackBox\PHPUnit\Framework\TestCase;
@@ -20,7 +18,7 @@ class VectorTest extends TestCase
     {
         $vector = Vector::of(...numerize(1, 2, 3));
 
-        $this->assertSame(3, $vector->dimension()->value());
+        $this->assertSame(3, $vector->dimension());
         $this->assertInstanceOf(Number::class, $vector->get(0));
         $this->assertInstanceOf(Number::class, $vector->get(1));
         $this->assertInstanceOf(Number::class, $vector->get(2));
@@ -59,7 +57,7 @@ class VectorTest extends TestCase
     {
         $vector = Vector::of(...numerize(25, 5, 1));
         $vector2 = $vector->multiplyBy(
-            Vector::initialize(Integer::of(3), Real::of(2.56)),
+            Vector::initialize(3, Number::of(2.56)),
         );
 
         $this->assertInstanceOf(Vector::class, $vector2);
@@ -75,8 +73,8 @@ class VectorTest extends TestCase
     {
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
-        Vector::initialize(Integer::of(1), Real::of(1))->multiplyBy(
-            Vector::initialize(Integer::of(2), Real::of(1)),
+        Vector::initialize(1, Number::of(1))->multiplyBy(
+            Vector::initialize(2, Number::of(1)),
         );
     }
 
@@ -84,7 +82,7 @@ class VectorTest extends TestCase
     {
         $vector = Vector::of(...numerize(25, 5, 1));
         $vector2 = $vector->divideBy(
-            Vector::initialize(Integer::of(3), Real::of(5)),
+            Vector::initialize(3, Number::of(5)),
         );
 
         $this->assertInstanceOf(Vector::class, $vector2);
@@ -100,14 +98,14 @@ class VectorTest extends TestCase
     {
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
-        Vector::initialize(Integer::of(1), Real::of(1))->divideBy(
-            Vector::initialize(Integer::of(2), Real::of(1)),
+        Vector::initialize(1, Number::of(1))->divideBy(
+            Vector::initialize(2, Number::of(1)),
         );
     }
 
     public function testInitialize()
     {
-        $vector = Vector::initialize(Integer::of(4), Real::of(1.2));
+        $vector = Vector::initialize(4, Number::of(1.2));
 
         $this->assertInstanceOf(Vector::class, $vector);
         $this->assertSame(1.2, $vector->get(0)->value());
@@ -144,8 +142,8 @@ class VectorTest extends TestCase
     {
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
-        Vector::initialize(Integer::of(1), Real::of(1))->subtract(
-            Vector::initialize(Integer::of(2), Real::of(1)),
+        Vector::initialize(1, Number::of(1))->subtract(
+            Vector::initialize(2, Number::of(1)),
         );
     }
 
@@ -169,8 +167,8 @@ class VectorTest extends TestCase
     {
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
-        Vector::initialize(Integer::of(1), Real::of(1))->add(
-            Vector::initialize(Integer::of(2), Real::of(1)),
+        Vector::initialize(1, Number::of(1))->add(
+            Vector::initialize(2, Number::of(1)),
         );
     }
 
@@ -178,7 +176,7 @@ class VectorTest extends TestCase
     {
         $vector1 = Vector::of(...numerize(1, 2, 3, -4));
 
-        $vector2 = $vector1->power(Real::of(3));
+        $vector2 = $vector1->power(Number::of(3));
 
         $this->assertInstanceOf(Vector::class, $vector2);
         $this->assertNotSame($vector2, $vector1);

@@ -7,7 +7,6 @@ use Innmind\Math\{
     Regression\Dataset,
     Matrix\ColumnVector,
     Algebra\Number,
-    Algebra\Value,
 };
 
 /**
@@ -28,7 +27,7 @@ final class Variance
                     $expectation,
                 ),
             )
-            ->power(Value::two)
+            ->power(Number::two())
             ->multiplyBy($dataset->ordinates())
             ->sum();
     }

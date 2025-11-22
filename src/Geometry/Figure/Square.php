@@ -7,7 +7,6 @@ use Innmind\Math\{
     Geometry\Figure,
     Geometry\Segment,
     Algebra\Number,
-    Algebra\Integer,
 };
 
 /**
@@ -33,7 +32,7 @@ final class Square implements Figure
     #[\Override]
     public function perimeter(): Number
     {
-        return $this->side->length()->multiplyBy(Integer::of(4));
+        return $this->side->length()->multiplyBy(Number::of(4));
     }
 
     #[\Override]

@@ -6,7 +6,7 @@ namespace Tests\Innmind\Math\Geometry\Angle;
 use Innmind\Math\{
     Geometry\Angle\Radian,
     Geometry\Angle\Degree,
-    Algebra\Real,
+    Algebra\Number,
 };
 use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -16,36 +16,36 @@ class RadianTest extends TestCase
     #[DataProvider('radians')]
     public function testStringCast($radian, $expected)
     {
-        $this->assertSame($expected, (Radian::of(Real::of($radian)))->toString());
+        $this->assertSame($expected, Radian::of(Number::of($radian))->toString());
     }
 
     public function testIsRight()
     {
-        $this->assertTrue((Radian::of(Real::of(\M_PI_2)))->isRight());
-        $this->assertFalse((Radian::of(Real::of(\M_PI)))->isRight());
+        $this->assertTrue(Radian::of(Number::of(\M_PI_2))->isRight());
+        $this->assertFalse(Radian::of(Number::of(\M_PI))->isRight());
     }
 
     public function testIsObtuse()
     {
-        $this->assertTrue((Radian::of(Real::of((2 * \pi()) / 3)))->isObtuse());
-        $this->assertFalse((Radian::of(Real::of(\pi() / 3)))->isObtuse());
+        $this->assertTrue(Radian::of(Number::of((2 * \pi()) / 3))->isObtuse());
+        $this->assertFalse(Radian::of(Number::of(\pi() / 3))->isObtuse());
     }
 
     public function testIsAcuse()
     {
-        $this->assertTrue((Radian::of(Real::of(\pi() / 3)))->isAcuse());
-        $this->assertFalse((Radian::of(Real::of(\M_PI_2)))->isAcuse());
+        $this->assertTrue(Radian::of(Number::of(\pi() / 3))->isAcuse());
+        $this->assertFalse(Radian::of(Number::of(\M_PI_2))->isAcuse());
     }
 
     public function testIsFlat()
     {
-        $this->assertTrue((Radian::of(Real::of(\pi())))->isFlat());
-        $this->assertFalse((Radian::of(Real::of((5 * \pi()) / 4)))->isFlat());
+        $this->assertTrue(Radian::of(Number::of(\pi()))->isFlat());
+        $this->assertFalse(Radian::of(Number::of((5 * \pi()) / 4))->isFlat());
     }
 
     public function testOpposite()
     {
-        $radian = Radian::of(Real::of(\pi() / 4));
+        $radian = Radian::of(Number::of(\pi() / 4));
         $opposite = $radian->opposite();
 
         $this->assertNotSame($opposite, $radian);
@@ -56,7 +56,7 @@ class RadianTest extends TestCase
     #[DataProvider('radians')]
     public function testToDegree($radian, $string, $expected)
     {
-        $radian = Radian::of(Real::of($radian));
+        $radian = Radian::of(Number::of($radian));
         $degree = $radian->toDegree();
 
         $this->assertInstanceOf(Degree::class, $degree);

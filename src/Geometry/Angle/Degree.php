@@ -3,11 +3,7 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Geometry\Angle;
 
-use Innmind\Math\Algebra\{
-    Number,
-    Integer,
-    Real,
-};
+use Innmind\Math\Algebra\Number;
 
 /**
  * @psalm-immutable
@@ -18,7 +14,7 @@ final class Degree
 
     private function __construct(Number $number)
     {
-        $modulus = Integer::of(360);
+        $modulus = Number::of(360);
         $this->number = $number
             ->modulo($modulus)
             ->add($modulus)
@@ -36,7 +32,7 @@ final class Degree
     public function toRadian(): Radian
     {
         return Radian::of(
-            Real::of(
+            Number::of(
                 \deg2rad($this->number->value()),
             ),
         );
@@ -44,27 +40,27 @@ final class Degree
 
     public function isRight(): bool
     {
-        return $this->number->equals(Integer::of(90));
+        return $this->number->equals(Number::of(90));
     }
 
     public function isObtuse(): bool
     {
-        return $this->number->higherThan(Integer::of(90));
+        return $this->number->higherThan(Number::of(90));
     }
 
     public function isAcuse(): bool
     {
-        return Integer::of(90)->higherThan($this->number);
+        return Number::of(90)->higherThan($this->number);
     }
 
     public function isFlat(): bool
     {
-        return $this->number->equals(Integer::of(180));
+        return $this->number->equals(Number::of(180));
     }
 
     public function opposite(): self
     {
-        return new self($this->number->add(Integer::of(180)));
+        return new self($this->number->add(Number::of(180)));
     }
 
     public function number(): Number

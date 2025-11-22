@@ -5,8 +5,7 @@ namespace Tests\Innmind\Math\Polynom;
 
 use Innmind\Math\{
     Polynom\Degree,
-    Algebra\Real,
-    Algebra\Integer,
+    Algebra\Number,
 };
 use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
@@ -14,31 +13,31 @@ class DegreeTest extends TestCase
 {
     public function testDegree()
     {
-        $d = Degree::of(Integer::of(8), Real::of(2));
+        $d = Degree::of(8, Number::of(2));
 
-        $this->assertSame(8, $d->degree()->value());
+        $this->assertSame(8, $d->degree());
         $this->assertSame(2, $d->coeff()->value());
-        $this->assertSame(512, $d(Real::of(2))->value());
+        $this->assertSame(512, $d(Number::of(2))->value());
     }
 
     public function testStringCast()
     {
-        $d = Degree::of(Integer::of(8), Real::of(2));
+        $d = Degree::of(8, Number::of(2));
 
         $this->assertSame('2x^8', $d->toString());
 
-        $d = Degree::of(Integer::of(1), Real::of(2));
+        $d = Degree::of(1, Number::of(2));
 
         $this->assertSame('2x', $d->toString());
 
-        $d = Degree::of(Integer::of(8), Integer::of(1)->divideBy(Integer::of(4)));
+        $d = Degree::of(8, Number::of(1)->divideBy(Number::of(4)));
 
         $this->assertSame('(1 ÷ 4)x^8', $d->toString());
     }
 
     public function testPrimitive()
     {
-        $d = Degree::of(Integer::of(8), Real::of(2));
+        $d = Degree::of(8, Number::of(2));
         $primitive = $d->primitive();
 
         $this->assertInstanceOf(Degree::class, $primitive);
@@ -49,7 +48,7 @@ class DegreeTest extends TestCase
 
     public function testDerivative()
     {
-        $degree = Degree::of(Integer::of(2), Integer::of(2));
+        $degree = Degree::of(2, Number::of(2));
         $derivative = $degree->derivative();
 
         $this->assertInstanceOf(Degree::class, $derivative);

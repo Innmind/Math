@@ -8,7 +8,6 @@ use Innmind\Math\{
     Geometry\Figure,
     Geometry\Segment,
     Algebra\Number,
-    Algebra\Value,
 };
 
 /**
@@ -41,7 +40,7 @@ final class Triangle implements Figure
             $this
                 ->area()
                 ->divideBy($base)
-                ->multiplyBy(Value::two),
+                ->multiplyBy(Number::two()),
         );
     }
 
@@ -69,7 +68,7 @@ final class Triangle implements Figure
     public function area(): Number
     {
         // Heron's formula
-        $p = $this->perimeter()->divideBy(Value::two);
+        $p = $this->perimeter()->divideBy(Number::two());
 
         return $p
             ->multiplyBy($p->subtract($this->a))

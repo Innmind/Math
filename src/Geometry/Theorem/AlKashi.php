@@ -5,7 +5,7 @@ namespace Innmind\Math\Geometry\Theorem;
 
 use function Innmind\Math\max as maximum;
 use Innmind\Math\{
-    Algebra\Value,
+    Algebra\Number,
     Geometry\Angle\Degree,
     Geometry\Segment,
     Geometry\Trigonometry\Cosine,
@@ -34,15 +34,15 @@ final class AlKashi
         $b = $b->length();
 
         $side = $a
-            ->power(Value::two)
+            ->power(Number::two())
             ->add(
-                $b->power(Value::two),
+                $b->power(Number::two()),
             )
             ->subtract(
-                Value::two
+                Number::two()
                     ->multiplyBy($a)
                     ->multiplyBy($b)
-                    ->multiplyBy(Cosine::of($degree)),
+                    ->multiplyBy(Cosine::of($degree)->number()),
             )
             ->squareRoot();
 
@@ -73,11 +73,11 @@ final class AlKashi
         }
 
         $cosAB = $a
-            ->power(Value::two)
-            ->add($b->power(Value::two))
-            ->subtract($c->power(Value::two))
+            ->power(Number::two())
+            ->add($b->power(Number::two()))
+            ->subtract($c->power(Number::two()))
             ->divideBy(
-                Value::two
+                Number::two()
                     ->multiplyBy($a)
                     ->multiplyBy($b),
             );

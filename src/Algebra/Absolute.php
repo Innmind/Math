@@ -5,12 +5,13 @@ namespace Innmind\Math\Algebra;
 
 /**
  * @psalm-immutable
+ * @internal
  */
-final class Absolute implements Number
+final class Absolute implements Implementation
 {
-    private Number $number;
+    private Implementation $number;
 
-    private function __construct(Number $number)
+    private function __construct(Implementation $number)
     {
         $this->number = $number;
     }
@@ -18,7 +19,7 @@ final class Absolute implements Number
     /**
      * @psalm-pure
      */
-    public static function of(Number $number): self
+    public static function of(Implementation $number): self
     {
         return new self($number);
     }
@@ -30,133 +31,13 @@ final class Absolute implements Number
     }
 
     #[\Override]
-    public function equals(Number $number): bool
+    public function equals(Implementation $number): bool
     {
-        return $this->result()->equals($number);
+        return $this->value() == $number->value();
     }
 
     #[\Override]
-    public function higherThan(Number $number): bool
-    {
-        return $this->result()->higherThan($number);
-    }
-
-    #[\Override]
-    public function add(Number $number): Number
-    {
-        return Addition::of($this, $number);
-    }
-
-    #[\Override]
-    public function subtract(Number $number): Number
-    {
-        return Subtraction::of($this, $number);
-    }
-
-    #[\Override]
-    public function divideBy(Number $number): Number
-    {
-        return Division::of($this, $number);
-    }
-
-    #[\Override]
-    public function multiplyBy(Number $number): Number
-    {
-        return Multiplication::of($this, $number);
-    }
-
-    #[\Override]
-    public function roundUp(int $precision = 0): Number
-    {
-        return Round::up($this, $precision);
-    }
-
-    #[\Override]
-    public function roundDown(int $precision = 0): Number
-    {
-        return Round::down($this, $precision);
-    }
-
-    #[\Override]
-    public function roundEven(int $precision = 0): Number
-    {
-        return Round::even($this, $precision);
-    }
-
-    #[\Override]
-    public function roundOdd(int $precision = 0): Number
-    {
-        return Round::odd($this, $precision);
-    }
-
-    #[\Override]
-    public function floor(): Number
-    {
-        return Floor::of($this);
-    }
-
-    #[\Override]
-    public function ceil(): Number
-    {
-        return Ceil::of($this);
-    }
-
-    #[\Override]
-    public function modulo(Number $modulus): Number
-    {
-        return Modulo::of($this, $modulus);
-    }
-
-    #[\Override]
-    public function absolute(): self
-    {
-        return new self($this);
-    }
-
-    #[\Override]
-    public function power(Number $power): Number
-    {
-        return Power::of($this, $power);
-    }
-
-    #[\Override]
-    public function squareRoot(): Number
-    {
-        return SquareRoot::of($this);
-    }
-
-    #[\Override]
-    public function exponential(): Number
-    {
-        return Exponential::of($this);
-    }
-
-    #[\Override]
-    public function binaryLogarithm(): Number
-    {
-        return BinaryLogarithm::of($this);
-    }
-
-    #[\Override]
-    public function naturalLogarithm(): Number
-    {
-        return NaturalLogarithm::of($this);
-    }
-
-    #[\Override]
-    public function commonLogarithm(): Number
-    {
-        return CommonLogarithm::of($this);
-    }
-
-    #[\Override]
-    public function signum(): Number
-    {
-        return Signum::of($this);
-    }
-
-    #[\Override]
-    public function collapse(): Number
+    public function collapse(): Implementation
     {
         return $this->compute($this->number->collapse());
     }
@@ -173,12 +54,12 @@ final class Absolute implements Number
         return '('.$this->toString().')';
     }
 
-    private function result(): Number
+    private function result(): Implementation
     {
         return $this->compute($this->number);
     }
 
-    private function compute(Number $number): Number
+    private function compute(Implementation $number): Implementation
     {
         return Real::of(
             \abs($number->value()),

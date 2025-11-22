@@ -60,7 +60,7 @@ final class ComplexNumber
                 $this
                     ->imaginary
                     ->multiplyBy($number->imaginary())
-                    ->multiplyBy(Integer::of(-1)),  // because i^2 == -1
+                    ->multiplyBy(Number::of(-1)),  // because i^2 == -1
             );
         $imaginary = $this
             ->real
@@ -75,10 +75,10 @@ final class ComplexNumber
         $dividend = $this->multiplyBy($number->conjugate());
         $divisor = $number
             ->real()
-            ->power(Value::two)
+            ->power(Number::two())
             ->subtract(
-                Integer::of(-1)->multiplyBy(
-                    $number->imaginary()->power(Value::two),
+                Number::of(-1)->multiplyBy(
+                    $number->imaginary()->power(Number::two()),
                 ),
             );
         $real = $dividend->real()->divideBy($divisor);
@@ -91,7 +91,7 @@ final class ComplexNumber
     {
         return new self(
             $this->real,
-            Integer::of(-1)->multiplyBy($this->imaginary()),
+            Number::of(-1)->multiplyBy($this->imaginary()),
         );
     }
 
@@ -99,8 +99,8 @@ final class ComplexNumber
     {
         return $this
             ->real
-            ->power(Value::two)
-            ->add($this->imaginary->power(Value::two))
+            ->power(Number::two())
+            ->add($this->imaginary->power(Number::two()))
             ->squareRoot();
     }
 
@@ -108,12 +108,12 @@ final class ComplexNumber
     {
         $divisor = $this
             ->real
-            ->power(Value::two)
-            ->add($this->imaginary->power(Value::two));
+            ->power(Number::two())
+            ->add($this->imaginary->power(Number::two()));
 
         return new self(
             $this->real->divideBy($divisor),
-            Integer::of(-1)->multiplyBy(
+            Number::of(-1)->multiplyBy(
                 $this->imaginary->divideBy($divisor),
             ),
         );
@@ -122,8 +122,8 @@ final class ComplexNumber
     public function negation(): self
     {
         return new self(
-            Integer::of(-1)->multiplyBy($this->real),
-            Integer::of(-1)->multiplyBy($this->imaginary),
+            Number::of(-1)->multiplyBy($this->real),
+            Number::of(-1)->multiplyBy($this->imaginary),
         );
     }
 
@@ -132,13 +132,13 @@ final class ComplexNumber
         $real = $this
             ->real
             ->add($this->absolute())
-            ->divideBy(Value::two)
+            ->divideBy(Number::two())
             ->squareRoot();
         $imaginary = $this->imaginary->signum()->multiplyBy(
-            Integer::of(-1)
+            Number::of(-1)
                 ->multiplyBy($this->real)
                 ->add($this->absolute())
-                ->divideBy(Value::two)
+                ->divideBy(Number::two())
                 ->squareRoot(),
         );
 

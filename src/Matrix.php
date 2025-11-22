@@ -15,9 +15,6 @@ use Innmind\Math\{
     Exception\LogicException,
     Matrix\Dimension,
     Algebra\Number,
-    Algebra\Integer,
-    Algebra\Value,
-    Algebra\Real,
 };
 use Innmind\Immutable\Sequence;
 
@@ -42,7 +39,7 @@ final class Matrix
             static fn() => throw new LogicException('Empty matrix'),
         );
         $_ = $rest->foreach(
-            static fn($row) => match ($row->dimension()->equals($first->dimension())) {
+            static fn($row) => match ($row->dimension() === $first->dimension()) {
                 true => null, // as expected
                 false => throw new VectorsMustMeOfTheSameDimension,
             },
@@ -52,7 +49,7 @@ final class Matrix
 
         /** @psalm-suppress InvalidArgument There is always at least one row */
         $this->dimension = Dimension::of(
-            Integer::positive($this->rows->size()),
+            $this->rows->size(),
             $first->dimension(),
         );
         $this->columns = $this->buildColumns();
@@ -67,7 +64,7 @@ final class Matrix
     {
         $numerize = static fn(int|float|Number $number): Number => match (true) {
             $number instanceof Number => $number,
-            default => Real::of($number),
+            default => Number::of($number),
         };
 
         return new self(
@@ -111,7 +108,7 @@ final class Matrix
     public static function initialize(Dimension $dimension, Number $value): self
     {
         return new self(
-            Range::of(Integer::of(1), $dimension->rows())->map(
+            Range::of(1, $dimension->rows())->map(
                 static fn() => RowVector::initialize($dimension->columns(), $value),
             ),
         );
@@ -194,7 +191,7 @@ final class Matrix
 
     public function isSquare(): bool
     {
-        return $this->dimension->rows()->equals($this->dimension->columns());
+        return $this->dimension->rows() === $this->dimension->columns();
     }
 
     public function diagonal(): self
@@ -209,9 +206,9 @@ final class Matrix
             static function(Sequence $rows, RowVector $row): Sequence {
                 return ($rows)(RowVector::ofSequence(
                     Range::until($row->dimension())->map(
-                        static fn($i) => match ($i->value()) {
-                            $rows->size() => $row->get($i->value()),
-                            default => Value::zero,
+                        static fn($i) => match ($i) {
+                            $rows->size() => $row->get($i),
+                            default => Number::zero(),
                         },
                     ),
                 ));
@@ -234,9 +231,9 @@ final class Matrix
                 /** @psalm-suppress InvalidArgument Value is a subtype of Number */
                 return ($rows)(RowVector::ofSequence(
                     Range::until($row->dimension())->map(
-                        static fn($i) => match ($i->value()) {
-                            $rows->size() => Value::one,
-                            default => Value::zero,
+                        static fn($i) => match ($i) {
+                            $rows->size() => Number::one(),
+                            default => Number::zero(),
                         },
                     ),
                 ));
@@ -266,7 +263,7 @@ final class Matrix
     public function isAntisymmetric(): bool
     {
         return $this
-            ->multiplyBy(Integer::of(-1))
+            ->multiplyBy(Number::of(-1))
             ->equals($this->transpose());
     }
 
@@ -275,7 +272,7 @@ final class Matrix
         $leadingZeros = $this->rows->map(
             static fn(RowVector $row) => $row
                 ->toSequence()
-                ->takeWhile(static fn($number) => $number->equals(Value::zero))
+                ->takeWhile(static fn($number) => $number->equals(Number::zero()))
                 ->size(),
         );
 
@@ -315,7 +312,7 @@ final class Matrix
             $matrix
                 ->columns()
                 ->takeEnd(
-                    $this->dimension->columns()->value(),
+                    $this->dimension->columns(),
                 ),
         );
     }
@@ -328,7 +325,7 @@ final class Matrix
         /** @psalm-suppress ArgumentTypeCoercion */
         return Range::until($this->dimension->columns())
             ->map(fn($column) => $this->rows->map(
-                static fn($row) => $row->get($column->value()),
+                static fn($row) => $row->get($column),
             ))
             ->map(ColumnVector::ofSequence(...));
     }
@@ -373,7 +370,7 @@ final class Matrix
                         ->map(static fn($row) => $row->multiplyBy(
                             RowVector::initialize(
                                 $row->dimension(),
-                                Value::one->divideBy($row->lead()),
+                                Number::one()->divideBy($row->lead()),
                             ),
                         ));
                 },

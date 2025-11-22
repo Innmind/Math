@@ -8,8 +8,6 @@ use Innmind\Math\{
     Matrix\Dimension,
     Matrix\ColumnVector,
     Algebra\Number,
-    Algebra\Real,
-    Algebra\Integer,
 };
 use Innmind\Immutable\Sequence;
 
@@ -38,7 +36,7 @@ final class Dataset
     {
         $numerize = static fn(int|float|Number $number): Number => match (true) {
             $number instanceof Number => $number,
-            default => Real::of($number),
+            default => Number::of($number),
         };
 
         return new self(Sequence::of(...\array_map(
@@ -76,8 +74,8 @@ final class Dataset
     {
         /** @psalm-suppress InvalidArgument There is always at least one point */
         return Dimension::of(
-            Integer::positive($this->points->size()),
-            Integer::positive(2),
+            $this->points->size(),
+            2,
         );
     }
 }

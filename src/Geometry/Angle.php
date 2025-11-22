@@ -74,6 +74,6 @@ final class Angle
             ->firstSegment
             ->length()
             ->multiplyBy($this->secondSegment->length())
-            ->multiplyBy(Cosine::of($this->degree));
+            ->multiplyBy(Cosine::of($this->degree)->number());
     }
 }

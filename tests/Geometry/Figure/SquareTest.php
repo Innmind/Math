@@ -8,7 +8,6 @@ use Innmind\Math\{
     Geometry\Figure,
     Geometry\Segment,
     Algebra\Number,
-    Algebra\Integer
 };
 use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
@@ -19,7 +18,7 @@ class SquareTest extends TestCase
         $this->assertInstanceOf(
             Figure::class,
             Square::of(
-                Segment::of(Integer::of(2)),
+                Segment::of(Number::of(2)),
             ),
         );
     }
@@ -27,7 +26,7 @@ class SquareTest extends TestCase
     public function testPerimeter()
     {
         $square = Square::of(
-            Segment::of(Integer::of(2)),
+            Segment::of(Number::of(2)),
         );
 
         $this->assertInstanceOf(Number::class, $square->perimeter());
@@ -37,7 +36,7 @@ class SquareTest extends TestCase
     public function testArea()
     {
         $square = Square::of(
-            Segment::of(Integer::of(2)),
+            Segment::of(Number::of(2)),
         );
 
         $this->assertInstanceOf(Number::class, $square->area());
@@ -47,7 +46,7 @@ class SquareTest extends TestCase
     public function testSide()
     {
         $square = Square::of(
-            $expected = Segment::of(Integer::of(2)),
+            $expected = Segment::of(Number::of(2)),
         );
 
         $this->assertSame($expected, $square->side());

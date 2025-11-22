@@ -5,7 +5,6 @@ namespace Innmind\Math\DefinitionSet;
 
 use Innmind\Math\{
     Algebra\Number,
-    Algebra\Value,
     Exception\OutOfDefinitionSet,
 };
 
@@ -18,7 +17,7 @@ final class RealNumbersExceptZero implements Implementation
     #[\Override]
     public function contains(Number $number): bool
     {
-        return !$number->equals(Value::zero);
+        return !$number->equals(Number::zero());
     }
 
     #[\Override]

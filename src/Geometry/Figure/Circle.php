@@ -7,7 +7,6 @@ use Innmind\Math\{
     Geometry\Figure,
     Geometry\Segment,
     Algebra\Number,
-    Algebra\Value,
 };
 
 /**
@@ -22,7 +21,7 @@ final class Circle implements Figure
     {
         $this->radius = $radius;
         $this->diameter = Segment::of(
-            $radius->length()->multiplyBy(Value::two),
+            $radius->length()->multiplyBy(Number::two()),
         );
     }
 
@@ -37,15 +36,15 @@ final class Circle implements Figure
     #[\Override]
     public function perimeter(): Number
     {
-        return Value::pi
-            ->multiplyBy(Value::two)
+        return Number::pi()
+            ->multiplyBy(Number::two())
             ->multiplyBy($this->radius->length());
     }
 
     #[\Override]
     public function area(): Number
     {
-        return Value::pi
+        return Number::pi()
             ->multiplyBy($this->radius->length())
             ->multiplyBy($this->radius->length());
     }

@@ -3,11 +3,7 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Geometry\Angle;
 
-use Innmind\Math\Algebra\{
-    Number,
-    Value,
-    Real,
-};
+use Innmind\Math\Algebra\Number;
 
 /**
  * @psalm-immutable
@@ -19,7 +15,7 @@ final class Radian
     private function __construct(Number $number)
     {
         $this->number = $number->modulo(
-            Value::pi->multiplyBy(Value::two),
+            Number::pi()->multiplyBy(Number::two()),
         );
     }
 
@@ -34,7 +30,7 @@ final class Radian
     public function toDegree(): Degree
     {
         return Degree::of(
-            Real::of(
+            Number::of(
                 \rad2deg($this->number->value()),
             ),
         );

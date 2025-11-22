@@ -6,8 +6,6 @@ namespace Innmind\Math\Regression;
 use Innmind\Math\{
     Polynom\Polynom,
     Algebra\Number,
-    Algebra\Integer,
-    Algebra\Value,
     Monoid\Addition,
 };
 
@@ -24,7 +22,7 @@ final class LinearRegression
     {
         [$slope, $intercept] = $this->compute($data);
         $this->polynom = Polynom::interceptAt($intercept)->withDegree(
-            Integer::positive(1),
+            1,
             $slope,
         );
         $this->slope = $slope;
@@ -77,7 +75,7 @@ final class LinearRegression
      */
     private function compute(Dataset $data): array
     {
-        $dimension = $data->dimension()->rows();
+        $dimension = Number::of($data->dimension()->rows());
 
         $xSum = $data->abscissas()->sum();
         $ySum = $data->ordinates()->sum();
@@ -97,7 +95,7 @@ final class LinearRegression
             ->divideBy(
                 $dimension
                     ->multiplyBy($xxSum)
-                    ->subtract($xSum->power(Value::two)),
+                    ->subtract($xSum->power(Number::two())),
             );
         $intercept = $ySum
             ->subtract($slope->multiplyBy($xSum))
@@ -115,9 +113,9 @@ final class LinearRegression
 
         return $values
             ->subtract($estimated)
-            ->power(Value::two)
+            ->power(Number::two())
             ->sum()
-            ->divideBy($values->dimension())
+            ->divideBy(Number::of($values->dimension()))
             ->squareRoot();
     }
 }

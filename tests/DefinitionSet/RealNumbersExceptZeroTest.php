@@ -5,9 +5,7 @@ namespace Tests\Innmind\Math\DefinitionSet;
 
 use Innmind\Math\{
     DefinitionSet\Set,
-    Algebra\Integer,
-    Algebra\Real,
-    Algebra\Value,
+    Algebra\Number,
     Exception\OutOfDefinitionSet,
 };
 use Innmind\BlackBox\PHPUnit\Framework\TestCase;
@@ -23,24 +21,24 @@ class RealNumbersExceptZeroTest extends TestCase
     {
         $set = Set::realNumbersExceptZero();
 
-        $this->assertTrue($set->contains(Integer::of(1)));
-        $this->assertTrue($set->contains(Integer::of(-1)));
-        $this->assertTrue($set->contains(Real::of(0.75)));
-        $this->assertTrue($set->contains(Real::of(-0.75)));
-        $this->assertTrue($set->contains(Value::pi));
-        $this->assertFalse($set->contains(Integer::of(0)));
+        $this->assertTrue($set->contains(Number::of(1)));
+        $this->assertTrue($set->contains(Number::of(-1)));
+        $this->assertTrue($set->contains(Number::of(0.75)));
+        $this->assertTrue($set->contains(Number::of(-0.75)));
+        $this->assertTrue($set->contains(Number::pi()));
+        $this->assertFalse($set->contains(Number::of(0)));
     }
 
     public function testAccept()
     {
         $set = Set::realNumbersExceptZero();
 
-        $this->assertNull($set->accept(Integer::of(1)));
+        $this->assertNull($set->accept(Number::of(1)));
 
         $this->expectException(OutOfDefinitionSet::class);
         $this->expectExceptionMessage('0 ∉ ℝ*');
 
-        $set->accept(Real::of(0));
+        $set->accept(Number::of(0));
     }
 
     public function testUnion()

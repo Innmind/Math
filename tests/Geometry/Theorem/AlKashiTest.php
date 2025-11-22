@@ -7,8 +7,8 @@ use Innmind\Math\{
     Geometry\Theorem\AlKashi,
     Geometry\Angle\Degree,
     Geometry\Segment,
-    Algebra\Integer,
-    Exception\SegmentsCannotBeJoined
+    Algebra\Number,
+    Exception\SegmentsCannotBeJoined,
 };
 use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
@@ -22,9 +22,9 @@ class AlKashiTest extends TestCase
     public function testSide()
     {
         $c = AlKashi::side(
-            Segment::of(Integer::of(5)),
-            Degree::of(Integer::of(49)),
-            Segment::of(Integer::of(7)),
+            Segment::of(Number::of(5)),
+            Degree::of(Number::of(49)),
+            Segment::of(Number::of(7)),
         );
 
         $this->assertInstanceOf(Segment::class, $c);
@@ -42,9 +42,9 @@ class AlKashiTest extends TestCase
     public function testAngle()
     {
         $ab = AlKashi::angle(
-            Segment::of(Integer::of(6)),
-            Segment::of(Integer::of(7)),
-            Segment::of(Integer::of(8)),
+            Segment::of(Number::of(6)),
+            Segment::of(Number::of(7)),
+            Segment::of(Number::of(8)),
         );
 
         $this->assertInstanceOf(Degree::class, $ab);
@@ -56,9 +56,9 @@ class AlKashiTest extends TestCase
         $this->expectException(SegmentsCannotBeJoined::class);
 
         AlKashi::angle(
-            Segment::of(Integer::of(1)),
-            Segment::of(Integer::of(42)),
-            Segment::of(Integer::of(20)),
+            Segment::of(Number::of(1)),
+            Segment::of(Number::of(42)),
+            Segment::of(Number::of(20)),
         );
     }
 

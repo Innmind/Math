@@ -7,10 +7,7 @@ use Innmind\Math\{
     Exception\VectorsMustMeOfTheSameDimension,
     Exception\LogicException,
     Algebra\Number,
-    Algebra\Integer,
-    Algebra\Value,
     Monoid\Addition,
-    Range,
 };
 use Innmind\Immutable\{
     Sequence,
@@ -24,7 +21,6 @@ final class Vector
 {
     /** @var Sequence<Number> */
     private Sequence $numbers;
-    private Integer\Positive $dimension;
 
     /**
      * @param Sequence<Number> $numbers
@@ -32,8 +28,6 @@ final class Vector
     private function __construct(Sequence $numbers)
     {
         $this->numbers = $numbers;
-        /** @psalm-suppress InvalidArgument There is always at least one number in the sequence */
-        $this->dimension = Integer::positive($this->numbers->size());
     }
 
     /**
@@ -46,11 +40,13 @@ final class Vector
 
     /**
      * @psalm-pure
+     *
+     * @param int<1, max> $dimension
      */
-    public static function initialize(Integer\Positive $dimension, Number $value): self
+    public static function initialize(int $dimension, Number $value): self
     {
         return new self(
-            Range::until($dimension)->map(static fn() => $value),
+            Sequence::of($value)->pad($dimension, $value),
         );
     }
 
@@ -70,9 +66,13 @@ final class Vector
         return new self($numbers);
     }
 
-    public function dimension(): Integer\Positive
+    /**
+     * @return int<1, max>
+     */
+    public function dimension(): int
     {
-        return $this->dimension;
+        /** @var int<1, max> There's always at least one element */
+        return $this->numbers->size();
     }
 
     /**
@@ -80,7 +80,7 @@ final class Vector
      */
     public function dot(self $vector): Number
     {
-        if (!$this->dimension()->equals($vector->dimension())) {
+        if ($this->dimension() !== $vector->dimension()) {
             throw new VectorsMustMeOfTheSameDimension;
         }
 
@@ -93,7 +93,7 @@ final class Vector
 
     public function multiplyBy(self $vector): self
     {
-        if (!$this->dimension()->equals($vector->dimension())) {
+        if ($this->dimension() !== $vector->dimension()) {
             throw new VectorsMustMeOfTheSameDimension;
         }
 
@@ -107,7 +107,7 @@ final class Vector
 
     public function divideBy(self $vector): self
     {
-        if (!$this->dimension()->equals($vector->dimension())) {
+        if ($this->dimension() !== $vector->dimension()) {
             throw new VectorsMustMeOfTheSameDimension;
         }
 
@@ -121,7 +121,7 @@ final class Vector
 
     public function subtract(self $vector): self
     {
-        if (!$this->dimension()->equals($vector->dimension())) {
+        if ($this->dimension() !== $vector->dimension()) {
             throw new VectorsMustMeOfTheSameDimension;
         }
 
@@ -135,7 +135,7 @@ final class Vector
 
     public function add(self $vector): self
     {
-        if (!$this->dimension()->equals($vector->dimension())) {
+        if ($this->dimension() !== $vector->dimension()) {
             throw new VectorsMustMeOfTheSameDimension;
         }
 
@@ -191,7 +191,7 @@ final class Vector
     }
 
     /**
-     * @param 0|positive-int $position
+     * @param int<0, max> $position
      */
     public function get(int $position): Number
     {
@@ -203,7 +203,7 @@ final class Vector
 
     public function equals(self $vector): bool
     {
-        if (!$this->dimension()->equals($vector->dimension())) {
+        if ($this->dimension() !== $vector->dimension()) {
             return false;
         }
 
@@ -220,10 +220,10 @@ final class Vector
     {
         return $this
             ->numbers
-            ->find(static fn($number) => !$number->equals(Value::zero))
+            ->find(static fn($number) => !$number->equals(Number::zero()))
             ->match(
                 static fn($lead) => $lead,
-                static fn() => Value::zero,
+                static fn() => Number::zero(),
             );
     }
 

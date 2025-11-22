@@ -6,7 +6,6 @@ namespace Tests\Innmind\Math\Probabilities;
 use Innmind\Math\{
     Probabilities\BinomialDistribution,
     Algebra\Number,
-    Algebra\Real,
 };
 use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
@@ -14,7 +13,7 @@ class BinomialDistributionTest extends TestCase
 {
     public function testInvokation()
     {
-        $law = BinomialDistribution::of(Real::of(0.5));
+        $law = BinomialDistribution::of(Number::of(0.5));
 
         $probability = $law(9, 2);
 

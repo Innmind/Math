@@ -3,10 +3,7 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Statistics;
 
-use Innmind\Math\Algebra\{
-    Number,
-    Integer,
-};
+use Innmind\Math\Algebra\Number;
 use Innmind\Immutable\Sequence;
 
 /**
@@ -16,7 +13,6 @@ final class Frequence
 {
     /** @var Sequence<Number> */
     private Sequence $values;
-    private Integer $size;
 
     /**
      * @no-named-arguments
@@ -24,7 +20,6 @@ final class Frequence
     private function __construct(Number ...$values)
     {
         $this->values = Sequence::of(...$values);
-        $this->size = Integer::of($this->values->size());
     }
 
     public function __invoke(Number $number): Number
@@ -34,7 +29,7 @@ final class Frequence
             ->filter(static fn($value) => $value->equals($number))
             ->size();
 
-        return Integer::of($frequence)->divideBy($this->size);
+        return Number::of($frequence)->divideBy(Number::of($this->size()));
     }
 
     /**
@@ -46,8 +41,11 @@ final class Frequence
         return new self(...$values);
     }
 
-    public function size(): Integer
+    /**
+     * @return int<0, max>
+     */
+    public function size(): int
     {
-        return $this->size;
+        return $this->values->size();
     }
 }

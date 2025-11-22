@@ -8,7 +8,6 @@ use Innmind\Math\{
     Geometry\Figure,
     Geometry\Segment,
     Algebra\Number,
-    Algebra\Integer
 };
 use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
@@ -19,7 +18,7 @@ class CircleTest extends TestCase
         $this->assertInstanceOf(
             Figure::class,
             Circle::of(
-                Segment::of(Integer::of(2)),
+                Segment::of(Number::of(2)),
             ),
         );
     }
@@ -27,7 +26,7 @@ class CircleTest extends TestCase
     public function testPerimeter()
     {
         $circle = Circle::of(
-            Segment::of(Integer::of(4)),
+            Segment::of(Number::of(4)),
         );
 
         $this->assertInstanceOf(Number::class, $circle->perimeter());
@@ -37,7 +36,7 @@ class CircleTest extends TestCase
     public function testArea()
     {
         $circle = Circle::of(
-            Segment::of(Integer::of(4)),
+            Segment::of(Number::of(4)),
         );
 
         $this->assertInstanceOf(Number::class, $circle->area());
@@ -47,7 +46,7 @@ class CircleTest extends TestCase
     public function testRadius()
     {
         $circle = Circle::of(
-            $expected = Segment::of(Integer::of(4)),
+            $expected = Segment::of(Number::of(4)),
         );
 
         $this->assertSame($expected, $circle->radius());
@@ -56,7 +55,7 @@ class CircleTest extends TestCase
     public function testDiameter()
     {
         $circle = Circle::of(
-            Segment::of(Integer::of(4)),
+            Segment::of(Number::of(4)),
         );
 
         $this->assertInstanceOf(Segment::class, $circle->diameter());

@@ -9,8 +9,7 @@ use Innmind\Math\{
     Matrix\Dimension,
     Matrix\RowVector,
     Matrix\ColumnVector,
-    Algebra\Real,
-    Algebra\Integer,
+    Algebra\Number,
     Exception\VectorsMustMeOfTheSameDimension,
     Exception\MatricesMustBeOfTheSameDimension,
     Exception\MatrixMustBeSquare,
@@ -132,8 +131,8 @@ class MatrixTest extends TestCase
     public function testInitialize()
     {
         $matrix = Matrix::initialize(
-            Dimension::of(Integer::of(3), Integer::of(2)),
-            Real::of(4.2),
+            Dimension::of(3, 2),
+            Number::of(4.2),
         );
 
         $this->assertInstanceOf(Matrix::class, $matrix);
@@ -291,7 +290,7 @@ class MatrixTest extends TestCase
             [1, 0, -1],
             [2, 3, 4],
         ]);
-        $result = $matrix->multiplyBy(Integer::of(3));
+        $result = $matrix->multiplyBy(Number::of(3));
 
         $this->assertInstanceOf(Matrix::class, $result);
         $this->assertNotSame($matrix, $result);

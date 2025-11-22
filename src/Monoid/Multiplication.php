@@ -3,10 +3,7 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Monoid;
 
-use Innmind\Math\Algebra\{
-    Number,
-    Value,
-};
+use Innmind\Math\Algebra\Number;
 use Innmind\Immutable\Monoid;
 
 /**
@@ -20,7 +17,7 @@ enum Multiplication implements Monoid
     #[\Override]
     public function identity(): Number
     {
-        return Value::one;
+        return Number::one();
     }
 
     #[\Override]

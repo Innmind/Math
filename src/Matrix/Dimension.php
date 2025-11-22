@@ -3,17 +3,21 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Matrix;
 
-use Innmind\Math\Algebra\Integer;
-
 /**
  * @psalm-immutable
  */
 final class Dimension
 {
-    private Integer\Positive $rows;
-    private Integer\Positive $columns;
+    /** @var int<1, max> */
+    private int $rows;
+    /** @var int<1, max> */
+    private int $columns;
 
-    private function __construct(Integer\Positive $rows, Integer\Positive $columns)
+    /**
+     * @param int<1, max> $rows
+     * @param int<1, max> $columns
+     */
+    private function __construct(int $rows, int $columns)
     {
         $this->rows = $rows;
         $this->columns = $columns;
@@ -21,30 +25,39 @@ final class Dimension
 
     /**
      * @psalm-pure
+     *
+     * @param int<1, max> $rows
+     * @param int<1, max> $columns
      */
-    public static function of(Integer\Positive $rows, Integer\Positive $columns): self
+    public static function of(int $rows, int $columns): self
     {
         return new self($rows, $columns);
     }
 
-    public function rows(): Integer\Positive
+    /**
+     * @return int<1, max>
+     */
+    public function rows(): int
     {
         return $this->rows;
     }
 
-    public function columns(): Integer\Positive
+    /**
+     * @return int<1, max>
+     */
+    public function columns(): int
     {
         return $this->columns;
     }
 
     public function equals(self $dimension): bool
     {
-        return $this->rows->equals($dimension->rows()) &&
-            $this->columns->equals($dimension->columns());
+        return $this->rows === $dimension->rows() &&
+            $this->columns === $dimension->columns();
     }
 
     public function toString(): string
     {
-        return \sprintf('%s x %s', $this->rows->toString(), $this->columns->toString());
+        return \sprintf('%s x %s', $this->rows, $this->columns);
     }
 }

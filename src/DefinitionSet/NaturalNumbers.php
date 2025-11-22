@@ -5,8 +5,6 @@ namespace Innmind\Math\DefinitionSet;
 
 use Innmind\Math\{
     Algebra\Number,
-    Algebra\Integer,
-    Algebra\Value,
     Exception\OutOfDefinitionSet,
 };
 
@@ -19,17 +17,13 @@ final class NaturalNumbers implements Implementation
     #[\Override]
     public function contains(Number $number): bool
     {
-        if (Value::zero->higherThan($number)) {
+        if (Number::zero()->higherThan($number)) {
             return false;
         }
 
-        if ($number instanceof Integer) {
-            return true;
-        }
-
         return $number
-            ->modulo(Value::one)
-            ->equals(Value::zero);
+            ->modulo(Number::one())
+            ->equals(Number::zero());
     }
 
     #[\Override]

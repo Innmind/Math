@@ -6,7 +6,6 @@ namespace Innmind\Math\Matrix;
 use Innmind\Math\{
     Matrix,
     Algebra\Number,
-    Algebra\Integer,
     Exception\LogicException,
 };
 use Innmind\Immutable\{
@@ -36,8 +35,10 @@ final class ColumnVector
 
     /**
      * @psalm-pure
+     *
+     * @param int<1, max> $dimension
      */
-    public static function initialize(Integer\Positive $dimension, Number $value): self
+    public static function initialize(int $dimension, Number $value): self
     {
         return new self(Vector::initialize($dimension, $value));
     }
@@ -54,7 +55,10 @@ final class ColumnVector
         return new self(Vector::ofSequence($numbers));
     }
 
-    public function dimension(): Integer\Positive
+    /**
+     * @return int<1, max>
+     */
+    public function dimension(): int
     {
         return $this->vector->dimension();
     }

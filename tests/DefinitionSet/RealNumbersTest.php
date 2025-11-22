@@ -5,9 +5,7 @@ namespace Tests\Innmind\Math\DefinitionSet;
 
 use Innmind\Math\{
     DefinitionSet\Set,
-    Algebra\Integer,
-    Algebra\Real,
-    Algebra\Value,
+    Algebra\Number,
 };
 use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
@@ -22,24 +20,24 @@ class RealNumbersTest extends TestCase
     {
         $set = Set::realNumbers();
 
-        $this->assertTrue($set->contains(Integer::of(1)));
-        $this->assertTrue($set->contains(Integer::of(0)));
-        $this->assertTrue($set->contains(Integer::of(-1)));
-        $this->assertTrue($set->contains(Real::of(0.75)));
-        $this->assertTrue($set->contains(Real::of(-0.75)));
-        $this->assertTrue($set->contains(Value::pi));
+        $this->assertTrue($set->contains(Number::of(1)));
+        $this->assertTrue($set->contains(Number::of(0)));
+        $this->assertTrue($set->contains(Number::of(-1)));
+        $this->assertTrue($set->contains(Number::of(0.75)));
+        $this->assertTrue($set->contains(Number::of(-0.75)));
+        $this->assertTrue($set->contains(Number::pi()));
     }
 
     public function testAccept()
     {
         $set = Set::realNumbers();
 
-        $this->assertNull($set->accept(Integer::of(1)));
-        $this->assertNull($set->accept(Integer::of(0)));
-        $this->assertNull($set->accept(Integer::of(-1)));
-        $this->assertNull($set->accept(Real::of(0.75)));
-        $this->assertNull($set->accept(Real::of(-0.75)));
-        $this->assertNull($set->accept(Value::pi));
+        $this->assertNull($set->accept(Number::of(1)));
+        $this->assertNull($set->accept(Number::of(0)));
+        $this->assertNull($set->accept(Number::of(-1)));
+        $this->assertNull($set->accept(Number::of(0.75)));
+        $this->assertNull($set->accept(Number::of(-0.75)));
+        $this->assertNull($set->accept(Number::pi()));
     }
 
     public function testUnion()

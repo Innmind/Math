@@ -7,7 +7,6 @@ use Innmind\Math\{
     Regression\LinearRegression,
     Regression\Dataset,
     Algebra\Number,
-    Algebra\Integer,
 };
 use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
@@ -46,7 +45,7 @@ class LinearRegressionTest extends TestCase
 
         $this->assertSame(-0.15, $r->slope()->value());
         $this->assertSame(1.35, $r->intercept()->value());
-        $this->assertEqualsWithDelta(0.0, $r(Integer::of(9))->value(), 0.0001);
+        $this->assertEqualsWithDelta(0.0, $r(Number::of(9))->value(), 0.0001);
     }
 
     public function testRootMeanSquareDeviation()

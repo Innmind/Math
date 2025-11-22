@@ -8,8 +8,6 @@ use Innmind\Math\{
     Geometry\Figure,
     Geometry\Segment,
     Algebra\Number,
-    Algebra\Integer,
-    Algebra\Real,
 };
 use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
@@ -18,9 +16,9 @@ class TriangleTest extends TestCase
     public function testInterface()
     {
         $triangle = Triangle::of(
-            Segment::of(Integer::of(2)),
-            Segment::of(Integer::of(2)),
-            Segment::of(Integer::of(2)),
+            Segment::of(Number::of(2)),
+            Segment::of(Number::of(2)),
+            Segment::of(Number::of(2)),
         );
 
         $this->assertInstanceOf(Figure::class, $triangle);
@@ -29,9 +27,9 @@ class TriangleTest extends TestCase
     public function testPerimeter()
     {
         $triangle = Triangle::of(
-            Segment::of(Integer::of(2)),
-            Segment::of(Integer::of(3)),
-            Segment::of(Integer::of(4)),
+            Segment::of(Number::of(2)),
+            Segment::of(Number::of(3)),
+            Segment::of(Number::of(4)),
         );
 
         $this->assertInstanceOf(Number::class, $triangle->perimeter());
@@ -41,9 +39,9 @@ class TriangleTest extends TestCase
     public function testArea()
     {
         $triangle = Triangle::of(
-            Segment::of(Real::of(9.8)),
-            Segment::of(Integer::of(24)),
-            Segment::of(Integer::of(16)),
+            Segment::of(Number::of(9.8)),
+            Segment::of(Number::of(24)),
+            Segment::of(Number::of(16)),
         );
 
         $this->assertInstanceOf(Number::class, $triangle->area());
@@ -53,25 +51,25 @@ class TriangleTest extends TestCase
     public function testBase()
     {
         $triangle = Triangle::of(
-            $expected = Segment::of(Integer::of(24)),
-            Segment::of(Real::of(9.8)),
-            Segment::of(Integer::of(16)),
+            $expected = Segment::of(Number::of(24)),
+            Segment::of(Number::of(9.8)),
+            Segment::of(Number::of(16)),
         );
 
         $this->assertSame($expected, $triangle->base());
 
         $triangle = Triangle::of(
-            Segment::of(Real::of(9.8)),
-            $expected = Segment::of(Integer::of(24)),
-            Segment::of(Integer::of(16)),
+            Segment::of(Number::of(9.8)),
+            $expected = Segment::of(Number::of(24)),
+            Segment::of(Number::of(16)),
         );
 
         $this->assertSame($expected, $triangle->base());
 
         $triangle = Triangle::of(
-            Segment::of(Real::of(9.8)),
-            Segment::of(Integer::of(16)),
-            $expected = Segment::of(Integer::of(24)),
+            Segment::of(Number::of(9.8)),
+            Segment::of(Number::of(16)),
+            $expected = Segment::of(Number::of(24)),
         );
 
         $this->assertSame($expected, $triangle->base());
@@ -80,9 +78,9 @@ class TriangleTest extends TestCase
     public function testHeight()
     {
         $triangle = Triangle::of(
-            Segment::of(Real::of(9.8)),
-            Segment::of(Integer::of(24)),
-            Segment::of(Integer::of(16)),
+            Segment::of(Number::of(9.8)),
+            Segment::of(Number::of(24)),
+            Segment::of(Number::of(16)),
         );
 
         $this->assertInstanceOf(Segment::class, $triangle->height());
@@ -95,17 +93,17 @@ class TriangleTest extends TestCase
     public function testIsIsosceles()
     {
         $triangle = Triangle::of(
-            Segment::of(Real::of(9.8)),
-            Segment::of(Integer::of(16)),
-            Segment::of(Integer::of(16)),
+            Segment::of(Number::of(9.8)),
+            Segment::of(Number::of(16)),
+            Segment::of(Number::of(16)),
         );
 
         $this->assertTrue($triangle->isIsosceles());
 
         $triangle = Triangle::of(
-            Segment::of(Real::of(9.8)),
-            Segment::of(Integer::of(15)),
-            Segment::of(Integer::of(16)),
+            Segment::of(Number::of(9.8)),
+            Segment::of(Number::of(15)),
+            Segment::of(Number::of(16)),
         );
 
         $this->assertFalse($triangle->isIsosceles());
@@ -114,17 +112,17 @@ class TriangleTest extends TestCase
     public function testIsEquilateral()
     {
         $triangle = Triangle::of(
-            Segment::of(Integer::of(16)),
-            Segment::of(Integer::of(16)),
-            Segment::of(Integer::of(16)),
+            Segment::of(Number::of(16)),
+            Segment::of(Number::of(16)),
+            Segment::of(Number::of(16)),
         );
 
         $this->assertTrue($triangle->isEquilateral());
 
         $triangle = Triangle::of(
-            Segment::of(Real::of(9.8)),
-            Segment::of(Integer::of(16)),
-            Segment::of(Integer::of(16)),
+            Segment::of(Number::of(9.8)),
+            Segment::of(Number::of(16)),
+            Segment::of(Number::of(16)),
         );
 
         $this->assertFalse($triangle->isEquilateral());

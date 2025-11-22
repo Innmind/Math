@@ -8,6 +8,7 @@
 - `Innmind\Math\DefinitionSet\Set` is now a final class, all previous implementations are now flagged as internal
 - `Innmind\Math\Monoid\*` are now enums
 - `Innmind\Math\Probabilities\BinomialDistribution::__invoke()` arguments now expects `int`s
+- `Innmind\Math\Algebra\Number` is now a final class, all previous implementations are now flagged as internal
 
 ### Fixed
 
