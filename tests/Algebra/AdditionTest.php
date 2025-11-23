@@ -119,7 +119,7 @@ class AdditionTest extends TestCase
             Number::of(42)->add(Number::of(66)),
         );
 
-        $this->assertSame('24 + (42 + 66)', $addition->toString());
+        $this->assertSame('24 + 42 + 66', $addition->toString());
     }
 
     public function testModulo()

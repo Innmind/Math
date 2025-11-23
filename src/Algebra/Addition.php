@@ -14,26 +14,18 @@ use Innmind\Immutable\{
  */
 final class Addition implements Implementation
 {
-    /**
-     * @param Sequence<Implementation> $values
-     */
     private function __construct(
-        private Sequence $values,
+        private Implementation $a,
+        private Implementation $b,
     ) {
     }
 
     /**
      * @psalm-pure
      */
-    public static function of(Implementation $first, Implementation $value): self
+    public static function of(Implementation $a, Implementation $b): self
     {
-        if ($first instanceof self) {
-            $values = $first->values;
-        } else {
-            $values = Sequence::of($first);
-        }
-
-        return new self(($values)($value));
+        return new self($a, $b);
     }
 
     #[\Override]
@@ -50,21 +42,24 @@ final class Addition implements Implementation
 
     public function sum(): Implementation
     {
-        return $this->compute($this->values);
+        return Native::of(
+            $this->a->value() + $this->b->value(),
+        );
     }
 
     #[\Override]
     public function optimize(): Implementation
     {
-        return new self($this->values->map(
-            static fn($value) => $value->optimize(),
-        ));
+        return new self(
+            $this->a->optimize(),
+            $this->b->optimize(),
+        );
     }
 
     #[\Override]
     public function toString(): string
     {
-        $values = $this->values->map(
+        $values = $this->collect()->map(
             static fn($number) => $number->format(),
         );
 
@@ -78,15 +73,15 @@ final class Addition implements Implementation
     }
 
     /**
-     * @param Sequence<Implementation> $values
+     * @return Sequence<Implementation>
      */
-    private function compute(Sequence $values): Implementation
+    private function collect(): Sequence
     {
-        $value = $values->reduce(
-            0,
-            static fn(int|float $carry, $number): int|float => $carry + $number->value(),
+        return Sequence::of($this->a, $this->b)->flatMap(
+            static fn($number) => match (true) {
+                $number instanceof self => $number->collect(),
+                default => Sequence::of($number),
+            },
         );
-
-        return Native::of($value);
     }
 }
