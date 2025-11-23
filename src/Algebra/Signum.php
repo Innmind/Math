@@ -59,9 +59,9 @@ final class Signum implements Implementation
         return $this->compute($this->number);
     }
 
-    private function compute(Implementation $number): Integer
+    private function compute(Implementation $number): Implementation
     {
-        return Integer::of(
+        return Native::of(
             $number->value() <=> 0,
         );
     }

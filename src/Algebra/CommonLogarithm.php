@@ -77,7 +77,7 @@ final class CommonLogarithm implements Implementation
 
     private function compute(Implementation $number): Implementation
     {
-        return Real::of(
+        return Native::of(
             \log10($number->value()),
         );
     }

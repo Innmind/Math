@@ -3,29 +3,36 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Algebra;
 
+use Innmind\Math\Exception\NotANumber;
+
 /**
  * @psalm-immutable
  * @internal
  */
-final class Integer implements Implementation
+final class Native implements Implementation
 {
-    private int $value;
-
-    final private function __construct(int $value)
+    private function __construct(private int|float $value)
     {
-        $this->value = $value;
     }
 
     /**
      * @psalm-pure
      */
-    public static function of(int $value): self
+    public static function of(int|float $value): Implementation
     {
+        if (\is_infinite($value)) {
+            return $value > 0 ? Value::infinite : Value::negativeInfinite;
+        }
+
+        if (\is_nan($value)) {
+            throw new NotANumber;
+        }
+
         return new self($value);
     }
 
     #[\Override]
-    public function value(): int
+    public function value(): int|float
     {
         return $this->value;
     }

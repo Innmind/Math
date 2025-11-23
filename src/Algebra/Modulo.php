@@ -71,7 +71,7 @@ final class Modulo implements Implementation
         Implementation $number,
         Implementation $modulus,
     ): Implementation {
-        return Real::of(
+        return Native::of(
             \fmod($number->value(), $modulus->value()),
         );
     }

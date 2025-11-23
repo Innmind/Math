@@ -99,6 +99,6 @@ final class Subtraction implements Implementation
                 static fn(int|float $carry, $number): int|float => $carry - $number->value(),
             );
 
-        return Real::of($value);
+        return Native::of($value);
     }
 }

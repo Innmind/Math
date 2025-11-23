@@ -94,7 +94,7 @@ final class Division implements Implementation
         Implementation $dividend,
         Implementation $divisor,
     ): Implementation {
-        return Real::of(
+        return Native::of(
             $dividend->value() / $divisor->value(),
         );
     }

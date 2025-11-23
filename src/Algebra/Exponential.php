@@ -63,7 +63,7 @@ final class Exponential implements Implementation
 
     private function compute(Implementation $power): Implementation
     {
-        return Real::of(
+        return Native::of(
             \exp($power->value()),
         );
     }

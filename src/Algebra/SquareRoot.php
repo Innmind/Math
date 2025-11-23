@@ -67,7 +67,7 @@ final class SquareRoot implements Implementation
 
     private function result(): Implementation
     {
-        return Real::of(
+        return Native::of(
             \sqrt($this->number->value()),
         );
     }

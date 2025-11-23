@@ -61,7 +61,7 @@ final class Absolute implements Implementation
 
     private function compute(Implementation $number): Implementation
     {
-        return Real::of(
+        return Native::of(
             \abs($number->value()),
         );
     }

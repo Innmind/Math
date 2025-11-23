@@ -18,11 +18,7 @@ final class Number
      */
     public static function of(int|float $value): self
     {
-        if (\is_int($value)) {
-            return new self(Integer::of($value));
-        }
-
-        return new self(Real::of($value));
+        return new self(Native::of($value));
     }
 
     /**

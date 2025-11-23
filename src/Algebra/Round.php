@@ -80,7 +80,7 @@ final class Round implements Implementation
     #[\Override]
     public function collapse(): Implementation
     {
-        return Real::of($this->compute($this->number->collapse()));
+        return Native::of($this->compute($this->number->collapse()));
     }
 
     #[\Override]

@@ -75,7 +75,7 @@ final class Power implements Implementation
 
     private function result(): Implementation
     {
-        return Real::of(
+        return Native::of(
             $this->number->value() ** $this->power->value(),
         );
     }

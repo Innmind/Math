@@ -38,7 +38,7 @@ final class AppliedFunc implements Implementation
     #[\Override]
     public function collapse(): Implementation
     {
-        return Real::of(($this->func)($this->x->collapse())->value());
+        return Native::of(($this->func)($this->x->collapse())->value());
     }
 
     #[\Override]
