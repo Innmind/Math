@@ -97,6 +97,11 @@ final class Number
         return new self(Value::negativeInfinite);
     }
 
+    public function apply(Func $func): self
+    {
+        return new self(AppliedFunc::of($func, $this));
+    }
+
     public function value(): int|float
     {
         return $this->implementation->value();
