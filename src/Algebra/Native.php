@@ -28,7 +28,16 @@ final class Native implements Implementation
             throw new NotANumber;
         }
 
-        return new self($value);
+        return match ($value) {
+            0 => Value::zero,
+            1 => Value::one,
+            2 => Value::two,
+            10 => Value::ten,
+            100 => Value::hundred,
+            \M_E => Value::e,
+            \M_PI => Value::pi,
+            default => new self($value),
+        };
     }
 
     #[\Override]
