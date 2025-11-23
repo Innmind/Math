@@ -63,6 +63,21 @@ final class Degree
         return new self($this->number->add(Number::of(180)));
     }
 
+    public function cosine(): Number
+    {
+        return $this->toRadian()->cosine();
+    }
+
+    public function sine(): Number
+    {
+        return $this->toRadian()->sine();
+    }
+
+    public function tangent(): Number
+    {
+        return $this->toRadian()->tangent();
+    }
+
     public function number(): Number
     {
         return $this->number;

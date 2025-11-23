@@ -2,6 +2,18 @@
 
 ## [Unreleased]
 
+### Added
+
+- `Innmind\Math\Algebra\Number::apply()`
+- `Innmind\Math\Algebra\Func`
+- `Innmind\Math\Geometry\Trigonometry`
+- `Innmind\Math\Geometry\Angle\Degree::cosine()`
+- `Innmind\Math\Geometry\Angle\Degree::sine()`
+- `Innmind\Math\Geometry\Angle\Degree::tangent()`
+- `Innmind\Math\Geometry\Angle\Radian::cosine()`
+- `Innmind\Math\Geometry\Angle\Radian::sine()`
+- `Innmind\Math\Geometry\Angle\Radian::tangent()`
+
 ### Changed
 
 - Requires PHP `8.4`
@@ -18,6 +30,12 @@
 
 - `Innmind\Math\Algebra\Operation`
 - The possibility to specify multiple values to `Innmind\Math\Algebra\Number::add()`, `::multiplyBy()` and `::subtract()`
+- `Innmind\Math\Geometry\Trigonometry\ArcCosine`
+- `Innmind\Math\Geometry\Trigonometry\ArcSine`
+- `Innmind\Math\Geometry\Trigonometry\ArcTangent`
+- `Innmind\Math\Geometry\Trigonometry\Cosine`
+- `Innmind\Math\Geometry\Trigonometry\Sine`
+- `Innmind\Math\Geometry\Trigonometry\Tangent`
 
 ## 6.1.0 - 2023-09-23
 

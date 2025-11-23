@@ -7,9 +7,9 @@ use function Innmind\Math\max as maximum;
 use Innmind\Math\{
     Algebra\Number,
     Geometry\Angle\Degree,
+    Geometry\Angle\Radian,
     Geometry\Segment,
-    Geometry\Trigonometry\Cosine,
-    Geometry\Trigonometry\ArcCosine,
+    Geometry\Trigonometry,
     Exception\SegmentsCannotBeJoined,
 };
 
@@ -42,7 +42,7 @@ final class AlKashi
                 Number::two()
                     ->multiplyBy($a)
                     ->multiplyBy($b)
-                    ->multiplyBy(Cosine::of($degree)->number()),
+                    ->multiplyBy($degree->cosine()),
             )
             ->squareRoot();
 
@@ -82,7 +82,7 @@ final class AlKashi
                     ->multiplyBy($b),
             );
 
-        return ArcCosine::of($cosAB)->toDegree();
+        return Radian::of($cosAB->apply(Trigonometry::arcCosine))->toDegree();
     }
 
     public function toString(): string

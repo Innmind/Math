@@ -3,7 +3,10 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Geometry\Angle;
 
-use Innmind\Math\Algebra\Number;
+use Innmind\Math\{
+    Algebra\Number,
+    Geometry\Trigonometry,
+};
 
 /**
  * @psalm-immutable
@@ -59,6 +62,21 @@ final class Radian
     public function opposite(): self
     {
         return $this->toDegree()->opposite()->toRadian();
+    }
+
+    public function cosine(): Number
+    {
+        return $this->number->apply(Trigonometry::cosine);
+    }
+
+    public function sine(): Number
+    {
+        return $this->number->apply(Trigonometry::sine);
+    }
+
+    public function tangent(): Number
+    {
+        return $this->number->apply(Trigonometry::tangent);
     }
 
     public function number(): Number
