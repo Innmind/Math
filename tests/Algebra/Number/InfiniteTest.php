@@ -127,21 +127,21 @@ class InfiniteTest extends TestCase
     {
         $this->expectException(OutOfDefinitionSet::class);
 
-        Number::infinite()->apply(Logarithm::base2)->collapse();
+        Number::infinite()->apply(Logarithm::base2)->memoize();
     }
 
     public function testNaturalLogarithm()
     {
         $this->expectException(OutOfDefinitionSet::class);
 
-        Number::infinite()->apply(Logarithm::baseE)->collapse();
+        Number::infinite()->apply(Logarithm::baseE)->memoize();
     }
 
     public function testCommonLogarithm()
     {
         $this->expectException(OutOfDefinitionSet::class);
 
-        Number::infinite()->apply(Logarithm::base10)->collapse();
+        Number::infinite()->apply(Logarithm::base10)->memoize();
     }
 
     public function testSignum()

@@ -37,9 +37,9 @@ final class Exponential implements Implementation
     }
 
     #[\Override]
-    public function collapse(): Implementation
+    public function optimize(): Implementation
     {
-        return $this->compute($this->power->collapse());
+        return new self($this->power->optimize());
     }
 
     #[\Override]

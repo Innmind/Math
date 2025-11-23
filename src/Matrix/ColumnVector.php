@@ -81,7 +81,10 @@ final class ColumnVector
                 ->vector
                 ->toSequence()
                 ->map(static fn($number) => $row->toSequence()->map(
-                    static fn($rowNumber) => $number->multiplyBy($rowNumber)->collapse(),
+                    static fn($rowNumber) => $number
+                        ->multiplyBy($rowNumber)
+                        ->optimize()
+                        ->memoize(),
                 ))
                 ->map(RowVector::ofSequence(...)),
         );

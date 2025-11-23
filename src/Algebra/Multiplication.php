@@ -71,16 +71,16 @@ final class Multiplication implements Implementation
     }
 
     #[\Override]
-    public function collapse(): Implementation
+    public function optimize(): Implementation
     {
         return $this
             ->values
             ->drop(2)
             ->reduce(
-                $this->doCollapse($this->first, $this->second),
-                $this->doCollapse(...),
+                $this->doOptimize($this->first, $this->second),
+                $this->doOptimize(...),
             )
-            ->collapse();
+            ->optimize();
     }
 
     #[\Override]
@@ -99,12 +99,12 @@ final class Multiplication implements Implementation
         return '('.$this->toString().')';
     }
 
-    private function doCollapse(
+    private function doOptimize(
         Implementation $a,
         Implementation $b,
     ): Implementation {
         if ($a instanceof Division) {
-            $divisor = $a->divisor()->collapse();
+            $divisor = $a->divisor()->optimize();
 
             if ($b->equals($divisor)) {
                 return $a->dividend();
@@ -112,13 +112,13 @@ final class Multiplication implements Implementation
         }
 
         if ($b instanceof Division) {
-            $divisor = $b->divisor()->collapse();
+            $divisor = $b->divisor()->optimize();
 
             if ($a->equals($divisor)) {
                 return $b->dividend();
             }
         }
 
-        return self::of($a->collapse(), $b->collapse())->product();
+        return self::of($a->optimize(), $b->optimize())->product(); // todo avoid computing concrete value
     }
 }

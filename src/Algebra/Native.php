@@ -53,7 +53,7 @@ final class Native implements Implementation
     }
 
     #[\Override]
-    public function collapse(): Implementation
+    public function optimize(): Implementation
     {
         return $this;
     }

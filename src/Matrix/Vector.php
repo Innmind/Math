@@ -87,7 +87,12 @@ final class Vector
         return $this
             ->numbers
             ->zip($vector->numbers)
-            ->map(static fn($pair) => $pair[0]->multiplyBy($pair[1])->collapse())
+            ->map(
+                static fn($pair) => $pair[0]
+                    ->multiplyBy($pair[1])
+                    ->optimize()
+                    ->memoize(),
+            )
             ->fold(Addition::monoid);
     }
 
@@ -101,7 +106,12 @@ final class Vector
             $this
                 ->numbers
                 ->zip($vector->numbers)
-                ->map(static fn($pair) => $pair[0]->multiplyBy($pair[1])->collapse()),
+                ->map(
+                    static fn($pair) => $pair[0]
+                        ->multiplyBy($pair[1])
+                        ->optimize()
+                        ->memoize(),
+                ),
         );
     }
 

@@ -36,9 +36,12 @@ final class AppliedFunc implements Implementation
     }
 
     #[\Override]
-    public function collapse(): Implementation
+    public function optimize(): Implementation
     {
-        return Native::of(($this->func)($this->x->collapse())->value());
+        return new self(
+            $this->func,
+            $this->x->optimize(),
+        );
     }
 
     #[\Override]

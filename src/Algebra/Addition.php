@@ -54,10 +54,10 @@ final class Addition implements Implementation
     }
 
     #[\Override]
-    public function collapse(): Implementation
+    public function optimize(): Implementation
     {
-        return $this->compute($this->values->map(
-            static fn($value) => $value->collapse(),
+        return new self($this->values->map(
+            static fn($value) => $value->optimize(),
         ));
     }
 

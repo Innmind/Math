@@ -13,5 +13,5 @@ interface Implementation
     public function equals(self $number): bool;
     public function toString(): string;
     public function format(): string;
-    public function collapse(): self;
+    public function optimize(): self;
 }

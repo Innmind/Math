@@ -39,13 +39,13 @@ final class Power implements Implementation
     }
 
     #[\Override]
-    public function collapse(): Implementation
+    public function optimize(): Implementation
     {
         if ($this->number instanceof SquareRoot && $this->square()) {
-            return $this->number->number()->collapse();
+            return $this->number->number()->optimize();
         }
 
-        return $this->result();
+        return $this;
     }
 
     public function number(): Implementation

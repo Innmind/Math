@@ -234,7 +234,7 @@ class SquareRootTest extends TestCase
         $result = Number::of(2)
             ->power(Number::of(2))
             ->squareRoot()
-            ->collapse()
+            ->optimize()
             ->value();
 
         $this->assertSame(2, $result);
@@ -244,7 +244,7 @@ class SquareRootTest extends TestCase
             ->squareRoot()
             ->power(Number::of(2))
             ->squareRoot()
-            ->collapse()
+            ->optimize()
             ->value();
 
         $this->assertSame(2, $result);

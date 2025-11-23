@@ -31,7 +31,7 @@ class ColumnVectorTest extends TestCase
             [1, 2, 3],
             $vector
                 ->toSequence()
-                ->map(static fn($number) => $number->collapse()->value())
+                ->map(static fn($number) => $number->optimize()->value())
                 ->toList(),
         );
     }
@@ -83,14 +83,14 @@ class ColumnVectorTest extends TestCase
             [25, 5, 1],
             $column
                 ->toSequence()
-                ->map(static fn($number) => $number->collapse()->value())
+                ->map(static fn($number) => $number->optimize()->value())
                 ->toList(),
         );
         $this->assertSame(
             [64.0, 12.8, 2.56],
             $column2
                 ->toSequence()
-                ->map(static fn($number) => $number->collapse()->value())
+                ->map(static fn($number) => $number->optimize()->value())
                 ->toList(),
         );
     }
@@ -116,14 +116,14 @@ class ColumnVectorTest extends TestCase
             [25, 5, 1],
             $column
                 ->toSequence()
-                ->map(static fn($number) => $number->collapse()->value())
+                ->map(static fn($number) => $number->optimize()->value())
                 ->toList(),
         );
         $this->assertSame(
             [5, 1, 0.2],
             $column2
                 ->toSequence()
-                ->map(static fn($number) => $number->collapse()->value())
+                ->map(static fn($number) => $number->optimize()->value())
                 ->toList(),
         );
     }
@@ -146,7 +146,7 @@ class ColumnVectorTest extends TestCase
             [1.2, 1.2, 1.2, 1.2],
             $vector
                 ->toSequence()
-                ->map(static fn($number) => $number->collapse()->value())
+                ->map(static fn($number) => $number->optimize()->value())
                 ->toList(),
         );
     }
@@ -165,7 +165,7 @@ class ColumnVectorTest extends TestCase
             [0.5, -0.5, 0.20000000000000018, -0.20000000000000018],
             $vector3
                 ->toSequence()
-                ->map(static fn($number) => $number->collapse()->value())
+                ->map(static fn($number) => $number->optimize()->value())
                 ->toList(),
         );
     }
@@ -193,7 +193,7 @@ class ColumnVectorTest extends TestCase
             [1.5, 4.5, 5.8, 8.2],
             $vector3
                 ->toSequence()
-                ->map(static fn($number) => $number->collapse()->value())
+                ->map(static fn($number) => $number->optimize()->value())
                 ->toList(),
         );
     }
@@ -219,7 +219,7 @@ class ColumnVectorTest extends TestCase
             [1.0, 8.0, 27.0, -64.0],
             $vector2
                 ->toSequence()
-                ->map(static fn($number) => $number->collapse()->value())
+                ->map(static fn($number) => $number->optimize()->value())
                 ->toList(),
         );
     }
@@ -256,14 +256,14 @@ class ColumnVectorTest extends TestCase
             [1, 2, 3, -4],
             $vector
                 ->toSequence()
-                ->map(static fn($number) => $number->collapse()->value())
+                ->map(static fn($number) => $number->optimize()->value())
                 ->toList(),
         );
         $this->assertEquals(
             [1, 4, 9, 16],
             $vector2
                 ->toSequence()
-                ->map(static fn($number) => $number->collapse()->value())
+                ->map(static fn($number) => $number->optimize()->value())
                 ->toList(),
         );
     }

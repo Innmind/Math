@@ -16,7 +16,7 @@ final class Division implements Implementation
 
     private function __construct(Implementation $dividend, Implementation $divisor)
     {
-        if ($divisor->collapse()->value() == 0) {
+        if ($divisor->optimize()->value() == 0) {
             throw new DivisionByZero;
         }
 
@@ -63,11 +63,11 @@ final class Division implements Implementation
     }
 
     #[\Override]
-    public function collapse(): Implementation
+    public function optimize(): Implementation
     {
-        return $this->compute(
-            $this->dividend->collapse(),
-            $this->divisor->collapse(),
+        return new self(
+            $this->dividend->optimize(),
+            $this->divisor->optimize(),
         );
     }
 

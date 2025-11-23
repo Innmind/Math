@@ -36,9 +36,12 @@ final class DisplayAs implements Implementation
     }
 
     #[\Override]
-    public function collapse(): Implementation
+    public function optimize(): Implementation
     {
-        return $this->number->collapse();
+        return new self(
+            $this->number->optimize(),
+            $this->string,
+        );
     }
 
     #[\Override]

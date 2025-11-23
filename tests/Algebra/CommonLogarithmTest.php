@@ -23,7 +23,7 @@ class CommonLogarithmTest extends TestCase
     {
         $this->expectException(OutOfDefinitionSet::class);
 
-        Number::of(0)->apply(Logarithm::common)->collapse();
+        Number::of(0)->apply(Logarithm::common)->memoize();
     }
 
     public function testResult()

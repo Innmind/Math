@@ -29,7 +29,7 @@ class VectorTest extends TestCase
             [1, 2, 3],
             $vector
                 ->toSequence()
-                ->map(static fn($number) => $number->collapse()->value())
+                ->map(static fn($number) => $number->optimize()->value())
                 ->toList(),
         );
     }
@@ -218,14 +218,14 @@ class VectorTest extends TestCase
             [1, 2, 3, -4],
             $vector
                 ->toSequence()
-                ->map(static fn($number) => $number->collapse()->value())
+                ->map(static fn($number) => $number->optimize()->value())
                 ->toList(),
         );
         $this->assertSame(
             [1, 4, 9, 16],
             $vector2
                 ->toSequence()
-                ->map(static fn($number) => $number->collapse()->value())
+                ->map(static fn($number) => $number->optimize()->value())
                 ->toList(),
         );
     }

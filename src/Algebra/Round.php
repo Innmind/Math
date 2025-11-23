@@ -10,6 +10,7 @@ namespace Innmind\Math\Algebra;
 final class Round implements Implementation
 {
     private Implementation $number;
+    /** @var int<0, max> */
     private int $precision;
     /** @var 0|positive-int */
     private int $mode;
@@ -78,9 +79,13 @@ final class Round implements Implementation
     }
 
     #[\Override]
-    public function collapse(): Implementation
+    public function optimize(): Implementation
     {
-        return Native::of($this->compute($this->number->collapse()));
+        return new self(
+            $this->number->optimize(),
+            $this->precision,
+            $this->mode,
+        );
     }
 
     #[\Override]

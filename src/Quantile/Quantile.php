@@ -91,7 +91,7 @@ final class Quantile
         $index = (int) Number::of($this->values->size())
             ->multiplyBy($percentage)
             ->roundUp()
-            ->collapse()
+            ->optimize()
             ->value();
 
         return $this->values->match(

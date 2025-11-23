@@ -39,11 +39,11 @@ final class Modulo implements Implementation
     }
 
     #[\Override]
-    public function collapse(): Implementation
+    public function optimize(): Implementation
     {
-        return $this->compute(
-            $this->number->collapse(),
-            $this->modulus->collapse(),
+        return new self(
+            $this->number->optimize(),
+            $this->modulus->optimize(),
         );
     }
 

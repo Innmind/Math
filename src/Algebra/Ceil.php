@@ -37,9 +37,9 @@ final class Ceil implements Implementation
     }
 
     #[\Override]
-    public function collapse(): Implementation
+    public function optimize(): Implementation
     {
-        return Native::of($this->compute($this->number->collapse()));
+        return new self($this->number->optimize());
     }
 
     #[\Override]

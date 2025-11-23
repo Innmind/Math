@@ -276,7 +276,7 @@ class MultiplicationTest extends TestCase
             Number::of(3)
                 ->divideBy(Number::of(2))
                 ->multiplyBy(Number::of(2))
-                ->collapse()
+                ->optimize()
                 ->value(),
         );
         $this->assertSame(
@@ -285,7 +285,7 @@ class MultiplicationTest extends TestCase
                 ->multiplyBy(
                     Number::of(3)->divideBy(Number::of(2)),
                 )
-                ->collapse()
+                ->optimize()
                 ->value(),
         );
     }

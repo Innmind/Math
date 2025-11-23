@@ -63,11 +63,11 @@ final class Subtraction implements Implementation
     }
 
     #[\Override]
-    public function collapse(): Implementation
+    public function optimize(): Implementation
     {
-        return $this->compute(
-            $this->first->collapse(),
-            $this->values->map(static fn($value) => $value->collapse()),
+        return new self(
+            $this->first->optimize(),
+            $this->values->map(static fn($value) => $value->optimize()),
         );
     }
 

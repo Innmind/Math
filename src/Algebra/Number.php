@@ -265,14 +265,27 @@ final class Number
     }
 
     /**
-     * Compute the underlying number like the value() method but it will try to
-     * skip some operations to provide the most accurate number
+     * This method will remove unnecessary operations in order to have the most
+     * precise number in the end.
      *
      * For example instead of computing each operation of `sqrt(square(x))` it
      * will directly return `x`
      */
-    public function collapse(): self
+    public function optimize(): self
     {
-        return new self($this->implementation->collapse());
+        return new self($this->implementation->optimize());
+    }
+
+    /**
+     * This prevents recomputing the underlying operations each time the result
+     * is accessed.
+     */
+    public function memoize(): self
+    {
+        if ($this->implementation instanceof Native) {
+            return $this;
+        }
+
+        return self::of($this->value());
     }
 }
