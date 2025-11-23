@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace Tests\Innmind\Math\Algebra;
 
 use Innmind\Math\{
-    Algebra\NaturalLogarithm,
+    Algebra\Logarithm,
     Algebra\Number,
     Exception\OutOfDefinitionSet
 };
@@ -14,7 +14,7 @@ class NaturalLogarithmTest extends TestCase
 {
     public function testInterface()
     {
-        $ln = Number::of(42.42)->naturalLogarithm();
+        $ln = Number::of(42.42)->apply(Logarithm::natural);
 
         $this->assertInstanceOf(Number::class, $ln);
     }
@@ -23,19 +23,19 @@ class NaturalLogarithmTest extends TestCase
     {
         $this->expectException(OutOfDefinitionSet::class);
 
-        Number::of(0)->naturalLogarithm();
+        Number::of(0)->apply(Logarithm::natural)->collapse();
     }
 
     public function testResult()
     {
-        $ln = Number::of(1)->naturalLogarithm();
+        $ln = Number::of(1)->apply(Logarithm::natural);
 
         $this->assertSame(0.0, $ln->value());
     }
 
     public function testValue()
     {
-        $ln = Number::of(1)->naturalLogarithm();
+        $ln = Number::of(1)->apply(Logarithm::natural);
 
         $this->assertSame(0.0, $ln->value());
     }
@@ -44,13 +44,13 @@ class NaturalLogarithmTest extends TestCase
     {
         $this->assertSame(
             'ln(4)',
-            Number::of(4)->naturalLogarithm()->toString(),
+            Number::of(4)->apply(Logarithm::natural)->toString(),
         );
     }
 
     public function testEquals()
     {
-        $ln = Number::of(1)->naturalLogarithm();
+        $ln = Number::of(1)->apply(Logarithm::natural);
 
         $this->assertTrue($ln->equals(Number::of(0)));
         $this->assertFalse($ln->equals(Number::of(0.1)));
@@ -58,7 +58,7 @@ class NaturalLogarithmTest extends TestCase
 
     public function testHigherThan()
     {
-        $ln = Number::of(1)->naturalLogarithm();
+        $ln = Number::of(1)->apply(Logarithm::natural);
 
         $this->assertTrue($ln->higherThan(Number::of(-0.1)));
         $this->assertFalse($ln->higherThan(Number::of(0)));
@@ -66,7 +66,7 @@ class NaturalLogarithmTest extends TestCase
 
     public function testAdd()
     {
-        $ln = Number::of(1)->naturalLogarithm();
+        $ln = Number::of(1)->apply(Logarithm::natural);
         $number = $ln->add(Number::of(7));
 
         $this->assertSame(7.0, $number->value());
@@ -74,7 +74,7 @@ class NaturalLogarithmTest extends TestCase
 
     public function testSubtract()
     {
-        $ln = Number::of(1)->naturalLogarithm();
+        $ln = Number::of(1)->apply(Logarithm::natural);
         $number = $ln->subtract(Number::of(7));
 
         $this->assertSame(-7.0, $number->value());
@@ -82,7 +82,7 @@ class NaturalLogarithmTest extends TestCase
 
     public function testMultiplication()
     {
-        $ln = Number::of(1)->naturalLogarithm();
+        $ln = Number::of(1)->apply(Logarithm::natural);
         $number = $ln->multiplyBy(Number::of(2));
 
         $this->assertSame(0.0, $number->value());
@@ -90,7 +90,7 @@ class NaturalLogarithmTest extends TestCase
 
     public function testDivision()
     {
-        $ln = Number::of(1)->naturalLogarithm();
+        $ln = Number::of(1)->apply(Logarithm::natural);
         $number = $ln->divideBy(Number::of(2));
 
         $this->assertSame(0.0, $number->value());
@@ -98,7 +98,7 @@ class NaturalLogarithmTest extends TestCase
 
     public function testFloor()
     {
-        $ln = Number::of(1)->naturalLogarithm();
+        $ln = Number::of(1)->apply(Logarithm::natural);
         $number = $ln->floor();
 
         $this->assertSame(0.0, $number->value());
@@ -106,7 +106,7 @@ class NaturalLogarithmTest extends TestCase
 
     public function testCeil()
     {
-        $ln = Number::of(1)->naturalLogarithm();
+        $ln = Number::of(1)->apply(Logarithm::natural);
         $number = $ln->ceil();
 
         $this->assertSame(0.0, $number->value());
@@ -114,7 +114,7 @@ class NaturalLogarithmTest extends TestCase
 
     public function testAbsolute()
     {
-        $ln = Number::of(0.5)->naturalLogarithm();
+        $ln = Number::of(0.5)->apply(Logarithm::natural);
         $number = $ln->absolute();
 
         $this->assertSame(0.6931471805599453, $number->value());
@@ -122,7 +122,7 @@ class NaturalLogarithmTest extends TestCase
 
     public function testModulo()
     {
-        $ln = Number::of(1)->naturalLogarithm();
+        $ln = Number::of(1)->apply(Logarithm::natural);
         $number = $ln->modulo(Number::of(2));
 
         $this->assertSame(0.0, $number->value());
@@ -130,7 +130,7 @@ class NaturalLogarithmTest extends TestCase
 
     public function testPower()
     {
-        $ln = Number::of(1)->naturalLogarithm();
+        $ln = Number::of(1)->apply(Logarithm::natural);
         $number = $ln->power(Number::of(2));
 
         $this->assertSame(0.0, $number->value());
@@ -138,7 +138,7 @@ class NaturalLogarithmTest extends TestCase
 
     public function testSquareRoot()
     {
-        $ln = Number::of(1)->naturalLogarithm();
+        $ln = Number::of(1)->apply(Logarithm::natural);
         $number = $ln->squareRoot();
 
         $this->assertSame(0.0, $number->value());
@@ -146,44 +146,37 @@ class NaturalLogarithmTest extends TestCase
 
     public function testExponential()
     {
-        $number = Number::of(1)->naturalLogarithm()->exponential();
+        $number = Number::of(1)->apply(Logarithm::natural)->exponential();
 
         $this->assertSame(1.0, $number->value());
     }
 
     public function testBinaryLogarithm()
     {
-        $number = Number::of(2)->naturalLogarithm()->binaryLogarithm();
+        $number = Number::of(2)->apply(Logarithm::natural)->apply(Logarithm::base2);
 
         $this->assertSame(\log(\log(2), 2), $number->value());
     }
 
     public function testNaturalLogarithm()
     {
-        $number = Number::of(2)->naturalLogarithm()->naturalLogarithm();
+        $number = Number::of(2)->apply(Logarithm::natural)->apply(Logarithm::baseE);
 
         $this->assertSame(\log(\log(2)), $number->value());
     }
 
     public function testCommonLogarithm()
     {
-        $number = Number::of(2)->naturalLogarithm()->commonLogarithm();
+        $number = Number::of(2)->apply(Logarithm::natural)->apply(Logarithm::base10);
 
         $this->assertSame(\log10(\log(2)), $number->value());
     }
 
     public function testSignum()
     {
-        $number = Number::of(2)->naturalLogarithm()->signum();
+        $number = Number::of(2)->apply(Logarithm::natural)->signum();
 
         $this->assertSame(1, $number->value());
-    }
-
-    public function testDefinitionSet()
-    {
-        $set = NaturalLogarithm::definitionSet();
-
-        $this->assertSame(']0;+∞[', $set->toString());
     }
 
     public function testLogarithmMultiplication()
@@ -192,10 +185,10 @@ class NaturalLogarithmTest extends TestCase
         $this->assertTrue(
             ($a = Number::of(2))
                 ->multiplyBy($b = Number::of(4))
-                ->naturalLogarithm()
+                ->apply(Logarithm::natural)
                 ->equals(
-                    $a->naturalLogarithm()->add(
-                        $b->naturalLogarithm(),
+                    $a->apply(Logarithm::natural)->add(
+                        $b->apply(Logarithm::natural),
                     ),
                 ),
         );
@@ -207,10 +200,10 @@ class NaturalLogarithmTest extends TestCase
         $this->assertTrue(
             ($a = Number::of(2))
                 ->divideBy($b = Number::of(4))
-                ->naturalLogarithm()
+                ->apply(Logarithm::natural)
                 ->equals(
-                    $a->naturalLogarithm()->subtract(
-                        $b->naturalLogarithm(),
+                    $a->apply(Logarithm::natural)->subtract(
+                        $b->apply(Logarithm::natural),
                     ),
                 ),
         );

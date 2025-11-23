@@ -140,27 +140,6 @@ class SquareRootTest extends TestCase
         $this->assertSame(\exp(4), $number->value());
     }
 
-    public function testBinaryLogarithm()
-    {
-        $number = Number::of(16)->squareRoot()->binaryLogarithm();
-
-        $this->assertSame(\log(4, 2), $number->value());
-    }
-
-    public function testNaturalLogarithm()
-    {
-        $number = Number::of(16)->squareRoot()->naturalLogarithm();
-
-        $this->assertSame(\log(4), $number->value());
-    }
-
-    public function testCommonLogarithm()
-    {
-        $number = Number::of(16)->squareRoot()->commonLogarithm();
-
-        $this->assertSame(\log10(4), $number->value());
-    }
-
     public function testSignum()
     {
         $number = Number::of(16)->squareRoot()->signum();

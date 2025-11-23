@@ -5,6 +5,7 @@ namespace Tests\Innmind\Math\Algebra\Number;
 
 use Innmind\Math\{
     Algebra\Number,
+    Algebra\Logarithm,
     Exception\NotANumber,
     Exception\OutOfDefinitionSet
 };
@@ -126,21 +127,21 @@ class InfiniteTest extends TestCase
     {
         $this->expectException(OutOfDefinitionSet::class);
 
-        Number::infinite()->binaryLogarithm();
+        Number::infinite()->apply(Logarithm::base2)->collapse();
     }
 
     public function testNaturalLogarithm()
     {
         $this->expectException(OutOfDefinitionSet::class);
 
-        Number::infinite()->naturalLogarithm();
+        Number::infinite()->apply(Logarithm::baseE)->collapse();
     }
 
     public function testCommonLogarithm()
     {
         $this->expectException(OutOfDefinitionSet::class);
 
-        Number::infinite()->commonLogarithm();
+        Number::infinite()->apply(Logarithm::base10)->collapse();
     }
 
     public function testSignum()

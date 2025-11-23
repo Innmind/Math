@@ -136,27 +136,6 @@ class CeilTest extends TestCase
         $this->assertSame(\exp(4), $number->value());
     }
 
-    public function testBinaryLogarithm()
-    {
-        $number = Number::of(3.5)->ceil()->binaryLogarithm();
-
-        $this->assertSame(\log(4, 2), $number->value());
-    }
-
-    public function testNaturalLogarithm()
-    {
-        $number = Number::of(3.5)->ceil()->naturalLogarithm();
-
-        $this->assertSame(\log(4), $number->value());
-    }
-
-    public function testCommonLogarithm()
-    {
-        $number = Number::of(3.5)->ceil()->commonLogarithm();
-
-        $this->assertSame(\log10(4), $number->value());
-    }
-
     public function testSignum()
     {
         $number = Number::of(2)->ceil()->signum();

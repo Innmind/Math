@@ -138,27 +138,6 @@ class RoundTest extends TestCase
         $this->assertSame(\exp(4), $number->value());
     }
 
-    public function testBinaryLogarithm()
-    {
-        $number = Number::of(3.6)->roundUp()->binaryLogarithm();
-
-        $this->assertSame(\log(4, 2), $number->value());
-    }
-
-    public function testNaturalLogarithm()
-    {
-        $number = Number::of(3.6)->roundUp()->naturalLogarithm();
-
-        $this->assertSame(\log(4), $number->value());
-    }
-
-    public function testCommonLogarithm()
-    {
-        $number = Number::of(3.6)->roundUp()->commonLogarithm();
-
-        $this->assertSame(\log10(4), $number->value());
-    }
-
     public function testSignum()
     {
         $number = Number::of(1)->roundUp()->signum();

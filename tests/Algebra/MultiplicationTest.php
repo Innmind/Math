@@ -166,33 +166,6 @@ class MultiplicationTest extends TestCase
         $this->assertSame(\exp(4), $number->value());
     }
 
-    public function testBinaryLogarithm()
-    {
-        $number = Number::of(2)
-            ->multiplyBy(Number::of(2))
-            ->binaryLogarithm();
-
-        $this->assertSame(\log(4, 2), $number->value());
-    }
-
-    public function testNaturalLogarithm()
-    {
-        $number = Number::of(2)
-            ->multiplyBy(Number::of(2))
-            ->naturalLogarithm();
-
-        $this->assertSame(\log(4), $number->value());
-    }
-
-    public function testCommonLogarithm()
-    {
-        $number = Number::of(2)
-            ->multiplyBy(Number::of(2))
-            ->commonLogarithm();
-
-        $this->assertSame(\log10(4), $number->value());
-    }
-
     public function testSignum()
     {
         $number = Number::of(2)

@@ -6,6 +6,7 @@ namespace Tests\Innmind\Math\Statistics;
 use Innmind\Math\{
     Statistics\Median,
     Algebra\Number,
+    Algebra\Logarithm,
 };
 use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
@@ -217,7 +218,7 @@ class MedianTest extends TestCase
             Number::of(7),
         )
             ->result()
-            ->binaryLogarithm();
+            ->apply(Logarithm::binary);
 
         $this->assertSame(\log(4, 2), $number->value());
     }
@@ -229,7 +230,7 @@ class MedianTest extends TestCase
             Number::of(7),
         )
             ->result()
-            ->naturalLogarithm();
+            ->apply(Logarithm::natural);
 
         $this->assertSame(\log(4), $number->value());
     }
@@ -241,7 +242,7 @@ class MedianTest extends TestCase
             Number::of(7),
         )
             ->result()
-            ->commonLogarithm();
+            ->apply(Logarithm::common);
 
         $this->assertSame(\log10(4), $number->value());
     }

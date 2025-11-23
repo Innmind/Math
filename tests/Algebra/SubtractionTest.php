@@ -166,33 +166,6 @@ class SubtractionTest extends TestCase
         $this->assertSame(\exp(4), $number->value());
     }
 
-    public function testBinaryLogarithm()
-    {
-        $number = Number::of(8)
-            ->subtract(Number::of(4))
-            ->binaryLogarithm();
-
-        $this->assertSame(\log(4, 2), $number->value());
-    }
-
-    public function testNaturalLogarithm()
-    {
-        $number = Number::of(8)
-            ->subtract(Number::of(4))
-            ->naturalLogarithm();
-
-        $this->assertSame(\log(4), $number->value());
-    }
-
-    public function testCommonLogarithm()
-    {
-        $number = Number::of(8)
-            ->subtract(Number::of(4))
-            ->commonLogarithm();
-
-        $this->assertSame(\log10(4), $number->value());
-    }
-
     public function testSignum()
     {
         $number = Number::of(4)

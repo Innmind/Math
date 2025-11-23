@@ -6,6 +6,7 @@ namespace Tests\Innmind\Math\Geometry\Trigonometry;
 use Innmind\Math\{
     Geometry\Angle\Degree,
     Algebra\Number,
+    Algebra\Logarithm,
 };
 use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
@@ -139,7 +140,7 @@ class CosineTest extends TestCase
     {
         $number = Degree::of(Number::of(42))
             ->cosine()
-            ->binaryLogarithm();
+            ->apply(Logarithm::binary);
 
         $this->assertSame(-0.42828470156966353, $number->value());
     }
@@ -148,7 +149,7 @@ class CosineTest extends TestCase
     {
         $number = Degree::of(Number::of(42))
             ->cosine()
-            ->naturalLogarithm();
+            ->apply(Logarithm::natural);
 
         $this->assertSame(-0.29686433336996987, $number->value());
     }
@@ -157,7 +158,7 @@ class CosineTest extends TestCase
     {
         $number = Degree::of(Number::of(42))
             ->cosine()
-            ->commonLogarithm();
+            ->apply(Logarithm::common);
 
         $this->assertSame(-0.1289265418564653, $number->value());
     }

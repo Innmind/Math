@@ -236,27 +236,6 @@ final class Number
         ));
     }
 
-    public function binaryLogarithm(): self
-    {
-        return new self(BinaryLogarithm::of(
-            $this->implementation,
-        ));
-    }
-
-    public function naturalLogarithm(): self
-    {
-        return new self(NaturalLogarithm::of(
-            $this->implementation,
-        ));
-    }
-
-    public function commonLogarithm(): self
-    {
-        return new self(CommonLogarithm::of(
-            $this->implementation,
-        ));
-    }
-
     public function signum(): self
     {
         return new self(Signum::of($this->implementation));

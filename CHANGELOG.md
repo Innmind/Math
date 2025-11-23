@@ -7,6 +7,7 @@
 - `Innmind\Math\Algebra\Number::apply()`
 - `Innmind\Math\Algebra\Number::as()`
 - `Innmind\Math\Algebra\Func`
+- `Innmind\Math\Algebra\Logarithm`
 - `Innmind\Math\Geometry\Trigonometry`
 - `Innmind\Math\Geometry\Angle\Degree::cosine()`
 - `Innmind\Math\Geometry\Angle\Degree::sine()`
@@ -37,6 +38,9 @@
 - `Innmind\Math\Geometry\Trigonometry\Cosine`
 - `Innmind\Math\Geometry\Trigonometry\Sine`
 - `Innmind\Math\Geometry\Trigonometry\Tangent`
+- `Innmind\Math\Algebra\Number::binaryLogarithm()`, use `->apply(Logarithm::binary)` instead
+- `Innmind\Math\Algebra\Number::commonLogarithm()`, use `->apply(Logarithm::common)` instead
+- `Innmind\Math\Algebra\Number::naturalLogarithm()`, use `->apply(Logarithm::natural)` instead
 
 ## 6.1.0 - 2023-09-23
 

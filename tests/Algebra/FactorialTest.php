@@ -128,27 +128,6 @@ class FactorialTest extends TestCase
         $this->assertSame(\exp(24), $number->value());
     }
 
-    public function testBinaryLogarithm()
-    {
-        $number = Factorial::of(4)->number()->binaryLogarithm();
-
-        $this->assertSame(\log(24, 2), $number->value());
-    }
-
-    public function testNaturalLogarithm()
-    {
-        $number = Factorial::of(4)->number()->naturalLogarithm();
-
-        $this->assertSame(\log(24), $number->value());
-    }
-
-    public function testCommonLogarithm()
-    {
-        $number = Factorial::of(4)->number()->commonLogarithm();
-
-        $this->assertSame(\log10(24), $number->value());
-    }
-
     public function testSignum()
     {
         $number = Factorial::of(4)->number()->signum();

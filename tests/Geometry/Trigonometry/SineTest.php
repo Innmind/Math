@@ -6,6 +6,7 @@ namespace Tests\Innmind\Math\Geometry\Trigonometry;
 use Innmind\Math\{
     Geometry\Angle\Degree,
     Algebra\Number,
+    Algebra\Logarithm,
 };
 use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
@@ -139,7 +140,7 @@ class SineTest extends TestCase
     {
         $number = Degree::of(Number::of(42))
             ->sine()
-            ->binaryLogarithm();
+            ->apply(Logarithm::binary);
 
         $this->assertSame(-0.5796402595724052, $number->value());
     }
@@ -148,7 +149,7 @@ class SineTest extends TestCase
     {
         $number = Degree::of(Number::of(42))
             ->sine()
-            ->naturalLogarithm();
+            ->apply(Logarithm::natural);
 
         $this->assertSame(-0.4017760116616475, $number->value());
     }
@@ -157,7 +158,7 @@ class SineTest extends TestCase
     {
         $number = Degree::of(Number::of(42))
             ->sine()
-            ->commonLogarithm();
+            ->apply(Logarithm::common);
 
         $this->assertSame(-0.17448910482575006, $number->value());
     }

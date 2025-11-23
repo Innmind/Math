@@ -121,27 +121,6 @@ class PiTest extends TestCase
         $this->assertSame(\exp(\M_PI), $number->value());
     }
 
-    public function testBinaryLogarithm()
-    {
-        $number = Number::pi()->binaryLogarithm();
-
-        $this->assertSame(\log(\M_PI, 2), $number->value());
-    }
-
-    public function testNaturalLogarithm()
-    {
-        $number = Number::pi()->naturalLogarithm();
-
-        $this->assertSame(\log(\M_PI), $number->value());
-    }
-
-    public function testCommonLogarithm()
-    {
-        $number = Number::pi()->commonLogarithm();
-
-        $this->assertSame(\log10(\M_PI), $number->value());
-    }
-
     public function testSignum()
     {
         $number = Number::pi()->signum();

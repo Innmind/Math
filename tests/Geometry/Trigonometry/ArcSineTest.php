@@ -8,6 +8,7 @@ use Innmind\Math\{
     Geometry\Angle\Degree,
     Geometry\Angle\Radian,
     Algebra\Number,
+    Algebra\Logarithm,
 };
 use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
@@ -229,7 +230,7 @@ class ArcSineTest extends TestCase
         )
             ->toDegree()
             ->number()
-            ->binaryLogarithm();
+            ->apply(Logarithm::binary);
 
         $this->assertSame(5.392317422778761, $number->value());
     }
@@ -243,7 +244,7 @@ class ArcSineTest extends TestCase
         )
             ->toDegree()
             ->number()
-            ->naturalLogarithm();
+            ->apply(Logarithm::natural);
 
         $this->assertSame(3.7376696182833684, $number->value());
     }
@@ -257,7 +258,7 @@ class ArcSineTest extends TestCase
         )
             ->toDegree()
             ->number()
-            ->commonLogarithm();
+            ->apply(Logarithm::common);
 
         $this->assertSame(1.6232492903979006, $number->value());
     }

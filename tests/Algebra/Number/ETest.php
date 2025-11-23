@@ -118,27 +118,6 @@ class ETest extends TestCase
         $this->assertSame(\exp(\M_E), $number->value());
     }
 
-    public function testBinaryLogarithm()
-    {
-        $number = Number::e()->binaryLogarithm();
-
-        $this->assertSame(\log(\M_E, 2), $number->value());
-    }
-
-    public function testNaturalLogarithm()
-    {
-        $number = Number::e()->naturalLogarithm();
-
-        $this->assertSame(\log(\M_E), $number->value());
-    }
-
-    public function testCommonLogarithm()
-    {
-        $number = Number::e()->commonLogarithm();
-
-        $this->assertSame(\log10(\M_E), $number->value());
-    }
-
     public function testSignum()
     {
         $number = Number::e()->signum();

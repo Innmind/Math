@@ -136,27 +136,6 @@ class FloorTest extends TestCase
         $this->assertSame(\exp(4), $number->value());
     }
 
-    public function testBinaryLogarithm()
-    {
-        $number = Number::of(3.5)->floor()->binaryLogarithm();
-
-        $this->assertSame(\log(3, 2), $number->value());
-    }
-
-    public function testNaturalLogarithm()
-    {
-        $number = Number::of(3.5)->floor()->naturalLogarithm();
-
-        $this->assertSame(\log(3), $number->value());
-    }
-
-    public function testCommonLogarithm()
-    {
-        $number = Number::of(3.5)->floor()->commonLogarithm();
-
-        $this->assertSame(\log10(3), $number->value());
-    }
-
     public function testSignum()
     {
         $number = Number::of(2)->floor()->signum();

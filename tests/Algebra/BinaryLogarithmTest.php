@@ -4,9 +4,8 @@ declare(strict_types = 1);
 namespace Tests\Innmind\Math\Algebra;
 
 use Innmind\Math\{
-    Algebra\BinaryLogarithm,
+    Algebra\Logarithm,
     Algebra\Number,
-    DefinitionSet\Set,
     Exception\OutOfDefinitionSet
 };
 use Innmind\BlackBox\PHPUnit\Framework\TestCase;
@@ -15,7 +14,7 @@ class BinaryLogarithmTest extends TestCase
 {
     public function testInterface()
     {
-        $lb = Number::of(42.42)->binaryLogarithm();
+        $lb = Number::of(42.42)->apply(Logarithm::binary);
 
         $this->assertInstanceOf(Number::class, $lb);
     }
@@ -24,19 +23,19 @@ class BinaryLogarithmTest extends TestCase
     {
         $this->expectException(OutOfDefinitionSet::class);
 
-        Number::of(0)->binaryLogarithm();
+        Number::of(0)->apply(Logarithm::binary)->collapse();
     }
 
     public function testResult()
     {
-        $lb = Number::of(1)->binaryLogarithm();
+        $lb = Number::of(1)->apply(Logarithm::binary);
 
         $this->assertSame(0.0, $lb->value());
     }
 
     public function testValue()
     {
-        $lb = Number::of(1)->binaryLogarithm();
+        $lb = Number::of(1)->apply(Logarithm::binary);
 
         $this->assertSame(0.0, $lb->value());
     }
@@ -45,13 +44,13 @@ class BinaryLogarithmTest extends TestCase
     {
         $this->assertSame(
             'lb(4)',
-            Number::of(4)->binaryLogarithm()->toString(),
+            Number::of(4)->apply(Logarithm::binary)->toString(),
         );
     }
 
     public function testEquals()
     {
-        $lb = Number::of(1)->binaryLogarithm();
+        $lb = Number::of(1)->apply(Logarithm::binary);
 
         $this->assertTrue($lb->equals(Number::of(0)));
         $this->assertFalse($lb->equals(Number::of(0.1)));
@@ -59,7 +58,7 @@ class BinaryLogarithmTest extends TestCase
 
     public function testHigherThan()
     {
-        $lb = Number::of(1)->binaryLogarithm();
+        $lb = Number::of(1)->apply(Logarithm::binary);
 
         $this->assertTrue($lb->higherThan(Number::of(-0.1)));
         $this->assertFalse($lb->higherThan(Number::of(0)));
@@ -67,7 +66,7 @@ class BinaryLogarithmTest extends TestCase
 
     public function testAdd()
     {
-        $lb = Number::of(1)->binaryLogarithm();
+        $lb = Number::of(1)->apply(Logarithm::binary);
         $number = $lb->add(Number::of(7));
 
         $this->assertSame(7.0, $number->value());
@@ -75,7 +74,7 @@ class BinaryLogarithmTest extends TestCase
 
     public function testSubtract()
     {
-        $lb = Number::of(1)->binaryLogarithm();
+        $lb = Number::of(1)->apply(Logarithm::binary);
         $number = $lb->subtract(Number::of(7));
 
         $this->assertSame(-7.0, $number->value());
@@ -83,7 +82,7 @@ class BinaryLogarithmTest extends TestCase
 
     public function testMultiplication()
     {
-        $lb = Number::of(1)->binaryLogarithm();
+        $lb = Number::of(1)->apply(Logarithm::binary);
         $number = $lb->multiplyBy(Number::of(2));
 
         $this->assertSame(0.0, $number->value());
@@ -91,7 +90,7 @@ class BinaryLogarithmTest extends TestCase
 
     public function testDivision()
     {
-        $lb = Number::of(1)->binaryLogarithm();
+        $lb = Number::of(1)->apply(Logarithm::binary);
         $number = $lb->divideBy(Number::of(2));
 
         $this->assertSame(0.0, $number->value());
@@ -99,7 +98,7 @@ class BinaryLogarithmTest extends TestCase
 
     public function testFloor()
     {
-        $lb = Number::of(1)->binaryLogarithm();
+        $lb = Number::of(1)->apply(Logarithm::binary);
         $number = $lb->floor();
 
         $this->assertSame(0.0, $number->value());
@@ -107,7 +106,7 @@ class BinaryLogarithmTest extends TestCase
 
     public function testCeil()
     {
-        $lb = Number::of(1)->binaryLogarithm();
+        $lb = Number::of(1)->apply(Logarithm::binary);
         $number = $lb->ceil();
 
         $this->assertSame(0.0, $number->value());
@@ -115,7 +114,7 @@ class BinaryLogarithmTest extends TestCase
 
     public function testAbsolute()
     {
-        $lb = Number::of(0.5)->binaryLogarithm();
+        $lb = Number::of(0.5)->apply(Logarithm::binary);
         $number = $lb->absolute();
 
         $this->assertSame(1.0, $number->value());
@@ -123,7 +122,7 @@ class BinaryLogarithmTest extends TestCase
 
     public function testModulo()
     {
-        $lb = Number::of(1)->binaryLogarithm();
+        $lb = Number::of(1)->apply(Logarithm::binary);
         $number = $lb->modulo(Number::of(2));
 
         $this->assertSame(0.0, $number->value());
@@ -131,7 +130,7 @@ class BinaryLogarithmTest extends TestCase
 
     public function testPower()
     {
-        $lb = Number::of(1)->binaryLogarithm();
+        $lb = Number::of(1)->apply(Logarithm::binary);
         $number = $lb->power(Number::of(2));
 
         $this->assertSame(0.0, $number->value());
@@ -139,7 +138,7 @@ class BinaryLogarithmTest extends TestCase
 
     public function testSquareRoot()
     {
-        $lb = Number::of(1)->binaryLogarithm();
+        $lb = Number::of(1)->apply(Logarithm::binary);
         $number = $lb->squareRoot();
 
         $this->assertSame(0.0, $number->value());
@@ -147,45 +146,37 @@ class BinaryLogarithmTest extends TestCase
 
     public function testExponential()
     {
-        $number = Number::of(1)->binaryLogarithm()->exponential();
+        $number = Number::of(1)->apply(Logarithm::binary)->exponential();
 
         $this->assertSame(1.0, $number->value());
     }
 
     public function testBinaryLogarithm()
     {
-        $number = Number::of(2)->binaryLogarithm()->binaryLogarithm();
+        $number = Number::of(2)->apply(Logarithm::binary)->apply(Logarithm::base2);
 
         $this->assertSame(\log(\log(2, 2), 2), $number->value());
     }
 
     public function testNaturalLogarithm()
     {
-        $number = Number::of(2)->binaryLogarithm()->naturalLogarithm();
+        $number = Number::of(2)->apply(Logarithm::binary)->apply(Logarithm::baseE);
 
         $this->assertSame(\log(\log(2, 2)), $number->value());
     }
 
     public function testCommonLogarithm()
     {
-        $number = Number::of(2)->binaryLogarithm()->commonLogarithm();
+        $number = Number::of(2)->apply(Logarithm::binary)->apply(Logarithm::base10);
 
         $this->assertSame(\log10(\log(2, 2)), $number->value());
     }
 
     public function testSignum()
     {
-        $number = Number::of(2)->binaryLogarithm()->signum();
+        $number = Number::of(2)->apply(Logarithm::binary)->signum();
 
         $this->assertSame(1, $number->value());
-    }
-
-    public function testDefinitionSet()
-    {
-        $set = BinaryLogarithm::definitionSet();
-
-        $this->assertInstanceOf(Set::class, $set);
-        $this->assertSame(']0;+∞[', $set->toString());
     }
 
     public function testLogarithmMultiplication()
@@ -194,10 +185,10 @@ class BinaryLogarithmTest extends TestCase
         $this->assertTrue(
             ($a = Number::of(2))
                 ->multiplyBy($b = Number::of(4))
-                ->binaryLogarithm()
+                ->apply(Logarithm::binary)
                 ->equals(
-                    $a->binaryLogarithm()->add(
-                        $b->binaryLogarithm(),
+                    $a->apply(Logarithm::binary)->add(
+                        $b->apply(Logarithm::binary),
                     ),
                 ),
         );
@@ -209,10 +200,10 @@ class BinaryLogarithmTest extends TestCase
         $this->assertTrue(
             ($a = Number::of(2))
                 ->divideBy($b = Number::of(4))
-                ->binaryLogarithm()
+                ->apply(Logarithm::binary)
                 ->equals(
-                    $a->binaryLogarithm()->subtract(
-                        $b->binaryLogarithm(),
+                    $a->apply(Logarithm::binary)->subtract(
+                        $b->apply(Logarithm::binary),
                     ),
                 ),
         );

@@ -141,27 +141,6 @@ class ExponentialTest extends TestCase
         $this->assertSame(\exp(1), $number->value());
     }
 
-    public function testBinaryLogarithm()
-    {
-        $number = Number::of(1)->exponential()->binaryLogarithm();
-
-        $this->assertSame(\log(\exp(1), 2), $number->value());
-    }
-
-    public function testNaturalLogarithm()
-    {
-        $number = Number::of(1)->exponential()->naturalLogarithm();
-
-        $this->assertSame(\log(\exp(1)), $number->value());
-    }
-
-    public function testCommonLogarithm()
-    {
-        $number = Number::of(1)->exponential()->commonLogarithm();
-
-        $this->assertSame(\log10(\exp(1)), $number->value());
-    }
-
     public function testSignum()
     {
         $number = Number::of(1)->exponential()->signum();

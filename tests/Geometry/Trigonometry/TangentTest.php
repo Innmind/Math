@@ -6,6 +6,7 @@ namespace Tests\Innmind\Math\Geometry\Trigonometry;
 use Innmind\Math\{
     Geometry\Angle\Degree,
     Algebra\Number,
+    Algebra\Logarithm,
 };
 use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
@@ -139,7 +140,7 @@ class TangentTest extends TestCase
     {
         $number = Degree::of(Number::of(42))
             ->tangent()
-            ->binaryLogarithm();
+            ->apply(Logarithm::binary);
 
         $this->assertSame(-0.1513555580027417, $number->value());
     }
@@ -148,7 +149,7 @@ class TangentTest extends TestCase
     {
         $number = Degree::of(Number::of(42))
             ->tangent()
-            ->naturalLogarithm();
+            ->apply(Logarithm::natural);
 
         $this->assertSame(-0.10491167829167766, $number->value());
     }
@@ -157,7 +158,7 @@ class TangentTest extends TestCase
     {
         $number = Degree::of(Number::of(42))
             ->tangent()
-            ->commonLogarithm();
+            ->apply(Logarithm::common);
 
         $this->assertEqualsWithDelta(
             -0.04556256296928478,

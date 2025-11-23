@@ -146,33 +146,6 @@ class SignumTest extends TestCase
         $this->assertSame(\exp(1), $number->value());
     }
 
-    public function testBinaryLogarithm()
-    {
-        $number = Number::of(2)
-            ->signum()
-            ->binaryLogarithm();
-
-        $this->assertSame(\log(1, 2), $number->value());
-    }
-
-    public function testNaturalLogarithm()
-    {
-        $number = Number::of(2)
-            ->signum()
-            ->naturalLogarithm();
-
-        $this->assertSame(\log(1), $number->value());
-    }
-
-    public function testCommonLogarithm()
-    {
-        $number = Number::of(2)
-            ->signum()
-            ->commonLogarithm();
-
-        $this->assertSame(\log10(1), $number->value());
-    }
-
     public function testSignum()
     {
         $number = Number::of(1)->signum()->signum();
