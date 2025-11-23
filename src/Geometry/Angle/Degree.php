@@ -3,7 +3,10 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Geometry\Angle;
 
-use Innmind\Math\Algebra\Number;
+use Innmind\Math\{
+    Algebra\Number,
+    Geometry\Trigonometry,
+};
 
 /**
  * @psalm-immutable
@@ -65,17 +68,29 @@ final class Degree
 
     public function cosine(): Number
     {
-        return $this->toRadian()->cosine();
+        return $this
+            ->toRadian()
+            ->number()
+            ->as($this->toString())
+            ->apply(Trigonometry::cosine);
     }
 
     public function sine(): Number
     {
-        return $this->toRadian()->sine();
+        return $this
+            ->toRadian()
+            ->number()
+            ->as($this->toString())
+            ->apply(Trigonometry::sine);
     }
 
     public function tangent(): Number
     {
-        return $this->toRadian()->tangent();
+        return $this
+            ->toRadian()
+            ->number()
+            ->as($this->toString())
+            ->apply(Trigonometry::tangent);
     }
 
     public function number(): Number

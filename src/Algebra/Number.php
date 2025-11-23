@@ -266,6 +266,19 @@ final class Number
         return new self(Signum::of($this->implementation));
     }
 
+    /**
+     * This allows to change the way the number is represented as a string.
+     *
+     * You can use this to display a number as a name instead of the real value.
+     */
+    public function as(string $string): self
+    {
+        return new self(DisplayAs::of(
+            $this->implementation,
+            $string,
+        ));
+    }
+
     public function toString(): string
     {
         return $this->implementation->toString();

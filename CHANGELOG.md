@@ -5,6 +5,7 @@
 ### Added
 
 - `Innmind\Math\Algebra\Number::apply()`
+- `Innmind\Math\Algebra\Number::as()`
 - `Innmind\Math\Algebra\Func`
 - `Innmind\Math\Geometry\Trigonometry`
 - `Innmind\Math\Geometry\Angle\Degree::cosine()`

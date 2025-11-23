@@ -19,9 +19,7 @@ class ArcTangentTest extends TestCase
             ->tangent()
             ->apply(Trigonometry::arcTangent);
 
-        $this->assertInstanceOf(Degree::class, $atan->toDegree());
         $this->assertSame('tan⁻¹(tan(42°))', $atan->toString());
-        $this->assertSame('42°', $atan->toDegree()->toString());
     }
 
     public function testEquals()

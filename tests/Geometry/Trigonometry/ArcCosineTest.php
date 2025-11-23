@@ -19,9 +19,7 @@ class ArcCosineTest extends TestCase
             ->cosine()
             ->apply(Trigonometry::arcCosine);
 
-        $this->assertInstanceOf(Degree::class, $acos->toDegree());
         $this->assertSame('cos⁻¹(cos(42°))', $acos->toString());
-        $this->assertSame('42°', $acos->toDegree()->toString());
     }
 
     public function testEquals()

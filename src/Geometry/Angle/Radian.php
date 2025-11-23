@@ -66,17 +66,26 @@ final class Radian
 
     public function cosine(): Number
     {
-        return $this->number->apply(Trigonometry::cosine);
+        return $this
+            ->number
+            ->as($this->toString())
+            ->apply(Trigonometry::cosine);
     }
 
     public function sine(): Number
     {
-        return $this->number->apply(Trigonometry::sine);
+        return $this
+            ->number
+            ->as($this->toString())
+            ->apply(Trigonometry::sine);
     }
 
     public function tangent(): Number
     {
-        return $this->number->apply(Trigonometry::tangent);
+        return $this
+            ->number
+            ->as($this->toString())
+            ->apply(Trigonometry::tangent);
     }
 
     public function number(): Number
