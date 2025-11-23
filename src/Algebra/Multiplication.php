@@ -48,19 +48,22 @@ final class Multiplication implements Implementation
     #[\Override]
     public function optimize(): Implementation
     {
-        if ($this->a instanceof Division) {
-            $divisor = $this->a->divisor()->optimize();
+        $a = $this->a->optimize();
+        $b = $this->b->optimize();
 
-            if ($this->b->equals($divisor)) {
-                return $this->a->dividend();
+        if ($a instanceof Division) {
+            $divisor = $a->divisor();
+
+            if ($b->equals($divisor)) {
+                return $a->dividend();
             }
         }
 
-        if ($this->b instanceof Division) {
-            $divisor = $this->b->divisor()->optimize();
+        if ($b instanceof Division) {
+            $divisor = $b->divisor();
 
-            if ($this->a->equals($divisor)) {
-                return $this->b->dividend();
+            if ($a->equals($divisor)) {
+                return $b->dividend();
             }
         }
 
