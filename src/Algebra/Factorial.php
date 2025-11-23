@@ -36,13 +36,16 @@ final class Factorial // todo better integration
             return Number::one();
         }
 
-        $factorial = $i = $this->value;
+        $i = $this->value;
+        $factorial = Number::of($i);
 
         do {
-            $factorial *= --$i;
+            $factorial = $factorial
+                ->multiplyBy(Number::of(--$i))
+                ->memoize();
         } while ($i > 1);
 
-        return Number::of($factorial);
+        return $factorial;
     }
 
     public function toString(): string
