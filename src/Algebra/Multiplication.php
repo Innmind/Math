@@ -14,38 +14,18 @@ use Innmind\Immutable\{
  */
 final class Multiplication implements Implementation
 {
-    /**
-     * @param Sequence<Implementation> $values
-     */
     private function __construct(
-        private Implementation $first,
-        private Implementation $second,
-        private Sequence $values,
+        private Implementation $a,
+        private Implementation $b,
     ) {
     }
 
     /**
      * @psalm-pure
      */
-    public static function of(Implementation $first, Implementation $second): self
+    public static function of(Implementation $a, Implementation $b): self
     {
-        if ($first instanceof self) {
-            if ($second instanceof self) {
-                return new self(
-                    $first->first,
-                    $first->second,
-                    $first->values->append($second->values),
-                );
-            }
-
-            return new self(
-                $first->first,
-                $first->second,
-                ($first->values)($second),
-            );
-        }
-
-        return new self($first, $second, Sequence::of($first, $second));
+        return new self($a, $b);
     }
 
     #[\Override]
@@ -62,31 +42,35 @@ final class Multiplication implements Implementation
 
     public function product(): Implementation
     {
-        $value = $this->values->reduce(
-            1,
-            static fn(int|float $carry, $number): int|float => $carry * $number->value(),
-        );
-
-        return Native::of($value);
+        return Native::of($this->a->value() * $this->b->value());
     }
 
     #[\Override]
     public function optimize(): Implementation
     {
-        return $this
-            ->values
-            ->drop(2)
-            ->reduce(
-                $this->doOptimize($this->first, $this->second),
-                $this->doOptimize(...),
-            )
-            ->optimize();
+        if ($this->a instanceof Division) {
+            $divisor = $this->a->divisor()->optimize();
+
+            if ($this->b->equals($divisor)) {
+                return $this->a->dividend();
+            }
+        }
+
+        if ($this->b instanceof Division) {
+            $divisor = $this->b->divisor()->optimize();
+
+            if ($this->a->equals($divisor)) {
+                return $this->b->dividend();
+            }
+        }
+
+        return $this;
     }
 
     #[\Override]
     public function toString(): string
     {
-        $values = $this->values->map(
+        $values = $this->collect()->map(
             static fn($number) => $number->format(),
         );
 
@@ -99,26 +83,16 @@ final class Multiplication implements Implementation
         return '('.$this->toString().')';
     }
 
-    private function doOptimize(
-        Implementation $a,
-        Implementation $b,
-    ): Implementation {
-        if ($a instanceof Division) {
-            $divisor = $a->divisor()->optimize();
-
-            if ($b->equals($divisor)) {
-                return $a->dividend();
-            }
-        }
-
-        if ($b instanceof Division) {
-            $divisor = $b->divisor()->optimize();
-
-            if ($a->equals($divisor)) {
-                return $b->dividend();
-            }
-        }
-
-        return self::of($a->optimize(), $b->optimize())->product(); // todo avoid computing concrete value
+    /**
+     * @return Sequence<Implementation>
+     */
+    private function collect(): Sequence
+    {
+        return Sequence::of($this->a, $this->b)->flatMap(
+            static fn($number) => match (true) {
+                $number instanceof self => $number->collect(),
+                default => Sequence::of($number),
+            },
+        );
     }
 }
