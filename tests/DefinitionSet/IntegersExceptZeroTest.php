@@ -8,6 +8,7 @@ use Innmind\Math\{
     Algebra\Number,
     Exception\OutOfDefinitionSet,
 };
+use Innmind\Immutable\SideEffect;
 use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class IntegersExceptZeroTest extends TestCase
@@ -29,12 +30,15 @@ class IntegersExceptZeroTest extends TestCase
 
     public function testAccept()
     {
-        $this->assertNull(Set::integersExceptZero()->accept(Number::of(1)));
+        $this->assertInstanceOf(
+            SideEffect::class,
+            Set::integersExceptZero()->accept(Number::of(1))->unwrap(),
+        );
 
         $this->expectException(OutOfDefinitionSet::class);
         $this->expectExceptionMessage('0 ∉ ℤ*');
 
-        Set::integersExceptZero()->accept(Number::of(0));
+        $_ = Set::integersExceptZero()->accept(Number::of(0))->unwrap();
     }
 
     public function testUnion()

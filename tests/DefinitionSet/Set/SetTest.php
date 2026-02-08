@@ -8,6 +8,7 @@ use Innmind\Math\{
     Algebra\Number,
     Exception\OutOfDefinitionSet,
 };
+use Innmind\Immutable\SideEffect;
 use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class SetTest extends TestCase
@@ -38,12 +39,15 @@ class SetTest extends TestCase
 
     public function testAccept()
     {
-        $this->assertNull(Set::of(Number::of(1))->accept(Number::of(1)));
+        $this->assertInstanceOf(
+            SideEffect::class,
+            Set::of(Number::of(1))->accept(Number::of(1))->unwrap(),
+        );
 
         $this->expectException(OutOfDefinitionSet::class);
         $this->expectExceptionMessage('2 ∉ {1}');
 
-        Set::of(Number::of(1))->accept(Number::of(2));
+        $_ = Set::of(Number::of(1))->accept(Number::of(2))->unwrap();
     }
 
     public function testUnion()

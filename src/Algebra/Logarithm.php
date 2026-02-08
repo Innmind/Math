@@ -20,10 +20,12 @@ enum Logarithm implements Func
     #[\Override]
     public function __invoke(Number $x): Number
     {
-        Set::exclusiveRange(
+        $_ = Set::exclusiveRange(
             Number::zero(),
             Number::infinite(),
-        )->accept($x);
+        )
+            ->accept($x)
+            ->unwrap();
 
         return Number::of(match ($this) {
             self::binary, self::base2 => \log($x->value(), 2),

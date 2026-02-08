@@ -29,6 +29,7 @@
 - `Innmind\Math\Algebra\Number` is now a final class, all previous implementations are now flagged as internal
 - Requires `innmind/immutable:~6.0`
 - `Innmind\Math\Geometry\*` methods are no longer prefixed with `is`
+- `Innmind\Math\DefinitionSet\Set::accept()` now returns an `Innmind\Immutable\Attempt<SideEffect>`
 
 ### Fixed
 

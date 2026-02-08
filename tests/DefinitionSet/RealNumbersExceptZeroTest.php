@@ -8,6 +8,7 @@ use Innmind\Math\{
     Algebra\Number,
     Exception\OutOfDefinitionSet,
 };
+use Innmind\Immutable\SideEffect;
 use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class RealNumbersExceptZeroTest extends TestCase
@@ -33,12 +34,15 @@ class RealNumbersExceptZeroTest extends TestCase
     {
         $set = Set::realNumbersExceptZero();
 
-        $this->assertNull($set->accept(Number::of(1)));
+        $this->assertInstanceOf(
+            SideEffect::class,
+            $set->accept(Number::of(1))->unwrap(),
+        );
 
         $this->expectException(OutOfDefinitionSet::class);
         $this->expectExceptionMessage('0 ∉ ℝ*');
 
-        $set->accept(Number::of(0));
+        $_ = $set->accept(Number::of(0))->unwrap();
     }
 
     public function testUnion()

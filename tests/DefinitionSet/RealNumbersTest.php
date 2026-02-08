@@ -7,6 +7,7 @@ use Innmind\Math\{
     DefinitionSet\Set,
     Algebra\Number,
 };
+use Innmind\Immutable\SideEffect;
 use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class RealNumbersTest extends TestCase
@@ -32,12 +33,12 @@ class RealNumbersTest extends TestCase
     {
         $set = Set::realNumbers();
 
-        $this->assertNull($set->accept(Number::of(1)));
-        $this->assertNull($set->accept(Number::of(0)));
-        $this->assertNull($set->accept(Number::of(-1)));
-        $this->assertNull($set->accept(Number::of(0.75)));
-        $this->assertNull($set->accept(Number::of(-0.75)));
-        $this->assertNull($set->accept(Number::pi()));
+        $this->assertInstanceOf(SideEffect::class, $set->accept(Number::of(1))->unwrap());
+        $this->assertInstanceOf(SideEffect::class, $set->accept(Number::of(0))->unwrap());
+        $this->assertInstanceOf(SideEffect::class, $set->accept(Number::of(-1))->unwrap());
+        $this->assertInstanceOf(SideEffect::class, $set->accept(Number::of(0.75))->unwrap());
+        $this->assertInstanceOf(SideEffect::class, $set->accept(Number::of(-0.75))->unwrap());
+        $this->assertInstanceOf(SideEffect::class, $set->accept(Number::pi())->unwrap());
     }
 
     public function testUnion()

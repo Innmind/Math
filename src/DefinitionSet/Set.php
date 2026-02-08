@@ -7,6 +7,10 @@ use Innmind\Math\{
     Algebra\Number,
     Exception\OutOfDefinitionSet,
 };
+use Innmind\Immutable\{
+    Attempt,
+    SideEffect,
+};
 
 /**
  * @psalm-immutable
@@ -100,13 +104,15 @@ final class Set
     }
 
     /**
-     * @throws OutOfDefinitionSet
+     * @return Attempt<SideEffect>
      */
-    public function accept(Number $number): void
+    public function accept(Number $number): Attempt
     {
         if (!$this->contains($number)) {
-            throw new OutOfDefinitionSet($this->implementation, $number);
+            return Attempt::error(new OutOfDefinitionSet($this->implementation, $number));
         }
+
+        return Attempt::result(SideEffect::identity);
     }
 
     public function union(self $set): self
