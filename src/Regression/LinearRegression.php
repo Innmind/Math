@@ -6,7 +6,7 @@ namespace Innmind\Math\Regression;
 use Innmind\Math\{
     Polynom\Polynom,
     Algebra\Number,
-    Monoid\Addition,
+    Monoid\Algebra,
 };
 
 /**
@@ -83,11 +83,11 @@ final class LinearRegression
             ->abscissas()
             ->toSequence()
             ->map(static fn($x) => $x->multiplyBy($x))
-            ->fold(Addition::monoid);
+            ->fold(Algebra::addition);
         $xySum = $data
             ->points()
             ->map(static fn($point) => $point->abscissa()->multiplyBy($point->ordinate()))
-            ->fold(Addition::monoid);
+            ->fold(Algebra::addition);
 
         $slope = $dimension
             ->multiplyBy($xySum)

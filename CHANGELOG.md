@@ -23,6 +23,8 @@
 - Requires PHP `8.4`
 - `Innmind\Math\DefinitionSet\Set` is now a final class, all previous implementations are now flagged as internal
 - `Innmind\Math\Monoid\*` are now enums
+    - `Addition` is now accessible via `Algebra::addition`
+    - `Multiplication` is now accessible via `Algebra::multiplication`
 - `Innmind\Math\Probabilities\BinomialDistribution::__invoke()` arguments now expects `int`s
 - `Innmind\Math\Algebra\Number` is now a final class, all previous implementations are now flagged as internal
 - Requires `innmind/immutable:~6.0`

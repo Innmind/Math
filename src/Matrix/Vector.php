@@ -7,7 +7,7 @@ use Innmind\Math\{
     Exception\VectorsMustMeOfTheSameDimension,
     Exception\LogicException,
     Algebra\Number,
-    Monoid\Addition,
+    Monoid\Algebra,
 };
 use Innmind\Immutable\{
     Sequence,
@@ -89,7 +89,7 @@ final class Vector
                     ->optimize()
                     ->memoize(),
             )
-            ->fold(Addition::monoid);
+            ->fold(Algebra::addition);
     }
 
     public function multiplyBy(self $vector): self
@@ -162,7 +162,7 @@ final class Vector
 
     public function sum(): Number
     {
-        return $this->numbers->fold(Addition::monoid);
+        return $this->numbers->fold(Algebra::addition);
     }
 
     /**

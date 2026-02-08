@@ -5,7 +5,7 @@ namespace Innmind\Math\Polynom;
 
 use Innmind\Math\{
     Algebra\Number,
-    Monoid\Addition,
+    Monoid\Algebra,
 };
 use Innmind\Immutable\{
     Sequence,
@@ -36,7 +36,7 @@ final class Polynom
             ->degrees
             ->map(static fn($degree) => $degree($x))
             ->prepend(Sequence::of($this->intercept))
-            ->fold(Addition::monoid);
+            ->fold(Algebra::addition);
     }
 
     /**
