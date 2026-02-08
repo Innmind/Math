@@ -9,7 +9,7 @@ use Innmind\Math\Exception\FactorialMustBePositive;
  * @psalm-immutable
  * @internal
  */
-final class Factorial // todo better integration
+final class Factorial
 {
     private int $value;
 
