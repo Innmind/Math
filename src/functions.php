@@ -46,10 +46,8 @@ function max(Number $first, Number ...$numbers): Number
     return Sequence::of($first, ...$numbers)
         ->sort(desc(...))
         ->first()
-        ->match(
-            static fn($max) => $max,
-            static fn() => throw new LogicException('Unreachable'),
-        );
+        ->attempt(static fn() => new LogicException('Unreachable'))
+        ->unwrap();
 }
 
 /**
@@ -61,8 +59,6 @@ function min(Number $first, Number ...$numbers): Number
     return Sequence::of($first, ...$numbers)
         ->sort(asc(...))
         ->first()
-        ->match(
-            static fn($min) => $min,
-            static fn() => throw new LogicException('Unreachable'),
-        );
+        ->attempt(static fn() => new LogicException('Unreachable'))
+        ->unwrap();
 }

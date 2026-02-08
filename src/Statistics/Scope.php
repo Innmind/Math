@@ -29,10 +29,8 @@ final class Scope
 
         $this->result = Maybe::all($sequence->last(), $sequence->first())
             ->map(static fn(Number $last, Number $first) => $last->subtract($first))
-            ->match(
-                static fn($result) => $result,
-                static fn() => throw new LogicException('Unreachable'),
-            );
+            ->attempt(static fn() => new LogicException('Unreachable'))
+            ->unwrap();
     }
 
     /**
