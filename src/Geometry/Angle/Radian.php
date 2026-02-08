@@ -36,24 +36,24 @@ final class Radian
         );
     }
 
-    public function isRight(): bool
+    public function right(): bool
     {
-        return $this->toDegree()->isRight();
+        return $this->toDegree()->right();
     }
 
-    public function isObtuse(): bool
+    public function obtuse(): bool
     {
-        return $this->toDegree()->isObtuse();
+        return $this->toDegree()->obtuse();
     }
 
-    public function isAcuse(): bool
+    public function acuse(): bool
     {
-        return $this->toDegree()->isAcuse();
+        return $this->toDegree()->acuse();
     }
 
-    public function isFlat(): bool
+    public function flat(): bool
     {
-        return $this->toDegree()->isFlat();
+        return $this->toDegree()->flat();
     }
 
     public function opposite(): self

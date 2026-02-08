@@ -87,14 +87,14 @@ final class Triangle implements Figure
         return $this->height;
     }
 
-    public function isIsosceles(): bool
+    public function isosceles(): bool
     {
         return $this->a->equals($this->b) ||
             $this->a->equals($this->c) ||
             $this->b->equals($this->c);
     }
 
-    public function isEquilateral(): bool
+    public function equilateral(): bool
     {
         return $this->a->equals($this->b) &&
             $this->b->equals($this->c);

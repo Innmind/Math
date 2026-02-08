@@ -41,22 +41,22 @@ final class Degree
         );
     }
 
-    public function isRight(): bool
+    public function right(): bool
     {
         return $this->number->equals(Number::of(90));
     }
 
-    public function isObtuse(): bool
+    public function obtuse(): bool
     {
         return $this->number->higherThan(Number::of(90));
     }
 
-    public function isAcuse(): bool
+    public function acuse(): bool
     {
         return Number::of(90)->higherThan($this->number);
     }
 
-    public function isFlat(): bool
+    public function flat(): bool
     {
         return $this->number->equals(Number::of(180));
     }

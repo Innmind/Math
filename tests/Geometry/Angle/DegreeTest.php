@@ -21,26 +21,26 @@ class DegreeTest extends TestCase
 
     public function testIsRight()
     {
-        $this->assertTrue(Degree::of(Number::of(90))->isRight());
-        $this->assertFalse(Degree::of(Number::of(91))->isRight());
+        $this->assertTrue(Degree::of(Number::of(90))->right());
+        $this->assertFalse(Degree::of(Number::of(91))->right());
     }
 
     public function testIsObtuse()
     {
-        $this->assertTrue(Degree::of(Number::of(91))->isObtuse());
-        $this->assertFalse(Degree::of(Number::of(89))->isObtuse());
+        $this->assertTrue(Degree::of(Number::of(91))->obtuse());
+        $this->assertFalse(Degree::of(Number::of(89))->obtuse());
     }
 
     public function testIsAcuse()
     {
-        $this->assertTrue(Degree::of(Number::of(89))->isAcuse());
-        $this->assertFalse(Degree::of(Number::of(90))->isAcuse());
+        $this->assertTrue(Degree::of(Number::of(89))->acuse());
+        $this->assertFalse(Degree::of(Number::of(90))->acuse());
     }
 
     public function testIsFlat()
     {
-        $this->assertTrue(Degree::of(Number::of(180))->isFlat());
-        $this->assertFalse(Degree::of(Number::of(181))->isFlat());
+        $this->assertTrue(Degree::of(Number::of(180))->flat());
+        $this->assertFalse(Degree::of(Number::of(181))->flat());
     }
 
     public function testOpposite()

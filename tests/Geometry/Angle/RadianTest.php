@@ -21,26 +21,26 @@ class RadianTest extends TestCase
 
     public function testIsRight()
     {
-        $this->assertTrue(Radian::of(Number::of(\M_PI_2))->isRight());
-        $this->assertFalse(Radian::of(Number::of(\M_PI))->isRight());
+        $this->assertTrue(Radian::of(Number::of(\M_PI_2))->right());
+        $this->assertFalse(Radian::of(Number::of(\M_PI))->right());
     }
 
     public function testIsObtuse()
     {
-        $this->assertTrue(Radian::of(Number::of((2 * \pi()) / 3))->isObtuse());
-        $this->assertFalse(Radian::of(Number::of(\pi() / 3))->isObtuse());
+        $this->assertTrue(Radian::of(Number::of((2 * \pi()) / 3))->obtuse());
+        $this->assertFalse(Radian::of(Number::of(\pi() / 3))->obtuse());
     }
 
     public function testIsAcuse()
     {
-        $this->assertTrue(Radian::of(Number::of(\pi() / 3))->isAcuse());
-        $this->assertFalse(Radian::of(Number::of(\M_PI_2))->isAcuse());
+        $this->assertTrue(Radian::of(Number::of(\pi() / 3))->acuse());
+        $this->assertFalse(Radian::of(Number::of(\M_PI_2))->acuse());
     }
 
     public function testIsFlat()
     {
-        $this->assertTrue(Radian::of(Number::of(\pi()))->isFlat());
-        $this->assertFalse(Radian::of(Number::of((5 * \pi()) / 4))->isFlat());
+        $this->assertTrue(Radian::of(Number::of(\pi()))->flat());
+        $this->assertFalse(Radian::of(Number::of((5 * \pi()) / 4))->flat());
     }
 
     public function testOpposite()

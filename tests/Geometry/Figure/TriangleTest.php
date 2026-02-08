@@ -98,7 +98,7 @@ class TriangleTest extends TestCase
             Segment::of(Number::of(16)),
         );
 
-        $this->assertTrue($triangle->isIsosceles());
+        $this->assertTrue($triangle->isosceles());
 
         $triangle = Triangle::of(
             Segment::of(Number::of(9.8)),
@@ -106,7 +106,7 @@ class TriangleTest extends TestCase
             Segment::of(Number::of(16)),
         );
 
-        $this->assertFalse($triangle->isIsosceles());
+        $this->assertFalse($triangle->isosceles());
     }
 
     public function testIsEquilateral()
@@ -117,7 +117,7 @@ class TriangleTest extends TestCase
             Segment::of(Number::of(16)),
         );
 
-        $this->assertTrue($triangle->isEquilateral());
+        $this->assertTrue($triangle->equilateral());
 
         $triangle = Triangle::of(
             Segment::of(Number::of(9.8)),
@@ -125,6 +125,6 @@ class TriangleTest extends TestCase
             Segment::of(Number::of(16)),
         );
 
-        $this->assertFalse($triangle->isEquilateral());
+        $this->assertFalse($triangle->equilateral());
     }
 }
