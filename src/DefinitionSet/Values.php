@@ -18,17 +18,11 @@ use Innmind\Immutable\{
  */
 final class Values implements Implementation
 {
-    /** @var Sequence<int|float> */
-    private Sequence $values;
-
     /**
-     * @no-named-arguments
+     * @param Sequence<int|float> $values
      */
-    private function __construct(Number ...$values)
+    private function __construct(private Sequence $values)
     {
-        $this->values = Sequence::of(...$values)->map(
-            static fn(Number $v) => $v->value(),
-        );
     }
 
     /**
@@ -37,7 +31,9 @@ final class Values implements Implementation
      */
     public static function of(Number ...$values): self
     {
-        return new self(...$values);
+        return new self(Sequence::of(...$values)->map(
+            static fn(Number $v) => $v->value(),
+        ));
     }
 
     #[\Override]

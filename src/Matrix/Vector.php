@@ -19,15 +19,11 @@ use Innmind\Immutable\{
  */
 final class Vector
 {
-    /** @var Sequence<Number> */
-    private Sequence $numbers;
-
     /**
      * @param Sequence<Number> $numbers
      */
-    private function __construct(Sequence $numbers)
+    private function __construct(private Sequence $numbers)
     {
-        $this->numbers = $numbers;
     }
 
     /**

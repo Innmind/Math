@@ -13,11 +13,8 @@ use Innmind\Math\Algebra\{
  */
 final class BinomialDistribution
 {
-    private Number $probability;
-
-    private function __construct(Number $probability)
+    private function __construct(private Number $probability)
     {
-        $this->probability = $probability;
     }
 
     public function __invoke(int $trials, int $success): Number

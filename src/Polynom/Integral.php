@@ -10,11 +10,8 @@ use Innmind\Math\Algebra\Number;
  */
 final class Integral
 {
-    private Polynom $polynom;
-
-    private function __construct(Polynom $polynom)
+    private function __construct(private Polynom $polynom)
     {
-        $this->polynom = $polynom;
     }
 
     public function __invoke(Number $a, Number $b): Number

@@ -18,11 +18,8 @@ use Innmind\Immutable\{
  */
 final class ColumnVector
 {
-    private Vector $vector;
-
-    private function __construct(Vector $vector)
+    private function __construct(private Vector $vector)
     {
-        $this->vector = $vector;
     }
 
     /**

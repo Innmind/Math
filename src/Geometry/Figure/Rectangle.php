@@ -14,13 +14,10 @@ use Innmind\Math\{
  */
 final class Rectangle implements Figure
 {
-    private Segment $length;
-    private Segment $width;
-
-    private function __construct(Segment $length, Segment $width)
-    {
-        $this->length = $length;
-        $this->width = $width;
+    private function __construct(
+        private Segment $length,
+        private Segment $width,
+    ) {
     }
 
     /**

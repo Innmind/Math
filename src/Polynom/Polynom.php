@@ -18,17 +18,13 @@ use Innmind\Immutable\{
  */
 final class Polynom
 {
-    private Number $intercept;
-    /** @var Sequence<Degree> */
-    private Sequence $degrees;
-
     /**
      * @param Sequence<Degree> $degrees
      */
-    private function __construct(Number $intercept, Sequence $degrees)
-    {
-        $this->intercept = $intercept;
-        $this->degrees = $degrees;
+    private function __construct(
+        private Number $intercept,
+        private Sequence $degrees,
+    ) {
     }
 
     /**

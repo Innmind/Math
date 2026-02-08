@@ -13,13 +13,8 @@ use Innmind\Math\{
  */
 final class Radian
 {
-    private Number $number;
-
-    private function __construct(Number $number)
+    private function __construct(private Number $number)
     {
-        $this->number = $number->modulo(
-            Number::pi()->multiplyBy(Number::two()),
-        );
     }
 
     /**
@@ -27,7 +22,9 @@ final class Radian
      */
     public static function of(Number $number): self
     {
-        return new self($number);
+        return new self($number->modulo(
+            Number::pi()->multiplyBy(Number::two()),
+        ));
     }
 
     public function toDegree(): Degree

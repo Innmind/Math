@@ -14,11 +14,8 @@ use Innmind\Math\{
  */
 final class Square implements Figure
 {
-    private Segment $side;
-
-    private function __construct(Segment $side)
+    private function __construct(private Segment $side)
     {
-        $this->side = $side;
     }
 
     /**

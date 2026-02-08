@@ -10,17 +10,13 @@ use Innmind\Math\Algebra\Number;
  */
 final class Degree
 {
-    /** @var int<1, max> */
-    private int $degree;
-    private Number $coeff;
-
     /**
      * @param int<1, max> $degree
      */
-    private function __construct(int $degree, Number $coeff)
-    {
-        $this->degree = $degree;
-        $this->coeff = $coeff;
+    private function __construct(
+        private int $degree,
+        private Number $coeff,
+    ) {
     }
 
     /**

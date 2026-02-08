@@ -16,15 +16,11 @@ use Innmind\Immutable\Sequence;
  */
 final class Dataset
 {
-    /** @var Sequence<Point> */
-    private Sequence $points;
-
     /**
      * @param Sequence<Point> $points
      */
-    private function __construct(Sequence $points)
+    private function __construct(private Sequence $points)
     {
-        $this->points = $points;
     }
 
     /**

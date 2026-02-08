@@ -9,21 +9,15 @@ namespace Innmind\Math\Algebra;
  */
 final class Round implements Implementation
 {
-    private Implementation $number;
-    /** @var int<0, max> */
-    private int $precision;
-    /** @var 0|positive-int */
-    private int $mode;
-
     /**
      * @param int<0, max> $precision
      * @param 0|positive-int $mode
      */
-    private function __construct(Implementation $number, int $precision, int $mode)
-    {
-        $this->number = $number;
-        $this->precision = $precision;
-        $this->mode = $mode;
+    private function __construct(
+        private Implementation $number,
+        private int $precision,
+        private int $mode,
+    ) {
     }
 
     /**

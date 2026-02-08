@@ -11,15 +11,11 @@ use Innmind\Immutable\Sequence;
  */
 final class Frequence
 {
-    /** @var Sequence<Number> */
-    private Sequence $values;
-
     /**
-     * @no-named-arguments
+     * @param Sequence<Number> $values
      */
-    private function __construct(Number ...$values)
+    private function __construct(private Sequence $values)
     {
-        $this->values = Sequence::of(...$values);
     }
 
     public function __invoke(Number $number): Number
@@ -38,7 +34,7 @@ final class Frequence
      */
     public static function of(Number ...$values): self
     {
-        return new self(...$values);
+        return new self(Sequence::of(...$values));
     }
 
     /**

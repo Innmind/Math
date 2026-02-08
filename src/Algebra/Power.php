@@ -9,13 +9,10 @@ namespace Innmind\Math\Algebra;
  */
 final class Power implements Implementation
 {
-    private Implementation $number;
-    private Implementation $power;
-
-    private function __construct(Implementation $number, Implementation $power)
-    {
-        $this->number = $number;
-        $this->power = $power;
+    private function __construct(
+        private Implementation $number,
+        private Implementation $power,
+    ) {
     }
 
     /**

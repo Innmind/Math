@@ -9,11 +9,8 @@ namespace Innmind\Math\Algebra;
  */
 final class SquareRoot implements Implementation
 {
-    private Implementation $number;
-
-    private function __construct(Implementation $number)
+    private function __construct(private Implementation $number)
     {
-        $this->number = $number;
     }
 
     /**

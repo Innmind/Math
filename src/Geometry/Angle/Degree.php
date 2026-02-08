@@ -13,15 +13,8 @@ use Innmind\Math\{
  */
 final class Degree
 {
-    private Number $number;
-
-    private function __construct(Number $number)
+    private function __construct(private Number $number)
     {
-        $modulus = Number::of(360);
-        $this->number = $number
-            ->modulo($modulus)
-            ->add($modulus)
-            ->modulo($modulus);
     }
 
     /**
@@ -29,7 +22,14 @@ final class Degree
      */
     public static function of(Number $number): self
     {
-        return new self($number);
+        $modulus = Number::of(360);
+
+        return new self(
+            $number
+                ->modulo($modulus)
+                ->add($modulus)
+                ->modulo($modulus),
+        );
     }
 
     public function toRadian(): Radian
@@ -63,7 +63,7 @@ final class Degree
 
     public function opposite(): self
     {
-        return new self($this->number->add(Number::of(180)));
+        return self::of($this->number->add(Number::of(180)));
     }
 
     public function cosine(): Number

@@ -9,11 +9,8 @@ namespace Innmind\Math\Algebra;
  */
 final class Exponential implements Implementation
 {
-    private Implementation $power;
-
-    private function __construct(Implementation $power)
+    private function __construct(private Implementation $power)
     {
-        $this->power = $power;
     }
 
     /**

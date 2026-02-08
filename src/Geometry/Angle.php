@@ -14,18 +14,11 @@ use Innmind\Math\{
  */
 final class Angle
 {
-    private Segment $firstSegment;
-    private Segment $secondSegment;
-    private Degree $degree;
-
     private function __construct(
-        Segment $firstSegment,
-        Degree $degree,
-        Segment $secondSegment,
+        private Segment $firstSegment,
+        private Degree $degree,
+        private Segment $secondSegment,
     ) {
-        $this->firstSegment = $firstSegment;
-        $this->secondSegment = $secondSegment;
-        $this->degree = $degree;
     }
 
     /**

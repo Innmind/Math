@@ -14,13 +14,10 @@ use Innmind\Math\{
  */
 final class Union implements Implementation
 {
-    private Implementation $left;
-    private Implementation $right;
-
-    private function __construct(Implementation $left, Implementation $right)
-    {
-        $this->left = $left;
-        $this->right = $right;
+    private function __construct(
+        private Implementation $left,
+        private Implementation $right,
+    ) {
     }
 
     /**

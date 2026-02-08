@@ -14,21 +14,12 @@ use Innmind\Math\{
  */
 final class Range implements Implementation
 {
-    private bool $lowerInclusivity;
-    private bool $upperInclusivity;
-    private Number $lower;
-    private Number $upper;
-
     private function __construct(
-        bool $lowerInclusivity,
-        Number $lower,
-        Number $upper,
-        bool $upperInclusivity,
+        private bool $lowerInclusivity,
+        private Number $lower,
+        private Number $upper,
+        private bool $upperInclusivity,
     ) {
-        $this->lowerInclusivity = $lowerInclusivity;
-        $this->lower = $lower;
-        $this->upper = $upper;
-        $this->upperInclusivity = $upperInclusivity;
     }
 
     /**

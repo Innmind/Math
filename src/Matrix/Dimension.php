@@ -8,19 +8,14 @@ namespace Innmind\Math\Matrix;
  */
 final class Dimension
 {
-    /** @var int<1, max> */
-    private int $rows;
-    /** @var int<1, max> */
-    private int $columns;
-
     /**
      * @param int<1, max> $rows
      * @param int<1, max> $columns
      */
-    private function __construct(int $rows, int $columns)
-    {
-        $this->rows = $rows;
-        $this->columns = $columns;
+    private function __construct(
+        private int $rows,
+        private int $columns,
+    ) {
     }
 
     /**

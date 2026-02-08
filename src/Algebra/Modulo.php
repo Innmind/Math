@@ -9,13 +9,10 @@ namespace Innmind\Math\Algebra;
  */
 final class Modulo implements Implementation
 {
-    private Implementation $number;
-    private Implementation $modulus;
-
-    private function __construct(Implementation $number, Implementation $modulus)
-    {
-        $this->number = $number;
-        $this->modulus = $modulus;
+    private function __construct(
+        private Implementation $number,
+        private Implementation $modulus,
+    ) {
     }
 
     /**
