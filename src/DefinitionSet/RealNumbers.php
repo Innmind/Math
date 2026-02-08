@@ -18,12 +18,6 @@ final class RealNumbers implements Implementation
     }
 
     #[\Override]
-    public function accept(Number $number): void
-    {
-        // it accepts everything
-    }
-
-    #[\Override]
     public function toString(): string
     {
         return 'ℝ';

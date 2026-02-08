@@ -3,10 +3,7 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\DefinitionSet;
 
-use Innmind\Math\{
-    Algebra\Number,
-    Exception\OutOfDefinitionSet,
-};
+use Innmind\Math\Algebra\Number;
 
 /**
  * @psalm-immutable
@@ -18,14 +15,6 @@ final class RealNumbersExceptZero implements Implementation
     public function contains(Number $number): bool
     {
         return !$number->equals(Number::zero());
-    }
-
-    #[\Override]
-    public function accept(Number $number): void
-    {
-        if (!$this->contains($number)) {
-            throw new OutOfDefinitionSet($this, $number);
-        }
     }
 
     #[\Override]

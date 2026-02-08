@@ -3,10 +3,7 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\DefinitionSet;
 
-use Innmind\Math\{
-    Algebra\Number,
-    Exception\OutOfDefinitionSet,
-};
+use Innmind\Math\Algebra\Number;
 use Innmind\Immutable\{
     Sequence,
     Str,
@@ -40,14 +37,6 @@ final class Values implements Implementation
     public function contains(Number $number): bool
     {
         return $this->values->contains($number->value());
-    }
-
-    #[\Override]
-    public function accept(Number $number): void
-    {
-        if (!$this->contains($number)) {
-            throw new OutOfDefinitionSet($this, $number);
-        }
     }
 
     #[\Override]

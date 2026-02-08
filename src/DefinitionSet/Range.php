@@ -3,10 +3,7 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\DefinitionSet;
 
-use Innmind\Math\{
-    Algebra\Number,
-    Exception\OutOfDefinitionSet,
-};
+use Innmind\Math\Algebra\Number;
 
 /**
  * @psalm-immutable
@@ -64,14 +61,6 @@ final class Range implements Implementation
         }
 
         return true;
-    }
-
-    #[\Override]
-    public function accept(Number $number): void
-    {
-        if (!$this->contains($number)) {
-            throw new OutOfDefinitionSet($this, $number);
-        }
     }
 
     #[\Override]

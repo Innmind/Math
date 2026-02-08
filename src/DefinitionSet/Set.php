@@ -104,7 +104,9 @@ final class Set
      */
     public function accept(Number $number): void
     {
-        $this->implementation->accept($number);
+        if (!$this->contains($number)) {
+            throw new OutOfDefinitionSet($this->implementation, $number);
+        }
     }
 
     public function union(self $set): self
