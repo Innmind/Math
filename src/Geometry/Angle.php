@@ -6,7 +6,6 @@ namespace Innmind\Math\Geometry;
 use Innmind\Math\{
     Geometry\Angle\Degree,
     Geometry\Theorem\AlKashi,
-    Geometry\Trigonometry\Cosine,
     Algebra\Number,
 };
 
@@ -15,18 +14,11 @@ use Innmind\Math\{
  */
 final class Angle
 {
-    private Segment $firstSegment;
-    private Segment $secondSegment;
-    private Degree $degree;
-
     private function __construct(
-        Segment $firstSegment,
-        Degree $degree,
-        Segment $secondSegment,
+        private Segment $firstSegment,
+        private Degree $degree,
+        private Segment $secondSegment,
     ) {
-        $this->firstSegment = $firstSegment;
-        $this->secondSegment = $secondSegment;
-        $this->degree = $degree;
     }
 
     /**
@@ -74,6 +66,6 @@ final class Angle
             ->firstSegment
             ->length()
             ->multiplyBy($this->secondSegment->length())
-            ->multiplyBy(Cosine::of($this->degree));
+            ->multiplyBy($this->degree->cosine());
     }
 }

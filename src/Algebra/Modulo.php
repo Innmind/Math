@@ -5,30 +5,22 @@ namespace Innmind\Math\Algebra;
 
 /**
  * @psalm-immutable
+ * @internal
  */
-final class Modulo implements Operation, Number
+final class Modulo implements Implementation
 {
-    private Number $number;
-    private Number $modulus;
-
-    private function __construct(Number $number, Number $modulus)
-    {
-        $this->number = $number;
-        $this->modulus = $modulus;
+    private function __construct(
+        private Implementation $number,
+        private Implementation $modulus,
+    ) {
     }
 
     /**
      * @psalm-pure
      */
-    public static function of(Number $number, Number $modulus): self
+    public static function of(Implementation $number, Implementation $modulus): self
     {
         return new self($number, $modulus);
-    }
-
-    #[\Override]
-    public function result(): Number
-    {
-        return $this->compute($this->number, $this->modulus);
     }
 
     #[\Override]
@@ -38,154 +30,45 @@ final class Modulo implements Operation, Number
     }
 
     #[\Override]
-    public function equals(Number $number): bool
+    public function equals(Implementation $number): bool
     {
-        return $this->result()->equals($number);
+        return $this->value() == $number->value();
     }
 
     #[\Override]
-    public function higherThan(Number $number): bool
+    public function optimize(): Implementation
     {
-        return $this->result()->higherThan($number);
-    }
-
-    #[\Override]
-    public function add(Number $number, Number ...$numbers): Number
-    {
-        return Addition::of($this, $number, ...$numbers);
-    }
-
-    #[\Override]
-    public function subtract(Number $number, Number ...$numbers): Number
-    {
-        return Subtraction::of($this, $number, ...$numbers);
-    }
-
-    #[\Override]
-    public function divideBy(Number $number): Number
-    {
-        return Division::of($this, $number);
-    }
-
-    #[\Override]
-    public function multiplyBy(Number $number, Number ...$numbers): Number
-    {
-        return Multiplication::of($this, $number, ...$numbers);
-    }
-
-    #[\Override]
-    public function roundUp(int $precision = 0): Number
-    {
-        return Round::up($this, $precision);
-    }
-
-    #[\Override]
-    public function roundDown(int $precision = 0): Number
-    {
-        return Round::down($this, $precision);
-    }
-
-    #[\Override]
-    public function roundEven(int $precision = 0): Number
-    {
-        return Round::even($this, $precision);
-    }
-
-    #[\Override]
-    public function roundOdd(int $precision = 0): Number
-    {
-        return Round::odd($this, $precision);
-    }
-
-    #[\Override]
-    public function floor(): Number
-    {
-        return Floor::of($this);
-    }
-
-    #[\Override]
-    public function ceil(): Number
-    {
-        return Ceil::of($this);
-    }
-
-    #[\Override]
-    public function modulo(Number $modulus): self
-    {
-        return new self($this, $modulus);
-    }
-
-    #[\Override]
-    public function absolute(): Number
-    {
-        return Absolute::of($this);
-    }
-
-    #[\Override]
-    public function power(Number $power): Number
-    {
-        return Power::of($this, $power);
-    }
-
-    #[\Override]
-    public function squareRoot(): Number
-    {
-        return SquareRoot::of($this);
-    }
-
-    #[\Override]
-    public function exponential(): Number
-    {
-        return Exponential::of($this);
-    }
-
-    #[\Override]
-    public function binaryLogarithm(): Number
-    {
-        return BinaryLogarithm::of($this);
-    }
-
-    #[\Override]
-    public function naturalLogarithm(): Number
-    {
-        return NaturalLogarithm::of($this);
-    }
-
-    #[\Override]
-    public function commonLogarithm(): Number
-    {
-        return CommonLogarithm::of($this);
-    }
-
-    #[\Override]
-    public function signum(): Number
-    {
-        return Signum::of($this);
-    }
-
-    #[\Override]
-    public function collapse(): Number
-    {
-        return $this->compute(
-            $this->number->collapse(),
-            $this->modulus->collapse(),
+        return new self(
+            $this->number->optimize(),
+            $this->modulus->optimize(),
         );
     }
 
     #[\Override]
     public function toString(): string
     {
-        $number = $this->number instanceof Operation ?
-            '('.$this->number->toString().')' : $this->number->toString();
-        $modulus = $this->modulus instanceof Operation ?
-            '('.$this->modulus->toString().')' : $this->modulus->toString();
+        $number = $this->number->format();
+        $modulus = $this->modulus->format();
 
         return $number.' % '.$modulus;
     }
 
-    private function compute(Number $number, Number $modulus): Number
+    #[\Override]
+    public function format(): string
     {
-        return Real::of(
+        return '('.$this->toString().')';
+    }
+
+    private function result(): Implementation
+    {
+        return $this->compute($this->number, $this->modulus);
+    }
+
+    private function compute(
+        Implementation $number,
+        Implementation $modulus,
+    ): Implementation {
+        return Native::of(
             \fmod($number->value(), $modulus->value()),
         );
     }

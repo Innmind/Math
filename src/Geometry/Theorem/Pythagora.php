@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace Innmind\Math\Geometry\Theorem;
 
 use Innmind\Math\{
-    Algebra\Value,
+    Algebra\Number,
     Geometry\Segment,
 };
 
@@ -24,8 +24,8 @@ final class Pythagora
     ): Segment {
         $hypotenuse = $a
             ->length()
-            ->power(Value::two)
-            ->add($b->length()->power(Value::two))
+            ->power(Number::two())
+            ->add($b->length()->power(Number::two()))
             ->squareRoot();
 
         return Segment::of($hypotenuse);
@@ -41,8 +41,8 @@ final class Pythagora
     ): Segment {
         $side = $hypotenuse
             ->length()
-            ->power(Value::two)
-            ->subtract($adjacentSide->length()->power(Value::two))
+            ->power(Number::two())
+            ->subtract($adjacentSide->length()->power(Number::two()))
             ->squareRoot();
 
         return Segment::of($side);

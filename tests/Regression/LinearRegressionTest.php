@@ -7,9 +7,8 @@ use Innmind\Math\{
     Regression\LinearRegression,
     Regression\Dataset,
     Algebra\Number,
-    Algebra\Integer,
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class LinearRegressionTest extends TestCase
 {
@@ -46,7 +45,7 @@ class LinearRegressionTest extends TestCase
 
         $this->assertSame(-0.15, $r->slope()->value());
         $this->assertSame(1.35, $r->intercept()->value());
-        $this->assertEqualsWithDelta(0.0, $r(Integer::of(9))->value(), 0.0001);
+        $this->assertEqualsWithDelta(0.0, $r(Number::of(9))->value(), 0.0001);
     }
 
     public function testRootMeanSquareDeviation()
@@ -66,5 +65,14 @@ class LinearRegressionTest extends TestCase
             1.8079684731764545,
             $regression->rootMeanSquareDeviation()->value(),
         );
+    }
+
+    private function assertEqualsWithDelta(
+        int|float $expected,
+        int|float $value,
+        int|float $delta,
+    ): void {
+        $this->assertGreaterThanOrEqual($expected-$delta, $value);
+        $this->assertLessThanOrEqual($expected+$delta, $value);
     }
 }

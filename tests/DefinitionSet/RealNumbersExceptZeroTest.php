@@ -4,69 +4,58 @@ declare(strict_types = 1);
 namespace Tests\Innmind\Math\DefinitionSet;
 
 use Innmind\Math\{
-    DefinitionSet\RealNumbersExceptZero,
     DefinitionSet\Set,
-    DefinitionSet\Union,
-    DefinitionSet\Intersection,
-    Algebra\Integer,
-    Algebra\Real,
-    Algebra\Value,
+    Algebra\Number,
     Exception\OutOfDefinitionSet,
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\Immutable\SideEffect;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class RealNumbersExceptZeroTest extends TestCase
 {
-    public function testInterface()
-    {
-        $this->assertInstanceOf(
-            Set::class,
-            new RealNumbersExceptZero,
-        );
-    }
-
     public function testStringCast()
     {
-        $this->assertSame('ℝ*', (new RealNumbersExceptZero)->toString());
+        $this->assertSame('ℝ*', Set::realNumbersExceptZero()->toString());
     }
 
     public function testContains()
     {
-        $set = new RealNumbersExceptZero;
+        $set = Set::realNumbersExceptZero();
 
-        $this->assertTrue($set->contains(Integer::of(1)));
-        $this->assertTrue($set->contains(Integer::of(-1)));
-        $this->assertTrue($set->contains(Real::of(0.75)));
-        $this->assertTrue($set->contains(Real::of(-0.75)));
-        $this->assertTrue($set->contains(Value::pi));
-        $this->assertFalse($set->contains(Integer::of(0)));
+        $this->assertTrue($set->contains(Number::of(1)));
+        $this->assertTrue($set->contains(Number::of(-1)));
+        $this->assertTrue($set->contains(Number::of(0.75)));
+        $this->assertTrue($set->contains(Number::of(-0.75)));
+        $this->assertTrue($set->contains(Number::pi()));
+        $this->assertFalse($set->contains(Number::of(0)));
     }
 
     public function testAccept()
     {
-        $set = new RealNumbersExceptZero;
+        $set = Set::realNumbersExceptZero();
 
-        $this->assertNull($set->accept(Integer::of(1)));
+        $this->assertInstanceOf(
+            SideEffect::class,
+            $set->accept(Number::of(1))->unwrap(),
+        );
 
         $this->expectException(OutOfDefinitionSet::class);
         $this->expectExceptionMessage('0 ∉ ℝ*');
 
-        $set->accept(Real::of(0));
+        $_ = $set->accept(Number::of(0))->unwrap();
     }
 
     public function testUnion()
     {
-        $union = (new RealNumbersExceptZero)->union(new RealNumbersExceptZero);
+        $union = Set::realNumbersExceptZero()->union(Set::realNumbersExceptZero());
 
-        $this->assertInstanceOf(Union::class, $union);
         $this->assertSame('ℝ*∪ℝ*', $union->toString());
     }
 
     public function testIntersect()
     {
-        $intersection = (new RealNumbersExceptZero)->intersect(new RealNumbersExceptZero);
+        $intersection = Set::realNumbersExceptZero()->intersect(Set::realNumbersExceptZero());
 
-        $this->assertInstanceOf(Intersection::class, $intersection);
         $this->assertSame('ℝ*∩ℝ*', $intersection->toString());
     }
 }

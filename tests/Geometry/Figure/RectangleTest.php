@@ -8,9 +8,8 @@ use Innmind\Math\{
     Geometry\Figure,
     Geometry\Segment,
     Algebra\Number,
-    Algebra\Integer
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class RectangleTest extends TestCase
 {
@@ -19,8 +18,8 @@ class RectangleTest extends TestCase
         $this->assertInstanceOf(
             Figure::class,
             Rectangle::of(
-                Segment::of(Integer::of(2)),
-                Segment::of(Integer::of(4)),
+                Segment::of(Number::of(2)),
+                Segment::of(Number::of(4)),
             ),
         );
     }
@@ -28,8 +27,8 @@ class RectangleTest extends TestCase
     public function testPerimeter()
     {
         $rectangle = Rectangle::of(
-            Segment::of(Integer::of(2)),
-            Segment::of(Integer::of(4)),
+            Segment::of(Number::of(2)),
+            Segment::of(Number::of(4)),
         );
 
         $this->assertInstanceOf(Number::class, $rectangle->perimeter());
@@ -39,8 +38,8 @@ class RectangleTest extends TestCase
     public function testArea()
     {
         $rectangle = Rectangle::of(
-            Segment::of(Integer::of(2)),
-            Segment::of(Integer::of(4)),
+            Segment::of(Number::of(2)),
+            Segment::of(Number::of(4)),
         );
 
         $this->assertInstanceOf(Number::class, $rectangle->area());
@@ -50,8 +49,8 @@ class RectangleTest extends TestCase
     public function testLength()
     {
         $rectangle = Rectangle::of(
-            $expected = Segment::of(Integer::of(2)),
-            Segment::of(Integer::of(4)),
+            $expected = Segment::of(Number::of(2)),
+            Segment::of(Number::of(4)),
         );
 
         $this->assertSame($expected, $rectangle->length());
@@ -60,8 +59,8 @@ class RectangleTest extends TestCase
     public function testWidth()
     {
         $rectangle = Rectangle::of(
-            Segment::of(Integer::of(2)),
-            $expected = Segment::of(Integer::of(4)),
+            Segment::of(Number::of(2)),
+            $expected = Segment::of(Number::of(4)),
         );
 
         $this->assertSame($expected, $rectangle->width());

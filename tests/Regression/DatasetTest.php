@@ -9,7 +9,7 @@ use Innmind\Math\{
     Matrix\ColumnVector,
     Matrix\Dimension,
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class DatasetTest extends TestCase
 {

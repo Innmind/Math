@@ -7,7 +7,6 @@ use Innmind\Math\{
     Geometry\Figure,
     Geometry\Segment,
     Algebra\Number,
-    Algebra\Value,
 };
 
 /**
@@ -15,13 +14,10 @@ use Innmind\Math\{
  */
 final class Rectangle implements Figure
 {
-    private Segment $length;
-    private Segment $width;
-
-    private function __construct(Segment $length, Segment $width)
-    {
-        $this->length = $length;
-        $this->width = $width;
+    private function __construct(
+        private Segment $length,
+        private Segment $width,
+    ) {
     }
 
     /**
@@ -38,8 +34,8 @@ final class Rectangle implements Figure
         return $this
             ->length
             ->length()
-            ->multiplyBy(Value::two)
-            ->add($this->width->length()->multiplyBy(Value::two));
+            ->multiplyBy(Number::two())
+            ->add($this->width->length()->multiplyBy(Number::two()));
     }
 
     #[\Override]

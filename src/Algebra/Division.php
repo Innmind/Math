@@ -7,15 +7,16 @@ use Innmind\Math\Exception\DivisionByZero;
 
 /**
  * @psalm-immutable
+ * @internal
  */
-final class Division implements Operation, Number
+final class Division implements Implementation
 {
-    private Number $dividend;
-    private Number $divisor;
+    private Implementation $dividend;
+    private Implementation $divisor;
 
-    private function __construct(Number $dividend, Number $divisor)
+    private function __construct(Implementation $dividend, Implementation $divisor)
     {
-        if ($divisor->collapse()->equals(Value::zero)) {
+        if ($divisor->optimize()->value() == 0) {
             throw new DivisionByZero;
         }
 
@@ -26,17 +27,17 @@ final class Division implements Operation, Number
     /**
      * @psalm-pure
      */
-    public static function of(Number $dividend, Number $divisor): self
+    public static function of(Implementation $dividend, Implementation $divisor): self
     {
         return new self($dividend, $divisor);
     }
 
-    public function dividend(): Number
+    public function dividend(): Implementation
     {
         return $this->dividend;
     }
 
-    public function divisor(): Number
+    public function divisor(): Implementation
     {
         return $this->divisor;
     }
@@ -44,142 +45,16 @@ final class Division implements Operation, Number
     #[\Override]
     public function value(): int|float
     {
-        return $this->result()->value();
+        return $this->quotient()->value();
     }
 
     #[\Override]
-    public function equals(Number $number): bool
+    public function equals(Implementation $number): bool
     {
-        return $this->result()->equals($number);
+        return $this->value() == $number->value();
     }
 
-    #[\Override]
-    public function higherThan(Number $number): bool
-    {
-        return $this->result()->higherThan($number);
-    }
-
-    #[\Override]
-    public function add(Number $number, Number ...$numbers): Number
-    {
-        return Addition::of($this, $number, ...$numbers);
-    }
-
-    #[\Override]
-    public function subtract(Number $number, Number ...$numbers): Number
-    {
-        return Subtraction::of($this, $number, ...$numbers);
-    }
-
-    #[\Override]
-    public function divideBy(Number $number): self
-    {
-        return new self($this, $number);
-    }
-
-    #[\Override]
-    public function multiplyBy(Number $number, Number ...$numbers): Number
-    {
-        return Multiplication::of($this, $number, ...$numbers);
-    }
-
-    #[\Override]
-    public function roundUp(int $precision = 0): Number
-    {
-        return Round::up($this, $precision);
-    }
-
-    #[\Override]
-    public function roundDown(int $precision = 0): Number
-    {
-        return Round::down($this, $precision);
-    }
-
-    #[\Override]
-    public function roundEven(int $precision = 0): Number
-    {
-        return Round::even($this, $precision);
-    }
-
-    #[\Override]
-    public function roundOdd(int $precision = 0): Number
-    {
-        return Round::odd($this, $precision);
-    }
-
-    #[\Override]
-    public function floor(): Number
-    {
-        return Floor::of($this);
-    }
-
-    #[\Override]
-    public function ceil(): Number
-    {
-        return Ceil::of($this);
-    }
-
-    #[\Override]
-    public function modulo(Number $modulus): Number
-    {
-        return Modulo::of($this, $modulus);
-    }
-
-    #[\Override]
-    public function absolute(): Number
-    {
-        return Absolute::of($this);
-    }
-
-    #[\Override]
-    public function power(Number $power): Number
-    {
-        return Power::of($this, $power);
-    }
-
-    #[\Override]
-    public function squareRoot(): Number
-    {
-        return SquareRoot::of($this);
-    }
-
-    #[\Override]
-    public function exponential(): Number
-    {
-        return Exponential::of($this);
-    }
-
-    #[\Override]
-    public function binaryLogarithm(): Number
-    {
-        return BinaryLogarithm::of($this);
-    }
-
-    #[\Override]
-    public function naturalLogarithm(): Number
-    {
-        return NaturalLogarithm::of($this);
-    }
-
-    #[\Override]
-    public function commonLogarithm(): Number
-    {
-        return CommonLogarithm::of($this);
-    }
-
-    #[\Override]
-    public function signum(): Number
-    {
-        return Signum::of($this);
-    }
-
-    public function quotient(): Number
-    {
-        return $this->result();
-    }
-
-    #[\Override]
-    public function result(): Number
+    public function quotient(): Implementation
     {
         return $this->compute(
             $this->dividend,
@@ -188,21 +63,19 @@ final class Division implements Operation, Number
     }
 
     #[\Override]
-    public function collapse(): Number
+    public function optimize(): Implementation
     {
-        return $this->compute(
-            $this->dividend->collapse(),
-            $this->divisor->collapse(),
+        return new self(
+            $this->dividend->optimize(),
+            $this->divisor->optimize(),
         );
     }
 
     #[\Override]
     public function toString(): string
     {
-        $dividend = $this->dividend instanceof Operation ?
-            '('.$this->dividend->toString().')' : $this->dividend->toString();
-        $divisor = $this->divisor instanceof Operation ?
-            '('.$this->divisor->toString().')' : $this->divisor->toString();
+        $dividend = $this->dividend->format();
+        $divisor = $this->divisor->format();
 
         return \sprintf(
             '%s ÷ %s',
@@ -211,9 +84,17 @@ final class Division implements Operation, Number
         );
     }
 
-    private function compute(Number $dividend, Number $divisor): Number
+    #[\Override]
+    public function format(): string
     {
-        return Real::of(
+        return '('.$this->toString().')';
+    }
+
+    private function compute(
+        Implementation $dividend,
+        Implementation $divisor,
+    ): Implementation {
+        return Native::of(
             $dividend->value() / $divisor->value(),
         );
     }

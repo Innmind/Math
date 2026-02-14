@@ -3,29 +3,24 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\DefinitionSet;
 
-use Innmind\Math\{
-    Algebra\Number,
-    Exception\OutOfDefinitionSet,
-};
+use Innmind\Math\Algebra\Number;
 
 /**
  * @psalm-immutable
+ * @internal
  */
-final class Union implements Set
+final class Union implements Implementation
 {
-    private Set $left;
-    private Set $right;
-
-    private function __construct(Set $left, Set $right)
-    {
-        $this->left = $left;
-        $this->right = $right;
+    private function __construct(
+        private Implementation $left,
+        private Implementation $right,
+    ) {
     }
 
     /**
      * @psalm-pure
      */
-    public static function of(Set $left, Set $right): self
+    public static function of(Implementation $left, Implementation $right): self
     {
         return new self($left, $right);
     }
@@ -35,26 +30,6 @@ final class Union implements Set
     {
         return $this->left->contains($number) ||
             $this->right->contains($number);
-    }
-
-    #[\Override]
-    public function accept(Number $number): void
-    {
-        if (!$this->contains($number)) {
-            throw new OutOfDefinitionSet($this, $number);
-        }
-    }
-
-    #[\Override]
-    public function union(Set $set): Set
-    {
-        return new self($this, $set);
-    }
-
-    #[\Override]
-    public function intersect(Set $set): Set
-    {
-        return Intersection::of($this, $set);
     }
 
     #[\Override]

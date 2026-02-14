@@ -9,15 +9,15 @@ use Innmind\Math\{
     Matrix\Dimension,
     Matrix\RowVector,
     Matrix\ColumnVector,
-    Algebra\Real,
-    Algebra\Integer,
+    Algebra\Number,
     Exception\VectorsMustMeOfTheSameDimension,
     Exception\MatricesMustBeOfTheSameDimension,
     Exception\MatrixMustBeSquare,
     Exception\MatrixNotInvertible
 };
 use Innmind\Immutable\Sequence;
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class MatrixTest extends TestCase
 {
@@ -47,7 +47,7 @@ class MatrixTest extends TestCase
         ]);
 
         $this->assertInstanceOf(Sequence::class, $matrix->columns());
-        $this->assertCount(3, $matrix->columns());
+        $this->assertSame(3, $matrix->columns()->size());
     }
 
     public function testThrowWhenBuildingMatrixWithIncoherentRows()
@@ -131,8 +131,8 @@ class MatrixTest extends TestCase
     public function testInitialize()
     {
         $matrix = Matrix::initialize(
-            Dimension::of(Integer::of(3), Integer::of(2)),
-            Real::of(4.2),
+            Dimension::of(3, 2),
+            Number::of(4.2),
         );
 
         $this->assertInstanceOf(Matrix::class, $matrix);
@@ -290,7 +290,7 @@ class MatrixTest extends TestCase
             [1, 0, -1],
             [2, 3, 4],
         ]);
-        $result = $matrix->multiplyBy(Integer::of(3));
+        $result = $matrix->multiplyBy(Number::of(3));
 
         $this->assertInstanceOf(Matrix::class, $result);
         $this->assertNotSame($matrix, $result);
@@ -407,9 +407,7 @@ class MatrixTest extends TestCase
         )));
     }
 
-    /**
-     * @dataProvider inverses
-     */
+    #[DataProvider('inverses')]
     public function testInverse($initial, $expected)
     {
         $matrix = Matrix::of($initial);
@@ -459,7 +457,7 @@ class MatrixTest extends TestCase
         ])->inverse();
     }
 
-    public function inverses(): array
+    public static function inverses(): array
     {
         return [
             [

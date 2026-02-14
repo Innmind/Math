@@ -4,64 +4,54 @@ declare(strict_types = 1);
 namespace Tests\Innmind\Math\DefinitionSet;
 
 use Innmind\Math\{
-    DefinitionSet\Integers,
     DefinitionSet\Set,
-    DefinitionSet\Union,
-    DefinitionSet\Intersection,
-    Algebra\Integer,
-    Algebra\Real,
+    Algebra\Number,
     Exception\OutOfDefinitionSet,
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\Immutable\SideEffect;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class IntegersTest extends TestCase
 {
-    public function testInterface()
-    {
-        $this->assertInstanceOf(
-            Set::class,
-            new Integers,
-        );
-    }
-
     public function testStringCast()
     {
-        $this->assertSame('ℤ', (new Integers)->toString());
+        $this->assertSame('ℤ', Set::integers()->toString());
     }
 
     public function testContains()
     {
-        $set = new Integers;
+        $set = Set::integers();
 
-        $this->assertTrue($set->contains(Integer::of(1)));
-        $this->assertTrue($set->contains(Integer::of(-1)));
-        $this->assertTrue($set->contains(Integer::of(0)));
-        $this->assertFalse($set->contains(Real::of(0.75)));
+        $this->assertTrue($set->contains(Number::of(1)));
+        $this->assertTrue($set->contains(Number::of(-1)));
+        $this->assertTrue($set->contains(Number::of(0)));
+        $this->assertFalse($set->contains(Number::of(0.75)));
     }
 
     public function testAccept()
     {
-        $this->assertNull((new Integers)->accept(Integer::of(1)));
+        $this->assertInstanceOf(
+            SideEffect::class,
+            Set::integers()->accept(Number::of(1))->unwrap(),
+        );
 
         $this->expectException(OutOfDefinitionSet::class);
         $this->expectExceptionMessage('0.1 ∉ ℤ');
 
-        (new Integers)->accept(Real::of(0.1));
+        $_ = Set::integers()->accept(Number::of(0.1))->unwrap();
     }
 
     public function testUnion()
     {
-        $union = (new Integers)->union(new Integers);
+        $union = Set::integers()->union(Set::integers());
 
-        $this->assertInstanceOf(Union::class, $union);
         $this->assertSame('ℤ∪ℤ', $union->toString());
     }
 
     public function testIntersect()
     {
-        $intersection = (new Integers)->intersect(new Integers);
+        $intersection = Set::integers()->intersect(Set::integers());
 
-        $this->assertInstanceOf(Intersection::class, $intersection);
         $this->assertSame('ℤ∩ℤ', $intersection->toString());
     }
 }

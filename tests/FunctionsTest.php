@@ -7,18 +7,18 @@ use function Innmind\Math\{
     max as maximum,
     min as minimum,
 };
-use Innmind\Math\Algebra\Real;
-use PHPUnit\Framework\TestCase;
+use Innmind\Math\Algebra\Number;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class FunctionsTest extends TestCase
 {
     public function testMax()
     {
         $number = maximum(
-            Real::of(1),
-            Real::of(2),
-            $expected = Real::of(4),
-            Real::of(3),
+            Number::of(1),
+            Number::of(2),
+            $expected = Number::of(4),
+            Number::of(3),
         );
 
         $this->assertSame($expected, $number);
@@ -27,10 +27,10 @@ class FunctionsTest extends TestCase
     public function testMin()
     {
         $number = minimum(
-            Real::of(2),
-            $expected = Real::of(1),
-            Real::of(4),
-            Real::of(3),
+            Number::of(2),
+            $expected = Number::of(1),
+            Number::of(4),
+            Number::of(3),
         );
 
         $this->assertSame($expected, $number);

@@ -5,8 +5,7 @@ namespace Innmind\Math\Probabilities;
 
 use Innmind\Math\Algebra\{
     Number,
-    Integer,
-    Value,
+    Factorial,
 };
 
 /**
@@ -14,28 +13,28 @@ use Innmind\Math\Algebra\{
  */
 final class BinomialDistribution
 {
-    private Number $probability;
-
-    private function __construct(Number $probability)
+    private function __construct(private Number $probability)
     {
-        $this->probability = $probability;
     }
 
-    public function __invoke(Integer $trials, Integer $success): Number
+    public function __invoke(int $trials, int $success): Number
     {
-        /** @var Integer */
-        $errors = $trials->subtract($success)->collapse();
-        $coefficient = $trials
-            ->factorial()
+        $errors = $trials - $success;
+        $coefficient = Factorial::of($trials)
+            ->number()
             ->divideBy(
-                $success->factorial()->multiplyBy(
-                    $errors->factorial(),
+                Factorial::of($success)->number()->multiplyBy(
+                    Factorial::of($errors)->number(),
                 ),
             );
 
         return $coefficient
-            ->multiplyBy($this->probability->power($success))
-            ->multiplyBy(Value::one->subtract($this->probability)->power($errors));
+            ->multiplyBy($this->probability->power(Number::of($success)))
+            ->multiplyBy(
+                Number::one()
+                    ->subtract($this->probability)
+                    ->power(Number::of($errors)),
+            );
     }
 
     /**

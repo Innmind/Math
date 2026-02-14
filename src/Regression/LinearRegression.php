@@ -6,11 +6,7 @@ namespace Innmind\Math\Regression;
 use Innmind\Math\{
     Polynom\Polynom,
     Algebra\Number,
-    Algebra\Integer,
-    Algebra\Value,
-    Algebra\Division,
-    Algebra\Subtraction,
-    Monoid,
+    Monoid\Algebra,
 };
 
 /**
@@ -26,7 +22,7 @@ final class LinearRegression
     {
         [$slope, $intercept] = $this->compute($data);
         $this->polynom = Polynom::interceptAt($intercept)->withDegree(
-            Integer::positive(1),
+            1,
             $slope,
         );
         $this->slope = $slope;
@@ -79,7 +75,7 @@ final class LinearRegression
      */
     private function compute(Dataset $data): array
     {
-        $dimension = $data->dimension()->rows();
+        $dimension = Number::of($data->dimension()->rows());
 
         $xSum = $data->abscissas()->sum();
         $ySum = $data->ordinates()->sum();
@@ -87,29 +83,23 @@ final class LinearRegression
             ->abscissas()
             ->toSequence()
             ->map(static fn($x) => $x->multiplyBy($x))
-            ->fold(new Monoid\Addition);
+            ->fold(Algebra::addition);
         $xySum = $data
             ->points()
             ->map(static fn($point) => $point->abscissa()->multiplyBy($point->ordinate()))
-            ->fold(new Monoid\Addition);
+            ->fold(Algebra::addition);
 
-        $slope = Division::of(
-            Subtraction::of(
-                $dimension->multiplyBy($xySum),
-                $xSum->multiplyBy($ySum),
-            ),
-            Subtraction::of(
-                $dimension->multiplyBy($xxSum),
-                $xSum->power(Value::two),
-            ),
-        );
-        $intercept = Division::of(
-            Subtraction::of(
-                $ySum,
-                $slope->multiplyBy($xSum),
-            ),
-            $dimension,
-        );
+        $slope = $dimension
+            ->multiplyBy($xySum)
+            ->subtract($xSum->multiplyBy($ySum))
+            ->divideBy(
+                $dimension
+                    ->multiplyBy($xxSum)
+                    ->subtract($xSum->power(Number::two())),
+            );
+        $intercept = $ySum
+            ->subtract($slope->multiplyBy($xSum))
+            ->divideBy($dimension);
 
         return [$slope, $intercept];
     }
@@ -123,9 +113,9 @@ final class LinearRegression
 
         return $values
             ->subtract($estimated)
-            ->power(Value::two)
+            ->power(Number::two())
             ->sum()
-            ->divideBy($values->dimension())
+            ->divideBy(Number::of($values->dimension()))
             ->squareRoot();
     }
 }

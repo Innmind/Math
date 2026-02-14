@@ -3,10 +3,9 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Geometry\Angle;
 
-use Innmind\Math\Algebra\{
-    Number,
-    Integer,
-    Real,
+use Innmind\Math\{
+    Algebra\Number,
+    Geometry\Trigonometry,
 };
 
 /**
@@ -14,15 +13,8 @@ use Innmind\Math\Algebra\{
  */
 final class Degree
 {
-    private Number $number;
-
-    private function __construct(Number $number)
+    private function __construct(private Number $number)
     {
-        $modulus = Integer::of(360);
-        $this->number = $number
-            ->modulo($modulus)
-            ->add($modulus)
-            ->modulo($modulus);
     }
 
     /**
@@ -30,41 +22,75 @@ final class Degree
      */
     public static function of(Number $number): self
     {
-        return new self($number);
+        $modulus = Number::of(360);
+
+        return new self(
+            $number
+                ->modulo($modulus)
+                ->add($modulus)
+                ->modulo($modulus),
+        );
     }
 
     public function toRadian(): Radian
     {
         return Radian::of(
-            Real::of(
+            Number::of(
                 \deg2rad($this->number->value()),
             ),
         );
     }
 
-    public function isRight(): bool
+    public function right(): bool
     {
-        return $this->number->equals(Integer::of(90));
+        return $this->number->equals(Number::of(90));
     }
 
-    public function isObtuse(): bool
+    public function obtuse(): bool
     {
-        return $this->number->higherThan(Integer::of(90));
+        return $this->number->higherThan(Number::of(90));
     }
 
-    public function isAcuse(): bool
+    public function acuse(): bool
     {
-        return Integer::of(90)->higherThan($this->number);
+        return Number::of(90)->higherThan($this->number);
     }
 
-    public function isFlat(): bool
+    public function flat(): bool
     {
-        return $this->number->equals(Integer::of(180));
+        return $this->number->equals(Number::of(180));
     }
 
     public function opposite(): self
     {
-        return new self($this->number->add(Integer::of(180)));
+        return self::of($this->number->add(Number::of(180)));
+    }
+
+    public function cosine(): Number
+    {
+        return $this
+            ->toRadian()
+            ->number()
+            ->as($this->toString())
+            ->apply(Trigonometry::cosine);
+    }
+
+    public function sine(): Number
+    {
+        return $this
+            ->toRadian()
+            ->number()
+            ->as($this->toString())
+            ->apply(Trigonometry::sine);
+    }
+
+    public function tangent(): Number
+    {
+        return $this
+            ->toRadian()
+            ->number()
+            ->as($this->toString())
+            ->apply(Trigonometry::tangent);
     }
 
     public function number(): Number

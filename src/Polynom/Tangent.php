@@ -3,10 +3,7 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Polynom;
 
-use Innmind\Math\Algebra\{
-    Number,
-    Real,
-};
+use Innmind\Math\Algebra\Number;
 
 /**
  * @psalm-immutable
@@ -63,6 +60,6 @@ final class Tangent
      */
     public static function limit(): Number
     {
-        return Real::of(0.000000000001);
+        return Number::of(0.000000000001);
     }
 }

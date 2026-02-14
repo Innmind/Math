@@ -8,8 +8,6 @@ use Innmind\Math\{
     Geometry\Figure,
     Geometry\Segment,
     Algebra\Number,
-    Algebra\Value,
-    Algebra\Addition,
 };
 
 /**
@@ -42,7 +40,7 @@ final class Triangle implements Figure
             $this
                 ->area()
                 ->divideBy($base)
-                ->multiplyBy(Value::two),
+                ->multiplyBy(Number::two()),
         );
     }
 
@@ -60,14 +58,17 @@ final class Triangle implements Figure
     #[\Override]
     public function perimeter(): Number
     {
-        return Addition::of($this->a, $this->b, $this->c);
+        return $this
+            ->a
+            ->add($this->b)
+            ->add($this->c);
     }
 
     #[\Override]
     public function area(): Number
     {
         // Heron's formula
-        $p = $this->perimeter()->divideBy(Value::two);
+        $p = $this->perimeter()->divideBy(Number::two());
 
         return $p
             ->multiplyBy($p->subtract($this->a))
@@ -86,14 +87,14 @@ final class Triangle implements Figure
         return $this->height;
     }
 
-    public function isIsosceles(): bool
+    public function isosceles(): bool
     {
         return $this->a->equals($this->b) ||
             $this->a->equals($this->c) ||
             $this->b->equals($this->c);
     }
 
-    public function isEquilateral(): bool
+    public function equilateral(): bool
     {
         return $this->a->equals($this->b) &&
             $this->b->equals($this->c);

@@ -3,31 +3,20 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\DefinitionSet;
 
-use Innmind\Math\{
-    Algebra\Number,
-    Exception\OutOfDefinitionSet,
-};
+use Innmind\Math\Algebra\Number;
 
 /**
  * @psalm-immutable
+ * @internal
  */
-final class Range implements Set
+final class Range implements Implementation
 {
-    private bool $lowerInclusivity;
-    private bool $upperInclusivity;
-    private Number $lower;
-    private Number $upper;
-
     private function __construct(
-        bool $lowerInclusivity,
-        Number $lower,
-        Number $upper,
-        bool $upperInclusivity,
+        private bool $lowerInclusivity,
+        private Number $lower,
+        private Number $upper,
+        private bool $upperInclusivity,
     ) {
-        $this->lowerInclusivity = $lowerInclusivity;
-        $this->lower = $lower;
-        $this->upper = $upper;
-        $this->upperInclusivity = $upperInclusivity;
     }
 
     /**
@@ -44,16 +33,6 @@ final class Range implements Set
     public static function exclusive(Number $lower, Number $upper): self
     {
         return new self(false, $lower, $upper, false);
-    }
-
-    public function excludeLowerBound(): self
-    {
-        return new self(false, $this->lower, $this->upper, $this->upperInclusivity);
-    }
-
-    public function excludeUpperBound(): self
-    {
-        return new self($this->lowerInclusivity, $this->lower, $this->upper, false);
     }
 
     #[\Override]
@@ -82,26 +61,6 @@ final class Range implements Set
         }
 
         return true;
-    }
-
-    #[\Override]
-    public function accept(Number $number): void
-    {
-        if (!$this->contains($number)) {
-            throw new OutOfDefinitionSet($this, $number);
-        }
-    }
-
-    #[\Override]
-    public function union(Set $set): Set
-    {
-        return Union::of($this, $set);
-    }
-
-    #[\Override]
-    public function intersect(Set $set): Set
-    {
-        return Intersection::of($this, $set);
     }
 
     #[\Override]
