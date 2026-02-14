@@ -87,7 +87,7 @@ final class Quantile
      */
     private function buildQuartile(Number $percentage): Number
     {
-        /** @var positive-int */
+        /** @var int<1, max> */
         $index = (int) Number::of($this->values->size())
             ->multiplyBy($percentage)
             ->roundUp()

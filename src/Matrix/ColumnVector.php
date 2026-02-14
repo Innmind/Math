@@ -159,7 +159,7 @@ final class ColumnVector
     }
 
     /**
-     * @param 0|positive-int $position
+     * @param int<0, max> $position
      */
     public function get(int $position): Number
     {

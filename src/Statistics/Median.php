@@ -47,7 +47,7 @@ final class Median
     {
         // mathematically the index to choose is (size+1/2) but here we
         // do (size-1)/2 as the sequence indexes start at 0
-        /** @var 0|positive-int */
+        /** @var int<0, max> */
         $index = (int) (($values->size() - 1) / 2);
 
         return $values
@@ -65,7 +65,7 @@ final class Median
     {
         // mathematically the value is mean(size/2, size/2+1) but here we
         // do mean(size/2-1, size/2) as the sequence indexes start at 0
-        /** @var positive-int */
+        /** @var int<1, max> */
         $index = (int) ($values->size() / 2);
 
         return Mean::of(
