@@ -29,12 +29,6 @@ final class Subtraction implements Implementation
     }
 
     #[\Override]
-    public function value(): int|float
-    {
-        return $this->difference()->value();
-    }
-
-    #[\Override]
     public function raw(): Native|Value
     {
         return $this->difference();
@@ -42,7 +36,7 @@ final class Subtraction implements Implementation
 
     public function difference(): Native|Value
     {
-        return Native::of($this->a->value() - $this->b->value());
+        return Native::of($this->a->raw()->value() - $this->b->raw()->value());
     }
 
     #[\Override]

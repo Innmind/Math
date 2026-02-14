@@ -24,15 +24,9 @@ final class Power implements Implementation
     }
 
     #[\Override]
-    public function value(): int|float
-    {
-        return $this->number->value() ** $this->power->value();
-    }
-
-    #[\Override]
     public function raw(): Native|Value
     {
-        return Native::of($this->value());
+        return Native::of($this->number->raw()->value() ** $this->power->raw()->value());
     }
 
     #[\Override]

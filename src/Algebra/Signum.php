@@ -22,15 +22,9 @@ final class Signum implements Implementation
     }
 
     #[\Override]
-    public function value(): int|float
-    {
-        return $this->number->value() <=> 0;
-    }
-
-    #[\Override]
     public function raw(): Native|Value
     {
-        return Native::of($this->value());
+        return Native::of($this->number->raw()->value() <=> 0);
     }
 
     #[\Override]

@@ -112,7 +112,7 @@ final class Number
     #[\NoDiscard]
     public function value(): int|float
     {
-        return $this->implementation->value();
+        return $this->implementation->raw()->value();
     }
 
     #[\NoDiscard]

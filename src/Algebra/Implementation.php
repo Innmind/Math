@@ -9,7 +9,6 @@ namespace Innmind\Math\Algebra;
  */
 interface Implementation
 {
-    public function value(): int|float;
     public function raw(): Native|Value;
     public function toString(): string;
     public function format(): string;

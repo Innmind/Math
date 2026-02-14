@@ -22,15 +22,9 @@ final class Exponential implements Implementation
     }
 
     #[\Override]
-    public function value(): int|float
-    {
-        return \exp($this->power->value());
-    }
-
-    #[\Override]
     public function raw(): Native|Value
     {
-        return Native::of($this->value());
+        return Native::of(\exp($this->power->raw()->value()));
     }
 
     #[\Override]

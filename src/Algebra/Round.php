@@ -61,19 +61,13 @@ final class Round implements Implementation
     }
 
     #[\Override]
-    public function value(): int|float
-    {
-        return \round(
-            $this->number->value(),
-            $this->precision,
-            $this->mode,
-        );
-    }
-
-    #[\Override]
     public function raw(): Native|Value
     {
-        return Native::of($this->value());
+        return Native::of(\round(
+            $this->number->raw()->value(),
+            $this->precision,
+            $this->mode,
+        ));
     }
 
     #[\Override]
@@ -89,7 +83,7 @@ final class Round implements Implementation
     #[\Override]
     public function toString(): string
     {
-        return \var_export($this->value(), true);
+        return \var_export($this->raw()->value(), true);
     }
 
     #[\Override]

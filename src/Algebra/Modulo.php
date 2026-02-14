@@ -24,18 +24,12 @@ final class Modulo implements Implementation
     }
 
     #[\Override]
-    public function value(): int|float
-    {
-        // wrap to throw in case of invlid values
-        return Native::of(
-            \fmod($this->number->value(), $this->modulus->value()),
-        )->value();
-    }
-
-    #[\Override]
     public function raw(): Native|Value
     {
-        return Native::of($this->value());
+        return Native::of(\fmod(
+            $this->number->raw()->value(),
+            $this->modulus->raw()->value(),
+        ));
     }
 
     #[\Override]

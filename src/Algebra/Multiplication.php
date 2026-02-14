@@ -29,12 +29,6 @@ final class Multiplication implements Implementation
     }
 
     #[\Override]
-    public function value(): int|float
-    {
-        return $this->product()->value();
-    }
-
-    #[\Override]
     public function raw(): Native|Value
     {
         return $this->product();
@@ -42,7 +36,7 @@ final class Multiplication implements Implementation
 
     public function product(): Native|Value
     {
-        return Native::of($this->a->value() * $this->b->value());
+        return Native::of($this->a->raw()->value() * $this->b->raw()->value());
     }
 
     #[\Override]

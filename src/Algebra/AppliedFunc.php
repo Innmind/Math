@@ -24,15 +24,21 @@ final class AppliedFunc implements Implementation
     }
 
     #[\Override]
-    public function value(): int|float
-    {
-        return ($this->func)($this->x)->value();
-    }
-
-    #[\Override]
     public function raw(): Native|Value
     {
-        return Native::of($this->value());
+        $result = ($this->func)($this->x);
+
+        /**
+         * @psalm-suppress PossiblyNullFunctionCall
+         * @psalm-suppress ImpureFunctionCall
+         * @psalm-suppress MixedReturnStatement
+         * @psalm-suppress InaccessibleProperty
+         */
+        return (\Closure::bind(
+            static fn(Number $result) => $result->implementation->raw(),
+            null,
+            Number::class,
+        ))($result);
     }
 
     #[\Override]

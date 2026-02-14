@@ -22,15 +22,9 @@ final class Absolute implements Implementation
     }
 
     #[\Override]
-    public function value(): int|float
-    {
-        return \abs($this->number->value());
-    }
-
-    #[\Override]
     public function raw(): Native|Value
     {
-        return Native::of($this->value());
+        return Native::of(\abs($this->number->raw()->value()));
     }
 
     #[\Override]

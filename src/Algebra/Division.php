@@ -43,12 +43,6 @@ final class Division implements Implementation
     }
 
     #[\Override]
-    public function value(): int|float
-    {
-        return $this->quotient()->value();
-    }
-
-    #[\Override]
     public function raw(): Native|Value
     {
         return $this->quotient();
@@ -57,7 +51,7 @@ final class Division implements Implementation
     public function quotient(): Native|Value
     {
         return Native::of(
-            $this->dividend->value() / $this->divisor->value(),
+            $this->dividend->raw()->value() / $this->divisor->raw()->value(),
         );
     }
 

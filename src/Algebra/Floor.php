@@ -22,15 +22,9 @@ final class Floor implements Implementation
     }
 
     #[\Override]
-    public function value(): int|float
-    {
-        return \floor($this->number->value());
-    }
-
-    #[\Override]
     public function raw(): Native|Value
     {
-        return Native::of($this->value());
+        return Native::of(\floor($this->number->raw()->value()));
     }
 
     #[\Override]
@@ -42,7 +36,7 @@ final class Floor implements Implementation
     #[\Override]
     public function toString(): string
     {
-        return \var_export($this->value(), true);
+        return \var_export($this->raw()->value(), true);
     }
 
     #[\Override]

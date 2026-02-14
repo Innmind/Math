@@ -29,12 +29,6 @@ final class Addition implements Implementation
     }
 
     #[\Override]
-    public function value(): int|float
-    {
-        return $this->sum()->value();
-    }
-
-    #[\Override]
     public function raw(): Native|Value
     {
         return $this->sum();
@@ -43,7 +37,7 @@ final class Addition implements Implementation
     public function sum(): Native|Value
     {
         return Native::of(
-            $this->a->value() + $this->b->value(),
+            $this->a->raw()->value() + $this->b->raw()->value(),
         );
     }
 

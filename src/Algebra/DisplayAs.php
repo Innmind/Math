@@ -24,15 +24,9 @@ final class DisplayAs implements Implementation
     }
 
     #[\Override]
-    public function value(): int|float
-    {
-        return $this->number->value();
-    }
-
-    #[\Override]
     public function raw(): Native|Value
     {
-        return Native::of($this->value());
+        return $this->number->raw();
     }
 
     #[\Override]

@@ -22,15 +22,9 @@ final class SquareRoot implements Implementation
     }
 
     #[\Override]
-    public function value(): int|float
-    {
-        return \sqrt($this->number->value());
-    }
-
-    #[\Override]
     public function raw(): Native|Value
     {
-        return Native::of($this->value());
+        return Native::of(\sqrt($this->number->raw()->value()));
     }
 
     #[\Override]

@@ -20,7 +20,6 @@ enum Value implements Implementation
     case infinite;
     case negativeInfinite;
 
-    #[\Override]
     public function value(): int|float
     {
         return match ($this) {

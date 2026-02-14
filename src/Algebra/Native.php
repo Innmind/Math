@@ -40,7 +40,6 @@ final class Native implements Implementation
         };
     }
 
-    #[\Override]
     public function value(): int|float
     {
         return $this->value;
