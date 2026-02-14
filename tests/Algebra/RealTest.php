@@ -127,7 +127,7 @@ class RealTest extends TestCase
         $number = Number::of(3);
         $number = $number->modulo(Number::of(2));
 
-        $this->assertSame(1.0, $number->value());
+        $this->assertSame(1, $number->value());
     }
 
     public function testAbsolute()
@@ -151,7 +151,7 @@ class RealTest extends TestCase
         $number = Number::of(4);
         $number = $number->squareRoot();
 
-        $this->assertSame(2.0, $number->value());
+        $this->assertSame(2, $number->value());
     }
 
     public function testExponential()

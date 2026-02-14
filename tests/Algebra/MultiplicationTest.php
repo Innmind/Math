@@ -124,7 +124,7 @@ class MultiplicationTest extends TestCase
         );
         $number = $multiplication->modulo(Number::of(2));
 
-        $this->assertSame(1.0, $number->value());
+        $this->assertSame(1, $number->value());
     }
 
     public function testAbsolute()
@@ -154,7 +154,7 @@ class MultiplicationTest extends TestCase
         );
         $number = $multiplication->squareRoot();
 
-        $this->assertSame(2.0, $number->value());
+        $this->assertSame(2, $number->value());
     }
 
     public function testExponential()

@@ -94,7 +94,7 @@ class FactorialTest extends TestCase
         $number = Factorial::of(3)->number();
         $number = $number->modulo(Number::of(4));
 
-        $this->assertSame(2.0, $number->value());
+        $this->assertSame(2, $number->value());
     }
 
     public function testAbsolute()

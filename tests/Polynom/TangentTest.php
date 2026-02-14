@@ -29,7 +29,7 @@ class TangentTest extends TestCase
         $this->assertSame($abscissa, $tangent->abscissa());
         $this->assertInstanceOf(Number::class, $tangent(Number::of(0)));
         $this->assertSame(
-            4.0,
+            4,
             $tangent(Number::of(2))->value(),
         );
     }

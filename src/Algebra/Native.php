@@ -33,11 +33,11 @@ final class Native implements Implementation
         }
 
         return new self(match ($value) {
-            0 => Value::zero,
-            1 => Value::one,
-            2 => Value::two,
-            10 => Value::ten,
-            100 => Value::hundred,
+            0, 0.0 => Value::zero,
+            1, 1.0 => Value::one,
+            2, 2.0 => Value::two,
+            10, 10.0 => Value::ten,
+            100, 100.0 => Value::hundred,
             \M_E => Value::e,
             \M_PI => Value::pi,
             default => $value,

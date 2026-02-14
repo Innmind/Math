@@ -85,7 +85,7 @@ class TangentTest extends TestCase
         $tan = Degree::of(Number::of(42))->tangent();
         $number = $tan->floor();
 
-        $this->assertSame(0.0, $number->value());
+        $this->assertSame(0, $number->value());
     }
 
     public function testCeil()
@@ -93,7 +93,7 @@ class TangentTest extends TestCase
         $tan = Degree::of(Number::of(42))->tangent();
         $number = $tan->ceil();
 
-        $this->assertSame(1.0, $number->value());
+        $this->assertSame(1, $number->value());
     }
 
     public function testModulo()

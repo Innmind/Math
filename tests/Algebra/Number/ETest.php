@@ -67,7 +67,7 @@ class ETest extends TestCase
         $number = Number::e();
         $number = $number->floor();
 
-        $this->assertSame(2.0, $number->value());
+        $this->assertSame(2, $number->value());
     }
 
     public function testCeil()

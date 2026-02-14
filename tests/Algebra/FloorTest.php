@@ -102,7 +102,7 @@ class FloorTest extends TestCase
         $floor = Number::of(42.45)->floor();
         $number = $floor->modulo(Number::of(20));
 
-        $this->assertSame(2.0, $number->value());
+        $this->assertSame(2, $number->value());
     }
 
     public function testAbsolute()
@@ -118,7 +118,7 @@ class FloorTest extends TestCase
         $floor = Number::of(2.5)->floor();
         $number = $floor->power(Number::of(2));
 
-        $this->assertSame(4.0, $number->value());
+        $this->assertSame(4, $number->value());
     }
 
     public function testSquareRoot()
@@ -126,7 +126,7 @@ class FloorTest extends TestCase
         $floor = Number::of(4.5)->floor();
         $number = $floor->squareRoot();
 
-        $this->assertSame(2.0, $number->value());
+        $this->assertSame(2, $number->value());
     }
 
     public function testExponential()

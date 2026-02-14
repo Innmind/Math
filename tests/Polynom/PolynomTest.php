@@ -81,7 +81,7 @@ class PolynomTest extends TestCase
                 ->polynom(),
         );
         $this->assertSame(
-            4.0,
+            4,
             $polynom->tangent(Number::of(2))(Number::of(2))->value(),
         );
     }

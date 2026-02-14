@@ -125,7 +125,7 @@ class AbsoluteTest extends TestCase
         $absolute = Number::of(-4)->absolute();
         $number = $absolute->squareRoot();
 
-        $this->assertSame(2.0, $number->value());
+        $this->assertSame(2, $number->value());
     }
 
     public function testExponential()

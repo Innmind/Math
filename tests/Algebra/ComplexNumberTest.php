@@ -167,8 +167,8 @@ class ComplexNumberTest extends TestCase
         $this->assertInstanceOf(ComplexNumber::class, $squareRoot);
         $this->assertNotSame($number, $squareRoot);
         $this->assertSame('(3 + 4i)', $number->toString());
-        $this->assertSame(2.0, $squareRoot->real()->value());
-        $this->assertSame(1.0, $squareRoot->imaginary()->value());
+        $this->assertSame(2, $squareRoot->real()->value());
+        $this->assertSame(1, $squareRoot->imaginary()->value());
         $this->assertSame(
             '((√((3 + (√((3^2) + (4^2)))) ÷ 2)) + (sgn(4) x (√(((-1 x 3) + (√((3^2) + (4^2)))) ÷ 2)))i)',
             $squareRoot->toString(),

@@ -115,7 +115,7 @@ class ModuloTest extends TestCase
         );
         $number = $modulo->floor();
 
-        $this->assertSame(0.0, $number->value());
+        $this->assertSame(0, $number->value());
     }
 
     public function testCeil()
@@ -125,7 +125,7 @@ class ModuloTest extends TestCase
         );
         $number = $modulo->ceil();
 
-        $this->assertSame(1.0, $number->value());
+        $this->assertSame(1, $number->value());
     }
 
     public function testModulo()
@@ -159,7 +159,7 @@ class ModuloTest extends TestCase
         );
         $number = $modulo->power(Number::of(2));
 
-        $this->assertSame(1.0, $number->value());
+        $this->assertSame(1, $number->value());
     }
 
     public function testSquareRoot()
@@ -169,7 +169,7 @@ class ModuloTest extends TestCase
         );
         $number = $modulo->squareRoot();
 
-        $this->assertSame(2.0, $number->value());
+        $this->assertSame(2, $number->value());
     }
 
     public function testExponential()

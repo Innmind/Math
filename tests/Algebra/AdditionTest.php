@@ -159,7 +159,7 @@ class AdditionTest extends TestCase
         );
         $number = $addition->squareRoot();
 
-        $this->assertSame(2.0, $number->value());
+        $this->assertSame(2, $number->value());
     }
 
     public function testExponential()

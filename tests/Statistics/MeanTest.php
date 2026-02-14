@@ -142,7 +142,7 @@ class MeanTest extends TestCase
         )->result();
         $number = $mean->modulo(Number::of(3));
 
-        $this->assertSame(1.0, $number->value());
+        $this->assertSame(1, $number->value());
     }
 
     public function testAbsolute()
@@ -175,7 +175,7 @@ class MeanTest extends TestCase
         )->result();
         $number = $mean->squareRoot();
 
-        $this->assertSame(2.0, $number->value());
+        $this->assertSame(2, $number->value());
     }
 
     public function testExponential()
@@ -198,7 +198,7 @@ class MeanTest extends TestCase
             ->result()
             ->apply(Logarithm::binary);
 
-        $this->assertSame(\log(4, 2), $number->value());
+        $this->assertSame(2, $number->value());
     }
 
     public function testNaturalLogarithm()
