@@ -22,9 +22,9 @@ final class SquareRoot implements Implementation
     }
 
     #[\Override]
-    public function raw(): Native
+    public function memoize(): Native
     {
-        return Native::of(\sqrt($this->number->raw()->value()));
+        return Native::of(\sqrt($this->number->memoize()->value()));
     }
 
     #[\Override]

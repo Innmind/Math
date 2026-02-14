@@ -29,14 +29,14 @@ final class Multiplication implements Implementation
     }
 
     #[\Override]
-    public function raw(): Native
+    public function memoize(): Native
     {
         return $this->product();
     }
 
     public function product(): Native
     {
-        return Native::of($this->a->raw()->value() * $this->b->raw()->value());
+        return Native::of($this->a->memoize()->value() * $this->b->memoize()->value());
     }
 
     #[\Override]
@@ -49,7 +49,7 @@ final class Multiplication implements Implementation
         if ($a instanceof Division) {
             $divisor = $a->divisor();
 
-            if ($b->raw()->equals($divisor->raw())) {
+            if ($b->memoize()->equals($divisor->memoize())) {
                 return $a->dividend();
             }
         }
@@ -58,7 +58,7 @@ final class Multiplication implements Implementation
         if ($b instanceof Division) {
             $divisor = $b->divisor();
 
-            if ($a->raw()->equals($divisor->raw())) {
+            if ($a->memoize()->equals($divisor->memoize())) {
                 return $b->dividend();
             }
         }

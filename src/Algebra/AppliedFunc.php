@@ -24,7 +24,7 @@ final class AppliedFunc implements Implementation
     }
 
     #[\Override]
-    public function raw(): Native
+    public function memoize(): Native
     {
         $result = ($this->func)($this->x);
 
@@ -35,7 +35,7 @@ final class AppliedFunc implements Implementation
          * @psalm-suppress InaccessibleProperty
          */
         return (\Closure::bind(
-            static fn(Number $result) => $result->implementation->raw(),
+            static fn(Number $result) => $result->implementation->memoize(),
             null,
             Number::class,
         ))($result);

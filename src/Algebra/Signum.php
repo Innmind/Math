@@ -22,9 +22,9 @@ final class Signum implements Implementation
     }
 
     #[\Override]
-    public function raw(): Native
+    public function memoize(): Native
     {
-        return Native::of($this->number->raw()->value() <=> 0);
+        return Native::of($this->number->memoize()->value() <=> 0);
     }
 
     #[\Override]

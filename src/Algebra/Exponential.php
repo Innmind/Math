@@ -22,9 +22,9 @@ final class Exponential implements Implementation
     }
 
     #[\Override]
-    public function raw(): Native
+    public function memoize(): Native
     {
-        return Native::of(\exp($this->power->raw()->value()));
+        return Native::of(\exp($this->power->memoize()->value()));
     }
 
     #[\Override]

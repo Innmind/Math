@@ -22,9 +22,9 @@ final class Absolute implements Implementation
     }
 
     #[\Override]
-    public function raw(): Native
+    public function memoize(): Native
     {
-        return Native::of(\abs($this->number->raw()->value()));
+        return Native::of(\abs($this->number->memoize()->value()));
     }
 
     #[\Override]

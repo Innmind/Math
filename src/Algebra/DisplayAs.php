@@ -24,9 +24,9 @@ final class DisplayAs implements Implementation
     }
 
     #[\Override]
-    public function raw(): Native
+    public function memoize(): Native
     {
-        return $this->number->raw();
+        return $this->number->memoize();
     }
 
     #[\Override]

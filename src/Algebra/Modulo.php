@@ -24,11 +24,11 @@ final class Modulo implements Implementation
     }
 
     #[\Override]
-    public function raw(): Native
+    public function memoize(): Native
     {
         return Native::of(\fmod(
-            $this->number->raw()->value(),
-            $this->modulus->raw()->value(),
+            $this->number->memoize()->value(),
+            $this->modulus->memoize()->value(),
         ));
     }
 

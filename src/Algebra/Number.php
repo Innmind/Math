@@ -112,14 +112,14 @@ final class Number
     #[\NoDiscard]
     public function value(): int|float
     {
-        return $this->implementation->raw()->value();
+        return $this->implementation->memoize()->value();
     }
 
     #[\NoDiscard]
     public function equals(self $number): bool
     {
-        return $this->implementation->raw()->equals(
-            $number->implementation->raw(),
+        return $this->implementation->memoize()->equals(
+            $number->implementation->memoize(),
         );
     }
 
@@ -317,10 +317,6 @@ final class Number
     #[\NoDiscard]
     public function memoize(): self
     {
-        if ($this->implementation instanceof Native) {
-            return $this;
-        }
-
-        return self::of($this->value());
+        return new self($this->implementation->memoize());
     }
 }

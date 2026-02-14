@@ -24,9 +24,9 @@ final class Power implements Implementation
     }
 
     #[\Override]
-    public function raw(): Native
+    public function memoize(): Native
     {
-        return Native::of($this->number->raw()->value() ** $this->power->raw()->value());
+        return Native::of($this->number->memoize()->value() ** $this->power->memoize()->value());
     }
 
     #[\Override]

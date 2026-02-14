@@ -22,9 +22,9 @@ final class Floor implements Implementation
     }
 
     #[\Override]
-    public function raw(): Native
+    public function memoize(): Native
     {
-        return Native::of(\floor($this->number->raw()->value()));
+        return Native::of(\floor($this->number->memoize()->value()));
     }
 
     #[\Override]
@@ -36,7 +36,7 @@ final class Floor implements Implementation
     #[\Override]
     public function toString(): string
     {
-        return \var_export($this->raw()->value(), true);
+        return \var_export($this->memoize()->value(), true);
     }
 
     #[\Override]

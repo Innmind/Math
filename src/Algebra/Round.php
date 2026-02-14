@@ -61,10 +61,10 @@ final class Round implements Implementation
     }
 
     #[\Override]
-    public function raw(): Native
+    public function memoize(): Native
     {
         return Native::of(\round(
-            $this->number->raw()->value(),
+            $this->number->memoize()->value(),
             $this->precision,
             $this->mode,
         ));
@@ -83,7 +83,7 @@ final class Round implements Implementation
     #[\Override]
     public function toString(): string
     {
-        return \var_export($this->raw()->value(), true);
+        return \var_export($this->memoize()->value(), true);
     }
 
     #[\Override]

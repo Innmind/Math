@@ -54,7 +54,7 @@ final class Native implements Implementation
     }
 
     #[\Override]
-    public function raw(): self
+    public function memoize(): self
     {
         return $this;
     }
