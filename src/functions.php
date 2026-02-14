@@ -14,6 +14,7 @@ use Innmind\Immutable\Sequence;
  *
  * @return -1|0|1
  */
+#[\NoDiscard]
 function asc(Number $a, Number $b): int
 {
     if ($a->equals($b)) {
@@ -28,6 +29,7 @@ function asc(Number $a, Number $b): int
  *
  * @return -1|0|1
  */
+#[\NoDiscard]
 function desc(Number $a, Number $b): int
 {
     if ($a->equals($b)) {
@@ -41,6 +43,7 @@ function desc(Number $a, Number $b): int
  * @no-named-arguments
  * @psalm-pure
  */
+#[\NoDiscard]
 function max(Number $first, Number ...$numbers): Number
 {
     return Sequence::of($first, ...$numbers)
@@ -54,6 +57,7 @@ function max(Number $first, Number ...$numbers): Number
  * @no-named-arguments
  * @psalm-pure
  */
+#[\NoDiscard]
 function min(Number $first, Number ...$numbers): Number
 {
     return Sequence::of($first, ...$numbers)

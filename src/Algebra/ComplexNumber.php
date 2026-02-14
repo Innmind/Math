@@ -17,21 +17,25 @@ final class ComplexNumber
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function of(Number $real, Number $imaginary): self
     {
         return new self($real, $imaginary);
     }
 
+    #[\NoDiscard]
     public function real(): Number
     {
         return $this->real;
     }
 
+    #[\NoDiscard]
     public function imaginary(): Number
     {
         return $this->imaginary;
     }
 
+    #[\NoDiscard]
     public function add(self $number): self
     {
         return new self(
@@ -40,6 +44,7 @@ final class ComplexNumber
         );
     }
 
+    #[\NoDiscard]
     public function subtract(self $number): self
     {
         return new self(
@@ -48,6 +53,7 @@ final class ComplexNumber
         );
     }
 
+    #[\NoDiscard]
     public function multiplyBy(self $number): self
     {
         $real = $this
@@ -67,6 +73,7 @@ final class ComplexNumber
         return new self($real, $imaginary);
     }
 
+    #[\NoDiscard]
     public function divideBy(self $number): self
     {
         $dividend = $this->multiplyBy($number->conjugate());
@@ -84,6 +91,7 @@ final class ComplexNumber
         return new self($real, $imaginary);
     }
 
+    #[\NoDiscard]
     public function conjugate(): self
     {
         return new self(
@@ -92,6 +100,7 @@ final class ComplexNumber
         );
     }
 
+    #[\NoDiscard]
     public function absolute(): Number
     {
         return $this
@@ -101,6 +110,7 @@ final class ComplexNumber
             ->squareRoot();
     }
 
+    #[\NoDiscard]
     public function reciprocal(): self
     {
         $divisor = $this
@@ -116,6 +126,7 @@ final class ComplexNumber
         );
     }
 
+    #[\NoDiscard]
     public function negation(): self
     {
         return new self(
@@ -124,6 +135,7 @@ final class ComplexNumber
         );
     }
 
+    #[\NoDiscard]
     public function squareRoot(): self
     {
         $real = $this
@@ -142,12 +154,14 @@ final class ComplexNumber
         return new self($real, $imaginary);
     }
 
+    #[\NoDiscard]
     public function equals(self $number): bool
     {
         return $this->real->equals($number->real()) &&
             $this->imaginary->equals($number->imaginary());
     }
 
+    #[\NoDiscard]
     public function toString(): string
     {
         $real = $this->real->format();

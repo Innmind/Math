@@ -32,6 +32,7 @@ final class LinearRegression
     /**
      * Compute the value at the given x value
      */
+    #[\NoDiscard]
     public function __invoke(Number $x): Number
     {
         return ($this->polynom)($x);
@@ -40,6 +41,7 @@ final class LinearRegression
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function of(Dataset $data): self
     {
         return new self($data);
@@ -48,6 +50,7 @@ final class LinearRegression
     /**
      * Return the intercept value
      */
+    #[\NoDiscard]
     public function intercept(): Number
     {
         return $this->polynom->intercept();
@@ -56,11 +59,13 @@ final class LinearRegression
     /**
      * Return the slope value
      */
+    #[\NoDiscard]
     public function slope(): Number
     {
         return $this->slope;
     }
 
+    #[\NoDiscard]
     public function rootMeanSquareDeviation(): Number
     {
         return $this->deviation;

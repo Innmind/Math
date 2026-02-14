@@ -18,6 +18,7 @@ final class Pythagora
      * Compute the hypotenuse for adjacent sides A and B
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function hypotenuse(
         Segment $a,
         Segment $b,
@@ -35,6 +36,7 @@ final class Pythagora
      * Compute a side A or B from the hypotenuse and one side
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function adjacentSide(
         Segment $hypotenuse,
         Segment $adjacentSide,
@@ -48,6 +50,7 @@ final class Pythagora
         return Segment::of($side);
     }
 
+    #[\NoDiscard]
     public function toString(): string
     {
         return 'C²=A²+B²';

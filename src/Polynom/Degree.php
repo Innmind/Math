@@ -22,6 +22,7 @@ final class Degree
     /**
      * Compute the value for the given x
      */
+    #[\NoDiscard]
     public function __invoke(Number $x): Number
     {
         return $this->coeff->multiplyBy($x->power(Number::of($this->degree)));
@@ -32,6 +33,7 @@ final class Degree
      *
      * @param int<1, max> $degree
      */
+    #[\NoDiscard]
     public static function of(int $degree, Number $coeff): self
     {
         return new self($degree, $coeff);
@@ -40,16 +42,19 @@ final class Degree
     /**
      * @return int<1, max>
      */
+    #[\NoDiscard]
     public function degree(): int
     {
         return $this->degree;
     }
 
+    #[\NoDiscard]
     public function coeff(): Number
     {
         return $this->coeff;
     }
 
+    #[\NoDiscard]
     public function primitive(): self
     {
         return new self(
@@ -58,6 +63,7 @@ final class Degree
         );
     }
 
+    #[\NoDiscard]
     public function derivative(): self
     {
         if ($this->degree === 1) {
@@ -70,6 +76,7 @@ final class Degree
         );
     }
 
+    #[\NoDiscard]
     public function toString(): string
     {
         $coeff = $this->coeff->format();

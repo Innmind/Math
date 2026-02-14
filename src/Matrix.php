@@ -60,6 +60,7 @@ final class Matrix
      *
      * @param non-empty-list<non-empty-list<int|float|Number>> $values
      */
+    #[\NoDiscard]
     public static function of(array $values): self
     {
         $numerize = static fn(int|float|Number $number): Number => match (true) {
@@ -81,6 +82,7 @@ final class Matrix
      *
      * @throws LogicException When the sequence is empty
      */
+    #[\NoDiscard]
     public static function fromRows(Sequence $rows): self
     {
         return new self($rows);
@@ -93,6 +95,7 @@ final class Matrix
      *
      * @throws LogicException When the sequence is empty
      */
+    #[\NoDiscard]
     public static function fromColumns(Sequence $columns): self
     {
         return self::fromRows(
@@ -105,6 +108,7 @@ final class Matrix
      *
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function initialize(Dimension $dimension, Number $value): self
     {
         return new self(
@@ -114,6 +118,7 @@ final class Matrix
         );
     }
 
+    #[\NoDiscard]
     public function dimension(): Dimension
     {
         return $this->dimension;
@@ -122,11 +127,13 @@ final class Matrix
     /**
      * @return Sequence<ColumnVector>
      */
+    #[\NoDiscard]
     public function columns(): Sequence
     {
         return $this->columns;
     }
 
+    #[\NoDiscard]
     public function add(self $matrix): self
     {
         if (!$this->dimension->equals($matrix->dimension())) {
@@ -141,6 +148,7 @@ final class Matrix
         );
     }
 
+    #[\NoDiscard]
     public function subtract(self $matrix): self
     {
         if (!$this->dimension->equals($matrix->dimension())) {
@@ -155,6 +163,7 @@ final class Matrix
         );
     }
 
+    #[\NoDiscard]
     public function multiplyBy(Number $number): self
     {
         $multiplier = RowVector::initialize($this->dimension->columns(), $number);
@@ -166,6 +175,7 @@ final class Matrix
         );
     }
 
+    #[\NoDiscard]
     public function transpose(): self
     {
         return new self(
@@ -175,6 +185,7 @@ final class Matrix
         );
     }
 
+    #[\NoDiscard]
     public function dot(self $matrix): self
     {
         return new self(
@@ -189,11 +200,13 @@ final class Matrix
         );
     }
 
+    #[\NoDiscard]
     public function isSquare(): bool
     {
         return $this->dimension->rows() === $this->dimension->columns();
     }
 
+    #[\NoDiscard]
     public function diagonal(): self
     {
         if (!$this->isSquare()) {
@@ -218,6 +231,7 @@ final class Matrix
         return new self($rows);
     }
 
+    #[\NoDiscard]
     public function identity(): self
     {
         if (!$this->isSquare()) {
@@ -243,6 +257,7 @@ final class Matrix
         return new self($rows);
     }
 
+    #[\NoDiscard]
     public function equals(self $matrix): bool
     {
         if (!$this->dimension->equals($matrix->dimension())) {
@@ -255,11 +270,13 @@ final class Matrix
             ->matches(static fn($pair) => $pair[0]->equals($pair[1]));
     }
 
+    #[\NoDiscard]
     public function isSymmetric(): bool
     {
         return $this->equals($this->transpose());
     }
 
+    #[\NoDiscard]
     public function isAntisymmetric(): bool
     {
         return $this
@@ -267,6 +284,7 @@ final class Matrix
             ->equals($this->transpose());
     }
 
+    #[\NoDiscard]
     public function isInRowEchelonForm(): bool
     {
         $leadingZeros = $this->rows->map(
@@ -280,6 +298,7 @@ final class Matrix
             $leadingZeros->equals($leadingZeros->distinct());
     }
 
+    #[\NoDiscard]
     public function augmentWith(self $matrix): self
     {
         return self::fromColumns(
@@ -293,6 +312,7 @@ final class Matrix
      * The matrix augmented with its identity, by transforming the matrix part
      * to be its identity, then the identity part became the inversed matrix
      */
+    #[\NoDiscard]
     public function inverse(): self
     {
         if (!$this->isSquare()) {

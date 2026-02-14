@@ -29,6 +29,7 @@ final class Vector
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function of(Number $number, Number ...$numbers): self
     {
         return new self(Sequence::of($number, ...$numbers));
@@ -39,6 +40,7 @@ final class Vector
      *
      * @param int<1, max> $dimension
      */
+    #[\NoDiscard]
     public static function initialize(int $dimension, Number $value): self
     {
         return new self(
@@ -53,6 +55,7 @@ final class Vector
      *
      * @throws LogicException When the sequence is empty
      */
+    #[\NoDiscard]
     public static function ofSequence(Sequence $numbers): self
     {
         if ($numbers->empty()) {
@@ -65,6 +68,7 @@ final class Vector
     /**
      * @return int<1, max>
      */
+    #[\NoDiscard]
     public function dimension(): int
     {
         /** @var int<1, max> There's always at least one element */
@@ -74,6 +78,7 @@ final class Vector
     /**
      * @see https://en.wikipedia.org/wiki/Row_and_column_vectors#Operations
      */
+    #[\NoDiscard]
     public function dot(self $vector): Number
     {
         if ($this->dimension() !== $vector->dimension()) {
@@ -92,6 +97,7 @@ final class Vector
             ->fold(Algebra::addition);
     }
 
+    #[\NoDiscard]
     public function multiplyBy(self $vector): self
     {
         if ($this->dimension() !== $vector->dimension()) {
@@ -111,6 +117,7 @@ final class Vector
         );
     }
 
+    #[\NoDiscard]
     public function divideBy(self $vector): self
     {
         if ($this->dimension() !== $vector->dimension()) {
@@ -125,6 +132,7 @@ final class Vector
         );
     }
 
+    #[\NoDiscard]
     public function subtract(self $vector): self
     {
         if ($this->dimension() !== $vector->dimension()) {
@@ -139,6 +147,7 @@ final class Vector
         );
     }
 
+    #[\NoDiscard]
     public function add(self $vector): self
     {
         if ($this->dimension() !== $vector->dimension()) {
@@ -153,6 +162,7 @@ final class Vector
         );
     }
 
+    #[\NoDiscard]
     public function power(Number $power): self
     {
         return new self(
@@ -160,6 +170,7 @@ final class Vector
         );
     }
 
+    #[\NoDiscard]
     public function sum(): Number
     {
         return $this->numbers->fold(Algebra::addition);
@@ -168,6 +179,7 @@ final class Vector
     /**
      * @param callable(Number): void $function
      */
+    #[\NoDiscard]
     public function foreach(callable $function): SideEffect
     {
         return $this->numbers->foreach($function);
@@ -176,6 +188,7 @@ final class Vector
     /**
      * @param callable(Number): Number $function
      */
+    #[\NoDiscard]
     public function map(callable $function): self
     {
         return new self(
@@ -191,6 +204,7 @@ final class Vector
      *
      * @return R
      */
+    #[\NoDiscard]
     public function reduce($carry, callable $reducer)
     {
         return $this->numbers->reduce($carry, $reducer);
@@ -199,6 +213,7 @@ final class Vector
     /**
      * @param int<0, max> $position
      */
+    #[\NoDiscard]
     public function get(int $position): Number
     {
         return $this->numbers->get($position)->match(
@@ -207,6 +222,7 @@ final class Vector
         );
     }
 
+    #[\NoDiscard]
     public function equals(self $vector): bool
     {
         if ($this->dimension() !== $vector->dimension()) {
@@ -222,6 +238,7 @@ final class Vector
     /**
      * First non zero number found
      */
+    #[\NoDiscard]
     public function lead(): Number
     {
         return $this
@@ -236,6 +253,7 @@ final class Vector
     /**
      * @return Sequence<Number>
      */
+    #[\NoDiscard]
     public function toSequence(): Sequence
     {
         return $this->numbers;

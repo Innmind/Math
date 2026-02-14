@@ -24,6 +24,7 @@ final class Dimension
      * @param int<1, max> $rows
      * @param int<1, max> $columns
      */
+    #[\NoDiscard]
     public static function of(int $rows, int $columns): self
     {
         return new self($rows, $columns);
@@ -32,6 +33,7 @@ final class Dimension
     /**
      * @return int<1, max>
      */
+    #[\NoDiscard]
     public function rows(): int
     {
         return $this->rows;
@@ -40,17 +42,20 @@ final class Dimension
     /**
      * @return int<1, max>
      */
+    #[\NoDiscard]
     public function columns(): int
     {
         return $this->columns;
     }
 
+    #[\NoDiscard]
     public function equals(self $dimension): bool
     {
         return $this->rows === $dimension->rows() &&
             $this->columns === $dimension->columns();
     }
 
+    #[\NoDiscard]
     public function toString(): string
     {
         return \sprintf('%s x %s', $this->rows, $this->columns);

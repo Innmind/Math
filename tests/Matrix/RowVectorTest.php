@@ -50,7 +50,7 @@ class RowVectorTest extends TestCase
     {
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
-        RowVector::of(...numerize(-1, 2))->dot(
+        $_ = RowVector::of(...numerize(-1, 2))->dot(
             ColumnVector::of(...numerize(4, 1, 0)),
         );
     }
@@ -100,7 +100,7 @@ class RowVectorTest extends TestCase
     {
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
-        RowVector::initialize(1, Number::of(1))->multiplyBy(
+        $_ = RowVector::initialize(1, Number::of(1))->multiplyBy(
             RowVector::initialize(2, Number::of(1)),
         );
     }
@@ -133,7 +133,7 @@ class RowVectorTest extends TestCase
     {
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
-        RowVector::initialize(1, Number::of(1))->divideBy(
+        $_ = RowVector::initialize(1, Number::of(1))->divideBy(
             RowVector::initialize(2, Number::of(1)),
         );
     }
@@ -175,7 +175,7 @@ class RowVectorTest extends TestCase
     {
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
-        RowVector::initialize(1, Number::of(1))->subtract(
+        $_ = RowVector::initialize(1, Number::of(1))->subtract(
             RowVector::initialize(2, Number::of(1)),
         );
     }
@@ -203,7 +203,7 @@ class RowVectorTest extends TestCase
     {
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
-        RowVector::initialize(1, Number::of(1))->add(
+        $_ = RowVector::initialize(1, Number::of(1))->add(
             RowVector::initialize(2, Number::of(1)),
         );
     }
@@ -237,7 +237,7 @@ class RowVectorTest extends TestCase
     {
         $vector = RowVector::of(...numerize(1, 2, 3, -4));
         $count = 0;
-        $vector->foreach(static function() use (&$count) {
+        $_ = $vector->foreach(static function() use (&$count) {
             ++$count;
         });
 

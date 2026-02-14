@@ -18,6 +18,7 @@ final class Quartile
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function of(Number $value): self
     {
         return new self($value);
@@ -26,6 +27,7 @@ final class Quartile
     /**
      * Return the quartile value
      */
+    #[\NoDiscard]
     public function value(): Number
     {
         return $this->value;

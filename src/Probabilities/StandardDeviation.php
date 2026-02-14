@@ -20,6 +20,7 @@ final class StandardDeviation
         $this->deviation = Variance::of($dataset)()->squareRoot();
     }
 
+    #[\NoDiscard]
     public function __invoke(): Number
     {
         return $this->deviation;
@@ -28,6 +29,7 @@ final class StandardDeviation
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function of(Dataset $dataset): self
     {
         return new self($dataset);

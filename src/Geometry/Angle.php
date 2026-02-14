@@ -24,6 +24,7 @@ final class Angle
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function of(
         Segment $firstSegment,
         Degree $degree,
@@ -32,16 +33,19 @@ final class Angle
         return new self($firstSegment, $degree, $secondSegment);
     }
 
+    #[\NoDiscard]
     public function firstSegment(): Segment
     {
         return $this->firstSegment;
     }
 
+    #[\NoDiscard]
     public function secondSegment(): Segment
     {
         return $this->secondSegment;
     }
 
+    #[\NoDiscard]
     public function degree(): Degree
     {
         return $this->degree;
@@ -51,6 +55,7 @@ final class Angle
      * It sums the segments like we would sum vectors, except here we don't use
      * vectors as it would need a plan to express a direction
      */
+    #[\NoDiscard]
     public function sum(): Segment
     {
         return AlKashi::side(
@@ -60,6 +65,7 @@ final class Angle
         );
     }
 
+    #[\NoDiscard]
     public function scalarProduct(): Number
     {
         return $this

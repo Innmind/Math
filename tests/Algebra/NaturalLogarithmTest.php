@@ -23,7 +23,7 @@ class NaturalLogarithmTest extends TestCase
     {
         $this->expectException(OutOfDefinitionSet::class);
 
-        Number::of(0)->apply(Logarithm::natural)->memoize();
+        $_ = Number::of(0)->apply(Logarithm::natural)->memoize();
     }
 
     public function testResult()

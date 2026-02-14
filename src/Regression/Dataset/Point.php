@@ -19,16 +19,19 @@ final class Point
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function of(Number $abscissa, Number $ordinate): self
     {
         return new self($abscissa, $ordinate);
     }
 
+    #[\NoDiscard]
     public function abscissa(): Number
     {
         return $this->abscissa;
     }
 
+    #[\NoDiscard]
     public function ordinate(): Number
     {
         return $this->ordinate;

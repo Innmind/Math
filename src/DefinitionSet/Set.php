@@ -26,6 +26,7 @@ final class Set
      * @psalm-pure
      * @no-named-arguments
      */
+    #[\NoDiscard]
     public static function of(Number ...$values): self
     {
         return new self(Values::of(...$values));
@@ -34,6 +35,7 @@ final class Set
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function integers(): self
     {
         return new self(new Integers);
@@ -42,6 +44,7 @@ final class Set
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function integersExceptZero(): self
     {
         return new self(new IntegersExceptZero);
@@ -50,6 +53,7 @@ final class Set
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function naturalNumbers(): self
     {
         return new self(new NaturalNumbers);
@@ -58,6 +62,7 @@ final class Set
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function naturalNumbersExceptZero(): self
     {
         return new self(new NaturalNumbersExceptZero);
@@ -66,6 +71,7 @@ final class Set
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function realNumbers(): self
     {
         return new self(new RealNumbers);
@@ -74,6 +80,7 @@ final class Set
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function realNumbersExceptZero(): self
     {
         return new self(new RealNumbersExceptZero);
@@ -82,6 +89,7 @@ final class Set
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function inclusiveRange(Number $lower, Number $upper): self
     {
         return new self(Range::inclusive($lower, $upper));
@@ -90,6 +98,7 @@ final class Set
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function exclusiveRange(Number $lower, Number $upper): self
     {
         return new self(Range::exclusive($lower, $upper));
@@ -98,6 +107,7 @@ final class Set
     /**
      * ∈ or ∉
      */
+    #[\NoDiscard]
     public function contains(Number $number): bool
     {
         return $this->implementation->contains($number);
@@ -106,6 +116,7 @@ final class Set
     /**
      * @return Attempt<SideEffect>
      */
+    #[\NoDiscard]
     public function accept(Number $number): Attempt
     {
         if (!$this->contains($number)) {
@@ -115,6 +126,7 @@ final class Set
         return Attempt::result(SideEffect::identity);
     }
 
+    #[\NoDiscard]
     public function union(self $set): self
     {
         return new self(Union::of(
@@ -123,6 +135,7 @@ final class Set
         ));
     }
 
+    #[\NoDiscard]
     public function intersect(self $set): self
     {
         return new self(Intersection::of(
@@ -131,6 +144,7 @@ final class Set
         ));
     }
 
+    #[\NoDiscard]
     public function toString(): string
     {
         return $this->implementation->toString();

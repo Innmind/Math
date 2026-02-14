@@ -14,6 +14,7 @@ final class Range
      *
      * @return Sequence<int>
      */
+    #[\NoDiscard]
     public static function until(int $max): Sequence
     {
         return self::of(0, $max - 1);
@@ -24,6 +25,7 @@ final class Range
      *
      * @return Sequence<int>
      */
+    #[\NoDiscard]
     public static function of(int $min, int $max): Sequence
     {
         return Sequence::of(...\range($min, $max));
@@ -37,6 +39,7 @@ final class Range
      *
      * @return Sequence<int<1, max>>
      */
+    #[\NoDiscard]
     public static function ofPositive(int $min, int $max): Sequence
     {
         /** @var Sequence<int<1, max>> */

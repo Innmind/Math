@@ -16,5 +16,6 @@
     </projectFiles>
     <issueHandlers>
         <InvalidOperand errorLevel="suppress" />
+        <UndefinedAttributeClass errorLevel="suppress" />
     </issueHandlers>
 </psalm>

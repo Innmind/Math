@@ -25,6 +25,7 @@ final class AlKashi
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function side(
         Segment $a,
         Degree $degree,
@@ -53,6 +54,7 @@ final class AlKashi
      * Return the angle between a and b sides
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function angle(
         Segment $a,
         Segment $b,
@@ -85,6 +87,7 @@ final class AlKashi
         return Radian::of($cosAB->apply(Trigonometry::arcCosine))->toDegree();
     }
 
+    #[\NoDiscard]
     public function toString(): string
     {
         return 'C²=A²+B²-2AB*cos(A,B)';

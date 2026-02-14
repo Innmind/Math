@@ -160,6 +160,6 @@ class DivisionTest extends TestCase
     {
         $this->expectException(DivisionByZero::class);
 
-        Number::of(4)->divideBy(Number::of(-0.0));
+        $_ = Number::of(4)->divideBy(Number::of(-0.0));
     }
 }

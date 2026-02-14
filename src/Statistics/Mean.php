@@ -27,11 +27,13 @@ final class Mean
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function of(Number $first, Number ...$values): self
     {
         return new self($first, ...$values);
     }
 
+    #[\NoDiscard]
     public function result(): Number
     {
         return $this->result;

@@ -36,6 +36,7 @@ final class Scope
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function of(
         Number $first,
         Number $second,
@@ -44,6 +45,7 @@ final class Scope
         return new self($first, $second, ...$values);
     }
 
+    #[\NoDiscard]
     public function result(): Number
     {
         return $this->result;
