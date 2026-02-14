@@ -35,12 +35,12 @@ final class Subtraction implements Implementation
     }
 
     #[\Override]
-    public function equals(Implementation $number): bool
+    public function raw(): Native|Value
     {
-        return $this->value() == $number->value();
+        return $this->difference();
     }
 
-    public function difference(): Implementation
+    public function difference(): Native|Value
     {
         return Native::of($this->a->value() - $this->b->value());
     }

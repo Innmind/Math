@@ -30,9 +30,9 @@ final class DisplayAs implements Implementation
     }
 
     #[\Override]
-    public function equals(Implementation $number): bool
+    public function raw(): Native|Value
     {
-        return $this->number->equals($number);
+        return Native::of($this->value());
     }
 
     #[\Override]

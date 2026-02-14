@@ -118,8 +118,8 @@ final class Number
     #[\NoDiscard]
     public function equals(self $number): bool
     {
-        return $this->implementation->equals(
-            $number->implementation,
+        return $this->implementation->raw()->equals(
+            $number->implementation->raw(),
         );
     }
 

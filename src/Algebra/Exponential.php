@@ -28,9 +28,9 @@ final class Exponential implements Implementation
     }
 
     #[\Override]
-    public function equals(Implementation $number): bool
+    public function raw(): Native|Value
     {
-        return $this->value() == $number->value();
+        return Native::of($this->value());
     }
 
     #[\Override]

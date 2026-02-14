@@ -36,10 +36,19 @@ enum Value implements Implementation
         };
     }
 
-    #[\Override]
-    public function equals(Implementation $number): bool
+    public function equals(Native|self $number): bool
     {
-        return $this->value() == $number->value();
+        if ($number instanceof self) {
+            return $this === $number;
+        }
+
+        return $number->equals($this);
+    }
+
+    #[\Override]
+    public function raw(): Native|Value
+    {
+        return $this;
     }
 
     #[\Override]

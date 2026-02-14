@@ -30,9 +30,9 @@ final class Power implements Implementation
     }
 
     #[\Override]
-    public function equals(Implementation $number): bool
+    public function raw(): Native|Value
     {
-        return $this->value() == $number->value();
+        return Native::of($this->value());
     }
 
     #[\Override]
@@ -52,7 +52,7 @@ final class Power implements Implementation
 
     public function square(): bool
     {
-        return $this->power->equals(Value::two);
+        return $this->power->raw()->equals(Value::two);
     }
 
     #[\Override]

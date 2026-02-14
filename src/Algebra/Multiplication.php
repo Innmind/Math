@@ -35,12 +35,12 @@ final class Multiplication implements Implementation
     }
 
     #[\Override]
-    public function equals(Implementation $number): bool
+    public function raw(): Native|Value
     {
-        return $this->value() == $number->value();
+        return $this->product();
     }
 
-    public function product(): Implementation
+    public function product(): Native|Value
     {
         return Native::of($this->a->value() * $this->b->value());
     }
@@ -54,7 +54,7 @@ final class Multiplication implements Implementation
         if ($a instanceof Division) {
             $divisor = $a->divisor();
 
-            if ($b->equals($divisor)) {
+            if ($b->raw()->equals($divisor->raw())) {
                 return $a->dividend();
             }
         }
@@ -62,7 +62,7 @@ final class Multiplication implements Implementation
         if ($b instanceof Division) {
             $divisor = $b->divisor();
 
-            if ($a->equals($divisor)) {
+            if ($a->raw()->equals($divisor->raw())) {
                 return $b->dividend();
             }
         }

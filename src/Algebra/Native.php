@@ -18,7 +18,7 @@ final class Native implements Implementation
     /**
      * @psalm-pure
      */
-    public static function of(int|float $value): Implementation
+    public static function of(int|float $value): self|Value
     {
         if (\is_infinite($value)) {
             return $value > 0 ? Value::infinite : Value::negativeInfinite;
@@ -47,7 +47,12 @@ final class Native implements Implementation
     }
 
     #[\Override]
-    public function equals(Implementation $number): bool
+    public function raw(): self
+    {
+        return $this;
+    }
+
+    public function equals(self|Value $number): bool
     {
         return $this->value == $number->value();
     }
