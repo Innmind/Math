@@ -16,7 +16,7 @@ final class Division implements Implementation
 
     private function __construct(Implementation $dividend, Implementation $divisor)
     {
-        if ($divisor->optimize()->value() == 0) {
+        if ($divisor->optimize()->equals(Value::zero)) {
             throw new DivisionByZero;
         }
 
