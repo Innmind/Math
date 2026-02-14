@@ -58,9 +58,16 @@ final class Division implements Implementation
     #[\Override]
     public function optimize(): Implementation
     {
+        $dividend = $this->dividend->optimize();
+        $divisor = $this->divisor->optimize();
+
+        if ($divisor->raw()->is(Value::one)) {
+            return $dividend;
+        }
+
         return new self(
-            $this->dividend->optimize(),
-            $this->divisor->optimize(),
+            $dividend,
+            $divisor,
         );
     }
 
