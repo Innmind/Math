@@ -201,7 +201,7 @@ final class Matrix
     }
 
     #[\NoDiscard]
-    public function isSquare(): bool
+    public function square(): bool
     {
         return $this->dimension->rows() === $this->dimension->columns();
     }
@@ -209,7 +209,7 @@ final class Matrix
     #[\NoDiscard]
     public function diagonal(): self
     {
-        if (!$this->isSquare()) {
+        if (!$this->square()) {
             throw new MatrixMustBeSquare;
         }
 
@@ -234,7 +234,7 @@ final class Matrix
     #[\NoDiscard]
     public function identity(): self
     {
-        if (!$this->isSquare()) {
+        if (!$this->square()) {
             throw new MatrixMustBeSquare;
         }
 
@@ -271,13 +271,13 @@ final class Matrix
     }
 
     #[\NoDiscard]
-    public function isSymmetric(): bool
+    public function symmetric(): bool
     {
         return $this->equals($this->transpose());
     }
 
     #[\NoDiscard]
-    public function isAntisymmetric(): bool
+    public function antisymmetric(): bool
     {
         return $this
             ->multiplyBy(Number::of(-1))
@@ -285,7 +285,7 @@ final class Matrix
     }
 
     #[\NoDiscard]
-    public function isInRowEchelonForm(): bool
+    public function inRowEchelonForm(): bool
     {
         $leadingZeros = $this->rows->map(
             static fn(RowVector $row) => $row
@@ -315,7 +315,7 @@ final class Matrix
     #[\NoDiscard]
     public function inverse(): self
     {
-        if (!$this->isSquare()) {
+        if (!$this->square()) {
             throw new MatrixMustBeSquare;
         }
 
