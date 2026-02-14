@@ -63,7 +63,7 @@ final class Multiplication implements Implementation
             }
         }
 
-        return $this;
+        return new self($a, $b);
     }
 
     #[\Override]
