@@ -151,12 +151,12 @@ class MatrixTest extends TestCase
             Matrix::of([
                 [1, 2],
                 [3, 4],
-            ])->isSquare(),
+            ])->square(),
         );
         $this->assertFalse(
             Matrix::of([
                 [1, 2],
-            ])->isSquare(),
+            ])->square(),
         );
     }
 
@@ -333,7 +333,7 @@ class MatrixTest extends TestCase
             [2, 3, 4],
         ]);
 
-        $this->assertFalse($matrix->isSymmetric());
+        $this->assertFalse($matrix->symmetric());
 
         $matrix = Matrix::of([
             [1, 0, 1],
@@ -341,7 +341,7 @@ class MatrixTest extends TestCase
             [1, 0, 1],
         ]);
 
-        $this->assertTrue($matrix->isSymmetric());
+        $this->assertTrue($matrix->symmetric());
     }
 
     public function testIsAntisymmetric()
@@ -351,7 +351,7 @@ class MatrixTest extends TestCase
             [2, 3, 4],
         ]);
 
-        $this->assertFalse($matrix->isAntisymmetric());
+        $this->assertFalse($matrix->antisymmetric());
 
         $matrix = Matrix::of([
             [0, 2, 3, 4],
@@ -360,7 +360,7 @@ class MatrixTest extends TestCase
             [-4, -7, 6, 0],
         ]);
 
-        $this->assertTrue($matrix->isAntisymmetric());
+        $this->assertTrue($matrix->antisymmetric());
     }
 
     public function testIsInRowEchelonForm()
@@ -373,7 +373,7 @@ class MatrixTest extends TestCase
             [0, 0, 0, 0, 0, 0, -3],
         ]);
 
-        $this->assertTrue($matrix->isInRowEchelonForm());
+        $this->assertTrue($matrix->inRowEchelonForm());
 
         $matrix = Matrix::of([
             [3, 1, 1, -2, 1, 0, -3],
@@ -383,7 +383,7 @@ class MatrixTest extends TestCase
             [0, 0, 0, 0, 0, 0, -3],
         ]);
 
-        $this->assertFalse($matrix->isInRowEchelonForm());
+        $this->assertFalse($matrix->inRowEchelonForm());
     }
 
     public function testAugmentWith()
