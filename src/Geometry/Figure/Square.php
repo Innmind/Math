@@ -21,6 +21,7 @@ final class Square implements Figure
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function of(Segment $side): self
     {
         return new self($side);
@@ -38,6 +39,7 @@ final class Square implements Figure
         return $this->side->length()->multiplyBy($this->side->length());
     }
 
+    #[\NoDiscard]
     public function side(): Segment
     {
         return $this->side;

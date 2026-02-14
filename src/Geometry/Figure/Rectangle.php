@@ -23,6 +23,7 @@ final class Rectangle implements Figure
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function of(Segment $length, Segment $width): self
     {
         return new self($length, $width);
@@ -46,11 +47,13 @@ final class Rectangle implements Figure
         );
     }
 
+    #[\NoDiscard]
     public function length(): Segment
     {
         return $this->length;
     }
 
+    #[\NoDiscard]
     public function width(): Segment
     {
         return $this->width;
