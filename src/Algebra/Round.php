@@ -11,7 +11,7 @@ final class Round implements Implementation
 {
     /**
      * @param int<0, max> $precision
-     * @param 0|positive-int $mode
+     * @param int<0, max> $mode
      */
     private function __construct(
         private Implementation $number,
