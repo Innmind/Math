@@ -61,7 +61,7 @@ final class Division implements Implementation
         $dividend = $this->dividend->optimize();
         $divisor = $this->divisor->optimize();
 
-        if ($divisor->raw()->is(Value::one)) {
+        if (Value::one->is($divisor)) {
             return $dividend;
         }
 

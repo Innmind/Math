@@ -20,6 +20,24 @@ enum Value
     case infinite;
     case negativeInfinite;
 
+    /**
+     * This allows to safely check if numbers are this integer without computing
+     * the real value.
+     */
+    public function is(Implementation $number): bool
+    {
+        if ($number instanceof Native) {
+            return $number->is($this);
+        }
+
+        // todo allow to optimize on addition, multiplication and subtraction ?
+        // this could be checked if each component is an int but the
+        // recursiveness can be expansive to walk through
+
+        // other than zero through hundred we prevent optimizing
+        return false;
+    }
+
     public function value(): int|float
     {
         return match ($this) {

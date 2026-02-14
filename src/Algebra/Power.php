@@ -35,7 +35,7 @@ final class Power implements Implementation
         $number = $this->number->optimize();
         $power = $this->power->optimize();
 
-        if ($number instanceof SquareRoot && $power->raw()->is(Value::two)) {
+        if ($number instanceof SquareRoot && Value::two->is($power)) {
             return $number->number()->optimize();
         }
 
@@ -52,7 +52,7 @@ final class Power implements Implementation
 
     public function square(): bool
     {
-        return $this->power->optimize()->raw()->is(Value::two);
+        return Value::two->is($this->power->optimize());
     }
 
     #[\Override]
