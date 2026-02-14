@@ -133,7 +133,7 @@ class PowerTest extends TestCase
         );
         $number = $power->modulo(Number::of(0.5));
 
-        $this->assertSame(0.0, $number->value());
+        $this->assertSame(0, $number->value());
     }
 
     public function testAbsolute()
@@ -163,7 +163,7 @@ class PowerTest extends TestCase
         );
         $number = $power->squareRoot();
 
-        $this->assertSame(2.0, $number->value());
+        $this->assertSame(2, $number->value());
     }
 
     public function testExponential()

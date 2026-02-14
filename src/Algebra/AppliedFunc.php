@@ -24,15 +24,21 @@ final class AppliedFunc implements Implementation
     }
 
     #[\Override]
-    public function value(): int|float
+    public function memoize(): Native
     {
-        return ($this->func)($this->x)->value();
-    }
+        $result = ($this->func)($this->x);
 
-    #[\Override]
-    public function equals(Implementation $number): bool
-    {
-        return $this->value() == $number->value();
+        /**
+         * @psalm-suppress PossiblyNullFunctionCall
+         * @psalm-suppress ImpureFunctionCall
+         * @psalm-suppress MixedReturnStatement
+         * @psalm-suppress InaccessibleProperty
+         */
+        return (\Closure::bind(
+            static fn(Number $result) => $result->implementation->memoize(),
+            null,
+            Number::class,
+        ))($result);
     }
 
     #[\Override]

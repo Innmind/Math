@@ -28,7 +28,7 @@ final class Number
     #[\NoDiscard]
     public static function zero(): self
     {
-        return new self(Value::zero);
+        return new self(Native::of(Value::zero));
     }
 
     /**
@@ -37,7 +37,7 @@ final class Number
     #[\NoDiscard]
     public static function one(): self
     {
-        return new self(Value::one);
+        return new self(Native::of(Value::one));
     }
 
     /**
@@ -46,7 +46,7 @@ final class Number
     #[\NoDiscard]
     public static function two(): self
     {
-        return new self(Value::two);
+        return new self(Native::of(Value::two));
     }
 
     /**
@@ -55,7 +55,7 @@ final class Number
     #[\NoDiscard]
     public static function ten(): self
     {
-        return new self(Value::ten);
+        return new self(Native::of(Value::ten));
     }
 
     /**
@@ -64,7 +64,7 @@ final class Number
     #[\NoDiscard]
     public static function hundred(): self
     {
-        return new self(Value::hundred);
+        return new self(Native::of(Value::hundred));
     }
 
     /**
@@ -73,7 +73,7 @@ final class Number
     #[\NoDiscard]
     public static function e(): self
     {
-        return new self(Value::e);
+        return new self(Native::of(Value::e));
     }
 
     /**
@@ -82,7 +82,7 @@ final class Number
     #[\NoDiscard]
     public static function pi(): self
     {
-        return new self(Value::pi);
+        return new self(Native::of(Value::pi));
     }
 
     /**
@@ -91,7 +91,7 @@ final class Number
     #[\NoDiscard]
     public static function infinite(): self
     {
-        return new self(Value::infinite);
+        return new self(Native::of(Value::infinite));
     }
 
     /**
@@ -100,7 +100,7 @@ final class Number
     #[\NoDiscard]
     public static function negativeInfinite(): self
     {
-        return new self(Value::negativeInfinite);
+        return new self(Native::of(Value::negativeInfinite));
     }
 
     #[\NoDiscard]
@@ -112,14 +112,14 @@ final class Number
     #[\NoDiscard]
     public function value(): int|float
     {
-        return $this->implementation->value();
+        return $this->implementation->memoize()->value();
     }
 
     #[\NoDiscard]
     public function equals(self $number): bool
     {
-        return $this->implementation->equals(
-            $number->implementation,
+        return $this->implementation->memoize()->equals(
+            $number->implementation->memoize(),
         );
     }
 
@@ -317,10 +317,6 @@ final class Number
     #[\NoDiscard]
     public function memoize(): self
     {
-        if ($this->implementation instanceof Native) {
-            return $this;
-        }
-
-        return self::of($this->value());
+        return new self($this->implementation->memoize());
     }
 }

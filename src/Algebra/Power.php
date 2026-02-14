@@ -24,25 +24,25 @@ final class Power implements Implementation
     }
 
     #[\Override]
-    public function value(): int|float
+    public function memoize(): Native
     {
-        return $this->result()->value();
-    }
-
-    #[\Override]
-    public function equals(Implementation $number): bool
-    {
-        return $this->value() == $number->value();
+        return Native::of($this->number->memoize()->value() ** $this->power->memoize()->value());
     }
 
     #[\Override]
     public function optimize(): Implementation
     {
-        if ($this->number instanceof SquareRoot && $this->square()) {
-            return $this->number->number()->optimize();
+        $number = $this->number->optimize();
+        $power = $this->power->optimize();
+
+        if ($number instanceof SquareRoot && Value::two->is($power)) {
+            return $number->number()->optimize();
         }
 
-        return $this;
+        return new self(
+            $number,
+            $power,
+        );
     }
 
     public function number(): Implementation
@@ -52,7 +52,7 @@ final class Power implements Implementation
 
     public function square(): bool
     {
-        return $this->power->equals(Value::two);
+        return Value::two->is($this->power->optimize());
     }
 
     #[\Override]
@@ -68,12 +68,5 @@ final class Power implements Implementation
     public function format(): string
     {
         return '('.$this->toString().')';
-    }
-
-    private function result(): Implementation
-    {
-        return Native::of(
-            $this->number->value() ** $this->power->value(),
-        );
     }
 }

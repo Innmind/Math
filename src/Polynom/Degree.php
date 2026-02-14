@@ -40,6 +40,15 @@ final class Degree
     }
 
     /**
+     * @param int<1, max> $degree
+     */
+    #[\NoDiscard]
+    public function is(int $degree): bool
+    {
+        return $this->degree === $degree;
+    }
+
+    /**
      * @return int<1, max>
      */
     #[\NoDiscard]
@@ -81,7 +90,7 @@ final class Degree
     {
         $coeff = $this->coeff->format();
 
-        if ($this->degree === 1) {
+        if ($this->is(1)) {
             return $coeff.'x';
         }
 

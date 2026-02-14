@@ -24,15 +24,9 @@ final class DisplayAs implements Implementation
     }
 
     #[\Override]
-    public function value(): int|float
+    public function memoize(): Native
     {
-        return $this->number->value();
-    }
-
-    #[\Override]
-    public function equals(Implementation $number): bool
-    {
-        return $this->number->equals($number);
+        return $this->number->memoize();
     }
 
     #[\Override]

@@ -22,15 +22,9 @@ final class Exponential implements Implementation
     }
 
     #[\Override]
-    public function value(): int|float
+    public function memoize(): Native
     {
-        return $this->result()->value();
-    }
-
-    #[\Override]
-    public function equals(Implementation $number): bool
-    {
-        return $this->value() == $number->value();
+        return Native::of(\exp($this->power->memoize()->value()));
     }
 
     #[\Override]
@@ -51,17 +45,5 @@ final class Exponential implements Implementation
     public function format(): string
     {
         return '('.$this->toString().')';
-    }
-
-    private function result(): Implementation
-    {
-        return $this->compute($this->power);
-    }
-
-    private function compute(Implementation $power): Implementation
-    {
-        return Native::of(
-            \exp($power->value()),
-        );
     }
 }

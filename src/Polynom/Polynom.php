@@ -76,7 +76,7 @@ final class Polynom
             $this->intercept,
             $this
                 ->degrees
-                ->exclude(static fn($known) => $known->degree() === $degree)
+                ->exclude(static fn($known) => $known->is($degree))
                 ->add(Degree::of($degree, $coeff)),
         );
     }
@@ -101,7 +101,7 @@ final class Polynom
     public function degree(int $degree): Maybe
     {
         return $this->degrees->find(
-            static fn($known) => $known->degree() === $degree,
+            static fn($known) => $known->is($degree),
         );
     }
 
@@ -154,12 +154,12 @@ final class Polynom
     {
         [$intercept, $degrees] = $this
             ->degrees
-            ->find(static fn($degree) => $degree->degree() === 1)
+            ->find(static fn($degree) => $degree->is(1))
             ->match(
                 fn($degree) => [
                     $degree->coeff(),
                     $this->degrees->exclude(
-                        static fn($degree) => $degree->degree() === 1,
+                        static fn($degree) => $degree->is(1),
                     ),
                 ],
                 fn() => [Number::zero(), $this->degrees],

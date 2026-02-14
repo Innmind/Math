@@ -3,27 +3,23 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Algebra;
 
-use Innmind\Math\Exception\FactorialMustBePositive;
-
 /**
  * @psalm-immutable
  * @internal
  */
 final class Factorial
 {
-    private int $value;
-
-    private function __construct(int $value)
+    /**
+     * @param int<0, max> $value
+     */
+    private function __construct(private int $value)
     {
-        if ($value < 0) {
-            throw new FactorialMustBePositive((string) $value);
-        }
-
-        $this->value = $value;
     }
 
     /**
      * @psalm-pure
+     *
+     * @param int<0, max> $value
      */
     public static function of(int $value): self
     {

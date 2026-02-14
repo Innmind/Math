@@ -33,7 +33,7 @@ class PolynomialRegressionTest extends TestCase
             static fn() => true,
             static fn() => false,
         ));
-        $this->assertSame(1.0, $polynom->degree(2)->match(
+        $this->assertSame(1, $polynom->degree(2)->match(
             static fn($degree) => $degree->coeff()->value(),
             static fn() => null,
         ));

@@ -29,21 +29,15 @@ final class Addition implements Implementation
     }
 
     #[\Override]
-    public function value(): int|float
+    public function memoize(): Native
     {
-        return $this->sum()->value();
+        return $this->sum();
     }
 
-    #[\Override]
-    public function equals(Implementation $number): bool
-    {
-        return $this->value() == $number->value();
-    }
-
-    public function sum(): Implementation
+    public function sum(): Native
     {
         return Native::of(
-            $this->a->value() + $this->b->value(),
+            $this->a->memoize()->value() + $this->b->memoize()->value(),
         );
     }
 

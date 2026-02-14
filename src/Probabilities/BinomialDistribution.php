@@ -17,10 +17,19 @@ final class BinomialDistribution
     {
     }
 
+    /**
+     * @param int<0, max> $trials
+     * @param int<0, max> $success
+     */
     #[\NoDiscard]
     public function __invoke(int $trials, int $success): Number
     {
         $errors = $trials - $success;
+
+        if ($errors < 0) {
+            throw new \LogicException('There must be more trials than successes');
+        }
+
         $coefficient = Factorial::of($trials)
             ->number()
             ->divideBy(

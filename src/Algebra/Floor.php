@@ -22,15 +22,9 @@ final class Floor implements Implementation
     }
 
     #[\Override]
-    public function value(): int|float
+    public function memoize(): Native
     {
-        return $this->compute($this->number);
-    }
-
-    #[\Override]
-    public function equals(Implementation $number): bool
-    {
-        return $this->value() == $number->value();
+        return Native::of(\floor($this->number->memoize()->value()));
     }
 
     #[\Override]
@@ -42,17 +36,12 @@ final class Floor implements Implementation
     #[\Override]
     public function toString(): string
     {
-        return \var_export($this->value(), true);
+        return \var_export($this->memoize()->value(), true);
     }
 
     #[\Override]
     public function format(): string
     {
         return $this->toString();
-    }
-
-    private function compute(Implementation $number): int|float
-    {
-        return \floor($number->value());
     }
 }

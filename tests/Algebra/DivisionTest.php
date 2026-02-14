@@ -88,7 +88,7 @@ class DivisionTest extends TestCase
         $division = Number::of(6.66)->divideBy(Number::of(3));
         $number = $division->floor();
 
-        $this->assertSame(2.0, $number->value());
+        $this->assertSame(2, $number->value());
     }
 
     public function testCeil()
@@ -104,7 +104,7 @@ class DivisionTest extends TestCase
         $division = Number::of(9)->divideBy(Number::of(3));
         $number = $division->modulo(Number::of(2));
 
-        $this->assertSame(1.0, $number->value());
+        $this->assertSame(1, $number->value());
     }
 
     public function testAbsolute()
@@ -128,7 +128,7 @@ class DivisionTest extends TestCase
         $division = Number::of(8)->divideBy(Number::of(2));
         $number = $division->squareRoot();
 
-        $this->assertSame(2.0, $number->value());
+        $this->assertSame(2, $number->value());
     }
 
     public function testExponential()

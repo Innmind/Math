@@ -22,15 +22,9 @@ final class Absolute implements Implementation
     }
 
     #[\Override]
-    public function value(): int|float
+    public function memoize(): Native
     {
-        return $this->result()->value();
-    }
-
-    #[\Override]
-    public function equals(Implementation $number): bool
-    {
-        return $this->value() == $number->value();
+        return Native::of(\abs($this->number->memoize()->value()));
     }
 
     #[\Override]
@@ -49,17 +43,5 @@ final class Absolute implements Implementation
     public function format(): string
     {
         return '('.$this->toString().')';
-    }
-
-    private function result(): Implementation
-    {
-        return $this->compute($this->number);
-    }
-
-    private function compute(Implementation $number): Implementation
-    {
-        return Native::of(
-            \abs($number->value()),
-        );
     }
 }

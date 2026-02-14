@@ -16,7 +16,7 @@ final class Division implements Implementation
 
     private function __construct(Implementation $dividend, Implementation $divisor)
     {
-        if ($divisor->optimize()->value() == 0) {
+        if ($divisor->optimize()->memoize()->is(Value::zero)) {
             throw new DivisionByZero;
         }
 
@@ -43,31 +43,31 @@ final class Division implements Implementation
     }
 
     #[\Override]
-    public function value(): int|float
+    public function memoize(): Native
     {
-        return $this->quotient()->value();
+        return $this->quotient();
     }
 
-    #[\Override]
-    public function equals(Implementation $number): bool
+    public function quotient(): Native
     {
-        return $this->value() == $number->value();
-    }
-
-    public function quotient(): Implementation
-    {
-        return $this->compute(
-            $this->dividend,
-            $this->divisor,
+        return Native::of(
+            $this->dividend->memoize()->value() / $this->divisor->memoize()->value(),
         );
     }
 
     #[\Override]
     public function optimize(): Implementation
     {
+        $dividend = $this->dividend->optimize();
+        $divisor = $this->divisor->optimize();
+
+        if (Value::one->is($divisor)) {
+            return $dividend;
+        }
+
         return new self(
-            $this->dividend->optimize(),
-            $this->divisor->optimize(),
+            $dividend,
+            $divisor,
         );
     }
 
@@ -88,14 +88,5 @@ final class Division implements Implementation
     public function format(): string
     {
         return '('.$this->toString().')';
-    }
-
-    private function compute(
-        Implementation $dividend,
-        Implementation $divisor,
-    ): Implementation {
-        return Native::of(
-            $dividend->value() / $divisor->value(),
-        );
     }
 }

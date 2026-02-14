@@ -24,15 +24,12 @@ final class Modulo implements Implementation
     }
 
     #[\Override]
-    public function value(): int|float
+    public function memoize(): Native
     {
-        return $this->result()->value();
-    }
-
-    #[\Override]
-    public function equals(Implementation $number): bool
-    {
-        return $this->value() == $number->value();
+        return Native::of(\fmod(
+            $this->number->memoize()->value(),
+            $this->modulus->memoize()->value(),
+        ));
     }
 
     #[\Override]
@@ -57,19 +54,5 @@ final class Modulo implements Implementation
     public function format(): string
     {
         return '('.$this->toString().')';
-    }
-
-    private function result(): Implementation
-    {
-        return $this->compute($this->number, $this->modulus);
-    }
-
-    private function compute(
-        Implementation $number,
-        Implementation $modulus,
-    ): Implementation {
-        return Native::of(
-            \fmod($number->value(), $modulus->value()),
-        );
     }
 }

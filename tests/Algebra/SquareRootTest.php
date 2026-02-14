@@ -19,14 +19,14 @@ class SquareRootTest extends TestCase
     {
         $sqrt = Number::of(4)->squareRoot();
 
-        $this->assertSame(2.0, $sqrt->value());
+        $this->assertSame(2, $sqrt->value());
     }
 
     public function testValue()
     {
         $sqrt = Number::of(4)->squareRoot();
 
-        $this->assertSame(2.0, $sqrt->value());
+        $this->assertSame(2, $sqrt->value());
     }
 
     public function testStringCast()
@@ -58,7 +58,7 @@ class SquareRootTest extends TestCase
         $sqrt = Number::of(4)->squareRoot();
         $number = $sqrt->add(Number::of(7));
 
-        $this->assertSame(9.0, $number->value());
+        $this->assertSame(9, $number->value());
     }
 
     public function testSubtract()
@@ -66,7 +66,7 @@ class SquareRootTest extends TestCase
         $sqrt = Number::of(4)->squareRoot();
         $number = $sqrt->subtract(Number::of(7));
 
-        $this->assertSame(-5.0, $number->value());
+        $this->assertSame(-5, $number->value());
     }
 
     public function testMultiplication()
@@ -74,7 +74,7 @@ class SquareRootTest extends TestCase
         $sqrt = Number::of(4)->squareRoot();
         $number = $sqrt->multiplyBy(Number::of(2));
 
-        $this->assertSame(4.0, $number->value());
+        $this->assertSame(4, $number->value());
     }
 
     public function testDivision()
@@ -82,7 +82,7 @@ class SquareRootTest extends TestCase
         $sqrt = Number::of(4)->squareRoot();
         $number = $sqrt->divideBy(Number::of(2));
 
-        $this->assertSame(1.0, $number->value());
+        $this->assertSame(1, $number->value());
     }
 
     public function testFloor()
@@ -90,7 +90,7 @@ class SquareRootTest extends TestCase
         $sqrt = Number::of(2)->squareRoot();
         $number = $sqrt->floor();
 
-        $this->assertSame(1.0, $number->value());
+        $this->assertSame(1, $number->value());
     }
 
     public function testCeil()
@@ -98,7 +98,7 @@ class SquareRootTest extends TestCase
         $sqrt = Number::of(2)->squareRoot();
         $number = $sqrt->ceil();
 
-        $this->assertSame(2.0, $number->value());
+        $this->assertSame(2, $number->value());
     }
 
     public function testAbsolute()
@@ -106,7 +106,7 @@ class SquareRootTest extends TestCase
         $sqrt = Number::of(4)->squareRoot();
         $number = $sqrt->absolute();
 
-        $this->assertSame(2.0, $number->value());
+        $this->assertSame(2, $number->value());
     }
 
     public function testModulo()
@@ -114,7 +114,7 @@ class SquareRootTest extends TestCase
         $sqrt = Number::of(4)->squareRoot();
         $number = $sqrt->modulo(Number::of(2));
 
-        $this->assertSame(0.0, $number->value());
+        $this->assertSame(0, $number->value());
     }
 
     public function testPower()
@@ -122,7 +122,7 @@ class SquareRootTest extends TestCase
         $sqrt = Number::of(4)->squareRoot();
         $number = $sqrt->power(Number::of(2));
 
-        $this->assertSame(4.0, $number->value());
+        $this->assertSame(4, $number->value());
     }
 
     public function testSquareRoot()
@@ -130,7 +130,7 @@ class SquareRootTest extends TestCase
         $sqrt = Number::of(16)->squareRoot();
         $number = $sqrt->squareRoot();
 
-        $this->assertSame(2.0, $number->value());
+        $this->assertSame(2, $number->value());
     }
 
     public function testExponential()

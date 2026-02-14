@@ -85,7 +85,7 @@ class CosineTest extends TestCase
         $cos = Degree::of(Number::of(42))->cosine();
         $number = $cos->floor();
 
-        $this->assertSame(0.0, $number->value());
+        $this->assertSame(0, $number->value());
     }
 
     public function testCeil()
@@ -93,7 +93,7 @@ class CosineTest extends TestCase
         $cos = Degree::of(Number::of(42))->cosine();
         $number = $cos->ceil();
 
-        $this->assertSame(1.0, $number->value());
+        $this->assertSame(1, $number->value());
     }
 
     public function testModulo()

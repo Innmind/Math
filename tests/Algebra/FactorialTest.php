@@ -6,20 +6,12 @@ namespace Tests\Innmind\Math\Algebra;
 use Innmind\Math\{
     Algebra\Factorial,
     Algebra\Number,
-    Exception\FactorialMustBePositive
 };
 use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 class FactorialTest extends TestCase
 {
-    public function testThrowWhenNegativeFactorial()
-    {
-        $this->expectException(FactorialMustBePositive::class);
-
-        Factorial::of(-1);
-    }
-
     public function testStringCast()
     {
         $number = Factorial::of(3);
@@ -94,7 +86,7 @@ class FactorialTest extends TestCase
         $number = Factorial::of(3)->number();
         $number = $number->modulo(Number::of(4));
 
-        $this->assertSame(2.0, $number->value());
+        $this->assertSame(2, $number->value());
     }
 
     public function testAbsolute()

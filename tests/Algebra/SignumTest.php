@@ -94,7 +94,7 @@ class SignumTest extends TestCase
         $sgn = Number::of(2)->signum();
         $number = $sgn->floor();
 
-        $this->assertSame(1.0, $number->value());
+        $this->assertSame(1, $number->value());
     }
 
     public function testCeil()
@@ -102,7 +102,7 @@ class SignumTest extends TestCase
         $sgn = Number::of(2)->signum();
         $number = $sgn->ceil();
 
-        $this->assertSame(1.0, $number->value());
+        $this->assertSame(1, $number->value());
     }
 
     public function testModulo()
@@ -110,7 +110,7 @@ class SignumTest extends TestCase
         $sgn = Number::of(2)->signum();
         $number = $sgn->modulo(Number::of(0.5));
 
-        $this->assertSame(0.0, $number->value());
+        $this->assertSame(0, $number->value());
     }
 
     public function testAbsolute()
@@ -134,7 +134,7 @@ class SignumTest extends TestCase
         $sgn = Number::of(2)->signum();
         $number = $sgn->squareRoot();
 
-        $this->assertSame(1.0, $number->value());
+        $this->assertSame(1, $number->value());
     }
 
     public function testExponential()

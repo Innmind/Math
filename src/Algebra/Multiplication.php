@@ -29,20 +29,14 @@ final class Multiplication implements Implementation
     }
 
     #[\Override]
-    public function value(): int|float
+    public function memoize(): Native
     {
-        return $this->product()->value();
+        return $this->product();
     }
 
-    #[\Override]
-    public function equals(Implementation $number): bool
+    public function product(): Native
     {
-        return $this->value() == $number->value();
-    }
-
-    public function product(): Implementation
-    {
-        return Native::of($this->a->value() * $this->b->value());
+        return Native::of($this->a->memoize()->value() * $this->b->memoize()->value());
     }
 
     #[\Override]
@@ -51,23 +45,25 @@ final class Multiplication implements Implementation
         $a = $this->a->optimize();
         $b = $this->b->optimize();
 
+        // (dividend/divisor)*b = dividend
         if ($a instanceof Division) {
             $divisor = $a->divisor();
 
-            if ($b->equals($divisor)) {
+            if ($b->memoize()->equals($divisor->memoize())) {
                 return $a->dividend();
             }
         }
 
+        // a*(dividend/divisor) = dividend
         if ($b instanceof Division) {
             $divisor = $b->divisor();
 
-            if ($a->equals($divisor)) {
+            if ($a->memoize()->equals($divisor->memoize())) {
                 return $b->dividend();
             }
         }
 
-        return $this;
+        return new self($a, $b);
     }
 
     #[\Override]

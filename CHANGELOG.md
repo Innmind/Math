@@ -17,6 +17,7 @@
 - `Innmind\Math\Geometry\Angle\Radian::cosine()`
 - `Innmind\Math\Geometry\Angle\Radian::sine()`
 - `Innmind\Math\Geometry\Angle\Radian::tangent()`
+- `Innmind\Math\Polynom\Degree::is()`
 
 ### Changed
 

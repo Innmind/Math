@@ -9,8 +9,7 @@ namespace Innmind\Math\Algebra;
  */
 interface Implementation
 {
-    public function value(): int|float;
-    public function equals(self $number): bool;
+    public function memoize(): Native;
     public function toString(): string;
     public function format(): string;
     public function optimize(): self;

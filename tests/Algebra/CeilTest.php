@@ -126,7 +126,7 @@ class CeilTest extends TestCase
         $ceil = Number::of(3.5)->ceil();
         $number = $ceil->squareRoot();
 
-        $this->assertSame(2.0, $number->value());
+        $this->assertSame(2, $number->value());
     }
 
     public function testExponential()

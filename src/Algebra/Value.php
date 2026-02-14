@@ -7,7 +7,7 @@ namespace Innmind\Math\Algebra;
  * @psalm-immutable
  * @internal
  */
-enum Value implements Implementation
+enum Value
 {
     case zero;
     case one;
@@ -20,7 +20,24 @@ enum Value implements Implementation
     case infinite;
     case negativeInfinite;
 
-    #[\Override]
+    /**
+     * This allows to safely check if numbers are this integer without computing
+     * the real value.
+     */
+    public function is(Implementation $number): bool
+    {
+        if ($number instanceof Native) {
+            return $number->is($this);
+        }
+
+        // todo allow to optimize on addition, multiplication and subtraction ?
+        // this could be checked if each component is an int but the
+        // recursiveness can be expansive to walk through
+
+        // other than zero through hundred we prevent optimizing
+        return false;
+    }
+
     public function value(): int|float
     {
         return match ($this) {
@@ -36,19 +53,6 @@ enum Value implements Implementation
         };
     }
 
-    #[\Override]
-    public function equals(Implementation $number): bool
-    {
-        return $this->value() == $number->value();
-    }
-
-    #[\Override]
-    public function optimize(): Implementation
-    {
-        return $this;
-    }
-
-    #[\Override]
     public function toString(): string
     {
         return match ($this) {
@@ -62,11 +66,5 @@ enum Value implements Implementation
             self::infinite => '+∞',
             self::negativeInfinite => '-∞',
         };
-    }
-
-    #[\Override]
-    public function format(): string
-    {
-        return $this->toString();
     }
 }

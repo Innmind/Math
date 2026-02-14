@@ -22,25 +22,21 @@ final class SquareRoot implements Implementation
     }
 
     #[\Override]
-    public function value(): int|float
+    public function memoize(): Native
     {
-        return $this->result()->value();
-    }
-
-    #[\Override]
-    public function equals(Implementation $number): bool
-    {
-        return $this->value() == $number->value();
+        return Native::of(\sqrt($this->number->memoize()->value()));
     }
 
     #[\Override]
     public function optimize(): Implementation
     {
-        if ($this->number instanceof Power && $this->number->square()) {
-            return $this->number->number()->optimize();
+        $number = $this->number->optimize();
+
+        if ($number instanceof Power && $number->square()) {
+            return $number->number()->optimize();
         }
 
-        return $this;
+        return new self($number);
     }
 
     public function number(): Implementation
@@ -60,12 +56,5 @@ final class SquareRoot implements Implementation
     public function format(): string
     {
         return '('.$this->toString().')';
-    }
-
-    private function result(): Implementation
-    {
-        return Native::of(
-            \sqrt($this->number->value()),
-        );
     }
 }

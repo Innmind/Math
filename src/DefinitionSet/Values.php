@@ -42,7 +42,7 @@ final class Values implements Implementation
     #[\Override]
     public function toString(): string
     {
-        if ($this->values->size() === 0) {
+        if ($this->values->empty()) {
             return '∅';
         }
 

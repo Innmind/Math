@@ -29,20 +29,14 @@ final class Subtraction implements Implementation
     }
 
     #[\Override]
-    public function value(): int|float
+    public function memoize(): Native
     {
-        return $this->difference()->value();
+        return $this->difference();
     }
 
-    #[\Override]
-    public function equals(Implementation $number): bool
+    public function difference(): Native
     {
-        return $this->value() == $number->value();
-    }
-
-    public function difference(): Implementation
-    {
-        return Native::of($this->a->value() - $this->b->value());
+        return Native::of($this->a->memoize()->value() - $this->b->memoize()->value());
     }
 
     #[\Override]

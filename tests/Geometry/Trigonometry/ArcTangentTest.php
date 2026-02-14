@@ -162,7 +162,7 @@ class ArcTangentTest extends TestCase
             ->number();
         $number = $atan->modulo(Number::of(3));
 
-        $this->assertSame(0.0, $number->value());
+        $this->assertSame(0, $number->value());
     }
 
     public function testAbsolute()

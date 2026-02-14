@@ -128,7 +128,7 @@ class RoundTest extends TestCase
         $round = Number::of(4.3)->roundUp();
         $number = $round->squareRoot();
 
-        $this->assertSame(2.0, $number->value());
+        $this->assertSame(2, $number->value());
     }
 
     public function testExponential()
