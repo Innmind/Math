@@ -7,7 +7,6 @@ use Innmind\Math\{
     Geometry\Figure,
     Geometry\Segment,
     Algebra\Number,
-    Algebra\Value,
 };
 
 /**
@@ -15,32 +14,32 @@ use Innmind\Math\{
  */
 final class Rectangle implements Figure
 {
-    private Segment $length;
-    private Segment $width;
-
-    private function __construct(Segment $length, Segment $width)
-    {
-        $this->length = $length;
-        $this->width = $width;
+    private function __construct(
+        private Segment $length,
+        private Segment $width,
+    ) {
     }
 
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function of(Segment $length, Segment $width): self
     {
         return new self($length, $width);
     }
 
+    #[\Override]
     public function perimeter(): Number
     {
         return $this
             ->length
             ->length()
-            ->multiplyBy(Value::two)
-            ->add($this->width->length()->multiplyBy(Value::two));
+            ->multiplyBy(Number::two())
+            ->add($this->width->length()->multiplyBy(Number::two()));
     }
 
+    #[\Override]
     public function area(): Number
     {
         return $this->length->length()->multiplyBy(
@@ -48,11 +47,13 @@ final class Rectangle implements Figure
         );
     }
 
+    #[\NoDiscard]
     public function length(): Segment
     {
         return $this->length;
     }
 
+    #[\NoDiscard]
     public function width(): Segment
     {
         return $this->width;

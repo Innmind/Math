@@ -5,160 +5,56 @@ namespace Innmind\Math\Algebra;
 
 /**
  * @psalm-immutable
+ * @internal
  */
-final class SquareRoot implements Operation, Number
+final class SquareRoot implements Implementation
 {
-    private Number $number;
-
-    private function __construct(Number $number)
+    private function __construct(private Implementation $number)
     {
-        $this->number = $number;
     }
 
     /**
      * @psalm-pure
      */
-    public static function of(Number $number): self
+    public static function of(Implementation $number): self
     {
         return new self($number);
     }
 
-    public function value(): int|float
+    #[\Override]
+    public function memoize(): Native
     {
-        return $this->result()->value();
+        return Native::of(\sqrt($this->number->memoize()->value()));
     }
 
-    public function result(): Number
+    #[\Override]
+    public function optimize(): Implementation
     {
-        return Real::of(
-            \sqrt($this->number->value()),
-        );
-    }
+        $number = $this->number->optimize();
 
-    public function equals(Number $number): bool
-    {
-        return $this->result()->equals($number);
-    }
-
-    public function higherThan(Number $number): bool
-    {
-        return $this->result()->higherThan($number);
-    }
-
-    public function add(Number $number, Number ...$numbers): Number
-    {
-        return Addition::of($this, $number, ...$numbers);
-    }
-
-    public function subtract(Number $number, Number ...$numbers): Number
-    {
-        return Subtraction::of($this, $number, ...$numbers);
-    }
-
-    public function divideBy(Number $number): Number
-    {
-        return Division::of($this, $number);
-    }
-
-    public function multiplyBy(Number $number, Number ...$numbers): Number
-    {
-        return Multiplication::of($this, $number, ...$numbers);
-    }
-
-    public function roundUp(int $precision = 0): Number
-    {
-        return Round::up($this, $precision);
-    }
-
-    public function roundDown(int $precision = 0): Number
-    {
-        return Round::down($this, $precision);
-    }
-
-    public function roundEven(int $precision = 0): Number
-    {
-        return Round::even($this, $precision);
-    }
-
-    public function roundOdd(int $precision = 0): Number
-    {
-        return Round::odd($this, $precision);
-    }
-
-    public function floor(): Number
-    {
-        return Floor::of($this);
-    }
-
-    public function ceil(): Number
-    {
-        return Ceil::of($this);
-    }
-
-    public function modulo(Number $modulus): Number
-    {
-        return Modulo::of($this, $modulus);
-    }
-
-    public function absolute(): Number
-    {
-        return Absolute::of($this);
-    }
-
-    public function power(Number $power): Number
-    {
-        return Power::of($this, $power);
-    }
-
-    public function squareRoot(): self
-    {
-        return new self($this);
-    }
-
-    public function exponential(): Number
-    {
-        return Exponential::of($this);
-    }
-
-    public function binaryLogarithm(): Number
-    {
-        return BinaryLogarithm::of($this);
-    }
-
-    public function naturalLogarithm(): Number
-    {
-        return NaturalLogarithm::of($this);
-    }
-
-    public function commonLogarithm(): Number
-    {
-        return CommonLogarithm::of($this);
-    }
-
-    public function signum(): Number
-    {
-        return Signum::of($this);
-    }
-
-    public function collapse(): Number
-    {
-        if ($this->number instanceof Power && $this->number->square()) {
-            return $this->number->number()->collapse();
+        if ($number instanceof Power && $number->square()) {
+            return $number->number()->optimize();
         }
 
-        return $this->result();
+        return new self($number);
     }
 
-    public function number(): Number
+    public function number(): Implementation
     {
         return $this->number;
     }
 
+    #[\Override]
     public function toString(): string
     {
-        $number = $this->number instanceof Operation ?
-            '('.$this->number->toString().')' : $this->number->toString();
+        $number = $this->number->format();
 
         return '√'.$number;
+    }
+
+    #[\Override]
+    public function format(): string
+    {
+        return '('.$this->toString().')';
     }
 }

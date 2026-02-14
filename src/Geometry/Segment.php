@@ -6,7 +6,6 @@ namespace Innmind\Math\Geometry;
 use Innmind\Math\{
     Geometry\Angle\Degree,
     Algebra\Number,
-    Algebra\Value,
     Exception\LengthMustBePositive,
 };
 
@@ -19,7 +18,7 @@ final class Segment
 
     private function __construct(Number $length)
     {
-        if (!$length->higherThan(Value::zero)) {
+        if (!$length->higherThan(Number::zero())) {
             throw new LengthMustBePositive($length->toString());
         }
 
@@ -31,21 +30,25 @@ final class Segment
      *
      * @throws LengthMustBePositive
      */
+    #[\NoDiscard]
     public static function of(Number $length): self
     {
         return new self($length);
     }
 
+    #[\NoDiscard]
     public function length(): Number
     {
         return $this->length;
     }
 
+    #[\NoDiscard]
     public function join(self $segment, Degree $angle): Angle
     {
         return Angle::of($this, $angle, $segment);
     }
 
+    #[\NoDiscard]
     public function toString(): string
     {
         return (string) $this->length->value();

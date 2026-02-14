@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace Innmind\Math;
 
-use Innmind\Math\Algebra\Integer;
 use Innmind\Immutable\Sequence;
 
 final class Range
@@ -11,33 +10,39 @@ final class Range
     /**
      * @psalm-pure
      *
-     * @return Sequence<Integer>
+     * @param int<1, max> $max
+     *
+     * @return Sequence<int>
      */
-    public static function until(Integer\Positive $max): Sequence
+    #[\NoDiscard]
+    public static function until(int $max): Sequence
     {
-        return self::of(Integer::of(0), $max->decrement());
+        return self::of(0, $max - 1);
     }
 
     /**
      * @psalm-pure
      *
-     * @return Sequence<Integer>
+     * @return Sequence<int>
      */
-    public static function of(Integer $min, Integer $max): Sequence
+    #[\NoDiscard]
+    public static function of(int $min, int $max): Sequence
     {
-        return Sequence::of(...\range($min->value(), $max->value()))
-            ->map(Integer::of(...));
+        return Sequence::of(...\range($min, $max));
     }
 
     /**
      * @psalm-pure
      *
-     * @return Sequence<Integer\Positive>
+     * @param int<1, max> $min
+     * @param int<1, max> $max
+     *
+     * @return Sequence<int<1, max>>
      */
-    public static function ofPositive(Integer\Positive $min, Integer\Positive $max): Sequence
+    #[\NoDiscard]
+    public static function ofPositive(int $min, int $max): Sequence
     {
-        /** @psalm-suppress ArgumentTypeCoercion */
-        return Sequence::of(...\range($min->value(), $max->value()))
-            ->map(Integer::positive(...));
+        /** @var Sequence<int<1, max>> */
+        return Sequence::of(...\range($min, $max));
     }
 }

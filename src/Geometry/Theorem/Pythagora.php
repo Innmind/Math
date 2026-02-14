@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace Innmind\Math\Geometry\Theorem;
 
 use Innmind\Math\{
-    Algebra\Value,
+    Algebra\Number,
     Geometry\Segment,
 };
 
@@ -18,14 +18,15 @@ final class Pythagora
      * Compute the hypotenuse for adjacent sides A and B
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function hypotenuse(
         Segment $a,
         Segment $b,
     ): Segment {
         $hypotenuse = $a
             ->length()
-            ->power(Value::two)
-            ->add($b->length()->power(Value::two))
+            ->power(Number::two())
+            ->add($b->length()->power(Number::two()))
             ->squareRoot();
 
         return Segment::of($hypotenuse);
@@ -35,19 +36,21 @@ final class Pythagora
      * Compute a side A or B from the hypotenuse and one side
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function adjacentSide(
         Segment $hypotenuse,
         Segment $adjacentSide,
     ): Segment {
         $side = $hypotenuse
             ->length()
-            ->power(Value::two)
-            ->subtract($adjacentSide->length()->power(Value::two))
+            ->power(Number::two())
+            ->subtract($adjacentSide->length()->power(Number::two()))
             ->squareRoot();
 
         return Segment::of($side);
     }
 
+    #[\NoDiscard]
     public function toString(): string
     {
         return 'C²=A²+B²';

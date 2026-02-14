@@ -4,90 +4,75 @@ declare(strict_types = 1);
 namespace Tests\Innmind\Math\DefinitionSet;
 
 use Innmind\Math\{
-    DefinitionSet\Union,
-    DefinitionSet\Set as SetInterface,
-    DefinitionSet\Set\Set,
-    DefinitionSet\Intersection,
-    Algebra\Integer,
-    Algebra\Real,
+    DefinitionSet\Set,
+    Algebra\Number,
     Exception\OutOfDefinitionSet,
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\Immutable\SideEffect;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class UnionTest extends TestCase
 {
-    public function testInterface()
-    {
-        $this->assertInstanceOf(
-            SetInterface::class,
-            Union::of(
-                $this->createMock(SetInterface::class),
-                $this->createMock(SetInterface::class),
-            ),
-        );
-    }
-
     public function testStringCast()
     {
-        $this->assertSame('∅∪∅', (Union::of(Set::of(), Set::of()))->toString());
+        $this->assertSame('∅∪∅', Set::of()->union(Set::of())->toString());
     }
 
     public function testContains()
     {
-        $union = Union::of(
+        $union = Set::of(
+            Number::of(1),
+            Number::of(2),
+        )->union(
             Set::of(
-                Integer::of(1),
-                Integer::of(2),
-            ),
-            Set::of(
-                Integer::of(4),
-                Integer::of(5),
+                Number::of(4),
+                Number::of(5),
             ),
         );
 
-        $this->assertTrue($union->contains(Real::of(1)));
-        $this->assertTrue($union->contains(Real::of(2)));
-        $this->assertTrue($union->contains(Real::of(4)));
-        $this->assertTrue($union->contains(Real::of(5)));
-        $this->assertFalse($union->contains(Real::of(6)));
-        $this->assertFalse($union->contains(Real::of(3)));
-        $this->assertFalse($union->contains(Real::of(0)));
+        $this->assertTrue($union->contains(Number::of(1)));
+        $this->assertTrue($union->contains(Number::of(2)));
+        $this->assertTrue($union->contains(Number::of(4)));
+        $this->assertTrue($union->contains(Number::of(5)));
+        $this->assertFalse($union->contains(Number::of(6)));
+        $this->assertFalse($union->contains(Number::of(3)));
+        $this->assertFalse($union->contains(Number::of(0)));
     }
 
     public function testAccept()
     {
-        $set = Union::of(
+        $set = Set::of(
+            Number::of(1),
+            Number::of(2),
+        )->union(
             Set::of(
-                Integer::of(1),
-                Integer::of(2),
-            ),
-            Set::of(
-                Integer::of(4),
-                Integer::of(5),
+                Number::of(4),
+                Number::of(5),
             ),
         );
 
-        $this->assertNull($set->accept(Integer::of(1)));
+        $this->assertInstanceOf(
+            SideEffect::class,
+            $set->accept(Number::of(1))->unwrap(),
+        );
 
         $this->expectException(OutOfDefinitionSet::class);
         $this->expectExceptionMessage('0.1 ∉ {1;2}∪{4;5}');
 
-        $set->accept(Real::of(0.1));
+        $_ = $set->accept(Number::of(0.1))->unwrap();
     }
 
     public function testUnion()
     {
-        $union = Union::of(Set::of(), Set::of())->union(Set::of());
+        $union = Set::of()->union(Set::of())->union(Set::of());
 
-        $this->assertInstanceOf(Union::class, $union);
         $this->assertSame('∅∪∅∪∅', $union->toString());
     }
 
     public function testIntersect()
     {
-        $intersection = Union::of(Set::of(), Set::of())->intersect(Set::of());
+        $intersection = Set::of()->union(Set::of())->intersect(Set::of());
 
-        $this->assertInstanceOf(Intersection::class, $intersection);
         $this->assertSame('∅∪∅∩∅', $intersection->toString());
     }
 }

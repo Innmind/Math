@@ -5,13 +5,9 @@ namespace Innmind\Math\Regression;
 
 use Innmind\Math\{
     Regression\Dataset\Point,
-    Matrix,
     Matrix\Dimension,
-    Matrix\RowVector,
     Matrix\ColumnVector,
     Algebra\Number,
-    Algebra\Real,
-    Algebra\Integer,
 };
 use Innmind\Immutable\Sequence;
 
@@ -20,15 +16,11 @@ use Innmind\Immutable\Sequence;
  */
 final class Dataset
 {
-    /** @var Sequence<Point> */
-    private Sequence $points;
-
     /**
      * @param Sequence<Point> $points
      */
-    private function __construct(Sequence $points)
+    private function __construct(private Sequence $points)
     {
-        $this->points = $points;
     }
 
     /**
@@ -36,11 +28,12 @@ final class Dataset
      *
      * @param non-empty-list<array{0: int|float|Number, 1: int|float|Number}> $values
      */
+    #[\NoDiscard]
     public static function of(array $values): self
     {
         $numerize = static fn(int|float|Number $number): Number => match (true) {
             $number instanceof Number => $number,
-            default => Real::of($number),
+            default => Number::of($number),
         };
 
         return new self(Sequence::of(...\array_map(
@@ -52,6 +45,7 @@ final class Dataset
         )));
     }
 
+    #[\NoDiscard]
     public function abscissas(): ColumnVector
     {
         return ColumnVector::ofSequence(
@@ -59,6 +53,7 @@ final class Dataset
         );
     }
 
+    #[\NoDiscard]
     public function ordinates(): ColumnVector
     {
         return ColumnVector::ofSequence(
@@ -69,17 +64,19 @@ final class Dataset
     /**
      * @return Sequence<Point>
      */
+    #[\NoDiscard]
     public function points(): Sequence
     {
         return $this->points;
     }
 
+    #[\NoDiscard]
     public function dimension(): Dimension
     {
         /** @psalm-suppress InvalidArgument There is always at least one point */
         return Dimension::of(
-            Integer::positive($this->points->size()),
-            Integer::positive(2),
+            $this->points->size(),
+            2,
         );
     }
 }

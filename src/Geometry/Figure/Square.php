@@ -7,7 +7,6 @@ use Innmind\Math\{
     Geometry\Figure,
     Geometry\Segment,
     Algebra\Number,
-    Algebra\Integer,
 };
 
 /**
@@ -15,31 +14,32 @@ use Innmind\Math\{
  */
 final class Square implements Figure
 {
-    private Segment $side;
-
-    private function __construct(Segment $side)
+    private function __construct(private Segment $side)
     {
-        $this->side = $side;
     }
 
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function of(Segment $side): self
     {
         return new self($side);
     }
 
+    #[\Override]
     public function perimeter(): Number
     {
-        return $this->side->length()->multiplyBy(Integer::of(4));
+        return $this->side->length()->multiplyBy(Number::of(4));
     }
 
+    #[\Override]
     public function area(): Number
     {
         return $this->side->length()->multiplyBy($this->side->length());
     }
 
+    #[\NoDiscard]
     public function side(): Segment
     {
         return $this->side;

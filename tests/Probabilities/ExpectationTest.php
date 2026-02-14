@@ -8,7 +8,7 @@ use Innmind\Math\{
     Regression\Dataset,
     Algebra\Number
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class ExpectationTest extends TestCase
 {
@@ -28,5 +28,14 @@ class ExpectationTest extends TestCase
             $expectation()->value(),
             0.00001,
         );
+    }
+
+    private function assertEqualsWithDelta(
+        int|float $expected,
+        int|float $value,
+        int|float $delta,
+    ): void {
+        $this->assertGreaterThanOrEqual($expected-$delta, $value);
+        $this->assertLessThanOrEqual($expected+$delta, $value);
     }
 }

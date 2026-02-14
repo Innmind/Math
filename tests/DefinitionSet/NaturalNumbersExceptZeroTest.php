@@ -4,68 +4,58 @@ declare(strict_types = 1);
 namespace Tests\Innmind\Math\DefinitionSet;
 
 use Innmind\Math\{
-    DefinitionSet\NaturalNumbersExceptZero,
     DefinitionSet\Set,
-    DefinitionSet\Union,
-    DefinitionSet\Intersection,
-    Algebra\Integer,
-    Algebra\Real,
+    Algebra\Number,
     Exception\OutOfDefinitionSet,
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\Immutable\SideEffect;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class NaturalNumbersExceptZeroTest extends TestCase
 {
-    public function testInterface()
-    {
-        $this->assertInstanceOf(
-            Set::class,
-            new NaturalNumbersExceptZero,
-        );
-    }
-
     public function testStringCast()
     {
-        $this->assertSame('ℕ*', (new NaturalNumbersExceptZero)->toString());
+        $this->assertSame('ℕ*', Set::naturalNumbersExceptZero()->toString());
     }
 
     public function testContains()
     {
-        $set = new NaturalNumbersExceptZero;
+        $set = Set::naturalNumbersExceptZero();
 
-        $this->assertTrue($set->contains(Integer::of(1)));
-        $this->assertTrue($set->contains(Integer::of(2)));
-        $this->assertFalse($set->contains(Integer::of(0)));
-        $this->assertFalse($set->contains(Integer::of(-1)));
-        $this->assertFalse($set->contains(Real::of(0.75)));
-        $this->assertFalse($set->contains(Real::of(1.75)));
+        $this->assertTrue($set->contains(Number::of(1)));
+        $this->assertTrue($set->contains(Number::of(2)));
+        $this->assertFalse($set->contains(Number::of(0)));
+        $this->assertFalse($set->contains(Number::of(-1)));
+        $this->assertFalse($set->contains(Number::of(0.75)));
+        $this->assertFalse($set->contains(Number::of(1.75)));
     }
 
     public function testAccept()
     {
-        $set = new NaturalNumbersExceptZero;
+        $set = Set::naturalNumbersExceptZero();
 
-        $this->assertNull($set->accept(Integer::of(1)));
+        $this->assertInstanceOf(
+            SideEffect::class,
+            $set->accept(Number::of(1))->unwrap(),
+        );
 
         $this->expectException(OutOfDefinitionSet::class);
         $this->expectExceptionMessage('0.1 ∉ ℕ*');
 
-        $set->accept(Real::of(0.1));
+        $_ = $set->accept(Number::of(0.1))->unwrap();
     }
 
     public function testUnion()
     {
-        $union = (new NaturalNumbersExceptZero)->union(new NaturalNumbersExceptZero);
+        $union = Set::naturalNumbersExceptZero()->union(Set::naturalNumbersExceptZero());
 
-        $this->assertInstanceOf(Union::class, $union);
         $this->assertSame('ℕ*∪ℕ*', $union->toString());
     }
 
     public function testIntersect()
     {
-        $intersection = (new NaturalNumbersExceptZero)->intersect(new NaturalNumbersExceptZero);
+        $intersection = Set::naturalNumbersExceptZero()->intersect(Set::naturalNumbersExceptZero());
 
-        $this->assertInstanceOf(Intersection::class, $intersection);
         $this->assertSame('ℕ*∩ℕ*', $intersection->toString());
     }
 }

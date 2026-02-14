@@ -3,46 +3,23 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\DefinitionSet;
 
-use Innmind\Math\{
-    Algebra\Number,
-    Algebra\Integer,
-    Algebra\Value,
-    Exception\OutOfDefinitionSet,
-};
+use Innmind\Math\Algebra\Number;
 
 /**
  * @psalm-immutable
+ * @internal
  */
-final class Integers implements Set
+final class Integers implements Implementation
 {
+    #[\Override]
     public function contains(Number $number): bool
     {
-        if ($number instanceof Integer) {
-            return true;
-        }
-
         return $number
-            ->modulo(Value::one)
-            ->equals(Value::zero);
+            ->modulo(Number::one())
+            ->equals(Number::zero());
     }
 
-    public function accept(Number $number): void
-    {
-        if (!$this->contains($number)) {
-            throw new OutOfDefinitionSet($this, $number);
-        }
-    }
-
-    public function union(Set $set): Set
-    {
-        return Union::of($this, $set);
-    }
-
-    public function intersect(Set $set): Set
-    {
-        return Intersection::of($this, $set);
-    }
-
+    #[\Override]
     public function toString(): string
     {
         return 'ℤ';

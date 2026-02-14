@@ -7,11 +7,10 @@ use function Innmind\Math\numerize;
 use Innmind\Math\{
     Matrix\Vector,
     Algebra\Number,
-    Algebra\Integer,
-    Algebra\Real,
     Exception\VectorsMustMeOfTheSameDimension
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class VectorTest extends TestCase
 {
@@ -19,7 +18,7 @@ class VectorTest extends TestCase
     {
         $vector = Vector::of(...numerize(1, 2, 3));
 
-        $this->assertSame(3, $vector->dimension()->value());
+        $this->assertSame(3, $vector->dimension());
         $this->assertInstanceOf(Number::class, $vector->get(0));
         $this->assertInstanceOf(Number::class, $vector->get(1));
         $this->assertInstanceOf(Number::class, $vector->get(2));
@@ -30,7 +29,7 @@ class VectorTest extends TestCase
             [1, 2, 3],
             $vector
                 ->toSequence()
-                ->map(static fn($number) => $number->collapse()->value())
+                ->map(static fn($number) => $number->optimize()->value())
                 ->toList(),
         );
     }
@@ -49,7 +48,7 @@ class VectorTest extends TestCase
     {
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
-        Vector::of(...numerize(-1, 2))->dot(
+        $_ = Vector::of(...numerize(-1, 2))->dot(
             Vector::of(...numerize(4, 1, 0)),
         );
     }
@@ -58,7 +57,7 @@ class VectorTest extends TestCase
     {
         $vector = Vector::of(...numerize(25, 5, 1));
         $vector2 = $vector->multiplyBy(
-            Vector::initialize(Integer::of(3), Real::of(2.56)),
+            Vector::initialize(3, Number::of(2.56)),
         );
 
         $this->assertInstanceOf(Vector::class, $vector2);
@@ -74,8 +73,8 @@ class VectorTest extends TestCase
     {
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
-        Vector::initialize(Integer::of(1), Real::of(1))->multiplyBy(
-            Vector::initialize(Integer::of(2), Real::of(1)),
+        $_ = Vector::initialize(1, Number::of(1))->multiplyBy(
+            Vector::initialize(2, Number::of(1)),
         );
     }
 
@@ -83,7 +82,7 @@ class VectorTest extends TestCase
     {
         $vector = Vector::of(...numerize(25, 5, 1));
         $vector2 = $vector->divideBy(
-            Vector::initialize(Integer::of(3), Real::of(5)),
+            Vector::initialize(3, Number::of(5)),
         );
 
         $this->assertInstanceOf(Vector::class, $vector2);
@@ -99,14 +98,14 @@ class VectorTest extends TestCase
     {
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
-        Vector::initialize(Integer::of(1), Real::of(1))->divideBy(
-            Vector::initialize(Integer::of(2), Real::of(1)),
+        $_ = Vector::initialize(1, Number::of(1))->divideBy(
+            Vector::initialize(2, Number::of(1)),
         );
     }
 
     public function testInitialize()
     {
-        $vector = Vector::initialize(Integer::of(4), Real::of(1.2));
+        $vector = Vector::initialize(4, Number::of(1.2));
 
         $this->assertInstanceOf(Vector::class, $vector);
         $this->assertSame(1.2, $vector->get(0)->value());
@@ -143,8 +142,8 @@ class VectorTest extends TestCase
     {
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
-        Vector::initialize(Integer::of(1), Real::of(1))->subtract(
-            Vector::initialize(Integer::of(2), Real::of(1)),
+        $_ = Vector::initialize(1, Number::of(1))->subtract(
+            Vector::initialize(2, Number::of(1)),
         );
     }
 
@@ -168,8 +167,8 @@ class VectorTest extends TestCase
     {
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
-        Vector::initialize(Integer::of(1), Real::of(1))->add(
-            Vector::initialize(Integer::of(2), Real::of(1)),
+        $_ = Vector::initialize(1, Number::of(1))->add(
+            Vector::initialize(2, Number::of(1)),
         );
     }
 
@@ -177,7 +176,7 @@ class VectorTest extends TestCase
     {
         $vector1 = Vector::of(...numerize(1, 2, 3, -4));
 
-        $vector2 = $vector1->power(Real::of(3));
+        $vector2 = $vector1->power(Number::of(3));
 
         $this->assertInstanceOf(Vector::class, $vector2);
         $this->assertNotSame($vector2, $vector1);
@@ -199,7 +198,7 @@ class VectorTest extends TestCase
     {
         $vector = Vector::of(...numerize(1, 2, 3, -4));
         $count = 0;
-        $vector->foreach(static function() use (&$count) {
+        $_ = $vector->foreach(static function() use (&$count) {
             ++$count;
         });
 
@@ -219,14 +218,14 @@ class VectorTest extends TestCase
             [1, 2, 3, -4],
             $vector
                 ->toSequence()
-                ->map(static fn($number) => $number->collapse()->value())
+                ->map(static fn($number) => $number->optimize()->value())
                 ->toList(),
         );
         $this->assertSame(
             [1, 4, 9, 16],
             $vector2
                 ->toSequence()
-                ->map(static fn($number) => $number->collapse()->value())
+                ->map(static fn($number) => $number->optimize()->value())
                 ->toList(),
         );
     }
@@ -257,9 +256,7 @@ class VectorTest extends TestCase
         $this->assertFalse($vector->equals(Vector::of(...numerize(1, 2))));
     }
 
-    /**
-     * @dataProvider leads
-     */
+    #[DataProvider('leads')]
     public function testLead($numbers, $expected)
     {
         $vector = Vector::of(...numerize(...$numbers));
@@ -268,7 +265,7 @@ class VectorTest extends TestCase
         $this->assertSame($expected, $vector->lead()->value());
     }
 
-    public function leads(): array
+    public static function leads(): array
     {
         return [
             [
@@ -288,5 +285,14 @@ class VectorTest extends TestCase
                 0,
             ],
         ];
+    }
+
+    private function assertEqualsWithDelta(
+        int|float $expected,
+        int|float $value,
+        int|float $delta,
+    ): void {
+        $this->assertGreaterThanOrEqual($expected-$delta, $value);
+        $this->assertLessThanOrEqual($expected+$delta, $value);
     }
 }

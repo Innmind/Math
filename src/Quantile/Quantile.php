@@ -3,17 +3,9 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Quantile;
 
-use function Innmind\Math\{
-    min as minimum,
-    max as maximum,
-    asc,
-};
+use function Innmind\Math\asc;
 use Innmind\Math\{
     Algebra\Number,
-    Algebra\Real,
-    Algebra\Value,
-    Algebra\Integer,
-    Algebra\Addition,
     Statistics\Mean,
     Statistics\Median,
     Exception\LogicException,
@@ -44,11 +36,13 @@ final class Quantile
      *
      * @param Sequence<Number> $values
      */
+    #[\NoDiscard]
     public static function of(Sequence $values): self
     {
         return new self($values);
     }
 
+    #[\NoDiscard]
     public function min(): Quartile
     {
         return $this->values->first()->match(
@@ -57,6 +51,7 @@ final class Quantile
         );
     }
 
+    #[\NoDiscard]
     public function max(): Quartile
     {
         return $this->values->last()->match(
@@ -65,29 +60,33 @@ final class Quantile
         );
     }
 
+    #[\NoDiscard]
     public function mean(): Number
     {
         /** @psalm-suppress InvalidArgument At least one value present */
-        return Mean::of(...$this->values->toList());
+        return Mean::of(...$this->values->toList())->result();
     }
 
     /**
      * Return the median value
      */
+    #[\NoDiscard]
     public function median(): Quartile
     {
         /** @psalm-suppress InvalidArgument At least one value present */
-        return Quartile::of(Median::of(...$this->values->toList()));
+        return Quartile::of(Median::of(...$this->values->toList())->result());
     }
 
+    #[\NoDiscard]
     public function firstQuartile(): Quartile
     {
-        return Quartile::of($this->buildQuartile(Real::of(0.25)));
+        return Quartile::of($this->buildQuartile(Number::of(0.25)));
     }
 
+    #[\NoDiscard]
     public function thirdQuartile(): Quartile
     {
-        return Quartile::of($this->buildQuartile(Real::of(0.75)));
+        return Quartile::of($this->buildQuartile(Number::of(0.75)));
     }
 
     /**
@@ -95,23 +94,23 @@ final class Quantile
      */
     private function buildQuartile(Number $percentage): Number
     {
-        /** @var positive-int */
-        $index = (int) Integer::of($this->values->size())
+        /** @var int<1, max> */
+        $index = (int) Number::of($this->values->size())
             ->multiplyBy($percentage)
             ->roundUp()
-            ->collapse()
+            ->optimize()
             ->value();
 
         return $this->values->match(
             fn($first, $rest) => $rest->match(
                 fn($second, $rest) => match ($rest->empty()) {
-                    true => $first->add($second)->divideBy(Value::two),
+                    true => $first->add($second)->divideBy(Number::two()),
                     false => Maybe::all(
                         $this->values->get($index),
                         $this->values->get($index - 1),
                     )
-                        ->map(Addition::of(...))
-                        ->map(static fn($sum) => $sum->divideBy(Value::two))
+                        ->map(static fn(Number $a, Number $b) => $a->add($b))
+                        ->map(static fn($sum) => $sum->divideBy(Number::two()))
                         ->match(
                             static fn($quartile) => $quartile,
                             fn() => throw new LogicException("Operation not working for size {$this->values->size()}"),

@@ -6,12 +6,8 @@ namespace Innmind\Math\Matrix;
 use Innmind\Math\{
     Exception\VectorsMustMeOfTheSameDimension,
     Exception\LogicException,
-    Matrix,
     Algebra\Number,
-    Algebra\Integer,
-    Algebra\Value,
-    Monoid\Addition,
-    Range,
+    Monoid\Algebra,
 };
 use Innmind\Immutable\{
     Sequence,
@@ -23,23 +19,17 @@ use Innmind\Immutable\{
  */
 final class Vector
 {
-    /** @var Sequence<Number> */
-    private Sequence $numbers;
-    private Integer\Positive $dimension;
-
     /**
      * @param Sequence<Number> $numbers
      */
-    private function __construct(Sequence $numbers)
+    private function __construct(private Sequence $numbers)
     {
-        $this->numbers = $numbers;
-        /** @psalm-suppress InvalidArgument There is always at least one number in the sequence */
-        $this->dimension = Integer::positive($this->numbers->size());
     }
 
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function of(Number $number, Number ...$numbers): self
     {
         return new self(Sequence::of($number, ...$numbers));
@@ -47,11 +37,14 @@ final class Vector
 
     /**
      * @psalm-pure
+     *
+     * @param int<1, max> $dimension
      */
-    public static function initialize(Integer\Positive $dimension, Number $value): self
+    #[\NoDiscard]
+    public static function initialize(int $dimension, Number $value): self
     {
         return new self(
-            Range::until($dimension)->map(static fn() => $value),
+            Sequence::of($value)->pad($dimension, $value),
         );
     }
 
@@ -62,6 +55,7 @@ final class Vector
      *
      * @throws LogicException When the sequence is empty
      */
+    #[\NoDiscard]
     public static function ofSequence(Sequence $numbers): self
     {
         if ($numbers->empty()) {
@@ -71,30 +65,42 @@ final class Vector
         return new self($numbers);
     }
 
-    public function dimension(): Integer\Positive
+    /**
+     * @return int<1, max>
+     */
+    #[\NoDiscard]
+    public function dimension(): int
     {
-        return $this->dimension;
+        /** @var int<1, max> There's always at least one element */
+        return $this->numbers->size();
     }
 
     /**
      * @see https://en.wikipedia.org/wiki/Row_and_column_vectors#Operations
      */
+    #[\NoDiscard]
     public function dot(self $vector): Number
     {
-        if (!$this->dimension()->equals($vector->dimension())) {
+        if ($this->dimension() !== $vector->dimension()) {
             throw new VectorsMustMeOfTheSameDimension;
         }
 
         return $this
             ->numbers
             ->zip($vector->numbers)
-            ->map(static fn($pair) => $pair[0]->multiplyBy($pair[1])->collapse())
-            ->fold(new Addition);
+            ->map(
+                static fn($pair) => $pair[0]
+                    ->multiplyBy($pair[1])
+                    ->optimize()
+                    ->memoize(),
+            )
+            ->fold(Algebra::addition);
     }
 
+    #[\NoDiscard]
     public function multiplyBy(self $vector): self
     {
-        if (!$this->dimension()->equals($vector->dimension())) {
+        if ($this->dimension() !== $vector->dimension()) {
             throw new VectorsMustMeOfTheSameDimension;
         }
 
@@ -102,13 +108,19 @@ final class Vector
             $this
                 ->numbers
                 ->zip($vector->numbers)
-                ->map(static fn($pair) => $pair[0]->multiplyBy($pair[1])->collapse()),
+                ->map(
+                    static fn($pair) => $pair[0]
+                        ->multiplyBy($pair[1])
+                        ->optimize()
+                        ->memoize(),
+                ),
         );
     }
 
+    #[\NoDiscard]
     public function divideBy(self $vector): self
     {
-        if (!$this->dimension()->equals($vector->dimension())) {
+        if ($this->dimension() !== $vector->dimension()) {
             throw new VectorsMustMeOfTheSameDimension;
         }
 
@@ -120,9 +132,10 @@ final class Vector
         );
     }
 
+    #[\NoDiscard]
     public function subtract(self $vector): self
     {
-        if (!$this->dimension()->equals($vector->dimension())) {
+        if ($this->dimension() !== $vector->dimension()) {
             throw new VectorsMustMeOfTheSameDimension;
         }
 
@@ -134,9 +147,10 @@ final class Vector
         );
     }
 
+    #[\NoDiscard]
     public function add(self $vector): self
     {
-        if (!$this->dimension()->equals($vector->dimension())) {
+        if ($this->dimension() !== $vector->dimension()) {
             throw new VectorsMustMeOfTheSameDimension;
         }
 
@@ -148,6 +162,7 @@ final class Vector
         );
     }
 
+    #[\NoDiscard]
     public function power(Number $power): self
     {
         return new self(
@@ -155,14 +170,16 @@ final class Vector
         );
     }
 
+    #[\NoDiscard]
     public function sum(): Number
     {
-        return $this->numbers->fold(new Addition);
+        return $this->numbers->fold(Algebra::addition);
     }
 
     /**
      * @param callable(Number): void $function
      */
+    #[\NoDiscard]
     public function foreach(callable $function): SideEffect
     {
         return $this->numbers->foreach($function);
@@ -171,6 +188,7 @@ final class Vector
     /**
      * @param callable(Number): Number $function
      */
+    #[\NoDiscard]
     public function map(callable $function): self
     {
         return new self(
@@ -186,14 +204,16 @@ final class Vector
      *
      * @return R
      */
+    #[\NoDiscard]
     public function reduce($carry, callable $reducer)
     {
         return $this->numbers->reduce($carry, $reducer);
     }
 
     /**
-     * @param 0|positive-int $position
+     * @param int<0, max> $position
      */
+    #[\NoDiscard]
     public function get(int $position): Number
     {
         return $this->numbers->get($position)->match(
@@ -202,9 +222,10 @@ final class Vector
         );
     }
 
+    #[\NoDiscard]
     public function equals(self $vector): bool
     {
-        if (!$this->dimension()->equals($vector->dimension())) {
+        if ($this->dimension() !== $vector->dimension()) {
             return false;
         }
 
@@ -217,20 +238,22 @@ final class Vector
     /**
      * First non zero number found
      */
+    #[\NoDiscard]
     public function lead(): Number
     {
         return $this
             ->numbers
-            ->find(static fn($number) => !$number->equals(Value::zero))
+            ->find(static fn($number) => !$number->equals(Number::zero()))
             ->match(
                 static fn($lead) => $lead,
-                static fn() => Value::zero,
+                static fn() => Number::zero(),
             );
     }
 
     /**
      * @return Sequence<Number>
      */
+    #[\NoDiscard]
     public function toSequence(): Sequence
     {
         return $this->numbers;

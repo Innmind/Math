@@ -6,15 +6,7 @@ namespace Innmind\Math\Regression;
 use Innmind\Math\{
     Polynom\Polynom,
     Algebra\Number,
-    Algebra\Integer,
-    Algebra\Value,
-    Algebra\Division,
-    Algebra\Subtraction,
-    Algebra\Addition,
-    Algebra\Multiplication,
-    Algebra\Real,
-    Matrix,
-    Monoid,
+    Monoid\Algebra,
 };
 
 /**
@@ -30,7 +22,7 @@ final class LinearRegression
     {
         [$slope, $intercept] = $this->compute($data);
         $this->polynom = Polynom::interceptAt($intercept)->withDegree(
-            Integer::positive(1),
+            1,
             $slope,
         );
         $this->slope = $slope;
@@ -40,6 +32,7 @@ final class LinearRegression
     /**
      * Compute the value at the given x value
      */
+    #[\NoDiscard]
     public function __invoke(Number $x): Number
     {
         return ($this->polynom)($x);
@@ -48,6 +41,7 @@ final class LinearRegression
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function of(Dataset $data): self
     {
         return new self($data);
@@ -56,6 +50,7 @@ final class LinearRegression
     /**
      * Return the intercept value
      */
+    #[\NoDiscard]
     public function intercept(): Number
     {
         return $this->polynom->intercept();
@@ -64,11 +59,13 @@ final class LinearRegression
     /**
      * Return the slope value
      */
+    #[\NoDiscard]
     public function slope(): Number
     {
         return $this->slope;
     }
 
+    #[\NoDiscard]
     public function rootMeanSquareDeviation(): Number
     {
         return $this->deviation;
@@ -83,7 +80,7 @@ final class LinearRegression
      */
     private function compute(Dataset $data): array
     {
-        $dimension = $data->dimension()->rows();
+        $dimension = Number::of($data->dimension()->rows());
 
         $xSum = $data->abscissas()->sum();
         $ySum = $data->ordinates()->sum();
@@ -91,29 +88,23 @@ final class LinearRegression
             ->abscissas()
             ->toSequence()
             ->map(static fn($x) => $x->multiplyBy($x))
-            ->fold(new Monoid\Addition);
+            ->fold(Algebra::addition);
         $xySum = $data
             ->points()
             ->map(static fn($point) => $point->abscissa()->multiplyBy($point->ordinate()))
-            ->fold(new Monoid\Addition);
+            ->fold(Algebra::addition);
 
-        $slope = Division::of(
-            Subtraction::of(
-                $dimension->multiplyBy($xySum),
-                $xSum->multiplyBy($ySum),
-            ),
-            Subtraction::of(
-                $dimension->multiplyBy($xxSum),
-                $xSum->power(Value::two),
-            ),
-        );
-        $intercept = Division::of(
-            Subtraction::of(
-                $ySum,
-                $slope->multiplyBy($xSum),
-            ),
-            $dimension,
-        );
+        $slope = $dimension
+            ->multiplyBy($xySum)
+            ->subtract($xSum->multiplyBy($ySum))
+            ->divideBy(
+                $dimension
+                    ->multiplyBy($xxSum)
+                    ->subtract($xSum->power(Number::two())),
+            );
+        $intercept = $ySum
+            ->subtract($slope->multiplyBy($xSum))
+            ->divideBy($dimension);
 
         return [$slope, $intercept];
     }
@@ -127,9 +118,9 @@ final class LinearRegression
 
         return $values
             ->subtract($estimated)
-            ->power(Value::two)
+            ->power(Number::two())
             ->sum()
-            ->divideBy($values->dimension())
+            ->divideBy(Number::of($values->dimension()))
             ->squareRoot();
     }
 }

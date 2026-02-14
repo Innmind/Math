@@ -6,7 +6,6 @@ namespace Innmind\Math\Matrix;
 use Innmind\Math\{
     Matrix,
     Algebra\Number,
-    Algebra\Integer,
     Exception\LogicException,
 };
 use Innmind\Immutable\{
@@ -19,16 +18,14 @@ use Innmind\Immutable\{
  */
 final class RowVector
 {
-    private Vector $vector;
-
-    private function __construct(Vector $vector)
+    private function __construct(private Vector $vector)
     {
-        $this->vector = $vector;
     }
 
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function of(Number $number, Number ...$numbers): self
     {
         return new self(Vector::of($number, ...$numbers));
@@ -36,8 +33,11 @@ final class RowVector
 
     /**
      * @psalm-pure
+     *
+     * @param int<1, max> $dimension
      */
-    public static function initialize(Integer\Positive $dimension, Number $value): self
+    #[\NoDiscard]
+    public static function initialize(int $dimension, Number $value): self
     {
         return new self(Vector::initialize($dimension, $value));
     }
@@ -49,16 +49,22 @@ final class RowVector
      *
      * @throws LogicException When the sequence is empty
      */
+    #[\NoDiscard]
     public static function ofSequence(Sequence $numbers): self
     {
         return new self(Vector::ofSequence($numbers));
     }
 
-    public function dimension(): Integer\Positive
+    /**
+     * @return int<1, max>
+     */
+    #[\NoDiscard]
+    public function dimension(): int
     {
         return $this->vector->dimension();
     }
 
+    #[\NoDiscard]
     public function dot(ColumnVector $column): Number
     {
         return $this->vector->dot(Vector::ofSequence($column->toSequence()));
@@ -67,18 +73,23 @@ final class RowVector
     /**
      * @see https://en.wikipedia.org/wiki/Row_and_column_vectors#Operations
      */
+    #[\NoDiscard]
     public function matrix(ColumnVector $column): Matrix
     {
         return Matrix::fromRows(
             $column
                 ->toSequence()
                 ->map(fn($number) => $this->vector->toSequence()->map(
-                    static fn($rowNumber) => $rowNumber->multiplyBy($number)->collapse(),
+                    static fn($rowNumber) => $rowNumber
+                        ->multiplyBy($number)
+                        ->optimize()
+                        ->memoize(),
                 ))
                 ->map(self::ofSequence(...)),
         );
     }
 
+    #[\NoDiscard]
     public function multiplyBy(self $row): self
     {
         return new self(
@@ -86,6 +97,7 @@ final class RowVector
         );
     }
 
+    #[\NoDiscard]
     public function divideBy(self $row): self
     {
         return new self(
@@ -93,6 +105,7 @@ final class RowVector
         );
     }
 
+    #[\NoDiscard]
     public function subtract(self $row): self
     {
         return new self(
@@ -100,6 +113,7 @@ final class RowVector
         );
     }
 
+    #[\NoDiscard]
     public function add(self $row): self
     {
         return new self(
@@ -107,6 +121,7 @@ final class RowVector
         );
     }
 
+    #[\NoDiscard]
     public function power(Number $power): self
     {
         return new self(
@@ -114,6 +129,7 @@ final class RowVector
         );
     }
 
+    #[\NoDiscard]
     public function sum(): Number
     {
         return $this->vector->sum();
@@ -122,6 +138,7 @@ final class RowVector
     /**
      * @param callable(Number): void $function
      */
+    #[\NoDiscard]
     public function foreach(callable $function): SideEffect
     {
         return $this->vector->foreach($function);
@@ -130,6 +147,7 @@ final class RowVector
     /**
      * @param callable(Number): Number $function
      */
+    #[\NoDiscard]
     public function map(callable $function): self
     {
         return new self(
@@ -145,19 +163,22 @@ final class RowVector
      *
      * @return R
      */
+    #[\NoDiscard]
     public function reduce($carry, callable $reducer)
     {
         return $this->vector->reduce($carry, $reducer);
     }
 
     /**
-     * @param 0|positive-int $position
+     * @param int<0, max> $position
      */
+    #[\NoDiscard]
     public function get(int $position): Number
     {
         return $this->vector->get($position);
     }
 
+    #[\NoDiscard]
     public function equals(self $row): bool
     {
         return $this->vector->equals($row->vector);
@@ -166,11 +187,13 @@ final class RowVector
     /**
      * First non zero number found
      */
+    #[\NoDiscard]
     public function lead(): Number
     {
         return $this->vector->lead();
     }
 
+    #[\NoDiscard]
     public function asColumn(): ColumnVector
     {
         return ColumnVector::ofSequence($this->toSequence());
@@ -179,6 +202,7 @@ final class RowVector
     /**
      * @return Sequence<Number>
      */
+    #[\NoDiscard]
     public function toSequence(): Sequence
     {
         return $this->vector->toSequence();

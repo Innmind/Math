@@ -6,7 +6,6 @@ namespace Innmind\Math\Geometry;
 use Innmind\Math\{
     Geometry\Angle\Degree,
     Geometry\Theorem\AlKashi,
-    Geometry\Trigonometry\Cosine,
     Algebra\Number,
 };
 
@@ -15,23 +14,17 @@ use Innmind\Math\{
  */
 final class Angle
 {
-    private Segment $firstSegment;
-    private Segment $secondSegment;
-    private Degree $degree;
-
     private function __construct(
-        Segment $firstSegment,
-        Degree $degree,
-        Segment $secondSegment,
+        private Segment $firstSegment,
+        private Degree $degree,
+        private Segment $secondSegment,
     ) {
-        $this->firstSegment = $firstSegment;
-        $this->secondSegment = $secondSegment;
-        $this->degree = $degree;
     }
 
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function of(
         Segment $firstSegment,
         Degree $degree,
@@ -40,16 +33,19 @@ final class Angle
         return new self($firstSegment, $degree, $secondSegment);
     }
 
+    #[\NoDiscard]
     public function firstSegment(): Segment
     {
         return $this->firstSegment;
     }
 
+    #[\NoDiscard]
     public function secondSegment(): Segment
     {
         return $this->secondSegment;
     }
 
+    #[\NoDiscard]
     public function degree(): Degree
     {
         return $this->degree;
@@ -59,6 +55,7 @@ final class Angle
      * It sums the segments like we would sum vectors, except here we don't use
      * vectors as it would need a plan to express a direction
      */
+    #[\NoDiscard]
     public function sum(): Segment
     {
         return AlKashi::side(
@@ -68,12 +65,13 @@ final class Angle
         );
     }
 
+    #[\NoDiscard]
     public function scalarProduct(): Number
     {
         return $this
             ->firstSegment
             ->length()
             ->multiplyBy($this->secondSegment->length())
-            ->multiplyBy(Cosine::of($this->degree));
+            ->multiplyBy($this->degree->cosine());
     }
 }

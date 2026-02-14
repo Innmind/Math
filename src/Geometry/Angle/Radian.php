@@ -3,10 +3,9 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Geometry\Angle;
 
-use Innmind\Math\Algebra\{
-    Number,
-    Value,
-    Real,
+use Innmind\Math\{
+    Algebra\Number,
+    Geometry\Trigonometry,
 };
 
 /**
@@ -14,62 +13,95 @@ use Innmind\Math\Algebra\{
  */
 final class Radian
 {
-    private Number $number;
-
-    private function __construct(Number $number)
+    private function __construct(private Number $number)
     {
-        $this->number = $number->modulo(
-            Value::pi->multiplyBy(Value::two),
-        );
     }
 
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function of(Number $number): self
     {
-        return new self($number);
+        return new self($number->modulo(
+            Number::pi()->multiplyBy(Number::two()),
+        ));
     }
 
+    #[\NoDiscard]
     public function toDegree(): Degree
     {
         return Degree::of(
-            Real::of(
+            Number::of(
                 \rad2deg($this->number->value()),
             ),
         );
     }
 
-    public function isRight(): bool
+    #[\NoDiscard]
+    public function right(): bool
     {
-        return $this->toDegree()->isRight();
+        return $this->toDegree()->right();
     }
 
-    public function isObtuse(): bool
+    #[\NoDiscard]
+    public function obtuse(): bool
     {
-        return $this->toDegree()->isObtuse();
+        return $this->toDegree()->obtuse();
     }
 
-    public function isAcuse(): bool
+    #[\NoDiscard]
+    public function acuse(): bool
     {
-        return $this->toDegree()->isAcuse();
+        return $this->toDegree()->acuse();
     }
 
-    public function isFlat(): bool
+    #[\NoDiscard]
+    public function flat(): bool
     {
-        return $this->toDegree()->isFlat();
+        return $this->toDegree()->flat();
     }
 
+    #[\NoDiscard]
     public function opposite(): self
     {
         return $this->toDegree()->opposite()->toRadian();
     }
 
+    #[\NoDiscard]
+    public function cosine(): Number
+    {
+        return $this
+            ->number
+            ->as($this->toString())
+            ->apply(Trigonometry::cosine);
+    }
+
+    #[\NoDiscard]
+    public function sine(): Number
+    {
+        return $this
+            ->number
+            ->as($this->toString())
+            ->apply(Trigonometry::sine);
+    }
+
+    #[\NoDiscard]
+    public function tangent(): Number
+    {
+        return $this
+            ->number
+            ->as($this->toString())
+            ->apply(Trigonometry::tangent);
+    }
+
+    #[\NoDiscard]
     public function number(): Number
     {
         return $this->number;
     }
 
+    #[\NoDiscard]
     public function toString(): string
     {
         return $this->number->value().' rad';

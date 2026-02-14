@@ -10,205 +10,88 @@ use Innmind\Immutable\{
 
 /**
  * @psalm-immutable
+ * @internal
  */
-final class Multiplication implements Operation, Number
+final class Multiplication implements Implementation
 {
-    private Number $first;
-    private Number $second;
-    /** @var Sequence<Number> */
-    private Sequence $values;
-
     private function __construct(
-        Number $first,
-        Number $second,
-        Number ...$values,
+        private Implementation $a,
+        private Implementation $b,
     ) {
-        $this->first = $first;
-        $this->second = $second;
-        $this->values = Sequence::of($first, $second, ...$values);
     }
 
     /**
      * @psalm-pure
      */
-    public static function of(
-        Number $first,
-        Number $second,
-        Number ...$values,
-    ): self {
-        return new self($first, $second, ...$values);
-    }
-
-    public function value(): int|float
+    public static function of(Implementation $a, Implementation $b): self
     {
-        return $this->result()->value();
+        return new self($a, $b);
     }
 
-    public function equals(Number $number): bool
+    #[\Override]
+    public function memoize(): Native
     {
-        return $this->result()->equals($number);
+        return $this->product();
     }
 
-    public function higherThan(Number $number): bool
+    public function product(): Native
     {
-        return $this->result()->higherThan($number);
+        return Native::of($this->a->memoize()->value() * $this->b->memoize()->value());
     }
 
-    public function add(Number $number, Number ...$numbers): Number
+    #[\Override]
+    public function optimize(): Implementation
     {
-        return Addition::of($this, $number, ...$numbers);
+        $a = $this->a->optimize();
+        $b = $this->b->optimize();
+
+        // (dividend/divisor)*b = dividend
+        if ($a instanceof Division) {
+            $divisor = $a->divisor();
+
+            if ($b->memoize()->equals($divisor->memoize())) {
+                return $a->dividend();
+            }
+        }
+
+        // a*(dividend/divisor) = dividend
+        if ($b instanceof Division) {
+            $divisor = $b->divisor();
+
+            if ($a->memoize()->equals($divisor->memoize())) {
+                return $b->dividend();
+            }
+        }
+
+        return new self($a, $b);
     }
 
-    public function subtract(Number $number, Number ...$numbers): Number
-    {
-        return Subtraction::of($this, $number, ...$numbers);
-    }
-
-    public function divideBy(Number $number): Number
-    {
-        return Division::of($this, $number);
-    }
-
-    public function multiplyBy(Number $number, Number ...$numbers): self
-    {
-        return new self($this, $number, ...$numbers);
-    }
-
-    public function roundUp(int $precision = 0): Number
-    {
-        return Round::up($this, $precision);
-    }
-
-    public function roundDown(int $precision = 0): Number
-    {
-        return Round::down($this, $precision);
-    }
-
-    public function roundEven(int $precision = 0): Number
-    {
-        return Round::even($this, $precision);
-    }
-
-    public function roundOdd(int $precision = 0): Number
-    {
-        return Round::odd($this, $precision);
-    }
-
-    public function floor(): Number
-    {
-        return Floor::of($this);
-    }
-
-    public function ceil(): Number
-    {
-        return Ceil::of($this);
-    }
-
-    public function modulo(Number $modulus): Number
-    {
-        return Modulo::of($this, $modulus);
-    }
-
-    public function absolute(): Number
-    {
-        return Absolute::of($this);
-    }
-
-    public function power(Number $power): Number
-    {
-        return Power::of($this, $power);
-    }
-
-    public function squareRoot(): Number
-    {
-        return SquareRoot::of($this);
-    }
-
-    public function exponential(): Number
-    {
-        return Exponential::of($this);
-    }
-
-    public function binaryLogarithm(): Number
-    {
-        return BinaryLogarithm::of($this);
-    }
-
-    public function naturalLogarithm(): Number
-    {
-        return NaturalLogarithm::of($this);
-    }
-
-    public function commonLogarithm(): Number
-    {
-        return CommonLogarithm::of($this);
-    }
-
-    public function signum(): Number
-    {
-        return Signum::of($this);
-    }
-
-    public function product(): Number
-    {
-        return $this->result();
-    }
-
-    public function result(): Number
-    {
-        $value = $this->values->reduce(
-            1,
-            static fn(int|float $carry, $number): int|float => $carry * $number->value(),
-        );
-
-        return Real::of($value);
-    }
-
-    public function collapse(): Number
-    {
-        return $this
-            ->values
-            ->drop(2)
-            ->reduce(
-                $this->doCollapse($this->first, $this->second),
-                $this->doCollapse(...),
-            )
-            ->collapse();
-    }
-
+    #[\Override]
     public function toString(): string
     {
-        $values = $this->values->map(
-            static function(Number $number) {
-                if ($number instanceof Operation) {
-                    return '('.$number->toString().')';
-                }
-
-                return $number->toString();
-            },
+        $values = $this->collect()->map(
+            static fn($number) => $number->format(),
         );
 
         return Str::of(' x ')->join($values)->toString();
     }
 
-    private function doCollapse(Number $a, Number $b): Number
+    #[\Override]
+    public function format(): string
     {
-        if ($a instanceof Division) {
-            $divisor = $a->divisor()->collapse();
+        return '('.$this->toString().')';
+    }
 
-            if ($b->equals($divisor)) {
-                return $a->dividend();
-            }
-        }
-
-        if ($b instanceof Division) {
-            $divisor = $b->divisor()->collapse();
-
-            if ($a->equals($divisor)) {
-                return $b->dividend();
-            }
-        }
-
-        return (new self($a->collapse(), $b->collapse()))->result();
+    /**
+     * @return Sequence<Implementation>
+     */
+    private function collect(): Sequence
+    {
+        return Sequence::of($this->a, $this->b)->flatMap(
+            static fn($number) => match (true) {
+                $number instanceof self => $number->collect(),
+                default => Sequence::of($number),
+            },
+        );
     }
 }

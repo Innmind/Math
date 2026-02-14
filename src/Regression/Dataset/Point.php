@@ -10,28 +10,28 @@ use Innmind\Math\Algebra\Number;
  */
 final class Point
 {
-    private Number $abscissa;
-    private Number $ordinate;
-
-    private function __construct(Number $abscissa, Number $ordinate)
-    {
-        $this->abscissa = $abscissa;
-        $this->ordinate = $ordinate;
+    private function __construct(
+        private Number $abscissa,
+        private Number $ordinate,
+    ) {
     }
 
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function of(Number $abscissa, Number $ordinate): self
     {
         return new self($abscissa, $ordinate);
     }
 
+    #[\NoDiscard]
     public function abscissa(): Number
     {
         return $this->abscissa;
     }
 
+    #[\NoDiscard]
     public function ordinate(): Number
     {
         return $this->ordinate;

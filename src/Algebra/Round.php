@@ -3,190 +3,92 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Algebra;
 
-use Innmind\Math\Exception\PrecisionMustBePositive;
-
 /**
  * @psalm-immutable
+ * @internal
  */
-final class Round implements Number
+final class Round implements Implementation
 {
-    private Number $number;
-    private int $precision;
-    /** @var 0|positive-int */
-    private int $mode;
-
     /**
-     * @param 0|positive-int $mode
+     * @param int<0, max> $precision
+     * @param int<0, max> $mode
      */
-    private function __construct(Number $number, int $precision, int $mode)
-    {
-        if ($precision < 0) {
-            throw new PrecisionMustBePositive((string) $precision);
-        }
-
-        $this->number = $number;
-        $this->precision = $precision;
-        $this->mode = $mode;
+    private function __construct(
+        private Implementation $number,
+        private int $precision,
+        private int $mode,
+    ) {
     }
 
     /**
      * @psalm-pure
+     *
+     * @param int<0, max> $precision
      */
-    public static function up(Number $number, int $precision = 0): self
+    public static function up(Implementation $number, int $precision = 0): self
     {
         return new self($number, $precision, \PHP_ROUND_HALF_UP);
     }
 
     /**
      * @psalm-pure
+     *
+     * @param int<0, max> $precision
      */
-    public static function down(Number $number, int $precision = 0): self
+    public static function down(Implementation $number, int $precision = 0): self
     {
         return new self($number, $precision, \PHP_ROUND_HALF_DOWN);
     }
 
     /**
      * @psalm-pure
+     *
+     * @param int<0, max> $precision
      */
-    public static function even(Number $number, int $precision = 0): self
+    public static function even(Implementation $number, int $precision = 0): self
     {
         return new self($number, $precision, \PHP_ROUND_HALF_EVEN);
     }
 
     /**
      * @psalm-pure
+     *
+     * @param int<0, max> $precision
      */
-    public static function odd(Number $number, int $precision = 0): self
+    public static function odd(Implementation $number, int $precision = 0): self
     {
         return new self($number, $precision, \PHP_ROUND_HALF_ODD);
     }
 
-    public function value(): int|float
+    #[\Override]
+    public function memoize(): Native
     {
-        return $this->compute($this->number);
+        return Native::of(\round(
+            $this->number->memoize()->value(),
+            $this->precision,
+            $this->mode,
+        ));
     }
 
-    public function equals(Number $number): bool
+    #[\Override]
+    public function optimize(): Implementation
     {
-        return $this->value() == $number->value();
-    }
-
-    public function higherThan(Number $number): bool
-    {
-        return $this->value() > $number->value();
-    }
-
-    public function add(Number $number, Number ...$numbers): Number
-    {
-        return Addition::of($this, $number, ...$numbers);
-    }
-
-    public function subtract(Number $number, Number ...$numbers): Number
-    {
-        return Subtraction::of($this, $number, ...$numbers);
-    }
-
-    public function divideBy(Number $number): Number
-    {
-        return Division::of($this, $number);
-    }
-
-    public function multiplyBy(Number $number, Number ...$numbers): Number
-    {
-        return Multiplication::of($this, $number, ...$numbers);
-    }
-
-    public function roundUp(int $precision = 0): Number
-    {
-        return self::up($this, $precision);
-    }
-
-    public function roundDown(int $precision = 0): Number
-    {
-        return self::down($this, $precision);
-    }
-
-    public function roundEven(int $precision = 0): Number
-    {
-        return self::even($this, $precision);
-    }
-
-    public function roundOdd(int $precision = 0): Number
-    {
-        return self::odd($this, $precision);
-    }
-
-    public function floor(): Number
-    {
-        return Floor::of($this);
-    }
-
-    public function ceil(): Number
-    {
-        return Ceil::of($this);
-    }
-
-    public function modulo(Number $modulus): Number
-    {
-        return Modulo::of($this, $modulus);
-    }
-
-    public function absolute(): Number
-    {
-        return Absolute::of($this);
-    }
-
-    public function power(Number $power): Number
-    {
-        return Power::of($this, $power);
-    }
-
-    public function squareRoot(): Number
-    {
-        return SquareRoot::of($this);
-    }
-
-    public function exponential(): Number
-    {
-        return Exponential::of($this);
-    }
-
-    public function binaryLogarithm(): Number
-    {
-        return BinaryLogarithm::of($this);
-    }
-
-    public function naturalLogarithm(): Number
-    {
-        return NaturalLogarithm::of($this);
-    }
-
-    public function commonLogarithm(): Number
-    {
-        return CommonLogarithm::of($this);
-    }
-
-    public function signum(): Number
-    {
-        return Signum::of($this);
-    }
-
-    public function collapse(): Number
-    {
-        return Real::of($this->compute($this->number->collapse()));
-    }
-
-    public function toString(): string
-    {
-        return \var_export($this->value(), true);
-    }
-
-    private function compute(Number $number): int|float
-    {
-        return \round(
-            $number->value(),
+        return new self(
+            $this->number->optimize(),
             $this->precision,
             $this->mode,
         );
+    }
+
+    #[\Override]
+    public function toString(): string
+    {
+        return \var_export($this->memoize()->value(), true);
+    }
+
+    #[\Override]
+    public function format(): string
+    {
+        return $this->toString();
     }
 }

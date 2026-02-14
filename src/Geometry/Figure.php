@@ -10,6 +10,8 @@ use Innmind\Math\Algebra\Number;
  */
 interface Figure
 {
+    #[\NoDiscard]
     public function perimeter(): Number;
+    #[\NoDiscard]
     public function area(): Number;
 }

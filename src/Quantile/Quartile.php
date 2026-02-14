@@ -11,16 +11,14 @@ use Innmind\Math\Algebra\Number;
  */
 final class Quartile
 {
-    private Number $value;
-
-    private function __construct(Number $value)
+    private function __construct(private Number $value)
     {
-        $this->value = $value;
     }
 
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function of(Number $value): self
     {
         return new self($value);
@@ -29,6 +27,7 @@ final class Quartile
     /**
      * Return the quartile value
      */
+    #[\NoDiscard]
     public function value(): Number
     {
         return $this->value;

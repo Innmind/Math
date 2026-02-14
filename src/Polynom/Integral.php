@@ -10,13 +10,11 @@ use Innmind\Math\Algebra\Number;
  */
 final class Integral
 {
-    private Polynom $polynom;
-
-    private function __construct(Polynom $polynom)
+    private function __construct(private Polynom $polynom)
     {
-        $this->polynom = $polynom;
     }
 
+    #[\NoDiscard]
     public function __invoke(Number $a, Number $b): Number
     {
         $primitive = $this->polynom->primitive();
@@ -27,16 +25,19 @@ final class Integral
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function of(Polynom $polynom): self
     {
         return new self($polynom);
     }
 
+    #[\NoDiscard]
     public function polynom(): Polynom
     {
         return $this->polynom;
     }
 
+    #[\NoDiscard]
     public function toString(): string
     {
         return \sprintf(

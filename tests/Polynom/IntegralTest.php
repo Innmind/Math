@@ -6,16 +6,15 @@ namespace Tests\Innmind\Math\Polynom;
 use Innmind\Math\{
     Polynom\Integral,
     Polynom\Polynom,
-    Algebra\Integer,
-    Algebra\Number
+    Algebra\Number,
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class IntegralTest extends TestCase
 {
     public function testPolynom()
     {
-        $polynom = Polynom::interceptAt(Integer::of(42));
+        $polynom = Polynom::interceptAt(Number::of(42));
         $integral = Integral::of($polynom);
 
         $this->assertSame($polynom, $integral->polynom());
@@ -24,8 +23,8 @@ class IntegralTest extends TestCase
     public function testStringCast()
     {
         $polynom = Polynom::zero()
-            ->withDegree(Integer::of(1), Integer::of(4))
-            ->withDegree(Integer::of(2), Integer::of(-1));
+            ->withDegree(1, Number::of(4))
+            ->withDegree(2, Number::of(-1));
         $integral = Integral::of($polynom);
 
         $this->assertSame(
@@ -37,11 +36,11 @@ class IntegralTest extends TestCase
     public function testInvokation()
     {
         $polynom = Polynom::zero()
-            ->withDegree(Integer::of(1), Integer::of(4))
-            ->withDegree(Integer::of(2), Integer::of(-1));
+            ->withDegree(1, Number::of(4))
+            ->withDegree(2, Number::of(-1));
         $integral = Integral::of($polynom);
 
-        $area = $integral(Integer::of(0), Integer::of(4));
+        $area = $integral(Number::of(0), Number::of(4));
 
         $this->assertInstanceOf(Number::class, $area);
         // 32/3

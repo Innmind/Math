@@ -8,33 +8,34 @@ namespace Innmind\Math\Algebra;
  */
 final class ComplexNumber
 {
-    private Number $real;
-    private Number $imaginary;
-
-    private function __construct(Number $real, Number $imaginary)
-    {
-        $this->real = $real;
-        $this->imaginary = $imaginary;
+    private function __construct(
+        private Number $real,
+        private Number $imaginary,
+    ) {
     }
 
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function of(Number $real, Number $imaginary): self
     {
         return new self($real, $imaginary);
     }
 
+    #[\NoDiscard]
     public function real(): Number
     {
         return $this->real;
     }
 
+    #[\NoDiscard]
     public function imaginary(): Number
     {
         return $this->imaginary;
     }
 
+    #[\NoDiscard]
     public function add(self $number): self
     {
         return new self(
@@ -43,6 +44,7 @@ final class ComplexNumber
         );
     }
 
+    #[\NoDiscard]
     public function subtract(self $number): self
     {
         return new self(
@@ -51,6 +53,7 @@ final class ComplexNumber
         );
     }
 
+    #[\NoDiscard]
     public function multiplyBy(self $number): self
     {
         $real = $this
@@ -60,7 +63,7 @@ final class ComplexNumber
                 $this
                     ->imaginary
                     ->multiplyBy($number->imaginary())
-                    ->multiplyBy(Integer::of(-1)),  // because i^2 == -1
+                    ->multiplyBy(Number::of(-1)),  // because i^2 == -1
             );
         $imaginary = $this
             ->real
@@ -70,15 +73,16 @@ final class ComplexNumber
         return new self($real, $imaginary);
     }
 
+    #[\NoDiscard]
     public function divideBy(self $number): self
     {
         $dividend = $this->multiplyBy($number->conjugate());
         $divisor = $number
             ->real()
-            ->power(Value::two)
+            ->power(Number::two())
             ->subtract(
-                Integer::of(-1)->multiplyBy(
-                    $number->imaginary()->power(Value::two),
+                Number::of(-1)->multiplyBy(
+                    $number->imaginary()->power(Number::two()),
                 ),
             );
         $real = $dividend->real()->divideBy($divisor);
@@ -87,76 +91,81 @@ final class ComplexNumber
         return new self($real, $imaginary);
     }
 
+    #[\NoDiscard]
     public function conjugate(): self
     {
         return new self(
             $this->real,
-            Integer::of(-1)->multiplyBy($this->imaginary()),
+            Number::of(-1)->multiplyBy($this->imaginary()),
         );
     }
 
+    #[\NoDiscard]
     public function absolute(): Number
     {
         return $this
             ->real
-            ->power(Value::two)
-            ->add($this->imaginary->power(Value::two))
+            ->power(Number::two())
+            ->add($this->imaginary->power(Number::two()))
             ->squareRoot();
     }
 
+    #[\NoDiscard]
     public function reciprocal(): self
     {
         $divisor = $this
             ->real
-            ->power(Value::two)
-            ->add($this->imaginary->power(Value::two));
+            ->power(Number::two())
+            ->add($this->imaginary->power(Number::two()));
 
         return new self(
             $this->real->divideBy($divisor),
-            Integer::of(-1)->multiplyBy(
+            Number::of(-1)->multiplyBy(
                 $this->imaginary->divideBy($divisor),
             ),
         );
     }
 
+    #[\NoDiscard]
     public function negation(): self
     {
         return new self(
-            Integer::of(-1)->multiplyBy($this->real),
-            Integer::of(-1)->multiplyBy($this->imaginary),
+            Number::of(-1)->multiplyBy($this->real),
+            Number::of(-1)->multiplyBy($this->imaginary),
         );
     }
 
+    #[\NoDiscard]
     public function squareRoot(): self
     {
         $real = $this
             ->real
             ->add($this->absolute())
-            ->divideBy(Value::two)
+            ->divideBy(Number::two())
             ->squareRoot();
         $imaginary = $this->imaginary->signum()->multiplyBy(
-            Integer::of(-1)
+            Number::of(-1)
                 ->multiplyBy($this->real)
                 ->add($this->absolute())
-                ->divideBy(Value::two)
+                ->divideBy(Number::two())
                 ->squareRoot(),
         );
 
         return new self($real, $imaginary);
     }
 
+    #[\NoDiscard]
     public function equals(self $number): bool
     {
         return $this->real->equals($number->real()) &&
             $this->imaginary->equals($number->imaginary());
     }
 
+    #[\NoDiscard]
     public function toString(): string
     {
-        $real = $this->real instanceof Operation ?
-            '('.$this->real->toString().')' : $this->real->toString();
-        $imaginary = $this->imaginary instanceof Operation ?
-            '('.$this->imaginary->toString().')' : $this->imaginary->toString();
+        $real = $this->real->format();
+        $imaginary = $this->imaginary->format();
 
         return \sprintf('(%s + %si)', $real, $imaginary);
     }

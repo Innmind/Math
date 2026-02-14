@@ -6,9 +6,9 @@ namespace Tests\Innmind\Math\Gemoetry\Theorem;
 use Innmind\Math\{
     Geometry\Theorem\Pythagora,
     Geometry\Segment,
-    Algebra\Real,
+    Algebra\Number,
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class PythagoraTest extends TestCase
 {
@@ -20,8 +20,8 @@ class PythagoraTest extends TestCase
     public function testHypotenuse()
     {
         $hypotenuse = Pythagora::hypotenuse(
-            Segment::of(Real::of(3)),
-            Segment::of(Real::of(2)),
+            Segment::of(Number::of(3)),
+            Segment::of(Number::of(2)),
         );
 
         $this->assertInstanceOf(Segment::class, $hypotenuse);
@@ -34,8 +34,8 @@ class PythagoraTest extends TestCase
     public function testAdjacentSide()
     {
         $side = Pythagora::adjacentSide(
-            Segment::of(Real::of(5)),
-            Segment::of(Real::of(2)),
+            Segment::of(Number::of(5)),
+            Segment::of(Number::of(2)),
         );
 
         $this->assertInstanceOf(Segment::class, $side);

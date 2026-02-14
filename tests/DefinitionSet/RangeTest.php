@@ -4,102 +4,74 @@ declare(strict_types = 1);
 namespace Tests\Innmind\Math\DefinitionSet;
 
 use Innmind\Math\{
-    DefinitionSet\Range,
     DefinitionSet\Set,
-    DefinitionSet\Union,
-    DefinitionSet\Intersection,
-    Algebra\Integer,
-    Algebra\Real,
+    Algebra\Number,
     Exception\OutOfDefinitionSet,
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\Immutable\SideEffect;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class RangeTest extends TestCase
 {
-    public function testInterface()
-    {
-        $this->assertInstanceOf(
-            Set::class,
-            Range::inclusive(Integer::of(1), Integer::of(2)),
-        );
-    }
-
     public function testStringCast()
     {
         $this->assertSame(
             '[1;2]',
-            Range::inclusive(Integer::of(1), Integer::of(2))->toString(),
+            Set::inclusiveRange(Number::of(1), Number::of(2))->toString(),
         );
         $this->assertSame(
             ']1;2[',
-            Range::exclusive(Integer::of(1), Integer::of(2))->toString(),
-        );
-        $this->assertSame(
-            '[1;2[',
-            Range::inclusive(
-                Integer::of(1),
-                Integer::of(2),
-            )
-                ->excludeUpperBound()
-                ->toString(),
-        );
-        $this->assertSame(
-            ']1;2]',
-            Range::inclusive(
-                Integer::of(1),
-                Integer::of(2),
-            )
-                ->excludeLowerBound()
-                ->toString(),
+            Set::exclusiveRange(Number::of(1), Number::of(2))->toString(),
         );
     }
 
     public function testContains()
     {
-        $inclusive = Range::inclusive(Integer::of(1), Integer::of(2));
+        $inclusive = Set::inclusiveRange(Number::of(1), Number::of(2));
 
-        $this->assertTrue($inclusive->contains(Real::of(1)));
-        $this->assertTrue($inclusive->contains(Real::of(1.5)));
-        $this->assertTrue($inclusive->contains(Real::of(2)));
-        $this->assertFalse($inclusive->contains(Real::of(0)));
-        $this->assertFalse($inclusive->contains(Real::of(2.1)));
+        $this->assertTrue($inclusive->contains(Number::of(1)));
+        $this->assertTrue($inclusive->contains(Number::of(1.5)));
+        $this->assertTrue($inclusive->contains(Number::of(2)));
+        $this->assertFalse($inclusive->contains(Number::of(0)));
+        $this->assertFalse($inclusive->contains(Number::of(2.1)));
 
-        $exclusive = Range::exclusive(Integer::of(1), Integer::of(2));
+        $exclusive = Set::exclusiveRange(Number::of(1), Number::of(2));
 
-        $this->assertTrue($exclusive->contains(Real::of(1.5)));
-        $this->assertFalse($exclusive->contains(Real::of(1)));
-        $this->assertFalse($exclusive->contains(Real::of(2)));
-        $this->assertFalse($exclusive->contains(Real::of(0)));
-        $this->assertFalse($exclusive->contains(Real::of(2.1)));
+        $this->assertTrue($exclusive->contains(Number::of(1.5)));
+        $this->assertFalse($exclusive->contains(Number::of(1)));
+        $this->assertFalse($exclusive->contains(Number::of(2)));
+        $this->assertFalse($exclusive->contains(Number::of(0)));
+        $this->assertFalse($exclusive->contains(Number::of(2.1)));
     }
 
     public function testAccept()
     {
-        $set = Range::inclusive(Integer::of(1), Integer::of(2));
+        $set = Set::inclusiveRange(Number::of(1), Number::of(2));
 
-        $this->assertNull($set->accept(Integer::of(1)));
+        $this->assertInstanceOf(
+            SideEffect::class,
+            $set->accept(Number::of(1))->unwrap(),
+        );
 
         $this->expectException(OutOfDefinitionSet::class);
         $this->expectExceptionMessage('0.1 ∉ [1;2]');
 
-        $set->accept(Real::of(0.1));
+        $_ = $set->accept(Number::of(0.1))->unwrap();
     }
 
     public function testUnion()
     {
-        $range = Range::inclusive(Integer::of(1), Integer::of(2));
+        $range = Set::inclusiveRange(Number::of(1), Number::of(2));
         $union = $range->union($range);
 
-        $this->assertInstanceOf(Union::class, $union);
         $this->assertSame('[1;2]∪[1;2]', $union->toString());
     }
 
     public function testIntersect()
     {
-        $range = Range::inclusive(Integer::of(1), Integer::of(2));
+        $range = Set::inclusiveRange(Number::of(1), Number::of(2));
         $intersection = $range->intersect($range);
 
-        $this->assertInstanceOf(Intersection::class, $intersection);
         $this->assertSame('[1;2]∩[1;2]', $intersection->toString());
     }
 }

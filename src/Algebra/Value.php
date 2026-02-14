@@ -5,8 +5,9 @@ namespace Innmind\Math\Algebra;
 
 /**
  * @psalm-immutable
+ * @internal
  */
-enum Value implements Number
+enum Value
 {
     case zero;
     case one;
@@ -18,6 +19,24 @@ enum Value implements Number
     case pi;
     case infinite;
     case negativeInfinite;
+
+    /**
+     * This allows to safely check if numbers are this integer without computing
+     * the real value.
+     */
+    public function is(Implementation $number): bool
+    {
+        if ($number instanceof Native) {
+            return $number->is($this);
+        }
+
+        // todo allow to optimize on addition, multiplication and subtraction ?
+        // this could be checked if each component is an int but the
+        // recursiveness can be expansive to walk through
+
+        // other than zero through hundred we prevent optimizing
+        return false;
+    }
 
     public function value(): int|float
     {
@@ -32,122 +51,6 @@ enum Value implements Number
             self::infinite => \INF,
             self::negativeInfinite => -\INF,
         };
-    }
-
-    public function equals(Number $number): bool
-    {
-        return $this->value() == $number->collapse()->value();
-    }
-
-    public function higherThan(Number $number): bool
-    {
-        return $this->value() > $number->collapse()->value();
-    }
-
-    public function add(
-        Number $number,
-        Number ...$numbers,
-    ): Number {
-        return Addition::of($this, $number, ...$numbers);
-    }
-
-    public function subtract(
-        Number $number,
-        Number ...$numbers,
-    ): Number {
-        return Subtraction::of($this, $number, ...$numbers);
-    }
-
-    public function divideBy(Number $number): Number
-    {
-        return Division::of($this, $number);
-    }
-
-    public function multiplyBy(
-        Number $number,
-        Number ...$numbers,
-    ): Number {
-        return Multiplication::of($this, $number, ...$numbers);
-    }
-
-    public function roundUp(int $precision = 0): Number
-    {
-        return Round::up($this, $precision);
-    }
-
-    public function roundDown(int $precision = 0): Number
-    {
-        return Round::down($this, $precision);
-    }
-
-    public function roundEven(int $precision = 0): Number
-    {
-        return Round::even($this, $precision);
-    }
-
-    public function roundOdd(int $precision = 0): Number
-    {
-        return Round::odd($this, $precision);
-    }
-
-    public function floor(): Number
-    {
-        return Floor::of($this);
-    }
-
-    public function ceil(): Number
-    {
-        return Ceil::of($this);
-    }
-
-    public function modulo(Number $modulus): Number
-    {
-        return Modulo::of($this, $modulus);
-    }
-
-    public function absolute(): Number
-    {
-        return Absolute::of($this);
-    }
-
-    public function power(Number $power): Number
-    {
-        return Power::of($this, $power);
-    }
-
-    public function squareRoot(): Number
-    {
-        return SquareRoot::of($this);
-    }
-
-    public function exponential(): Number
-    {
-        return Exponential::of($this);
-    }
-
-    public function binaryLogarithm(): Number
-    {
-        return BinaryLogarithm::of($this);
-    }
-
-    public function naturalLogarithm(): Number
-    {
-        return NaturalLogarithm::of($this);
-    }
-
-    public function commonLogarithm(): Number
-    {
-        return CommonLogarithm::of($this);
-    }
-
-    public function signum(): Number
-    {
-        return Signum::of($this);
-    }
-
-    public function collapse(): Number
-    {
-        return $this;
     }
 
     public function toString(): string

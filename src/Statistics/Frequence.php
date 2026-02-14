@@ -3,11 +3,7 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Statistics;
 
-use Innmind\Math\Algebra\{
-    Number,
-    Division,
-    Integer,
-};
+use Innmind\Math\Algebra\Number;
 use Innmind\Immutable\Sequence;
 
 /**
@@ -15,19 +11,14 @@ use Innmind\Immutable\Sequence;
  */
 final class Frequence
 {
-    /** @var Sequence<Number> */
-    private Sequence $values;
-    private Integer $size;
-
     /**
-     * @no-named-arguments
+     * @param Sequence<Number> $values
      */
-    private function __construct(Number ...$values)
+    private function __construct(private Sequence $values)
     {
-        $this->values = Sequence::of(...$values);
-        $this->size = Integer::of($this->values->size());
     }
 
+    #[\NoDiscard]
     public function __invoke(Number $number): Number
     {
         $frequence = $this
@@ -35,20 +26,25 @@ final class Frequence
             ->filter(static fn($value) => $value->equals($number))
             ->size();
 
-        return Division::of(Integer::of($frequence), $this->size);
+        return Number::of($frequence)->divideBy(Number::of($this->size()));
     }
 
     /**
      * @psalm-pure
      * @no-named-arguments
      */
+    #[\NoDiscard]
     public static function of(Number ...$values): self
     {
-        return new self(...$values);
+        return new self(Sequence::of(...$values));
     }
 
-    public function size(): Integer
+    /**
+     * @return int<0, max>
+     */
+    #[\NoDiscard]
+    public function size(): int
     {
-        return $this->size;
+        return $this->values->size();
     }
 }

@@ -6,11 +6,10 @@ namespace Innmind\Math\Geometry\Theorem;
 use function Innmind\Math\max as maximum;
 use Innmind\Math\{
     Algebra\Number,
-    Algebra\Value,
     Geometry\Angle\Degree,
+    Geometry\Angle\Radian,
     Geometry\Segment,
-    Geometry\Trigonometry\Cosine,
-    Geometry\Trigonometry\ArcCosine,
+    Geometry\Trigonometry,
     Exception\SegmentsCannotBeJoined,
 };
 
@@ -26,6 +25,7 @@ final class AlKashi
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function side(
         Segment $a,
         Degree $degree,
@@ -35,15 +35,15 @@ final class AlKashi
         $b = $b->length();
 
         $side = $a
-            ->power(Value::two)
+            ->power(Number::two())
             ->add(
-                $b->power(Value::two),
+                $b->power(Number::two()),
             )
             ->subtract(
-                Value::two
+                Number::two()
                     ->multiplyBy($a)
                     ->multiplyBy($b)
-                    ->multiplyBy(Cosine::of($degree)),
+                    ->multiplyBy($degree->cosine()),
             )
             ->squareRoot();
 
@@ -54,6 +54,7 @@ final class AlKashi
      * Return the angle between a and b sides
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function angle(
         Segment $a,
         Segment $b,
@@ -74,18 +75,19 @@ final class AlKashi
         }
 
         $cosAB = $a
-            ->power(Value::two)
-            ->add($b->power(Value::two))
-            ->subtract($c->power(Value::two))
+            ->power(Number::two())
+            ->add($b->power(Number::two()))
+            ->subtract($c->power(Number::two()))
             ->divideBy(
-                Value::two
+                Number::two()
                     ->multiplyBy($a)
                     ->multiplyBy($b),
             );
 
-        return ArcCosine::of($cosAB)->toDegree();
+        return Radian::of($cosAB->apply(Trigonometry::arcCosine))->toDegree();
     }
 
+    #[\NoDiscard]
     public function toString(): string
     {
         return 'C²=A²+B²-2AB*cos(A,B)';

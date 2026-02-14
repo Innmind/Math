@@ -7,44 +7,44 @@ use Innmind\Math\{
     Geometry\Segment,
     Geometry\Angle,
     Geometry\Angle\Degree,
-    Algebra\Integer,
-    Exception\LengthMustBePositive
+    Algebra\Number,
+    Exception\LengthMustBePositive,
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class SegmentTest extends TestCase
 {
     public function testLength()
     {
-        $segment = Segment::of($length = Integer::of(2));
+        $segment = Segment::of($length = Number::of(2));
 
         $this->assertSame($length, $segment->length());
     }
 
     public function testStringCast()
     {
-        $this->assertSame('2', Segment::of(Integer::of(2))->toString());
+        $this->assertSame('2', Segment::of(Number::of(2))->toString());
     }
 
     public function testThrowWhenNullSegment()
     {
         $this->expectException(LengthMustBePositive::class);
 
-        Segment::of(Integer::of(0));
+        $_ = Segment::of(Number::of(0));
     }
 
     public function testThrowWhenNegativeLength()
     {
         $this->expectException(LengthMustBePositive::class);
 
-        Segment::of(Integer::of(-1));
+        $_ = Segment::of(Number::of(-1));
     }
 
     public function testJoin()
     {
-        $first = Segment::of(Integer::of(1));
-        $second = Segment::of(Integer::of(1));
-        $degree = Degree::of(Integer::of(42));
+        $first = Segment::of(Number::of(1));
+        $second = Segment::of(Number::of(1));
+        $degree = Degree::of(Number::of(42));
 
         $angle = $first->join($second, $degree);
 

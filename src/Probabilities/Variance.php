@@ -7,7 +7,6 @@ use Innmind\Math\{
     Regression\Dataset,
     Matrix\ColumnVector,
     Algebra\Number,
-    Algebra\Value,
 };
 
 /**
@@ -28,11 +27,12 @@ final class Variance
                     $expectation,
                 ),
             )
-            ->power(Value::two)
+            ->power(Number::two())
             ->multiplyBy($dataset->ordinates())
             ->sum();
     }
 
+    #[\NoDiscard]
     public function __invoke(): Number
     {
         return $this->variance;
@@ -41,6 +41,7 @@ final class Variance
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function of(Dataset $dataset): self
     {
         return new self($dataset);

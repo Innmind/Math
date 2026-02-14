@@ -5,8 +5,7 @@ namespace Innmind\Math\Probabilities;
 
 use Innmind\Math\Algebra\{
     Number,
-    Integer,
-    Value,
+    Factorial,
 };
 
 /**
@@ -14,33 +13,44 @@ use Innmind\Math\Algebra\{
  */
 final class BinomialDistribution
 {
-    private Number $probability;
-
-    private function __construct(Number $probability)
+    private function __construct(private Number $probability)
     {
-        $this->probability = $probability;
     }
 
-    public function __invoke(Integer $trials, Integer $success): Number
+    /**
+     * @param int<0, max> $trials
+     * @param int<0, max> $success
+     */
+    #[\NoDiscard]
+    public function __invoke(int $trials, int $success): Number
     {
-        /** @var Integer */
-        $errors = $trials->subtract($success)->collapse();
-        $coefficient = $trials
-            ->factorial()
+        $errors = $trials - $success;
+
+        if ($errors < 0) {
+            throw new \LogicException('There must be more trials than successes');
+        }
+
+        $coefficient = Factorial::of($trials)
+            ->number()
             ->divideBy(
-                $success->factorial()->multiplyBy(
-                    $errors->factorial(),
+                Factorial::of($success)->number()->multiplyBy(
+                    Factorial::of($errors)->number(),
                 ),
             );
 
         return $coefficient
-            ->multiplyBy($this->probability->power($success))
-            ->multiplyBy(Value::one->subtract($this->probability)->power($errors));
+            ->multiplyBy($this->probability->power(Number::of($success)))
+            ->multiplyBy(
+                Number::one()
+                    ->subtract($this->probability)
+                    ->power(Number::of($errors)),
+            );
     }
 
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function of(Number $probability): self
     {
         return new self($probability);

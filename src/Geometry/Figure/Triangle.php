@@ -8,8 +8,6 @@ use Innmind\Math\{
     Geometry\Figure,
     Geometry\Segment,
     Algebra\Number,
-    Algebra\Value,
-    Algebra\Addition,
 };
 
 /**
@@ -42,13 +40,14 @@ final class Triangle implements Figure
             $this
                 ->area()
                 ->divideBy($base)
-                ->multiplyBy(Value::two),
+                ->multiplyBy(Number::two()),
         );
     }
 
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function of(
         Segment $a,
         Segment $b,
@@ -57,15 +56,20 @@ final class Triangle implements Figure
         return new self($a, $b, $c);
     }
 
+    #[\Override]
     public function perimeter(): Number
     {
-        return Addition::of($this->a, $this->b, $this->c);
+        return $this
+            ->a
+            ->add($this->b)
+            ->add($this->c);
     }
 
+    #[\Override]
     public function area(): Number
     {
         // Heron's formula
-        $p = $this->perimeter()->divideBy(Value::two);
+        $p = $this->perimeter()->divideBy(Number::two());
 
         return $p
             ->multiplyBy($p->subtract($this->a))
@@ -74,24 +78,28 @@ final class Triangle implements Figure
             ->squareRoot();
     }
 
+    #[\NoDiscard]
     public function base(): Segment
     {
         return $this->base;
     }
 
+    #[\NoDiscard]
     public function height(): Segment
     {
         return $this->height;
     }
 
-    public function isIsosceles(): bool
+    #[\NoDiscard]
+    public function isosceles(): bool
     {
         return $this->a->equals($this->b) ||
             $this->a->equals($this->c) ||
             $this->b->equals($this->c);
     }
 
-    public function isEquilateral(): bool
+    #[\NoDiscard]
+    public function equilateral(): bool
     {
         return $this->a->equals($this->b) &&
             $this->b->equals($this->c);

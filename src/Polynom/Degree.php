@@ -3,83 +3,101 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Polynom;
 
-use Innmind\Math\{
-    Algebra\Number,
-    Algebra\Integer,
-    Algebra\Operation,
-    Algebra\Value,
-};
+use Innmind\Math\Algebra\Number;
 
 /**
  * @psalm-immutable
  */
 final class Degree
 {
-    private Integer\Positive $degree;
-    private Number $coeff;
-
-    private function __construct(Integer\Positive $degree, Number $coeff)
-    {
-        $this->degree = $degree;
-        $this->coeff = $coeff;
+    /**
+     * @param int<1, max> $degree
+     */
+    private function __construct(
+        private int $degree,
+        private Number $coeff,
+    ) {
     }
 
     /**
      * Compute the value for the given x
      */
+    #[\NoDiscard]
     public function __invoke(Number $x): Number
     {
-        return $this->coeff->multiplyBy($x->power($this->degree));
+        return $this->coeff->multiplyBy($x->power(Number::of($this->degree)));
     }
 
     /**
      * @psalm-pure
+     *
+     * @param int<1, max> $degree
      */
-    public static function of(Integer\Positive $degree, Number $coeff): self
+    #[\NoDiscard]
+    public static function of(int $degree, Number $coeff): self
     {
         return new self($degree, $coeff);
     }
 
-    public function degree(): Integer\Positive
+    /**
+     * @param int<1, max> $degree
+     */
+    #[\NoDiscard]
+    public function is(int $degree): bool
+    {
+        return $this->degree === $degree;
+    }
+
+    /**
+     * @return int<1, max>
+     */
+    #[\NoDiscard]
+    public function degree(): int
     {
         return $this->degree;
     }
 
+    #[\NoDiscard]
     public function coeff(): Number
     {
         return $this->coeff;
     }
 
+    #[\NoDiscard]
     public function primitive(): self
     {
         return new self(
-            $this->degree->increment(),
-            $this->coeff->divideBy($this->degree->add(Value::one)),
+            $this->degree + 1,
+            $this->coeff->divideBy(Number::of($this->degree)->add(Number::one())),
         );
     }
 
+    #[\NoDiscard]
     public function derivative(): self
     {
-        /** @psalm-suppress ArgumentTypeCoercion It must throw if we decrement below 1 as it means there is a bug somewhere */
+        if ($this->degree === 1) {
+            throw new \LogicException('Cannot derivate a degree of 1');
+        }
+
         return new self(
-            $this->degree->decrement(),
-            $this->coeff->multiplyBy($this->degree),
+            $this->degree - 1,
+            $this->coeff->multiplyBy(Number::of($this->degree)),
         );
     }
 
+    #[\NoDiscard]
     public function toString(): string
     {
-        $coeff = $this->coeff instanceof Operation ?
-            '('.$this->coeff->toString().')' : $this->coeff->toString();
+        $coeff = $this->coeff->format();
 
-        if ($this->degree->equals(Value::one)) {
+        if ($this->is(1)) {
             return $coeff.'x';
         }
 
         return \sprintf(
             '%sx^%s',
             $coeff,
-            $this->degree->toString(),
+            $this->degree,
         );
     }
 }

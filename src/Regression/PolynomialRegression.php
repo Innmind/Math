@@ -5,9 +5,6 @@ namespace Innmind\Math\Regression;
 
 use Innmind\Math\{
     Algebra\Number,
-    Algebra\Real,
-    Algebra\Integer,
-    Algebra\Value,
     Polynom\Polynom,
     Matrix,
     Matrix\RowVector,
@@ -24,7 +21,10 @@ final class PolynomialRegression
     private Polynom $polynom;
     private Number $deviation;
 
-    private function __construct(Dataset $dataset, Integer\Positive $degree)
+    /**
+     * @param int<1, max> $degree
+     */
+    private function __construct(Dataset $dataset, int $degree)
     {
         $matrix = $this->buildMatrix($dataset, $degree);
         $vector = $this->buildVector($dataset);
@@ -41,9 +41,9 @@ final class PolynomialRegression
                 static fn() => throw new LogicException('Empty matrix'),
             );
 
-        $this->polynom = Range::ofPositive(Integer::positive(1), $degree)
+        $this->polynom = Range::ofPositive(1, $degree)
             ->zip($coefficients->toSequence()->drop(1))
-            ->filter(static fn($pair) => !$pair[1]->equals(Value::zero))
+            ->filter(static fn($pair) => !$pair[1]->equals(Number::zero()))
             ->reduce(
                 Polynom::interceptAt($coefficients->get(0)),
                 static fn(Polynom $polynom, $pair) => $polynom->withDegree(
@@ -55,6 +55,7 @@ final class PolynomialRegression
         $this->deviation = $this->buildRmsd($dataset, $this->polynom);
     }
 
+    #[\NoDiscard]
     public function __invoke(Number $x): Number
     {
         return ($this->polynom)($x);
@@ -62,26 +63,33 @@ final class PolynomialRegression
 
     /**
      * @psalm-pure
+     *
+     * @param int<1, max> $degree
      */
-    public static function of(Dataset $data, Integer\Positive $degree): self
+    #[\NoDiscard]
+    public static function of(Dataset $data, int $degree): self
     {
         return new self($data, $degree);
     }
 
+    #[\NoDiscard]
     public function polynom(): Polynom
     {
         return $this->polynom;
     }
 
+    #[\NoDiscard]
     public function rootMeanSquareDeviation(): Number
     {
         return $this->deviation;
     }
 
-    private function buildMatrix(Dataset $dataset, Integer\Positive $degree): Matrix
+    /**
+     * @param int<1, max> $degree
+     */
+    private function buildMatrix(Dataset $dataset, int $degree): Matrix
     {
-        /** @psalm-suppress InvalidArgument */
-        $powers = RowVector::ofSequence(Range::of(Integer::of(0), $degree));
+        $powers = RowVector::ofSequence(Range::of(0, $degree)->map(Number::of(...)));
 
         return Matrix::fromRows(
             $dataset
@@ -107,9 +115,9 @@ final class PolynomialRegression
 
         return $values
             ->subtract($estimated)
-            ->power(Value::two)
+            ->power(Number::two())
             ->sum()
-            ->divideBy($values->dimension())
+            ->divideBy(Number::of($values->dimension()))
             ->squareRoot();
     }
 }

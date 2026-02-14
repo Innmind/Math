@@ -6,11 +6,10 @@ namespace Tests\Innmind\Math\Regression;
 use Innmind\Math\{
     Regression\PolynomialRegression,
     Regression\Dataset,
-    Algebra\Integer,
     Algebra\Number,
     Polynom\Polynom
 };
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
 
 class PolynomialRegressionTest extends TestCase
 {
@@ -25,7 +24,7 @@ class PolynomialRegressionTest extends TestCase
             [8, 64],
         ]);
 
-        $regression = PolynomialRegression::of($dataset, Integer::of(2));
+        $regression = PolynomialRegression::of($dataset, 2);
         $polynom = $regression->polynom();
 
         $this->assertInstanceOf(Polynom::class, $polynom);
@@ -34,7 +33,7 @@ class PolynomialRegressionTest extends TestCase
             static fn() => true,
             static fn() => false,
         ));
-        $this->assertSame(1.0, $polynom->degree(2)->match(
+        $this->assertSame(1, $polynom->degree(2)->match(
             static fn($degree) => $degree->coeff()->value(),
             static fn() => null,
         ));
@@ -42,7 +41,7 @@ class PolynomialRegressionTest extends TestCase
             static fn() => true,
             static fn() => false,
         ));
-        $this->assertSame(81.0, $polynom(Integer::of(9))->value());
+        $this->assertSame(81.0, $polynom(Number::of(9))->value());
         $this->assertInstanceOf(
             Number::class,
             $regression->rootMeanSquareDeviation(),
@@ -65,7 +64,7 @@ class PolynomialRegressionTest extends TestCase
             [8, 512],
         ]);
 
-        $regression = PolynomialRegression::of($dataset, Integer::of(3));
+        $regression = PolynomialRegression::of($dataset, 3);
         $polynom = $regression->polynom();
 
         $this->assertInstanceOf(Polynom::class, $polynom);
@@ -94,7 +93,7 @@ class PolynomialRegressionTest extends TestCase
             ),
             0.0001,
         );
-        $this->assertEqualsWithDelta(729.0, $polynom(Integer::of(9))->value(), 0.0001);
+        $this->assertEqualsWithDelta(729.0, $polynom(Number::of(9))->value(), 0.0001);
     }
 
     public function testRegression()
@@ -114,7 +113,7 @@ class PolynomialRegressionTest extends TestCase
             [11, 0],
         ]);
 
-        $regression = PolynomialRegression::of($dataset, Integer::of(4));
+        $regression = PolynomialRegression::of($dataset, 4);
         $polynom = $regression->polynom();
 
         $this->assertInstanceOf(Polynom::class, $polynom);
@@ -144,5 +143,14 @@ class PolynomialRegressionTest extends TestCase
             1.0876840197440238,
             $regression->rootMeanSquareDeviation()->value(),
         );
+    }
+
+    private function assertEqualsWithDelta(
+        int|float $expected,
+        int|float $value,
+        int|float $delta,
+    ): void {
+        $this->assertGreaterThanOrEqual($expected-$delta, $value);
+        $this->assertLessThanOrEqual($expected+$delta, $value);
     }
 }

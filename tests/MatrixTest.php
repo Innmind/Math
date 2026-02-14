@@ -9,15 +9,15 @@ use Innmind\Math\{
     Matrix\Dimension,
     Matrix\RowVector,
     Matrix\ColumnVector,
-    Algebra\Real,
-    Algebra\Integer,
+    Algebra\Number,
     Exception\VectorsMustMeOfTheSameDimension,
     Exception\MatricesMustBeOfTheSameDimension,
     Exception\MatrixMustBeSquare,
     Exception\MatrixNotInvertible
 };
 use Innmind\Immutable\Sequence;
-use PHPUnit\Framework\TestCase;
+use Innmind\BlackBox\PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class MatrixTest extends TestCase
 {
@@ -47,14 +47,14 @@ class MatrixTest extends TestCase
         ]);
 
         $this->assertInstanceOf(Sequence::class, $matrix->columns());
-        $this->assertCount(3, $matrix->columns());
+        $this->assertSame(3, $matrix->columns()->size());
     }
 
     public function testThrowWhenBuildingMatrixWithIncoherentRows()
     {
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
-        Matrix::fromRows(Sequence::of(
+        $_ = Matrix::fromRows(Sequence::of(
             RowVector::of(...numerize(1, 2)),
             RowVector::of(...numerize(1, 2, 3)),
         ));
@@ -131,8 +131,8 @@ class MatrixTest extends TestCase
     public function testInitialize()
     {
         $matrix = Matrix::initialize(
-            Dimension::of(Integer::of(3), Integer::of(2)),
-            Real::of(4.2),
+            Dimension::of(3, 2),
+            Number::of(4.2),
         );
 
         $this->assertInstanceOf(Matrix::class, $matrix);
@@ -151,12 +151,12 @@ class MatrixTest extends TestCase
             Matrix::of([
                 [1, 2],
                 [3, 4],
-            ])->isSquare(),
+            ])->square(),
         );
         $this->assertFalse(
             Matrix::of([
                 [1, 2],
-            ])->isSquare(),
+            ])->square(),
         );
     }
 
@@ -164,7 +164,7 @@ class MatrixTest extends TestCase
     {
         $this->expectException(MatrixMustBeSquare::class);
 
-        Matrix::of([[1, 2]])->diagonal();
+        $_ = Matrix::of([[1, 2]])->diagonal();
     }
 
     public function testDiagonal()
@@ -190,9 +190,9 @@ class MatrixTest extends TestCase
 
     public function testThrowWhenAskingForNonSquareIdentity()
     {
-        $this->expectException(MatrixMustBeSquare::class);
+        $_ = $this->expectException(MatrixMustBeSquare::class);
 
-        Matrix::of([[1, 2]])->identity();
+        $_ = Matrix::of([[1, 2]])->identity();
     }
 
     public function testIdentity()
@@ -220,7 +220,7 @@ class MatrixTest extends TestCase
     {
         $this->expectException(MatricesMustBeOfTheSameDimension::class);
 
-        Matrix::of([[1]])->add(
+        $_ = Matrix::of([[1]])->add(
             Matrix::of([[1, 2]]),
         );
     }
@@ -252,9 +252,9 @@ class MatrixTest extends TestCase
 
     public function testThrowWhenSubtractingMatricesOfDifferentDimensions()
     {
-        $this->expectException(MatricesMustBeOfTheSameDimension::class);
+        $_ = $this->expectException(MatricesMustBeOfTheSameDimension::class);
 
-        Matrix::of([[1]])->subtract(
+        $_ = Matrix::of([[1]])->subtract(
             Matrix::of([[1, 2]]),
         );
     }
@@ -290,7 +290,7 @@ class MatrixTest extends TestCase
             [1, 0, -1],
             [2, 3, 4],
         ]);
-        $result = $matrix->multiplyBy(Integer::of(3));
+        $result = $matrix->multiplyBy(Number::of(3));
 
         $this->assertInstanceOf(Matrix::class, $result);
         $this->assertNotSame($matrix, $result);
@@ -333,7 +333,7 @@ class MatrixTest extends TestCase
             [2, 3, 4],
         ]);
 
-        $this->assertFalse($matrix->isSymmetric());
+        $this->assertFalse($matrix->symmetric());
 
         $matrix = Matrix::of([
             [1, 0, 1],
@@ -341,7 +341,7 @@ class MatrixTest extends TestCase
             [1, 0, 1],
         ]);
 
-        $this->assertTrue($matrix->isSymmetric());
+        $this->assertTrue($matrix->symmetric());
     }
 
     public function testIsAntisymmetric()
@@ -351,7 +351,7 @@ class MatrixTest extends TestCase
             [2, 3, 4],
         ]);
 
-        $this->assertFalse($matrix->isAntisymmetric());
+        $this->assertFalse($matrix->antisymmetric());
 
         $matrix = Matrix::of([
             [0, 2, 3, 4],
@@ -360,7 +360,7 @@ class MatrixTest extends TestCase
             [-4, -7, 6, 0],
         ]);
 
-        $this->assertTrue($matrix->isAntisymmetric());
+        $this->assertTrue($matrix->antisymmetric());
     }
 
     public function testIsInRowEchelonForm()
@@ -373,7 +373,7 @@ class MatrixTest extends TestCase
             [0, 0, 0, 0, 0, 0, -3],
         ]);
 
-        $this->assertTrue($matrix->isInRowEchelonForm());
+        $this->assertTrue($matrix->inRowEchelonForm());
 
         $matrix = Matrix::of([
             [3, 1, 1, -2, 1, 0, -3],
@@ -383,7 +383,7 @@ class MatrixTest extends TestCase
             [0, 0, 0, 0, 0, 0, -3],
         ]);
 
-        $this->assertFalse($matrix->isInRowEchelonForm());
+        $this->assertFalse($matrix->inRowEchelonForm());
     }
 
     public function testAugmentWith()
@@ -407,9 +407,7 @@ class MatrixTest extends TestCase
         )));
     }
 
-    /**
-     * @dataProvider inverses
-     */
+    #[DataProvider('inverses')]
     public function testInverse($initial, $expected)
     {
         $matrix = Matrix::of($initial);
@@ -425,7 +423,7 @@ class MatrixTest extends TestCase
     {
         $this->expectException(MatrixMustBeSquare::class);
 
-        Matrix::of([
+        $_ = Matrix::of([
             [1, 2, 3],
             [4, 5, 6],
         ])->inverse();
@@ -450,7 +448,7 @@ class MatrixTest extends TestCase
     {
         $this->expectException(MatrixNotInvertible::class);
 
-        Matrix::of([
+        $_ = Matrix::of([
             [  2,   -3,    9,   -27,    81],
             [ -3,    9,  -27,    81,  -243],
             [  9,  -27,   81,  -243,   729],
@@ -459,7 +457,7 @@ class MatrixTest extends TestCase
         ])->inverse();
     }
 
-    public function inverses(): array
+    public static function inverses(): array
     {
         return [
             [

@@ -3,13 +3,9 @@ declare(strict_types = 1);
 
 namespace Innmind\Math\Polynom;
 
-use function Innmind\Math\desc;
-use Innmind\Math\Algebra\{
-    Number,
-    Integer,
-    Operation,
-    Value,
-    Addition,
+use Innmind\Math\{
+    Algebra\Number,
+    Monoid\Algebra,
 };
 use Innmind\Immutable\{
     Sequence,
@@ -22,46 +18,44 @@ use Innmind\Immutable\{
  */
 final class Polynom
 {
-    private Number $intercept;
-    /** @var Sequence<Degree> */
-    private Sequence $degrees;
-
     /**
      * @param Sequence<Degree> $degrees
      */
-    private function __construct(Number $intercept, Sequence $degrees)
-    {
-        $this->intercept = $intercept;
-        $this->degrees = $degrees;
+    private function __construct(
+        private Number $intercept,
+        private Sequence $degrees,
+    ) {
     }
 
     /**
      * Compute the value for the given x
      */
+    #[\NoDiscard]
     public function __invoke(Number $x): Number
     {
-        $values = $this
+        return $this
             ->degrees
             ->map(static fn($degree) => $degree($x))
-            ->toList();
-
-        return Addition::of($this->intercept, ...$values);
+            ->prepend(Sequence::of($this->intercept))
+            ->fold(Algebra::addition);
     }
 
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function zero(): self
     {
         /** @var Sequence<Degree> */
         $degrees = Sequence::of();
 
-        return new self(Value::zero, $degrees);
+        return new self(Number::zero(), $degrees);
     }
 
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function interceptAt(Number $intercept): self
     {
         /** @var Sequence<Degree> */
@@ -72,14 +66,17 @@ final class Polynom
 
     /**
      * Create a new polynom with this added degree
+     *
+     * @param int<1, max> $degree
      */
-    public function withDegree(Integer\Positive $degree, Number $coeff): self
+    #[\NoDiscard]
+    public function withDegree(int $degree, Number $coeff): self
     {
         return new self(
             $this->intercept,
             $this
                 ->degrees
-                ->filter(static fn($known) => !$known->degree()->equals($degree))
+                ->exclude(static fn($known) => $known->is($degree))
                 ->add(Degree::of($degree, $coeff)),
         );
     }
@@ -87,6 +84,7 @@ final class Polynom
     /**
      * Return the intercept value
      */
+    #[\NoDiscard]
     public function intercept(): Number
     {
         return $this->intercept;
@@ -95,14 +93,15 @@ final class Polynom
     /**
      * Return the given degree
      *
-     * @param positive-int $degree
+     * @param int<1, max> $degree
      *
      * @return Maybe<Degree>
      */
+    #[\NoDiscard]
     public function degree(int $degree): Maybe
     {
         return $this->degrees->find(
-            static fn($known) => $known->degree()->equals(Integer::of($degree)),
+            static fn($known) => $known->is($degree),
         );
     }
 
@@ -111,7 +110,8 @@ final class Polynom
      *
      * @param Number|null $limit Value that tend to 0 (default to 0.000000000001)
      */
-    public function derived(Number $x, Number $limit = null): Number
+    #[\NoDiscard]
+    public function derived(Number $x, ?Number $limit = null): Number
     {
         $limit = $limit ?? Tangent::limit();
 
@@ -123,23 +123,25 @@ final class Polynom
     /**
      * Return the affine function (tangent) in the position x
      */
-    public function tangent(Number $x, Number $limit = null): Tangent
+    #[\NoDiscard]
+    public function tangent(Number $x, ?Number $limit = null): Tangent
     {
         return Tangent::of($this, $x, $limit);
     }
 
+    #[\NoDiscard]
     public function primitive(): self
     {
         $primitive = new self(
-            Value::zero,
+            Number::zero(),
             $this
                 ->degrees
                 ->map(static fn($degree) => $degree->primitive()),
         );
 
-        if (!$this->intercept->equals(Value::zero)) {
+        if (!$this->intercept->equals(Number::zero())) {
             $primitive = $primitive->withDegree(
-                Integer::positive(1),
+                1,
                 $this->intercept,
             );
         }
@@ -147,19 +149,20 @@ final class Polynom
         return $primitive;
     }
 
+    #[\NoDiscard]
     public function derivative(): self
     {
         [$intercept, $degrees] = $this
             ->degrees
-            ->find(static fn($degree) => $degree->degree()->equals(Value::one))
+            ->find(static fn($degree) => $degree->is(1))
             ->match(
                 fn($degree) => [
                     $degree->coeff(),
-                    $this->degrees->filter(
-                        static fn($degree) => !$degree->degree()->equals(Value::one),
+                    $this->degrees->exclude(
+                        static fn($degree) => $degree->is(1),
                     ),
                 ],
-                fn() => [Value::zero, $this->degrees],
+                fn() => [Number::zero(), $this->degrees],
             );
 
         return new self(
@@ -168,22 +171,23 @@ final class Polynom
         );
     }
 
+    #[\NoDiscard]
     public function integral(): Integral
     {
         return Integral::of($this);
     }
 
+    #[\NoDiscard]
     public function toString(): string
     {
         $degrees = $this
             ->degrees
-            ->sort(static fn($a, $b) => desc($a->degree(), $b->degree()))
+            ->sort(static fn($a, $b) => ($a->degree() <=> $b->degree()) * -1)
             ->map(static fn($degree) => $degree->toString());
         $polynom = Str::of(' + ')->join($degrees);
 
-        if (!$this->intercept->equals(Value::zero)) {
-            $intercept = $this->intercept instanceof Operation ?
-                '('.$this->intercept->toString().')' : $this->intercept->toString();
+        if (!$this->intercept->equals(Number::zero())) {
+            $intercept = $this->intercept->format();
 
             $polynom = $polynom
                 ->append(' + ')
