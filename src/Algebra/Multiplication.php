@@ -45,6 +45,7 @@ final class Multiplication implements Implementation
         $a = $this->a->optimize();
         $b = $this->b->optimize();
 
+        // (dividend/divisor)*b = dividend
         if ($a instanceof Division) {
             $divisor = $a->divisor();
 
@@ -53,6 +54,7 @@ final class Multiplication implements Implementation
             }
         }
 
+        // a*(dividend/divisor) = dividend
         if ($b instanceof Division) {
             $divisor = $b->divisor();
 
