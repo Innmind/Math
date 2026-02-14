@@ -28,6 +28,7 @@ final class Dataset
      *
      * @param non-empty-list<array{0: int|float|Number, 1: int|float|Number}> $values
      */
+    #[\NoDiscard]
     public static function of(array $values): self
     {
         $numerize = static fn(int|float|Number $number): Number => match (true) {
@@ -44,6 +45,7 @@ final class Dataset
         )));
     }
 
+    #[\NoDiscard]
     public function abscissas(): ColumnVector
     {
         return ColumnVector::ofSequence(
@@ -51,6 +53,7 @@ final class Dataset
         );
     }
 
+    #[\NoDiscard]
     public function ordinates(): ColumnVector
     {
         return ColumnVector::ofSequence(
@@ -61,11 +64,13 @@ final class Dataset
     /**
      * @return Sequence<Point>
      */
+    #[\NoDiscard]
     public function points(): Sequence
     {
         return $this->points;
     }
 
+    #[\NoDiscard]
     public function dimension(): Dimension
     {
         /** @psalm-suppress InvalidArgument There is always at least one point */

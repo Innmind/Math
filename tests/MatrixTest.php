@@ -54,7 +54,7 @@ class MatrixTest extends TestCase
     {
         $this->expectException(VectorsMustMeOfTheSameDimension::class);
 
-        Matrix::fromRows(Sequence::of(
+        $_ = Matrix::fromRows(Sequence::of(
             RowVector::of(...numerize(1, 2)),
             RowVector::of(...numerize(1, 2, 3)),
         ));
@@ -164,7 +164,7 @@ class MatrixTest extends TestCase
     {
         $this->expectException(MatrixMustBeSquare::class);
 
-        Matrix::of([[1, 2]])->diagonal();
+        $_ = Matrix::of([[1, 2]])->diagonal();
     }
 
     public function testDiagonal()
@@ -190,9 +190,9 @@ class MatrixTest extends TestCase
 
     public function testThrowWhenAskingForNonSquareIdentity()
     {
-        $this->expectException(MatrixMustBeSquare::class);
+        $_ = $this->expectException(MatrixMustBeSquare::class);
 
-        Matrix::of([[1, 2]])->identity();
+        $_ = Matrix::of([[1, 2]])->identity();
     }
 
     public function testIdentity()
@@ -220,7 +220,7 @@ class MatrixTest extends TestCase
     {
         $this->expectException(MatricesMustBeOfTheSameDimension::class);
 
-        Matrix::of([[1]])->add(
+        $_ = Matrix::of([[1]])->add(
             Matrix::of([[1, 2]]),
         );
     }
@@ -252,9 +252,9 @@ class MatrixTest extends TestCase
 
     public function testThrowWhenSubtractingMatricesOfDifferentDimensions()
     {
-        $this->expectException(MatricesMustBeOfTheSameDimension::class);
+        $_ = $this->expectException(MatricesMustBeOfTheSameDimension::class);
 
-        Matrix::of([[1]])->subtract(
+        $_ = Matrix::of([[1]])->subtract(
             Matrix::of([[1, 2]]),
         );
     }
@@ -423,7 +423,7 @@ class MatrixTest extends TestCase
     {
         $this->expectException(MatrixMustBeSquare::class);
 
-        Matrix::of([
+        $_ = Matrix::of([
             [1, 2, 3],
             [4, 5, 6],
         ])->inverse();
@@ -448,7 +448,7 @@ class MatrixTest extends TestCase
     {
         $this->expectException(MatrixNotInvertible::class);
 
-        Matrix::of([
+        $_ = Matrix::of([
             [  2,   -3,    9,   -27,    81],
             [ -3,    9,  -27,    81,  -243],
             [  9,  -27,   81,  -243,   729],

@@ -26,6 +26,7 @@ final class Tangent
         $this->intercept = $polynom($abscissa);
     }
 
+    #[\NoDiscard]
     public function __invoke(Number $x): Number
     {
         return $this
@@ -37,6 +38,7 @@ final class Tangent
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function of(
         Polynom $polynom,
         Number $abscissa,
@@ -45,11 +47,13 @@ final class Tangent
         return new self($polynom, $abscissa, $limit);
     }
 
+    #[\NoDiscard]
     public function polynom(): Polynom
     {
         return $this->polynom;
     }
 
+    #[\NoDiscard]
     public function abscissa(): Number
     {
         return $this->abscissa;
@@ -58,6 +62,7 @@ final class Tangent
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function limit(): Number
     {
         return Number::of(0.000000000001);

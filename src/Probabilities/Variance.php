@@ -32,6 +32,7 @@ final class Variance
             ->sum();
     }
 
+    #[\NoDiscard]
     public function __invoke(): Number
     {
         return $this->variance;
@@ -40,6 +41,7 @@ final class Variance
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function of(Dataset $dataset): self
     {
         return new self($dataset);

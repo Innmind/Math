@@ -28,6 +28,7 @@ final class Circle implements Figure
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function of(Segment $radius): self
     {
         return new self($radius);
@@ -49,11 +50,13 @@ final class Circle implements Figure
             ->multiplyBy($this->radius->length());
     }
 
+    #[\NoDiscard]
     public function radius(): Segment
     {
         return $this->radius;
     }
 
+    #[\NoDiscard]
     public function diameter(): Segment
     {
         return $this->diameter;

@@ -8,10 +8,12 @@ namespace Innmind\Math\Algebra;
  */
 interface Func
 {
+    #[\NoDiscard]
     public function __invoke(Number $x): Number;
 
     /**
      * @return non-empty-string
      */
+    #[\NoDiscard]
     public function name(): string;
 }

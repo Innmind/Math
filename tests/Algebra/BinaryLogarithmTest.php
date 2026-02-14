@@ -23,7 +23,7 @@ class BinaryLogarithmTest extends TestCase
     {
         $this->expectException(OutOfDefinitionSet::class);
 
-        Number::of(0)->apply(Logarithm::binary)->memoize();
+        $_ = Number::of(0)->apply(Logarithm::binary)->memoize();
     }
 
     public function testResult()

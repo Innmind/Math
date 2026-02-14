@@ -20,6 +20,7 @@ final class Degree
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function of(Number $number): self
     {
         $modulus = Number::of(360);
@@ -32,6 +33,7 @@ final class Degree
         );
     }
 
+    #[\NoDiscard]
     public function toRadian(): Radian
     {
         return Radian::of(
@@ -41,31 +43,37 @@ final class Degree
         );
     }
 
+    #[\NoDiscard]
     public function right(): bool
     {
         return $this->number->equals(Number::of(90));
     }
 
+    #[\NoDiscard]
     public function obtuse(): bool
     {
         return $this->number->higherThan(Number::of(90));
     }
 
+    #[\NoDiscard]
     public function acuse(): bool
     {
         return Number::of(90)->higherThan($this->number);
     }
 
+    #[\NoDiscard]
     public function flat(): bool
     {
         return $this->number->equals(Number::of(180));
     }
 
+    #[\NoDiscard]
     public function opposite(): self
     {
         return self::of($this->number->add(Number::of(180)));
     }
 
+    #[\NoDiscard]
     public function cosine(): Number
     {
         return $this
@@ -75,6 +83,7 @@ final class Degree
             ->apply(Trigonometry::cosine);
     }
 
+    #[\NoDiscard]
     public function sine(): Number
     {
         return $this
@@ -84,6 +93,7 @@ final class Degree
             ->apply(Trigonometry::sine);
     }
 
+    #[\NoDiscard]
     public function tangent(): Number
     {
         return $this
@@ -93,11 +103,13 @@ final class Degree
             ->apply(Trigonometry::tangent);
     }
 
+    #[\NoDiscard]
     public function number(): Number
     {
         return $this->number;
     }
 
+    #[\NoDiscard]
     public function toString(): string
     {
         return $this->number->value().'°';

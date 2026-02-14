@@ -55,6 +55,7 @@ final class PolynomialRegression
         $this->deviation = $this->buildRmsd($dataset, $this->polynom);
     }
 
+    #[\NoDiscard]
     public function __invoke(Number $x): Number
     {
         return ($this->polynom)($x);
@@ -65,16 +66,19 @@ final class PolynomialRegression
      *
      * @param int<1, max> $degree
      */
+    #[\NoDiscard]
     public static function of(Dataset $data, int $degree): self
     {
         return new self($data, $degree);
     }
 
+    #[\NoDiscard]
     public function polynom(): Polynom
     {
         return $this->polynom;
     }
 
+    #[\NoDiscard]
     public function rootMeanSquareDeviation(): Number
     {
         return $this->deviation;

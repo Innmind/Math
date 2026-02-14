@@ -17,6 +17,7 @@ final class BinomialDistribution
     {
     }
 
+    #[\NoDiscard]
     public function __invoke(int $trials, int $success): Number
     {
         $errors = $trials - $success;
@@ -40,6 +41,7 @@ final class BinomialDistribution
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function of(Number $probability): self
     {
         return new self($probability);

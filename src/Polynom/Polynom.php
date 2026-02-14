@@ -30,6 +30,7 @@ final class Polynom
     /**
      * Compute the value for the given x
      */
+    #[\NoDiscard]
     public function __invoke(Number $x): Number
     {
         return $this
@@ -42,6 +43,7 @@ final class Polynom
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function zero(): self
     {
         /** @var Sequence<Degree> */
@@ -53,6 +55,7 @@ final class Polynom
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function interceptAt(Number $intercept): self
     {
         /** @var Sequence<Degree> */
@@ -66,6 +69,7 @@ final class Polynom
      *
      * @param int<1, max> $degree
      */
+    #[\NoDiscard]
     public function withDegree(int $degree, Number $coeff): self
     {
         return new self(
@@ -80,6 +84,7 @@ final class Polynom
     /**
      * Return the intercept value
      */
+    #[\NoDiscard]
     public function intercept(): Number
     {
         return $this->intercept;
@@ -92,6 +97,7 @@ final class Polynom
      *
      * @return Maybe<Degree>
      */
+    #[\NoDiscard]
     public function degree(int $degree): Maybe
     {
         return $this->degrees->find(
@@ -104,6 +110,7 @@ final class Polynom
      *
      * @param Number|null $limit Value that tend to 0 (default to 0.000000000001)
      */
+    #[\NoDiscard]
     public function derived(Number $x, ?Number $limit = null): Number
     {
         $limit = $limit ?? Tangent::limit();
@@ -116,11 +123,13 @@ final class Polynom
     /**
      * Return the affine function (tangent) in the position x
      */
+    #[\NoDiscard]
     public function tangent(Number $x, ?Number $limit = null): Tangent
     {
         return Tangent::of($this, $x, $limit);
     }
 
+    #[\NoDiscard]
     public function primitive(): self
     {
         $primitive = new self(
@@ -140,6 +149,7 @@ final class Polynom
         return $primitive;
     }
 
+    #[\NoDiscard]
     public function derivative(): self
     {
         [$intercept, $degrees] = $this
@@ -161,11 +171,13 @@ final class Polynom
         );
     }
 
+    #[\NoDiscard]
     public function integral(): Integral
     {
         return Integral::of($this);
     }
 
+    #[\NoDiscard]
     public function toString(): string
     {
         $degrees = $this

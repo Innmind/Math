@@ -30,14 +30,14 @@ class SegmentTest extends TestCase
     {
         $this->expectException(LengthMustBePositive::class);
 
-        Segment::of(Number::of(0));
+        $_ = Segment::of(Number::of(0));
     }
 
     public function testThrowWhenNegativeLength()
     {
         $this->expectException(LengthMustBePositive::class);
 
-        Segment::of(Number::of(-1));
+        $_ = Segment::of(Number::of(-1));
     }
 
     public function testJoin()

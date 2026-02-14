@@ -36,11 +36,13 @@ final class Quantile
      *
      * @param Sequence<Number> $values
      */
+    #[\NoDiscard]
     public static function of(Sequence $values): self
     {
         return new self($values);
     }
 
+    #[\NoDiscard]
     public function min(): Quartile
     {
         return $this->values->first()->match(
@@ -49,6 +51,7 @@ final class Quantile
         );
     }
 
+    #[\NoDiscard]
     public function max(): Quartile
     {
         return $this->values->last()->match(
@@ -57,6 +60,7 @@ final class Quantile
         );
     }
 
+    #[\NoDiscard]
     public function mean(): Number
     {
         /** @psalm-suppress InvalidArgument At least one value present */
@@ -66,17 +70,20 @@ final class Quantile
     /**
      * Return the median value
      */
+    #[\NoDiscard]
     public function median(): Quartile
     {
         /** @psalm-suppress InvalidArgument At least one value present */
         return Quartile::of(Median::of(...$this->values->toList())->result());
     }
 
+    #[\NoDiscard]
     public function firstQuartile(): Quartile
     {
         return Quartile::of($this->buildQuartile(Number::of(0.25)));
     }
 
+    #[\NoDiscard]
     public function thirdQuartile(): Quartile
     {
         return Quartile::of($this->buildQuartile(Number::of(0.75)));

@@ -47,6 +47,7 @@ final class Triangle implements Figure
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function of(
         Segment $a,
         Segment $b,
@@ -77,16 +78,19 @@ final class Triangle implements Figure
             ->squareRoot();
     }
 
+    #[\NoDiscard]
     public function base(): Segment
     {
         return $this->base;
     }
 
+    #[\NoDiscard]
     public function height(): Segment
     {
         return $this->height;
     }
 
+    #[\NoDiscard]
     public function isosceles(): bool
     {
         return $this->a->equals($this->b) ||
@@ -94,6 +98,7 @@ final class Triangle implements Figure
             $this->b->equals($this->c);
     }
 
+    #[\NoDiscard]
     public function equilateral(): bool
     {
         return $this->a->equals($this->b) &&

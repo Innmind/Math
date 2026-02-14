@@ -55,7 +55,7 @@ class AlKashiTest extends TestCase
     {
         $this->expectException(SegmentsCannotBeJoined::class);
 
-        AlKashi::angle(
+        $_ = AlKashi::angle(
             Segment::of(Number::of(1)),
             Segment::of(Number::of(42)),
             Segment::of(Number::of(20)),

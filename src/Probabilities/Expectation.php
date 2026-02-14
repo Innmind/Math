@@ -23,6 +23,7 @@ final class Expectation
             ->sum();
     }
 
+    #[\NoDiscard]
     public function __invoke(): Number
     {
         return $this->expectation;
@@ -31,6 +32,7 @@ final class Expectation
     /**
      * @psalm-pure
      */
+    #[\NoDiscard]
     public static function of(Dataset $dataset): self
     {
         return new self($dataset);

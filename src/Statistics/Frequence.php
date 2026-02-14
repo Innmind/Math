@@ -18,6 +18,7 @@ final class Frequence
     {
     }
 
+    #[\NoDiscard]
     public function __invoke(Number $number): Number
     {
         $frequence = $this
@@ -32,6 +33,7 @@ final class Frequence
      * @psalm-pure
      * @no-named-arguments
      */
+    #[\NoDiscard]
     public static function of(Number ...$values): self
     {
         return new self(Sequence::of(...$values));
@@ -40,6 +42,7 @@ final class Frequence
     /**
      * @return int<0, max>
      */
+    #[\NoDiscard]
     public function size(): int
     {
         return $this->values->size();

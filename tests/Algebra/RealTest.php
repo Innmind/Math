@@ -15,7 +15,7 @@ class RealTest extends TestCase
     {
         $this->expectException(NotANumber::class);
 
-        Number::of(\NAN);
+        $_ = Number::of(\NAN);
     }
 
     public function testWrap()
