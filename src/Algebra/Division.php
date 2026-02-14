@@ -56,9 +56,8 @@ final class Division implements Implementation
 
     public function quotient(): Implementation
     {
-        return $this->compute(
-            $this->dividend,
-            $this->divisor,
+        return Native::of(
+            $this->dividend->value() / $this->divisor->value(),
         );
     }
 
@@ -88,14 +87,5 @@ final class Division implements Implementation
     public function format(): string
     {
         return '('.$this->toString().')';
-    }
-
-    private function compute(
-        Implementation $dividend,
-        Implementation $divisor,
-    ): Implementation {
-        return Native::of(
-            $dividend->value() / $divisor->value(),
-        );
     }
 }

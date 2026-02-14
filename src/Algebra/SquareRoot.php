@@ -24,7 +24,7 @@ final class SquareRoot implements Implementation
     #[\Override]
     public function value(): int|float
     {
-        return $this->result()->value();
+        return \sqrt($this->number->value());
     }
 
     #[\Override]
@@ -60,12 +60,5 @@ final class SquareRoot implements Implementation
     public function format(): string
     {
         return '('.$this->toString().')';
-    }
-
-    private function result(): Implementation
-    {
-        return Native::of(
-            \sqrt($this->number->value()),
-        );
     }
 }

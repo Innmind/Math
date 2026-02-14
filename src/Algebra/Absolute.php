@@ -24,7 +24,7 @@ final class Absolute implements Implementation
     #[\Override]
     public function value(): int|float
     {
-        return $this->result()->value();
+        return \abs($this->number->value());
     }
 
     #[\Override]
@@ -49,17 +49,5 @@ final class Absolute implements Implementation
     public function format(): string
     {
         return '('.$this->toString().')';
-    }
-
-    private function result(): Implementation
-    {
-        return $this->compute($this->number);
-    }
-
-    private function compute(Implementation $number): Implementation
-    {
-        return Native::of(
-            \abs($number->value()),
-        );
     }
 }

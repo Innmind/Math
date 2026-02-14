@@ -63,7 +63,11 @@ final class Round implements Implementation
     #[\Override]
     public function value(): int|float
     {
-        return $this->compute($this->number);
+        return \round(
+            $this->number->value(),
+            $this->precision,
+            $this->mode,
+        );
     }
 
     #[\Override]
@@ -92,14 +96,5 @@ final class Round implements Implementation
     public function format(): string
     {
         return $this->toString();
-    }
-
-    private function compute(Implementation $number): int|float
-    {
-        return \round(
-            $number->value(),
-            $this->precision,
-            $this->mode,
-        );
     }
 }

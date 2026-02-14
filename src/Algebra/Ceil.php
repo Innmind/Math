@@ -24,7 +24,7 @@ final class Ceil implements Implementation
     #[\Override]
     public function value(): int|float
     {
-        return $this->compute($this->number);
+        return \ceil($this->number->value());
     }
 
     #[\Override]
@@ -49,10 +49,5 @@ final class Ceil implements Implementation
     public function format(): string
     {
         return $this->toString();
-    }
-
-    private function compute(Implementation $number): int|float
-    {
-        return \ceil($number->value());
     }
 }

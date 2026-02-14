@@ -26,7 +26,7 @@ final class Power implements Implementation
     #[\Override]
     public function value(): int|float
     {
-        return $this->result()->value();
+        return $this->number->value() ** $this->power->value();
     }
 
     #[\Override]
@@ -68,12 +68,5 @@ final class Power implements Implementation
     public function format(): string
     {
         return '('.$this->toString().')';
-    }
-
-    private function result(): Implementation
-    {
-        return Native::of(
-            $this->number->value() ** $this->power->value(),
-        );
     }
 }

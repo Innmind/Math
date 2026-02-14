@@ -26,7 +26,10 @@ final class Modulo implements Implementation
     #[\Override]
     public function value(): int|float
     {
-        return $this->result()->value();
+        // wrap to throw in case of invlid values
+        return Native::of(
+            \fmod($this->number->value(), $this->modulus->value()),
+        )->value();
     }
 
     #[\Override]
@@ -57,19 +60,5 @@ final class Modulo implements Implementation
     public function format(): string
     {
         return '('.$this->toString().')';
-    }
-
-    private function result(): Implementation
-    {
-        return $this->compute($this->number, $this->modulus);
-    }
-
-    private function compute(
-        Implementation $number,
-        Implementation $modulus,
-    ): Implementation {
-        return Native::of(
-            \fmod($number->value(), $modulus->value()),
-        );
     }
 }
