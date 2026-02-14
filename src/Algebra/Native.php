@@ -11,24 +11,28 @@ use Innmind\Math\Exception\NotANumber;
  */
 final class Native implements Implementation
 {
-    private function __construct(private int|float $value)
+    private function __construct(private int|float|Value $value)
     {
     }
 
     /**
      * @psalm-pure
      */
-    public static function of(int|float $value): self|Value
+    public static function of(int|float|Value $value): self
     {
+        if ($value instanceof Value) {
+            return new self($value);
+        }
+
         if (\is_infinite($value)) {
-            return $value > 0 ? Value::infinite : Value::negativeInfinite;
+            return new self($value > 0 ? Value::infinite : Value::negativeInfinite);
         }
 
         if (\is_nan($value)) {
             throw new NotANumber;
         }
 
-        return match ($value) {
+        return new self(match ($value) {
             0 => Value::zero,
             1 => Value::one,
             2 => Value::two,
@@ -36,12 +40,16 @@ final class Native implements Implementation
             100 => Value::hundred,
             \M_E => Value::e,
             \M_PI => Value::pi,
-            default => new self($value),
-        };
+            default => $value,
+        });
     }
 
     public function value(): int|float
     {
+        if ($this->value instanceof Value) {
+            return $this->value->value();
+        }
+
         return $this->value;
     }
 
@@ -51,9 +59,13 @@ final class Native implements Implementation
         return $this;
     }
 
-    public function equals(self|Value $number): bool
+    public function equals(self $number): bool
     {
-        return $this->value == $number->value();
+        if ($this->value instanceof Value && $number->value instanceof Value) {
+            return $this->value === $number->value;
+        }
+
+        return $this->value() == $number->value();
     }
 
     #[\Override]
@@ -65,6 +77,10 @@ final class Native implements Implementation
     #[\Override]
     public function toString(): string
     {
+        if ($this->value instanceof Value) {
+            return $this->value->toString();
+        }
+
         return \var_export($this->value, true);
     }
 

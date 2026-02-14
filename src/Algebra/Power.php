@@ -24,7 +24,7 @@ final class Power implements Implementation
     }
 
     #[\Override]
-    public function raw(): Native|Value
+    public function raw(): Native
     {
         return Native::of($this->number->raw()->value() ** $this->power->raw()->value());
     }
@@ -46,7 +46,7 @@ final class Power implements Implementation
 
     public function square(): bool
     {
-        return $this->power->raw()->equals(Value::two);
+        return $this->power->raw()->equals(Native::of(Value::two));
     }
 
     #[\Override]

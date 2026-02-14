@@ -61,7 +61,7 @@ final class Round implements Implementation
     }
 
     #[\Override]
-    public function raw(): Native|Value
+    public function raw(): Native
     {
         return Native::of(\round(
             $this->number->raw()->value(),

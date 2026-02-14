@@ -22,7 +22,7 @@ final class Absolute implements Implementation
     }
 
     #[\Override]
-    public function raw(): Native|Value
+    public function raw(): Native
     {
         return Native::of(\abs($this->number->raw()->value()));
     }

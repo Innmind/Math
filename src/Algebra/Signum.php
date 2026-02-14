@@ -22,7 +22,7 @@ final class Signum implements Implementation
     }
 
     #[\Override]
-    public function raw(): Native|Value
+    public function raw(): Native
     {
         return Native::of($this->number->raw()->value() <=> 0);
     }

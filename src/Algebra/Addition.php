@@ -29,12 +29,12 @@ final class Addition implements Implementation
     }
 
     #[\Override]
-    public function raw(): Native|Value
+    public function raw(): Native
     {
         return $this->sum();
     }
 
-    public function sum(): Native|Value
+    public function sum(): Native
     {
         return Native::of(
             $this->a->raw()->value() + $this->b->raw()->value(),

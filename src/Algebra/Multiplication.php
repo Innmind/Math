@@ -29,12 +29,12 @@ final class Multiplication implements Implementation
     }
 
     #[\Override]
-    public function raw(): Native|Value
+    public function raw(): Native
     {
         return $this->product();
     }
 
-    public function product(): Native|Value
+    public function product(): Native
     {
         return Native::of($this->a->raw()->value() * $this->b->raw()->value());
     }

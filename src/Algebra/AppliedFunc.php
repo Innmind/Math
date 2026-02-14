@@ -24,7 +24,7 @@ final class AppliedFunc implements Implementation
     }
 
     #[\Override]
-    public function raw(): Native|Value
+    public function raw(): Native
     {
         $result = ($this->func)($this->x);
 

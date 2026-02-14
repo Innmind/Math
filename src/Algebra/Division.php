@@ -16,7 +16,7 @@ final class Division implements Implementation
 
     private function __construct(Implementation $dividend, Implementation $divisor)
     {
-        if ($divisor->optimize()->raw()->equals(Value::zero)) {
+        if ($divisor->optimize()->raw()->equals(Native::of(Value::zero))) {
             throw new DivisionByZero;
         }
 
@@ -43,12 +43,12 @@ final class Division implements Implementation
     }
 
     #[\Override]
-    public function raw(): Native|Value
+    public function raw(): Native
     {
         return $this->quotient();
     }
 
-    public function quotient(): Native|Value
+    public function quotient(): Native
     {
         return Native::of(
             $this->dividend->raw()->value() / $this->divisor->raw()->value(),

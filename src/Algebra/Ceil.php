@@ -22,7 +22,7 @@ final class Ceil implements Implementation
     }
 
     #[\Override]
-    public function raw(): Native|Value
+    public function raw(): Native
     {
         return Native::of(\ceil($this->number->raw()->value()));
     }

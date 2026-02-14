@@ -29,12 +29,12 @@ final class Subtraction implements Implementation
     }
 
     #[\Override]
-    public function raw(): Native|Value
+    public function raw(): Native
     {
         return $this->difference();
     }
 
-    public function difference(): Native|Value
+    public function difference(): Native
     {
         return Native::of($this->a->raw()->value() - $this->b->raw()->value());
     }

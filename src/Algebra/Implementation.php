@@ -9,7 +9,7 @@ namespace Innmind\Math\Algebra;
  */
 interface Implementation
 {
-    public function raw(): Native|Value;
+    public function raw(): Native;
     public function toString(): string;
     public function format(): string;
     public function optimize(): self;

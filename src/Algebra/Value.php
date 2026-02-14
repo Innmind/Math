@@ -7,7 +7,7 @@ namespace Innmind\Math\Algebra;
  * @psalm-immutable
  * @internal
  */
-enum Value implements Implementation
+enum Value
 {
     case zero;
     case one;
@@ -35,28 +35,6 @@ enum Value implements Implementation
         };
     }
 
-    public function equals(Native|self $number): bool
-    {
-        if ($number instanceof self) {
-            return $this === $number;
-        }
-
-        return $number->equals($this);
-    }
-
-    #[\Override]
-    public function raw(): Native|Value
-    {
-        return $this;
-    }
-
-    #[\Override]
-    public function optimize(): Implementation
-    {
-        return $this;
-    }
-
-    #[\Override]
     public function toString(): string
     {
         return match ($this) {
@@ -70,11 +48,5 @@ enum Value implements Implementation
             self::infinite => '+∞',
             self::negativeInfinite => '-∞',
         };
-    }
-
-    #[\Override]
-    public function format(): string
-    {
-        return $this->toString();
     }
 }

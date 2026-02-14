@@ -22,7 +22,7 @@ final class SquareRoot implements Implementation
     }
 
     #[\Override]
-    public function raw(): Native|Value
+    public function raw(): Native
     {
         return Native::of(\sqrt($this->number->raw()->value()));
     }
