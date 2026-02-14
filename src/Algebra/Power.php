@@ -32,11 +32,17 @@ final class Power implements Implementation
     #[\Override]
     public function optimize(): Implementation
     {
-        if ($this->number instanceof SquareRoot && $this->square()) {
-            return $this->number->number()->optimize();
+        $number = $this->number->optimize();
+        $power = $this->power->optimize();
+
+        if ($number instanceof SquareRoot && $power->raw()->is(Value::two)) {
+            return $number->number()->optimize();
         }
 
-        return $this;
+        return new self(
+            $number,
+            $power,
+        );
     }
 
     public function number(): Implementation
@@ -46,7 +52,7 @@ final class Power implements Implementation
 
     public function square(): bool
     {
-        return $this->power->raw()->equals(Native::of(Value::two));
+        return $this->power->optimize()->raw()->is(Value::two);
     }
 
     #[\Override]

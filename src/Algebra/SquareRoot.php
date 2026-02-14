@@ -30,11 +30,13 @@ final class SquareRoot implements Implementation
     #[\Override]
     public function optimize(): Implementation
     {
-        if ($this->number instanceof Power && $this->number->square()) {
-            return $this->number->number()->optimize();
+        $number = $this->number->optimize();
+
+        if ($number instanceof Power && $number->square()) {
+            return $number->number()->optimize();
         }
 
-        return $this;
+        return new self($number);
     }
 
     public function number(): Implementation

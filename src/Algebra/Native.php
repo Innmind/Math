@@ -59,6 +59,11 @@ final class Native implements Implementation
         return $this;
     }
 
+    public function is(Value $value): bool
+    {
+        return $this->value === $value;
+    }
+
     public function equals(self $number): bool
     {
         if ($this->value instanceof Value && $number->value instanceof Value) {
