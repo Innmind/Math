@@ -2,7 +2,9 @@
     "name": "innmind/math",
     "type": "library",
     "description": "Library holding a set of math functions",
-    "keywords": ["math"],
+    "keywords": [
+        "math"
+    ],
     "homepage": "http://github.com/Innmind/Math",
     "license": "MIT",
     "authors": [
